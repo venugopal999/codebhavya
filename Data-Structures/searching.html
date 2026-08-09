@@ -1,12 +1,13 @@
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Searching | Data Structures | CodeBhavya</title>
-<link rel="icon" type="image/png" href="../images/codebhavya-icon-32.png">
-<link rel="stylesheet" href="../style.css">
-
+<link href="../images/codebhavya-icon-32.png" rel="icon" type="image/png"/>
+<link href="../style.css" rel="stylesheet"/>
 <style>
 /* Searching page: expandable sidebar topics */
 .sidebar details {
@@ -132,104 +133,203 @@
     .input-output, .complexity-list { grid-template-columns:1fr; }
     .nav-topic { flex-direction:column; text-align:center; }
 }
+
+/* ===== Presentation improvements: preserve all existing content ===== */
+.key-idea-box {
+    background: #F8FAFC;
+    border: 1px solid #DCE7F0;
+    border-left: 5px solid #8CC8F0;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 18px 0 22px;
+}
+.key-idea-box h3 { margin-top: 0; }
+.key-idea-box p { margin-bottom: 0; }
+.example-presentation {
+    background: #F8FAFC;
+    border: 1px solid #DCE7F0;
+    border-left: 5px solid #D4AF37;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 20px 0;
+}
+.example-presentation h3 { margin-top: 0; color: #0F172A; }
+.example-presentation p { margin: 0; line-height: 1.9; }
+.approaches-heading {
+    margin-top: 28px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #E2E8F0;
+}
+.practice-item pre code {
+    white-space: pre;
+    text-align: left;
+}
+.topic-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 24px;
+    margin-top: 40px;
+}
+.topic-navigation .topic-nav-card {
+    flex: 1;
+    min-width: 0;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 18px 20px;
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.topic-navigation .topic-nav-card:hover {
+    transform: translateY(-3px);
+    border-color: #B8D8F0;
+    box-shadow: 0 8px 22px rgba(15,23,42,.08);
+}
+.topic-navigation .topic-nav-card.next { text-align: right; }
+.topic-navigation .nav-label { margin-bottom: 7px; }
+.topic-navigation .nav-topic-name {
+    display: block;
+    color: #0F172A;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+.topic-navigation .nav-action {
+    display: inline-block;
+    color: #2563EB;
+    font-size: 14px;
+    font-weight: 700;
+}
+@media(max-width:700px) {
+    .topic-navigation { flex-direction: column; }
+    .topic-navigation .topic-nav-card.next { text-align: left; }
+}
+
+/* Final topic navigation presentation */
+.topic-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-top: 40px;
+    padding: 22px 24px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(15,23,42,.04);
+}
+.topic-nav-side {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.topic-nav-side.next {
+    margin-left: auto;
+    justify-content: flex-end;
+}
+.topic-nav-side .nav-label {
+    margin: 0;
+}
+.topic-nav-side .nav-topic-name {
+    color: #0F172A;
+}
+.topic-nav-side .primary-button {
+    white-space: nowrap;
+}
+@media(max-width:700px) {
+    .topic-navigation {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .topic-nav-side,
+    .topic-nav-side.next {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+        flex-wrap: wrap;
+    }
+}
 </style>
 </head>
-
 <body>
-
 <header class="top-header">
-    <a href="../index.html" class="logo">
-        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
-    </a>
-
-    <nav class="top-nav">
-        <a href="../index.html">Home</a>
-        <a href="../Mathematics/">Maths</a>
-        <a href="../C-Programming/">C</a>
-        <a href="index.html" class="active">DSA</a>
-        <a href="../Python/">Python</a>
-        <a href="../AI-ML/">AI &amp; ML</a>
-        <a href="../Placement/">Placement</a>
-    </nav>
+<a class="logo" href="../index.html">
+<span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a>
+<nav class="top-nav">
+<a href="../index.html">Home</a>
+<a href="../Mathematics/">Maths</a>
+<a href="../C-Programming/">C</a>
+<a class="active" href="index.html">DSA</a>
+<a href="../Python/">Python</a>
+<a href="../AI-ML/">AI &amp; ML</a>
+<a href="../Placement/">Placement</a>
+</nav>
 </header>
-
 <div class="docs-layout">
-
 <aside class="sidebar">
-
-    <div class="sidebar-title">Data Structures</div>
-
-    <input type="text" id="topicSearch" class="search-box"
-           placeholder="🔍 Search topics..." onkeyup="searchTopics()">
-
-    <details open class="sidebar-topic">
-        <summary>🔍 Searching</summary>
-        <a href="#introduction">Introduction</a>
-        <a href="#linear-search">Linear Search</a>
-        <a href="#binary-search">Binary Search</a>
-        <a href="#rotated-binary-search">Rotated Binary Search</a>
-        <a href="#jump-search">Jump Search</a>
-        <a href="#interpolation-search">Interpolation Search</a>
-        <a href="#fibonacci-search">Fibonacci Search</a>
-        <a href="#skip-list-search">Skip List Search</a>
-        <a href="#comparison">Algorithm Comparison</a>
-        <a href="#interview-section">Interview &amp; Practice</a>
-    </details>
-
-    <details class="sidebar-topic"><summary>🔄 Sorting</summary><a href="sorting.html">Open Topic</a></details>
-    <details class="sidebar-topic"><summary>🔗 Linked List</summary><a href="linked-list.html">Open Topic</a></details>
-    <details class="sidebar-topic"><summary>📚 Stack</summary><a href="stack.html">Open Topic</a></details>
-    <details class="sidebar-topic"><summary>🚶 Queue</summary><a href="queue.html">Open Topic</a></details>
-    <details class="sidebar-topic"><summary>🌳 Trees</summary><a href="trees.html">Open Topic</a></details>
-    <details class="sidebar-topic"><summary>🕸️ Graphs</summary><a href="graphs.html">Open Topic</a></details>
-
+<div class="sidebar-title">Data Structures</div>
+<input class="search-box" id="topicSearch" onkeyup="searchTopics()" placeholder="🔍 Search topics..." type="text"/>
+<details class="sidebar-topic" open="">
+<summary>🔍 Searching</summary>
+<a href="#introduction">Introduction</a>
+<a href="#linear-search">Linear Search</a>
+<a href="#binary-search">Binary Search</a>
+<a href="#rotated-binary-search">Rotated Binary Search</a>
+<a href="#jump-search">Jump Search</a>
+<a href="#interpolation-search">Interpolation Search</a>
+<a href="#fibonacci-search">Fibonacci Search</a>
+<a href="#skip-list-search">Skip List Search</a>
+<a href="#comparison">Algorithm Comparison</a>
+<a href="#interview-section">Interview &amp; Practice</a>
+</details>
+<details class="sidebar-topic"><summary>🔄 Sorting</summary><a href="sorting.html">Open Topic</a></details>
+<details class="sidebar-topic"><summary>🔗 Linked List</summary><a href="linked-list.html">Open Topic</a></details>
+<details class="sidebar-topic"><summary>📚 Stack</summary><a href="stack.html">Open Topic</a></details>
+<details class="sidebar-topic"><summary>🚶 Queue</summary><a href="queue.html">Open Topic</a></details>
+<details class="sidebar-topic"><summary>🌳 Trees</summary><a href="trees.html">Open Topic</a></details>
+<details class="sidebar-topic"><summary>🕸️ Graphs</summary><a href="graphs.html">Open Topic</a></details>
 </aside>
-
 <main class="main-content">
-
 <section class="subject-hero">
-    <span class="subject-label">CODEBHAVYA • DATA STRUCTURES</span>
-    <h1 class="page-title">🔍 Searching</h1>
-    <p class="page-description">
+<span class="subject-label">CODEBHAVYA • DATA STRUCTURES</span>
+<h1 class="page-title">🔍 Searching</h1>
+<p class="page-description">
         Learn important searching techniques in C from basic linear search
         to interview-oriented advanced searching methods.
     </p>
 </section>
-
 <section class="content-card" id="introduction">
-    <span class="section-label">SEARCHING</span>
-    <h2>📖 Introduction to Searching</h2>
-    <p>
+<span class="section-label">SEARCHING</span>
+<h2>📖 Introduction to Searching</h2>
+<p>
         Searching is the process of finding whether a particular value exists
         in a collection of data and, if it exists, determining its position.
     </p>
-    <p>
+<p>
         The choice of searching algorithm depends mainly on whether the data is
         sorted, how uniformly the values are distributed, and whether the data
         structure supports random access.
     </p>
-    <div class="tip-box">
-        <strong>Important:</strong> Always check the data requirement before
+<div class="tip-box">
+<strong>Important:</strong> Always check the data requirement before
         selecting a searching algorithm. Binary Search, for example, requires
         sorted data.
     </div>
 </section>
-
 <section class="content-section" id="linear-search">
 <div class="section-heading">
 <span class="section-label">01 • SEARCHING ALGORITHM</span>
 <h2>🔎 Linear Search</h2>
 <p>Check each element one by one until the target is found or the collection ends.</p>
 </div>
-
 <div class="content-card">
-<h3>💡 Key Idea</h3>
-<p>
+<div class="key-idea-box"><h3>💡 Key Idea</h3><p>
 Start from the first element and compare every element with the target.
 The first matching position is returned. If no element matches, report that
 the target is not present.
-</p>
-
+</p></div>
 <h3>🔹 Step-by-Step Algorithm</h3>
 <ol>
 <li>Read the array and target value.</li>
@@ -239,13 +339,10 @@ the target is not present.
 <li>Otherwise move to the next element.</li>
 <li>If the array ends, report not found.</li>
 </ol>
-
-<h3>🧠 Example</h3>
-<p>For <code>[12, 7, 25, 9, 18]</code> and target <code>25</code>, compare 12 → 7 → 25. The target is found at index 2.</p>
-
+<div class="example-presentation"><h3>🧠 Example</h3><p>For <code>[12, 7, 25, 9, 18]</code> and target <code>25</code>,<br/>compare 12 → 7 → 25.<br/>The target is found at index 2.</p></div>
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('linearProgram')">Show Program</button>
-<div id="linearProgram" class="program-content">
+<div class="program-content" id="linearProgram">
 <pre><code>#include &lt;stdio.h&gt;
 
 int main() {
@@ -274,7 +371,6 @@ int main() {
 
     return 0;
 }</code></pre>
-
 <div class="input-output">
 <div class="io-box"><h4>Sample Input</h4><pre><code>5
 12 7 25 9 18
@@ -284,7 +380,6 @@ int main() {
 <p><strong>Input explanation:</strong> First enter the number of elements, then the elements, followed by the target.</p>
 </div>
 </div>
-
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
 <div class="complexity-item"><strong>Best: O(1)</strong> Target is the first element.</div>
@@ -292,27 +387,22 @@ int main() {
 <div class="complexity-item"><strong>Worst: O(n)</strong> Target is last or absent, so every element is checked.</div>
 </div>
 <p><strong>Space: O(1)</strong> because only a few variables are used apart from the input array.</p>
-
 <div class="tip-box"><strong>Interview note:</strong> Linear Search works on both sorted and unsorted arrays.</div>
 </div>
 </section>
-
 <section class="content-section" id="binary-search">
 <div class="section-heading">
 <span class="section-label">02 • SEARCHING ALGORITHM</span>
 <h2>⚡ Binary Search</h2>
 <p>Repeatedly divide a sorted search range into two halves.</p>
 </div>
-
 <div class="content-card">
-<h3>💡 Key Idea</h3>
-<p>
+<div class="key-idea-box"><h3>💡 Key Idea</h3><p>
 Binary Search compares the target with the middle element. If the target is
 smaller, continue in the left half; if larger, continue in the right half.
 The process continues until the target is found or the range becomes empty.
-</p>
-
-<h3>🔹 Iterative Algorithm</h3>
+</p></div>
+<h3 class="approaches-heading">🔁 Approaches</h3><h3>🔹 Iterative Algorithm</h3>
 <ol>
 <li>Set <code>low = 0</code> and <code>high = n - 1</code>.</li>
 <li>Calculate <code>mid = low + (high - low) / 2</code>.</li>
@@ -321,14 +411,11 @@ The process continues until the target is found or the range becomes empty.
 <li>Otherwise set <code>low = mid + 1</code>.</li>
 <li>Repeat while <code>low &lt;= high</code>.</li>
 </ol>
-
-<h3>💡 Example</h3>
-<p>For <code>[3, 7, 11, 18, 25, 31, 40]</code>, searching for 25 starts at the middle, eliminates the left or right half based on comparison, and quickly reaches 25.</p>
-
+<div class="example-presentation"><h3>💡 Example</h3><p>For <code>[3, 7, 11, 18, 25, 31, 40]</code>, searching for 25<br/>starts at the middle, eliminates the left or right half based on comparison,<br/>and quickly reaches 25.</p></div>
 <h3>💻 Iterative C Program</h3>
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('binaryIterative')">Show Program</button>
-<div id="binaryIterative" class="program-content">
+<div class="program-content" id="binaryIterative">
 <pre><code>#include &lt;stdio.h&gt;
 
 int main() {
@@ -373,7 +460,6 @@ int main() {
 </div>
 </div>
 </div>
-
 <h3>🔁 Recursive Binary Search</h3>
 <p>
 The recursive version uses the same divide-and-conquer idea. Instead of
@@ -385,10 +471,9 @@ updating the search range inside a loop, it calls itself on the appropriate half
 <li>If the middle value is the target, return it.</li>
 <li>Search the left or right half recursively.</li>
 </ol>
-
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('binaryRecursive')">Show Program</button>
-<div id="binaryRecursive" class="program-content">
+<div class="program-content" id="binaryRecursive">
 <pre><code>#include &lt;stdio.h&gt;
 
 int binarySearch(int a[], int low, int high, int target) {
@@ -434,7 +519,6 @@ int main() {
 </div>
 </div>
 </div>
-
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
 <div class="complexity-item"><strong>Best: O(1)</strong> The first middle element is the target.</div>
@@ -442,26 +526,21 @@ int main() {
 <div class="complexity-item"><strong>Worst: O(log n)</strong> The search continues until the range becomes empty.</div>
 </div>
 <p><strong>Space:</strong> Iterative = O(1); Recursive = O(log n) because of the call stack.</p>
-
 <div class="warning-box"><strong>Critical condition:</strong> Binary Search requires the data to be sorted.</div>
 </div>
 </section>
-
 <section class="content-section" id="rotated-binary-search">
 <div class="section-heading">
 <span class="section-label">03 • SEARCHING ALGORITHM</span>
 <h2>🔄 Rotated Binary Search</h2>
 <p>Search efficiently in a sorted array that has been rotated around a pivot.</p>
 </div>
-
 <div class="content-card">
-<h3>💡 Key Idea</h3>
-<p>
+<div class="key-idea-box"><h3>💡 Key Idea</h3><p>
 At least one half of a rotated sorted array is always normally sorted.
 Identify the sorted half, determine whether the target lies inside it, and
 discard the appropriate half.
-</p>
-
+</p></div>
 <h3>🔹 Step-by-Step Algorithm</h3>
 <ol>
 <li>Set low and high.</li>
@@ -471,13 +550,10 @@ discard the appropriate half.
 <li>If the target belongs to the sorted half, search there; otherwise search the other half.</li>
 <li>Repeat until the range is empty.</li>
 </ol>
-
-<h3>💡 Example</h3>
-<p>For <code>[15, 18, 2, 3, 6, 12]</code>, the array was originally sorted but rotated. The algorithm determines which half remains sorted at every step.</p>
-
+<div class="example-presentation"><h3>💡 Example</h3><p>For <code>[15, 18, 2, 3, 6, 12]</code>, the array was originally sorted but rotated.<br/>The algorithm determines which half remains sorted at every step.</p></div>
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('rotatedProgram')">Show Program</button>
-<div id="rotatedProgram" class="program-content">
+<div class="program-content" id="rotatedProgram">
 <pre><code>#include &lt;stdio.h&gt;
 
 int searchRotated(int a[], int n, int target) {
@@ -532,7 +608,6 @@ int main() {
 </div>
 </div>
 </div>
-
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
 <div class="complexity-item"><strong>Best: O(1)</strong> Target is at the first middle position checked.</div>
@@ -543,21 +618,17 @@ int main() {
 <div class="tip-box"><strong>Interview note:</strong> Duplicate values can make the worst case O(n) because it may become impossible to determine which half is strictly sorted.</div>
 </div>
 </section>
-
 <section class="content-section" id="jump-search">
 <div class="section-heading">
 <span class="section-label">04 • SEARCHING ALGORITHM</span>
 <h2>⏩ Jump Search</h2>
 <p>Search a sorted array by jumping fixed-size blocks and then performing a linear scan.</p>
 </div>
-
 <div class="content-card">
-<h3>💡 Key Idea</h3>
-<p>
+<div class="key-idea-box"><h3>💡 Key Idea</h3><p>
 Jump approximately √n positions at a time. Once a block containing the target
 is identified, perform a linear search inside that block.
-</p>
-
+</p></div>
 <h3>🔹 Algorithm</h3>
 <ol>
 <li>Choose block size √n.</li>
@@ -565,10 +636,9 @@ is identified, perform a linear search inside that block.
 <li>Linearly search the identified block.</li>
 <li>Return the index if found; otherwise return -1.</li>
 </ol>
-
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('jumpProgram')">Show Program</button>
-<div id="jumpProgram" class="program-content">
+<div class="program-content" id="jumpProgram">
 <pre><code>#include &lt;stdio.h&gt;
 
 int jumpSearch(int a[], int n, int target) {
@@ -625,7 +695,6 @@ int main() {
 </div>
 </div>
 </div>
-
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
 <div class="complexity-item"><strong>Best: O(1)</strong> Target is encountered immediately.</div>
@@ -635,27 +704,22 @@ int main() {
 <p><strong>Space: O(1)</strong>.</p>
 </div>
 </section>
-
 <section class="content-section" id="interpolation-search">
 <div class="section-heading">
 <span class="section-label">05 • SEARCHING ALGORITHM</span>
 <h2>📍 Interpolation Search</h2>
 <p>Estimate the likely position of the target using the values at the boundaries.</p>
 </div>
-
 <div class="content-card">
-<h3>💡 Key Idea</h3>
-<p>
+<div class="key-idea-box"><h3>💡 Key Idea</h3><p>
 Unlike Binary Search, which always chooses the middle, Interpolation Search
 estimates a position. It works especially well when sorted values are
 approximately uniformly distributed.
-</p>
-
+</p></div>
 <h3>🔹 Position Formula</h3>
 <div class="formula-box">
 pos = low + ((target - a[low]) × (high - low)) / (a[high] - a[low])
 </div>
-
 <h3>🔹 Algorithm</h3>
 <ol>
 <li>Set low and high.</li>
@@ -665,10 +729,9 @@ pos = low + ((target - a[low]) × (high - low)) / (a[high] - a[low])
 <li>Move low or high accordingly.</li>
 <li>Repeat until found or the range becomes invalid.</li>
 </ol>
-
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('interpolationProgram')">Show Program</button>
-<div id="interpolationProgram" class="program-content">
+<div class="program-content" id="interpolationProgram">
 <pre><code>#include &lt;stdio.h&gt;
 
 int interpolationSearch(int a[], int n, int target) {
@@ -725,7 +788,6 @@ int main() {
 </div>
 </div>
 </div>
-
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
 <div class="complexity-item"><strong>Best: O(1)</strong> The estimated position directly contains the target.</div>
@@ -736,22 +798,18 @@ int main() {
 <div class="warning-box"><strong>Condition:</strong> It requires sorted data and is most effective when values are uniformly distributed.</div>
 </div>
 </section>
-
 <section class="content-section" id="fibonacci-search">
 <div class="section-heading">
 <span class="section-label">06 • SEARCHING ALGORITHM</span>
 <h2>🌀 Fibonacci Search</h2>
 <p>Use Fibonacci numbers to divide a sorted array into search ranges.</p>
 </div>
-
 <div class="content-card">
-<h3>💡 Key Idea</h3>
-<p>
+<div class="key-idea-box"><h3>💡 Key Idea</h3><p>
 Fibonacci Search divides the search range using Fibonacci numbers instead of
 using a direct midpoint. It requires sorted data and achieves logarithmic
 search time.
-</p>
-
+</p></div>
 <h3>🔹 Algorithm</h3>
 <ol>
 <li>Generate Fibonacci numbers until one is at least n.</li>
@@ -760,10 +818,9 @@ search time.
 <li>Reduce the Fibonacci range toward the left or right.</li>
 <li>Continue until the target is found or the range is exhausted.</li>
 </ol>
-
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('fibonacciProgram')">Show Program</button>
-<div id="fibonacciProgram" class="program-content">
+<div class="program-content" id="fibonacciProgram">
 <pre><code>#include &lt;stdio.h&gt;
 
 int fibonacciSearch(int a[], int n, int target) {
@@ -833,7 +890,6 @@ int main() {
 </div>
 </div>
 </div>
-
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
 <div class="complexity-item"><strong>Best: O(1)</strong> Target is found at the first probe.</div>
@@ -843,22 +899,18 @@ int main() {
 <p><strong>Space: O(1)</strong>.</p>
 </div>
 </section>
-
 <section class="content-section" id="skip-list-search">
 <div class="section-heading">
 <span class="section-label">07 • SEARCHING ALGORITHM</span>
 <h2>⛓️ Skip List Search</h2>
 <p>Search an ordered linked structure using multiple levels of forward links.</p>
 </div>
-
 <div class="content-card">
-<h3>💡 Key Idea</h3>
-<p>
+<div class="key-idea-box"><h3>💡 Key Idea</h3><p>
 A Skip List augments a sorted linked list with extra forward links. Higher
 levels skip over many nodes, allowing the search to move quickly and then
 drop down to lower levels near the target.
-</p>
-
+</p></div>
 <h3>🔹 Search Algorithm</h3>
 <ol>
 <li>Start from the highest available level.</li>
@@ -867,10 +919,9 @@ drop down to lower levels near the target.
 <li>Repeat until level 0.</li>
 <li>Check the next node for equality.</li>
 </ol>
-
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('skipProgram')">Show Program</button>
-<div id="skipProgram" class="program-content">
+<div class="program-content" id="skipProgram">
 <pre><code>#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 
@@ -959,7 +1010,6 @@ int main() {
 </div>
 </div>
 </div>
-
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
 <div class="complexity-item"><strong>Best: O(1)</strong> The target is found immediately after the starting point.</div>
@@ -970,14 +1020,12 @@ int main() {
 <div class="tip-box"><strong>Interview note:</strong> Skip Lists provide probabilistic alternatives to balanced search trees and are especially useful when ordered operations are required.</div>
 </div>
 </section>
-
 <section class="content-section" id="comparison">
 <div class="section-heading">
 <span class="section-label">QUICK REVISION</span>
 <h2>📊 Searching Algorithm Comparison</h2>
 <p>Compare the major searching algorithms at a glance.</p>
 </div>
-
 <div class="content-card">
 <div class="comparison-table-wrapper">
 <table class="comparison-table">
@@ -1004,7 +1052,6 @@ int main() {
 </table>
 </div>
 <p><small>* Iterative Binary Search uses O(1) auxiliary space; recursive implementation uses O(log n) stack space.</small></p>
-
 <div class="tip-box">
 <strong>Quick Interview Rule:</strong>
 Unsorted data → Linear Search | Sorted data → Binary Search |
@@ -1014,14 +1061,12 @@ Ordered linked structure → Skip List.
 </div>
 </div>
 </section>
-
 <section class="content-section" id="interview-section">
 <div class="section-heading">
 <span class="section-label">INTERVIEW PREPARATION</span>
 <h2>📝 Important Interview Points</h2>
 <p>Key facts to remember before solving searching problems.</p>
 </div>
-
 <div class="content-card">
 <ul>
 <li>Binary Search requires sorted data.</li>
@@ -1038,7 +1083,6 @@ Ordered linked structure → Skip List.
 <li>For duplicate arrays, interviewers may ask for first occurrence, last occurrence, or count of occurrences.</li>
 </ul>
 </div>
-
 <div class="content-card">
 <span class="section-label">INTERVIEW TIPS</span>
 <h2>💡 Interview Tips</h2>
@@ -1051,7 +1095,6 @@ Ordered linked structure → Skip List.
 <li>Explain why the complexity is logarithmic instead of simply stating O(log n).</li>
 </ol>
 </div>
-
 <div class="content-card">
 <span class="section-label">COMMON QUESTIONS</span>
 <h2>❓ Common Interview Questions</h2>
@@ -1068,232 +1111,811 @@ Ordered linked structure → Skip List.
 <li>How do duplicate values affect Rotated Binary Search?</li>
 </ol>
 </div>
-
 <div class="content-card">
 <span class="section-label">PRACTICE</span>
 <h2>🎯 20 Practice Problems</h2>
 <p>Try each problem yourself first. Use <strong>Hint</strong> when you are stuck, then use <strong>Show Program</strong> to view the complete C solution.</p>
-
 <div class="practice-item">
 <strong>1. Find an element using Linear Search</strong>
 <p>Given an array and a target, print its index or -1.</p>
 <p><strong>Input:</strong> n, n integers, target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h1')">Hint</button><button class="program-toggle" onclick="toggleProgram('p1')">Show Program</button></div>
-<div id="h1" class="hint">Scan from index 0 to n-1 and stop when the target is found.</div>
-<div id="p1" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t,pos=-1;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);for(int i=0;i&lt;n;i++)if(a[i]==t){pos=i;break;}printf("%d\n",pos);return 0;}</code></pre>
+<div class="hint" id="h1">Scan from index 0 to n-1 and stop when the target is found.</div>
+<div class="program-content" id="p1"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t, pos = -1;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    for (int i = 0; i &lt; n; i++) {
+        if (a[i] == t) {
+            pos = i;
+            break;
+        }
+    }
+
+    printf("%d\n", pos);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>5
 4 8 2 9 6
 9</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div>
 </div>
-
 <div class="practice-item"><strong>2. Count occurrences of a target</strong><p>Count how many times a value occurs in an array.</p>
 <p><strong>Input:</strong> n, array, target</p><p><strong>Output:</strong> count</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h2')">Hint</button><button class="program-toggle" onclick="toggleProgram('p2')">Show Program</button></div>
-<div id="h2" class="hint">Increment a counter every time a[i] equals target.</div>
-<div id="p2" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t,c=0;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);for(int i=0;i&lt;n;i++)if(a[i]==t)c++;printf("%d\n",c);return 0;}</code></pre>
+<div class="hint" id="h2">Increment a counter every time a[i] equals target.</div>
+<div class="program-content" id="p2"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t, c = 0;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    for (int i = 0; i &lt; n; i++)
+        if (a[i] == t)
+            c++;
+
+    printf("%d\n", c);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>7
 2 4 2 7 2 8 2
 2</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>4</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>3. Find first occurrence</strong><p>Find the first index of a target.</p>
 <p><strong>Input:</strong> n, array, target</p><p><strong>Output:</strong> first index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h3')">Hint</button><button class="program-toggle" onclick="toggleProgram('p3')">Show Program</button></div>
-<div id="h3" class="hint">Scan from left to right and stop at the first match.</div>
-<div id="p3" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t,pos=-1;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);for(int i=0;i&lt;n;i++)if(a[i]==t){pos=i;break;}printf("%d\n",pos);return 0;}</code></pre>
+<div class="hint" id="h3">Scan from left to right and stop at the first match.</div>
+<div class="program-content" id="p3"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t, pos = -1;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    for (int i = 0; i &lt; n; i++) {
+        if (a[i] == t) {
+            pos = i;
+            break;
+        }
+    }
+
+    printf("%d\n", pos);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
 5 3 8 3 9 3
 3</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>1</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>4. Find last occurrence</strong><p>Find the last index of a target.</p>
 <p><strong>Input:</strong> n, array, target</p><p><strong>Output:</strong> last index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h4')">Hint</button><button class="program-toggle" onclick="toggleProgram('p4')">Show Program</button></div>
-<div id="h4" class="hint">Do not stop at the first match. Update the position every time the target is found.</div>
-<div id="p4" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t,pos=-1;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);for(int i=0;i&lt;n;i++)if(a[i]==t)pos=i;printf("%d\n",pos);return 0;}</code></pre>
+<div class="hint" id="h4">Do not stop at the first match. Update the position every time the target is found.</div>
+<div class="program-content" id="p4"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t, pos = -1;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    for (int i = 0; i &lt; n; i++)
+        if (a[i] == t)
+            pos = i;
+
+    printf("%d\n", pos);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
 5 3 8 3 9 3
 3</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>5</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>5. Binary Search — iterative</strong><p>Search for a target in a sorted array using iteration.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h5')">Hint</button><button class="program-toggle" onclick="toggleProgram('p5')">Show Program</button></div>
-<div id="h5" class="hint">Maintain low and high and compare the target with the middle element.</div>
-<div id="p5" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t,lo,hi,mid,pos=-1;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);lo=0;hi=n-1;while(lo&lt;=hi){mid=lo+(hi-lo)/2;if(a[mid]==t){pos=mid;break;}if(a[mid]&lt;t)lo=mid+1;else hi=mid-1;}printf("%d\n",pos);return 0;}</code></pre>
+<div class="hint" id="h5">Maintain low and high and compare the target with the middle element.</div>
+<div class="program-content" id="p5"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t, lo, hi, mid, pos = -1;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    lo = 0;
+    hi = n - 1;
+
+    while (lo &lt;= hi) {
+        mid = lo + (hi - lo) / 2;
+
+        if (a[mid] == t) {
+            pos = mid;
+            break;
+        }
+
+        if (a[mid] &lt; t)
+            lo = mid + 1;
+        else
+            hi = mid - 1;
+    }
+
+    printf("%d\n", pos);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>5
 10 20 30 40 50
 40</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>6. Binary Search — recursive</strong><p>Implement Binary Search using recursion.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h6')">Hint</button><button class="program-toggle" onclick="toggleProgram('p6')">Show Program</button></div>
-<div id="h6" class="hint">Create a recursive function with low and high parameters.</div>
-<div id="p6" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int bs(int a[],int l,int h,int t){if(l&gt;h)return -1;int m=l+(h-l)/2;if(a[m]==t)return m;if(t&lt;a[m])return bs(a,l,m-1,t);return bs(a,m+1,h,t);}
-int main(){int n,t;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);printf("%d\n",bs(a,0,n-1,t));return 0;}</code></pre>
+<div class="hint" id="h6">Create a recursive function with low and high parameters.</div>
+<div class="program-content" id="p6"><pre><code>#include &lt;stdio.h&gt;
+
+int bs(int a[], int l, int h, int t) {
+    if (l &gt; h)
+        return -1;
+
+    int m = l + (h - l) / 2;
+
+    if (a[m] == t)
+        return m;
+
+    if (t &lt; a[m])
+        return bs(a, l, m - 1, t);
+
+    return bs(a, m + 1, h, t);
+}
+
+int main() {
+    int n, t;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    printf("%d\n", bs(a, 0, n - 1, t));
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
 2 5 8 11 14 19
 14</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>4</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>7. First occurrence in sorted array</strong><p>Find the first occurrence of a duplicate target using Binary Search.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> first index</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h7')">Hint</button><button class="program-toggle" onclick="toggleProgram('p7')">Show Program</button></div>
-<div id="h7" class="hint">When target is found, store mid and continue searching the left half.</div>
-<div id="p7" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t,l=0,h,pos=-1;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);h=n-1;while(l&lt;=h){int m=l+(h-l)/2;if(a[m]==t){pos=m;h=m-1;}else if(a[m]&lt;t)l=m+1;else h=m-1;}printf("%d\n",pos);return 0;}</code></pre>
+<div class="hint" id="h7">When target is found, store mid and continue searching the left half.</div>
+<div class="program-content" id="p7"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t, l = 0, h, pos = -1;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    h = n - 1;
+
+    while (l &lt;= h) {
+        int m = l + (h - l) / 2;
+
+        if (a[m] == t) {
+            pos = m;
+            h = m - 1;
+        } else if (a[m] &lt; t) {
+            l = m + 1;
+        } else {
+            h = m - 1;
+        }
+    }
+
+    printf("%d\n", pos);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>7
 2 4 4 4 7 9 12
 4</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>1</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>8. Last occurrence in sorted array</strong><p>Find the last occurrence of a target using Binary Search.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> last index</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h8')">Hint</button><button class="program-toggle" onclick="toggleProgram('p8')">Show Program</button></div>
-<div id="h8" class="hint">When target is found, store mid and continue searching the right half.</div>
-<div id="p8" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t,l=0,h,pos=-1;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);h=n-1;while(l&lt;=h){int m=l+(h-l)/2;if(a[m]==t){pos=m;l=m+1;}else if(a[m]&lt;t)l=m+1;else h=m-1;}printf("%d\n",pos);return 0;}</code></pre>
+<div class="hint" id="h8">When target is found, store mid and continue searching the right half.</div>
+<div class="program-content" id="p8"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t, l = 0, h, pos = -1;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    h = n - 1;
+
+    while (l &lt;= h) {
+        int m = l + (h - l) / 2;
+
+        if (a[m] == t) {
+            pos = m;
+            l = m + 1;
+        } else if (a[m] &lt; t) {
+            l = m + 1;
+        } else {
+            h = m - 1;
+        }
+    }
+
+    printf("%d\n", pos);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>7
 2 4 4 4 7 9 12
 4</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>9. Count occurrences in sorted array</strong><p>Find how many times a target occurs.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> count</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h9')">Hint</button><button class="program-toggle" onclick="toggleProgram('p9')">Show Program</button></div>
-<div id="h9" class="hint">Find first and last occurrence; count = last - first + 1.</div>
-<div id="p9" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int first(int a[],int n,int t){int l=0,h=n-1,p=-1;while(l&lt;=h){int m=l+(h-l)/2;if(a[m]==t){p=m;h=m-1;}else if(a[m]&lt;t)l=m+1;else h=m-1;}return p;}
-int last(int a[],int n,int t){int l=0,h=n-1,p=-1;while(l&lt;=h){int m=l+(h-l)/2;if(a[m]==t){p=m;l=m+1;}else if(a[m]&lt;t)l=m+1;else h=m-1;}return p;}
-int main(){int n,t;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);int f=first(a,n,t),l=last(a,n,t);printf("%d\n",f==-1?0:l-f+1);return 0;}</code></pre>
+<div class="hint" id="h9">Find first and last occurrence; count = last - first + 1.</div>
+<div class="program-content" id="p9"><pre><code>#include &lt;stdio.h&gt;
+
+int first(int a[], int n, int t) {
+    int l = 0, h = n - 1, p = -1;
+
+    while (l &lt;= h) {
+        int m = l + (h - l) / 2;
+
+        if (a[m] == t) {
+            p = m;
+            h = m - 1;
+        } else if (a[m] &lt; t) {
+            l = m + 1;
+        } else {
+            h = m - 1;
+        }
+    }
+
+    return p;
+}
+
+int last(int a[], int n, int t) {
+    int l = 0, h = n - 1, p = -1;
+
+    while (l &lt;= h) {
+        int m = l + (h - l) / 2;
+
+        if (a[m] == t) {
+            p = m;
+            l = m + 1;
+        } else if (a[m] &lt; t) {
+            l = m + 1;
+        } else {
+            h = m - 1;
+        }
+    }
+
+    return p;
+}
+
+int main() {
+    int n, t;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    int f = first(a, n, t), l = last(a, n, t);
+
+    printf("%d\n", f == -1 ? 0 : l - f + 1);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>8
 1 2 2 2 3 4 4 7
 2</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>10. Search in rotated sorted array</strong><p>Search a target in a rotated sorted array.</p>
 <p><strong>Input:</strong> rotated sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h10')">Hint</button><button class="program-toggle" onclick="toggleProgram('p10')">Show Program</button></div>
-<div id="h10" class="hint">At every step, identify which half is sorted.</div>
-<div id="p10" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t,l=0,h,pos=-1;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);h=n-1;while(l&lt;=h){int m=l+(h-l)/2;if(a[m]==t){pos=m;break;}if(a[l]&lt;=a[m]){if(a[l]&lt;=t&amp;&amp;t&lt;a[m])h=m-1;else l=m+1;}else{if(a[m]&lt;t&amp;&amp;t&lt;=a[h])l=m+1;else h=m-1;}}printf("%d\n",pos);return 0;}</code></pre>
+<div class="hint" id="h10">At every step, identify which half is sorted.</div>
+<div class="program-content" id="p10"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t, l = 0, h, pos = -1;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    h = n - 1;
+
+    while (l &lt;= h) {
+        int m = l + (h - l) / 2;
+
+        if (a[m] == t) {
+            pos = m;
+            break;
+        }
+
+        if (a[l] &lt;= a[m]) {
+            if (a[l] &lt;= t &amp;&amp; t &lt; a[m])
+                h = m - 1;
+            else
+                l = m + 1;
+        } else {
+            if (a[m] &lt; t &amp;&amp; t &lt;= a[h])
+                l = m + 1;
+            else
+                h = m - 1;
+        }
+    }
+
+    printf("%d\n", pos);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>7
 8 9 10 2 3 5 6
 5</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>5</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>11. Jump Search</strong><p>Search a sorted array using Jump Search.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h11')">Hint</button><button class="program-toggle" onclick="toggleProgram('p11')">Show Program</button></div>
-<div id="h11" class="hint">Jump √n positions until you cross the target, then linearly scan that block.</div>
-<div id="p11" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t,step=1,prev=0,pos=-1;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);while(step*step&lt;n)step++;int next=step;while(prev&lt;n&amp;&amp;a[(next&lt;n?next:n)-1]&lt;t){prev=next;next+=step;if(prev&gt;=n)break;}while(prev&lt;n&amp;&amp;prev&lt;next){if(a[prev]==t){pos=prev;break;}if(a[prev]&gt;t)break;prev++;}printf("%d\n",pos);return 0;}</code></pre>
+<div class="hint" id="h11">Jump √n positions until you cross the target, then linearly scan that block.</div>
+<div class="program-content" id="p11"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t, step = 1, prev = 0, pos = -1;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    while (step * step &lt; n)
+        step++;
+
+    int next = step;
+
+    while (prev &lt; n &amp;&amp; a[(next &lt; n ? next : n) - 1] &lt; t) {
+        prev = next;
+        next += step;
+
+        if (prev &gt;= n)
+            break;
+    }
+
+    while (prev &lt; n &amp;&amp; prev &lt; next) {
+        if (a[prev] == t) {
+            pos = prev;
+            break;
+        }
+
+        if (a[prev] &gt; t)
+            break;
+
+        prev++;
+    }
+
+    printf("%d\n", pos);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>9
 1 4 7 10 13 16 19 22 25
 19</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>6</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>12. Interpolation Search</strong><p>Search uniformly distributed sorted data using interpolation.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h12')">Hint</button><button class="program-toggle" onclick="toggleProgram('p12')">Show Program</button></div>
-<div id="h12" class="hint">Estimate the position using the values at low and high.</div>
-<div id="p12" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t,l=0,h,pos=-1;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);h=n-1;while(l&lt;=h&amp;&amp;t&gt;=a[l]&amp;&amp;t&lt;=a[h]){if(a[l]==a[h]){if(a[l]==t)pos=l;break;}int p=l+(int)((long long)(t-a[l])*(h-l)/(a[h]-a[l]));if(a[p]==t){pos=p;break;}if(a[p]&lt;t)l=p+1;else h=p-1;}printf("%d\n",pos);return 0;}</code></pre>
+<div class="hint" id="h12">Estimate the position using the values at low and high.</div>
+<div class="program-content" id="p12"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t, l = 0, h, pos = -1;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    h = n - 1;
+
+    while (l &lt;= h &amp;&amp; t &gt;= a[l] &amp;&amp; t &lt;= a[h]) {
+        if (a[l] == a[h]) {
+            if (a[l] == t)
+                pos = l;
+            break;
+        }
+
+        int p = l + (int)((long long)(t - a[l]) * (h - l) / (a[h] - a[l]));
+
+        if (a[p] == t) {
+            pos = p;
+            break;
+        }
+
+        if (a[p] &lt; t)
+            l = p + 1;
+        else
+            h = p - 1;
+    }
+
+    printf("%d\n", pos);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>10
 10 20 30 40 50 60 70 80 90 100
 90</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>8</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>13. Fibonacci Search</strong><p>Search a sorted array using Fibonacci partitions.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h13')">Hint</button><button class="program-toggle" onclick="toggleProgram('p13')">Show Program</button></div>
-<div id="h13" class="hint">Generate Fibonacci numbers until the largest one is at least n, then use the Fibonacci offsets to probe.</div>
-<div id="p13" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);int f2=0,f1=1,f=f1+f2;while(f&lt;n){f2=f1;f1=f;f=f1+f2;}int off=-1,pos=-1;while(f&gt;1){int i=off+f2;if(i&gt;=n)i=n-1;if(a[i]&lt;t){f=f1;f1=f2;f2=f-f1;off=i;}else if(a[i]&gt;t){f=f2;f1=f1-f2;f2=f-f1;}else{pos=i;break;}}if(pos==-1&amp;&amp;f1&amp;&amp;off+1&lt;n&amp;&amp;a[off+1]==t)pos=off+1;printf("%d\n",pos);return 0;}</code></pre>
+<div class="hint" id="h13">Generate Fibonacci numbers until the largest one is at least n, then use the Fibonacci offsets to probe.</div>
+<div class="program-content" id="p13"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    int f2 = 0, f1 = 1, f = f1 + f2;
+
+    while (f &lt; n) {
+        f2 = f1;
+        f1 = f;
+        f = f1 + f2;
+    }
+
+    int off = -1, pos = -1;
+
+    while (f &gt; 1) {
+        int i = off + f2;
+
+        if (i &gt;= n)
+            i = n - 1;
+
+        if (a[i] &lt; t) {
+            f = f1;
+            f1 = f2;
+            f2 = f - f1;
+            off = i;
+        } else if (a[i] &gt; t) {
+            f = f2;
+            f1 = f1 - f2;
+            f2 = f - f1;
+        } else {
+            pos = i;
+            break;
+        }
+    }
+
+    if (pos == -1 &amp;&amp; f1 &amp;&amp; off + 1 &lt; n &amp;&amp; a[off + 1] == t)
+        pos = off + 1;
+
+    printf("%d\n", pos);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>8
 5 10 15 20 25 30 35 40
 30</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>5</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>14. Lower Bound</strong><p>Find the first index whose value is greater than or equal to the target.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> lower-bound index</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h14')">Hint</button><button class="program-toggle" onclick="toggleProgram('p14')">Show Program</button></div>
-<div id="h14" class="hint">If a[mid] is at least target, store mid and move left.</div>
-<div id="p14" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t,l=0,h,pos;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);h=n;pos=n;while(l&lt;h){int m=l+(h-l)/2;if(a[m]&gt;=t){pos=m;h=m;}else l=m+1;}printf("%d\n",pos);return 0;}</code></pre>
+<div class="hint" id="h14">If a[mid] is at least target, store mid and move left.</div>
+<div class="program-content" id="p14"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t, l = 0, h, pos;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    h = n;
+    pos = n;
+
+    while (l &lt; h) {
+        int m = l + (h - l) / 2;
+
+        if (a[m] &gt;= t) {
+            pos = m;
+            h = m;
+        } else {
+            l = m + 1;
+        }
+    }
+
+    printf("%d\n", pos);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
 2 4 7 9 12 15
 8</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>15. Upper Bound</strong><p>Find the first index whose value is greater than the target.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> upper-bound index</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h15')">Hint</button><button class="program-toggle" onclick="toggleProgram('p15')">Show Program</button></div>
-<div id="h15" class="hint">If a[mid] is greater than target, store mid and move left; otherwise move right.</div>
-<div id="p15" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t,l=0,h,pos;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);h=n;pos=n;while(l&lt;h){int m=l+(h-l)/2;if(a[m]&gt;t){pos=m;h=m;}else l=m+1;}printf("%d\n",pos);return 0;}</code></pre>
+<div class="hint" id="h15">If a[mid] is greater than target, store mid and move left; otherwise move right.</div>
+<div class="program-content" id="p15"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t, l = 0, h, pos;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    h = n;
+    pos = n;
+
+    while (l &lt; h) {
+        int m = l + (h - l) / 2;
+
+        if (a[m] &gt; t) {
+            pos = m;
+            h = m;
+        } else {
+            l = m + 1;
+        }
+    }
+
+    printf("%d\n", pos);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
 2 4 7 9 12 15
 9</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>4</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>16. Search insertion position</strong><p>Find the position where a target should be inserted in sorted order.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> insertion index</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h16')">Hint</button><button class="program-toggle" onclick="toggleProgram('p16')">Show Program</button></div>
-<div id="h16" class="hint">The insertion position is the lower bound of the target.</div>
-<div id="p16" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t,l=0,h;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);h=n;while(l&lt;h){int m=l+(h-l)/2;if(a[m]&lt;t)l=m+1;else h=m;}printf("%d\n",l);return 0;}</code></pre>
+<div class="hint" id="h16">The insertion position is the lower bound of the target.</div>
+<div class="program-content" id="p16"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t, l = 0, h;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    h = n;
+
+    while (l &lt; h) {
+        int m = l + (h - l) / 2;
+
+        if (a[m] &lt; t)
+            l = m + 1;
+        else
+            h = m;
+    }
+
+    printf("%d\n", l);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>5
 10 20 30 40 50
 35</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>17. Find peak element</strong><p>Find an index of an element that is not smaller than its neighbors.</p>
 <p><strong>Input:</strong> n and array</p><p><strong>Output:</strong> peak index</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h17')">Hint</button><button class="program-toggle" onclick="toggleProgram('p17')">Show Program</button></div>
-<div id="h17" class="hint">Compare mid with mid+1. If a[mid] is smaller, move right; otherwise move left including mid.</div>
-<div id="p17" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);int l=0,h=n-1;while(l&lt;h){int m=l+(h-l)/2;if(a[m]&lt;a[m+1])l=m+1;else h=m;}printf("%d\n",l);return 0;}</code></pre>
+<div class="hint" id="h17">Compare mid with mid+1. If a[mid] is smaller, move right; otherwise move left including mid.</div>
+<div class="program-content" id="p17"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    int l = 0, h = n - 1;
+
+    while (l &lt; h) {
+        int m = l + (h - l) / 2;
+
+        if (a[m] &lt; a[m + 1])
+            l = m + 1;
+        else
+            h = m;
+    }
+
+    printf("%d\n", l);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
 1 3 8 7 5 2</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>2</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>18. Integer square root using Binary Search</strong><p>Find floor(√x) without using a square-root library.</p>
 <p><strong>Input:</strong> non-negative integer x</p><p><strong>Output:</strong> floor square root</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h18')">Hint</button><button class="program-toggle" onclick="toggleProgram('p18')">Show Program</button></div>
-<div id="h18" class="hint">Binary-search the answer from 0 to x and keep the largest mid whose square is at most x.</div>
-<div id="p18" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){long long x;scanf("%lld",&amp;x);long long l=0,h=x,ans=0;while(l&lt;=h){long long m=l+(h-l)/2;if(m==0||m&lt;=x/m){ans=m;l=m+1;}else h=m-1;}printf("%lld\n",ans);return 0;}</code></pre>
-<div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>50</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>7</code></pre></div></div></div></div>
+<div class="hint" id="h18">Binary-search the answer from 0 to x and keep the largest mid whose square is at most x.</div>
+<div class="program-content" id="p18"><pre><code>#include &lt;stdio.h&gt;
 
+int main() {
+    long long x;
+
+    scanf("%lld", &amp;x);
+
+    long long l = 0, h = x, ans = 0;
+
+    while (l &lt;= h) {
+        long long m = l + (h - l) / 2;
+
+        if (m == 0 || m &lt;= x / m) {
+            ans = m;
+            l = m + 1;
+        } else {
+            h = m - 1;
+        }
+    }
+
+    printf("%lld\n", ans);
+    return 0;
+}</code></pre>
+<div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>50</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>7</code></pre></div></div></div></div>
 <div class="practice-item"><strong>19. Search in a nearly sorted array</strong><p>Each element may be at its correct position or one position away. Find the target.</p>
 <p><strong>Input:</strong> nearly sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h19')">Hint</button><button class="program-toggle" onclick="toggleProgram('p19')">Show Program</button></div>
-<div id="h19" class="hint">Check mid, mid-1, and mid+1 before moving the search range.</div>
-<div id="p19" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n,t;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);scanf("%d",&amp;t);int l=0,h=n-1,pos=-1;while(l&lt;=h){int m=l+(h-l)/2;if(a[m]==t){pos=m;break;}if(m-1&gt;=l&amp;&amp;a[m-1]==t){pos=m-1;break;}if(m+1&lt;=h&amp;&amp;a[m+1]==t){pos=m+1;break;}if(t&lt;a[m])h=m-2;else l=m+2;}printf("%d\n",pos);return 0;}</code></pre>
+<div class="hint" id="h19">Check mid, mid-1, and mid+1 before moving the search range.</div>
+<div class="program-content" id="p19"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;t);
+
+    int l = 0, h = n - 1, pos = -1;
+
+    while (l &lt;= h) {
+        int m = l + (h - l) / 2;
+
+        if (a[m] == t) {
+            pos = m;
+            break;
+        }
+
+        if (m - 1 &gt;= l &amp;&amp; a[m - 1] == t) {
+            pos = m - 1;
+            break;
+        }
+
+        if (m + 1 &lt;= h &amp;&amp; a[m + 1] == t) {
+            pos = m + 1;
+            break;
+        }
+
+        if (t &lt; a[m])
+            h = m - 2;
+        else
+            l = m + 2;
+    }
+
+    printf("%d\n", pos);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
 10 20 30 25 40 50
 25</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div></div>
-
 <div class="practice-item"><strong>20. Find minimum in rotated sorted array</strong><p>Find the minimum element in a rotated sorted array.</p>
 <p><strong>Input:</strong> rotated sorted array</p><p><strong>Output:</strong> minimum value</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h20')">Hint</button><button class="program-toggle" onclick="toggleProgram('p20')">Show Program</button></div>
-<div id="h20" class="hint">Compare a[mid] with a[high]. If a[mid] is greater, the minimum lies to the right; otherwise it lies at mid or to the left.</div>
-<div id="p20" class="program-content"><pre><code>#include &lt;stdio.h&gt;
-int main(){int n;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&amp;a[i]);int l=0,h=n-1;while(l&lt;h){int m=l+(h-l)/2;if(a[m]&gt;a[h])l=m+1;else h=m;}printf("%d\n",a[l]);return 0;}</code></pre>
+<div class="hint" id="h20">Compare a[mid] with a[high]. If a[mid] is greater, the minimum lies to the right; otherwise it lies at mid or to the left.</div>
+<div class="program-content" id="p20"><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    int l = 0, h = n - 1;
+
+    while (l &lt; h) {
+        int m = l + (h - l) / 2;
+
+        if (a[m] &gt; a[h])
+            l = m + 1;
+        else
+            h = m;
+    }
+
+    printf("%d\n", a[l]);
+    return 0;
+}</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>7
 15 18 2 3 6 12 13</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>2</code></pre></div></div></div></div>
-
 </div>
 </section>
-
-<div class="nav-topic">
-    <a href="index.html" class="primary-button">
-        ← Previous Topic
-    </a>
-    <div>
-        <span class="nav-label">Next Topic</span>
-        <strong>🔄 Sorting</strong>
-        <br>
-        <a href="sorting.html">Continue to Sorting →</a>
-    </div>
-</div>
-
+<div class="topic-navigation"><div class="topic-nav-side previous"><a class="primary-button" href="index.html">← Previous Topic</a></div><div class="topic-nav-side next"><span class="nav-label">Next Topic</span><strong class="nav-topic-name">🔄 Sorting</strong><a class="primary-button" href="sorting.html">Continue to Sorting →</a></div></div>
 </main>
 </div>
-
 <footer class="footer">
 <div class="footer-container">
 <div class="footer-brand-section">
@@ -1303,34 +1925,29 @@ int main(){int n;scanf("%d",&amp;n);int a[n];for(int i=0;i&lt;n;i++)scanf("%d",&
 <p class="footer-tagline">From Learning to Limitless Possibilities.</p>
 <p class="footer-description">Learn, practice, build and grow with structured learning resources.</p>
 </div>
-
 <div class="footer-column">
 <h3>Quick Links</h3>
 <a href="../index.html">Home</a>
 <a href="../Mathematics/">Maths</a>
 <a href="../C-Programming/">C Programming</a>
 </div>
-
 <div class="footer-column">
 <h3>Learning</h3>
 <a href="index.html">Data Structures &amp; DSA</a>
 <a href="../Python/">Python</a>
 <a href="../AI-ML/">AI &amp; Machine Learning</a>
 </div>
-
 <div class="footer-column">
 <h3>Practice</h3>
 <a href="#interview-section">Practice Problems</a>
 <a href="#interview-section">Problem Solving</a>
 </div>
 </div>
-
 <div class="footer-bottom">
 <p>© 2026 CodeBhavya. All Rights Reserved.</p>
 <p>From Learning to Limitless Possibilities.</p>
 </div>
 </footer>
-
 <script>
 function toggleProgram(id) {
     const element = document.getElementById(id);
@@ -1357,6 +1974,5 @@ function searchTopics() {
     });
 }
 </script>
-
 </body>
 </html>
