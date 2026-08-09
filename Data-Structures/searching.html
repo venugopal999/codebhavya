@@ -296,6 +296,121 @@
   .cb-tracer-controls{min-width:678px}
 }
 
+
+/* ===== Final CodeBhavya Tracer Presentation Tuning ===== */
+/* Use the available page width more efficiently. */
+.docs-layout{
+    column-gap:18px !important;
+}
+.main-content{
+    min-width:0 !important;
+}
+
+/* Keep the tracer compact horizontally while giving the code enough height. */
+.cb-tracer{
+    padding:10px !important;
+}
+.cb-tracer-grid{
+    gap:9px !important;
+}
+.cb-tracer-panel,
+.cb-live-array{
+    padding:9px !important;
+}
+.cb-tracer-panel pre{
+    height:340px !important;
+    max-height:340px !important;
+    overflow-y:auto !important;
+    overflow-x:auto !important;
+    scroll-behavior:auto;
+}
+
+/* Keep the active program line visible after every Next/Previous/Auto step. */
+.cb-code-line{
+    scroll-margin-block:70px;
+}
+
+/* More compact spacing around the tracer's supporting sections. */
+.cb-tracer-explain{
+    margin-bottom:7px !important;
+    padding:8px !important;
+}
+.cb-live-array{
+    margin-top:8px !important;
+}
+.cb-operation{
+    margin-top:7px !important;
+    padding:8px 10px !important;
+}
+.cb-tracer-controls{
+    margin-top:7px !important;
+}
+
+/* Numbered lists and bullets: give markers enough room and prevent border overflow. */
+.main-content ol,
+.main-content ul{
+    padding-inline-start:2rem !important;
+    margin-inline-start:0 !important;
+}
+.main-content li{
+    padding-inline-start:.2rem;
+    overflow-wrap:anywhere;
+    word-break:normal;
+}
+.main-content ol li::marker,
+.main-content ul li::marker{
+    font-weight:600;
+}
+.main-content .practice-item ol,
+.main-content .practice-item ul{
+    padding-inline-start:2rem !important;
+}
+
+/* Mobile: preserve the two-pane tracer; scroll horizontally instead of stacking. */
+@media(max-width:750px){
+    .docs-layout{
+        column-gap:10px !important;
+    }
+    .main-content{
+        min-width:0 !important;
+    }
+    .cb-tracer{
+        padding:8px !important;
+        overflow-x:auto !important;
+        overflow-y:visible;
+    }
+    .cb-tracer-grid{
+        grid-template-columns:390px 350px !important;
+        gap:8px !important;
+        min-width:748px !important;
+    }
+    .cb-tracer-panel pre{
+        height:300px !important;
+        max-height:300px !important;
+        font-size:12px !important;
+    }
+    .cb-tracer-controls{
+        min-width:748px !important;
+    }
+    .main-content ol,
+    .main-content ul{
+        padding-inline-start:1.8rem !important;
+    }
+}
+@media(max-width:450px){
+    .cb-tracer-grid{
+        grid-template-columns:380px 340px !important;
+        min-width:728px !important;
+    }
+    .cb-tracer-controls{
+        min-width:728px !important;
+    }
+    .cb-tracer-panel pre{
+        height:280px !important;
+        max-height:280px !important;
+    }
+}
+
 </style>
 </head>
 <body>
@@ -2120,6 +2235,14 @@ const cbLinearTracer = {
   render(){
     const code=document.getElementById('cbLinearCode');if(!code)return;
     code.innerHTML=cbLinearProgram.map((line,i)=>`<span class="cb-code-line ${i===this.activeLine()?'active':''}">${i===this.activeLine()?'👉 ': '   '}${this.escape(line)}</span>`).join('');
+    /* Keep the currently executing statement visible inside the code window. */
+    requestAnimationFrame(()=>{
+      const active=code.querySelector('.cb-code-line.active');
+      if(active){
+        const target=active.offsetTop - (code.clientHeight/2) + (active.offsetHeight/2);
+        code.scrollTop=Math.max(0, Math.min(target, code.scrollHeight-code.clientHeight));
+      }
+    });
     const step=this.current>0?this.steps[this.current-1]:this.steps[0];
     document.getElementById('cbLinearExplain').textContent=this.current===0?'Press Next to start executing the program.':step.explain;
     const vars={};Object.keys(this.state).forEach(k=>{if(k!=='a'&&k!=='done'&&k!=='inputIndex'&&k!=='current'&&k!=='check'&&k!=='output')vars[k]=this.state[k];});
