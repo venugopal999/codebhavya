@@ -536,6 +536,34 @@
 .trace-status { margin:0 0 10px; padding:8px 11px; border-radius:7px; background:#f0fdfa; color:#0f766e; border:1px solid #ccfbf1; font-size:12px; font-weight:700; }
 @media(max-width:600px){ .trace-auto,.trace-nav,.trace-reset{flex:1 1 22%;} .trace-array-cell{min-width:40px;} }
 
+
+/* ===== Enhanced live array tracing ===== */
+.trace-target-badge {
+    display:inline-block; margin-left:8px; padding:3px 7px; border-radius:5px;
+    background:#fff7ed; color:#c2410c; border:1px solid #fed7aa;
+    font-size:11px; font-weight:800;
+}
+.trace-array-legend {
+    display:flex; flex-wrap:wrap; gap:8px; margin:8px 0;
+    color:#64748b; font-size:10px; font-weight:700;
+}
+.trace-array-legend span { padding:2px 5px; border-radius:4px; background:#f1f5f9; }
+.trace-array-cell { position:relative; transition:transform .15s ease, background .15s ease, border-color .15s ease; }
+.trace-array-cell.current { transform:translateY(-3px); border-width:2px; }
+.trace-array-cell.low-marker { border-color:#2563eb; }
+.trace-array-cell.mid-marker { border-color:#0f766e; box-shadow:0 0 0 2px rgba(15,118,110,.16); }
+.trace-array-cell.high-marker { border-color:#dc2626; }
+.trace-array-cell.low-marker .trace-array-role { color:#2563eb; }
+.trace-array-cell.mid-marker .trace-array-role { color:#0f766e; }
+.trace-array-cell.high-marker .trace-array-role { color:#dc2626; }
+.trace-array-role { display:block; margin-top:3px; font-size:8px; font-weight:900; line-height:1.1; }
+.trace-comparison-box {
+    margin-top:8px; padding:8px 10px; border-radius:7px;
+    background:#eff6ff; border:1px solid #bfdbfe; color:#1e3a8a;
+    font-size:12px; line-height:1.5;
+}
+.trace-comparison-box span { font-weight:700; }
+
 /* Compact documentation spacing */
 .docs-layout { gap:0; }
 .sidebar { width:245px; padding:20px 12px; }
@@ -4004,21 +4032,60 @@ function renderLiveState(panel, env) {
         box.innerHTML = '<div class="live-empty">No variable value has been created yet. Press Next to begin execution.</div>';
         return;
     }
+
+    const indexRoles = {};
+    const addRole = (key, role) => {
+        const n = Number(env[key]);
+        if (Number.isInteger(n)) {
+            if (!indexRoles[n]) indexRoles[n] = [];
+            if (!indexRoles[n].includes(role)) indexRoles[n].push(role);
+        }
+    };
+    addRole('i', 'i');
+    addRole('mid', 'MID');
+    addRole('pos', 'POS');
+    addRole('index', 'INDEX');
+    addRole('currentIndex', 'CURRENT');
+    addRole('low', 'LOW');
+    addRole('high', 'HIGH');
+    addRole('offset', 'OFFSET');
+
     let html = '<div class="live-state-grid">';
+
     entries.forEach(([name, value]) => {
         if (name === 'current' || name === 'inputIndex') return;
         if (Array.isArray(value)) {
-            const active = [env.i, env.mid, env.pos, env.index, env.currentIndex].filter(v => Number.isInteger(v));
-            html += `<div class="live-variable live-array"><span class="live-variable-name">${escapeTraceHtml(name)}</span> = <div class="trace-array-visual"><div class="trace-array-cells">`;
+            html += `<div class="live-variable live-array"><span class="live-variable-name">${escapeTraceHtml(name)}</span>`;
+            if (Number.isInteger(env.target)) {
+                html += ` <span class="trace-target-badge">Target = ${escapeTraceHtml(String(env.target))}</span>`;
+            }
+            html += '<div class="trace-array-legend"><span>LOW</span><span>MID</span><span>HIGH</span><span>Current = element being checked</span></div>';
+            html += '<div class="trace-array-visual"><div class="trace-array-cells">';
             value.forEach((v, i) => {
-                const cls = active.includes(i) ? ' current' : '';
-                html += `<div class="trace-array-cell${cls}"><span class="trace-array-index">[${i}]</span><span class="trace-array-value">${escapeTraceHtml(String(v))}</span></div>`;
+                const roles = indexRoles[i] || [];
+                const current = roles.includes('i') || roles.includes('MID') || roles.includes('POS') || roles.includes('INDEX') || roles.includes('CURRENT');
+                const classes = ['trace-array-cell'];
+                if (current) classes.push('current');
+                if (roles.includes('LOW')) classes.push('low-marker');
+                if (roles.includes('MID')) classes.push('mid-marker');
+                if (roles.includes('HIGH')) classes.push('high-marker');
+                const labels = roles.filter(r => ['LOW','MID','HIGH','POS','INDEX','CURRENT','i'].includes(r));
+                html += `<div class="${classes.join(' ')}">` +
+                        `<span class="trace-array-index">[${i}]</span>` +
+                        `<span class="trace-array-value">${escapeTraceHtml(String(v))}</span>` +
+                        (labels.length ? `<span class="trace-array-role">${escapeTraceHtml(labels.join(' • '))}</span>` : '') +
+                        '</div>';
             });
             html += '</div></div></div>';
         } else {
             html += `<div class="live-variable"><span class="live-variable-name">${escapeTraceHtml(name)}</span> = <span class="live-variable-value">${escapeTraceHtml(String(value === undefined ? '—' : value))}</span></div>`;
         }
     });
+
+    if (env.current !== undefined) {
+        html += `<div class="trace-comparison-box"><strong>🔎 Current comparison:</strong> ${escapeTraceHtml(String(env.current))}` +
+                (env.target !== undefined ? ` <span>vs target ${escapeTraceHtml(String(env.target))}</span>` : '') + '</div>';
+    }
     html += '</div>';
     box.innerHTML = html;
 }
