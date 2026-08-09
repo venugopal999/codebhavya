@@ -522,6 +522,29 @@
     .trace-controls { justify-content: stretch; }
     .trace-nav, .trace-reset { flex: 1 1 30%; }
 }
+
+/* ===== Improved execution tracer ===== */
+.trace-auto { background:#0f766e; color:#fff; border:0; border-radius:7px; padding:9px 16px; cursor:pointer; font-weight:700; }
+.trace-auto:hover { background:#115e59; }
+.trace-auto:disabled { opacity:.45; cursor:not-allowed; }
+.trace-array-visual { margin-top:8px; overflow-x:auto; }
+.trace-array-cells { display:flex; gap:5px; min-width:max-content; }
+.trace-array-cell { min-width:44px; padding:7px 5px; text-align:center; background:#fff; border:1px solid #cbd5e1; border-radius:6px; font-family:Consolas,"Courier New",monospace; font-weight:700; }
+.trace-array-cell.current { background:#dff7f3; border-color:#0f766e; box-shadow:0 0 0 2px rgba(15,118,110,.12); }
+.trace-array-index { display:block; color:#64748b; font-size:10px; font-weight:600; margin-bottom:2px; }
+.trace-array-value { display:block; color:#0f172a; font-size:13px; }
+.trace-status { margin:0 0 10px; padding:8px 11px; border-radius:7px; background:#f0fdfa; color:#0f766e; border:1px solid #ccfbf1; font-size:12px; font-weight:700; }
+@media(max-width:600px){ .trace-auto,.trace-nav,.trace-reset{flex:1 1 22%;} .trace-array-cell{min-width:40px;} }
+
+/* Compact documentation spacing */
+.docs-layout { gap:0; }
+.sidebar { width:245px; padding:20px 12px; }
+.main-content { max-width:1100px; padding:28px 28px; }
+.content-section { margin:26px 0; }
+.content-card { padding:24px; margin-bottom:20px; }
+.trace-panel { margin:10px 0 14px; padding:12px; }
+.trace-workspace { gap:10px; }
+@media(max-width:768px){ .sidebar{padding:16px 12px;} .main-content{padding:18px 16px;} .content-card{padding:20px;} }
 </style>
 </head>
 <body>
@@ -647,211 +670,8 @@ int main() {
 <div class="io-box"><h4>Sample Input</h4><pre><code>5
 12 7 25 9 18
 25</code></pre></div>
-<div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 2</code></pre></div></div>
-
-
-<!-- ==============================
-     LINEAR SEARCH PROGRAM TRACER
-================================= -->
-
-<div class="program-tracer">
-
-    <button class="tracer-toggle"
-            onclick="toggleTracer('linearTracer')">
-        🔬 Program Tracing
-    </button>
-
-    <div id="linearTracer" class="tracer-container">
-
-        <div class="tracer-header">
-            <div>
-                <span class="section-label">PROGRAM EXECUTION</span>
-                <h3>🔬 Linear Search Tracer</h3>
-                <p>
-                    Follow the program step by step and watch
-                    the variables change during execution.
-                </p>
-            </div>
-        </div>
-
-
-        <!-- TRACER MAIN AREA -->
-
-        <div class="tracer-grid">
-
-
-            <!-- LEFT: PROGRAM -->
-
-            <div class="tracer-panel">
-
-                <h4>💻 C Program</h4>
-
-                <div class="tracer-code" id="linearCode">
-
-                    <div data-line="1">#include &lt;stdio.h&gt;</div>
-                    <div data-line="2"></div>
-                    <div data-line="3">int main() {</div>
-                    <div data-line="4">    int n, target;</div>
-                    <div data-line="5">    scanf("%d", &amp;n);</div>
-                    <div data-line="6">    int arr[n];</div>
-                    <div data-line="7"></div>
-                    <div data-line="8">    for(int i = 0; i &lt; n; i++)</div>
-                    <div data-line="9">        scanf("%d", &amp;arr[i]);</div>
-                    <div data-line="10"></div>
-                    <div data-line="11">    scanf("%d", &amp;target);</div>
-                    <div data-line="12"></div>
-                    <div data-line="13">    for(int i = 0; i &lt; n; i++) {</div>
-                    <div data-line="14">        if(arr[i] == target) {</div>
-                    <div data-line="15">            printf("Element found at index %d", i);</div>
-                    <div data-line="16">            return 0;</div>
-                    <div data-line="17">        }</div>
-                    <div data-line="18">    }</div>
-                    <div data-line="19"></div>
-                    <div data-line="20">    printf("Element not found");</div>
-                    <div data-line="21"></div>
-                    <div data-line="22">    return 0;</div>
-                    <div data-line="23">}</div>
-
-                </div>
-
-            </div>
-
-
-            <!-- RIGHT: EXPLANATION -->
-
-            <div class="tracer-panel">
-
-                <h4>🧠 Current Execution</h4>
-
-                <div id="linearExplanation"
-                     class="tracer-explanation">
-
-                    <strong>Ready to Start</strong>
-
-                    <p>
-                        Click <b>Next</b> to begin executing
-                        the Linear Search program step by step.
-                    </p>
-
-                </div>
-
-
-                <!-- VARIABLES -->
-
-                <h4>📦 Live Variables</h4>
-
-                <div class="variable-table">
-
-                    <div class="variable-row">
-                        <span>n</span>
-                        <strong id="linearN">—</strong>
-                    </div>
-
-                    <div class="variable-row">
-                        <span>target</span>
-                        <strong id="linearTarget">—</strong>
-                    </div>
-
-                    <div class="variable-row">
-                        <span>i</span>
-                        <strong id="linearI">—</strong>
-                    </div>
-
-                    <div class="variable-row">
-                        <span>arr[i]</span>
-                        <strong id="linearCurrent">—</strong>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- ARRAY VISUALIZATION -->
-
-        <div class="tracer-panel">
-
-            <h4>📊 Array Visualization</h4>
-
-            <div id="linearArray"
-                 class="tracer-array">
-
-                <span class="tracer-empty">
-                    Array will appear here during execution.
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <!-- OUTPUT -->
-
-        <div class="tracer-panel">
-
-            <h4>🖥️ Program Output</h4>
-
-            <div id="linearOutput"
-                 class="tracer-output">
-
-                <span>Waiting for execution...</span>
-
-            </div>
-
-        </div>
-
-
-        <!-- CONTROLS -->
-
-        <div class="tracer-controls">
-
-            <button onclick="linearPreviousStep()"
-                    class="secondary-tracer-button">
-                ◀ Previous
-            </button>
-
-            <button onclick="linearNextStep()"
-                    class="primary-tracer-button">
-                ▶ Next
-            </button>
-
-            <button onclick="linearAutoRun()"
-                    class="primary-tracer-button">
-                ▶▶ Auto Run
-            </button>
-
-            <button onclick="linearReset()"
-                    class="secondary-tracer-button">
-                ↻ Reset
-            </button>
-
-        </div>
-
-
-        <div class="tracer-step-counter">
-            Step <span id="linearStep">0</span>
-            of <span id="linearTotalSteps">0</span>
-        </div>
-
-    </div>
-
-</div>
-
-
-
-
-
-
-
-    
-
-
-
-
-    
-<!-- </div><button class="trace-launcher" onclick='toggleTrace("trace1")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace1">
+<div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 2</code></pre></div>
+</div><button class="trace-launcher" onclick='toggleTrace("trace1")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace1">
 <div class="trace-header">
 <div>
 <span class="trace-label">PROGRAM TRACING</span>
@@ -883,9 +703,10 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
-</div>   -->
+</div>
 <p><strong>Input explanation:</strong> First enter the number of elements, then the elements, followed by the target.</p>
 </div>
 </div>
@@ -998,6 +819,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div>
@@ -1091,6 +913,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div>
@@ -1214,6 +1037,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div>
@@ -1335,6 +1159,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div>
@@ -1462,6 +1287,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div>
@@ -1598,6 +1424,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div>
@@ -1752,6 +1579,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div>
@@ -1926,6 +1754,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div>
@@ -1989,6 +1818,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -2054,6 +1884,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -2116,6 +1947,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -2191,6 +2023,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -2264,6 +2097,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -2337,6 +2171,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -2410,6 +2245,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -2508,6 +2344,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -2589,6 +2426,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -2672,6 +2510,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -2752,6 +2591,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -2844,6 +2684,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -2916,6 +2757,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -2988,6 +2830,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -3057,6 +2900,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -3123,6 +2967,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -3185,6 +3030,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -3269,6 +3115,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -3335,6 +3182,7 @@ int main() {
 <div class="trace-controls">
 <button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-auto" onclick="traceAutoRun(this)" type="button">▶ Auto Run</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
 </div></div></div>
@@ -3375,8 +3223,7 @@ int main() {
 <p>From Learning to Limitless Possibilities.</p>
 </div>
 </footer>
-    
-<!-- <script>
+<script>
 function toggleProgram(id) {
     const element = document.getElementById(id);
     if (element) element.classList.toggle("open");
@@ -3436,7 +3283,9 @@ function initializeTrace(panel) {
     const state = {
         lines: source,
         steps,
-        index: 0
+        index: 0,
+        autoRunning: false,
+        autoTimer: null
     };
 
     traceStates.set(panel, state);
@@ -3608,8 +3457,8 @@ function simulateLinearSearch(lines, tokens) {
 
     const arrDecl = findLine(lines, /\bint\s+a\s*\[/);
     if (arrDecl >= 0) {
-        env.a = [...input.a];
-        steps.push(makeStep(arrDecl, env));
+        env.a = Array.from({length: input.n}, () => '—');
+        steps.push(makeStep(arrDecl, env, 'The array is created; its elements are not filled yet.'));
     }
 
     const inputScanfs = findLines(lines, /scanf\s*\(/);
@@ -3617,9 +3466,11 @@ function simulateLinearSearch(lines, tokens) {
         const first = inputScanfs[0];
         steps.push(makeStep(first, env, 'The program reads the array size.'));
         for (let k = 1; k < inputScanfs.length - 1; k++) {
-            env.inputIndex = k - 1;
+            const ai = k - 1;
+            env.a[ai] = input.a[ai];
+            env.inputIndex = ai;
             steps.push(makeStep(inputScanfs[k], env,
-                `The next array element is read. Current array: [${env.a.join(', ')}]`));
+                `Array element a[${ai}] receives ${input.a[ai]}.`));
         }
         if (inputScanfs.length > 1) {
             env.target = input.target;
@@ -3630,6 +3481,7 @@ function simulateLinearSearch(lines, tokens) {
     }
 
     const forLine = findLine(lines, /^for\s*\(/);
+    const incrementLine = findLine(lines, /\bi\+\+\s*;?/);
     const ifLine = findLine(lines, /if\s*\(\s*a\s*\[\s*i\s*\]\s*==\s*target/);
     const posDecl = findLine(lines, /position\s*=\s*-1/);
     if (posDecl >= 0) {
@@ -3662,6 +3514,7 @@ function simulateLinearSearch(lines, tokens) {
                 break;
             }
         }
+        if (incrementLine >= 0) steps.push(makeStep(incrementLine, env, `i increments from ${i} to ${i + 1} before the next loop iteration.`));
     }
 
     const output = findLine(lines, /printf\s*\(/, (ifLine >= 0 ? ifLine + 1 : 0));
@@ -3735,12 +3588,18 @@ function simulateIterativeBinarySearch(lines, tokens) {
 
 function simulateRecursiveBinarySearch(lines, tokens) {
     const input = readSearchInput(tokens);
-    const env = { a: [...input.a], n: input.n, target: input.target };
+    const env = { a: Array.from({length: input.n}, () => '—'), n: '—', target: undefined };
     const steps = [];
 
     const main = findLine(lines, /^int\s+main\s*\(/);
     const func = findLine(lines, /^int\s+binarySearch\s*\(/);
     if (main >= 0) steps.push(makeStep(main, env));
+    const inputScanfs = findLines(lines, /scanf\s*\(/);
+    inputScanfs.forEach((line, i) => {
+        if (i === 0) { env.n = input.n; steps.push(makeStep(line, env, `n receives ${input.n}.`)); }
+        else if (i === inputScanfs.length - 1) { env.target = input.target; steps.push(makeStep(line, env, `The target value is read: ${input.target}.`)); }
+        else { const ai = i - 1; env.a[ai] = input.a[ai]; steps.push(makeStep(line, env, `Array element a[${ai}] receives ${input.a[ai]}.`)); }
+    });
     if (func >= 0) steps.push(makeStep(func, env));
 
     const ifLine = findLine(lines, /low\s*>\s*high/);
@@ -3789,8 +3648,17 @@ function simulateRecursiveBinarySearch(lines, tokens) {
 
 function simulateRotatedSearch(lines, tokens) {
     const input = readSearchInput(tokens);
-    const env = { a: [...input.a], n: input.n, target: input.target };
+    const env = { a: Array.from({length: input.n}, () => '—'), n: '—', target: undefined };
     const steps = [];
+    env.n = input.n;
+    env.a = Array.from({length: input.n}, () => '—');
+    const inputScanfs = findLines(lines, /scanf\s*\(/);
+    inputScanfs.forEach((line, i) => {
+        if (i === 0) steps.push(makeStep(line, env, `n receives ${input.n}.`));
+        else if (i === inputScanfs.length - 1) { env.target = input.target; steps.push(makeStep(line, env, `The target value is read: ${input.target}.`)); }
+        else { const ai=i-1; env.a[ai]=input.a[ai]; steps.push(makeStep(line, env, `Array element a[${ai}] receives ${input.a[ai]}.`)); }
+    });
+
     const whileLine = findLine(lines, /while\s*\(\s*low\s*<=\s*high/);
     const midLine = findLine(lines, /\bmid\s*=/);
     const firstCheck = findLine(lines, /a\s*\[\s*low\s*\]\s*<=\s*a\s*\[\s*mid\s*\]/);
@@ -3843,8 +3711,17 @@ function simulateRotatedSearch(lines, tokens) {
 
 function simulateJumpSearch(lines, tokens) {
     const input = readSearchInput(tokens);
-    const env = { a: [...input.a], n: input.n, target: input.target };
+    const env = { a: Array.from({length: input.n}, () => '—'), n: '—', target: undefined };
     const steps = [];
+    env.n = input.n;
+    env.a = Array.from({length: input.n}, () => '—');
+    const inputScanfs = findLines(lines, /scanf\s*\(/);
+    inputScanfs.forEach((line, i) => {
+        if (i === 0) steps.push(makeStep(line, env, `n receives ${input.n}.`));
+        else if (i === inputScanfs.length - 1) { env.target = input.target; steps.push(makeStep(line, env, `The target value is read: ${input.target}.`)); }
+        else { const ai=i-1; env.a[ai]=input.a[ai]; steps.push(makeStep(line, env, `Array element a[${ai}] receives ${input.a[ai]}.`)); }
+    });
+
     const sqrtLine = findLine(lines, /sqrt\s*\(\s*n\s*\)/);
     const prevDecl = findLine(lines, /\bprev\s*=\s*0/);
     const whileLine = findLine(lines, /while\s*\(\s*a\s*\[/);
@@ -3884,8 +3761,17 @@ function simulateJumpSearch(lines, tokens) {
 
 function simulateInterpolationSearch(lines, tokens) {
     const input = readSearchInput(tokens);
-    const env = { a: [...input.a], n: input.n, target: input.target };
+    const env = { a: Array.from({length: input.n}, () => '—'), n: '—', target: undefined };
     const steps = [];
+    env.n = input.n;
+    env.a = Array.from({length: input.n}, () => '—');
+    const inputScanfs = findLines(lines, /scanf\s*\(/);
+    inputScanfs.forEach((line, i) => {
+        if (i === 0) steps.push(makeStep(line, env, `n receives ${input.n}.`));
+        else if (i === inputScanfs.length - 1) { env.target = input.target; steps.push(makeStep(line, env, `The target value is read: ${input.target}.`)); }
+        else { const ai=i-1; env.a[ai]=input.a[ai]; steps.push(makeStep(line, env, `Array element a[${ai}] receives ${input.a[ai]}.`)); }
+    });
+
     const whileLine = findLine(lines, /while\s*\(\s*low\s*<=\s*high/);
     const posLine = findLine(lines, /\bpos\s*=/);
     const match = findLine(lines, /a\s*\[\s*pos\s*\]\s*==\s*target/);
@@ -3923,8 +3809,17 @@ function simulateInterpolationSearch(lines, tokens) {
 
 function simulateFibonacciSearch(lines, tokens) {
     const input = readSearchInput(tokens);
-    const env = { a: [...input.a], n: input.n, target: input.target };
+    const env = { a: Array.from({length: input.n}, () => '—'), n: '—', target: undefined };
     const steps = [];
+    env.n = input.n;
+    env.a = Array.from({length: input.n}, () => '—');
+    const inputScanfs = findLines(lines, /scanf\s*\(/);
+    inputScanfs.forEach((line, i) => {
+        if (i === 0) steps.push(makeStep(line, env, `n receives ${input.n}.`));
+        else if (i === inputScanfs.length - 1) { env.target = input.target; steps.push(makeStep(line, env, `The target value is read: ${input.target}.`)); }
+        else { const ai=i-1; env.a[ai]=input.a[ai]; steps.push(makeStep(line, env, `Array element a[${ai}] receives ${input.a[ai]}.`)); }
+    });
+
     const fibMMm2 = findLine(lines, /fibMm2\s*=/);
     const fibMMm1 = findLine(lines, /fibMm1\s*=/);
     const fibM = findLine(lines, /fibM\s*=/);
@@ -3981,24 +3876,35 @@ function addMainAndInputs(lines, input, env, steps) {
 
     const nLine = findLine(lines, /\bint\s+n\b/);
     if (nLine >= 0) {
-        env.n = input.n;
-        steps.push(makeStep(nLine, env));
+        env.n = '—';
+        steps.push(makeStep(nLine, env, 'The variable n is declared. Its value will be supplied by input.'));
     }
 
     const arrLine = findLine(lines, /\bint\s+a\s*\[/);
     if (arrLine >= 0) {
-        env.a = [...input.a];
-        steps.push(makeStep(arrLine, env));
+        env.a = Array.from({length: input.n}, () => '—');
+        steps.push(makeStep(arrLine, env, 'The array is created. Its elements will be filled as input is read.'));
     }
 
     const scanfs = findLines(lines, /scanf\s*\(/);
     scanfs.forEach((line, i) => {
-        if (i === scanfs.length - 1) {
+        if (i === 0) {
+            env.n = input.n;
+            steps.push(makeStep(line, env, `n receives the number of elements: ${input.n}.`));
+        } else if (i === scanfs.length - 1) {
             env.target = input.target;
+            steps.push(makeStep(line, env, `The target value is read: ${input.target}.`));
+        } else {
+            const ai = i - 1;
+            if (!Array.isArray(env.a)) env.a = Array.from({length: input.n}, () => '—');
+            env.a[ai] = input.a[ai];
+            env.inputIndex = ai;
+            steps.push(makeStep(line, env, `Array element a[${ai}] receives ${input.a[ai]}.`));
         }
-        steps.push(makeStep(line, env));
     });
+    delete env.inputIndex;
 }
+
 
 function findMatchingClose(lines, openLine) {
     if (openLine < 0) return -1;
@@ -4065,8 +3971,8 @@ function renderTrace(panel) {
 
     const sourceText = state.lines[step.line] || '';
 
-    panel.querySelector('.trace-step-count').textContent =
-        `Execution Step ${state.index + 1} of ${state.steps.length}`;
+    panel.querySelector('.trace-step-count').innerHTML =
+        `<div class="trace-status">Step ${state.index + 1} of ${state.steps.length}${step.env && step.env.i !== undefined ? ` • Iteration index: ${step.env.i}` : ''}</div>`;
 
     panel.querySelector('.trace-current-line').textContent =
         sourceText.trim() || '(program block)';
@@ -4080,33 +3986,43 @@ function renderTrace(panel) {
 
     const prev = panel.querySelector('.trace-nav.previous');
     const next = panel.querySelector('.trace-nav.next');
+    const auto = panel.querySelector('.trace-auto');
 
     if (prev) prev.disabled = state.index === 0;
     if (next) next.disabled = state.index === state.steps.length - 1;
+    if (auto) {
+        auto.disabled = state.index === state.steps.length - 1;
+        if (!state.autoRunning) auto.textContent = '▶ Auto Run';
+    }
 }
 
 function renderLiveState(panel, env) {
     const box = panel.querySelector('.trace-live-state');
     if (!box) return;
-
-    const entries = Object.entries(env);
-
+    const entries = Object.entries(env || {});
     if (!entries.length) {
-        box.innerHTML = '<div class="live-empty">No variable value has been created yet. Continue to the next executable line.</div>';
+        box.innerHTML = '<div class="live-empty">No variable value has been created yet. Press Next to begin execution.</div>';
         return;
     }
-
-    box.innerHTML = '<div class="live-state-grid">' +
-        entries.map(([name, value]) => {
-            if (Array.isArray(value)) {
-                const shown = value.map(v => v === undefined ? '?' : v).join(', ');
-                return `<div class="live-variable live-array"><span class="live-variable-name">${escapeTraceHtml(name)}</span> = [<span class="live-variable-value">${escapeTraceHtml(shown)}</span>]</div>`;
-            }
-
-            return `<div class="live-variable"><span class="live-variable-name">${escapeTraceHtml(name)}</span> = <span class="live-variable-value">${escapeTraceHtml(String(value))}</span></div>`;
-        }).join('') +
-        '</div>';
+    let html = '<div class="live-state-grid">';
+    entries.forEach(([name, value]) => {
+        if (name === 'current' || name === 'inputIndex') return;
+        if (Array.isArray(value)) {
+            const active = [env.i, env.mid, env.pos, env.index, env.currentIndex].filter(v => Number.isInteger(v));
+            html += `<div class="live-variable live-array"><span class="live-variable-name">${escapeTraceHtml(name)}</span> = <div class="trace-array-visual"><div class="trace-array-cells">`;
+            value.forEach((v, i) => {
+                const cls = active.includes(i) ? ' current' : '';
+                html += `<div class="trace-array-cell${cls}"><span class="trace-array-index">[${i}]</span><span class="trace-array-value">${escapeTraceHtml(String(v))}</span></div>`;
+            });
+            html += '</div></div></div>';
+        } else {
+            html += `<div class="live-variable"><span class="live-variable-name">${escapeTraceHtml(name)}</span> = <span class="live-variable-value">${escapeTraceHtml(String(value === undefined ? '—' : value))}</span></div>`;
+        }
+    });
+    html += '</div>';
+    box.innerHTML = html;
 }
+
 
 function traceExplanation(line, index, total) {
     const t = line.trim();
@@ -4184,6 +4100,36 @@ function tracePrevious(button) {
     }
 }
 
+function traceAutoRun(button) {
+    const panel = button.closest('.trace-panel');
+    if (!panel) return;
+    if (!traceStates.has(panel)) initializeTrace(panel);
+    const state = traceStates.get(panel);
+    if (state.index >= state.steps.length - 1) return;
+
+    if (state.autoRunning) {
+        clearInterval(state.autoTimer);
+        state.autoTimer = null;
+        state.autoRunning = false;
+        button.textContent = '▶ Auto Run';
+        return;
+    }
+
+    state.autoRunning = true;
+    button.textContent = '⏸ Pause';
+    state.autoTimer = setInterval(() => {
+        if (state.index >= state.steps.length - 1) {
+            clearInterval(state.autoTimer);
+            state.autoTimer = null;
+            state.autoRunning = false;
+            renderTrace(panel);
+            return;
+        }
+        state.index++;
+        renderTrace(panel);
+    }, 750);
+}
+
 function traceReset(button) {
     const panel = button.closest('.trace-panel');
     if (!panel) return;
@@ -4191,600 +4137,15 @@ function traceReset(button) {
     if (!traceStates.has(panel)) initializeTrace(panel);
 
     const state = traceStates.get(panel);
+    if (state.autoTimer) clearInterval(state.autoTimer);
+    state.autoTimer = null;
+    state.autoRunning = false;
     state.index = 0;
     renderTrace(panel);
+    const auto = panel.querySelector('.trace-auto');
+    if (auto) { auto.disabled = false; auto.textContent = '▶ Auto Run'; }
 }
-
-</script> -->
-
-<script>
-function toggleProgram(id) {
-    const element = document.getElementById(id);
-    if (element) element.classList.toggle("open");
-}
-const linearTraceSteps = [
-
-    {
-        line: 1,
-        title: "Header File",
-        explanation:
-            "The stdio.h header file is included so the program can use input and output functions such as scanf() and printf()."
-    },
-
-    {
-        line: 3,
-        title: "main() begins",
-        explanation:
-            "Program execution begins from the main() function."
-    },
-
-    {
-        line: 4,
-        title: "Variables are declared",
-        explanation:
-            "The variables n and target are declared. n will store the number of elements and target will store the value to search."
-    },
-
-    {
-        line: 5,
-        title: "Read number of elements",
-        explanation:
-            "The program reads the number of elements from the user."
-    },
-
-    {
-        line: 6,
-        title: "Array is created",
-        explanation:
-            "An integer array is created using the value stored in n."
-    },
-
-    {
-        line: 8,
-        title: "Input loop begins",
-        explanation:
-            "The for loop starts from i = 0 and will read each array element."
-    },
-
-    {
-        line: 9,
-        title: "Read array element",
-        explanation:
-            "The current array element is read from the user."
-    },
-
-    {
-        line: 13,
-        title: "Searching loop begins",
-        explanation:
-            "The Linear Search loop starts with i = 0 and checks each element one by one."
-    },
-
-    {
-        line: 14,
-        title: "Compare element",
-        explanation:
-            "The current array element arr[i] is compared with the target value."
-    },
-
-    {
-        line: 14,
-        title: "Move to next element",
-        explanation:
-            "The current element does not match the target, so the loop moves to the next element."
-    },
-
-    {
-        line: 13,
-        title: "Next iteration",
-        explanation:
-            "The loop increments i and checks the next array element."
-    },
-
-    {
-        line: 14,
-        title: "Target found",
-        explanation:
-            "The current array element matches the target value."
-    },
-
-    {
-        line: 15,
-        title: "Print result",
-        explanation:
-            "The program prints the index at which the target element was found."
-    },
-
-    {
-        line: 16,
-        title: "Program ends",
-        explanation:
-            "return 0 ends the program successfully."
-    }
-
-];
-
-
-let linearStepIndex = 0;
-
-
-/* SAMPLE DATA
-
-   Later we can make this come
-   automatically from the program input.
-*/
-
-const linearArrayData = [12, 7, 25, 9, 18];
-
-const linearTargetData = 25;
-
-
-/* OPEN / CLOSE TRACER */
-
-function toggleTracer(id) {
-
-    const tracer = document.getElementById(id);
-
-    tracer.classList.toggle("show");
-
-}
-
-
-/* UPDATE CODE HIGHLIGHT */
-
-function updateLinearCode(line) {
-
-    document
-        .querySelectorAll("#linearCode div")
-        .forEach(element => {
-
-            element.classList.remove("active-line");
-
-        });
-
-
-    const active =
-        document.querySelector(
-            `#linearCode div[data-line="${line}"]`
-        );
-
-
-    if (active) {
-
-        active.classList.add("active-line");
-
-    }
-
-}
-
-
-/* UPDATE ARRAY */
-
-function updateLinearArray(currentIndex) {
-
-    const container =
-        document.getElementById("linearArray");
-
-    container.innerHTML = "";
-
-
-    linearArrayData.forEach((value, index) => {
-
-        const item =
-            document.createElement("div");
-
-        item.className = "tracer-array-item";
-
-
-        if (index === currentIndex) {
-
-            item.classList.add("current");
-
-        }
-
-
-        if (
-            index === currentIndex &&
-            value === linearTargetData
-        ) {
-
-            item.classList.remove("current");
-            item.classList.add("found");
-
-        }
-
-
-        item.innerHTML = `
-            <strong>${value}</strong>
-            <small>index ${index}</small>
-        `;
-
-
-        container.appendChild(item);
-
-    });
-
-}
-
-
-/* UPDATE VARIABLES */
-
-function updateLinearVariables(currentIndex) {
-
-    document.getElementById("linearN")
-        .textContent = linearArrayData.length;
-
-
-    document.getElementById("linearTarget")
-        .textContent = linearTargetData;
-
-
-    document.getElementById("linearI")
-        .textContent =
-            currentIndex >= 0
-            ? currentIndex
-            : "—";
-
-
-    document.getElementById("linearCurrent")
-        .textContent =
-            currentIndex >= 0 &&
-            currentIndex < linearArrayData.length
-            ? linearArrayData[currentIndex]
-            : "—";
-
-}
-
-
-/* NEXT STEP */
-
-function linearNextStep() {
-
-    if (
-        linearStepIndex >=
-        linearTraceSteps.length
-    ) {
-
-        return;
-
-    }
-
-
-    const step =
-        linearTraceSteps[linearStepIndex];
-
-
-    updateLinearCode(step.line);
-
-
-    document.getElementById(
-        "linearExplanation"
-    ).innerHTML = `
-
-        <strong>
-            Step ${linearStepIndex + 1} —
-            ${step.title}
-        </strong>
-
-        <p>
-            ${step.explanation}
-        </p>
-
-    `;
-
-
-    /*
-       Determine current array position.
-       This gives students a visual idea
-       of how Linear Search moves.
-    */
-
-    let currentIndex = -1;
-
-
-    if (linearStepIndex >= 7) {
-
-        currentIndex =
-            Math.min(
-                linearStepIndex - 7,
-                linearArrayData.length - 1
-            );
-
-    }
-
-
-    if (linearStepIndex >= 11) {
-
-        currentIndex = 2;
-
-    }
-
-
-    updateLinearVariables(currentIndex);
-
-    updateLinearArray(currentIndex);
-
-
-    document.getElementById(
-        "linearStep"
-    ).textContent =
-        linearStepIndex + 1;
-
-
-    document.getElementById(
-        "linearTotalSteps"
-    ).textContent =
-        linearTraceSteps.length;
-
-
-    if (linearStepIndex >= 11) {
-
-        document.getElementById(
-            "linearOutput"
-        ).innerHTML =
-            "Element found at index 2";
-
-    }
-
-
-    linearStepIndex++;
-
-}
-
-
-/* PREVIOUS STEP */
-
-function linearPreviousStep() {
-
-    if (linearStepIndex <= 0) {
-
-        return;
-
-    }
-
-
-    linearStepIndex -= 1;
-
-
-    /*
-       Rebuild the display from
-       the beginning up to the
-       selected step.
-    */
-
-    linearResetDisplay();
-
-
-    for (
-        let i = 0;
-        i < linearStepIndex;
-        i++
-    ) {
-
-        linearApplyStep(
-            i,
-            false
-        );
-
-    }
-
-
-    document.getElementById(
-        "linearStep"
-    ).textContent =
-        linearStepIndex;
-
-}
-
-
-/* APPLY ONE STEP */
-
-function linearApplyStep(
-    index,
-    updateCounter = true
-) {
-
-    const step =
-        linearTraceSteps[index];
-
-
-    updateLinearCode(step.line);
-
-
-    document.getElementById(
-        "linearExplanation"
-    ).innerHTML = `
-
-        <strong>
-            Step ${index + 1} —
-            ${step.title}
-        </strong>
-
-        <p>
-            ${step.explanation}
-        </p>
-
-    `;
-
-
-    let currentIndex = -1;
-
-
-    if (index >= 7) {
-
-        currentIndex =
-            Math.min(
-                index - 7,
-                linearArrayData.length - 1
-            );
-
-    }
-
-
-    if (index >= 11) {
-
-        currentIndex = 2;
-
-    }
-
-
-    updateLinearVariables(currentIndex);
-
-    updateLinearArray(currentIndex);
-
-
-    if (index >= 11) {
-
-        document.getElementById(
-            "linearOutput"
-        ).textContent =
-            "Element found at index 2";
-
-    }
-
-
-    if (updateCounter) {
-
-        document.getElementById(
-            "linearStep"
-        ).textContent =
-            index + 1;
-
-    }
-
-}
-
-
-/* RESET DISPLAY */
-
-function linearResetDisplay() {
-
-    updateLinearCode(-1);
-
-    document.getElementById(
-        "linearExplanation"
-    ).innerHTML = `
-
-        <strong>
-            Ready to Start
-        </strong>
-
-        <p>
-            Click <b>Next</b> to begin executing
-            the Linear Search program step by step.
-        </p>
-
-    `;
-
-
-    document.getElementById(
-        "linearN"
-    ).textContent = "—";
-
-
-    document.getElementById(
-        "linearTarget"
-    ).textContent = "—";
-
-
-    document.getElementById(
-        "linearI"
-    ).textContent = "—";
-
-
-    document.getElementById(
-        "linearCurrent"
-    ).textContent = "—";
-
-
-    document.getElementById(
-        "linearArray"
-    ).innerHTML = `
-
-        <span class="tracer-empty">
-            Array will appear here during execution.
-        </span>
-
-    `;
-
-
-    document.getElementById(
-        "linearOutput"
-    ).innerHTML =
-        "<span>Waiting for execution...</span>";
-
-}
-
-
-/* RESET */
-
-function linearReset() {
-
-    linearStepIndex = 0;
-
-    linearResetDisplay();
-
-    document.getElementById(
-        "linearStep"
-    ).textContent = "0";
-
-
-    document.getElementById(
-        "linearTotalSteps"
-    ).textContent =
-        linearTraceSteps.length;
-
-}
-
-
-/* AUTO RUN */
-
-let linearAutoTimer = null;
-
-function linearAutoRun() {
-
-    if (linearAutoTimer) {
-
-        clearInterval(linearAutoTimer);
-
-    }
-
-
-    linearAutoTimer =
-        setInterval(() => {
-
-            if (
-                linearStepIndex >=
-                linearTraceSteps.length
-            ) {
-
-                clearInterval(
-                    linearAutoTimer
-                );
-
-                linearAutoTimer = null;
-
-                return;
-
-            }
-
-
-            linearNextStep();
-
-        }, 1200);
-
-}
-
-
-/* INITIALIZE */
-
-document.getElementById(
-    "linearTotalSteps"
-).textContent =
-    linearTraceSteps.length;
 
 </script>
-    
-    
 </body>
 </html>
