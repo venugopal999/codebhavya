@@ -4470,3 +4470,163 @@ function renderTrace(panel) {
 </script>
 </body>
 </html>
+
+<style>
+/* =========================================================
+   CODEBHAVYA - FINAL ARRAY + LOOP VISUALIZER OVERRIDE
+   This is deliberately isolated from the earlier tracer styles.
+   ========================================================= */
+.cb-live-visual { margin-top:12px; }
+.cb-array-panel { background:#fff; border:1px solid #dbe3ec; border-radius:10px; padding:12px; margin-bottom:12px; }
+.cb-array-title { display:flex; justify-content:space-between; gap:8px; align-items:center; font-size:13px; font-weight:800; color:#0f172a; margin-bottom:10px; }
+.cb-array-target { font-size:11px; padding:3px 7px; border-radius:5px; background:#fff7ed; color:#c2410c; border:1px solid #fed7aa; }
+.cb-array { display:flex; gap:7px; overflow-x:auto; padding:8px 4px 22px; }
+.cb-cell { flex:0 0 58px; min-height:62px; position:relative; border:1px solid #cbd5e1; border-radius:7px; background:#f8fafc; text-align:center; padding:7px 4px; box-sizing:border-box; transition:all .2s ease; }
+.cb-cell-index { display:block; font:600 10px Arial,sans-serif; color:#64748b; }
+.cb-cell-value { display:block; margin-top:5px; font:800 15px Consolas,"Courier New",monospace; color:#0f172a; }
+.cb-cell.current { transform:translateY(-5px); background:#ccfbf1; border:2px solid #0f766e; box-shadow:0 5px 14px rgba(15,118,110,.18); }
+.cb-cell.current::after { content:'▲'; position:absolute; bottom:-18px; left:50%; transform:translateX(-50%); color:#0f766e; font-size:11px; }
+.cb-cell.low { border:2px solid #2563eb; }
+.cb-cell.mid { border:2px solid #0f766e; box-shadow:0 0 0 2px rgba(15,118,110,.10); }
+.cb-cell.high { border:2px solid #dc2626; }
+.cb-cell-role { display:block; margin-top:3px; min-height:10px; font:900 8px Arial,sans-serif; }
+.cb-cell.low .cb-cell-role { color:#2563eb; }
+.cb-cell.mid .cb-cell-role { color:#0f766e; }
+.cb-cell.high .cb-cell-role { color:#dc2626; }
+.cb-loop-panel { background:#fff; border:1px solid #dbe3ec; border-radius:10px; padding:12px; margin-bottom:12px; }
+.cb-loop-title { font-size:13px; font-weight:800; color:#0f172a; margin-bottom:9px; }
+.cb-loop-track { display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
+.cb-loop-node { padding:5px 8px; border:1px solid #cbd5e1; border-radius:6px; background:#f8fafc; color:#475569; font-size:11px; font-weight:700; }
+.cb-loop-node.active { background:#dff7f3; border-color:#0f766e; color:#0f766e; box-shadow:0 0 0 2px rgba(15,118,110,.1); }
+.cb-loop-arrow { color:#94a3b8; font-weight:900; }
+.cb-loop-note { margin-top:8px; color:#475569; font-size:12px; line-height:1.5; }
+.cb-loop-counter { margin-top:7px; font-size:11px; font-weight:700; color:#64748b; }
+@media(max-width:600px){ .cb-cell{flex-basis:50px;min-height:58px}.cb-array{gap:5px}.cb-loop-node{font-size:10px;padding:5px 6px} }
+</style>
+
+<script>
+/* =========================================================
+   CODEBHAVYA - DEFINITIVE VISUAL EXECUTION LAYER
+   Uses the existing execution states; it never replaces the
+   teaching content or searching algorithms.
+   ========================================================= */
+(function(){
+    function cbEsc(v){
+        return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+    }
+
+    function cbGetInput(panel){
+        const box = panel.closest('.program-box');
+        const pre = box && box.querySelector('.input-output .io-box:first-child pre code');
+        if(!pre) return {n:0,a:[],target:undefined};
+        const t=pre.textContent.trim().split(/\s+/).filter(Boolean);
+        let p=0; const n=Number(t[p++])||0, a=[];
+        for(let i=0;i<n;i++) a.push(t[p++] ?? '—');
+        return {n,a,target:t[p]};
+    }
+
+    function cbCurrentIndex(env){
+        if(Number.isInteger(Number(env.i))) return Number(env.i);
+        if(Number.isInteger(Number(env.mid))) return Number(env.mid);
+        if(Number.isInteger(Number(env.pos))) return Number(env.pos);
+        if(Number.isInteger(Number(env.index))) return Number(env.index);
+        if(Number.isInteger(Number(env.currentIndex))) return Number(env.currentIndex);
+        if(Number.isInteger(Number(env.offset))) return Number(env.offset);
+        return null;
+    }
+
+    function cbRenderVisual(panel, env, lineText, state){
+        let root=panel.querySelector('.cb-live-visual');
+        const live=panel.querySelector('.trace-live-half');
+        if(!live) return;
+        if(!root){ root=document.createElement('div'); root.className='cb-live-visual'; live.insertBefore(root, live.firstChild); }
+
+        const input=cbGetInput(panel);
+        let arr=Array.isArray(env.a)?env.a:null;
+        if(!arr && Array.isArray(env.arr)) arr=env.arr;
+        if(!arr && Array.isArray(env.array)) arr=env.array;
+        if(!arr && input.a.length) arr=input.a.slice();
+
+        const idx=cbCurrentIndex(env);
+        const roles={};
+        function role(key,label){ const n=Number(env[key]); if(Number.isInteger(n)){ (roles[n]??=[]).push(label); } }
+        role('low','LOW'); role('mid','MID'); role('high','HIGH');
+        if(idx!==null) (roles[idx]??=[]).push('CURRENT');
+
+        let html='';
+        if(arr && arr.length){
+            html += '<div class="cb-array-panel"><div class="cb-array-title"><span>📊 Live Array</span>' +
+                (env.target!==undefined || input.target!==undefined ? '<span class="cb-array-target">Target = '+cbEsc(env.target ?? input.target)+'</span>':'') + '</div><div class="cb-array">';
+            arr.forEach((v,i)=>{
+                const r=roles[i]||[];
+                const current=r.includes('CURRENT');
+                const cls=['cb-cell'];
+                if(current) cls.push('current');
+                if(r.includes('LOW')) cls.push('low');
+                if(r.includes('MID')) cls.push('mid');
+                if(r.includes('HIGH')) cls.push('high');
+                const labels=r.filter(x=>x!=='CURRENT');
+                html += '<div class="'+cls.join(' ')+'"><span class="cb-cell-index">['+i+']</span><span class="cb-cell-value">'+cbEsc(v==='—'?'—':v)+'</span>'+(labels.length?'<span class="cb-cell-role">'+cbEsc(labels.join(' • '))+'</span>':'')+'</div>';
+            });
+            html += '</div></div>';
+        }
+
+        const t=String(lineText||'').trim();
+        let nodes=[],active=0,note='',counter='';
+        if(env.low!==undefined || env.high!==undefined || env.mid!==undefined){
+            nodes=['Check range','Calculate MID','Compare','Discard half','Repeat'];
+            if(/while\s*\(/.test(t)) active=0;
+            else if(/mid\s*=/.test(t)) active=1;
+            else if(/if\s*\(/.test(t) || /else if/.test(t)) active=2;
+            else if(/low\s*=|high\s*=/.test(t)) active=3;
+            else active=4;
+            note='LOW = '+(env.low??'—')+'   MID = '+(env.mid??'—')+'   HIGH = '+(env.high??'—');
+        } else if(env.i!==undefined){
+            nodes=['Initialize i','Check i < n','Compare a[i]','Update i','Repeat'];
+            if(/for\s*\(/.test(t)) active=1;
+            else if(/if\s*\(/.test(t)) active=2;
+            else if(/i\+\+|i\s*=/.test(t)) active=3;
+            else active=0;
+            note='Loop iteration: i = '+env.i+'   →   current array index = '+env.i;
+            counter='Iteration '+(Number(env.i)+1);
+        } else if(env.pos!==undefined || env.index!==undefined || env.offset!==undefined){
+            const x=env.pos??env.index??env.offset;
+            nodes=['Choose position','Compare','Move search range','Repeat'];
+            active=/==|<|>/.test(t)?1:0;
+            note='Current search position = '+x;
+        } else {
+            nodes=['Start','Input','Process','Output'];
+            active=/scanf/.test(t)?1:/printf/.test(t)?3:(t?2:0);
+            note='Program execution is progressing line by line.';
+        }
+        html += '<div class="cb-loop-panel"><div class="cb-loop-title">🔁 Live Execution Flow</div><div class="cb-loop-track">'+
+            nodes.map((n,i)=>'<span class="cb-loop-node '+(i===active?'active':'')+'">'+cbEsc(n)+'</span>'+(i<nodes.length-1?'<span class="cb-loop-arrow">→</span>':'')).join('')+
+            '</div><div class="cb-loop-note">'+cbEsc(note)+'</div>'+(counter?'<div class="cb-loop-counter">'+cbEsc(counter)+'</div>':'')+'</div>';
+
+        root.innerHTML=html;
+    }
+
+    const originalRenderTrace = window.renderTrace;
+    window.renderTrace = function(panel){
+        if(typeof originalRenderTrace==='function') originalRenderTrace(panel);
+        const state=window.traceStates && window.traceStates.get ? window.traceStates.get(panel) : null;
+        if(!state || !state.steps || !state.steps.length) return;
+        const step=state.steps[state.index];
+        const line=state.lines[step.line]||'';
+        cbRenderVisual(panel,step.env||{},line,state);
+    };
+
+    /* Re-render after initialization too, including panels opened later. */
+    const oldInitialize=window.initializeTrace;
+    if(typeof oldInitialize==='function'){
+        window.initializeTrace=function(panel){
+            oldInitialize(panel);
+            const state=window.traceStates && window.traceStates.get ? window.traceStates.get(panel):null;
+            if(state && state.steps && state.steps.length){
+                const step=state.steps[state.index];
+                cbRenderVisual(panel,step.env||{},state.lines[step.line]||'',state);
+            }
+        };
+    }
+})();
+</script>
