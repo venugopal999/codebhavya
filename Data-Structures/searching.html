@@ -3304,6 +3304,61 @@ function findLines(lines, regex) {
     return result;
 }
 
+function escapeTraceHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+function cloneEnv(env) {
+    const copy = {};
+    Object.entries(env || {}).forEach(([key, value]) => {
+        copy[key] = Array.isArray(value) ? [...value] : value;
+    });
+    return copy;
+}
+
+function parseCValue(value) {
+    if (value === undefined || value === null) return undefined;
+    const text = String(value).trim();
+    if (/^-?\d+$/.test(text)) return Number(text);
+    if (/^-?(?:\d+\.\d*|\.\d+)$/.test(text)) return Number(text);
+    return text;
+}
+
+function evaluateSimpleExpression(expr, env) {
+    if (expr === undefined || expr === null) return undefined;
+    let e = String(expr).trim().replace(/;$/, '');
+    e = e.replace(/\btrue\b/g, '1').replace(/\bfalse\b/g, '0');
+
+    const arrayAccess = e.match(/^([A-Za-z_]\w*)\s*\[\s*([A-Za-z_]\w*|\d+)\s*\]$/);
+    if (arrayAccess && Array.isArray(env[arrayAccess[1]])) {
+        const index = /^\d+$/.test(arrayAccess[2]) ? Number(arrayAccess[2]) : Number(env[arrayAccess[2]]);
+        return env[arrayAccess[1]][index];
+    }
+
+    if (/^-?\d+(?:\.\d+)?$/.test(e)) return Number(e);
+    if (Object.prototype.hasOwnProperty.call(env, e)) return env[e];
+
+    let expression = e.replace(/([A-Za-z_]\w*)\s*\[\s*([A-Za-z_]\w*)\s*\]/g,
+        (_, arr, idx) => `__arr_${arr}[${Number(env[idx])}]`);
+    Object.keys(env).filter(k => /^\w+$/.test(k) && !Array.isArray(env[k])).forEach(k => {
+        expression = expression.replace(new RegExp(`\\b${k}\\b`, 'g'), String(env[k]));
+    });
+    Object.keys(env).filter(k => Array.isArray(env[k])).forEach(k => {
+        expression = expression.replace(new RegExp(`__arr_${k}`, 'g'), JSON.stringify(env[k]));
+    });
+
+    if (/^[0-9+\-*/%().\s]+$/.test(expression)) {
+        try { return Function('"use strict"; return (' + expression + ');')(); }
+        catch (_) { return e; }
+    }
+    return e;
+}
+
 function readSearchInput(tokens) {
     let p = 0;
     const n = Number(tokens[p++]) || 0;
