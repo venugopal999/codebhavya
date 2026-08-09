@@ -647,8 +647,211 @@ int main() {
 <div class="io-box"><h4>Sample Input</h4><pre><code>5
 12 7 25 9 18
 25</code></pre></div>
-<div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 2</code></pre></div>
-</div><button class="trace-launcher" onclick='toggleTrace("trace1")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace1">
+<div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 2</code></pre></div></div>
+
+
+<!-- ==============================
+     LINEAR SEARCH PROGRAM TRACER
+================================= -->
+
+<div class="program-tracer">
+
+    <button class="tracer-toggle"
+            onclick="toggleTracer('linearTracer')">
+        🔬 Program Tracing
+    </button>
+
+    <div id="linearTracer" class="tracer-container">
+
+        <div class="tracer-header">
+            <div>
+                <span class="section-label">PROGRAM EXECUTION</span>
+                <h3>🔬 Linear Search Tracer</h3>
+                <p>
+                    Follow the program step by step and watch
+                    the variables change during execution.
+                </p>
+            </div>
+        </div>
+
+
+        <!-- TRACER MAIN AREA -->
+
+        <div class="tracer-grid">
+
+
+            <!-- LEFT: PROGRAM -->
+
+            <div class="tracer-panel">
+
+                <h4>💻 C Program</h4>
+
+                <div class="tracer-code" id="linearCode">
+
+                    <div data-line="1">#include &lt;stdio.h&gt;</div>
+                    <div data-line="2"></div>
+                    <div data-line="3">int main() {</div>
+                    <div data-line="4">    int n, target;</div>
+                    <div data-line="5">    scanf("%d", &amp;n);</div>
+                    <div data-line="6">    int arr[n];</div>
+                    <div data-line="7"></div>
+                    <div data-line="8">    for(int i = 0; i &lt; n; i++)</div>
+                    <div data-line="9">        scanf("%d", &amp;arr[i]);</div>
+                    <div data-line="10"></div>
+                    <div data-line="11">    scanf("%d", &amp;target);</div>
+                    <div data-line="12"></div>
+                    <div data-line="13">    for(int i = 0; i &lt; n; i++) {</div>
+                    <div data-line="14">        if(arr[i] == target) {</div>
+                    <div data-line="15">            printf("Element found at index %d", i);</div>
+                    <div data-line="16">            return 0;</div>
+                    <div data-line="17">        }</div>
+                    <div data-line="18">    }</div>
+                    <div data-line="19"></div>
+                    <div data-line="20">    printf("Element not found");</div>
+                    <div data-line="21"></div>
+                    <div data-line="22">    return 0;</div>
+                    <div data-line="23">}</div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT: EXPLANATION -->
+
+            <div class="tracer-panel">
+
+                <h4>🧠 Current Execution</h4>
+
+                <div id="linearExplanation"
+                     class="tracer-explanation">
+
+                    <strong>Ready to Start</strong>
+
+                    <p>
+                        Click <b>Next</b> to begin executing
+                        the Linear Search program step by step.
+                    </p>
+
+                </div>
+
+
+                <!-- VARIABLES -->
+
+                <h4>📦 Live Variables</h4>
+
+                <div class="variable-table">
+
+                    <div class="variable-row">
+                        <span>n</span>
+                        <strong id="linearN">—</strong>
+                    </div>
+
+                    <div class="variable-row">
+                        <span>target</span>
+                        <strong id="linearTarget">—</strong>
+                    </div>
+
+                    <div class="variable-row">
+                        <span>i</span>
+                        <strong id="linearI">—</strong>
+                    </div>
+
+                    <div class="variable-row">
+                        <span>arr[i]</span>
+                        <strong id="linearCurrent">—</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ARRAY VISUALIZATION -->
+
+        <div class="tracer-panel">
+
+            <h4>📊 Array Visualization</h4>
+
+            <div id="linearArray"
+                 class="tracer-array">
+
+                <span class="tracer-empty">
+                    Array will appear here during execution.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- OUTPUT -->
+
+        <div class="tracer-panel">
+
+            <h4>🖥️ Program Output</h4>
+
+            <div id="linearOutput"
+                 class="tracer-output">
+
+                <span>Waiting for execution...</span>
+
+            </div>
+
+        </div>
+
+
+        <!-- CONTROLS -->
+
+        <div class="tracer-controls">
+
+            <button onclick="linearPreviousStep()"
+                    class="secondary-tracer-button">
+                ◀ Previous
+            </button>
+
+            <button onclick="linearNextStep()"
+                    class="primary-tracer-button">
+                ▶ Next
+            </button>
+
+            <button onclick="linearAutoRun()"
+                    class="primary-tracer-button">
+                ▶▶ Auto Run
+            </button>
+
+            <button onclick="linearReset()"
+                    class="secondary-tracer-button">
+                ↻ Reset
+            </button>
+
+        </div>
+
+
+        <div class="tracer-step-counter">
+            Step <span id="linearStep">0</span>
+            of <span id="linearTotalSteps">0</span>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    
+<!-- </div><button class="trace-launcher" onclick='toggleTrace("trace1")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace1">
 <div class="trace-header">
 <div>
 <span class="trace-label">PROGRAM TRACING</span>
@@ -682,7 +885,7 @@ int main() {
 <button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
 <button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
 </div>
-</div>
+</div>   -->
 <p><strong>Input explanation:</strong> First enter the number of elements, then the elements, followed by the target.</p>
 </div>
 </div>
@@ -3172,7 +3375,8 @@ int main() {
 <p>From Learning to Limitless Possibilities.</p>
 </div>
 </footer>
-<script>
+    
+<!-- <script>
 function toggleProgram(id) {
     const element = document.getElementById(id);
     if (element) element.classList.toggle("open");
@@ -3991,6 +4195,593 @@ function traceReset(button) {
     renderTrace(panel);
 }
 
+</script> -->
+
+<script>
+
+const linearTraceSteps = [
+
+    {
+        line: 1,
+        title: "Header File",
+        explanation:
+            "The stdio.h header file is included so the program can use input and output functions such as scanf() and printf()."
+    },
+
+    {
+        line: 3,
+        title: "main() begins",
+        explanation:
+            "Program execution begins from the main() function."
+    },
+
+    {
+        line: 4,
+        title: "Variables are declared",
+        explanation:
+            "The variables n and target are declared. n will store the number of elements and target will store the value to search."
+    },
+
+    {
+        line: 5,
+        title: "Read number of elements",
+        explanation:
+            "The program reads the number of elements from the user."
+    },
+
+    {
+        line: 6,
+        title: "Array is created",
+        explanation:
+            "An integer array is created using the value stored in n."
+    },
+
+    {
+        line: 8,
+        title: "Input loop begins",
+        explanation:
+            "The for loop starts from i = 0 and will read each array element."
+    },
+
+    {
+        line: 9,
+        title: "Read array element",
+        explanation:
+            "The current array element is read from the user."
+    },
+
+    {
+        line: 13,
+        title: "Searching loop begins",
+        explanation:
+            "The Linear Search loop starts with i = 0 and checks each element one by one."
+    },
+
+    {
+        line: 14,
+        title: "Compare element",
+        explanation:
+            "The current array element arr[i] is compared with the target value."
+    },
+
+    {
+        line: 14,
+        title: "Move to next element",
+        explanation:
+            "The current element does not match the target, so the loop moves to the next element."
+    },
+
+    {
+        line: 13,
+        title: "Next iteration",
+        explanation:
+            "The loop increments i and checks the next array element."
+    },
+
+    {
+        line: 14,
+        title: "Target found",
+        explanation:
+            "The current array element matches the target value."
+    },
+
+    {
+        line: 15,
+        title: "Print result",
+        explanation:
+            "The program prints the index at which the target element was found."
+    },
+
+    {
+        line: 16,
+        title: "Program ends",
+        explanation:
+            "return 0 ends the program successfully."
+    }
+
+];
+
+
+let linearStepIndex = 0;
+
+
+/* SAMPLE DATA
+
+   Later we can make this come
+   automatically from the program input.
+*/
+
+const linearArrayData = [12, 7, 25, 9, 18];
+
+const linearTargetData = 25;
+
+
+/* OPEN / CLOSE TRACER */
+
+function toggleTracer(id) {
+
+    const tracer = document.getElementById(id);
+
+    tracer.classList.toggle("show");
+
+}
+
+
+/* UPDATE CODE HIGHLIGHT */
+
+function updateLinearCode(line) {
+
+    document
+        .querySelectorAll("#linearCode div")
+        .forEach(element => {
+
+            element.classList.remove("active-line");
+
+        });
+
+
+    const active =
+        document.querySelector(
+            `#linearCode div[data-line="${line}"]`
+        );
+
+
+    if (active) {
+
+        active.classList.add("active-line");
+
+    }
+
+}
+
+
+/* UPDATE ARRAY */
+
+function updateLinearArray(currentIndex) {
+
+    const container =
+        document.getElementById("linearArray");
+
+    container.innerHTML = "";
+
+
+    linearArrayData.forEach((value, index) => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "tracer-array-item";
+
+
+        if (index === currentIndex) {
+
+            item.classList.add("current");
+
+        }
+
+
+        if (
+            index === currentIndex &&
+            value === linearTargetData
+        ) {
+
+            item.classList.remove("current");
+            item.classList.add("found");
+
+        }
+
+
+        item.innerHTML = `
+            <strong>${value}</strong>
+            <small>index ${index}</small>
+        `;
+
+
+        container.appendChild(item);
+
+    });
+
+}
+
+
+/* UPDATE VARIABLES */
+
+function updateLinearVariables(currentIndex) {
+
+    document.getElementById("linearN")
+        .textContent = linearArrayData.length;
+
+
+    document.getElementById("linearTarget")
+        .textContent = linearTargetData;
+
+
+    document.getElementById("linearI")
+        .textContent =
+            currentIndex >= 0
+            ? currentIndex
+            : "—";
+
+
+    document.getElementById("linearCurrent")
+        .textContent =
+            currentIndex >= 0 &&
+            currentIndex < linearArrayData.length
+            ? linearArrayData[currentIndex]
+            : "—";
+
+}
+
+
+/* NEXT STEP */
+
+function linearNextStep() {
+
+    if (
+        linearStepIndex >=
+        linearTraceSteps.length
+    ) {
+
+        return;
+
+    }
+
+
+    const step =
+        linearTraceSteps[linearStepIndex];
+
+
+    updateLinearCode(step.line);
+
+
+    document.getElementById(
+        "linearExplanation"
+    ).innerHTML = `
+
+        <strong>
+            Step ${linearStepIndex + 1} —
+            ${step.title}
+        </strong>
+
+        <p>
+            ${step.explanation}
+        </p>
+
+    `;
+
+
+    /*
+       Determine current array position.
+       This gives students a visual idea
+       of how Linear Search moves.
+    */
+
+    let currentIndex = -1;
+
+
+    if (linearStepIndex >= 7) {
+
+        currentIndex =
+            Math.min(
+                linearStepIndex - 7,
+                linearArrayData.length - 1
+            );
+
+    }
+
+
+    if (linearStepIndex >= 11) {
+
+        currentIndex = 2;
+
+    }
+
+
+    updateLinearVariables(currentIndex);
+
+    updateLinearArray(currentIndex);
+
+
+    document.getElementById(
+        "linearStep"
+    ).textContent =
+        linearStepIndex + 1;
+
+
+    document.getElementById(
+        "linearTotalSteps"
+    ).textContent =
+        linearTraceSteps.length;
+
+
+    if (linearStepIndex >= 11) {
+
+        document.getElementById(
+            "linearOutput"
+        ).innerHTML =
+            "Element found at index 2";
+
+    }
+
+
+    linearStepIndex++;
+
+}
+
+
+/* PREVIOUS STEP */
+
+function linearPreviousStep() {
+
+    if (linearStepIndex <= 0) {
+
+        return;
+
+    }
+
+
+    linearStepIndex -= 1;
+
+
+    /*
+       Rebuild the display from
+       the beginning up to the
+       selected step.
+    */
+
+    linearResetDisplay();
+
+
+    for (
+        let i = 0;
+        i < linearStepIndex;
+        i++
+    ) {
+
+        linearApplyStep(
+            i,
+            false
+        );
+
+    }
+
+
+    document.getElementById(
+        "linearStep"
+    ).textContent =
+        linearStepIndex;
+
+}
+
+
+/* APPLY ONE STEP */
+
+function linearApplyStep(
+    index,
+    updateCounter = true
+) {
+
+    const step =
+        linearTraceSteps[index];
+
+
+    updateLinearCode(step.line);
+
+
+    document.getElementById(
+        "linearExplanation"
+    ).innerHTML = `
+
+        <strong>
+            Step ${index + 1} —
+            ${step.title}
+        </strong>
+
+        <p>
+            ${step.explanation}
+        </p>
+
+    `;
+
+
+    let currentIndex = -1;
+
+
+    if (index >= 7) {
+
+        currentIndex =
+            Math.min(
+                index - 7,
+                linearArrayData.length - 1
+            );
+
+    }
+
+
+    if (index >= 11) {
+
+        currentIndex = 2;
+
+    }
+
+
+    updateLinearVariables(currentIndex);
+
+    updateLinearArray(currentIndex);
+
+
+    if (index >= 11) {
+
+        document.getElementById(
+            "linearOutput"
+        ).textContent =
+            "Element found at index 2";
+
+    }
+
+
+    if (updateCounter) {
+
+        document.getElementById(
+            "linearStep"
+        ).textContent =
+            index + 1;
+
+    }
+
+}
+
+
+/* RESET DISPLAY */
+
+function linearResetDisplay() {
+
+    updateLinearCode(-1);
+
+    document.getElementById(
+        "linearExplanation"
+    ).innerHTML = `
+
+        <strong>
+            Ready to Start
+        </strong>
+
+        <p>
+            Click <b>Next</b> to begin executing
+            the Linear Search program step by step.
+        </p>
+
+    `;
+
+
+    document.getElementById(
+        "linearN"
+    ).textContent = "—";
+
+
+    document.getElementById(
+        "linearTarget"
+    ).textContent = "—";
+
+
+    document.getElementById(
+        "linearI"
+    ).textContent = "—";
+
+
+    document.getElementById(
+        "linearCurrent"
+    ).textContent = "—";
+
+
+    document.getElementById(
+        "linearArray"
+    ).innerHTML = `
+
+        <span class="tracer-empty">
+            Array will appear here during execution.
+        </span>
+
+    `;
+
+
+    document.getElementById(
+        "linearOutput"
+    ).innerHTML =
+        "<span>Waiting for execution...</span>";
+
+}
+
+
+/* RESET */
+
+function linearReset() {
+
+    linearStepIndex = 0;
+
+    linearResetDisplay();
+
+    document.getElementById(
+        "linearStep"
+    ).textContent = "0";
+
+
+    document.getElementById(
+        "linearTotalSteps"
+    ).textContent =
+        linearTraceSteps.length;
+
+}
+
+
+/* AUTO RUN */
+
+let linearAutoTimer = null;
+
+function linearAutoRun() {
+
+    if (linearAutoTimer) {
+
+        clearInterval(linearAutoTimer);
+
+    }
+
+
+    linearAutoTimer =
+        setInterval(() => {
+
+            if (
+                linearStepIndex >=
+                linearTraceSteps.length
+            ) {
+
+                clearInterval(
+                    linearAutoTimer
+                );
+
+                linearAutoTimer = null;
+
+                return;
+
+            }
+
+
+            linearNextStep();
+
+        }, 1200);
+
+}
+
+
+/* INITIALIZE */
+
+document.getElementById(
+    "linearTotalSteps"
+).textContent =
+    linearTraceSteps.length;
+
 </script>
+    
+    
 </body>
 </html>
