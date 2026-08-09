@@ -3256,29 +3256,29 @@ function buildExecutionTrace(lines, inputTokens) {
     const code = lines.join('\n');
 
     if (/searchRotated\s*\(/.test(code))
-        return simulateRotatedSearch(clean, inputTokens);
+        return simulateRotatedSearch(lines, inputTokens);
 
     if (/jumpSearch\s*\(/.test(code))
-        return simulateJumpSearch(clean, inputTokens);
+        return simulateJumpSearch(lines, inputTokens);
 
     if (/interpolationSearch\s*\(/.test(code))
-        return simulateInterpolationSearch(clean, inputTokens);
+        return simulateInterpolationSearch(lines, inputTokens);
 
     if (/fibonacciSearch\s*\(/.test(code))
-        return simulateFibonacciSearch(clean, inputTokens);
+        return simulateFibonacciSearch(lines, inputTokens);
 
     if (/binarySearch\s*\(/.test(code) && /binarySearch\s*\(a/.test(code))
-        return simulateRecursiveBinarySearch(clean, inputTokens);
+        return simulateRecursiveBinarySearch(lines, inputTokens);
 
     if (/while\s*\(\s*low\s*<=\s*high\s*\)/.test(code) &&
         /mid\s*=\s*low\s*\+\s*\(high\s*-\s*low\)\s*\/\s*2/.test(code))
-        return simulateIterativeBinarySearch(clean, inputTokens);
+        return simulateIterativeBinarySearch(lines, inputTokens);
 
     if (/for\s*\(\s*int\s+i\s*=\s*0\s*;\s*i\s*<\s*n\s*;\s*i\+\+\s*\)/.test(code) &&
         /a\s*\[\s*i\s*\]\s*==\s*target/.test(code))
-        return simulateLinearSearch(clean, inputTokens);
+        return simulateLinearSearch(lines, inputTokens);
 
-    return simulateSimpleExecution(clean, inputTokens);
+    return simulateSimpleExecution(lines, inputTokens);
 }
 
 function makeStep(line, env, note) {
