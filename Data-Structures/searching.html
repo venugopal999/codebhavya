@@ -301,6 +301,147 @@
     }
 }
 
+
+/* =========================================
+   CODEBHAVYA - PROGRAM TRACING
+========================================= */
+.trace-launcher {
+    display: inline-block;
+    margin: 4px 0 8px;
+    padding: 10px 17px;
+    background: #0f766e;
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+}
+.trace-launcher:hover { background: #115e59; }
+.trace-panel {
+    display: none;
+    margin: 14px 0 20px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.08);
+}
+.trace-panel.open { display: block; }
+.trace-label {
+    color: #0f766e;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+}
+.trace-header h3 { margin: 4px 0 6px; color: #0f172a; }
+.trace-header p { margin: 0 0 16px; color: #64748b; }
+.trace-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+    gap: 14px;
+}
+.trace-code-window,
+.trace-detail-window {
+    min-width: 0;
+    border: 1px solid #dbe3ec;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f8fafc;
+}
+.trace-window-title {
+    padding: 10px 13px;
+    background: #eaf1f7;
+    color: #0f172a;
+    font-weight: 700;
+    border-bottom: 1px solid #dbe3ec;
+}
+.trace-code {
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    max-height: 480px;
+    overflow: auto;
+    padding: 12px !important;
+    background: #0f172a !important;
+}
+.trace-line {
+    display: block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    color: #e2e8f0;
+}
+.trace-line-number {
+    display: inline-block;
+    width: 34px;
+    margin-right: 8px;
+    color: #64748b;
+    user-select: none;
+    text-align: right;
+}
+.trace-line.current {
+    background: #334155;
+    outline: 1px solid #5eead4;
+}
+.trace-line.current .trace-line-number { color: #5eead4; font-weight: 700; }
+.trace-step-count {
+    padding: 14px 15px 4px;
+    color: #0f766e;
+    font-size: 13px;
+    font-weight: 700;
+}
+.trace-current-line {
+    margin: 8px 15px;
+    padding: 11px 12px;
+    background: #ffffff;
+    border: 1px solid #dbe3ec;
+    border-left: 4px solid #0f766e;
+    border-radius: 7px;
+    color: #0f172a;
+    font-family: Consolas, "Courier New", monospace;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+.trace-explanation {
+    min-height: 130px;
+    padding: 10px 15px 18px;
+    color: #475569;
+    line-height: 1.7;
+}
+.trace-explanation strong { color: #0f172a; }
+.trace-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+.trace-nav,
+.trace-reset {
+    border: none;
+    border-radius: 7px;
+    padding: 9px 16px;
+    cursor: pointer;
+    font-weight: 700;
+}
+.trace-nav { background: #2563eb; color: #fff; }
+.trace-nav:hover { background: #1d4ed8; }
+.trace-reset { background: #e2e8f0; color: #334155; }
+.trace-reset:hover { background: #cbd5e1; }
+.trace-nav:disabled { opacity: .45; cursor: not-allowed; }
+@media (max-width: 800px) {
+    .trace-workspace { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+    .trace-panel { padding: 12px; }
+    .trace-code { font-size: 12px !important; }
+    .trace-controls { justify-content: stretch; }
+    .trace-nav, .trace-reset { flex: 1 1 30%; }
+}
 </style>
 </head>
 <body>
@@ -427,6 +568,31 @@ int main() {
 12 7 25 9 18
 25</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 2</code></pre></div>
+</div><button class="trace-launcher" onclick='toggleTrace("trace1")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace1">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
 </div>
 <p><strong>Input explanation:</strong> First enter the number of elements, then the elements, followed by the target.</p>
 </div>
@@ -508,6 +674,31 @@ int main() {
 3 7 11 18 25 31 40
 25</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 4</code></pre></div>
+</div><button class="trace-launcher" onclick='toggleTrace("trace2")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace2">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
 </div>
 </div>
 </div>
@@ -567,6 +758,31 @@ int main() {
 3 7 11 18 25 31 40
 31</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 5</code></pre></div>
+</div><button class="trace-launcher" onclick='toggleTrace("trace3")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace3">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
 </div>
 </div>
 </div>
@@ -656,6 +872,31 @@ int main() {
 15 18 2 3 6 12
 3</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 3</code></pre></div>
+</div><button class="trace-launcher" onclick='toggleTrace("trace4")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace4">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
 </div>
 </div>
 </div>
@@ -743,6 +984,31 @@ int main() {
 2 5 8 12 16 21 27 31 36 40
 27</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 6</code></pre></div>
+</div><button class="trace-launcher" onclick='toggleTrace("trace5")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace5">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
 </div>
 </div>
 </div>
@@ -836,6 +1102,31 @@ int main() {
 10 20 30 40 50 60 70 80 90 100
 70</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 6</code></pre></div>
+</div><button class="trace-launcher" onclick='toggleTrace("trace6")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace6">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
 </div>
 </div>
 </div>
@@ -938,6 +1229,31 @@ int main() {
 10 20 30 40 50 60 70 80 90 100
 80</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 7</code></pre></div>
+</div><button class="trace-launcher" onclick='toggleTrace("trace7")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace7">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
 </div>
 </div>
 </div>
@@ -1058,6 +1374,31 @@ int main() {
 <div class="input-output">
 <div class="io-box"><h4>Sample Input</h4><pre><code>40</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found</code></pre></div>
+</div><button class="trace-launcher" onclick='toggleTrace("trace8")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace8">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
 </div>
 </div>
 </div>
@@ -1198,7 +1539,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>5
 4 8 2 9 6
-9</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div>
+9</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace9")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace9">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div>
 </div>
 <div class="practice-item"><strong>2. Count occurrences of a target</strong><p>Count how many times a value occurs in an array.</p>
 <p><strong>Input:</strong> n, array, target</p><p><strong>Output:</strong> count</p>
@@ -1227,7 +1593,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>7
 2 4 2 7 2 8 2
-2</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>4</code></pre></div></div></div></div>
+2</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>4</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace10")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace10">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>3. Find first occurrence</strong><p>Find the first index of a target.</p>
 <p><strong>Input:</strong> n, array, target</p><p><strong>Output:</strong> first index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h3')">Hint</button><button class="program-toggle" onclick="toggleProgram('p3')">Show Program</button></div>
@@ -1258,7 +1649,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
 5 3 8 3 9 3
-3</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>1</code></pre></div></div></div></div>
+3</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>1</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace11")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace11">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>4. Find last occurrence</strong><p>Find the last index of a target.</p>
 <p><strong>Input:</strong> n, array, target</p><p><strong>Output:</strong> last index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h4')">Hint</button><button class="program-toggle" onclick="toggleProgram('p4')">Show Program</button></div>
@@ -1286,7 +1702,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
 5 3 8 3 9 3
-3</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>5</code></pre></div></div></div></div>
+3</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>5</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace12")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace12">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>5. Binary Search — iterative</strong><p>Search for a target in a sorted array using iteration.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h5')">Hint</button><button class="program-toggle" onclick="toggleProgram('p5')">Show Program</button></div>
@@ -1327,7 +1768,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>5
 10 20 30 40 50
-40</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div></div>
+40</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace13")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace13">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>6. Binary Search — recursive</strong><p>Implement Binary Search using recursion.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h6')">Hint</button><button class="program-toggle" onclick="toggleProgram('p6')">Show Program</button></div>
@@ -1366,7 +1832,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
 2 5 8 11 14 19
-14</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>4</code></pre></div></div></div></div>
+14</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>4</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace14")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace14">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>7. First occurrence in sorted array</strong><p>Find the first occurrence of a duplicate target using Binary Search.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> first index</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h7')">Hint</button><button class="program-toggle" onclick="toggleProgram('p7')">Show Program</button></div>
@@ -1405,7 +1896,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>7
 2 4 4 4 7 9 12
-4</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>1</code></pre></div></div></div></div>
+4</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>1</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace15")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace15">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>8. Last occurrence in sorted array</strong><p>Find the last occurrence of a target using Binary Search.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> last index</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h8')">Hint</button><button class="program-toggle" onclick="toggleProgram('p8')">Show Program</button></div>
@@ -1444,7 +1960,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>7
 2 4 4 4 7 9 12
-4</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div></div>
+4</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace16")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace16">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>9. Count occurrences in sorted array</strong><p>Find how many times a target occurs.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> count</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h9')">Hint</button><button class="program-toggle" onclick="toggleProgram('p9')">Show Program</button></div>
@@ -1508,7 +2049,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>8
 1 2 2 2 3 4 4 7
-2</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div></div>
+2</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace17")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace17">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>10. Search in rotated sorted array</strong><p>Search a target in a rotated sorted array.</p>
 <p><strong>Input:</strong> rotated sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h10')">Hint</button><button class="program-toggle" onclick="toggleProgram('p10')">Show Program</button></div>
@@ -1555,7 +2121,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>7
 8 9 10 2 3 5 6
-5</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>5</code></pre></div></div></div></div>
+5</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>5</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace18")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace18">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>11. Jump Search</strong><p>Search a sorted array using Jump Search.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h11')">Hint</button><button class="program-toggle" onclick="toggleProgram('p11')">Show Program</button></div>
@@ -1604,7 +2195,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>9
 1 4 7 10 13 16 19 22 25
-19</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>6</code></pre></div></div></div></div>
+19</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>6</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace19")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace19">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>12. Interpolation Search</strong><p>Search uniformly distributed sorted data using interpolation.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h12')">Hint</button><button class="program-toggle" onclick="toggleProgram('p12')">Show Program</button></div>
@@ -1650,7 +2266,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>10
 10 20 30 40 50 60 70 80 90 100
-90</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>8</code></pre></div></div></div></div>
+90</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>8</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace20")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace20">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>13. Fibonacci Search</strong><p>Search a sorted array using Fibonacci partitions.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h13')">Hint</button><button class="program-toggle" onclick="toggleProgram('p13')">Show Program</button></div>
@@ -1708,7 +2349,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>8
 5 10 15 20 25 30 35 40
-30</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>5</code></pre></div></div></div></div>
+30</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>5</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace21")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace21">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>14. Lower Bound</strong><p>Find the first index whose value is greater than or equal to the target.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> lower-bound index</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h14')">Hint</button><button class="program-toggle" onclick="toggleProgram('p14')">Show Program</button></div>
@@ -1746,7 +2412,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
 2 4 7 9 12 15
-8</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div></div>
+8</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace22")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace22">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>15. Upper Bound</strong><p>Find the first index whose value is greater than the target.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> upper-bound index</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h15')">Hint</button><button class="program-toggle" onclick="toggleProgram('p15')">Show Program</button></div>
@@ -1784,7 +2475,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
 2 4 7 9 12 15
-9</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>4</code></pre></div></div></div></div>
+9</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>4</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace23")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace23">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>16. Search insertion position</strong><p>Find the position where a target should be inserted in sorted order.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> insertion index</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h16')">Hint</button><button class="program-toggle" onclick="toggleProgram('p16')">Show Program</button></div>
@@ -1819,7 +2535,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>5
 10 20 30 40 50
-35</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div></div>
+35</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace24")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace24">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>17. Find peak element</strong><p>Find an index of an element that is not smaller than its neighbors.</p>
 <p><strong>Input:</strong> n and array</p><p><strong>Output:</strong> peak index</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h17')">Hint</button><button class="program-toggle" onclick="toggleProgram('p17')">Show Program</button></div>
@@ -1851,7 +2592,32 @@ int main() {
     return 0;
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
-1 3 8 7 5 2</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>2</code></pre></div></div></div></div>
+1 3 8 7 5 2</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>2</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace25")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace25">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>18. Integer square root using Binary Search</strong><p>Find floor(√x) without using a square-root library.</p>
 <p><strong>Input:</strong> non-negative integer x</p><p><strong>Output:</strong> floor square root</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h18')">Hint</button><button class="program-toggle" onclick="toggleProgram('p18')">Show Program</button></div>
@@ -1879,7 +2645,32 @@ int main() {
     printf("%lld\n", ans);
     return 0;
 }</code></pre>
-<div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>50</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>7</code></pre></div></div></div></div>
+<div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>50</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>7</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace26")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace26">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>19. Search in a nearly sorted array</strong><p>Each element may be at its correct position or one position away. Find the target.</p>
 <p><strong>Input:</strong> nearly sorted array and target</p><p><strong>Output:</strong> index or -1</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h19')">Hint</button><button class="program-toggle" onclick="toggleProgram('p19')">Show Program</button></div>
@@ -1929,7 +2720,32 @@ int main() {
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>6
 10 20 30 25 40 50
-25</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div></div></div>
+25</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>3</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace27")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace27">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 <div class="practice-item"><strong>20. Find minimum in rotated sorted array</strong><p>Find the minimum element in a rotated sorted array.</p>
 <p><strong>Input:</strong> rotated sorted array</p><p><strong>Output:</strong> minimum value</p>
 <div class="practice-buttons"><button class="secondary-small" onclick="toggleHint('h20')">Hint</button><button class="program-toggle" onclick="toggleProgram('p20')">Show Program</button></div>
@@ -1961,7 +2777,32 @@ int main() {
     return 0;
 }</code></pre>
 <div class="input-output"><div class="io-box"><h4>Sample Input</h4><pre><code>7
-15 18 2 3 6 12 13</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>2</code></pre></div></div></div></div>
+15 18 2 3 6 12 13</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>2</code></pre></div></div><button class="trace-launcher" onclick='toggleTrace("trace28")' type="button">🔎 Program Tracing</button><div class="trace-panel" id="trace28">
+<div class="trace-header">
+<div>
+<span class="trace-label">PROGRAM TRACING</span>
+<h3>🔎 Step-by-Step Execution</h3>
+<p>Use <strong>Next</strong> and <strong>Previous</strong> to follow the program line by line.</p>
+</div>
+</div>
+<div class="trace-workspace">
+<div class="trace-code-window">
+<div class="trace-window-title">💻 Program</div>
+<pre class="trace-code"><code></code></pre>
+</div>
+<div class="trace-detail-window">
+<div class="trace-window-title">🧠 Trace</div>
+<div class="trace-step-count"></div>
+<div class="trace-current-line"></div>
+<div class="trace-explanation"></div>
+</div>
+</div>
+<div class="trace-controls">
+<button class="trace-nav previous" onclick="tracePrevious(this)" type="button">← Previous</button>
+<button class="trace-reset" onclick="traceReset(this)" type="button">↺ Reset</button>
+<button class="trace-nav next" onclick="traceNext(this)" type="button">Next →</button>
+</div>
+</div></div></div>
 </div>
 </section>
 <div class="topic-navigation"><div class="topic-nav-side previous"><a class="primary-button" href="index.html">← Previous Topic</a></div><div class="topic-nav-side next"><span class="nav-label">Next Topic</span><strong class="nav-topic-name">🔄 Sorting</strong><a class="primary-button" href="sorting.html">Continue to Sorting →</a></div></div>
@@ -2023,6 +2864,116 @@ function searchTopics() {
     document.querySelectorAll(".sidebar details").forEach(detail => {
         if (filter) detail.open = true;
     });
+}
+
+
+const traceStates = new WeakMap();
+
+function toggleTrace(id) {
+    const panel = document.getElementById(id);
+    if (!panel) return;
+    const isOpening = !panel.classList.contains('open');
+    panel.classList.toggle('open');
+    if (isOpening && !traceStates.has(panel)) initializeTrace(panel);
+}
+
+function initializeTrace(panel) {
+    const programBox = panel.parentElement;
+    const codeElement = programBox.querySelector('pre code');
+    const codeWindow = panel.querySelector('.trace-code code');
+    if (!codeElement || !codeWindow) return;
+
+    const source = codeElement.textContent.replace(/\r/g, '').split('\n');
+    // Keep every non-empty source line so students can follow the real program.
+    const lines = source.filter(line => line.trim() !== '');
+    const state = { lines, index: 0 };
+    traceStates.set(panel, state);
+
+    codeWindow.innerHTML = lines.map((line, i) =>
+        `<span class="trace-line" data-line="${i}"><span class="trace-line-number">${i + 1}</span>${escapeTraceHtml(line)}</span>`
+    ).join('');
+
+    renderTrace(panel);
+}
+
+function escapeTraceHtml(value) {
+    return value
+        .replace(new RegExp(String.fromCharCode(38), 'g'), String.fromCharCode(38) + 'amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
+function renderTrace(panel) {
+    const state = traceStates.get(panel);
+    if (!state) return;
+    const lines = panel.querySelectorAll('.trace-line');
+    lines.forEach(line => line.classList.remove('current'));
+    const current = lines[state.index];
+    if (current) {
+        current.classList.add('current');
+        current.scrollIntoView({ block: 'nearest' });
+    }
+
+    const text = state.lines[state.index] || '';
+    panel.querySelector('.trace-step-count').textContent =
+        `Step ${state.index + 1} of ${state.lines.length}`;
+    panel.querySelector('.trace-current-line').textContent = text.trim();
+    panel.querySelector('.trace-explanation').innerHTML = traceExplanation(text, state.index, state.lines.length);
+
+    const prev = panel.querySelector('.trace-nav.previous');
+    const next = panel.querySelector('.trace-nav.next');
+    if (prev) prev.disabled = state.index === 0;
+    if (next) next.disabled = state.index === state.lines.length - 1;
+}
+
+function traceExplanation(line, index, total) {
+    const t = line.trim();
+    if (t.startsWith('#include')) return '<strong>Header inclusion:</strong> The program includes the required C standard library before execution begins.';
+    if (/^int main\s*\(/.test(t)) return '<strong>Program start:</strong> Execution enters the main function.';
+    if (/scanf\s*\(/.test(t)) return '<strong>Input:</strong> The program reads a value from the user and stores it in the specified variable or array position.';
+    if (/printf\s*\(/.test(t)) return '<strong>Output:</strong> The program sends the specified result to the screen.';
+    if (/\b(for|while)\s*\(/.test(t)) return '<strong>Loop:</strong> The loop condition is checked. If it is true, the statements inside the loop execute; otherwise execution moves ahead.';
+    if (/\bif\s*\(/.test(t)) return '<strong>Decision:</strong> The condition is evaluated. The program follows the branch only when the condition is true.';
+    if (/\belse\b/.test(t)) return '<strong>Alternative branch:</strong> This block runs when the preceding condition is false.';
+    if (/return\s+/.test(t)) return '<strong>Return:</strong> A value is sent back to the calling function, or the program/function finishes.';
+    if (/\b(int|float|double|char|long|short)\b/.test(t) && /[;=]/.test(t)) return '<strong>Variable statement:</strong> The program declares a variable and, when an assignment is present, stores the initial value.';
+    if (t.includes('{')) return '<strong>Block begins:</strong> The statements that belong to this function, loop, or condition are grouped inside this block.';
+    if (t.includes('}')) return '<strong>Block ends:</strong> Execution leaves this function, loop, or condition block and continues with the next statement.';
+    if (t.includes('++') || t.includes('--')) return '<strong>Update:</strong> A loop/control variable is changed before the next execution step.';
+    if (t.includes('=') && !t.includes('==') && !t.includes('<=') && !t.includes('>=')) return '<strong>Assignment:</strong> The expression on the right is evaluated and its value is stored in the variable on the left.';
+    if (t.includes('==') || t.includes('<') || t.includes('>')) return '<strong>Comparison:</strong> The program compares values to decide which execution path should be followed.';
+    return `<strong>Execution:</strong> The program executes this statement as part of Step ${index + 1} of ${total}.`;
+}
+
+function traceNext(button) {
+    const panel = button.closest('.trace-panel');
+    if (!panel) return;
+    if (!traceStates.has(panel)) initializeTrace(panel);
+    const state = traceStates.get(panel);
+    if (state.index < state.lines.length - 1) {
+        state.index++;
+        renderTrace(panel);
+    }
+}
+
+function tracePrevious(button) {
+    const panel = button.closest('.trace-panel');
+    if (!panel) return;
+    if (!traceStates.has(panel)) initializeTrace(panel);
+    const state = traceStates.get(panel);
+    if (state.index > 0) {
+        state.index--;
+        renderTrace(panel);
+    }
+}
+
+function traceReset(button) {
+    const panel = button.closest('.trace-panel');
+    if (!panel) return;
+    if (!traceStates.has(panel)) initializeTrace(panel);
+    const state = traceStates.get(panel);
+    state.index = 0;
+    renderTrace(panel);
 }
 </script>
 </body>
