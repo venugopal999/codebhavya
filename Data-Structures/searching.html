@@ -1,1 +1,1460 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Searching | Data Structures | CodeBhavya</title>
+
+    <link rel="icon"
+          type="image/png"
+          href="../images/codebhavya-icon-32.png">
+
+    <link rel="stylesheet"
+          href="../style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ============================
+     HEADER
+============================= -->
+
+<header class="top-header">
+
+    <a href="../index.html" class="logo">
+
+        <span class="logo-code">
+            Code
+        </span>
+
+        <span class="logo-bhavya">
+            Bhavya
+        </span>
+
+    </a>
+
+
+    <nav class="top-nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="../Maths/index.html">
+            Maths
+        </a>
+
+        <a href="../C-Programming/index.html">
+            C
+        </a>
+
+        <a href="index.html" class="active">
+            DSA
+        </a>
+
+        <a href="../Python/index.html">
+            Python
+        </a>
+
+        <a href="../AI-ML/index.html">
+            AI & ML
+        </a>
+
+        <a href="../Placement/index.html">
+            Placement
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ============================
+     DOCUMENT LAYOUT
+============================= -->
+
+<div class="docs-layout">
+
+
+<!-- ============================
+     SIDEBAR
+============================= -->
+
+<aside class="sidebar">
+
+
+    <div class="sidebar-title">
+        Data Structures
+    </div>
+
+
+    <input
+        type="text"
+        id="topicSearch"
+        class="search-box"
+        placeholder="🔍 Search topics..."
+        onkeyup="searchTopics()"
+    >
+
+
+    <a href="searching.html" class="active">
+        🔍 Searching
+    </a>
+
+
+    <a href="sorting.html">
+        🔄 Sorting
+    </a>
+
+
+    <a href="linked-list.html">
+        🔗 Linked List
+    </a>
+
+
+    <a href="stack.html">
+        📚 Stack
+    </a>
+
+
+    <a href="queue.html">
+        🚶 Queue
+    </a>
+
+
+    <a href="trees.html">
+        🌳 Trees
+    </a>
+
+
+    <a href="graphs.html">
+        🌐 Graphs
+    </a>
+
+
+</aside>
+
+
+
+<!-- ============================
+     MAIN CONTENT
+============================= -->
+
+<main class="main-content">
+
+
+    <!-- PAGE INTRO -->
+
+    <section class="subject-hero">
+
+        <span class="subject-label">
+            CODEBHAVYA • DATA STRUCTURES
+        </span>
+
+        <h1 class="page-title">
+            🔍 Searching
+        </h1>
+
+        <p class="page-description">
+            Learn searching techniques from the basics
+            to interview-level problems using C.
+        </p>
+
+    </section>
+
+
+
+    <!-- ============================
+         OVERVIEW
+    ============================= -->
+
+    <section class="content-card">
+
+        <h2>
+            📚 What is Searching?
+        </h2>
+
+        <p>
+            Searching is the process of finding a particular
+            element, called a <strong>key</strong>, inside a
+            collection of data.
+        </p>
+
+        <p>
+            Searching is one of the most frequently used
+            operations in programming and is an important
+            concept for technical interviews.
+        </p>
+
+        <div class="tip-box">
+
+            <strong>💡 Important:</strong>
+
+            The efficiency of a searching algorithm depends
+            mainly on how the data is organized.
+            For example, Binary Search requires the data
+            to be sorted.
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ============================
+         LEARNING PATH
+    ============================= -->
+
+    <section class="content-card">
+
+        <span class="section-label">
+            LEARNING PATH
+        </span>
+
+        <h2>
+            🧭 Searching Roadmap
+        </h2>
+
+        <ol>
+
+            <li>Searching fundamentals</li>
+
+            <li>Linear Search</li>
+
+            <li>Binary Search</li>
+
+            <li>Recursive Binary Search</li>
+
+            <li>First and Last Occurrence</li>
+
+            <li>Count Occurrences</li>
+
+            <li>Search in Rotated Sorted Array</li>
+
+            <li>Interview Problem Patterns</li>
+
+            <li>Complexity Analysis</li>
+
+            <li>Practice Problems</li>
+
+        </ol>
+
+    </section>
+
+
+
+    <!-- ============================
+         LINEAR SEARCH
+    ============================= -->
+
+    <section class="content-card">
+
+        <h2>
+            1. Linear Search
+        </h2>
+
+        <p>
+            Linear Search checks every element one by one
+            until the required element is found.
+        </p>
+
+        <h3>
+            How it works
+        </h3>
+
+        <ol>
+
+            <li>Start from the first element.</li>
+
+            <li>Compare the element with the key.</li>
+
+            <li>If they are equal, return the position.</li>
+
+            <li>Otherwise move to the next element.</li>
+
+            <li>If the entire array is checked, the element
+                is not present.</li>
+
+        </ol>
+
+
+        <div class="example-box">
+
+            <strong>Example:</strong>
+
+            <p>
+                Array:
+                <code>10 25 30 45 50</code>
+            </p>
+
+            <p>
+                Search key:
+                <code>45</code>
+            </p>
+
+            <p>
+                The algorithm checks:
+                <code>10 → 25 → 30 → 45</code>
+            </p>
+
+            <p class="answer">
+                45 found at index 3.
+            </p>
+
+        </div>
+
+
+        <h3>
+            C Program
+        </h3>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+
+    int n, key;
+    int found = -1;
+
+    scanf("%d", &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;arr[i]);
+    }
+
+    scanf("%d", &amp;key);
+
+    for (int i = 0; i &lt; n; i++) {
+
+        if (arr[i] == key) {
+            found = i;
+            break;
+        }
+
+    }
+
+    if (found != -1)
+        printf("Element found at index %d", found);
+    else
+        printf("Element not found");
+
+    return 0;
+}</code></pre>
+
+
+        <h3>
+            Complexity
+        </h3>
+
+        <div class="comparison-table-wrapper">
+
+            <table class="comparison-table">
+
+                <tr>
+                    <th>Case</th>
+                    <th>Time Complexity</th>
+                </tr>
+
+                <tr>
+                    <td>Best Case</td>
+                    <td>O(1)</td>
+                </tr>
+
+                <tr>
+                    <td>Average Case</td>
+                    <td>O(n)</td>
+                </tr>
+
+                <tr>
+                    <td>Worst Case</td>
+                    <td>O(n)</td>
+                </tr>
+
+                <tr>
+                    <td>Space</td>
+                    <td>O(1)</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ============================
+         BINARY SEARCH
+    ============================= -->
+
+    <section class="content-card">
+
+        <h2>
+            2. Binary Search
+        </h2>
+
+        <p>
+            Binary Search is an efficient searching algorithm
+            that repeatedly divides a <strong>sorted array</strong>
+            into two halves.
+        </p>
+
+        <div class="warning-box">
+
+            <strong>⚠️ Important:</strong>
+
+            Binary Search works correctly only when the
+            array is sorted according to the search condition.
+
+        </div>
+
+
+        <h3>
+            Basic Idea
+        </h3>
+
+        <p>
+            Instead of checking every element, Binary Search
+            checks the middle element.
+        </p>
+
+        <ul>
+
+            <li>
+                If <code>key == arr[mid]</code>, the element
+                is found.
+            </li>
+
+            <li>
+                If <code>key &lt; arr[mid]</code>, search the
+                left half.
+            </li>
+
+            <li>
+                If <code>key &gt; arr[mid]</code>, search the
+                right half.
+            </li>
+
+        </ul>
+
+
+        <h3>
+            C Program — Iterative Binary Search
+        </h3>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int binarySearch(int arr[], int n, int key) {
+
+    int low = 0;
+    int high = n - 1;
+
+    while (low &lt;= high) {
+
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == key)
+            return mid;
+
+        if (key &lt; arr[mid])
+            high = mid - 1;
+        else
+            low = mid + 1;
+    }
+
+    return -1;
+}
+
+int main() {
+
+    int n, key;
+
+    scanf("%d", &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;arr[i]);
+
+    scanf("%d", &amp;key);
+
+    int result = binarySearch(arr, n, key);
+
+    if (result != -1)
+        printf("Element found at index %d", result);
+    else
+        printf("Element not found");
+
+    return 0;
+}</code></pre>
+
+
+        <h3>
+            Complexity
+        </h3>
+
+        <div class="formula-box">
+
+            Time Complexity:
+            <strong>O(log n)</strong>
+
+            <br>
+
+            Space Complexity:
+            <strong>O(1)</strong>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ============================
+         RECURSIVE BINARY SEARCH
+    ============================= -->
+
+    <section class="content-card">
+
+        <h2>
+            3. Recursive Binary Search
+        </h2>
+
+        <p>
+            Binary Search can also be implemented using
+            recursion. The search range is reduced after
+            every recursive call.
+        </p>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int binarySearch(int arr[], int low, int high, int key) {
+
+    if (low &gt; high)
+        return -1;
+
+    int mid = low + (high - low) / 2;
+
+    if (arr[mid] == key)
+        return mid;
+
+    if (key &lt; arr[mid])
+        return binarySearch(arr, low, mid - 1, key);
+
+    return binarySearch(arr, mid + 1, high, key);
+}
+
+int main() {
+
+    int arr[] = {10, 20, 30, 40, 50, 60};
+
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int key = 40;
+
+    int result =
+        binarySearch(arr, 0, n - 1, key);
+
+    printf("%d", result);
+
+    return 0;
+}</code></pre>
+
+        <div class="tip-box">
+
+            <strong>Interview Tip:</strong>
+
+            Use
+
+            <code>low + (high - low) / 2</code>
+
+            instead of
+
+            <code>(low + high) / 2</code>
+
+            to avoid integer overflow in languages where
+            integer overflow is a concern.
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ============================
+         FIRST OCCURRENCE
+    ============================= -->
+
+    <section class="content-card">
+
+        <h2>
+            4. First Occurrence of an Element
+        </h2>
+
+        <p>
+            When duplicate elements are present, normal
+            Binary Search may return any occurrence.
+        </p>
+
+        <p>
+            To find the <strong>first occurrence</strong>,
+            continue searching toward the left even after
+            finding the key.
+        </p>
+
+<pre><code>int firstOccurrence(int arr[], int n, int key) {
+
+    int low = 0;
+    int high = n - 1;
+    int answer = -1;
+
+    while (low &lt;= high) {
+
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == key) {
+
+            answer = mid;
+            high = mid - 1;
+
+        }
+        else if (arr[mid] &lt; key) {
+
+            low = mid + 1;
+
+        }
+        else {
+
+            high = mid - 1;
+
+        }
+    }
+
+    return answer;
+}</code></pre>
+
+    </section>
+
+
+
+    <!-- ============================
+         LAST OCCURRENCE
+    ============================= -->
+
+    <section class="content-card">
+
+        <h2>
+            5. Last Occurrence of an Element
+        </h2>
+
+        <p>
+            To find the last occurrence, continue searching
+            toward the right after finding the key.
+        </p>
+
+<pre><code>int lastOccurrence(int arr[], int n, int key) {
+
+    int low = 0;
+    int high = n - 1;
+    int answer = -1;
+
+    while (low &lt;= high) {
+
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == key) {
+
+            answer = mid;
+            low = mid + 1;
+
+        }
+        else if (arr[mid] &lt; key) {
+
+            low = mid + 1;
+
+        }
+        else {
+
+            high = mid - 1;
+
+        }
+    }
+
+    return answer;
+}</code></pre>
+
+    </section>
+
+
+
+    <!-- ============================
+         COUNT OCCURRENCES
+    ============================= -->
+
+    <section class="content-card">
+
+        <h2>
+            6. Count Occurrences
+        </h2>
+
+        <p>
+            In a sorted array, the number of occurrences
+            of an element can be found efficiently using
+            its first and last positions.
+        </p>
+
+        <div class="formula-box">
+
+            Count =
+            <strong>
+                Last Position − First Position + 1
+            </strong>
+
+        </div>
+
+        <div class="example-box">
+
+            <strong>Example:</strong>
+
+            <p>
+                Array:
+                <code>1 2 2 2 3 4</code>
+            </p>
+
+            <p>
+                First occurrence of 2 = index 1
+            </p>
+
+            <p>
+                Last occurrence of 2 = index 3
+            </p>
+
+            <p class="answer">
+                Count = 3 − 1 + 1 = 3
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ============================
+         ROTATED ARRAY
+    ============================= -->
+
+    <section class="content-card">
+
+        <h2>
+            7. Search in a Rotated Sorted Array
+        </h2>
+
+        <p>
+            A sorted array can be rotated around a pivot.
+            For example:
+        </p>
+
+        <div class="formula-box">
+
+            1 2 3 4 5 6 7
+
+            <br>
+
+            ↓ rotation
+
+            <br>
+
+            4 5 6 7 1 2 3
+
+        </div>
+
+        <p>
+            We can still perform searching in
+            <strong>O(log n)</strong> by determining which
+            half of the array is sorted.
+        </p>
+
+
+        <h3>
+            C Implementation
+        </h3>
+
+<pre><code>int searchRotated(int arr[], int n, int key) {
+
+    int low = 0;
+    int high = n - 1;
+
+    while (low &lt;= high) {
+
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == key)
+            return mid;
+
+        /* Left half is sorted */
+
+        if (arr[low] &lt;= arr[mid]) {
+
+            if (arr[low] &lt;= key &amp;&amp;
+                key &lt; arr[mid]) {
+
+                high = mid - 1;
+
+            } else {
+
+                low = mid + 1;
+
+            }
+
+        }
+
+        /* Right half is sorted */
+
+        else {
+
+            if (arr[mid] &lt; key &amp;&amp;
+                key &lt;= arr[high]) {
+
+                low = mid + 1;
+
+            } else {
+
+                high = mid - 1;
+
+            }
+        }
+    }
+
+    return -1;
+}</code></pre>
+
+    </section>
+
+
+
+    <!-- ============================
+         COMPARISON
+    ============================= -->
+
+    <section class="content-card">
+
+        <h2>
+            8. Searching Algorithm Comparison
+        </h2>
+
+        <div class="comparison-table-wrapper">
+
+            <table class="comparison-table">
+
+                <tr>
+
+                    <th>
+                        Algorithm
+                    </th>
+
+                    <th>
+                        Data Requirement
+                    </th>
+
+                    <th>
+                        Best
+                    </th>
+
+                    <th>
+                        Average
+                    </th>
+
+                    <th>
+                        Worst
+                    </th>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Linear Search
+                    </td>
+
+                    <td>
+                        Sorted or Unsorted
+                    </td>
+
+                    <td>
+                        O(1)
+                    </td>
+
+                    <td>
+                        O(n)
+                    </td>
+
+                    <td>
+                        O(n)
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Binary Search
+                    </td>
+
+                    <td>
+                        Sorted
+                    </td>
+
+                    <td>
+                        O(1)
+                    </td>
+
+                    <td>
+                        O(log n)
+                    </td>
+
+                    <td>
+                        O(log n)
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Rotated Binary Search
+                    </td>
+
+                    <td>
+                        Rotated Sorted Array
+                    </td>
+
+                    <td>
+                        O(1)
+                    </td>
+
+                    <td>
+                        O(log n)
+                    </td>
+
+                    <td>
+                        O(log n)
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ============================
+         INTERVIEW PATTERNS
+    ============================= -->
+
+    <section class="content-card">
+
+        <span class="section-label">
+            INTERVIEW PREPARATION
+        </span>
+
+        <h2>
+            🎯 Important Searching Patterns
+        </h2>
+
+        <ul>
+
+            <li>
+                Find an element in an array.
+            </li>
+
+            <li>
+                Find first occurrence of an element.
+            </li>
+
+            <li>
+                Find last occurrence of an element.
+            </li>
+
+            <li>
+                Count occurrences in a sorted array.
+            </li>
+
+            <li>
+                Find lower bound.
+            </li>
+
+            <li>
+                Find upper bound.
+            </li>
+
+            <li>
+                Find insertion position.
+            </li>
+
+            <li>
+                Search in a rotated sorted array.
+            </li>
+
+            <li>
+                Find the minimum element in a rotated array.
+            </li>
+
+            <li>
+                Find the peak element.
+            </li>
+
+            <li>
+                Search for an answer using Binary Search.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+
+    <!-- ============================
+         BINARY SEARCH ON ANSWER
+    ============================= -->
+
+    <section class="content-card">
+
+        <h2>
+            9. Binary Search on Answer
+        </h2>
+
+        <p>
+            One of the most important interview techniques
+            is using Binary Search not directly on an array,
+            but on a possible range of answers.
+        </p>
+
+        <p>
+            This technique is commonly called
+            <strong>Binary Search on Answer</strong>.
+        </p>
+
+        <div class="tip-box">
+
+            <strong>💡 Recognize the pattern:</strong>
+
+            If the answer lies in a range and you can
+            determine whether a particular answer is
+            possible, Binary Search may be applicable.
+
+        </div>
+
+        <h3>
+            Common Examples
+        </h3>
+
+        <ul>
+
+            <li>
+                Minimum capacity problems
+            </li>
+
+            <li>
+                Minimum maximum distance
+            </li>
+
+            <li>
+                Allocate books
+            </li>
+
+            <li>
+                Painter partition problems
+            </li>
+
+            <li>
+                Aggressive cows
+            </li>
+
+        </ul>
+
+    </section>
+
+
+
+    <!-- ============================
+         INTERVIEW TIPS
+    ============================= -->
+
+    <section class="content-card">
+
+        <h2>
+            🏆 Interview Tips
+        </h2>
+
+        <div class="tip-box">
+
+            <strong>Tip 1:</strong>
+
+            Always check whether the array is sorted before
+            choosing Binary Search.
+
+        </div>
+
+        <div class="tip-box">
+
+            <strong>Tip 2:</strong>
+
+            Be careful with the boundary conditions:
+            <code>low</code>, <code>high</code> and
+            <code>mid</code>.
+
+        </div>
+
+        <div class="tip-box">
+
+            <strong>Tip 3:</strong>
+
+            Learn the difference between finding any
+            occurrence, first occurrence and last occurrence.
+
+        </div>
+
+        <div class="tip-box">
+
+            <strong>Tip 4:</strong>
+
+            Many difficult interview problems are actually
+            Binary Search problems disguised as optimization
+            problems.
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ============================
+         PRACTICE
+    ============================= -->
+
+    <section class="content-card">
+
+        <span class="section-label">
+            PRACTICE
+        </span>
+
+        <h2>
+            💻 Searching Practice
+        </h2>
+
+        <p>
+            Practice these problems after completing
+            the concepts above.
+        </p>
+
+
+        <div class="practice-question">
+
+            <strong>
+                1. Implement Linear Search in C.
+            </strong>
+
+        </div>
+
+
+        <div class="practice-question">
+
+            <strong>
+                2. Implement Iterative Binary Search.
+            </strong>
+
+        </div>
+
+
+        <div class="practice-question">
+
+            <strong>
+                3. Implement Recursive Binary Search.
+            </strong>
+
+        </div>
+
+
+        <div class="practice-question">
+
+            <strong>
+                4. Find the first occurrence of a given
+                element in a sorted array.
+            </strong>
+
+        </div>
+
+
+        <div class="practice-question">
+
+            <strong>
+                5. Find the last occurrence of a given
+                element in a sorted array.
+            </strong>
+
+        </div>
+
+
+        <div class="practice-question">
+
+            <strong>
+                6. Count the occurrences of an element
+                in a sorted array.
+            </strong>
+
+        </div>
+
+
+        <div class="practice-question">
+
+            <strong>
+                7. Search for an element in a rotated
+                sorted array.
+            </strong>
+
+        </div>
+
+
+        <div class="practice-question">
+
+            <strong>
+                8. Find the minimum element in a rotated
+                sorted array.
+            </strong>
+
+        </div>
+
+
+        <div class="practice-question">
+
+            <strong>
+                9. Find the peak element in an array.
+            </strong>
+
+        </div>
+
+
+        <div class="practice-question">
+
+            <strong>
+                10. Find the insertion position of an
+                element in a sorted array.
+            </strong>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ============================
+         TOPIC NAVIGATION
+    ============================= -->
+
+    <div class="topic-navigation">
+
+        <span></span>
+
+        <a href="sorting.html"
+           class="next-topic">
+
+            Next Topic: Sorting →
+
+        </a>
+
+    </div>
+
+
+</main>
+
+</div>
+
+
+
+<!-- ============================
+     FOOTER
+============================= -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+
+        <!-- BRAND -->
+
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+
+                <span class="footer-code">
+                    Code
+                </span>
+
+                <span class="footer-bhavya">
+                    Bhavya
+                </span>
+
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="footer-column">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../Maths/index.html">
+                Maths
+            </a>
+
+            <a href="../C-Programming/">
+                C Programming
+            </a>
+
+        </div>
+
+
+
+        <!-- LEARNING -->
+
+        <div class="footer-column">
+
+            <h3>
+                Learning
+            </h3>
+
+            <a href="index.html">
+                Data Structures
+            </a>
+
+            <a href="#">
+                Python
+            </a>
+
+            <a href="#">
+                AI & Machine Learning
+            </a>
+
+        </div>
+
+
+
+        <!-- PRACTICE -->
+
+        <div class="footer-column">
+
+            <h3>
+                Practice
+            </h3>
+
+            <a href="#">
+                Practice Problems
+            </a>
+
+            <a href="#">
+                Problem Solving
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<!-- ============================
+     SEARCH SCRIPT
+============================= -->
+
+<script>
+
+function searchTopics() {
+
+    const input =
+        document.getElementById("topicSearch");
+
+    const filter =
+        input.value.toLowerCase();
+
+    const links =
+        document.querySelectorAll(".sidebar a");
+
+    links.forEach(function(link) {
+
+        const text =
+            link.textContent.toLowerCase();
+
+        if (text.includes(filter)) {
+
+            link.style.display = "block";
+
+        } else {
+
+            link.style.display = "none";
+
+        }
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>
+```
 
