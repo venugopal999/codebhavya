@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -564,7 +565,7 @@ int main() {
     <div class="cb-tracer-controls">
       <button onclick="cbLinearTracer.prev()">← Previous</button>
       <button onclick="cbLinearTracer.reset()">↺ Reset</button>
-      <button onclick="cbLinearTracer.next()">Next →</button>
+      <button onclick="cbLinearTracer.next()" id="cbLinearNext">Next →</button>
       <button onclick="cbLinearTracer.autoRun()" id="cbLinearAuto">▶ Auto Run</button>
     </div>
     <div id="cbLinearStatus" class="cb-tracer-status">Ready to execute.</div>
@@ -2235,12 +2236,14 @@ const cbLinearTracer = {
   render(){
     const code=document.getElementById('cbLinearCode');if(!code)return;
     code.innerHTML=cbLinearProgram.map((line,i)=>`<span class="cb-code-line ${i===this.activeLine()?'active':''}">${i===this.activeLine()?'👉 ': '   '}${this.escape(line)}</span>`).join('');
-    /* Keep the currently executing statement visible inside the code window. */
+    /* Keep the currently executing statement centered inside the code window. */
     requestAnimationFrame(()=>{
       const active=code.querySelector('.cb-code-line.active');
       if(active){
-        const target=active.offsetTop - (code.clientHeight/2) + (active.offsetHeight/2);
-        code.scrollTop=Math.max(0, Math.min(target, code.scrollHeight-code.clientHeight));
+        const activeTop = active.offsetTop - code.offsetTop;
+        const target = activeTop - (code.clientHeight / 2) + (active.offsetHeight / 2);
+        const maxScroll = Math.max(0, code.scrollHeight - code.clientHeight);
+        code.scrollTop = Math.max(0, Math.min(target, maxScroll));
       }
     });
     const step=this.current>0?this.steps[this.current-1]:this.steps[0];
@@ -2259,7 +2262,13 @@ const cbLinearTracer = {
     }
     const op=this.current===0?'':(step.op||'');document.getElementById('cbLinearOperation').innerHTML=op?`<strong>⚡ Current operation:</strong> ${this.escape(op)}`:'';
     const status=document.getElementById('cbLinearStatus');status.textContent=this.current>=this.steps.length?'✓ Program execution completed.':`Step ${this.current} of ${this.steps.length}`;
-    document.querySelector('#cbLinearAuto').disabled=!!this.timer||this.current>=this.steps.length;
+    const completed=this.current>=this.steps.length;
+    document.querySelector('#cbLinearAuto').disabled=!!this.timer||completed;
+    const nextButton=document.querySelector('#cbLinearNext');
+    if(nextButton){
+      nextButton.disabled=completed;
+      nextButton.textContent=completed?'✓ Completed':'Next →';
+    }
   },
   activeLine(){if(this.current===0)return 0;return this.steps[Math.min(this.current-1,this.steps.length-1)].line;},
   escape(v){return v.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
