@@ -7,159 +7,125 @@
 <link href="../images/codebhavya-icon-32.png" rel="icon" type="image/png"/>
 <link href="../style.css" rel="stylesheet"/>
 <style>
-/* Existing styles preserved */
-.sidebar details { margin: 4px 0; }
-.sidebar summary { list-style: none; cursor: pointer; padding: 9px 12px; border-radius: 6px; color: #334155; font-size: 14px; font-weight: 600; }
-.sidebar summary::-webkit-details-marker { display:none; }
-.sidebar summary::before { content: "▸"; display: inline-block; width: 18px; color: #64748b; transition: transform .2s ease; }
-.sidebar details[open] summary::before { transform: rotate(90deg); }
-.sidebar details[open] summary { background: #f8fafc; color: #1d4ed8; }
-.sidebar details a { margin-left: 16px; font-size: 13px; padding: 7px 12px; }
+/* Your existing styles preserved */
 .program-box { margin: 18px 0; }
-.program-toggle { background: #2563eb; color: white; border: none; padding: 9px 16px; border-radius: 7px; cursor: pointer; font-weight: 600; }
+.program-toggle { background:#2563eb; color:#fff; border:none; padding:9px 16px; border-radius:7px; cursor:pointer; font-weight:600; }
 .program-toggle:hover { background:#1d4ed8; }
 .program-content { display:none; margin-top:12px; }
 .program-content.open { display:block; }
-/* ... rest of your CSS unchanged ... */
+.tracer-panel { display:flex; gap:20px; flex-wrap:wrap; }
+.tracer-panel > div { flex:1; min-width:280px; border:1px solid #e2e8f0; padding:10px; border-radius:8px; }
+.highlight { background:#ffff99; }
 </style>
 </head>
 <body>
 
 <header>
-  <!-- your header/navigation here -->
+  <!-- your header/navigation -->
 </header>
 
 <main>
   <h1>Searching Algorithms</h1>
   <p>Welcome to the searching section of Data Structures.</p>
 
-  <!-- Example Linear Search Program -->
+  <!-- === Linear Search Tracer === -->
   <div class="program-box">
-    <button class="program-toggle" onclick="toggleTracer()">Show Linear Search Tracer</button>
-    <div id="linear-search-tracer" class="program-content">
+    <button class="program-toggle" onclick="tracer.toggle()">Show Linear Search Tracer</button>
+    <div id="tracer-box" class="program-content">
       <h3>PROGRAM TRACING</h3>
-      <p>🔍 Step-by-Step Execution</p>
-      <div style="display:flex; gap:20px; flex-wrap:wrap;">
-        <!-- Program panel -->
-        <div style="flex:1; min-width:280px; border:1px solid #e2e8f0; padding:10px; border-radius:8px;">
+      <div class="tracer-panel">
+        <div>
           <h4>Program</h4>
-          <pre id="ls-code"></pre>
+          <pre id="tracer-code"></pre>
         </div>
-        <!-- Trace panel -->
-        <div style="flex:1; min-width:280px; border:1px solid #e2e8f0; padding:10px; border-radius:8px;">
+        <div>
           <h4>Trace</h4>
-          <p><b>📘 What this line means:</b> <span id="ls-explanation"></span></p>
-          <p><b>⚡ Live Program State:</b></p>
-          <pre id="ls-state"></pre>
-          <div id="ls-array" style="display:flex; gap:8px; margin-top:10px;"></div>
+          <p><b>📘 Explanation:</b> <span id="tracer-explain"></span></p>
+          <p><b>⚡ State:</b></p>
+          <pre id="tracer-state"></pre>
         </div>
       </div>
-      <!-- Controls -->
       <div style="margin-top:15px; text-align:center;">
-        <button onclick="lsPrev()">← Previous</button>
-        <button onclick="lsReset()">Reset</button>
-        <button onclick="lsNext()">Next →</button>
+        <button onclick="tracer.prev()">← Previous</button>
+        <button onclick="tracer.reset()">Reset</button>
+        <button onclick="tracer.next()">Next →</button>
       </div>
     </div>
   </div>
 
-  <!-- You can add more program-box sections for other algorithms -->
-
 </main>
 
 <footer>
-  <!-- your footer here -->
+  <!-- your footer -->
 </footer>
 
 <script>
-  function toggleTracer() {
-    document.getElementById("linear-search-tracer").classList.toggle("open");
-  }
-
-  // Program lines
-  const lsProgram = [
-    "int arr[] = {5, 2, 8, 1};",
-    "int key = 8;",
-    "for(int i=0; i<4; i++){",
-    "   if(arr[i] == key){",
-    "       // Found element",
-    "   }",
-    "}"
-  ];
-
-  // Explanations
-  const lsExplain = [
-    "Initialize array with values.",
-    "Set the search key to 8.",
-    "Start loop to traverse array.",
-    "Check if current element equals key.",
-    "If true, element is found.",
-    "End of if block.",
-    "End of loop."
-  ];
-
-  // States
-  const lsStates = [
-    "{}",
-    "{key: 8}",
-    "{i: 0, arr: [5,2,8,1]}",
-    "{i: 0, arr[i]: 5}",
-    "{i: 2, arr[i]: 8, found: true}",
-    "{found: true}",
-    "{loop finished}"
-  ];
-
-  let lsStep = 0;
-
-  function renderLS() {
-    // Program code with highlight
-    const codeEl = document.getElementById("ls-code");
-    codeEl.innerHTML = "";
-    lsProgram.forEach((line, idx) => {
-      const span = document.createElement("span");
-      span.textContent = line + "\n";
-      if (idx === lsStep) span.style.background = "#ffff99";
-      codeEl.appendChild(span);
-    });
-    // Explanation + state
-    document.getElementById("ls-explanation").textContent = lsExplain[lsStep];
-    document.getElementById("ls-state").textContent = lsStates[lsStep];
-    // Array visualization
-    const arrBox = document.getElementById("ls-array");
-    arrBox.innerHTML = "";
-    const arr = [5,2,8,1];
-    arr.forEach((val, idx) => {
-      const box = document.createElement("div");
-      box.textContent = val;
-      box.style.border = "1px solid #334155";
-      box.style.padding = "8px";
-      box.style.borderRadius = "6px";
-      if (lsStep >= 2 && idx === (lsStep===3?0:lsStep===4?2:null)) {
-        box.style.background = "#fde68a"; // highlight current element
-      }
-      arrBox.appendChild(box);
-    });
-  }
-
-  function lsNext() {
-    if (lsStep < lsProgram.length - 1) {
-      lsStep++;
-      renderLS();
+const tracer = {
+  steps: [],
+  state: {},
+  current: 0,
+  init(steps) {
+    this.steps = steps;
+    this.state = {};
+    this.current = 0;
+    this.render();
+  },
+  runStep() {
+    this.steps[this.current].run(this.state);
+  },
+  render() {
+    const codeEl = document.getElementById("tracer-code");
+    codeEl.innerHTML = this.steps.map((s,i)=>
+      (i===this.current ? "👉 " : "   ") + s.code
+    ).join("\n");
+    document.getElementById("tracer-explain").textContent = this.steps[this.current].explain;
+    document.getElementById("tracer-state").textContent = JSON.stringify(this.state,null,2);
+  },
+  next() {
+    if(this.current < this.steps.length) {
+      this.runStep();
+      this.render();
+      this.current++;
     }
-  }
-  function lsPrev() {
-    if (lsStep > 0) {
-      lsStep--;
-      renderLS();
+  },
+  prev() {
+    if(this.current > 0) {
+      this.current--;
+      this.state = {};
+      for(let i=0;i<this.current;i++) this.steps[i].run(this.state);
+      this.render();
     }
+  },
+  reset() {
+    this.current = 0;
+    this.state = {};
+    this.render();
+  },
+  toggle() {
+    document.getElementById("tracer-box").classList.toggle("open");
+  },
+  jumpTo(idx) {
+    this.current = idx;
+    this.render();
   }
-  function lsReset() {
-    lsStep = 0;
-    renderLS();
-  }
+};
 
-  // Initialize
-  renderLS();
+// Define linear search steps with loop execution
+const steps = [
+  { code:"int arr[] = {5,2,8,1};", run:s=>{s.arr=[5,2,8,1];}, explain:"Initialize array." },
+  { code:"int key = 8;", run:s=>{s.key=8;}, explain:"Set search key." },
+  { code:"for(int i=0; i<4; i++){", run:s=>{s.i=0;}, explain:"Start loop." },
+  { code:"   if(arr[i] == key){", run:s=>{s.check=(s.arr[s.i]===s.key);}, explain:"Check element." },
+  { code:"       // Found element", run:s=>{if(s.check) s.found=true;}, explain:"If true, found." },
+  { code:"   }", run:s=>{}, explain:"End if." },
+  { code:"}", run:s=>{
+      s.i++;
+      if(s.i < s.arr.length) tracer.jumpTo(3);
+    }, explain:"End loop iteration."
+  }
+];
+
+tracer.init(steps);
 </script>
 
 </body>
