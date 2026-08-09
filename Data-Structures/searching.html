@@ -2081,7 +2081,7 @@ const cbLinearTracer = {
     this.steps=[];
     const add=(line,explain,mutate,op='')=>this.steps.push({line,explain,mutate,op});
     add(0,'The program starts execution.',s=>{},'Program begins.');
-    add(3,'The variables are declared. position starts at -1, meaning the target has not been found.',s=>{s.n=5;s.target=key;s.i='—';s.position=-1;},'position = -1 → not found yet.');
+    add(3,'The variables are declared. Only position is initialized here with -1. The variables n, target, and i are declared but do not have meaningful values yet.',s=>{s.n='indeterminate';s.target='indeterminate';s.i='indeterminate';s.position=-1;},'position = -1 → initialized; n, target and i → indeterminate');
     add(5,'The program reads the number of elements: n = 5.',s=>{s.n=5;},'Input: n = 5');
     add(7,'An integer array of size 5 is created. The values have not been read yet.',s=>{s.a=['—','—','—','—','—'];},'Array allocated with 5 positions.');
     for(let i=0;i<a.length;i++) add(10,'The program reads the next array element.',s=>{if(!Array.isArray(s.a))s.a=['—','—','—','—','—'];s.a[i]=a[i];s.inputIndex=i;},`a[${i}] = ${a[i]}`);
