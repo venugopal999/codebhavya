@@ -2084,7 +2084,7 @@ const cbLinearTracer = {
     add(3,'The variables are declared. Only position is initialized here with -1. The variables n, target, and i are declared but do not have meaningful values yet.',s=>{s.n='indeterminate';s.target='indeterminate';s.i='indeterminate';s.position=-1;},'position = -1 → initialized; n, target and i → indeterminate');
     add(5,'The program reads the number of elements: n = 5.',s=>{s.n=5;},'Input: n = 5');
     add(7,'An integer array of size 5 is created. The values have not been read yet.',s=>{s.a=['—','—','—','—','—'];},'Array allocated with 5 positions.');
-    for(let i=0;i<a.length;i++) add(10,'The program reads the next array element.',s=>{if(!Array.isArray(s.a))s.a=['—','—','—','—','—'];s.a[i]=a[i];s.inputIndex=i;},`a[${i}] = ${a[i]}`);
+    for(let i=0;i<a.length;i++) add(10,'The program reads the next array element.',s=>{if(!Array.isArray(s.a))s.a=['—','—','—','—','—'];s.a[i]=a[i];s.inputIndex=i;s.i=i;},`i = ${i}; read a[${i}] = ${a[i]}`);
     add(12,'The target value is read. The program must search for 25.',s=>{s.target=key;delete s.inputIndex;},'target = 25');
     add(14,'The for loop starts. i is initialized to 0.',s=>{s.i=0;delete s.current;delete s.check;},'i = 0');
     for(let i=0;i<a.length;i++){
@@ -2116,8 +2116,13 @@ const cbLinearTracer = {
     if(this.state.check!==undefined)vars['comparison']=this.state.check?'TRUE':'FALSE';
     if(this.state.output!==undefined)vars['output']=this.state.output;
     document.getElementById('cbLinearVars').innerHTML=Object.keys(vars).length?Object.entries(vars).map(([k,v])=>`<div class="cb-var"><strong>${this.escape(k)}</strong><span>${this.escape(String(v))}</span></div>`).join(''):'<div class="cb-var"><strong>State</strong><span>Not started</span></div>';
-    const arr=this.state.a||['—','—','—','—','—'];const current=this.state.i;
-    document.getElementById('cbLinearArray').innerHTML='<div class="cb-array-row">'+arr.map((v,i)=>`<div class="cb-array-cell ${i===current?'current ':''}${this.state.check&&i===current?'match':''}"><div class="cb-array-index">index ${i}</div><div class="cb-array-value">${this.escape(String(v))}</div></div>`).join('')+'</div>';
+    const current=this.state.i;
+    if(!Array.isArray(this.state.a)){
+      document.getElementById('cbLinearArray').innerHTML='<div style="padding:12px;color:#64748b;">Array has not been declared yet.</div>';
+    } else {
+      const arr=this.state.a;
+      document.getElementById('cbLinearArray').innerHTML='<div class="cb-array-row">'+arr.map((v,i)=>`<div class="cb-array-cell ${i===current?'current ':''}${this.state.check&&i===current?'match':''}"><div class="cb-array-index">index ${i}</div><div class="cb-array-value">${this.escape(String(v))}</div></div>`).join('')+'</div>';
+    }
     const op=this.current===0?'':(step.op||'');document.getElementById('cbLinearOperation').innerHTML=op?`<strong>⚡ Current operation:</strong> ${this.escape(op)}`:'';
     const status=document.getElementById('cbLinearStatus');status.textContent=this.current>=this.steps.length?'✓ Program execution completed.':`Step ${this.current} of ${this.steps.length}`;
     document.querySelector('#cbLinearAuto').disabled=!!this.timer||this.current>=this.steps.length;
