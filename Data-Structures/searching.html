@@ -2352,10 +2352,33 @@ const cbBinaryTracer = {
     const active=this.activeLine();
     codeEl.innerHTML=cbBinaryProgram.map((line,i)=>`<span class="cb-binary-code-line ${i===active?'active':''}">${i===active?'👉 ':'   '}${this.escape(line)}</span>`).join('');
     requestAnimationFrame(()=>{
-      const activeEl=codeEl.querySelector('.cb-binary-code-line.active');
-      if(activeEl){
-        const targetTop = Math.max(0, activeEl.offsetTop - (codeEl.clientHeight - activeEl.offsetHeight) / 2);
-        codeEl.scrollTo({top:targetTop, behavior:'smooth'});
+      const activeEl = codeEl.querySelector('.cb-binary-code-line.active');
+      if(!activeEl) return;
+
+      /*
+       * Keep the active statement visible without unnecessarily moving
+       * the whole program window. Only scroll when the active line is
+       * approaching/outside the visible area.
+       */
+      const padding = 32;
+      const lineTop = activeEl.offsetTop;
+      const lineBottom = lineTop + activeEl.offsetHeight;
+      const visibleTop = codeEl.scrollTop + padding;
+      const visibleBottom = codeEl.scrollTop + codeEl.clientHeight - padding;
+
+      if(lineTop < visibleTop){
+        codeEl.scrollTo({
+          top: Math.max(0, lineTop - padding),
+          behavior: 'smooth'
+        });
+      } else if(lineBottom > visibleBottom){
+        codeEl.scrollTo({
+          top: Math.min(
+            codeEl.scrollHeight - codeEl.clientHeight,
+            lineBottom - codeEl.clientHeight + padding
+          ),
+          behavior: 'smooth'
+        });
       }
     });
 
