@@ -2291,7 +2291,27 @@ const cbBinaryTracer = {
     add(3,'The variables are declared. Only position is initialized to -1. The variables n, target, low, high and mid are declared but do not have meaningful values yet.',s=>{s.n='indeterminate';s.target='indeterminate';s.low='indeterminate';s.high='indeterminate';s.mid='indeterminate';s.position=-1;},'position = -1 → initialized; n, target, low, high and mid → indeterminate');
     add(5,'The program reads the number of elements. n becomes 7.',s=>{s.n=7;},'Input: n = 7');
     add(6,'An integer array of size 7 is created. The values have not been read yet.',s=>{s.a=['—','—','—','—','—','—','—'];},'Array allocated with 7 positions.');
-    for(let i=0;i<a.length;i++) add(8,'The array-input loop executes. The current index is i = '+i+' and the next input value is stored in a[i].',s=>{if(!Array.isArray(s.a))s.a=['—','—','—','—','—','—','—'];s.a[i]=a[i];s.i=i;},`i = ${i}; read a[${i}] = ${a[i]}`);
+    // Execute the array-input loop visibly: enter the for loop, execute scanf,
+    // increment i, check the condition again, and repeat for every element.
+    for(let i=0;i<a.length;i++) {
+      add(8,
+        i===0
+          ? 'The for loop initializes i to 0 and checks whether i < n. Since 0 < 7, the loop body will execute.'
+          : `The previous iteration finished. i is incremented to ${i} and the condition i < n is checked. Since ${i} < 7, the loop body will execute.`,
+        s=>{s.i=i;},
+        i===0 ? 'i = 0; 0 < 7 → TRUE' : `i = ${i}; ${i} < 7 → TRUE`
+      );
+      add(9,
+        `The loop body executes scanf and stores the next input value in a[${i}].`,
+        s=>{if(!Array.isArray(s.a))s.a=['—','—','—','—','—','—','—'];s.a[i]=a[i];s.i=i;},
+        `scanf → a[${i}] = ${a[i]}`
+      );
+    }
+    add(8,
+      'The last loop iteration finishes. i is incremented to 7 and the condition 7 < 7 is false, so the array-input loop ends.',
+      s=>{s.i=7;},
+      'i = 7; 7 < 7 → FALSE → exit loop'
+    );
     add(11,'The target value is read. The program must search for 25.',s=>{s.target=key;delete s.i;},'target = 25');
     add(13,'low is initialized to 0, so the search starts at the first array position.',s=>{s.low=0;},'low = 0');
     add(14,'high is initialized to n - 1. For n = 7, high becomes 6.',s=>{s.high=6;},'high = n - 1 = 6');
@@ -2310,9 +2330,9 @@ const cbBinaryTracer = {
     add(19,'The program compares a[4] with the target. Both are 25, so the target is found.',s=>{s.current=25;s.check=true;},'a[4] = 25 == 25 → TRUE');
     add(20,'position is assigned the value of mid, so position becomes 4.',s=>{s.position=4;s.found=true;},'position = mid = 4');
     add(21,'The break statement exits the while loop immediately because the target has been found.',s=>{s.broken=true;},'break → exit loop');
-    add(27,'The final if condition checks position != -1. Since position is 4, the condition is true.',s=>{s.output='Element found at index 4';},'position != -1 → TRUE');
-    add(28,'The program prints the found position.',s=>{s.output='Element found at index 4';},'Output: Element found at index 4');
-    add(32,'The program returns 0, indicating successful completion.',s=>{s.done=true;},'return 0');
+    add(29,'The final if condition checks position != -1. Since position is 4, the condition is true.',s=>{s.output='Element found at index 4';},'position != -1 → TRUE');
+    add(30,'The program prints the found position.',s=>{s.output='Element found at index 4';},'Output: Element found at index 4');
+    add(34,'The program returns 0, indicating successful completion.',s=>{s.done=true;},'return 0');
   },
   toggle(){
     const box=document.getElementById('cbBinaryTracer');
@@ -2333,7 +2353,10 @@ const cbBinaryTracer = {
     codeEl.innerHTML=cbBinaryProgram.map((line,i)=>`<span class="cb-binary-code-line ${i===active?'active':''}">${i===active?'👉 ':'   '}${this.escape(line)}</span>`).join('');
     requestAnimationFrame(()=>{
       const activeEl=codeEl.querySelector('.cb-binary-code-line.active');
-      if(activeEl)activeEl.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'});
+      if(activeEl){
+        const targetTop = Math.max(0, activeEl.offsetTop - (codeEl.clientHeight - activeEl.offsetHeight) / 2);
+        codeEl.scrollTo({top:targetTop, behavior:'smooth'});
+      }
     });
 
     const step=this.current===0?{explain:'Press Next to start executing the program.',op:''}:this.steps[Math.min(this.current-1,this.steps.length-1)];
