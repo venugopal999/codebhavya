@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -250,6 +251,45 @@
         margin-left: 0;
         flex-wrap: wrap;
     }
+}
+
+/* ===== CodeBhavya Binary Search Tracer ===== */
+.cb-binary-tracer-wrap{margin-top:10px}
+.cb-binary-tracer{margin-top:8px;background:#f8fafc;border:1px solid #dbe3ec;border-radius:12px;padding:12px;overflow-x:auto;scrollbar-width:thin}
+.cb-binary-title{text-align:center;font-weight:800;letter-spacing:1.5px;color:#0f172a;margin-bottom:9px}
+.cb-binary-grid{display:grid;grid-template-columns:minmax(360px,1.08fr) minmax(330px,.92fr);gap:10px;min-width:710px}
+.cb-binary-panel{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:9px}
+.cb-binary-panel h4{margin:0 0 7px;color:#0f172a;font-size:14px}
+.cb-binary-panel pre{margin:0;background:#0f172a;color:#e2e8f0;border-radius:7px;padding:10px;overflow:auto;font-family:Consolas,"Courier New",monospace;font-size:12.5px;line-height:1.5;height:340px;max-height:340px;white-space:pre;scrollbar-width:thin}
+.cb-binary-code-line{display:block;padding:1px 5px;border-radius:4px;white-space:pre;scroll-margin-block:120px}
+.cb-binary-code-line.active{background:#334155;color:#fff;font-weight:700;box-shadow:inset 4px 0 #d4af37}
+.cb-binary-explain{background:#f8fafc;border-left:4px solid #8cc8f0;border-radius:6px;padding:8px;margin-bottom:7px;line-height:1.5;color:#334155;min-height:40px}
+.cb-binary-vars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.cb-binary-var{border:1px solid #e2e8f0;border-radius:6px;padding:7px;background:#f8fafc}
+.cb-binary-var strong{display:block;color:#64748b;font-size:11px;margin-bottom:1px}
+.cb-binary-var span{font-family:Consolas,"Courier New",monospace;font-weight:700;color:#0f172a;font-size:12px}
+.cb-binary-array{margin-top:8px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:9px;overflow:hidden}
+.cb-binary-array-row{display:flex;gap:6px;overflow-x:auto;padding:8px 3px 5px;scrollbar-width:thin}
+.cb-binary-cell{min-width:58px;text-align:center;position:relative;opacity:.38}
+.cb-binary-cell.active-range{opacity:1}
+.cb-binary-cell.mid .cb-binary-value{border-color:#2563eb;background:#dbeafe;transform:translateY(-2px)}
+.cb-binary-cell.mid::after{content:"MID";display:block;color:#2563eb;font-size:10px;font-weight:800;margin-top:2px}
+.cb-binary-cell.low .cb-binary-value{border-color:#d97706;background:#fef3c7}
+.cb-binary-cell.high .cb-binary-value{border-color:#7c3aed;background:#ede9fe}
+.cb-binary-index{font-size:10px;color:#64748b;margin-bottom:3px}
+.cb-binary-value{border:2px solid #cbd5e1;background:#fff;border-radius:6px;padding:7px 4px;font-family:Consolas,"Courier New",monospace;font-weight:700;color:#0f172a}
+.cb-binary-operation{margin-top:7px;padding:8px 10px;background:#fff;border:1px solid #e2e8f0;border-left:4px solid #d4af37;border-radius:7px;color:#334155;min-height:18px;font-size:13px;line-height:1.45}
+.cb-binary-operation strong{color:#0f172a}
+.cb-binary-controls{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:7px}
+.cb-binary-controls button{border:0;border-radius:7px;padding:8px 12px;background:#2563eb;color:#fff;cursor:pointer;font-weight:600;font-size:13px}
+.cb-binary-controls button:hover{background:#1d4ed8}
+.cb-binary-controls button:disabled{background:#94a3b8;cursor:not-allowed}
+.cb-binary-status{text-align:center;color:#64748b;font-size:12px;margin-top:6px}
+@media(max-width:750px){
+  .cb-binary-tracer{padding:8px;-webkit-overflow-scrolling:touch}
+  .cb-binary-grid{grid-template-columns:390px 350px;gap:8px;min-width:748px}
+  .cb-binary-panel pre{height:300px;max-height:300px;font-size:12px}
+  .cb-binary-controls{justify-content:flex-start;min-width:748px}
 }
 
 /* ===== CodeBhavya Linear Search Tracer — compact + responsive ===== */
@@ -650,6 +690,37 @@ int main() {
 3 7 11 18 25 31 40
 25</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 4</code></pre></div>
+</div>
+
+<div class="cb-binary-tracer-wrap">
+  <button class="program-toggle" onclick="cbBinaryTracer.toggle()">▶ Program Tracing</button>
+  <div id="cbBinaryTracer" class="cb-binary-tracer" hidden>
+    <div class="cb-binary-title">PROGRAM TRACING — ITERATIVE BINARY SEARCH</div>
+    <div class="cb-binary-grid">
+      <div class="cb-binary-panel">
+        <h4>💻 Program</h4>
+        <pre id="cbBinaryCode"></pre>
+      </div>
+      <div class="cb-binary-panel">
+        <h4>🧠 What is happening?</h4>
+        <div id="cbBinaryExplain" class="cb-binary-explain"></div>
+        <h4>📊 Live Variables</h4>
+        <div id="cbBinaryVars" class="cb-binary-vars"></div>
+      </div>
+    </div>
+    <div class="cb-binary-array">
+      <h4>📦 Live Array — Search Range</h4>
+      <div id="cbBinaryArray"></div>
+    </div>
+    <div id="cbBinaryOperation" class="cb-binary-operation"></div>
+    <div class="cb-binary-controls">
+      <button onclick="cbBinaryTracer.prev()">← Previous</button>
+      <button onclick="cbBinaryTracer.reset()">↺ Reset</button>
+      <button onclick="cbBinaryTracer.next()" id="cbBinaryNext">Next →</button>
+      <button onclick="cbBinaryTracer.autoRun()" id="cbBinaryAuto">▶ Auto Run</button>
+    </div>
+    <div id="cbBinaryStatus" class="cb-binary-status">Ready to execute.</div>
+  </div>
 </div>
 </div>
 </div>
@@ -2167,6 +2238,160 @@ function searchTopics() {
     });
 }
 
+
+/* ===== CodeBhavya Iterative Binary Search Tracer Engine ===== */
+const cbBinaryProgram = [
+  '#include <stdio.h>',
+  '',
+  'int main() {',
+  '    int n, target, low, high, mid, position = -1;',
+  '',
+  '    scanf("%d", &n);',
+  '    int a[n];',
+  '',
+  '    for (int i = 0; i < n; i++)',
+  '        scanf("%d", &a[i]);',
+  '',
+  '    scanf("%d", &target);',
+  '',
+  '    low = 0;',
+  '    high = n - 1;',
+  '',
+  '    while (low <= high) {',
+  '        mid = low + (high - low) / 2;',
+  '',
+  '        if (a[mid] == target) {',
+  '            position = mid;',
+  '            break;',
+  '        } else if (target < a[mid]) {',
+  '            high = mid - 1;',
+  '        } else {',
+  '            low = mid + 1;',
+  '        }',
+  '    }',
+  '',
+  '    if (position != -1)',
+  '        printf("Element found at index %d\\n", position);',
+  '    else',
+  '        printf("Element not found\\n");',
+  '',
+  '    return 0;',
+  '}'
+];
+
+const cbBinaryTracer = {
+  steps: [], current: 0, state: {}, open: false, timer: null,
+  init(){ this.buildSteps(); this.render(); },
+  buildSteps(){
+    const a=[3,7,11,18,25,31,40], key=25;
+    this.steps=[];
+    const add=(line,explain,mutate,op='')=>this.steps.push({line,explain,mutate,op});
+
+    add(0,'The program starts execution.',s=>{},'Program begins.');
+    add(3,'The variables are declared. Only position is initialized to -1. The variables n, target, low, high and mid are declared but do not have meaningful values yet.',s=>{s.n='indeterminate';s.target='indeterminate';s.low='indeterminate';s.high='indeterminate';s.mid='indeterminate';s.position=-1;},'position = -1 → initialized; n, target, low, high and mid → indeterminate');
+    add(5,'The program reads the number of elements. n becomes 7.',s=>{s.n=7;},'Input: n = 7');
+    add(6,'An integer array of size 7 is created. The values have not been read yet.',s=>{s.a=['—','—','—','—','—','—','—'];},'Array allocated with 7 positions.');
+    for(let i=0;i<a.length;i++) add(8,'The array-input loop executes. The current index is i = '+i+' and the next input value is stored in a[i].',s=>{if(!Array.isArray(s.a))s.a=['—','—','—','—','—','—','—'];s.a[i]=a[i];s.i=i;},`i = ${i}; read a[${i}] = ${a[i]}`);
+    add(11,'The target value is read. The program must search for 25.',s=>{s.target=key;delete s.i;},'target = 25');
+    add(13,'low is initialized to 0, so the search starts at the first array position.',s=>{s.low=0;},'low = 0');
+    add(14,'high is initialized to n - 1. For n = 7, high becomes 6.',s=>{s.high=6;},'high = n - 1 = 6');
+    add(16,'The while condition is checked: low <= high. Since 0 <= 6, the loop continues.',s=>{s.condition=true;},'0 <= 6 → TRUE');
+    add(17,'The middle index is calculated using low + (high - low) / 2. Here mid becomes 3.',s=>{s.mid=3;},'mid = 0 + (6 - 0) / 2 = 3');
+    add(19,'The program compares the middle element with the target. a[3] is 18 and the target is 25, so they are not equal.',s=>{s.current=18;s.check=false;},'a[3] = 18 == 25 → FALSE');
+    add(22,'The program checks whether the target is smaller than the middle element. 25 < 18 is false, so the target must be in the right half.',s=>{s.direction='right';},'25 < 18 → FALSE');
+    add(25,'The right-half branch executes. low becomes mid + 1, so low becomes 4.',s=>{s.low=4;},'low = mid + 1 = 4');
+    add(16,'The while condition is checked again: 4 <= 6, so the loop continues.',s=>{s.condition=true;},'4 <= 6 → TRUE');
+    add(17,'The middle index of the new range is calculated. mid becomes 5.',s=>{s.mid=5;},'mid = 4 + (6 - 4) / 2 = 5');
+    add(19,'The program compares a[5] with the target. a[5] is 31, so it is not equal to 25.',s=>{s.current=31;s.check=false;},'a[5] = 31 == 25 → FALSE');
+    add(22,'The program checks whether the target is smaller than a[mid]. 25 < 31 is true, so the target must be in the left half of the current range.',s=>{s.direction='left';},'25 < 31 → TRUE');
+    add(23,'The left-half branch executes. high becomes mid - 1, so high becomes 4.',s=>{s.high=4;},'high = mid - 1 = 4');
+    add(16,'The while condition is checked again: 4 <= 4, so the loop continues for one more comparison.',s=>{s.condition=true;},'4 <= 4 → TRUE');
+    add(17,'The middle index of the remaining range is calculated. mid becomes 4.',s=>{s.mid=4;},'mid = 4 + (4 - 4) / 2 = 4');
+    add(19,'The program compares a[4] with the target. Both are 25, so the target is found.',s=>{s.current=25;s.check=true;},'a[4] = 25 == 25 → TRUE');
+    add(20,'position is assigned the value of mid, so position becomes 4.',s=>{s.position=4;s.found=true;},'position = mid = 4');
+    add(21,'The break statement exits the while loop immediately because the target has been found.',s=>{s.broken=true;},'break → exit loop');
+    add(27,'The final if condition checks position != -1. Since position is 4, the condition is true.',s=>{s.output='Element found at index 4';},'position != -1 → TRUE');
+    add(28,'The program prints the found position.',s=>{s.output='Element found at index 4';},'Output: Element found at index 4');
+    add(32,'The program returns 0, indicating successful completion.',s=>{s.done=true;},'return 0');
+  },
+  toggle(){
+    const box=document.getElementById('cbBinaryTracer');
+    box.hidden=!box.hidden;
+    this.open=!box.hidden;
+    if(this.open)this.render();
+  },
+  applyThrough(count){
+    this.state={};
+    for(let i=0;i<count;i++)this.steps[i].mutate(this.state);
+  },
+  activeLine(){return this.current===0?0:this.steps[Math.min(this.current-1,this.steps.length-1)].line;},
+  escape(v){return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');},
+  render(){
+    const codeEl=document.getElementById('cbBinaryCode');
+    if(!codeEl)return;
+    const active=this.activeLine();
+    codeEl.innerHTML=cbBinaryProgram.map((line,i)=>`<span class="cb-binary-code-line ${i===active?'active':''}">${i===active?'👉 ':'   '}${this.escape(line)}</span>`).join('');
+    requestAnimationFrame(()=>{
+      const activeEl=codeEl.querySelector('.cb-binary-code-line.active');
+      if(activeEl)activeEl.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'});
+    });
+
+    const step=this.current===0?{explain:'Press Next to start executing the program.',op:''}:this.steps[Math.min(this.current-1,this.steps.length-1)];
+    document.getElementById('cbBinaryExplain').textContent=step.explain;
+
+    const vars={};
+    Object.keys(this.state).forEach(k=>{if(!['a','current','check','condition','direction','found','broken','output','done','i'].includes(k))vars[k]=this.state[k];});
+    if(this.state.i!==undefined)vars['i']=this.state.i;
+    if(this.state.current!==undefined)vars['a[mid]']=this.state.current;
+    if(this.state.check!==undefined)vars['comparison']=this.state.check?'TRUE':'FALSE';
+    if(this.state.condition!==undefined)vars['while condition']=this.state.condition?'TRUE':'FALSE';
+    if(this.state.direction)vars['search direction']=this.state.direction;
+    if(this.state.output!==undefined)vars['output']=this.state.output;
+    document.getElementById('cbBinaryVars').innerHTML=Object.keys(vars).length?Object.entries(vars).map(([k,v])=>`<div class="cb-binary-var"><strong>${this.escape(k)}</strong><span>${this.escape(String(v))}</span></div>`).join(''):'<div class="cb-binary-var"><strong>State</strong><span>Not started</span></div>';
+
+    const arrEl=document.getElementById('cbBinaryArray');
+    if(!Array.isArray(this.state.a)){
+      arrEl.innerHTML='<div style="padding:12px;color:#64748b;">Array has not been declared yet.</div>';
+    }else{
+      const arr=this.state.a, low=Number.isInteger(this.state.low)?this.state.low:null, high=Number.isInteger(this.state.high)?this.state.high:null, mid=Number.isInteger(this.state.mid)?this.state.mid:null;
+      arrEl.innerHTML=`<div class="cb-binary-array-row">${arr.map((v,i)=>{const inRange=low!==null&&high!==null&&i>=low&&i<=high;const cls=[inRange?'active-range':'',i===low?'low':'',i===high?'high':'',i===mid?'mid':''].join(' ');return `<div class="cb-binary-cell ${cls}"><div class="cb-binary-index">index ${i}</div><div class="cb-binary-value">${this.escape(String(v))}</div></div>`;}).join('')}</div><div style="font-size:11px;color:#64748b;margin-top:4px;">🟨 LOW &nbsp;&nbsp; 🟪 HIGH &nbsp;&nbsp; 🔵 MID &nbsp;&nbsp; Faded cells are outside the current search range.</div>`;
+    }
+
+    const op=this.current===0?'':(step.op||'');document.getElementById('cbBinaryOperation').innerHTML=op?`<strong>⚡ Current operation:</strong> ${this.escape(op)}`:'';
+    const status=document.getElementById('cbBinaryStatus');
+    const completed=this.current>=this.steps.length;
+    status.textContent=completed?'✓ Program execution completed.':`Step ${this.current} of ${this.steps.length}`;
+    document.getElementById('cbBinaryAuto').disabled=!!this.timer||completed;
+    const next=document.getElementById('cbBinaryNext');
+    next.disabled=completed;
+    next.textContent=completed?'✓ Completed':'Next →';
+  },
+  next(){
+    if(this.current>=this.steps.length)return;
+    this.steps[this.current].mutate(this.state);
+    this.current++;
+    this.render();
+  },
+  prev(){
+    if(this.current<=0)return;
+    this.current--;
+    this.applyThrough(this.current);
+    this.render();
+  },
+  reset(){
+    if(this.timer){clearInterval(this.timer);this.timer=null;}
+    this.current=0;this.state={};this.render();
+  },
+  autoRun(){
+    if(this.timer||this.current>=this.steps.length)return;
+    this.timer=setInterval(()=>{
+      if(this.current>=this.steps.length){clearInterval(this.timer);this.timer=null;this.render();return;}
+      this.next();
+      if(this.current>=this.steps.length){clearInterval(this.timer);this.timer=null;this.render();}
+    },900);
+  }
+};
+cbBinaryTracer.init();
 
 /* ===== CodeBhavya Linear Search Tracer Engine ===== */
 const cbLinearProgram = [
