@@ -2356,9 +2356,18 @@ const cbBinaryTracer = {
       if(!activeEl) return;
 
       /*
-       * Keep the active statement visible without unnecessarily moving
-       * the whole program window. Only scroll when the active line is
-       * approaching/outside the visible area.
+       * Initial state must ALWAYS start at the top of the program.
+       * Do not run the follow-active-line scrolling logic here.
+       */
+      if(this.current === 0){
+        codeEl.scrollTop = 0;
+        codeEl.scrollLeft = 0;
+        return;
+      }
+
+      /*
+       * During execution, scroll ONLY the program panel and only when
+       * the active line is outside/near the edge of the visible area.
        */
       const padding = 32;
       const lineTop = activeEl.offsetTop;
