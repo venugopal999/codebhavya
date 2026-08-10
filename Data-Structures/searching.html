@@ -2351,53 +2351,14 @@ const cbBinaryTracer = {
     if(!codeEl)return;
     const active=this.activeLine();
     codeEl.innerHTML=cbBinaryProgram.map((line,i)=>`<span class="cb-binary-code-line ${i===active?'active':''}">${i===active?'👉 ':'   '}${this.escape(line)}</span>`).join('');
+    /* Keep the currently executing statement centered inside the code window. */
     requestAnimationFrame(()=>{
       const activeEl = codeEl.querySelector('.cb-binary-code-line.active');
-      if(!activeEl) return;
-
-      /*
-       * Initial state must ALWAYS start at the top of the program.
-       * Do not run the follow-active-line scrolling logic here.
-       */
-      if(this.current === 0){
-        // Force the initial/reset view to the very top. Two animation
-        // frames are used because the browser can restore the scroll
-        // position after the newly generated <span> elements are painted.
-        codeEl.style.overflowAnchor = 'none';
-        codeEl.scrollTo({top: 0, left: 0, behavior: 'auto'});
-        requestAnimationFrame(() => {
-          codeEl.scrollTo({top: 0, left: 0, behavior: 'auto'});
-          requestAnimationFrame(() => {
-            codeEl.scrollTop = 0;
-            codeEl.scrollLeft = 0;
-          });
-        });
-        return;
-      }
-
-      /*
-       * During execution, scroll ONLY the program panel and only when
-       * the active line is outside/near the edge of the visible area.
-       */
-      const padding = 32;
-      const lineTop = activeEl.offsetTop;
-      const lineBottom = lineTop + activeEl.offsetHeight;
-      const visibleTop = codeEl.scrollTop + padding;
-      const visibleBottom = codeEl.scrollTop + codeEl.clientHeight - padding;
-
-      if(lineTop < visibleTop){
-        codeEl.scrollTo({
-          top: Math.max(0, lineTop - padding),
-          behavior: 'smooth'
-        });
-      } else if(lineBottom > visibleBottom){
-        codeEl.scrollTo({
-          top: Math.min(
-            codeEl.scrollHeight - codeEl.clientHeight,
-            lineBottom - codeEl.clientHeight + padding
-          ),
-          behavior: 'smooth'
-        });
+      if(activeEl){
+        const activeTop = activeEl.offsetTop - codeEl.offsetTop;
+        const target = activeTop - (codeEl.clientHeight / 2) + (activeEl.offsetHeight / 2);
+        const maxScroll = Math.max(0, codeEl.scrollHeight - codeEl.clientHeight);
+        codeEl.scrollTop = Math.max(0, Math.min(target, maxScroll));
       }
     });
 
