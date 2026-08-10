@@ -260,7 +260,7 @@
 .cb-binary-grid{display:grid;grid-template-columns:minmax(360px,1.08fr) minmax(330px,.92fr);gap:10px;min-width:710px}
 .cb-binary-panel{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:9px}
 .cb-binary-panel h4{margin:0 0 7px;color:#0f172a;font-size:14px}
-.cb-binary-panel pre{margin:0;background:#0f172a;color:#e2e8f0;border-radius:7px;padding:10px;overflow:auto;font-family:Consolas,"Courier New",monospace;font-size:12.5px;line-height:1.5;height:340px;max-height:340px;white-space:pre;scrollbar-width:thin}
+.cb-binary-panel pre{margin:0;background:#0f172a;color:#e2e8f0;border-radius:7px;padding:10px;overflow:auto;overflow-anchor:none;font-family:Consolas,"Courier New",monospace;font-size:12.5px;line-height:1.5;height:340px;max-height:340px;white-space:pre;scrollbar-width:thin}
 .cb-binary-code-line{display:block;padding:1px 5px;border-radius:4px;white-space:pre;scroll-margin-block:120px}
 .cb-binary-code-line.active{background:#334155;color:#fff;font-weight:700;box-shadow:inset 4px 0 #d4af37}
 .cb-binary-explain{background:#f8fafc;border-left:4px solid #8cc8f0;border-radius:6px;padding:8px;margin-bottom:7px;line-height:1.5;color:#334155;min-height:40px}
@@ -2360,8 +2360,18 @@ const cbBinaryTracer = {
        * Do not run the follow-active-line scrolling logic here.
        */
       if(this.current === 0){
-        codeEl.scrollTop = 0;
-        codeEl.scrollLeft = 0;
+        // Force the initial/reset view to the very top. Two animation
+        // frames are used because the browser can restore the scroll
+        // position after the newly generated <span> elements are painted.
+        codeEl.style.overflowAnchor = 'none';
+        codeEl.scrollTo({top: 0, left: 0, behavior: 'auto'});
+        requestAnimationFrame(() => {
+          codeEl.scrollTo({top: 0, left: 0, behavior: 'auto'});
+          requestAnimationFrame(() => {
+            codeEl.scrollTop = 0;
+            codeEl.scrollLeft = 0;
+          });
+        });
         return;
       }
 
