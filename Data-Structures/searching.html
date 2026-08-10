@@ -453,6 +453,29 @@
 }
 
 </style>
+
+<style>
+.cb-recursive-stack{
+  margin:0 0 7px;
+  min-height:76px;
+  max-height:130px;
+  overflow:auto;
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:7px;
+  padding:8px;
+  color:#0f172a;
+  font-family:Consolas,"Courier New",monospace;
+  font-size:12px;
+  line-height:1.45;
+  white-space:pre-wrap;
+}
+.cb-recursive-cell-return .cb-binary-value{
+  border-color:#16a34a;
+  background:#dcfce7;
+}
+</style>
+
 </head>
 <body>
 <header class="top-header">
@@ -781,6 +804,48 @@ int main() {
 31</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 5</code></pre></div>
 </div>
+
+<div class="cb-binary-tracer-wrap">
+  <button class="program-toggle" onclick="cbRecursiveBinaryTracer.toggle()">▶ Program Tracing</button>
+  <div id="cbRecursiveBinaryTracer" class="cb-binary-tracer" hidden>
+    <div class="cb-binary-title">PROGRAM TRACING — RECURSIVE BINARY SEARCH</div>
+
+    <div class="cb-binary-grid">
+      <div class="cb-binary-panel">
+        <h4>💻 Program</h4>
+        <pre id="cbRecursiveCode"></pre>
+      </div>
+
+      <div class="cb-binary-panel">
+        <h4>🧠 What is happening?</h4>
+        <div id="cbRecursiveExplain" class="cb-binary-explain"></div>
+
+        <h4>📊 Live Variables</h4>
+        <div id="cbRecursiveVars" class="cb-binary-vars"></div>
+
+        <h4>📚 Recursive Call Stack</h4>
+        <pre id="cbRecursiveStack" class="cb-recursive-stack"></pre>
+      </div>
+    </div>
+
+    <div class="cb-binary-array">
+      <h4>📦 Live Array — Search Range</h4>
+      <div id="cbRecursiveArray"></div>
+    </div>
+
+    <div id="cbRecursiveOperation" class="cb-binary-operation"></div>
+
+    <div class="cb-binary-controls">
+      <button onclick="cbRecursiveBinaryTracer.prev()">← Previous</button>
+      <button onclick="cbRecursiveBinaryTracer.reset()">↺ Reset</button>
+      <button onclick="cbRecursiveBinaryTracer.next()" id="cbRecursiveNext">Next →</button>
+      <button onclick="cbRecursiveBinaryTracer.autoRun()" id="cbRecursiveAuto">▶ Auto Run</button>
+    </div>
+
+    <div id="cbRecursiveStatus" class="cb-binary-status">Ready to execute.</div>
+  </div>
+</div>
+
 </div>
 </div>
 <h3>⚡ Complexity</h3>
@@ -872,24 +937,6 @@ int main() {
 </div>
 </div>
 </div>
-<!-- Recursive Binary Search Tracer -->
-<div class="program-box">
-<button class="program-toggle" onclick="recursiveBinaryTracer.toggle()">Show Recursive Binary Search Tracer</button>
-<div id="recursive-binary-tracer-box" class="program-content">
-<h3>PROGRAM TRACING — RECURSIVE BINARY SEARCH</h3>
-<div class="tracer-panel">
-<div><h4>Program</h4><pre id="recursive-binary-code" class="recursive-code-panel"></pre></div>
-<div>
-<h4>Trace</h4>
-<p><b>📘 Explanation:</b> <span id="recursive-binary-explain"></span></p>
-<p><b>⚡ Current Operation:</b> <span id="recursive-binary-operation"></span></p>
-<p><b>📊 Live Variables:</b></p><pre id="recursive-binary-state"></pre>
-<p><b>📚 Recursive Call Stack:</b></p><pre id="recursive-binary-stack"></pre>
-<p><b>📦 Array:</b></p><div id="recursive-binary-array" class="binary-array-view"></div>
-</div></div>
-<div style="margin-top:15px;text-align:center"><button onclick="recursiveBinaryTracer.prev()">← Previous</button><button onclick="recursiveBinaryTracer.reset()">Reset</button><button id="recursive-binary-next" onclick="recursiveBinaryTracer.next()">Next →</button><button id="recursive-binary-auto" onclick="recursiveBinaryTracer.autoRun()">▶ Auto Run</button></div>
-</div></div>
-
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
 <div class="complexity-item"><strong>Best: O(1)</strong> Target is at the first middle position checked.</div>
@@ -2196,50 +2243,6 @@ int main() {
 </div>
 </section>
 <div class="topic-navigation"><div class="topic-nav-side previous"><a class="primary-button" href="index.html">← Previous Topic</a></div><div class="topic-nav-side next"><span class="nav-label">Next Topic</span><strong class="nav-topic-name">🔄 Sorting</strong><a class="primary-button" href="sorting.html">Continue to Sorting →</a></div></div>
-
-
-<script>
-const recursiveBinaryProgram=[
-'#include <stdio.h>','',
-'int binarySearch(int a[], int low, int high, int target) {',
-'    if (low > high)','        return -1;','',
-'    int mid = (low + high) / 2;','',
-'    if (a[mid] == target)','        return mid;','',
-'    if (a[mid] < target)','        return binarySearch(a, mid + 1, high, target);','',
-'    return binarySearch(a, low, mid - 1, target);','}', '',
-'int main() {','    int a[] = {3, 7, 11, 18, 25, 31, 40};','    int n = 7;','    int target = 25;','    int position = binarySearch(a, 0, n - 1, target);','',
-'    if (position != -1)','        printf("Element found at index %d\\n", position);','    else','        printf("Element not found\\n");','', '    return 0;','}'
-];
-const recursiveBinarySteps=[
-[0,'The standard input/output header is included.','Process #include <stdio.h>.',s=>{}],
-[2,'The recursive binary search function is entered.','Call binarySearch(a, 0, 6, 25).',s=>{s.low=0;s.high=6;s.target=25;s.stack=['binarySearch(0, 6)'];}],
-[3,'The function checks whether the current search range is empty.','0 > 6 → FALSE.',s=>{s.condition='0 > 6 → FALSE';}],
-[6,'The middle index is calculated.','mid = (0 + 6) / 2 = 3.',s=>{s.mid=3;}],
-[8,'The middle element is compared with the target.','a[3] = 18 == 25 → FALSE.',s=>{s.condition='18 == 25 → FALSE';}],
-[11,'The middle value is smaller, so the right half is selected.','18 < 25 → TRUE.',s=>{s.condition='18 < 25 → TRUE';}],
-[12,'A recursive call searches the right half.','binarySearch(a, 4, 6, 25).',s=>{s.low=4;s.high=6;s.stack.push('binarySearch(4, 6)');}],
-[3,'The second call checks its range.','4 > 6 → FALSE.',s=>{s.condition='4 > 6 → FALSE';}],
-[6,'The middle index is recalculated.','mid = (4 + 6) / 2 = 5.',s=>{s.mid=5;}],
-[8,'The new middle element is compared with the target.','a[5] = 31 == 25 → FALSE.',s=>{s.condition='31 == 25 → FALSE';}],
-[11,'The middle value is greater, so the left half is selected.','31 < 25 → FALSE.',s=>{s.condition='31 < 25 → FALSE';}],
-[14,'A recursive call searches the left half.','binarySearch(a, 4, 4, 25).',s=>{s.low=4;s.high=4;s.stack.push('binarySearch(4, 4)');}],
-[3,'The third call checks its range.','4 > 4 → FALSE.',s=>{s.condition='4 > 4 → FALSE';}],
-[6,'The middle index of the one-element range is calculated.','mid = (4 + 4) / 2 = 4.',s=>{s.mid=4;}],
-[8,'The middle element is compared with the target.','a[4] = 25 == 25 → TRUE.',s=>{s.condition='25 == 25 → TRUE';}],
-[9,'The target is found, so the current index is returned.','return 4.',s=>{s.position=4;s.returnValue=4;}],
-[12,'The third call returns its value to the second call.','binarySearch(4, 4) → 4.',s=>{s.stack.pop();}],
-[14,'The second call returns the same index to main.','binarySearch(4, 6) → 4.',s=>{s.stack.pop();}],
-[21,'main receives the returned index.','position = 4.',s=>{s.position=4;}],
-[23,'The result is checked.','position != -1 → TRUE.',s=>{s.condition='4 != -1 → TRUE';}],
-[24,'The successful result is printed.','Element found at index 4.',s=>{s.output='Element found at index 4';}],
-[29,'The program finishes successfully.','return 0.',s=>{s.completed=true;}]
-];
-const recursiveBinaryTracer={steps:recursiveBinarySteps,current:0,state:{},timer:null,toggle(){document.getElementById('recursive-binary-tracer-box').classList.toggle('open')},render(){const c=document.getElementById('recursive-binary-code');const line=this.steps[this.current][0];c.innerHTML=recursiveBinaryProgram.map((x,i)=>'<span class="'+(i===line?'trace-active-line':'trace-line')+'">'+(i===line?'👉 ':'   ')+x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</span>').join('');document.getElementById('recursive-binary-explain').textContent=this.steps[this.current][1];document.getElementById('recursive-binary-operation').textContent=this.steps[this.current][2];document.getElementById('recursive-binary-state').textContent=JSON.stringify(this.state,null,2);document.getElementById('recursive-binary-stack').textContent=(this.state.stack||[]).join('\n');this.renderArray();const done=this.current>=this.steps.length-1;const n=document.getElementById('recursive-binary-next');const a=document.getElementById('recursive-binary-auto');n.disabled=done;n.textContent=done?'✓ Completed':'Next →';a.disabled=done;requestAnimationFrame(()=>{const e=c.querySelector('.trace-active-line');if(e){const top=e.offsetTop-c.offsetTop,target=top-c.clientHeight/2+e.offsetHeight/2,max=Math.max(0,c.scrollHeight-c.clientHeight);c.scrollTop=Math.max(0,Math.min(target,max));}})},renderArray(){const e=document.getElementById('recursive-binary-array'),a=[3,7,11,18,25,31,40],s=this.state,lo=Number.isInteger(s.low)?s.low:null,hi=Number.isInteger(s.high)?s.high:null,mid=Number.isInteger(s.mid)?s.mid:null;e.innerHTML=a.map((v,i)=>{let q='binary-cell';if(lo!==null&&hi!==null&&(i<lo||i>hi))q+=' outside';if(i===lo)q+=' low';if(i===hi)q+=' high';if(i===mid)q+=' mid';if(i===s.position)q+=' found';return '<div class="'+q+'"><small>'+i+'</small><strong>'+v+'</strong></div>'}).join('')},next(){if(this.current>=this.steps.length-1)return;this.steps[this.current][3](this.state);this.current++;this.render()},prev(){if(this.current<=0)return;this.current--;this.state={};for(let i=0;i<this.current;i++)this.steps[i][3](this.state);this.render()},reset(){clearInterval(this.timer);this.timer=null;this.current=0;this.state={};this.render();requestAnimationFrame(()=>{const c=document.getElementById('recursive-binary-code');if(c)c.scrollTop=0})},autoRun(){if(this.timer||this.current>=this.steps.length-1)return;this.timer=setInterval(()=>{if(this.current>=this.steps.length-1){clearInterval(this.timer);this.timer=null;return}this.next()},900)}};
-recursiveBinaryTracer.reset();
-</script>
-<style>
-.recursive-code-panel{overflow:auto;overflow-anchor:none;font-family:Consolas,"Courier New",monospace;font-size:12.5px;line-height:1.5;height:340px;margin:0}.trace-line,.trace-active-line{display:block;white-space:pre;min-height:1.5em}.trace-active-line{background:#fff3a3;border-left:4px solid #2563eb;padding-left:6px}.binary-array-view{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.binary-cell{min-width:52px;padding:7px 5px;text-align:center;border:1px solid #cbd5e1;border-radius:7px;background:#fff}.binary-cell small,.binary-cell strong{display:block}.binary-cell.outside{opacity:.35}.binary-cell.low,.binary-cell.high{border-width:2px}.binary-cell.mid{outline:3px solid #facc15}.binary-cell.found{outline:3px solid #22c55e}.program-box button:disabled{opacity:.55;cursor:not-allowed}@media(max-width:700px){.recursive-code-panel{height:280px}.tracer-panel{flex-wrap:nowrap;overflow-x:auto;align-items:stretch}.tracer-panel>div{min-width:310px}}
-</style>
 </main>
 </div>
 <footer class="footer">
@@ -2589,5 +2592,228 @@ const cbLinearTracer = {
 cbLinearTracer.init();
 
 </script>
+
+<script>
+const cbRecursiveProgram = [
+  '#include <stdio.h>',
+  '',
+  'int binarySearch(int a[], int low, int high, int target) {',
+  '    if (low > high)',
+  '        return -1;',
+  '',
+  '    int mid = low + (high - low) / 2;',
+  '',
+  '    if (a[mid] == target)',
+  '        return mid;',
+  '',
+  '    if (target < a[mid])',
+  '        return binarySearch(a, low, mid - 1, target);',
+  '',
+  '    return binarySearch(a, mid + 1, high, target);',
+  '}',
+  '',
+  'int main() {',
+  '    int n, target;',
+  '    scanf("%d", &n);',
+  '',
+  '    int a[n];',
+  '',
+  '    for (int i = 0; i < n; i++)',
+  '        scanf("%d", &a[i]);',
+  '',
+  '    scanf("%d", &target);',
+  '',
+  '    int position = binarySearch(a, 0, n - 1, target);',
+  '',
+  '    if (position != -1)',
+  '        printf("Element found at index %d\\n", position);',
+  '    else',
+  '        printf("Element not found\\n");',
+  '',
+  '    return 0;',
+  '}'
+];
+
+const cbRecursiveSteps = [
+  { line:0, explain:'The standard input/output header is included.', op:'Process #include <stdio.h>.', run:s=>{} },
+  { line:2, explain:'The recursive binary search function is declared.', op:'Enter binarySearch(a, low, high, target).', run:s=>{} },
+  { line:17, explain:'The main function starts and declares n and target.', op:'Declare n and target. Their values are not initialized yet.', run:s=>{} },
+  { line:18, explain:'The program reads the number of elements.', op:'scanf reads n = 7.', run:s=>{s.n=7;} },
+  { line:20, explain:'The array is declared after n has been read.', op:'Create an array with 7 elements.', run:s=>{s.arrayDeclared=true; s.array=[null,null,null,null,null,null,null];} },
+  { line:22, explain:'The array-input loop starts.', op:'i = 0 and 0 < 7 → TRUE.', run:s=>{s.i=0;} },
+  { line:23, explain:'The first array element is read.', op:'a[0] = 3.', run:s=>{s.array[0]=3;} },
+  { line:22, explain:'The loop moves to the next iteration.', op:'i = 1 and 1 < 7 → TRUE.', run:s=>{s.i=1;} },
+  { line:23, explain:'The second array element is read.', op:'a[1] = 7.', run:s=>{s.array[1]=7;} },
+  { line:22, explain:'The loop moves to the next iteration.', op:'i = 2 and 2 < 7 → TRUE.', run:s=>{s.i=2;} },
+  { line:23, explain:'The third array element is read.', op:'a[2] = 11.', run:s=>{s.array[2]=11;} },
+  { line:22, explain:'The loop moves to the next iteration.', op:'i = 3 and 3 < 7 → TRUE.', run:s=>{s.i=3;} },
+  { line:23, explain:'The fourth array element is read.', op:'a[3] = 18.', run:s=>{s.array[3]=18;} },
+  { line:22, explain:'The loop moves to the next iteration.', op:'i = 4 and 4 < 7 → TRUE.', run:s=>{s.i=4;} },
+  { line:23, explain:'The fifth array element is read.', op:'a[4] = 25.', run:s=>{s.array[4]=25;} },
+  { line:22, explain:'The loop moves to the next iteration.', op:'i = 5 and 5 < 7 → TRUE.', run:s=>{s.i=5;} },
+  { line:23, explain:'The sixth array element is read.', op:'a[5] = 31.', run:s=>{s.array[5]=31;} },
+  { line:22, explain:'The loop moves to the next iteration.', op:'i = 6 and 6 < 7 → TRUE.', run:s=>{s.i=6;} },
+  { line:23, explain:'The seventh array element is read.', op:'a[6] = 40.', run:s=>{s.array[6]=40;} },
+  { line:22, explain:'The loop checks its condition after the last input.', op:'i = 7 and 7 < 7 → FALSE. Exit loop.', run:s=>{s.i=7;} },
+  { line:25, explain:'The target value is read.', op:'scanf reads target = 31.', run:s=>{s.target=31;} },
+  { line:27, explain:'The first recursive call is made for the full array range.', op:'binarySearch(a, 0, 6, 31).', run:s=>{s.low=0;s.high=6;s.callStack=['binarySearch(0, 6)'];} },
+  { line:3, explain:'The first call checks whether the range is empty.', op:'0 > 6 → FALSE.', run:s=>{s.condition='0 > 6 → FALSE';} },
+  { line:6, explain:'The middle index is calculated.', op:'mid = 0 + (6 - 0) / 2 = 3.', run:s=>{s.mid=3;} },
+  { line:8, explain:'The middle element is compared with the target.', op:'a[3] = 18 == 31 → FALSE.', run:s=>{s.condition='18 == 31 → FALSE';} },
+  { line:11, explain:'The target is greater than the middle element, so the right half is selected.', op:'31 < 18 → FALSE.', run:s=>{s.condition='31 < 18 → FALSE';} },
+  { line:13, explain:'A recursive call searches the right half.', op:'binarySearch(a, 4, 6, 31).', run:s=>{s.low=4;s.high=6;s.callStack.push('binarySearch(4, 6)');} },
+  { line:3, explain:'The second call checks its range.', op:'4 > 6 → FALSE.', run:s=>{s.condition='4 > 6 → FALSE';} },
+  { line:6, explain:'The middle index is recalculated.', op:'mid = 4 + (6 - 4) / 2 = 5.', run:s=>{s.mid=5;} },
+  { line:8, explain:'The middle element is compared with the target.', op:'a[5] = 31 == 31 → TRUE.', run:s=>{s.condition='31 == 31 → TRUE';} },
+  { line:9, explain:'The target is found, so the current index is returned.', op:'return 5.', run:s=>{s.position=5;s.returnValue=5;} },
+  { line:27, explain:'The recursive call returns 5 to main.', op:'binarySearch(4, 6) → 5.', run:s=>{s.callStack.pop();} },
+  { line:29, explain:'The returned value is stored in position.', op:'position = 5.', run:s=>{s.position=5;} },
+  { line:31, explain:'The program checks whether the position is valid.', op:'5 != -1 → TRUE.', run:s=>{s.condition='5 != -1 → TRUE';} },
+  { line:32, explain:'The program prints the found position.', op:'Print: Element found at index 5.', run:s=>{s.output='Element found at index 5';} },
+  { line:37, explain:'The main function finishes successfully.', op:'return 0.', run:s=>{s.completed=true;} }
+];
+
+const cbRecursiveBinaryTracer = {
+  steps: cbRecursiveSteps,
+  current:0,
+  state:{},
+  timer:null,
+
+  toggle(){
+    const box=document.getElementById('cbRecursiveBinaryTracer');
+    box.hidden=!box.hidden;
+    if(!box.hidden) this.render();
+  },
+
+  escape(v){
+    return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  },
+
+  render(){
+    const step=this.steps[this.current];
+    const codeEl=document.getElementById('cbRecursiveCode');
+
+    codeEl.innerHTML=cbRecursiveProgram.map((line,i)=>
+      `<span class="cb-binary-code-line ${i===step.line?'active':''}">${i===step.line?'👉 ':'   '}${this.escape(line)}</span>`
+    ).join('');
+
+    document.getElementById('cbRecursiveExplain').textContent=step.explain;
+    document.getElementById('cbRecursiveOperation').innerHTML='<strong>⚡ Current operation:</strong> '+this.escape(step.op);
+
+    const state=this.state;
+    const vars=[
+      ['n', state.n ?? 'indeterminate'],
+      ['target', state.target ?? 'indeterminate'],
+      ['low', state.low ?? 'indeterminate'],
+      ['high', state.high ?? 'indeterminate'],
+      ['mid', state.mid ?? 'indeterminate'],
+      ['position', state.position ?? 'indeterminate'],
+      ['condition', state.condition ?? '—'],
+      ['output', state.output ?? '—']
+    ];
+
+    document.getElementById('cbRecursiveVars').innerHTML=vars.map(([k,v])=>
+      `<div class="cb-binary-var"><strong>${k}</strong><span>${this.escape(v)}</span></div>`
+    ).join('');
+
+    document.getElementById('cbRecursiveStack').textContent=
+      state.callStack && state.callStack.length
+        ? state.callStack.join('\\n')
+        : 'No recursive call yet.';
+
+    this.renderArray();
+
+    const done=this.current>=this.steps.length-1;
+    const next=document.getElementById('cbRecursiveNext');
+    const auto=document.getElementById('cbRecursiveAuto');
+    next.disabled=done;
+    next.textContent=done?'✓ Completed':'Next →';
+    auto.disabled=done;
+
+    // Same scrolling behavior as finalized Iterative Binary Search / Linear Search.
+    requestAnimationFrame(()=>{
+      const activeEl=codeEl.querySelector('.cb-binary-code-line.active');
+      if(activeEl){
+        const activeTop=activeEl.offsetTop-codeEl.offsetTop;
+        const target=activeTop-(codeEl.clientHeight/2)+(activeEl.offsetHeight/2);
+        const maxScroll=Math.max(0,codeEl.scrollHeight-codeEl.clientHeight);
+        codeEl.scrollTop=Math.max(0,Math.min(target,maxScroll));
+      }
+    });
+
+    document.getElementById('cbRecursiveStatus').textContent=
+      done?'✓ Execution completed. Press Reset to run again.':'Step '+(this.current+1)+' of '+this.steps.length;
+  },
+
+  renderArray(){
+    const el=document.getElementById('cbRecursiveArray');
+    const a=this.state.array;
+    if(!this.state.arrayDeclared){
+      el.innerHTML='<p style="margin:4px 0;color:#64748b">Array has not been declared yet.</p>';
+      return;
+    }
+
+    const low=Number.isInteger(this.state.low)?this.state.low:null;
+    const high=Number.isInteger(this.state.high)?this.state.high:null;
+    const mid=Number.isInteger(this.state.mid)?this.state.mid:null;
+
+    el.innerHTML='<div class="cb-binary-array-row">'+a.map((v,i)=>{
+      let cls='cb-binary-cell';
+      if(v!==null && low!==null && high!==null && i>=low && i<=high) cls+=' active-range';
+      if(i===low) cls+=' low';
+      if(i===high) cls+=' high';
+      if(i===mid) cls+=' mid';
+      if(i===this.state.position) cls+=' mid';
+
+      return `<div class="${cls}">
+        <div class="cb-binary-index">${i}</div>
+        <div class="cb-binary-value">${v===null?'—':v}</div>
+      </div>`;
+    }).join('')+'</div>';
+  },
+
+  next(){
+    if(this.current>=this.steps.length-1) return;
+    this.steps[this.current].run(this.state);
+    this.current++;
+    this.render();
+  },
+
+  prev(){
+    if(this.current<=0) return;
+    this.current--;
+    this.state={};
+    for(let i=0;i<this.current;i++) this.steps[i].run(this.state);
+    this.render();
+  },
+
+  reset(){
+    clearInterval(this.timer);
+    this.timer=null;
+    this.current=0;
+    this.state={};
+    this.render();
+    requestAnimationFrame(()=>{
+      const codeEl=document.getElementById('cbRecursiveCode');
+      if(codeEl) codeEl.scrollTo({top:0,left:0,behavior:'auto'});
+    });
+  },
+
+  autoRun(){
+    if(this.timer || this.current>=this.steps.length-1) return;
+    this.timer=setInterval(()=>{
+      if(this.current>=this.steps.length-1){
+        clearInterval(this.timer);
+        this.timer=null;
+        return;
+      }
+      this.next();
+    },900);
+  }
+};
+
+cbRecursiveBinaryTracer.render();
+</script>
+
 </body>
 </html>
