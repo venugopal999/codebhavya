@@ -4963,9 +4963,9 @@ function toggleInterviewAnswer(id, button){
    CodeBhavya Practice Engine — reusable for future practice problems
    ================================================================ */
 window.CodeBhavyaPractice = (() => {
-  const executorBase='https://emkc.org/api/v2/piston';
+  const judge0Base='https://ce.judge0.com';
+  const judge0CLanguageId=103; // C (GCC 14.1.0) on current Judge0 CE language list
   const configs={};
-  const runtimeCache={c:null};
 
   function id(name,key){ return `${name}-${key}`; }
   function el(name,key){ return document.getElementById(id(name,key)); }
@@ -5054,62 +5054,63 @@ window.CodeBhavyaPractice = (() => {
     renderProgress(key);
   }
 
-  async function getCRuntime(){
-    if(runtimeCache.c)return runtimeCache.c;
-
-    const response=await fetch(`${executorBase}/runtimes`,{method:'GET'});
-    if(!response.ok)throw new Error('The code execution service is currently unavailable.');
-
-    const runtimes=await response.json();
-    const runtime=runtimes.find(r=>
-      String(r.language).toLowerCase()==='c' ||
-      (Array.isArray(r.aliases)&&r.aliases.map(a=>String(a).toLowerCase()).includes('c'))
+  async function executeC(code,stdin){
+    const response=await fetch(
+      `${judge0Base}/submissions?base64_encoded=false&wait=true`,
+      {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          language_id:judge0CLanguageId,
+          source_code:code,
+          stdin:stdin,
+          cpu_time_limit:2,
+          wall_time_limit:5,
+          memory_limit:128000
+        })
+      }
     );
 
-    if(!runtime)throw new Error('A C compiler runtime was not found.');
-    runtimeCache.c=runtime;
-    return runtime;
-  }
-
-  async function executeC(code,stdin){
-    const runtime=await getCRuntime();
-
-    const response=await fetch(`${executorBase}/execute`,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        language:runtime.language,
-        version:runtime.version,
-        files:[{name:'main.c',content:code}],
-        stdin:stdin,
-        compile_timeout:5000,
-        run_timeout:3000
-      })
-    });
+    let result=null;
+    try{
+      result=await response.json();
+    }catch(e){}
 
     if(!response.ok){
-      let msg='Code execution failed.';
-      try{
-        const body=await response.json();
-        if(body&&body.message)msg=body.message;
-      }catch(e){}
-      throw new Error(msg);
+      const message=
+        result?.message ||
+        result?.error ||
+        `Judge0 returned HTTP ${response.status}.`;
+      throw new Error(message);
     }
 
-    const result=await response.json();
-    const compileOutput=result.compile?.output||'';
-    const runOutput=result.run?.output||'';
-    const stdout=result.run?.stdout||'';
+    const description=String(result?.status?.description||'').trim();
+    const stdout=result?.stdout??'';
+    const stderr=result?.stderr??'';
+    const compileOutput=result?.compile_output??'';
+    const message=result?.message??'';
 
-    if(result.compile && result.compile.code!==0){
-      return {ok:false,type:'compile',output:compileOutput||'Compilation failed.'};
+    if(description==='Accepted'){
+      return {
+        ok:true,
+        type:'success',
+        output:stdout
+      };
     }
 
-    if(result.run && result.run.code!==0){
-      return {ok:false,type:'runtime',output:runOutput||'Runtime error.'};
+    if(/compilation/i.test(description) || compileOutput){
+      return {
+        ok:false,
+        type:'compile',
+        output:compileOutput || stderr || message || description || 'Compilation failed.'
+      };
     }
 
-    return {ok:true,type:'success',output:stdout};
+    return {
+      ok:false,
+      type:'runtime',
+      output:stderr || message || description || 'Program execution failed.'
+    };
   }
 
   function setBusy(key,busy){
@@ -5139,7 +5140,7 @@ window.CodeBhavyaPractice = (() => {
       const result=await executeC(code,stdin);
       output.textContent=result.output||'(Program finished with no output)';
     }catch(err){
-      output.textContent='Unable to run code: '+err.message+'\n\nCheck your internet connection and try again.';
+      output.textContent='Unable to run code: '+err.message+'\n\nThe online compiler may be temporarily unavailable. Please try again.';
     }finally{
       setBusy(key,false);
     }
@@ -5230,7 +5231,7 @@ window.CodeBhavyaPractice = (() => {
       }
     }catch(err){
       testsEl.innerHTML='<div class="cb-test-row fail"><span>Code execution service</span><strong>❌ Unavailable</strong></div>';
-      output.textContent='Unable to check your answer: '+err.message+'\n\nCheck your internet connection and try again.';
+      output.textContent='Unable to check your answer: '+err.message+'\n\nThe online compiler may be temporarily unavailable. Please try again.';
       renderProgress(key);
     }finally{
       setBusy(key,false);
