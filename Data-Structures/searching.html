@@ -481,6 +481,87 @@
 .cb-recursive-output-box h4{margin:0 0 5px;color:#0f172a;font-size:14px}
 #cbRecursiveOutput{font-size:13px;font-weight:700;color:#2563eb;white-space:pre-wrap}
 </style>
+
+<style>
+/* ===== CodeBhavya Skip List Visualization ===== */
+.cb-skip-visual{
+  margin-top:8px;
+  background:#fff;
+  border:1px solid #e2e8f0;
+  border-radius:8px;
+  padding:10px;
+  overflow-x:auto;
+}
+.cb-skip-level{
+  display:grid;
+  grid-template-columns:64px repeat(7,72px);
+  align-items:center;
+  gap:8px;
+  min-width:620px;
+  margin:7px 0;
+}
+.cb-skip-level-label{
+  font-size:11px;
+  font-weight:800;
+  color:#64748b;
+  text-align:right;
+  padding-right:6px;
+}
+.cb-skip-node{
+  min-height:37px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:2px solid #cbd5e1;
+  background:#fff;
+  border-radius:7px;
+  font-family:Consolas,"Courier New",monospace;
+  font-weight:700;
+  font-size:12px;
+  color:#0f172a;
+  position:relative;
+}
+.cb-skip-node.empty{
+  border-style:dashed;
+  opacity:.28;
+}
+.cb-skip-node.head{
+  background:#f1f5f9;
+}
+.cb-skip-node.current{
+  border-color:#2563eb;
+  background:#dbeafe;
+  transform:translateY(-1px);
+}
+.cb-skip-node.next{
+  border-color:#d97706;
+  background:#fef3c7;
+}
+.cb-skip-node.match{
+  border-color:#16a34a;
+  background:#dcfce7;
+}
+.cb-skip-node.visited{
+  opacity:.45;
+}
+.cb-skip-arrow{
+  position:absolute;
+  right:-13px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#94a3b8;
+  font-weight:900;
+}
+.cb-skip-legend{
+  margin-top:7px;
+  font-size:11px;
+  color:#64748b;
+}
+@media(max-width:750px){
+  .cb-skip-visual{padding:8px;-webkit-overflow-scrolling:touch}
+}
+</style>
+
 </head>
 <body>
 <header class="top-header">
@@ -1336,6 +1417,48 @@ int main() {
 80</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 7</code></pre></div>
 </div>
+
+<div class="cb-binary-tracer-wrap">
+<button class="program-toggle" onclick="cbFibonacciTracer.toggle()">▶ Program Tracing</button>
+<div id="cbFibonacciTracer" class="cb-binary-tracer" hidden>
+<div class="cb-binary-title">PROGRAM TRACING — FIBONACCI SEARCH</div>
+
+<div class="cb-binary-grid">
+<div class="cb-binary-panel">
+<h4>💻 Program</h4>
+<pre id="cbFibonacciCode"></pre>
+</div>
+
+<div class="cb-binary-panel">
+<h4>🧠 What is happening?</h4>
+<div id="cbFibonacciExplain" class="cb-binary-explain"></div>
+
+<h4>📊 Live Variables</h4>
+<div id="cbFibonacciVars" class="cb-binary-vars"></div>
+
+<h4>📚 Call Stack</h4>
+<pre id="cbFibonacciStack" class="cb-recursive-stack"></pre>
+</div>
+</div>
+
+<div class="cb-binary-array">
+<h4>📦 Live Array — Search Range</h4>
+<div id="cbFibonacciArray"></div>
+</div>
+
+<div id="cbFibonacciOperation" class="cb-binary-operation"></div>
+
+<div class="cb-binary-controls">
+<button onclick="cbFibonacciTracer.prev()">← Previous</button>
+<button onclick="cbFibonacciTracer.reset()">↺ Reset</button>
+<button onclick="cbFibonacciTracer.next()" id="cbFibonacciNext">Next →</button>
+<button onclick="cbFibonacciTracer.autoRun()" id="cbFibonacciAuto">▶ Auto Run</button>
+</div>
+
+<div id="cbFibonacciStatus" class="cb-binary-status">Ready to execute.</div>
+</div>
+</div>
+
 </div>
 </div>
 <h3>⚡ Complexity</h3>
@@ -1456,6 +1579,49 @@ int main() {
 <div class="io-box"><h4>Sample Input</h4><pre><code>40</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found</code></pre></div>
 </div>
+
+<div class="cb-binary-tracer-wrap">
+<button class="program-toggle" onclick="cbSkipListTracer.toggle()">▶ Program Tracing</button>
+
+<div id="cbSkipListTracer" class="cb-binary-tracer" hidden>
+<div class="cb-binary-title">PROGRAM TRACING — SKIP LIST SEARCH</div>
+
+<div class="cb-binary-grid">
+<div class="cb-binary-panel">
+<h4>💻 Program</h4>
+<pre id="cbSkipListCode"></pre>
+</div>
+
+<div class="cb-binary-panel">
+<h4>🧠 What is happening?</h4>
+<div id="cbSkipListExplain" class="cb-binary-explain"></div>
+
+<h4>📊 Live Variables</h4>
+<div id="cbSkipListVars" class="cb-binary-vars"></div>
+
+<h4>📚 Call Stack</h4>
+<pre id="cbSkipListStack" class="cb-recursive-stack"></pre>
+</div>
+</div>
+
+<div class="cb-skip-visual">
+<h4 style="margin:0 0 7px;color:#0f172a;font-size:14px;">⛓️ Live Skip List</h4>
+<div id="cbSkipListVisual"></div>
+</div>
+
+<div id="cbSkipListOperation" class="cb-binary-operation"></div>
+
+<div class="cb-binary-controls">
+<button onclick="cbSkipListTracer.prev()">← Previous</button>
+<button onclick="cbSkipListTracer.reset()">↺ Reset</button>
+<button onclick="cbSkipListTracer.next()" id="cbSkipListNext">Next →</button>
+<button onclick="cbSkipListTracer.autoRun()" id="cbSkipListAuto">▶ Auto Run</button>
+</div>
+
+<div id="cbSkipListStatus" class="cb-binary-status">Ready to execute.</div>
+</div>
+</div>
+
 </div>
 </div>
 <h3>⚡ Complexity</h3>
@@ -3399,7 +3565,248 @@ const vars={};['n','target','i','step','prev','next','pos','position','currentVa
 const el=document.getElementById('cbJumpArray');if(!Array.isArray(a.a)){el.innerHTML='<div style="padding:12px;color:#64748b">Array has not been declared yet.</div>'}else{const lo=Number.isInteger(a.prev)?a.prev:null,hi=Number.isInteger(a.next)?a.next-1:null,ci=Number.isInteger(a.checkIndex)?a.checkIndex:null,mi=Number.isInteger(a.currentValue)?a.currentValue:null;el.innerHTML='<div class="cb-binary-array-row">'+a.a.map((v,i)=>{let c=[];if(lo!==null&&hi!==null&&i>=lo&&i<=hi)c.push('active-range');if(lo!==null&&i<lo)c.push('outside');if(hi!==null&&i>hi)c.push('outside');if(i===lo)c.push('low');if(i===hi)c.push('high');if(i===ci)c.push('mid');if(v===mi&&mi!==null)c.push('found');return `<div class="cb-binary-cell ${c.join(' ')}"><div class="cb-binary-index">index ${i}</div><div class="cb-binary-value">${this.esc(v)}</div></div>`}).join('')+'</div><div style="font-size:11px;color:#64748b;margin-top:4px">Highlighted block = current Jump Search range.</div>'}
 requestAnimationFrame(()=>{const x=e.querySelector('.cb-binary-code-line.active');if(x){const t=x.offsetTop-e.offsetTop-e.clientHeight/2+x.offsetHeight/2,m=Math.max(0,e.scrollHeight-e.clientHeight);e.scrollTop=Math.max(0,Math.min(t,m))}});const done=this.current>=this.steps.length;document.getElementById('cbJumpStatus').textContent=done?'✓ Program execution completed.':`Step ${this.current} of ${this.steps.length}`;document.getElementById('cbJumpNext').disabled=done;document.getElementById('cbJumpAuto').disabled=done||!!this.timer;document.getElementById('cbJumpNext').textContent=done?'✓ Completed':'Next →'},next(){if(this.current>=this.steps.length)return;this.steps[this.current].mutate(this.state);this.current++;this.render()},prev(){if(this.current<=0)return;this.current--;this.apply(this.current);this.render()},reset(){if(this.timer){clearInterval(this.timer);this.timer=null}this.current=0;this.state={};this.render()},autoRun(){if(this.timer||this.current>=this.steps.length)return;this.timer=setInterval(()=>{if(this.current>=this.steps.length){clearInterval(this.timer);this.timer=null;this.render();return}this.next();if(this.current>=this.steps.length){clearInterval(this.timer);this.timer=null;this.render()}},900)}};cbJumpTracer.init();
 </script>
-<script src="tracer-engine.js"></script>
+<script>
+/* ============================================================
+   CodeBhavya Shared Program Tracer Engine
+   ------------------------------------------------------------
+   One reusable execution engine for all program tracers.
+   Each algorithm supplies only:
+     - program: source-code lines
+     - steps: execution steps
+     - variables: which state values to show
+     - optional renderArray / renderExtra callbacks
+   ============================================================ */
+
+window.CodeBhavyaTracer = (() => {
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function create(config) {
+    const api = {
+      current: 0,
+      state: {},
+      timer: null,
+
+      el(name) {
+        const id = config.ids[name];
+        return id ? document.getElementById(id) : null;
+      },
+
+      init() {
+        this.current = 0;
+        this.state = typeof config.initialState === "function"
+          ? config.initialState()
+          : {};
+        this.render();
+        return this;
+      },
+
+      toggle() {
+        const box = this.el("box");
+        if (!box) return;
+        box.hidden = !box.hidden;
+        if (!box.hidden) this.render();
+      },
+
+      applyThrough(count) {
+        this.state = typeof config.initialState === "function"
+          ? config.initialState()
+          : {};
+
+        for (let i = 0; i < count; i++) {
+          config.steps[i].run(this.state, this);
+        }
+      },
+
+      activeLine() {
+        if (this.current === 0) {
+          return config.startLine ?? config.steps[0]?.line ?? 0;
+        }
+        return config.steps[Math.min(this.current - 1, config.steps.length - 1)].line;
+      },
+
+      currentStep() {
+        if (this.current === 0) {
+          return {
+            explain: config.startMessage || "Press Next to start executing the program.",
+            op: ""
+          };
+        }
+        return config.steps[Math.min(this.current - 1, config.steps.length - 1)];
+      },
+
+      renderCode() {
+        const code = this.el("code");
+        if (!code) return;
+
+        const active = this.activeLine();
+
+        code.innerHTML = config.program.map((line, index) => {
+          const isActive = index === active;
+          return `<span class="${config.codeLineClass || "cb-binary-code-line"} ${isActive ? "active" : ""}">${isActive ? "👉 " : "   "}${escapeHtml(line)}</span>`;
+        }).join("");
+
+        requestAnimationFrame(() => {
+          const activeEl = code.querySelector("." + (config.codeLineClass || "cb-binary-code-line") + ".active");
+          if (!activeEl) return;
+
+          const activeTop = activeEl.offsetTop - code.offsetTop;
+          const target = activeTop - (code.clientHeight / 2) + (activeEl.offsetHeight / 2);
+          const maxScroll = Math.max(0, code.scrollHeight - code.clientHeight);
+          code.scrollTop = Math.max(0, Math.min(target, maxScroll));
+        });
+      },
+
+      renderVariables() {
+        const target = this.el("vars");
+        if (!target) return;
+
+        const entries = typeof config.variables === "function"
+          ? config.variables(this.state, this)
+          : [];
+
+        target.innerHTML = entries.length
+          ? entries.map(([name, value]) =>
+              `<div class="${config.variableClass || "cb-binary-var"}">
+                <strong>${escapeHtml(name)}</strong>
+                <span>${escapeHtml(value)}</span>
+              </div>`
+            ).join("")
+          : `<div class="${config.variableClass || "cb-binary-var"}"><strong>State</strong><span>Not started</span></div>`;
+      },
+
+      render() {
+        this.renderCode();
+
+        const step = this.currentStep();
+        const explain = this.el("explain");
+        const operation = this.el("operation");
+        const stack = this.el("stack");
+        const output = this.el("output");
+
+        if (explain) explain.textContent = step.explain || "";
+        if (operation) {
+          operation.innerHTML = step.op
+            ? `<strong>⚡ Current operation:</strong> ${escapeHtml(step.op)}`
+            : "";
+        }
+
+        this.renderVariables();
+
+        if (stack) {
+          const stackValues = typeof config.stack === "function"
+            ? config.stack(this.state, this)
+            : (this.state.callStack || []);
+
+          stack.textContent = stackValues.length
+            ? stackValues.join("\n")
+            : (config.emptyStackText || "No active function call.");
+        }
+
+        if (output) {
+          output.textContent = typeof config.output === "function"
+            ? config.output(this.state, this)
+            : (this.state.output ?? "No output yet.");
+        }
+
+        if (typeof config.renderArray === "function") {
+          config.renderArray(this.state, this, escapeHtml);
+        }
+
+        if (typeof config.renderExtra === "function") {
+          config.renderExtra(this.state, this, escapeHtml);
+        }
+
+        const completed = this.current >= config.steps.length;
+        const next = this.el("next");
+        const auto = this.el("auto");
+        const status = this.el("status");
+
+        if (next) {
+          next.disabled = completed;
+          next.textContent = completed ? "✓ Completed" : "Next →";
+        }
+
+        if (auto) auto.disabled = completed || !!this.timer;
+
+        if (status) {
+          status.textContent = completed
+            ? "✓ Program execution completed. Press Reset to run again."
+            : `Step ${this.current} of ${config.steps.length}`;
+        }
+      },
+
+      next() {
+        if (this.current >= config.steps.length) return;
+        config.steps[this.current].run(this.state, this);
+        this.current++;
+        this.render();
+      },
+
+      prev() {
+        if (this.current <= 0) return;
+        this.current--;
+        this.applyThrough(this.current);
+        this.render();
+      },
+
+      reset() {
+        if (this.timer) {
+          clearInterval(this.timer);
+          this.timer = null;
+        }
+
+        this.current = 0;
+        this.state = typeof config.initialState === "function"
+          ? config.initialState()
+          : {};
+        this.render();
+
+        const code = this.el("code");
+        if (code) {
+          requestAnimationFrame(() => {
+            code.scrollTo({ top: 0, left: 0, behavior: "auto" });
+          });
+        }
+      },
+
+      autoRun() {
+        if (this.timer || this.current >= config.steps.length) return;
+
+        this.timer = setInterval(() => {
+          if (this.current >= config.steps.length) {
+            clearInterval(this.timer);
+            this.timer = null;
+            this.render();
+            return;
+          }
+
+          this.next();
+
+          if (this.current >= config.steps.length) {
+            clearInterval(this.timer);
+            this.timer = null;
+            this.render();
+          }
+        }, config.autoRunDelay || 900);
+
+        this.render();
+      }
+    };
+
+    api.init();
+    return api;
+  }
+
+  return { create, escapeHtml };
+})();
+
+</script>
 
 <script>
 const cbInterpolationProgram = [
@@ -3603,5 +4010,723 @@ const cbInterpolationTracer = CodeBhavyaTracer.create({
   }
 });
 </script>
+
+<script>
+const cbFibonacciProgram = [
+  '#include <stdio.h>',
+  '',
+  'int fibonacciSearch(int a[], int n, int target) {',
+  '    int fib2 = 0;',
+  '    int fib1 = 1;',
+  '    int fib = fib1 + fib2;',
+  '',
+  '    while (fib < n) {',
+  '        fib2 = fib1;',
+  '        fib1 = fib;',
+  '        fib = fib1 + fib2;',
+  '    }',
+  '',
+  '    int offset = -1;',
+  '',
+  '    while (fib > 1) {',
+  '        int i = offset + fib2;',
+  '        if (i >= n)',
+  '            i = n - 1;',
+  '',
+  '        if (a[i] < target) {',
+  '            fib = fib1;',
+  '            fib1 = fib2;',
+  '            fib2 = fib - fib1;',
+  '            offset = i;',
+  '        }',
+  '        else if (a[i] > target) {',
+  '            fib = fib2;',
+  '            fib1 = fib1 - fib2;',
+  '            fib2 = fib - fib1;',
+  '        }',
+  '        else {',
+  '            return i;',
+  '        }',
+  '    }',
+  '',
+  '    if (fib1 && offset + 1 < n && a[offset + 1] == target)',
+  '        return offset + 1;',
+  '',
+  '    return -1;',
+  '}',
+  '',
+  'int main() {',
+  '    int n, target;',
+  '    scanf("%d", &n);',
+  '',
+  '    int a[n];',
+  '    for (int i = 0; i < n; i++)',
+  '        scanf("%d", &a[i]);',
+  '',
+  '    scanf("%d", &target);',
+  '',
+  '    int pos = fibonacciSearch(a, n, target);',
+  '',
+  '    if (pos != -1)',
+  '        printf("Element found at index %d\\n", pos);',
+  '    else',
+  '        printf("Element not found\\n");',
+  '',
+  '    return 0;',
+  '}'
+];
+
+const cbFibonacciSteps = (() => {
+  const steps = [];
+  const add = (line, explain, run, op) => steps.push({line, explain, run, op});
+  const data = [10,20,30,40,50,60,70,80,90,100];
+
+  add(42,'The program starts execution inside main().',
+      s=>{s.callStack=['main()'];},
+      'Enter main()');
+
+  add(43,'n and target are declared. They do not contain meaningful values yet.',
+      s=>{s.n='indeterminate';s.target='indeterminate';},
+      'Declare n and target');
+
+  add(44,'The number of elements is read.',
+      s=>{s.n=10;},
+      'scanf → n = 10');
+
+  add(46,'The array is declared after n is known.',
+      s=>{s.a=Array(10).fill('—');},
+      'Declare a[10]');
+
+  for(let i=0;i<data.length;i++){
+    add(47,`The array-input loop checks i = ${i}.`,
+        s=>{s.i=i;},
+        `i = ${i}; ${i} < 10 → TRUE`);
+    add(48,`The next array value is read into a[${i}].`,
+        s=>{s.i=i;s.a[i]=data[i];},
+        `scanf → a[${i}] = ${data[i]}`);
+  }
+
+  add(47,'The array-input loop finishes when i becomes 10.',
+      s=>{s.i=10;},
+      'i = 10; 10 < 10 → FALSE');
+
+  add(50,'The target value is read.',
+      s=>{s.target=80;delete s.i;},
+      'target = 80');
+
+  add(52,'Fibonacci Search is called.',
+      s=>{s.callStack=['main()','fibonacciSearch(a, 10, 80)'];},
+      'Call fibonacciSearch(a, 10, 80)');
+
+  add(3,'fib2 is initialized to 0.',
+      s=>{s.fib2=0;},
+      'fib2 = 0');
+
+  add(4,'fib1 is initialized to 1.',
+      s=>{s.fib1=1;},
+      'fib1 = 1');
+
+  add(5,'The next Fibonacci number is calculated.',
+      s=>{s.fib=1;},
+      'fib = 1 + 0 = 1');
+
+  // Build the smallest Fibonacci number that is at least n.
+  const fibBuild = [
+    [1,1,1,2],
+    [1,2,2,3],
+    [2,3,3,5],
+    [3,5,5,8],
+    [5,8,8,13]
+  ];
+
+  for (const [newFib2,newFib1,oldFib,newFib] of fibBuild) {
+    add(7,'The loop checks whether the current Fibonacci number is still smaller than n.',
+        s=>{s.condition='TRUE';},
+        `${oldFib} < 10 → TRUE`);
+
+    add(8,'fib2 takes the value of fib1.',
+        s=>{s.fib2=newFib2;},
+        `fib2 = ${newFib2}`);
+
+    add(9,'fib1 takes the previous fib value.',
+        s=>{s.fib1=newFib1;},
+        `fib1 = ${newFib1}`);
+
+    add(10,'A new Fibonacci number is calculated.',
+        s=>{s.fib=newFib;},
+        `fib = ${newFib1} + ${newFib2} = ${newFib}`);
+  }
+
+  add(7,'Now fib is large enough to cover the array.',
+      s=>{s.condition='FALSE';},
+      '13 < 10 → FALSE');
+
+  add(13,'offset starts before the first array position.',
+      s=>{s.offset=-1;},
+      'offset = -1');
+
+  add(15,'The main Fibonacci Search loop starts.',
+      s=>{s.condition='TRUE';},
+      '13 > 1 → TRUE');
+
+  add(16,'The probe index is calculated from offset and fib2.',
+      s=>{s.i=4;},
+      'i = -1 + 5 = 4');
+
+  add(17,'The program checks whether the probe index exceeds the array.',
+      s=>{s.condition='FALSE';},
+      '4 >= 10 → FALSE');
+
+  add(20,'The probe value is compared with the target.',
+      s=>{s.currentValue=50;s.comparison='LESS';},
+      'a[4] = 50 < 80 → TRUE');
+
+  add(21,'The Fibonacci search range moves right.',
+      s=>{s.fib=8;},
+      'fib = fib1 = 8');
+
+  add(22,'fib1 is reduced.',
+      s=>{s.fib1=5;},
+      'fib1 = fib2 = 5');
+
+  add(23,'fib2 is recalculated.',
+      s=>{s.fib2=3;},
+      'fib2 = 8 - 5 = 3');
+
+  add(24,'offset moves to the current probe.',
+      s=>{s.offset=4;},
+      'offset = 4');
+
+  add(15,'The search loop checks again.',
+      s=>{s.condition='TRUE';delete s.currentValue;delete s.comparison;},
+      '8 > 1 → TRUE');
+
+  add(16,'The next probe index is calculated.',
+      s=>{s.i=7;},
+      'i = 4 + 3 = 7');
+
+  add(17,'The program checks whether the probe index exceeds the array.',
+      s=>{s.condition='FALSE';},
+      '7 >= 10 → FALSE');
+
+  add(20,'The probe value is compared with the target.',
+      s=>{s.currentValue=80;s.comparison='EQUAL';},
+      'a[7] = 80 < 80 → FALSE');
+
+  add(26,'Because it is not smaller, the program checks whether it is greater than the target.',
+      s=>{s.comparison='EQUAL';},
+      'a[7] = 80 > 80 → FALSE');
+
+  add(31,'The else branch executes because a[7] equals the target.',
+      s=>{s.position=7;},
+      'a[7] == 80');
+
+  add(32,'The function returns the found index.',
+      s=>{s.position=7;s.callStack=['main()'];},
+      'return 7');
+
+  add(52,'The returned index is stored in pos.',
+      s=>{s.pos=7;},
+      'pos = 7');
+
+  add(54,'The program checks whether the returned position is valid.',
+      s=>{s.condition='TRUE';},
+      '7 != -1 → TRUE');
+
+  add(55,'The program prints the result.',
+      s=>{s.output='Element found at index 7';},
+      'Output: Element found at index 7');
+
+  add(59,'The program finishes successfully.',
+      s=>{s.callStack=[];},
+      'return 0');
+
+  return steps;
+})();
+
+const cbFibonacciTracer = CodeBhavyaTracer.create({
+  ids:{
+    box:'cbFibonacciTracer',
+    code:'cbFibonacciCode',
+    explain:'cbFibonacciExplain',
+    vars:'cbFibonacciVars',
+    stack:'cbFibonacciStack',
+    array:'cbFibonacciArray',
+    operation:'cbFibonacciOperation',
+    next:'cbFibonacciNext',
+    auto:'cbFibonacciAuto',
+    status:'cbFibonacciStatus'
+  },
+  program:cbFibonacciProgram,
+  steps:cbFibonacciSteps,
+  startLine:42,
+  startMessage:'Press Next to start the program from main().',
+  autoRunDelay:900,
+
+  variables(state){
+    const keys=['n','target','i','fib2','fib1','fib','offset','pos','position','currentValue','condition','comparison'];
+    return keys.filter(k=>state[k]!==undefined).map(k=>[k,String(state[k])]);
+  },
+
+  stack(state){
+    return state.callStack||[];
+  },
+
+  renderArray(state,tracer,esc){
+    const el=document.getElementById('cbFibonacciArray');
+
+    if(!Array.isArray(state.a)){
+      el.innerHTML='<div style="padding:12px;color:#64748b">Array has not been declared yet.</div>';
+      return;
+    }
+
+    const probe=Number.isInteger(state.i)?state.i:null;
+    const offset=Number.isInteger(state.offset)?state.offset:null;
+
+    el.innerHTML=
+      '<div class="cb-binary-array-row">'+
+      state.a.map((value,index)=>{
+        const classes=[];
+
+        if(offset!==null && index<=offset) classes.push('outside');
+        else classes.push('active-range');
+
+        if(index===probe) classes.push('mid');
+        if(index===offset) classes.push('low');
+        if(index===state.position) classes.push('found');
+
+        return `<div class="cb-binary-cell ${classes.join(' ')}">
+          <div class="cb-binary-index">index ${index}</div>
+          <div class="cb-binary-value">${esc(value)}</div>
+        </div>`;
+      }).join('')+
+      '</div><div style="font-size:11px;color:#64748b;margin-top:4px">MID marker = current Fibonacci probe; faded cells are already excluded.</div>';
+  }
+});
+</script>
+
+
+<script>
+const cbSkipListProgram = [
+  '#include <stdio.h>',
+  '#include <stdlib.h>',
+  '',
+  '#define MAX_LEVEL 3',
+  '',
+  'typedef struct Node {',
+  '    int key;',
+  '    struct Node *forward[MAX_LEVEL + 1];',
+  '} Node;',
+  '',
+  'Node *createNode(int key) {',
+  '    Node *node = (Node *)malloc(sizeof(Node));',
+  '    node->key = key;',
+  '',
+  '    for (int i = 0; i <= MAX_LEVEL; i++)',
+  '        node->forward[i] = NULL;',
+  '',
+  '    return node;',
+  '}',
+  '',
+  'void insert(Node *head, int key, int level) {',
+  '    Node *update[MAX_LEVEL + 1];',
+  '    Node *current = head;',
+  '',
+  '    for (int i = MAX_LEVEL; i >= 0; i--) {',
+  '        while (current->forward[i] != NULL &&',
+  '               current->forward[i]->key < key)',
+  '            current = current->forward[i];',
+  '',
+  '        update[i] = current;',
+  '    }',
+  '',
+  '    current = current->forward[0];',
+  '',
+  '    if (current != NULL && current->key == key)',
+  '        return;',
+  '',
+  '    Node *newNode = createNode(key);',
+  '',
+  '    for (int i = 0; i <= level; i++) {',
+  '        newNode->forward[i] = update[i]->forward[i];',
+  '        update[i]->forward[i] = newNode;',
+  '    }',
+  '}',
+  '',
+  'int search(Node *head, int key) {',
+  '    Node *current = head;',
+  '',
+  '    for (int i = MAX_LEVEL; i >= 0; i--) {',
+  '        while (current->forward[i] != NULL &&',
+  '               current->forward[i]->key < key)',
+  '            current = current->forward[i];',
+  '    }',
+  '',
+  '    current = current->forward[0];',
+  '',
+  '    if (current != NULL && current->key == key)',
+  '        return 1;',
+  '',
+  '    return 0;',
+  '}',
+  '',
+  'int main() {',
+  '    Node *head = createNode(-1);',
+  '',
+  '    insert(head, 10, 0);',
+  '    insert(head, 20, 1);',
+  '    insert(head, 30, 2);',
+  '    insert(head, 40, 1);',
+  '    insert(head, 50, 3);',
+  '    insert(head, 60, 2);',
+  '',
+  '    int target;',
+  '    scanf("%d", &target);',
+  '',
+  '    if (search(head, target))',
+  '        printf("Element found\\n");',
+  '    else',
+  '        printf("Element not found\\n");',
+  '',
+  '    return 0;',
+  '}'
+];
+
+const cbSkipListSteps = (() => {
+  const steps = [];
+  const add = (line, explain, run, op) => steps.push({line, explain, run, op});
+
+  add(63,
+    'The program starts execution inside main().',
+    s=>{s.callStack=['main()'];s.nodes=[];},
+    'Enter main()');
+
+  add(64,
+    'The head node is created with key -1. It acts as the starting node of the Skip List.',
+    s=>{s.head=true;s.current='HEAD';s.callStack=['main()','createNode(-1)'];},
+    'head = createNode(-1)');
+
+  add(10,
+    'Control enters createNode() to allocate a new node.',
+    s=>{},
+    'Enter createNode(-1)');
+
+  add(11,
+    'Memory is allocated for the head node.',
+    s=>{s.nodeAllocated=true;},
+    'Allocate memory for Node');
+
+  add(12,
+    'The head node key is initialized to -1.',
+    s=>{s.createdKey=-1;},
+    'node->key = -1');
+
+  add(14,
+    'The loop initializes the forward pointers of the new node.',
+    s=>{s.i=0;},
+    'i = 0; 0 <= 3 → TRUE');
+
+  add(15,
+    'The first forward pointer is initialized to NULL.',
+    s=>{s.i=0;},
+    'forward[0] = NULL');
+
+  add(14,
+    'The loop continues with level 1.',
+    s=>{s.i=1;},
+    'i = 1; 1 <= 3 → TRUE');
+
+  add(15,
+    'The level-1 forward pointer is initialized to NULL.',
+    s=>{s.i=1;},
+    'forward[1] = NULL');
+
+  add(14,
+    'The loop continues with level 2.',
+    s=>{s.i=2;},
+    'i = 2; 2 <= 3 → TRUE');
+
+  add(15,
+    'The level-2 forward pointer is initialized to NULL.',
+    s=>{s.i=2;},
+    'forward[2] = NULL');
+
+  add(14,
+    'The loop continues with level 3.',
+    s=>{s.i=3;},
+    'i = 3; 3 <= 3 → TRUE');
+
+  add(15,
+    'The level-3 forward pointer is initialized to NULL.',
+    s=>{s.i=3;},
+    'forward[3] = NULL');
+
+  add(14,
+    'The initialization loop finishes.',
+    s=>{s.i=4;},
+    'i = 4; 4 <= 3 → FALSE');
+
+  add(17,
+    'createNode() returns the initialized head node to main().',
+    s=>{s.callStack=['main()'];delete s.i;},
+    'return head node');
+
+  const inserts = [
+    {line:66,key:10,level:0},
+    {line:67,key:20,level:1},
+    {line:68,key:30,level:2},
+    {line:69,key:40,level:1},
+    {line:70,key:50,level:3},
+    {line:71,key:60,level:2}
+  ];
+
+  for (const item of inserts) {
+    add(item.line,
+      `main() calls insert() to add key ${item.key} with level ${item.level}.`,
+      s=>{
+        s.insertKey=item.key;
+        s.level=item.level;
+        s.current='HEAD';
+        s.callStack=['main()',`insert(${item.key}, level ${item.level})`];
+      },
+      `insert(head, ${item.key}, ${item.level})`);
+
+    add(20,
+      'Control enters insert().',
+      s=>{},
+      `Enter insert(${item.key})`);
+
+    add(22,
+      'current starts at the head node.',
+      s=>{s.current='HEAD';},
+      'current = head');
+
+    add(24,
+      'Insertion begins scanning from the highest Skip List level.',
+      s=>{s.i=3;},
+      'i = 3');
+
+    add(29,
+      'The appropriate predecessor position is recorded for this level.',
+      s=>{},
+      `update[${item.level}] prepared`);
+
+    add(37,
+      `A new node is created for key ${item.key}.`,
+      s=>{s.createdKey=item.key;},
+      `newNode = createNode(${item.key})`);
+
+    add(39,
+      'The new node is linked into every level it belongs to.',
+      s=>{s.i=0;},
+      `Link node ${item.key} from level 0 through level ${item.level}`);
+
+    add(41,
+      `The node ${item.key} is now connected into the Skip List.`,
+      s=>{
+        if(!Array.isArray(s.nodes))s.nodes=[];
+        if(!s.nodes.some(n=>n.key===item.key)){
+          s.nodes.push({key:item.key,level:item.level});
+          s.nodes.sort((a,b)=>a.key-b.key);
+        }
+        s.callStack=['main()'];
+        s.current=item.key;
+        delete s.i;
+      },
+      `Inserted ${item.key}`);
+  }
+
+  add(73,
+    'The target variable is declared but has no meaningful value yet.',
+    s=>{s.target='indeterminate';},
+    'Declare target');
+
+  add(74,
+    'The target value is read from input.',
+    s=>{s.target=40;},
+    'target = 40');
+
+  add(76,
+    'main() calls search() to find target 40.',
+    s=>{s.callStack=['main()','search(40)'];s.current='HEAD';s.level=3;delete s.nextNode;},
+    'search(head, 40)');
+
+  add(46,
+    'Control enters search().',
+    s=>{},
+    'Enter search(40)');
+
+  add(47,
+    'current starts at the head node.',
+    s=>{s.current='HEAD';},
+    'current = head');
+
+  add(49,
+    'Search starts at the highest level, level 3.',
+    s=>{s.i=3;s.level=3;},
+    'i = 3');
+
+  add(50,
+    'At level 3 the next node is 50. Since 50 is not smaller than 40, we do not move forward.',
+    s=>{s.nextNode=50;s.condition='FALSE';},
+    '50 < 40 → FALSE');
+
+  add(49,
+    'The search drops down to level 2.',
+    s=>{s.i=2;s.level=2;delete s.nextNode;},
+    'i = 2');
+
+  add(50,
+    'At level 2 the next node is 30. Since 30 is smaller than 40, the search can safely move forward.',
+    s=>{s.nextNode=30;s.condition='TRUE';},
+    '30 < 40 → TRUE');
+
+  add(52,
+    'current moves from HEAD to node 30 at level 2.',
+    s=>{s.current=30;s.visited=[30];},
+    'current = 30');
+
+  add(50,
+    'From node 30 there is no next node at level 2, so the search cannot move farther at this level.',
+    s=>{delete s.nextNode;s.condition='FALSE';},
+    'forward[2] == NULL');
+
+  add(49,
+    'The search drops down to level 1 while staying at node 30.',
+    s=>{s.i=1;s.level=1;},
+    'i = 1');
+
+  add(50,
+    'At level 1 the next node is 40. Since 40 is not smaller than the target 40, the search stops moving forward.',
+    s=>{s.nextNode=40;s.condition='FALSE';},
+    '40 < 40 → FALSE');
+
+  add(49,
+    'The search drops down to level 0.',
+    s=>{s.i=0;s.level=0;},
+    'i = 0');
+
+  add(50,
+    'At level 0 the next node is still 40. It is not smaller than 40, so the forward scan ends.',
+    s=>{s.nextNode=40;s.condition='FALSE';},
+    '40 < 40 → FALSE');
+
+  add(54,
+    'After finishing all levels, current moves to its level-0 successor.',
+    s=>{s.current=40;s.nextNode=40;},
+    'current = current->forward[0] → 40');
+
+  add(56,
+    'The program checks whether current exists and whether its key equals the target.',
+    s=>{s.condition='TRUE';s.match=true;},
+    'current != NULL && 40 == 40 → TRUE');
+
+  add(57,
+    'search() returns 1 because the target was found.',
+    s=>{s.searchResult=1;s.callStack=['main()'];},
+    'return 1');
+
+  add(76,
+    'The return value is true, so the if condition in main() succeeds.',
+    s=>{s.condition='TRUE';},
+    'search(...) → 1 → TRUE');
+
+  add(77,
+    'The program prints the success message.',
+    s=>{s.output='Element found';},
+    'Output: Element found');
+
+  add(81,
+    'The program finishes successfully.',
+    s=>{s.callStack=[];},
+    'return 0');
+
+  return steps;
+})();
+
+const cbSkipListTracer = CodeBhavyaTracer.create({
+  ids:{
+    box:'cbSkipListTracer',
+    code:'cbSkipListCode',
+    explain:'cbSkipListExplain',
+    vars:'cbSkipListVars',
+    stack:'cbSkipListStack',
+    array:'cbSkipListVisual',
+    operation:'cbSkipListOperation',
+    next:'cbSkipListNext',
+    auto:'cbSkipListAuto',
+    status:'cbSkipListStatus'
+  },
+  program:cbSkipListProgram,
+  steps:cbSkipListSteps,
+  startLine:63,
+  startMessage:'Press Next to start the program from main().',
+  autoRunDelay:900,
+
+  variables(state){
+    const keys=['target','insertKey','level','i','current','nextNode','condition','searchResult','output'];
+    return keys
+      .filter(k=>state[k]!==undefined)
+      .map(k=>[k,String(state[k])]);
+  },
+
+  stack(state){
+    return state.callStack||[];
+  },
+
+  renderArray(state,tracer,esc){
+    const el=document.getElementById('cbSkipListVisual');
+
+    const columns = [
+      {key:'HEAD',level:3,head:true},
+      ...(Array.isArray(state.nodes)?state.nodes:[])
+    ];
+
+    const fullKeys=['HEAD',10,20,30,40,50,60];
+    const nodeMap=new Map(columns.map(n=>[String(n.key),n]));
+    const current=String(state.current);
+    const next=state.nextNode!==undefined?String(state.nextNode):null;
+    const visited=new Set((state.visited||[]).map(String));
+
+    let html='';
+
+    for(let level=3;level>=0;level--){
+      html+=`<div class="cb-skip-level">
+        <div class="cb-skip-level-label">Level ${level}</div>`;
+
+      for(const key of fullKeys){
+        const node=nodeMap.get(String(key));
+        const exists=node && node.level>=level;
+
+        if(!exists){
+          html+='<div class="cb-skip-node empty"></div>';
+          continue;
+        }
+
+        const cls=['cb-skip-node'];
+        if(node.head)cls.push('head');
+        if(String(key)===current)cls.push('current');
+        if(next!==null && String(key)===next)cls.push('next');
+        if(state.match && String(key)===current)cls.push('match');
+        if(visited.has(String(key)) && String(key)!==current)cls.push('visited');
+
+        html+=`<div class="${cls.join(' ')}">
+          ${key}
+          <span class="cb-skip-arrow">→</span>
+        </div>`;
+      }
+
+      html+='</div>';
+    }
+
+    html+=`<div class="cb-skip-legend">
+      🔵 Current node &nbsp;&nbsp; 🟨 Next node being checked &nbsp;&nbsp; 🟩 Match
+    </div>`;
+
+    el.innerHTML=html;
+  }
+});
+</script>
+
 </body>
 </html>
