@@ -452,6 +452,8 @@
     }
 }
 
+
+.program-content.open{display:block !important;}
 </style>
 
 <style>
@@ -2369,7 +2371,7 @@ int main() {
 
 <div class="program-box">
 <button class="program-toggle" onclick="rotatedBinaryTracer.toggle()">▶ Program Tracing</button>
-<div id="rotatedTracer" class="program-content" hidden>
+<div id="rotatedTracer" class="program-content" style="display:none;">
 <h3>PROGRAM TRACING — ROTATED BINARY SEARCH</h3>
 <div class="tracer-panel">
 <div>
@@ -3073,7 +3075,11 @@ const rotatedSteps=[
 
 const rotatedBinaryTracer={
 steps:rotatedSteps,current:0,state:{},timer:null,
-toggle(){const b=document.getElementById('rotatedTracer');b.hidden=!b.hidden;if(!b.hidden)this.render()},
+toggle(){
+  const b=document.getElementById('rotatedTracer');
+  b.classList.toggle('open');
+  if(b.classList.contains('open')) this.render();
+},
 esc(v){return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')},
 render(){
 const st=this.steps[this.current],code=document.getElementById('rotatedCode');
