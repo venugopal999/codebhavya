@@ -364,10 +364,9 @@
 <main class="main-content">
 <section class="subject-hero">
 <span class="subject-label">CODEBHAVYA • DATA STRUCTURES</span>
-<h1 class="page-title">🔍 Searching</h1>
+<h1 class="page-title">🔍 Searching Techniques</h1>
 <p class="page-description">
-        Learn important searching techniques in C from basic linear search
-        to interview-oriented advanced searching methods.
+        Master the engineering behind programmatic exploration. Learn how to scan, split, and jump across datasets using everything from sequential lookups to advanced log-time search structures.
     </p>
 </section>
 
@@ -377,7 +376,8 @@
 <section class="content-section" id="introduction">
 <div class="key-idea-box">
 <h3>💡 Core Concept</h3>
-<p>Searching is the basic computing operation of finding the location of a target element within a dataset collection. The efficiency of a searching approach heavily relies on the underlying structure layout and whether the collection array sequence is pre-sorted or unsorted.</p>
+<p>Searching is a fundamental operation in computer science, focused on resolving the exact memory layout index or structural node containing a target item within a collection. The selection of an appropriate searching mechanism depends critically on dataset sizing constraints, performance criteria, memory limitations, and whether the targeted element repository is pre-arranged or unsorted.</p>
+<p>When working with unstructured array layouts, sequential approaches remain standard. However, introducing ordered structures enables divide-and-conquer logic, reducing performance costs from linear times down to sublinear bounds.</p>
 </div>
 </section>
 
@@ -386,11 +386,13 @@
      ========================================== -->
 <section class="content-section" id="linear-search">
 <div class="section-heading">
-<span class="section-label">01 • SEARCHING ALGORITHM</span>
+<span class="section-label">01 • SEQUENTIAL LOOKUP</span>
 <h2>🔎 Linear Search</h2>
 </div>
 <div class="content-card">
-<p>Linear search scans each item sequentially from the very beginning of the dataset collection until a valid identity match matches the query parameters or the structure bounds are reached.</p>
+<p>Linear search (or sequential search) offers the most intuitive method for finding items within a collection. It operates by systematically evaluating every single item from the lower boundary of the array layout index sequentially until a direct structural value identity match occurs or the upper array index constraint bound is breached.</p>
+<p>Because it makes no assumptions regarding underlying array organization, it works reliably for both unsorted and sorted structures. However, it exhibits a time complexity of $O(n)$, rendering it highly inefficient for major high-throughput datasets.</p>
+
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('linearProgram')">Show Program</button>
 <div class="program-content" id="linearProgram">
@@ -479,16 +481,18 @@ int main() {
      ========================================== -->
 <section class="content-section" id="binary-search">
 <div class="section-heading">
-<span class="section-label">02 • SEARCHING ALGORITHM</span>
+<span class="section-label">02 • LOGARITHMIC DIVISION</span>
 <h2>⚡ Binary Search</h2>
 </div>
 <div class="content-card">
 <div class="example-presentation">
-<h3>📋 Prerequisites</h3>
-<p>Binary search strictly requires the data collection sequence array framework to be pre-sorted either in ascending or descending sequence. It follows a divide-and-conquer strategy, consistently cutting the active search space range half down each step.</p>
+<h3>📋 Prerequisites &amp; Logic</h3>
+<p>Binary search relies on a strict architectural requirement: the dataset collection layout array framework must be entirely pre-sorted in either ascending or descending order. It leverages a divide-and-conquer processing model, analyzing the median midpoint of the active search range. If the value at the midpoint matches the target query, the index location is resolved. If the target is smaller, the upper search bound relocates below the midpoint; if larger, the lower search bound adjusts above the midpoint. This consistently cuts the active search window size in half with every cycle, yielding a logarithmic time complexity of $O(\log n)$.</p>
 </div>
 
 <h3>💻 Iterative C Program</h3>
+<p>The iterative approach optimizes memory utilization by processing boundaries within a simple, low-overhead loop without expanding the execution stack framework.</p>
+
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('binaryIterative')">Show Program</button>
 <div class="program-content" id="binaryIterative">
@@ -580,6 +584,8 @@ int main() {
 </div>
 
 <h3>🔁 Recursive Binary Search</h3>
+<p>The recursive architecture maps directly to the divide-and-conquer processing model by calling nested tracking sub-instances down the call stack until base cases trigger.</p>
+
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('binaryRecursive')">Show Program</button>
 <div class="program-content" id="binaryRecursive">
@@ -604,11 +610,15 @@ int main() {
     int a[] = {3, 7, 11, 18, 25, 31, 40};
     int n = 7;
     int target = 31;
+    
+    printf("Searching for %d in hardcoded sorted array...\n", target);
     int result = binarySearch(a, 0, n - 1, target);
+    
     if (result != -1)
         printf("Element found at index %d\n", result);
     else
         printf("Element not found\n");
+        
     return 0;
 }</code></pre>
 
@@ -658,11 +668,12 @@ int main() {
      ========================================== -->
 <section class="content-section" id="rotated-binary-search">
 <div class="section-heading">
-<span class="section-label">03 • ADVANCED SEARCH</span>
+<span class="section-label">03 • ROTATED DATA SPACE</span>
 <h2>🌀 Rotated Binary Search</h2>
 </div>
 <div class="content-card">
-<p>Finds items effectively in a sorted layout vector structure that has been shifted or circular-rotated around a specific pivot index address offset point.</p>
+<p>A classic technical interview variant, Rotated Binary Search handles collections that were originally sorted but have undergone a circular shift around a specific pivot offset (e.g., <code>{18, 25, 31, 40, 3, 7, 11}</code>). The core trick is identifying which half of the partitioned matrix remains perfectly linear, and checking if the target key lies within those sorted boundaries to focus the search.</p>
+
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('rotatedProgram')">Show Program</button>
 <div class="program-content" id="rotatedProgram">
@@ -696,8 +707,15 @@ int main() {
     int a[] = {18, 25, 31, 40, 3, 7, 11};
     int n = 7;
     int target = 7;
+    
+    printf("Searching in a rotated sorted array structure...\n");
     int idx = searchRotated(a, n, target);
-    printf("Index of target: %d\n", idx);
+    
+    if (idx != -1)
+        printf("Element found at index: %d\n", idx);
+    else
+        printf("Element not found in array\n");
+        
     return 0;
 }</code></pre>
 
@@ -741,11 +759,12 @@ int main() {
      ========================================== -->
 <section class="content-section" id="jump-search">
 <div class="section-heading">
-<span class="section-label">04 • SEARCHING ALGORITHM</span>
+<span class="section-label">04 • BLOCK SUB-DIVISION</span>
 <h2>🦘 Jump Search</h2>
 </div>
 <div class="content-card">
-<p>Jump search reduces comparison counts in sorted structures by skipping ahead across blocks of size $\sqrt{n}$ instead of iterating element-by-element.</p>
+<p>Jump search optimizes lookups in sorted structures by balancing sequential passes with complete element skipping. Instead of evaluating every element index, the algorithm steps ahead in blocks of fixed size $\sqrt{n}$. Once a block high-boundary element exceeds the target value, the system stops jumping forward and shifts into a localized, backward-facing sequential linear scan to pin down the exact index match location.</p>
+
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('jumpProgram')">Show Program</button>
 <div class="program-content" id="jumpProgram">
@@ -779,7 +798,15 @@ int main() {
     int a[] = {3, 7, 11, 18, 25, 31, 40, 45, 50};
     int n = 9;
     int target = 31;
-    printf("Found at index: %d\n", jumpSearch(a, n, target));
+    
+    printf("Executing Jump Search algorithm...\n");
+    int index = jumpSearch(a, n, target);
+    
+    if (index != -1)
+        printf("Found element at index: %d\n", index);
+    else
+        printf("Element not found in database array\n");
+        
     return 0;
 }</code></pre>
 
@@ -823,11 +850,14 @@ int main() {
      ========================================== -->
 <section class="content-section" id="interpolation-search">
 <div class="section-heading">
-<span class="section-label">05 • SEARCHING ALGORITHM</span>
+<span class="section-label">05 • ESTIMATED TRAJECTORY</span>
 <h2>📈 Interpolation Search</h2>
 </div>
 <div class="content-card">
-<p>An improvement over standard binary search for uniformly distributed values, finding items using proportional formula estimations.</p>
+<p>Interpolation Search optimizes lookups in sorted, uniformly distributed datasets. Unlike Binary Search, which always checks the exact midpoint, this algorithm mimics how a human searches a phonebook—estimating the target's probable location using a proportional interpolation formula:</p>
+<p>$$\text{pos} = \text{low} + \left( \frac{\text{high} - \text{low}}{a[\text{high}] - a[\text{low}]} \right) \cdot (\text{target} - a[\text{low}])$$</p>
+<p>When dataset values are uniformly spaced, it reaches an exceptional average time complexity of $O(\log \log n)$. However, if the dataset distribution is heavily skewed, performance degrades to $O(n)$.</p>
+
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('interpolationProgram')">Show Program</button>
 <div class="program-content" id="interpolationProgram">
@@ -858,7 +888,15 @@ int main() {
     int a[] = {10, 20, 30, 40, 50, 60, 70};
     int n = 7;
     int target = 60;
-    printf("Index match: %d\n", interpolationSearch(a, n, target));
+    
+    printf("Executing Interpolation Search...\n");
+    int idx = interpolationSearch(a, n, target);
+    
+    if (idx != -1)
+        printf("Index match isolated at: %d\n", idx);
+    else
+        printf("Target element value not located\n");
+        
     return 0;
 }</code></pre>
 
@@ -902,11 +940,12 @@ int main() {
      ========================================== -->
 <section class="content-section" id="fibonacci-search">
 <div class="section-heading">
-<span class="section-label">06 • SEARCHING ALGORITHM</span>
+<span class="section-label">06 • DIVISIONLESS PARTITIONING</span>
 <h2>🧬 Fibonacci Search</h2>
 </div>
 <div class="content-card">
-<p>Fibonacci Search uses a divide-and-conquer strategy utilizing Fibonacci numbers to pinpoint array target item lookups in a sorted collection array. It reduces the partition intervals mathematically without utilizing division operations.</p>
+<p>Fibonacci Search uses a divide-and-conquer strategy utilizing Fibonacci numbers to pinpoint array target item lookups in a sorted collection array. By using addition and subtraction to calculate split intervals instead of division, it is highly optimized for older or specialized CPU architectures where division operations are computationally expensive.</p>
+
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('fibonacciProgram')">Show Program</button>
 <div class="program-content" id="fibonacciProgram">
@@ -954,7 +993,15 @@ int main() {
     int a[] = {10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100};
     int n = 11;
     int target = 85;
-    printf("Found at index: %d\n", fibonacciSearch(a, n, target));
+    
+    printf("Executing Divisionless Fibonacci Search...\n");
+    int index = fibonacciSearch(a, n, target);
+    
+    if (index != -1)
+        printf("Found at index: %d\n", index);
+    else
+        printf("Element not found in dataset\n");
+        
     return 0;
 }</code></pre>
 </div>
@@ -967,11 +1014,12 @@ int main() {
      ========================================== -->
 <section class="content-section" id="skip-list-search">
 <div class="section-heading">
-<span class="section-label">07 • ADVANCED LINKED STRUCT</span>
+<span class="section-label">07 • LINKED HIERARCHIES</span>
 <h2>💎 Skip List Search</h2>
 </div>
 <div class="content-card">
-<p>Skip Lists build layered balance hierarchies across standard linked structures to approximate fast binary search times in linked lists. Below is a prototype layout implementation for tracking element lookup pathways.</p>
+<p>While arrays allow rapid lookups via binary search, linked structures are typically locked into slow linear scans. Skip Lists circumvent this limitation by constructing layered balance hierarchies over standard linked structures. By skipping across express lanes of node references, lookups emulate log-time binary search efficiency within dynamic linked lists.</p>
+
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('skiplistProgram')">Show Program</button>
 <div class="program-content" id="skiplistProgram">
@@ -994,7 +1042,9 @@ struct Node* createNode(int key, int level) {
     struct Node *n = (struct Node*)malloc(sizeof(struct Node));
     n->key = key;
     n->forward = (struct Node**)malloc(sizeof(struct Node*) * (level + 1));
-    for (int i = 0; i &lt;= level; i++) n->forward[i] = NULL;
+    for (int i = 0; i &lt;= level; i++) {
+        n->forward[i] = NULL;
+    }
     return n;
 }
 
@@ -1006,7 +1056,8 @@ int searchSkipList(struct SkipList *list, int target) {
         }
     }
     current = current->forward[0];
-    if (current != NULL &amp;&amp; current->key == target) return 1;
+    if (current != NULL &amp;&amp; current->key == target) 
+        return 1;
     return 0;
 }
 
@@ -1014,7 +1065,13 @@ int main() {
     struct SkipList list;
     list.level = 0;
     list.header = createNode(-1, MAX_LEVEL);
-    printf("Skip list structural components instantiated.\n");
+    
+    printf("Skip list structural components instantiated successfully.\n");
+    printf("Search function pointer addresses bound to runtime memory registers.\n");
+    
+    // Clean up memory allocation layers safely
+    free(list.header->forward);
+    free(list.header);
     return 0;
 }</code></pre>
 </div>
@@ -1027,11 +1084,11 @@ int main() {
      ========================================== -->
 <section class="content-section" id="comparison">
 <div class="section-heading">
-<span class="section-label">08 • DATA MATRIX GRAPH</span>
+<span class="section-label">08 • PERFORMANCE COMPARISON</span>
 <h2>📊 Algorithm Comparison</h2>
 </div>
 <div class="content-card">
-<p>Below is the detailed comparison matrix highlighting time complexities, space constraints, and operational guidelines across searching variants.</p>
+<p>Choosing the ideal searching algorithm requires balancing data distribution traits against structural memory layouts. The matrix below contrasts time, space, and operational boundaries across searching variants:</p>
 <table class="comparison-table">
     <thead>
         <tr>
