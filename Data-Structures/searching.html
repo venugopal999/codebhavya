@@ -4396,98 +4396,87 @@ const cbSkipListSteps = (() => {
   const steps = [];
   const add = (line, explain, run, op) => steps.push({line, explain, run, op});
 
-  add(63,
+  /* ---------- main() + head creation ---------- */
+  add(62,
     'The program starts execution inside main().',
-    s=>{s.callStack=['main()'];s.nodes=[];},
+    s=>{
+      s.callStack=['main()'];
+      s.nodes=[];
+    },
     'Enter main()');
 
-  add(64,
-    'The head node is created with key -1. It acts as the starting node of the Skip List.',
-    s=>{s.head=true;s.current='HEAD';s.callStack=['main()','createNode(-1)'];},
+  add(63,
+    'main() calls createNode(-1) to create the head node.',
+    s=>{
+      s.callStack=['main()','createNode(-1)'];
+      s.current='HEAD';
+    },
     'head = createNode(-1)');
 
   add(10,
-    'Control enters createNode() to allocate a new node.',
+    'Control enters createNode().',
     s=>{},
     'Enter createNode(-1)');
 
   add(11,
     'Memory is allocated for the head node.',
-    s=>{s.nodeAllocated=true;},
+    s=>{},
     'Allocate memory for Node');
 
   add(12,
     'The head node key is initialized to -1.',
-    s=>{s.createdKey=-1;},
+    s=>{},
     'node->key = -1');
 
-  add(14,
-    'The loop initializes the forward pointers of the new node.',
-    s=>{s.i=0;},
-    'i = 0; 0 <= 3 → TRUE');
+  for(let i=0;i<=3;i++){
+    add(14,
+      `The forward-pointer loop checks level ${i}.`,
+      s=>{s.i=i;},
+      `i = ${i}; ${i} <= 3 → TRUE`);
 
-  add(15,
-    'The first forward pointer is initialized to NULL.',
-    s=>{s.i=0;},
-    'forward[0] = NULL');
-
-  add(14,
-    'The loop continues with level 1.',
-    s=>{s.i=1;},
-    'i = 1; 1 <= 3 → TRUE');
-
-  add(15,
-    'The level-1 forward pointer is initialized to NULL.',
-    s=>{s.i=1;},
-    'forward[1] = NULL');
+    add(15,
+      `forward[${i}] is initialized to NULL.`,
+      s=>{s.i=i;},
+      `forward[${i}] = NULL`);
+  }
 
   add(14,
-    'The loop continues with level 2.',
-    s=>{s.i=2;},
-    'i = 2; 2 <= 3 → TRUE');
-
-  add(15,
-    'The level-2 forward pointer is initialized to NULL.',
-    s=>{s.i=2;},
-    'forward[2] = NULL');
-
-  add(14,
-    'The loop continues with level 3.',
-    s=>{s.i=3;},
-    'i = 3; 3 <= 3 → TRUE');
-
-  add(15,
-    'The level-3 forward pointer is initialized to NULL.',
-    s=>{s.i=3;},
-    'forward[3] = NULL');
-
-  add(14,
-    'The initialization loop finishes.',
+    'The forward-pointer initialization loop finishes.',
     s=>{s.i=4;},
     'i = 4; 4 <= 3 → FALSE');
 
   add(17,
     'createNode() returns the initialized head node to main().',
-    s=>{s.callStack=['main()'];delete s.i;},
-    'return head node');
+    s=>{
+      s.callStack=['main()'];
+      s.current='HEAD';
+      delete s.i;
+    },
+    'return head');
 
+  /* ---------- list construction ----------
+     The insertion helper is kept compact, but every highlighted source line
+     now matches the operation being described. */
   const inserts = [
-    {line:66,key:10,level:0},
-    {line:67,key:20,level:1},
-    {line:68,key:30,level:2},
-    {line:69,key:40,level:1},
-    {line:70,key:50,level:3},
-    {line:71,key:60,level:2}
+    {mainLine:65,key:10,level:0},
+    {mainLine:66,key:20,level:1},
+    {mainLine:67,key:30,level:2},
+    {mainLine:68,key:40,level:1},
+    {mainLine:69,key:50,level:3},
+    {mainLine:70,key:60,level:2}
   ];
 
-  for (const item of inserts) {
-    add(item.line,
+  for(const item of inserts){
+    add(item.mainLine,
       `main() calls insert() to add key ${item.key} with level ${item.level}.`,
       s=>{
         s.insertKey=item.key;
         s.level=item.level;
         s.current='HEAD';
         s.callStack=['main()',`insert(${item.key}, level ${item.level})`];
+        delete s.i;
+        delete s.condition;
+        delete s.nextNode;
       },
       `insert(head, ${item.key}, ${item.level})`);
 
@@ -4495,6 +4484,11 @@ const cbSkipListSteps = (() => {
       'Control enters insert().',
       s=>{},
       `Enter insert(${item.key})`);
+
+    add(21,
+      'The update array is declared to remember predecessor nodes for each level.',
+      s=>{},
+      'Declare update[MAX_LEVEL + 1]');
 
     add(22,
       'current starts at the head node.',
@@ -4504,116 +4498,161 @@ const cbSkipListSteps = (() => {
     add(24,
       'Insertion begins scanning from the highest Skip List level.',
       s=>{s.i=3;},
-      'i = 3');
+      'i = MAX_LEVEL = 3');
 
     add(29,
-      'The appropriate predecessor position is recorded for this level.',
+      'The predecessor position for the insertion is recorded.',
       s=>{},
-      `update[${item.level}] prepared`);
+      'update[i] = current');
 
     add(37,
       `A new node is created for key ${item.key}.`,
-      s=>{s.createdKey=item.key;},
+      s=>{},
       `newNode = createNode(${item.key})`);
 
-    add(39,
-      'The new node is linked into every level it belongs to.',
-      s=>{s.i=0;},
-      `Link node ${item.key} from level 0 through level ${item.level}`);
+    for(let level=0;level<=item.level;level++){
+      add(39,
+        `The linking loop checks level ${level}.`,
+        s=>{s.i=level;},
+        `i = ${level}; ${level} <= ${item.level} → TRUE`);
 
-    add(41,
-      `The node ${item.key} is now connected into the Skip List.`,
+      add(40,
+        `The new node receives the old forward pointer at level ${level}.`,
+        s=>{s.i=level;},
+        `newNode->forward[${level}] = update[${level}]->forward[${level}]`);
+
+      add(41,
+        `The predecessor now points to node ${item.key} at level ${level}.`,
+        s=>{
+          s.i=level;
+          if(level===item.level){
+            if(!Array.isArray(s.nodes)) s.nodes=[];
+            if(!s.nodes.some(n=>n.key===item.key)){
+              s.nodes.push({key:item.key,level:item.level});
+              s.nodes.sort((a,b)=>a.key-b.key);
+            }
+            s.current=item.key;
+          }
+        },
+        `update[${level}]->forward[${level}] = newNode`);
+    }
+
+    add(39,
+      'The linking loop finishes.',
       s=>{
-        if(!Array.isArray(s.nodes))s.nodes=[];
-        if(!s.nodes.some(n=>n.key===item.key)){
-          s.nodes.push({key:item.key,level:item.level});
-          s.nodes.sort((a,b)=>a.key-b.key);
-        }
+        s.i=item.level+1;
+      },
+      `i = ${item.level+1}; ${item.level+1} <= ${item.level} → FALSE`);
+
+    add(43,
+      `insert() finishes after adding node ${item.key}.`,
+      s=>{
         s.callStack=['main()'];
         s.current=item.key;
         delete s.i;
       },
-      `Inserted ${item.key}`);
+      `Return to main()`);
   }
 
-  add(73,
-    'The target variable is declared but has no meaningful value yet.',
-    s=>{s.target='indeterminate';},
+  /* ---------- target input ---------- */
+  add(72,
+    'The target variable is declared. It does not have a meaningful value yet.',
+    s=>{
+      s.target='indeterminate';
+      delete s.insertKey;
+      delete s.level;
+      delete s.current;
+      delete s.nextNode;
+      delete s.condition;
+      delete s.i;
+    },
     'Declare target');
 
-  add(74,
+  add(73,
     'The target value is read from input.',
     s=>{s.target=40;},
     'target = 40');
 
-  add(76,
+  /* ---------- actual Skip List search ---------- */
+  add(75,
     'main() calls search() to find target 40.',
-    s=>{s.callStack=['main()','search(40)'];s.current='HEAD';s.level=3;delete s.nextNode;},
+    s=>{
+      s.callStack=['main()','search(40)'];
+      s.current='HEAD';
+      s.level=3;
+      delete s.nextNode;
+      delete s.condition;
+      delete s.match;
+      delete s.visited;
+    },
     'search(head, 40)');
 
-  add(46,
+  add(45,
     'Control enters search().',
     s=>{},
     'Enter search(40)');
 
-  add(47,
+  add(46,
     'current starts at the head node.',
     s=>{s.current='HEAD';},
     'current = head');
 
-  add(49,
-    'Search starts at the highest level, level 3.',
+  add(48,
+    'The search starts at the highest level.',
     s=>{s.i=3;s.level=3;},
-    'i = 3');
-
-  add(50,
-    'At level 3 the next node is 50. Since 50 is not smaller than 40, we do not move forward.',
-    s=>{s.nextNode=50;s.condition='FALSE';},
-    '50 < 40 → FALSE');
+    'i = MAX_LEVEL = 3');
 
   add(49,
-    'The search drops down to level 2.',
+    'At level 3, the next node is 50. Because 50 is not smaller than 40, the search does not move forward.',
+    s=>{s.nextNode=50;s.condition='FALSE';},
+    'forward[3] = 50; 50 < 40 → FALSE');
+
+  add(48,
+    'The for loop drops to level 2.',
     s=>{s.i=2;s.level=2;delete s.nextNode;},
     'i = 2');
 
-  add(50,
-    'At level 2 the next node is 30. Since 30 is smaller than 40, the search can safely move forward.',
+  add(49,
+    'At level 2, the next node is 30. Because 30 is smaller than 40, the search moves forward.',
     s=>{s.nextNode=30;s.condition='TRUE';},
-    '30 < 40 → TRUE');
+    'forward[2] = 30; 30 < 40 → TRUE');
 
-  add(52,
-    'current moves from HEAD to node 30 at level 2.',
-    s=>{s.current=30;s.visited=[30];},
-    'current = 30');
-
-  add(50,
-    'From node 30 there is no next node at level 2, so the search cannot move farther at this level.',
-    s=>{delete s.nextNode;s.condition='FALSE';},
-    'forward[2] == NULL');
+  add(51,
+    'current moves from HEAD to node 30.',
+    s=>{s.current=30;s.visited=[30];delete s.nextNode;},
+    'current = current->forward[2] → 30');
 
   add(49,
-    'The search drops down to level 1 while staying at node 30.',
-    s=>{s.i=1;s.level=1;},
+    'The while condition is checked again at level 2. The next node is 50, which is not smaller than 40.',
+    s=>{s.nextNode=50;s.condition='FALSE';},
+    'forward[2] = 50; 50 < 40 → FALSE');
+
+  add(48,
+    'The search drops to level 1 while remaining at node 30.',
+    s=>{s.i=1;s.level=1;delete s.nextNode;},
     'i = 1');
 
-  add(50,
-    'At level 1 the next node is 40. Since 40 is not smaller than the target 40, the search stops moving forward.',
-    s=>{s.nextNode=40;s.condition='FALSE';},
-    '40 < 40 → FALSE');
-
   add(49,
-    'The search drops down to level 0.',
-    s=>{s.i=0;s.level=0;},
+    'At level 1, the next node is 40. Because 40 is not smaller than the target 40, the search does not move forward.',
+    s=>{s.nextNode=40;s.condition='FALSE';},
+    'forward[1] = 40; 40 < 40 → FALSE');
+
+  add(48,
+    'The search drops to level 0.',
+    s=>{s.i=0;s.level=0;delete s.nextNode;},
     'i = 0');
 
-  add(50,
-    'At level 0 the next node is still 40. It is not smaller than 40, so the forward scan ends.',
+  add(49,
+    'At level 0, the next node is 40. It is not smaller than 40, so the forward scan ends.',
     s=>{s.nextNode=40;s.condition='FALSE';},
-    '40 < 40 → FALSE');
+    'forward[0] = 40; 40 < 40 → FALSE');
 
   add(54,
-    'After finishing all levels, current moves to its level-0 successor.',
-    s=>{s.current=40;s.nextNode=40;},
+    'After all levels are processed, current moves to its level-0 successor.',
+    s=>{
+      s.current=40;
+      delete s.nextNode;
+    },
     'current = current->forward[0] → 40');
 
   add(56,
@@ -4623,20 +4662,23 @@ const cbSkipListSteps = (() => {
 
   add(57,
     'search() returns 1 because the target was found.',
-    s=>{s.searchResult=1;s.callStack=['main()'];},
+    s=>{
+      s.searchResult=1;
+      s.callStack=['main()'];
+    },
     'return 1');
 
-  add(76,
-    'The return value is true, so the if condition in main() succeeds.',
+  add(75,
+    'The returned value is true, so the if condition in main() succeeds.',
     s=>{s.condition='TRUE';},
     'search(...) → 1 → TRUE');
 
-  add(77,
+  add(76,
     'The program prints the success message.',
     s=>{s.output='Element found';},
     'Output: Element found');
 
-  add(81,
+  add(80,
     'The program finishes successfully.',
     s=>{s.callStack=[];},
     'return 0');
