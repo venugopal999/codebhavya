@@ -481,59 +481,42 @@
 .cb-recursive-output-box h4{margin:0 0 5px;color:#0f172a;font-size:14px}
 #cbRecursiveOutput{font-size:13px;font-weight:700;color:#2563eb;white-space:pre-wrap}
 </style>
+
+<style>
+.cb-rotated-code{height:360px;overflow:auto;overflow-anchor:none;margin:0;font-family:Consolas,"Courier New",monospace;font-size:12.5px;line-height:1.5}
+.cb-rotated-line{display:block;min-height:1.5em;white-space:pre}
+.cb-rotated-line.active{background:#fff3a3;border-left:4px solid #2563eb;padding-left:6px}
+.cb-rotated-output{margin-top:10px;padding:9px 11px;border:1px solid #dbe3ee;border-radius:8px;background:#f8fafc}
+.cb-rotated-output span{margin-left:6px;color:#2563eb;font-weight:700}
+.cb-rotated-vars{display:grid;grid-template-columns:repeat(2,minmax(110px,1fr));gap:7px}
+.cb-rotated-var{padding:7px 9px;border:1px solid #dbe3ee;border-radius:7px;background:#f8fafc}
+.cb-rotated-var strong,.cb-rotated-var span{display:block}
+.cb-rotated-var span{margin-top:2px;color:#2563eb;font-weight:700}
+.cb-rotated-array{display:flex;gap:7px;flex-wrap:wrap}
+.cb-rotated-cell{min-width:50px;padding:6px 5px;text-align:center;border:1px solid #cbd5e1;border-radius:7px;background:#fff}
+.cb-rotated-cell small,.cb-rotated-cell strong{display:block}
+.cb-rotated-cell.outside{opacity:.35}
+.cb-rotated-cell.low,.cb-rotated-cell.high{border-width:2px}
+.cb-rotated-cell.mid{outline:3px solid #facc15}
+.cb-rotated-cell.found{outline:3px solid #22c55e}
+@media(max-width:700px){.cb-rotated-code{height:300px}.cb-rotated-vars{grid-template-columns:1fr 1fr}}
+</style>
+
 </head>
 <body>
 <header class="top-header">
-
-    <a href="../index.html" class="logo codebhavya-new-logo">
-
-    <img
-        src="../images/codebhavya-main-logo.png"
-        alt="CodeBhavya Logo"
-        class="main-logo"
-    >
-
-    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
-
+<a class="logo" href="../index.html">
+<span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
 </a>
-
-
 <nav class="top-nav">
-
-        <a href="../index.html">
-            Home
-        </a>
-
-<a href="../Maths/index.html">
-        Maths
-    </a>
-    
-      <a href="../C-Programming/index.html">
-    C
-</a>
-
-    <a href="../Data-Structures/index.html" class="active">
-    Data Structures
-</a>
-
-<a href="../Advanced-Data-Structures/index.html">
-    Advanced Data Structures
-</a>
-
-        <a href="../Python/index.html">
-            Python
-        </a>
-
-        <a href="../AI-ML/index.html">
-            AI & ML
-        </a>
-
-        <a href="../Placement/index.html">
-            Placement
-        </a>
-
-    </nav>
-
+<a href="../index.html">Home</a>
+<a href="../Mathematics/">Maths</a>
+<a href="../C-Programming/">C</a>
+<a class="active" href="index.html">DSA</a>
+<a href="../Python/">Python</a>
+<a href="../AI-ML/">AI &amp; ML</a>
+<a href="../Placement/">Placement</a>
+</nav>
 </header>
 <div class="docs-layout">
 <aside class="sidebar">
@@ -2290,6 +2273,135 @@ int main() {
 </div>
 </section>
 <div class="topic-navigation"><div class="topic-nav-side previous"><a class="primary-button" href="index.html">← Previous Topic</a></div><div class="topic-nav-side next"><span class="nav-label">Next Topic</span><strong class="nav-topic-name">🔄 Sorting</strong><a class="primary-button" href="sorting.html">Continue to Sorting →</a></div></div>
+
+<section id="rotated-binary-search" class="search-topic">
+<h2>🔄 Rotated Binary Search</h2>
+<p>Rotated Binary Search is used when a sorted array has been rotated at some point. It identifies which half is sorted and decides which half can contain the target.</p>
+
+<h3>🔑 Key Ideas</h3>
+<ol>
+<li>Find the middle element using <code>mid</code>.</li>
+<li>At least one half of the current range is always sorted.</li>
+<li>Check whether the target lies inside the sorted half.</li>
+<li>Discard the half that cannot contain the target.</li>
+<li>Continue until the target is found or <code>low &gt; high</code>.</li>
+</ol>
+
+<h3>📌 Approach</h3>
+<ol>
+<li>Initialize <code>low = 0</code> and <code>high = n - 1</code>.</li>
+<li>Calculate <code>mid</code>.</li>
+<li>If <code>a[mid] == target</code>, return <code>mid</code>.</li>
+<li>Identify which half is sorted.</li>
+<li>Check whether the target belongs to that sorted half.</li>
+<li>Move <code>low</code> or <code>high</code> and repeat.</li>
+</ol>
+
+<h3>📝 Example</h3>
+<p>For <code>[4, 5, 6, 7, 0, 1, 2]</code> and target <code>0</code>:</p>
+<pre>low = 0, mid = 3, high = 6
+a[mid] = 7
+Left half is sorted, but target 0 is not in it.
+Move low to 4.
+
+low = 4, mid = 5, high = 6
+a[mid] = 1
+Target 0 is in the left side.
+Move high to 4.
+
+low = 4, mid = 4, high = 4
+a[mid] = 0
+Target found at index 4.</pre>
+
+<h3>💻 Complete C Program</h3>
+<pre><code>int rotatedBinarySearch(int a[], int n, int target) {
+    int low = 0, high = n - 1;
+
+    while (low &lt;= high) {
+        int mid = low + (high - low) / 2;
+
+        if (a[mid] == target)
+            return mid;
+
+        if (a[low] &lt;= a[mid]) {
+            if (a[low] &lt;= target &amp;&amp; target &lt; a[mid])
+                high = mid - 1;
+            else
+                low = mid + 1;
+        } else {
+            if (a[mid] &lt; target &amp;&amp; target &lt;= a[high])
+                low = mid + 1;
+            else
+                high = mid - 1;
+        }
+    }
+
+    return -1;
+}
+
+int main() {
+    int n, target;
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    scanf("%d", &amp;target);
+
+    int position = rotatedBinarySearch(a, n, target);
+
+    if (position != -1)
+        printf("Element found at index %d\n", position);
+    else
+        printf("Element not found\n");
+
+    return 0;
+}</code></pre>
+
+<h3>📥 Sample Input</h3>
+<pre>7
+4 5 6 7 0 1 2
+0</pre>
+<h3>📤 Sample Output</h3>
+<pre>Element found at index 4</pre>
+
+<div class="program-box">
+<button class="program-toggle" onclick="rotatedBinaryTracer.toggle()">▶ Program Tracing</button>
+<div id="rotatedTracer" class="program-content" hidden>
+<h3>PROGRAM TRACING — ROTATED BINARY SEARCH</h3>
+<div class="tracer-panel">
+<div>
+<h4>💻 Program</h4>
+<pre id="rotatedCode" class="cb-rotated-code"></pre>
+<div class="cb-rotated-output"><strong>📝 Program Output:</strong> <span id="rotatedOutput">No output yet.</span></div>
+</div>
+<div>
+<h4>🧠 What is happening?</h4>
+<p><b>📘 Explanation:</b> <span id="rotatedExplain"></span></p>
+<p><b>⚡ Current Operation:</b> <span id="rotatedOperation"></span></p>
+<h4>📊 Live Variables</h4>
+<div id="rotatedVars" class="cb-rotated-vars"></div>
+<h4>📦 Live Array — Search Range</h4>
+<div id="rotatedArray" class="cb-rotated-array"></div>
+</div>
+</div>
+<div style="margin-top:15px;text-align:center;">
+<button onclick="rotatedBinaryTracer.prev()">← Previous</button>
+<button onclick="rotatedBinaryTracer.reset()">↺ Reset</button>
+<button id="rotatedNext" onclick="rotatedBinaryTracer.next()">Next →</button>
+<button id="rotatedAuto" onclick="rotatedBinaryTracer.autoRun()">▶ Auto Run</button>
+</div>
+<div id="rotatedStatus" style="text-align:center;margin-top:9px;font-size:13px;">Ready to execute.</div>
+</div>
+</div>
+
+<h3>⏱️ Complexity</h3>
+<p><strong>Time:</strong> O(log n)</p>
+<p><strong>Space:</strong> O(1)</p>
+</section>
+
 </main>
 </div>
 <footer class="footer">
@@ -2862,6 +2974,136 @@ const cbRecursiveBinaryTracer = {
 };
 
 cbRecursiveBinaryTracer.render();
+</script>
+
+
+<script>
+const rotatedBinaryProgram=[
+'int rotatedBinarySearch(int a[], int n, int target) {',
+'    int low = 0, high = n - 1;',
+'',
+'    while (low <= high) {',
+'        int mid = low + (high - low) / 2;',
+'',
+'        if (a[mid] == target)',
+'            return mid;',
+'',
+'        if (a[low] <= a[mid]) {',
+'            if (a[low] <= target && target < a[mid])',
+'                high = mid - 1;',
+'            else',
+'                low = mid + 1;',
+'        } else {',
+'            if (a[mid] < target && target <= a[high])',
+'                low = mid + 1;',
+'            else',
+'                high = mid - 1;',
+'        }',
+'    }',
+'',
+'    return -1;',
+'}',
+'',
+'int main() {',
+'    int n, target;',
+'    scanf("%d", &n);',
+'',
+'    int a[n];',
+'',
+'    for (int i = 0; i < n; i++)',
+'        scanf("%d", &a[i]);',
+'',
+'    scanf("%d", &target);',
+'',
+'    int position = rotatedBinarySearch(a, n, target);',
+'',
+'    if (position != -1)',
+'        printf("Element found at index %d\\n", position);',
+'    else',
+'        printf("Element not found\\n");',
+'',
+'    return 0;',
+'}'
+];
+
+const rotatedSteps=[
+{line:27,explain:'The main function starts.',op:'Enter main().',run:s=>{}},
+{line:28,explain:'The program declares n and target.',op:'Declare n and target. Values are not initialized yet.',run:s=>{}},
+{line:29,explain:'The number of elements is read.',op:'n = 7.',run:s=>{s.n=7}},
+{line:31,explain:'The array is declared after n is known.',op:'Create an array with 7 elements.',run:s=>{s.arrayDeclared=true;s.a=[null,null,null,null,null,null,null]}},
+{line:33,explain:'The array-input loop starts.',op:'i = 0; 0 < 7 → TRUE.',run:s=>{s.i=0}},
+{line:34,explain:'The first array value is read.',op:'a[0] = 4.',run:s=>{s.a[0]=4}},
+{line:33,explain:'The loop advances.',op:'i = 1; 1 < 7 → TRUE.',run:s=>{s.i=1}},
+{line:34,explain:'The second array value is read.',op:'a[1] = 5.',run:s=>{s.a[1]=5}},
+{line:33,explain:'The loop advances.',op:'i = 2; 2 < 7 → TRUE.',run:s=>{s.i=2}},
+{line:34,explain:'The third array value is read.',op:'a[2] = 6.',run:s=>{s.a[2]=6}},
+{line:33,explain:'The loop advances.',op:'i = 3; 3 < 7 → TRUE.',run:s=>{s.i=3}},
+{line:34,explain:'The fourth array value is read.',op:'a[3] = 7.',run:s=>{s.a[3]=7}},
+{line:33,explain:'The loop advances.',op:'i = 4; 4 < 7 → TRUE.',run:s=>{s.i=4}},
+{line:34,explain:'The fifth array value is read.',op:'a[4] = 0.',run:s=>{s.a[4]=0}},
+{line:33,explain:'The loop advances.',op:'i = 5; 5 < 7 → TRUE.',run:s=>{s.i=5}},
+{line:34,explain:'The sixth array value is read.',op:'a[5] = 1.',run:s=>{s.a[5]=1}},
+{line:33,explain:'The loop advances.',op:'i = 6; 6 < 7 → TRUE.',run:s=>{s.i=6}},
+{line:34,explain:'The seventh array value is read.',op:'a[6] = 2.',run:s=>{s.a[6]=2}},
+{line:33,explain:'The loop ends.',op:'i = 7; 7 < 7 → FALSE. Exit loop.',run:s=>{s.i=7}},
+{line:36,explain:'The target value is read.',op:'target = 0.',run:s=>{s.target=0}},
+{line:38,explain:'The rotated binary search function is called.',op:'rotatedBinarySearch(a, 7, 0).',run:s=>{s.low=0;s.high=6}},
+{line:1,explain:'The initial search boundaries are set.',op:'low = 0, high = 6.',run:s=>{s.low=0;s.high=6}},
+{line:3,explain:'The search range is checked.',op:'0 <= 6 → TRUE.',run:s=>{s.condition='0 <= 6 → TRUE'}},
+{line:4,explain:'The middle position is calculated.',op:'mid = 3.',run:s=>{s.mid=3}},
+{line:6,explain:'The middle value is compared with the target.',op:'a[3] = 7 == 0 → FALSE.',run:s=>{s.condition='7 == 0 → FALSE'}},
+{line:9,explain:'The algorithm checks whether the left half is sorted.',op:'4 <= 7 → TRUE. Left half is sorted.',run:s=>{s.condition='4 <= 7 → TRUE'}},
+{line:10,explain:'The target is checked against the sorted left half.',op:'4 <= 0 && 0 < 7 → FALSE.',run:s=>{s.condition='4 <= 0 && 0 < 7 → FALSE'}},
+{line:12,explain:'The target is not in the left half, so it is discarded.',op:'low = mid + 1 = 4.',run:s=>{s.low=4}},
+{line:3,explain:'The reduced range is checked.',op:'4 <= 6 → TRUE.',run:s=>{s.condition='4 <= 6 → TRUE'}},
+{line:4,explain:'The middle position is recalculated.',op:'mid = 5.',run:s=>{s.mid=5}},
+{line:6,explain:'The middle value is compared with the target.',op:'a[5] = 1 == 0 → FALSE.',run:s=>{s.condition='1 == 0 → FALSE'}},
+{line:9,explain:'The left half of the current range is sorted.',op:'0 <= 1 → TRUE.',run:s=>{s.condition='0 <= 1 → TRUE'}},
+{line:10,explain:'The target belongs to this sorted left half.',op:'0 <= 0 && 0 < 1 → TRUE.',run:s=>{s.condition='0 <= 0 && 0 < 1 → TRUE'}},
+{line:11,explain:'The right side is discarded.',op:'high = mid - 1 = 4.',run:s=>{s.high=4}},
+{line:3,explain:'Only one element remains.',op:'4 <= 4 → TRUE.',run:s=>{s.condition='4 <= 4 → TRUE'}},
+{line:4,explain:'The middle position is calculated.',op:'mid = 4.',run:s=>{s.mid=4}},
+{line:6,explain:'The middle value matches the target.',op:'a[4] = 0 == 0 → TRUE.',run:s=>{s.condition='0 == 0 → TRUE'}},
+{line:7,explain:'The target is found.',op:'return 4.',run:s=>{s.position=4;s.output='Element found at index 4'}},
+{line:38,explain:'The returned index is stored in position.',op:'position = 4.',run:s=>{s.position=4}},
+{line:40,explain:'The program checks whether the position is valid.',op:'4 != -1 → TRUE.',run:s=>{s.condition='4 != -1 → TRUE'}},
+{line:41,explain:'The result is printed.',op:'Print: Element found at index 4.',run:s=>{s.output='Element found at index 4'}},
+{line:46,explain:'The program finishes.',op:'return 0.',run:s=>{s.completed=true}}
+];
+
+const rotatedBinaryTracer={
+steps:rotatedSteps,current:0,state:{},timer:null,
+toggle(){const b=document.getElementById('rotatedTracer');b.hidden=!b.hidden;if(!b.hidden)this.render()},
+esc(v){return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')},
+render(){
+const st=this.steps[this.current],code=document.getElementById('rotatedCode');
+code.innerHTML=rotatedBinaryProgram.map((line,i)=>`<span class="cb-rotated-line ${i===st.line?'active':''}">${i===st.line?'👉 ':'   '}${this.esc(line)}</span>`).join('');
+document.getElementById('rotatedExplain').textContent=st.explain;
+document.getElementById('rotatedOperation').textContent=st.op;
+const s=this.state;
+const vars=[['n',s.n??'indeterminate'],['i',s.i??'indeterminate'],['target',s.target??'indeterminate'],['low',s.low??'indeterminate'],['mid',s.mid??'indeterminate'],['high',s.high??'indeterminate'],['position',s.position??'indeterminate'],['condition',s.condition??'—']];
+document.getElementById('rotatedVars').innerHTML=vars.map(([k,v])=>`<div class="cb-rotated-var"><strong>${k}</strong><span>${this.esc(v)}</span></div>`).join('');
+document.getElementById('rotatedOutput').textContent=s.output??'No output yet.';
+this.renderArray();
+const done=this.current>=this.steps.length-1;
+document.getElementById('rotatedNext').disabled=done;
+document.getElementById('rotatedAuto').disabled=done;
+document.getElementById('rotatedNext').textContent=done?'✓ Completed':'Next →';
+document.getElementById('rotatedStatus').textContent=done?'✓ Execution completed. Press Reset to run again.':'Step '+(this.current+1)+' of '+this.steps.length;
+requestAnimationFrame(()=>{const active=code.querySelector('.cb-rotated-line.active');if(active){const top=active.offsetTop-code.offsetTop;const target=top-code.clientHeight/2+active.offsetHeight/2;const max=Math.max(0,code.scrollHeight-code.clientHeight);code.scrollTop=Math.max(0,Math.min(target,max))}});
+},
+renderArray(){
+const el=document.getElementById('rotatedArray'),a=this.state.a;
+if(!this.state.arrayDeclared){el.innerHTML='<span style="color:#64748b">Array has not been declared yet.</span>';return}
+const low=Number.isInteger(this.state.low)?this.state.low:null,high=Number.isInteger(this.state.high)?this.state.high:null,mid=Number.isInteger(this.state.mid)?this.state.mid:null;
+el.innerHTML=a.map((v,i)=>{let c='cb-rotated-cell';if(v!==null&&low!==null&&high!==null&&(i<low||i>high))c+=' outside';if(i===low)c+=' low';if(i===high)c+=' high';if(i===mid)c+=' mid';if(i===this.state.position)c+=' found';return `<div class="${c}"><small>${i}</small><strong>${v===null?'—':v}</strong></div>`}).join('');
+},
+next(){if(this.current>=this.steps.length-1)return;this.steps[this.current].run(this.state);this.current++;this.render()},
+prev(){if(this.current<=0)return;this.current--;this.state={};for(let i=0;i<this.current;i++)this.steps[i].run(this.state);this.render()},
+reset(){clearInterval(this.timer);this.timer=null;this.current=0;this.state={};this.render();requestAnimationFrame(()=>document.getElementById('rotatedCode').scrollTo({top:0,left:0,behavior:'auto'}))},
+autoRun(){if(this.timer||this.current>=this.steps.length-1)return;this.timer=setInterval(()=>{if(this.current>=this.steps.length-1){clearInterval(this.timer);this.timer=null;return}this.next()},900)}
+};
+rotatedBinaryTracer.render();
 </script>
 
 </body>
