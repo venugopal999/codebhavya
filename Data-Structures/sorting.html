@@ -1086,6 +1086,171 @@
 }
 </style>
 
+
+<style>
+/* ============================================================
+   CodeBhavya Sorting — responsive width & visualizer tuning
+   ============================================================ */
+
+/* Desktop: use more of the screen and reduce empty side gutters. */
+.docs-layout{
+    width:calc(100% - 16px) !important;
+    max-width:1600px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    padding-left:0 !important;
+    padding-right:0 !important;
+    column-gap:10px !important;
+}
+.main-content{
+    min-width:0 !important;
+    width:100% !important;
+    max-width:none !important;
+}
+.sidebar{
+    min-width:0 !important;
+}
+
+/* Premium visualizers must not force page-level horizontal overflow. */
+.cb-av-card,
+.cb-av-layout,
+.cb-av-stage,
+.cb-av-side,
+.cb-av-sidecard,
+.cb-av-toolbar,
+.cb-av-options,
+.cb-av-field{
+    min-width:0 !important;
+    max-width:100% !important;
+}
+.cb-av-card{
+    width:100% !important;
+    overflow:hidden !important;
+}
+.cb-av-array-wrap{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    overflow-x:auto !important;
+    overflow-y:visible !important;
+    -webkit-overflow-scrolling:touch;
+}
+.cb-av-array{
+    width:max-content;
+    max-width:none;
+}
+.cb-av-input{
+    min-width:0 !important;
+}
+.cb-av-topbar{
+    flex-wrap:wrap;
+}
+.cb-av-brand,
+.cb-av-controls,
+.cb-av-options{
+    max-width:100%;
+}
+.cb-av-btn{
+    max-width:100%;
+}
+
+@media(max-width:850px){
+    html,body{
+        max-width:100%;
+        overflow-x:hidden;
+    }
+    .docs-layout{
+        width:100% !important;
+        max-width:100% !important;
+        padding-left:8px !important;
+        padding-right:8px !important;
+        column-gap:6px !important;
+    }
+    .main-content,
+    .content-section,
+    .content-card,
+    .cb-av-card{
+        min-width:0 !important;
+        max-width:100% !important;
+    }
+    .cb-av-card{
+        padding:14px !important;
+        margin-top:18px !important;
+        border-radius:12px !important;
+    }
+    .cb-av-layout{
+        grid-template-columns:minmax(0,1fr) !important;
+        gap:10px !important;
+    }
+    .cb-av-toolbar{
+        grid-template-columns:minmax(0,1fr) !important;
+        gap:8px !important;
+    }
+    .cb-av-options{
+        gap:8px !important;
+    }
+    .cb-av-speed{
+        width:100%;
+        max-width:100%;
+        flex-wrap:wrap;
+    }
+    .cb-av-speed input{
+        width:auto !important;
+        min-width:120px;
+        flex:1 1 150px;
+        max-width:100%;
+    }
+    .cb-av-controls{
+        gap:6px !important;
+    }
+    .cb-av-controls .cb-av-btn{
+        flex:1 1 105px;
+        padding:9px 8px !important;
+    }
+    .cb-av-side{
+        width:100%;
+    }
+    .cb-av-stats{
+        grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    }
+}
+
+@media(max-width:520px){
+    .docs-layout{
+        padding-left:5px !important;
+        padding-right:5px !important;
+    }
+    .cb-av-card{
+        padding:11px !important;
+    }
+    .cb-av-topbar{
+        gap:7px !important;
+    }
+    .cb-av-brand{
+        font-size:16px !important;
+    }
+    .cb-av-brand-mark{
+        width:25px !important;
+        height:25px !important;
+        margin-right:6px !important;
+    }
+    .cb-av-array-wrap{
+        padding-left:1px !important;
+        padding-right:1px !important;
+    }
+    .cb-av-cell{
+        width:58px !important;
+        height:66px !important;
+    }
+    .cb-av-cell .val{
+        font-size:18px !important;
+    }
+    .cb-av-sidecard{
+        padding:11px !important;
+    }
+}
+</style>
+
 </head>
 <body>
 <header class="top-header">
@@ -1150,6 +1315,8 @@
 <div class="content-card">
 <div class="key-idea-box"><h3>💡 Key Idea</h3><p>Bubble Sort compares neighboring elements. If the left value is greater than the right value, the two values are swapped. After one complete pass, the largest unsorted value reaches its correct position at the end of the array.</p></div>
 
+<div class="example-presentation"><h3>🧠 Example</h3><p>For <code>[5, 1, 4, 2, 8]</code>:<br/>Compare 5 and 1 → swap → <code>[1, 5, 4, 2, 8]</code><br/>Compare 5 and 4 → swap → <code>[1, 4, 5, 2, 8]</code><br/>Compare 5 and 2 → swap → <code>[1, 4, 2, 5, 8]</code><br/>At the end of the first pass, the largest element is fixed at the end.</p></div>
+
 <h3>🔹 Step-by-Step Algorithm</h3>
 <ol>
 <li>Start from the first element.</li>
@@ -1159,8 +1326,6 @@
 <li>After each pass, one largest value reaches its final position.</li>
 <li>Repeat until the entire array is sorted.</li>
 </ol>
-
-<div class="example-presentation"><h3>🧠 Example</h3><p>For <code>[5, 1, 4, 2, 8]</code>:<br/>Compare 5 and 1 → swap → <code>[1, 5, 4, 2, 8]</code><br/>Compare 5 and 4 → swap → <code>[1, 4, 5, 2, 8]</code><br/>Compare 5 and 2 → swap → <code>[1, 4, 2, 5, 8]</code><br/>At the end of the first pass, the largest element is fixed at the end.</p></div>
 
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('bubbleProgram')">Show Program</button>
@@ -1243,7 +1408,7 @@ int main() {
 <div class="complexity-item"><strong>Worst: O(n²)</strong> A reverse-sorted array requires many comparisons and swaps.</div>
 </div>
 <p><strong>Space: O(1)</strong> because Bubble Sort works in place.</p>
-<div class="tip-box"><strong>Interview note:</strong> Bubble Sort is stable. An optimized version can stop early when a complete pass performs no swaps.</div>
+
 </div>
 
 
@@ -1325,6 +1490,8 @@ int main() {
   </div>
 </div>
 
+<div class="tip-box"><strong>Interview note:</strong> Bubble Sort is stable. An optimized version can stop early when a complete pass performs no swaps.</div>
+
 </section>
 
 
@@ -1346,16 +1513,6 @@ and swaps that value into the current position.
 </p>
 </div>
 
-<h3>🔹 Step-by-Step Algorithm</h3>
-<ol>
-<li>Start at index 0 and assume it contains the minimum value.</li>
-<li>Scan all elements to its right.</li>
-<li>If a smaller value is found, update the minimum index.</li>
-<li>After the scan finishes, swap the minimum value with the current position.</li>
-<li>The current position is now fixed in sorted order.</li>
-<li>Move to the next position and repeat.</li>
-</ol>
-
 <div class="example-presentation">
 <h3>🧠 Example</h3>
 <p>
@@ -1366,6 +1523,16 @@ Pass 3 → minimum is 22 → swap with 25 → <code>[11, 12, 22, 25, 64]</code><
 The remaining elements are already in correct order.
 </p>
 </div>
+
+<h3>🔹 Step-by-Step Algorithm</h3>
+<ol>
+<li>Start at index 0 and assume it contains the minimum value.</li>
+<li>Scan all elements to its right.</li>
+<li>If a smaller value is found, update the minimum index.</li>
+<li>After the scan finishes, swap the minimum value with the current position.</li>
+<li>The current position is now fixed in sorted order.</li>
+<li>Move to the next position and repeat.</li>
+</ol>
 
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('selectionProgram')">Show Program</button>
@@ -1469,10 +1636,7 @@ int main() {
 
 <p><strong>Space: O(1)</strong> because Selection Sort works in place.</p>
 
-<div class="tip-box">
-<strong>Interview note:</strong> Selection Sort usually performs fewer swaps than Bubble Sort,
-but the standard implementation is not stable.
-</div>
+
 
 </div>
 
@@ -1555,6 +1719,11 @@ but the standard implementation is not stable.
   </div>
 </div>
 
+<div class="tip-box">
+<strong>Interview note:</strong> Selection Sort usually performs fewer swaps than Bubble Sort,
+but the standard implementation is not stable.
+</div>
+
 </section>
 
 
@@ -1576,16 +1745,6 @@ and inserts the key into the empty position that remains.
 </p>
 </div>
 
-<h3>🔹 Step-by-Step Algorithm</h3>
-<ol>
-<li>Assume the first element is already sorted.</li>
-<li>Take the next element as <code>key</code>.</li>
-<li>Compare the key with elements to its left.</li>
-<li>Shift every larger element one position to the right.</li>
-<li>Insert the key into the correct position.</li>
-<li>Repeat for all remaining elements.</li>
-</ol>
-
 <div class="example-presentation">
 <h3>🧠 Example</h3>
 <p>
@@ -1597,6 +1756,16 @@ Insert 1 → <code>[1, 2, 4, 5, 6, 3]</code><br/>
 Insert 3 → <code>[1, 2, 3, 4, 5, 6]</code>
 </p>
 </div>
+
+<h3>🔹 Step-by-Step Algorithm</h3>
+<ol>
+<li>Assume the first element is already sorted.</li>
+<li>Take the next element as <code>key</code>.</li>
+<li>Compare the key with elements to its left.</li>
+<li>Shift every larger element one position to the right.</li>
+<li>Insert the key into the correct position.</li>
+<li>Repeat for all remaining elements.</li>
+</ol>
 
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('insertionProgram')">Show Program</button>
@@ -1696,10 +1865,7 @@ int main() {
 
 <p><strong>Space: O(1)</strong> because Insertion Sort works in place.</p>
 
-<div class="tip-box">
-<strong>Interview note:</strong> Insertion Sort is stable and performs very well on small or nearly sorted data.
-It is also commonly used as a helper inside more advanced hybrid sorting algorithms.
-</div>
+
 
 </div>
 
@@ -1782,6 +1948,11 @@ It is also commonly used as a helper inside more advanced hybrid sorting algorit
   </div>
 </div>
 
+<div class="tip-box">
+<strong>Interview note:</strong> Insertion Sort is stable and performs very well on small or nearly sorted data.
+It is also commonly used as a helper inside more advanced hybrid sorting algorithms.
+</div>
+
 </section>
 
 
@@ -1803,17 +1974,6 @@ Then it merges those small sorted parts back together in the correct order.
 </p>
 </div>
 
-<h3>🔹 Step-by-Step Algorithm</h3>
-<ol>
-<li>Find the middle of the current array range.</li>
-<li>Recursively sort the left half.</li>
-<li>Recursively sort the right half.</li>
-<li>Compare values from both sorted halves.</li>
-<li>Copy the smaller value into a temporary array.</li>
-<li>Copy any remaining values from either half.</li>
-<li>Copy the merged temporary values back into the original array.</li>
-</ol>
-
 <div class="example-presentation">
 <h3>🧠 Example</h3>
 <p>
@@ -1825,6 +1985,17 @@ Merge the right side → <code>[3, 9, 82]</code><br/>
 Final merge → <code>[3, 9, 27, 38, 43, 82]</code>
 </p>
 </div>
+
+<h3>🔹 Step-by-Step Algorithm</h3>
+<ol>
+<li>Find the middle of the current array range.</li>
+<li>Recursively sort the left half.</li>
+<li>Recursively sort the right half.</li>
+<li>Compare values from both sorted halves.</li>
+<li>Copy the smaller value into a temporary array.</li>
+<li>Copy any remaining values from either half.</li>
+<li>Copy the merged temporary values back into the original array.</li>
+</ol>
 
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('mergeProgram')">Show Program</button>
@@ -1959,10 +2130,7 @@ int main() {
 
 <p><strong>Space: O(n)</strong> because temporary storage is required while merging.</p>
 
-<div class="tip-box">
-<strong>Interview note:</strong> Merge Sort is stable and guarantees O(n log n) time.
-It is especially useful for linked lists, external sorting, and situations where predictable performance is important.
-</div>
+
 
 </div>
 
@@ -2045,6 +2213,11 @@ It is especially useful for linked lists, external sorting, and situations where
   </div>
 </div>
 
+<div class="tip-box">
+<strong>Interview note:</strong> Merge Sort is stable and guarantees O(n log n) time.
+It is especially useful for linked lists, external sorting, and situations where predictable performance is important.
+</div>
+
 </section>
 
 
@@ -2066,16 +2239,6 @@ and larger values come after it, and then the two sides are sorted recursively.
 </p>
 </div>
 
-<h3>🔹 Step-by-Step Algorithm</h3>
-<ol>
-<li>Select a pivot. In this program, the last element is used as the pivot.</li>
-<li>Keep an index <code>i</code> for the end of the smaller-or-equal region.</li>
-<li>Scan the partition using <code>j</code>.</li>
-<li>If <code>a[j] &lt;= pivot</code>, move that value into the smaller region.</li>
-<li>After scanning, place the pivot between the two regions.</li>
-<li>Recursively Quick Sort the left and right subarrays.</li>
-</ol>
-
 <div class="example-presentation">
 <h3>🧠 Example</h3>
 <p>
@@ -2086,6 +2249,16 @@ Recursively sort the right part <code>[8, 9, 10, 7]</code>.<br/>
 After further partitioning, the final array becomes <code>[1, 5, 7, 8, 9, 10]</code>.
 </p>
 </div>
+
+<h3>🔹 Step-by-Step Algorithm</h3>
+<ol>
+<li>Select a pivot. In this program, the last element is used as the pivot.</li>
+<li>Keep an index <code>i</code> for the end of the smaller-or-equal region.</li>
+<li>Scan the partition using <code>j</code>.</li>
+<li>If <code>a[j] &lt;= pivot</code>, move that value into the smaller region.</li>
+<li>After scanning, place the pivot between the two regions.</li>
+<li>Recursively Quick Sort the left and right subarrays.</li>
+</ol>
 
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('quickProgram')">Show Program</button>
@@ -2213,10 +2386,7 @@ int main() {
 
 <p><strong>Space: O(log n)</strong> on average for the recursion stack, but it can grow to O(n) in the worst case.</p>
 
-<div class="tip-box">
-<strong>Interview note:</strong> Quick Sort is usually very fast in practice and sorts in place,
-but the standard implementation is not stable and its worst case is O(n²).
-</div>
+
 
 </div>
 
@@ -2299,6 +2469,11 @@ but the standard implementation is not stable and its worst case is O(n²).
   </div>
 </div>
 
+<div class="tip-box">
+<strong>Interview note:</strong> Quick Sort is usually very fast in practice and sorts in place,
+but the standard implementation is not stable and its worst case is O(n²).
+</div>
+
 </section>
 
 
@@ -2320,17 +2495,6 @@ It then swaps that root with the last unsorted element, reduces the heap size, a
 </p>
 </div>
 
-<h3>🔹 Step-by-Step Algorithm</h3>
-<ol>
-<li>Start from the last non-leaf node and build a max heap.</li>
-<li>In <code>heapify()</code>, compare a node with its left and right children.</li>
-<li>If a child is larger, swap the node with the largest child.</li>
-<li>Continue heapifying from the changed child position.</li>
-<li>Swap the root (largest value) with the last unsorted element.</li>
-<li>Reduce the heap size and heapify the root again.</li>
-<li>Repeat until the array is fully sorted.</li>
-</ol>
-
 <div class="example-presentation">
 <h3>🧠 Example</h3>
 <p>
@@ -2341,6 +2505,17 @@ Then move the next largest values one by one to the sorted suffix.<br/>
 Final array → <code>[5, 6, 7, 11, 12, 13]</code>
 </p>
 </div>
+
+<h3>🔹 Step-by-Step Algorithm</h3>
+<ol>
+<li>Start from the last non-leaf node and build a max heap.</li>
+<li>In <code>heapify()</code>, compare a node with its left and right children.</li>
+<li>If a child is larger, swap the node with the largest child.</li>
+<li>Continue heapifying from the changed child position.</li>
+<li>Swap the root (largest value) with the last unsorted element.</li>
+<li>Reduce the heap size and heapify the root again.</li>
+<li>Repeat until the array is fully sorted.</li>
+</ol>
 
 <div class="program-box">
 <button class="program-toggle" onclick="toggleProgram('heapProgram')">Show Program</button>
@@ -2471,10 +2646,7 @@ int main() {
 
 <p><strong>Space: O(log n)</strong> for this recursive <code>heapify()</code> implementation because of the call stack. An iterative heapify version can use O(1) auxiliary space.</p>
 
-<div class="tip-box">
-<strong>Interview note:</strong> Heap Sort guarantees O(n log n) worst-case time and sorts in place,
-but the standard algorithm is not stable and is often less cache-friendly than Quick Sort.
-</div>
+
 
 </div>
 
@@ -2555,6 +2727,11 @@ but the standard algorithm is not stable and is often less cache-friendly than Q
       </div>
     </div>
   </div>
+</div>
+
+<div class="tip-box">
+<strong>Interview note:</strong> Heap Sort guarantees O(n log n) worst-case time and sorts in place,
+but the standard algorithm is not stable and is often less cache-friendly than Quick Sort.
 </div>
 
 </section>
