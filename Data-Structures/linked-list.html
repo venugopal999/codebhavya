@@ -1206,47 +1206,92 @@
 
 .ll-interview-list {
     display:grid;
-    gap:10px;
-    margin-top:14px;
+    gap:14px;
+    margin-top:18px;
 }
 
 .ll-interview-item {
     border:1px solid #dbe3ec;
     border-radius:10px;
-    background:#fff;
+    background:#f8fafc;
     overflow:hidden;
 }
 
-.ll-interview-item summary {
-    cursor:pointer;
-    list-style:none;
-    padding:14px 16px;
+.ll-interview-question-row {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:15px 18px 12px;
+}
+
+.ll-interview-question {
+    margin:0;
+    font-size:16px;
+    line-height:1.5;
     font-weight:800;
     color:#0d1b2a;
-    background:#f8fafc;
 }
 
-.ll-interview-item summary::-webkit-details-marker {
-    display:none;
+.ll-interview-toggle {
+    flex:0 0 auto;
+    border:0;
+    border-radius:8px;
+    padding:9px 14px;
+    background:#2563eb;
+    color:#fff;
+    font-size:13px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.2s ease;
 }
 
-.ll-interview-item summary::after {
-    content:"+";
-    float:right;
-    color:#d4af37;
-    font-size:20px;
-    line-height:18px;
-}
-
-.ll-interview-item[open] summary::after {
-    content:"−";
+.ll-interview-toggle:hover {
+    background:#1d4ed8;
 }
 
 .ll-interview-answer {
-    padding:14px 16px;
-    border-top:1px solid #e2e8f0;
+    display:none;
+    margin:0 18px 16px;
+    padding:17px 18px;
+    border-left:5px solid #7dd3fc;
+    border-radius:8px;
+    background:#fff;
     color:#334155;
     line-height:1.7;
+}
+
+.ll-interview-answer.show {
+    display:block;
+}
+
+.ll-interview-short {
+    margin-top:13px;
+    padding:11px 12px;
+    border:1px solid #93c5fd;
+    border-radius:7px;
+    background:#eff6ff;
+    color:#334155;
+}
+
+.ll-interview-short strong {
+    color:#1d4ed8;
+}
+
+@media(max-width:650px) {
+    .ll-interview-question-row {
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .ll-interview-toggle {
+        align-self:flex-start;
+    }
+
+    .ll-interview-answer {
+        margin-left:12px;
+        margin-right:12px;
+    }
 }
 
 .ll-practice-summary {
@@ -1646,6 +1691,139 @@
 
     .llp-badges {
         justify-content:flex-start;
+    }
+}
+
+
+/* ============================================================
+   LINKED LIST VISUALIZERS — MATCH SORTING BRAND PRESENTATION
+   Same CodeBhavya icon, colors, top-right brand position,
+   and "Interactive Algorithm Visualization" top label.
+   ============================================================ */
+
+.ll-viz-header {
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) auto !important;
+    align-items:center !important;
+    gap:8px 14px !important;
+    padding:18px 20px 8px !important;
+
+    background:#ffffff !important;
+    color:#0f172a !important;
+
+    border-bottom:0 !important;
+}
+
+/* Same top-left label used in Sorting premium visualizers */
+.ll-viz-header::before {
+    content:"INTERACTIVE ALGORITHM VISUALIZATION";
+    grid-column:1;
+    grid-row:1;
+
+    font-size:11px;
+    letter-spacing:1.4px;
+    font-weight:800;
+    color:#2563eb;
+    text-transform:uppercase;
+}
+
+/* Put CodeBhavya brand at top-right like Sorting */
+.ll-viz-header > .ll-viz-brand {
+    grid-column:2;
+    grid-row:1;
+
+    justify-self:end;
+
+    display:inline-flex !important;
+    align-items:center !important;
+    gap:0 !important;
+
+    font-weight:900 !important;
+    font-size:20px !important;
+    letter-spacing:-.5px !important;
+    white-space:nowrap;
+    user-select:none;
+}
+
+/* Same logo badge treatment as Sorting */
+.ll-viz-brand img {
+    width:30px !important;
+    height:30px !important;
+
+    margin-right:8px !important;
+
+    object-fit:contain !important;
+
+    border:1px solid #dbe3ec !important;
+    border-radius:9px !important;
+    background:#ffffff !important;
+
+    box-shadow:0 5px 12px rgba(37,99,235,.12) !important;
+}
+
+/* Same Code / Bhavya wordmark colors as Sorting */
+.ll-viz-brand strong {
+    font-family:inherit !important;
+    font-size:20px !important;
+    font-weight:900 !important;
+    letter-spacing:-.5px !important;
+}
+
+.ll-viz-brand strong > span:first-child {
+    color:#2563eb !important;
+}
+
+.ll-viz-brand strong > .gold {
+    color:#f59e0b !important;
+}
+
+/* Move existing Linked List visualizer title under top bar */
+.ll-viz-header > div:not(.ll-viz-brand) {
+    grid-column:1 / -1;
+    grid-row:2;
+    margin-top:1px;
+}
+
+.ll-viz-header > div:not(.ll-viz-brand) > div:first-child {
+    font-size:18px;
+    font-weight:800;
+    color:#0f172a;
+}
+
+.ll-viz-subtitle {
+    margin-top:3px;
+    color:#64748b !important;
+    font-size:12px !important;
+}
+
+/* Keep the body visually connected to the white premium header */
+.ll-viz-body {
+    border-top:0 !important;
+}
+
+@media(max-width:560px) {
+    .ll-viz-header {
+        padding:14px 12px 7px !important;
+        gap:7px 9px !important;
+    }
+
+    .ll-viz-header::before {
+        font-size:9px;
+        letter-spacing:1px;
+    }
+
+    .ll-viz-header > .ll-viz-brand {
+        font-size:17px !important;
+    }
+
+    .ll-viz-brand img {
+        width:27px !important;
+        height:27px !important;
+        margin-right:6px !important;
+    }
+
+    .ll-viz-brand strong {
+        font-size:17px !important;
     }
 }
 
@@ -5703,100 +5881,175 @@ CDLL = two-direction loop.
 
 <section class="content-section" id="linked-list-interview">
 <div class="section-heading">
-<span class="section-label">19 • INTERVIEW PREPARATION</span>
-<h2>🎯 Top 10 Linked List Interview Questions</h2>
-<p>Open each question to revise the idea, expected explanation, and common interview point.</p>
+<span class="section-label">COMMON QUESTIONS</span>
+<h2>❓ Common Interview Questions</h2>
+<p>Think about each question first. Open the answer only when you want to verify your understanding.</p>
 </div>
 
 <div class="content-card">
 
 <div class="ll-interview-list">
 
-<details class="ll-interview-item">
-<summary>1. What is the main difference between an array and a linked list?</summary>
-<div class="ll-interview-answer">
+<div class="ll-interview-item">
+<div class="ll-interview-question-row">
+<h3 class="ll-interview-question">1. What is the main difference between an array and a linked list?</h3>
+<button class="ll-interview-toggle" type="button"
+onclick="toggleLinkedListInterview('lli-answer-1', this)">Show Answer</button>
+</div>
+<div class="ll-interview-answer" id="lli-answer-1">
 Arrays store elements in contiguous memory and support direct indexing. Linked-list nodes can be
-scattered in memory and are connected using pointers. Access by index is O(1) for an array but
-generally O(n) for a linked list, while linked lists can perform some insertions/deletions without shifting elements.
+scattered in memory and are connected using pointers. Array access by index is O(1), while linked-list
+access to an arbitrary position is generally O(n). Linked lists can perform some insertions and deletions
+without shifting elements.
+<div class="ll-interview-short">
+<strong>Interview answer:</strong> Arrays give fast indexed access; linked lists give flexible node insertion/deletion through pointers.
 </div>
-</details>
-
-<details class="ll-interview-item">
-<summary>2. Why is random access not efficient in a linked list?</summary>
-<div class="ll-interview-answer">
-A node does not know the address of an arbitrary indexed node. To reach position k, traversal normally
-starts from head and follows links one by one, so indexed access takes O(n) time in the general case.
 </div>
-</details>
+</div>
 
-<details class="ll-interview-item">
-<summary>3. How do you reverse a singly linked list in O(n) time and O(1) extra space?</summary>
-<div class="ll-interview-answer">
+<div class="ll-interview-item">
+<div class="ll-interview-question-row">
+<h3 class="ll-interview-question">2. Why is random access not efficient in a linked list?</h3>
+<button class="ll-interview-toggle" type="button"
+onclick="toggleLinkedListInterview('lli-answer-2', this)">Show Answer</button>
+</div>
+<div class="ll-interview-answer" id="lli-answer-2">
+A linked-list node stores only its data and link information. It does not know the address of an arbitrary
+indexed node. To reach position k, traversal normally starts from head and follows links one by one.
+<div class="ll-interview-short">
+<strong>Interview answer:</strong> Linked lists have no direct indexing, so reaching an arbitrary node generally takes O(n) traversal.
+</div>
+</div>
+</div>
+
+<div class="ll-interview-item">
+<div class="ll-interview-question-row">
+<h3 class="ll-interview-question">3. How do you reverse a singly linked list in O(n) time and O(1) extra space?</h3>
+<button class="ll-interview-toggle" type="button"
+onclick="toggleLinkedListInterview('lli-answer-3', this)">Show Answer</button>
+</div>
+<div class="ll-interview-answer" id="lli-answer-3">
 Use three pointers: <code>prev</code>, <code>current</code>, and <code>nextNode</code>.
-For every node, first save <code>current-&gt;next</code>, reverse the link to <code>prev</code>,
-then advance <code>prev</code> and <code>current</code>. Finally set head to prev.
+For each node, first save <code>current-&gt;next</code>, then reverse <code>current-&gt;next</code>
+to point to <code>prev</code>. Move <code>prev</code> and <code>current</code> forward.
+Finally, set head to <code>prev</code>.
+<div class="ll-interview-short">
+<strong>Interview answer:</strong> Save the next node first, reverse the current link, then advance the three pointers.
 </div>
-</details>
-
-<details class="ll-interview-item">
-<summary>4. How can you find the middle node in one traversal?</summary>
-<div class="ll-interview-answer">
-Use the slow/fast pointer technique. Move slow one node at a time and fast two nodes at a time.
-When fast reaches the end, slow is at the middle. With the usual loop condition, an even-length list
-produces the second middle node.
 </div>
-</details>
-
-<details class="ll-interview-item">
-<summary>5. How do you find the Nth node from the end without counting all nodes first?</summary>
-<div class="ll-interview-answer">
-Use two pointers. Move fast N nodes ahead, then move slow and fast together.
-When fast reaches NULL, slow points to the Nth node from the end.
 </div>
-</details>
 
-<details class="ll-interview-item">
-<summary>6. How does Floyd's cycle detection algorithm work?</summary>
-<div class="ll-interview-answer">
-Use slow and fast pointers. Slow moves by one link and fast by two. If a cycle exists,
-they eventually meet inside the loop. If fast reaches NULL, there is no cycle.
-This detects a cycle in O(n) time and O(1) extra space.
+<div class="ll-interview-item">
+<div class="ll-interview-question-row">
+<h3 class="ll-interview-question">4. How can you find the middle node in one traversal?</h3>
+<button class="ll-interview-toggle" type="button"
+onclick="toggleLinkedListInterview('lli-answer-4', this)">Show Answer</button>
 </div>
-</details>
-
-<details class="ll-interview-item">
-<summary>7. Why can deleting the last node of a singly linked list still be O(n) even when a tail pointer exists?</summary>
-<div class="ll-interview-answer">
-The tail gives the last node directly, but a singly linked list has no backward pointer.
-To make the previous node the new tail, the program generally must traverse from head to find the node before tail.
+<div class="ll-interview-answer" id="lli-answer-4">
+Use slow and fast pointers. Move slow by one node and fast by two nodes.
+When fast reaches the end of the list, slow points to the middle node.
+With the common loop condition, an even-length list produces the second middle node.
+<div class="ll-interview-short">
+<strong>Interview answer:</strong> Use slow/fast pointers; fast moves twice as quickly, so slow reaches the middle when fast reaches the end.
 </div>
-</details>
+</div>
+</div>
 
-<details class="ll-interview-item">
-<summary>8. What extra advantage does a doubly linked list provide?</summary>
-<div class="ll-interview-answer">
-Every node contains both <code>prev</code> and <code>next</code>, so traversal can move in both directions.
+<div class="ll-interview-item">
+<div class="ll-interview-question-row">
+<h3 class="ll-interview-question">5. How do you find the Nth node from the end without counting all nodes first?</h3>
+<button class="ll-interview-toggle" type="button"
+onclick="toggleLinkedListInterview('lli-answer-5', this)">Show Answer</button>
+</div>
+<div class="ll-interview-answer" id="lli-answer-5">
+Use two pointers. Move the fast pointer N nodes ahead. Then move slow and fast together one node at a time.
+When fast becomes NULL, slow points to the Nth node from the end.
+<div class="ll-interview-short">
+<strong>Interview answer:</strong> Keep an N-node gap between fast and slow; when fast reaches NULL, slow is at the required node.
+</div>
+</div>
+</div>
+
+<div class="ll-interview-item">
+<div class="ll-interview-question-row">
+<h3 class="ll-interview-question">6. How does Floyd's cycle detection algorithm work?</h3>
+<button class="ll-interview-toggle" type="button"
+onclick="toggleLinkedListInterview('lli-answer-6', this)">Show Answer</button>
+</div>
+<div class="ll-interview-answer" id="lli-answer-6">
+Use slow and fast pointers. Slow moves by one link while fast moves by two.
+If a cycle exists, they eventually meet inside the loop. If fast reaches NULL,
+the list has no cycle. The method uses O(n) time and O(1) extra space.
+<div class="ll-interview-short">
+<strong>Interview answer:</strong> If slow and fast pointers ever meet, a cycle exists; otherwise fast eventually reaches NULL.
+</div>
+</div>
+</div>
+
+<div class="ll-interview-item">
+<div class="ll-interview-question-row">
+<h3 class="ll-interview-question">7. Why can deleting the last node of a singly linked list still be O(n) even with a tail pointer?</h3>
+<button class="ll-interview-toggle" type="button"
+onclick="toggleLinkedListInterview('lli-answer-7', this)">Show Answer</button>
+</div>
+<div class="ll-interview-answer" id="lli-answer-7">
+A tail pointer gives direct access to the last node, but a singly linked list cannot move backward.
+To make the previous node the new tail, the program generally has to traverse from head
+to find the node whose <code>next</code> points to tail.
+<div class="ll-interview-short">
+<strong>Interview answer:</strong> Tail gives the last node, but not its predecessor; finding that predecessor still requires traversal.
+</div>
+</div>
+</div>
+
+<div class="ll-interview-item">
+<div class="ll-interview-question-row">
+<h3 class="ll-interview-question">8. What extra advantage does a doubly linked list provide?</h3>
+<button class="ll-interview-toggle" type="button"
+onclick="toggleLinkedListInterview('lli-answer-8', this)">Show Answer</button>
+</div>
+<div class="ll-interview-answer" id="lli-answer-8">
+Every node contains both <code>prev</code> and <code>next</code> pointers, so traversal can move in both directions.
 When a target node is already known, its neighbours can often be reconnected directly during deletion.
-The trade-off is extra memory and additional pointer updates.
+The trade-off is additional memory and more pointer updates.
+<div class="ll-interview-short">
+<strong>Interview answer:</strong> A DLL supports forward/backward traversal and easier neighbour reconnection, at the cost of one extra pointer per node.
 </div>
-</details>
+</div>
+</div>
 
-<details class="ll-interview-item">
-<summary>9. Why is a do-while loop often used for circular linked-list traversal?</summary>
-<div class="ll-interview-answer">
-The traversal starts at head and must process head before checking whether the pointer has returned to head.
-A do-while loop naturally executes the node-processing body once and then checks the circular stopping condition.
+<div class="ll-interview-item">
+<div class="ll-interview-question-row">
+<h3 class="ll-interview-question">9. Why is a do-while loop often used for circular linked-list traversal?</h3>
+<button class="ll-interview-toggle" type="button"
+onclick="toggleLinkedListInterview('lli-answer-9', this)">Show Answer</button>
 </div>
-</details>
+<div class="ll-interview-answer" id="lli-answer-9">
+Circular traversal starts at head and must process the starting node before checking whether
+the pointer has returned to head. A do-while loop naturally executes the body once before testing
+the circular stopping condition.
+<div class="ll-interview-short">
+<strong>Interview answer:</strong> A do-while processes head first and then stops when traversal returns to the starting node.
+</div>
+</div>
+</div>
 
-<details class="ll-interview-item">
-<summary>10. What pointer mistakes commonly cause linked-list bugs?</summary>
-<div class="ll-interview-answer">
-Common errors include dereferencing NULL, losing the rest of the list before saving a next pointer,
-forgetting to update both links in a DLL, freeing a node too early, forgetting special cases for empty/one-node lists,
-and using <code>temp != NULL</code> as the stopping condition for a circular list.
+<div class="ll-interview-item">
+<div class="ll-interview-question-row">
+<h3 class="ll-interview-question">10. What pointer mistakes commonly cause linked-list bugs?</h3>
+<button class="ll-interview-toggle" type="button"
+onclick="toggleLinkedListInterview('lli-answer-10', this)">Show Answer</button>
 </div>
-</details>
+<div class="ll-interview-answer" id="lli-answer-10">
+Common mistakes include dereferencing NULL, losing the rest of the list before saving a next pointer,
+forgetting to update both links in a doubly linked list, freeing a node too early,
+ignoring empty or one-node special cases, and using <code>temp != NULL</code> as the stopping
+condition for a circular list.
+<div class="ll-interview-short">
+<strong>Interview answer:</strong> Most linked-list bugs come from incorrect pointer-update order, missing edge cases, or using the wrong stopping condition.
+</div>
+</div>
+</div>
 
 </div>
 </div>
@@ -12626,6 +12879,27 @@ window.CodeBhavyaLinkedListPractice = (() => {
         updateProgressUI
     };
 })();
+</script>
+
+
+
+<script>
+/* Linked List interview Q&A — same Show/Hide Answer style as Sorting */
+function toggleLinkedListInterview(answerId, button) {
+    const answer = document.getElementById(answerId);
+
+    if (!answer || !button) return;
+
+    const isOpen = answer.classList.toggle("show");
+
+    button.textContent =
+        isOpen ? "Hide Answer" : "Show Answer";
+
+    button.setAttribute(
+        "aria-expanded",
+        isOpen ? "true" : "false"
+    );
+}
 </script>
 
 
