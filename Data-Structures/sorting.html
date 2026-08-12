@@ -1273,6 +1273,109 @@
 }
 </style>
 
+
+<style>
+/* ============================================================
+   Final Sorting learning flow + topic navigation
+   ============================================================ */
+
+/* Algorithm programs are intentionally visible; practice solutions remain hidden. */
+.algorithm-program-visible{
+    display:block !important;
+    margin-top:10px;
+}
+.cb-visible-program-heading{
+    margin:18px 0 8px;
+    color:#0f172a;
+    font-size:18px;
+    font-weight:800;
+}
+
+/* Keep visualizer visually separate even when placed inside the algorithm card. */
+.content-card > .cb-av-card{
+    margin:22px 0 !important;
+}
+
+/* Previous / overview / next navigation between sorting algorithms. */
+.cb-topic-nav{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    gap:10px;
+    align-items:center;
+    margin:22px 0 8px;
+}
+.cb-topic-nav a{
+    display:flex;
+    align-items:center;
+    min-height:44px;
+    padding:9px 13px;
+    border:1px solid #dbe3ec;
+    border-radius:9px;
+    background:#ffffff;
+    color:#1e3a5f;
+    text-decoration:none;
+    font-weight:700;
+    font-size:13px;
+    transition:transform .2s ease,border-color .2s ease,background .2s ease;
+}
+.cb-topic-nav a:hover{
+    border-color:#8cc8f0;
+    background:#f1f7fc;
+    transform:translateY(-1px);
+}
+.cb-topic-nav .cb-topic-prev{justify-content:flex-start;}
+.cb-topic-nav .cb-topic-next{justify-content:flex-end;text-align:right;}
+.cb-topic-nav .cb-topic-home{
+    justify-content:center;
+    background:#f8f3e4;
+    border-color:#e8d9a8;
+    color:#8b6b16;
+}
+.cb-topic-nav .cb-nav-small{
+    display:block;
+    color:#64748b;
+    font-size:10px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+}
+.cb-topic-nav .cb-nav-name{
+    display:block;
+    margin-top:2px;
+}
+
+/* Sorting sidebar: topic-only navigation with active section state. */
+.sidebar details[open] a.sorting-side-link{
+    position:relative;
+    margin-left:16px;
+}
+.sidebar details[open] a.sorting-side-link.active{
+    background:#eaf3ff;
+    color:#1d4ed8;
+    font-weight:800;
+}
+.sidebar details[open] a.sorting-side-link.active::before{
+    content:"";
+    position:absolute;
+    left:3px;
+    top:9px;
+    bottom:9px;
+    width:3px;
+    border-radius:3px;
+    background:#d4af37;
+}
+
+@media(max-width:700px){
+    .cb-topic-nav{
+        grid-template-columns:1fr 1fr;
+    }
+    .cb-topic-nav .cb-topic-home{
+        grid-column:1 / -1;
+        grid-row:2;
+    }
+}
+</style>
+
 </head>
 <body>
 <header class="top-header">
@@ -1296,15 +1399,16 @@
 <details class="sidebar-topic"><summary>🔍 Searching</summary><a href="searching.html">Open Topic</a></details>
 <details class="sidebar-topic" open="">
 <summary>🔄 Sorting</summary>
-<a href="#introduction">Introduction</a>
-<a href="#bubble-sort">Bubble Sort</a>
-<a href="#selection-sort">Selection Sort</a>
-<a href="#insertion-sort">Insertion Sort</a>
-<a href="#merge-sort">Merge Sort</a>
-<a href="#quick-sort">Quick Sort</a>
-<a href="#heap-sort">Heap Sort</a>
-<a href="#comparison">Algorithm Comparison</a>
-<a href="#interview-section">Interview &amp; Practice</a>
+<a class="sorting-side-link" href="#introduction">Sorting Overview</a>
+<a class="sorting-side-link" href="#bubble-sort">Bubble Sort</a>
+<a class="sorting-side-link" href="#selection-sort">Selection Sort</a>
+<a class="sorting-side-link" href="#insertion-sort">Insertion Sort</a>
+<a class="sorting-side-link" href="#merge-sort">Merge Sort</a>
+<a class="sorting-side-link" href="#quick-sort">Quick Sort</a>
+<a class="sorting-side-link" href="#heap-sort">Heap Sort</a>
+<a class="sorting-side-link" href="#comparison">Algorithm Comparison</a>
+<a class="sorting-side-link" href="#interview-section">Interview Questions</a>
+<a class="sorting-side-link" href="#practice-section">Practice Problems</a>
 </details>
 <details class="sidebar-topic"><summary>🔗 Linked List</summary><a href="linked-list.html">Open Topic</a></details>
 <details class="sidebar-topic"><summary>📚 Stack</summary><a href="stack.html">Open Topic</a></details>
@@ -1349,56 +1453,8 @@
 <li>Repeat until the entire array is sorted.</li>
 </ol>
 
-<div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('bubbleProgram')">Show Program</button>
-<div class="program-content" id="bubbleProgram">
-<pre><code>#include &lt;stdio.h&gt;
-
-int main() {
-    int n;
-
-    scanf("%d", &amp;n);
-
-    int a[n];
-
-    for (int i = 0; i &lt; n; i++)
-        scanf("%d", &amp;a[i]);
-
-    for (int i = 0; i &lt; n - 1; i++) {
-        for (int j = 0; j &lt; n - 1 - i; j++) {
-            if (a[j] &gt; a[j + 1]) {
-                int temp = a[j];
-                a[j] = a[j + 1];
-                a[j + 1] = temp;
-            }
-        }
-    }
-
-    for (int i = 0; i &lt; n; i++)
-        printf("%d ", a[i]);
-
-    return 0;
-}</code></pre>
-
-<div class="input-output">
-<div class="io-box"><h4>Sample Input</h4><pre><code>5
-5 1 4 2 8</code></pre></div>
-<div class="io-box"><h4>Sample Output</h4><pre><code>1 2 4 5 8</code></pre></div>
-</div>
 
 
-</div>
-</div>
-
-<h3>⚡ Complexity</h3>
-<div class="complexity-list">
-<div class="complexity-item"><strong>Best: O(n²)</strong> The basic version still performs all comparisons even if the array is already sorted.</div>
-<div class="complexity-item"><strong>Average: O(n²)</strong> Nested loops compare adjacent pairs over multiple passes.</div>
-<div class="complexity-item"><strong>Worst: O(n²)</strong> A reverse-sorted array requires many comparisons and swaps.</div>
-</div>
-<p><strong>Space: O(1)</strong> because Bubble Sort works in place.</p>
-
-</div>
 
 
 <div class="cb-av-card" id="bubble-av-visualizer">
@@ -1479,6 +1535,47 @@ int main() {
   </div>
 </div>
 
+<div class="program-box">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content algorithm-program-visible" id="bubbleProgram">
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    for (int i = 0; i &lt; n - 1; i++) {
+        for (int j = 0; j &lt; n - 1 - i; j++) {
+            if (a[j] &gt; a[j + 1]) {
+                int temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i &lt; n; i++)
+        printf("%d ", a[i]);
+
+    return 0;
+}</code></pre>
+
+<div class="input-output">
+<div class="io-box"><h4>Sample Input</h4><pre><code>5
+5 1 4 2 8</code></pre></div>
+<div class="io-box"><h4>Sample Output</h4><pre><code>1 2 4 5 8</code></pre></div>
+</div>
+
+
+</div>
+</div>
+
 <div class="cb-binary-tracer-wrap">
 <button class="program-toggle" onclick="cbBubbleTracer.toggle()">▶ Program Tracing</button>
 <div id="cbBubbleTracer" class="cb-binary-tracer" hidden>
@@ -1514,8 +1611,34 @@ int main() {
 </div>
 </div>
 
+<h3>⚡ Complexity</h3>
+<div class="complexity-list">
+<div class="complexity-item"><strong>Best: O(n²)</strong> The basic version still performs all comparisons even if the array is already sorted.</div>
+<div class="complexity-item"><strong>Average: O(n²)</strong> Nested loops compare adjacent pairs over multiple passes.</div>
+<div class="complexity-item"><strong>Worst: O(n²)</strong> A reverse-sorted array requires many comparisons and swaps.</div>
+</div>
+<p><strong>Space: O(1)</strong> because Bubble Sort works in place.</p>
+
+</div>
+
+
+
+
+
+
 
 <div class="tip-box"><strong>Interview note:</strong> Bubble Sort is stable. An optimized version can stop early when a complete pass performs no swaps.</div>
+
+
+<div class="cb-topic-nav" aria-label="Sorting topic navigation">
+  <a class="cb-topic-prev" href="#introduction">
+    <span><span class="cb-nav-small">← Previous</span><span class="cb-nav-name">Sorting Overview</span></span>
+  </a>
+  <a class="cb-topic-home" href="#introduction">Sorting Overview</a>
+  <a class="cb-topic-next" href="#selection-sort">
+    <span><span class="cb-nav-small">Next →</span><span class="cb-nav-name">Selection Sort</span></span>
+  </a>
+</div>
 
 </section>
 
@@ -1559,74 +1682,8 @@ The remaining elements are already in correct order.
 <li>Move to the next position and repeat.</li>
 </ol>
 
-<div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('selectionProgram')">Show Program</button>
-
-<div class="program-content" id="selectionProgram">
-<pre><code>#include &lt;stdio.h&gt;
-
-int main() {
-    int n;
-
-    scanf("%d", &amp;n);
-
-    int a[n];
-
-    for (int i = 0; i &lt; n; i++)
-        scanf("%d", &amp;a[i]);
-
-    for (int i = 0; i &lt; n - 1; i++) {
-        int minIndex = i;
-
-        for (int j = i + 1; j &lt; n; j++) {
-            if (a[j] &lt; a[minIndex]) {
-                minIndex = j;
-            }
-        }
-
-        if (minIndex != i) {
-            int temp = a[i];
-            a[i] = a[minIndex];
-            a[minIndex] = temp;
-        }
-    }
-
-    for (int i = 0; i &lt; n; i++)
-        printf("%d ", a[i]);
-
-    return 0;
-}</code></pre>
-
-<div class="input-output">
-<div class="io-box">
-<h4>Sample Input</h4>
-<pre><code>5
-64 25 12 22 11</code></pre>
-</div>
-
-<div class="io-box">
-<h4>Sample Output</h4>
-<pre><code>11 12 22 25 64</code></pre>
-</div>
-</div>
 
 
-
-</div>
-</div>
-
-<h3>⚡ Complexity</h3>
-<div class="complexity-list">
-<div class="complexity-item"><strong>Best: O(n²)</strong> Selection Sort still scans the unsorted portion even when the array is already sorted.</div>
-<div class="complexity-item"><strong>Average: O(n²)</strong> Finding the minimum repeatedly requires nested scanning.</div>
-<div class="complexity-item"><strong>Worst: O(n²)</strong> The same number of comparisons is made for reverse or random order.</div>
-</div>
-
-<p><strong>Space: O(1)</strong> because Selection Sort works in place.</p>
-
-
-
-</div>
 
 
 <div class="cb-av-card" id="selection-av-visualizer">
@@ -1707,6 +1764,61 @@ int main() {
   </div>
 </div>
 
+<div class="program-box">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content algorithm-program-visible" id="selectionProgram">
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    for (int i = 0; i &lt; n - 1; i++) {
+        int minIndex = i;
+
+        for (int j = i + 1; j &lt; n; j++) {
+            if (a[j] &lt; a[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        if (minIndex != i) {
+            int temp = a[i];
+            a[i] = a[minIndex];
+            a[minIndex] = temp;
+        }
+    }
+
+    for (int i = 0; i &lt; n; i++)
+        printf("%d ", a[i]);
+
+    return 0;
+}</code></pre>
+
+<div class="input-output">
+<div class="io-box">
+<h4>Sample Input</h4>
+<pre><code>5
+64 25 12 22 11</code></pre>
+</div>
+
+<div class="io-box">
+<h4>Sample Output</h4>
+<pre><code>11 12 22 25 64</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
 <div class="cb-binary-tracer-wrap">
 <button class="program-toggle" onclick="cbSelectionTracer.toggle()">▶ Program Tracing</button>
 
@@ -1746,10 +1858,39 @@ int main() {
 </div>
 </div>
 
+<h3>⚡ Complexity</h3>
+<div class="complexity-list">
+<div class="complexity-item"><strong>Best: O(n²)</strong> Selection Sort still scans the unsorted portion even when the array is already sorted.</div>
+<div class="complexity-item"><strong>Average: O(n²)</strong> Finding the minimum repeatedly requires nested scanning.</div>
+<div class="complexity-item"><strong>Worst: O(n²)</strong> The same number of comparisons is made for reverse or random order.</div>
+</div>
+
+<p><strong>Space: O(1)</strong> because Selection Sort works in place.</p>
+
+
+
+</div>
+
+
+
+
+
+
 
 <div class="tip-box">
 <strong>Interview note:</strong> Selection Sort usually performs fewer swaps than Bubble Sort,
 but the standard implementation is not stable.
+</div>
+
+
+<div class="cb-topic-nav" aria-label="Sorting topic navigation">
+  <a class="cb-topic-prev" href="#bubble-sort">
+    <span><span class="cb-nav-small">← Previous</span><span class="cb-nav-name">Bubble Sort</span></span>
+  </a>
+  <a class="cb-topic-home" href="#introduction">Sorting Overview</a>
+  <a class="cb-topic-next" href="#insertion-sort">
+    <span><span class="cb-nav-small">Next →</span><span class="cb-nav-name">Insertion Sort</span></span>
+  </a>
 </div>
 
 </section>
@@ -1795,70 +1936,8 @@ Insert 3 → <code>[1, 2, 3, 4, 5, 6]</code>
 <li>Repeat for all remaining elements.</li>
 </ol>
 
-<div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('insertionProgram')">Show Program</button>
-
-<div class="program-content" id="insertionProgram">
-<pre><code>#include &lt;stdio.h&gt;
-
-int main() {
-    int n;
-
-    scanf("%d", &amp;n);
-
-    int a[n];
-
-    for (int i = 0; i &lt; n; i++)
-        scanf("%d", &amp;a[i]);
-
-    for (int i = 1; i &lt; n; i++) {
-        int key = a[i];
-        int j = i - 1;
-
-        while (j &gt;= 0 &amp;&amp; a[j] &gt; key) {
-            a[j + 1] = a[j];
-            j--;
-        }
-
-        a[j + 1] = key;
-    }
-
-    for (int i = 0; i &lt; n; i++)
-        printf("%d ", a[i]);
-
-    return 0;
-}</code></pre>
-
-<div class="input-output">
-<div class="io-box">
-<h4>Sample Input</h4>
-<pre><code>6
-5 2 4 6 1 3</code></pre>
-</div>
-
-<div class="io-box">
-<h4>Sample Output</h4>
-<pre><code>1 2 3 4 5 6</code></pre>
-</div>
-</div>
 
 
-
-</div>
-</div>
-
-<h3>⚡ Complexity</h3>
-<div class="complexity-list">
-<div class="complexity-item"><strong>Best: O(n)</strong> When the array is already sorted, every key needs only one comparison.</div>
-<div class="complexity-item"><strong>Average: O(n²)</strong> Elements may need to move through part of the sorted prefix.</div>
-<div class="complexity-item"><strong>Worst: O(n²)</strong> A reverse-sorted array causes the maximum number of shifts.</div>
-</div>
-
-<p><strong>Space: O(1)</strong> because Insertion Sort works in place.</p>
-
-
-
-</div>
 
 
 <div class="cb-av-card" id="insertion-av-visualizer">
@@ -1939,6 +2018,57 @@ int main() {
   </div>
 </div>
 
+<div class="program-box">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content algorithm-program-visible" id="insertionProgram">
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    for (int i = 1; i &lt; n; i++) {
+        int key = a[i];
+        int j = i - 1;
+
+        while (j &gt;= 0 &amp;&amp; a[j] &gt; key) {
+            a[j + 1] = a[j];
+            j--;
+        }
+
+        a[j + 1] = key;
+    }
+
+    for (int i = 0; i &lt; n; i++)
+        printf("%d ", a[i]);
+
+    return 0;
+}</code></pre>
+
+<div class="input-output">
+<div class="io-box">
+<h4>Sample Input</h4>
+<pre><code>6
+5 2 4 6 1 3</code></pre>
+</div>
+
+<div class="io-box">
+<h4>Sample Output</h4>
+<pre><code>1 2 3 4 5 6</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
 <div class="cb-binary-tracer-wrap">
 <button class="program-toggle" onclick="cbInsertionTracer.toggle()">▶ Program Tracing</button>
 
@@ -1978,10 +2108,39 @@ int main() {
 </div>
 </div>
 
+<h3>⚡ Complexity</h3>
+<div class="complexity-list">
+<div class="complexity-item"><strong>Best: O(n)</strong> When the array is already sorted, every key needs only one comparison.</div>
+<div class="complexity-item"><strong>Average: O(n²)</strong> Elements may need to move through part of the sorted prefix.</div>
+<div class="complexity-item"><strong>Worst: O(n²)</strong> A reverse-sorted array causes the maximum number of shifts.</div>
+</div>
+
+<p><strong>Space: O(1)</strong> because Insertion Sort works in place.</p>
+
+
+
+</div>
+
+
+
+
+
+
 
 <div class="tip-box">
 <strong>Interview note:</strong> Insertion Sort is stable and performs very well on small or nearly sorted data.
 It is also commonly used as a helper inside more advanced hybrid sorting algorithms.
+</div>
+
+
+<div class="cb-topic-nav" aria-label="Sorting topic navigation">
+  <a class="cb-topic-prev" href="#selection-sort">
+    <span><span class="cb-nav-small">← Previous</span><span class="cb-nav-name">Selection Sort</span></span>
+  </a>
+  <a class="cb-topic-home" href="#introduction">Sorting Overview</a>
+  <a class="cb-topic-next" href="#merge-sort">
+    <span><span class="cb-nav-small">Next →</span><span class="cb-nav-name">Merge Sort</span></span>
+  </a>
 </div>
 
 </section>
@@ -2028,94 +2187,8 @@ Final merge → <code>[3, 9, 27, 38, 43, 82]</code>
 <li>Copy the merged temporary values back into the original array.</li>
 </ol>
 
-<div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('mergeProgram')">Show Program</button>
-
-<div class="program-content" id="mergeProgram">
-<pre><code>#include &lt;stdio.h&gt;
-
-void merge(int a[], int low, int mid, int high) {
-    int i = low;
-    int j = mid + 1;
-    int k = 0;
-    int temp[high - low + 1];
-
-    while (i &lt;= mid &amp;&amp; j &lt;= high) {
-        if (a[i] &lt;= a[j])
-            temp[k++] = a[i++];
-        else
-            temp[k++] = a[j++];
-    }
-
-    while (i &lt;= mid)
-        temp[k++] = a[i++];
-
-    while (j &lt;= high)
-        temp[k++] = a[j++];
-
-    for (i = 0; i &lt; k; i++)
-        a[low + i] = temp[i];
-}
-
-void mergeSort(int a[], int low, int high) {
-    if (low &gt;= high)
-        return;
-
-    int mid = low + (high - low) / 2;
-
-    mergeSort(a, low, mid);
-    mergeSort(a, mid + 1, high);
-    merge(a, low, mid, high);
-}
-
-int main() {
-    int n;
-
-    scanf("%d", &amp;n);
-
-    int a[n];
-
-    for (int i = 0; i &lt; n; i++)
-        scanf("%d", &amp;a[i]);
-
-    mergeSort(a, 0, n - 1);
-
-    for (int i = 0; i &lt; n; i++)
-        printf("%d ", a[i]);
-
-    return 0;
-}</code></pre>
-
-<div class="input-output">
-<div class="io-box">
-<h4>Sample Input</h4>
-<pre><code>6
-38 27 43 3 9 82</code></pre>
-</div>
-
-<div class="io-box">
-<h4>Sample Output</h4>
-<pre><code>3 9 27 38 43 82</code></pre>
-</div>
-</div>
 
 
-
-</div>
-</div>
-
-<h3>⚡ Complexity</h3>
-<div class="complexity-list">
-<div class="complexity-item"><strong>Best: O(n log n)</strong> The array is always divided and merged through the same number of levels.</div>
-<div class="complexity-item"><strong>Average: O(n log n)</strong> Every level processes all n elements during merging.</div>
-<div class="complexity-item"><strong>Worst: O(n log n)</strong> Its running time remains predictable even for reverse-sorted data.</div>
-</div>
-
-<p><strong>Space: O(n)</strong> because temporary storage is required while merging.</p>
-
-
-
-</div>
 
 
 <div class="cb-av-card" id="merge-av-visualizer">
@@ -2196,6 +2269,81 @@ int main() {
   </div>
 </div>
 
+<div class="program-box">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content algorithm-program-visible" id="mergeProgram">
+<pre><code>#include &lt;stdio.h&gt;
+
+void merge(int a[], int low, int mid, int high) {
+    int i = low;
+    int j = mid + 1;
+    int k = 0;
+    int temp[high - low + 1];
+
+    while (i &lt;= mid &amp;&amp; j &lt;= high) {
+        if (a[i] &lt;= a[j])
+            temp[k++] = a[i++];
+        else
+            temp[k++] = a[j++];
+    }
+
+    while (i &lt;= mid)
+        temp[k++] = a[i++];
+
+    while (j &lt;= high)
+        temp[k++] = a[j++];
+
+    for (i = 0; i &lt; k; i++)
+        a[low + i] = temp[i];
+}
+
+void mergeSort(int a[], int low, int high) {
+    if (low &gt;= high)
+        return;
+
+    int mid = low + (high - low) / 2;
+
+    mergeSort(a, low, mid);
+    mergeSort(a, mid + 1, high);
+    merge(a, low, mid, high);
+}
+
+int main() {
+    int n;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    mergeSort(a, 0, n - 1);
+
+    for (int i = 0; i &lt; n; i++)
+        printf("%d ", a[i]);
+
+    return 0;
+}</code></pre>
+
+<div class="input-output">
+<div class="io-box">
+<h4>Sample Input</h4>
+<pre><code>6
+38 27 43 3 9 82</code></pre>
+</div>
+
+<div class="io-box">
+<h4>Sample Output</h4>
+<pre><code>3 9 27 38 43 82</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
 <div class="cb-binary-tracer-wrap">
 <button class="program-toggle" onclick="cbMergeTracer.toggle()">▶ Program Tracing</button>
 
@@ -2246,10 +2394,39 @@ int main() {
 </div>
 </div>
 
+<h3>⚡ Complexity</h3>
+<div class="complexity-list">
+<div class="complexity-item"><strong>Best: O(n log n)</strong> The array is always divided and merged through the same number of levels.</div>
+<div class="complexity-item"><strong>Average: O(n log n)</strong> Every level processes all n elements during merging.</div>
+<div class="complexity-item"><strong>Worst: O(n log n)</strong> Its running time remains predictable even for reverse-sorted data.</div>
+</div>
+
+<p><strong>Space: O(n)</strong> because temporary storage is required while merging.</p>
+
+
+
+</div>
+
+
+
+
+
+
 
 <div class="tip-box">
 <strong>Interview note:</strong> Merge Sort is stable and guarantees O(n log n) time.
 It is especially useful for linked lists, external sorting, and situations where predictable performance is important.
+</div>
+
+
+<div class="cb-topic-nav" aria-label="Sorting topic navigation">
+  <a class="cb-topic-prev" href="#insertion-sort">
+    <span><span class="cb-nav-small">← Previous</span><span class="cb-nav-name">Insertion Sort</span></span>
+  </a>
+  <a class="cb-topic-home" href="#introduction">Sorting Overview</a>
+  <a class="cb-topic-next" href="#quick-sort">
+    <span><span class="cb-nav-small">Next →</span><span class="cb-nav-name">Quick Sort</span></span>
+  </a>
 </div>
 
 </section>
@@ -2294,90 +2471,8 @@ After further partitioning, the final array becomes <code>[1, 5, 7, 8, 9, 10]</c
 <li>Recursively Quick Sort the left and right subarrays.</li>
 </ol>
 
-<div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('quickProgram')">Show Program</button>
-
-<div class="program-content" id="quickProgram">
-<pre><code>#include &lt;stdio.h&gt;
-
-int partition(int a[], int low, int high) {
-    int pivot = a[high];
-    int i = low - 1;
-
-    for (int j = low; j &lt; high; j++) {
-        if (a[j] &lt;= pivot) {
-            i++;
-
-            int temp = a[i];
-            a[i] = a[j];
-            a[j] = temp;
-        }
-    }
-
-    int temp = a[i + 1];
-    a[i + 1] = a[high];
-    a[high] = temp;
-
-    return i + 1;
-}
-
-void quickSort(int a[], int low, int high) {
-    if (low &lt; high) {
-        int p = partition(a, low, high);
-
-        quickSort(a, low, p - 1);
-        quickSort(a, p + 1, high);
-    }
-}
-
-int main() {
-    int n;
-
-    scanf("%d", &amp;n);
-
-    int a[n];
-
-    for (int i = 0; i &lt; n; i++)
-        scanf("%d", &amp;a[i]);
-
-    quickSort(a, 0, n - 1);
-
-    for (int i = 0; i &lt; n; i++)
-        printf("%d ", a[i]);
-
-    return 0;
-}</code></pre>
-
-<div class="input-output">
-<div class="io-box">
-<h4>Sample Input</h4>
-<pre><code>6
-10 7 8 9 1 5</code></pre>
-</div>
-
-<div class="io-box">
-<h4>Sample Output</h4>
-<pre><code>1 5 7 8 9 10</code></pre>
-</div>
-</div>
 
 
-
-</div>
-</div>
-
-<h3>⚡ Complexity</h3>
-<div class="complexity-list">
-<div class="complexity-item"><strong>Best: O(n log n)</strong> The pivot divides the array into balanced parts.</div>
-<div class="complexity-item"><strong>Average: O(n log n)</strong> Good partitions keep the recursion depth near log n.</div>
-<div class="complexity-item"><strong>Worst: O(n²)</strong> Very unbalanced partitions can occur repeatedly, such as with a poor pivot choice.</div>
-</div>
-
-<p><strong>Space: O(log n)</strong> on average for the recursion stack, but it can grow to O(n) in the worst case.</p>
-
-
-
-</div>
 
 
 <div class="cb-av-card" id="quick-av-visualizer">
@@ -2458,6 +2553,77 @@ int main() {
   </div>
 </div>
 
+<div class="program-box">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content algorithm-program-visible" id="quickProgram">
+<pre><code>#include &lt;stdio.h&gt;
+
+int partition(int a[], int low, int high) {
+    int pivot = a[high];
+    int i = low - 1;
+
+    for (int j = low; j &lt; high; j++) {
+        if (a[j] &lt;= pivot) {
+            i++;
+
+            int temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+    }
+
+    int temp = a[i + 1];
+    a[i + 1] = a[high];
+    a[high] = temp;
+
+    return i + 1;
+}
+
+void quickSort(int a[], int low, int high) {
+    if (low &lt; high) {
+        int p = partition(a, low, high);
+
+        quickSort(a, low, p - 1);
+        quickSort(a, p + 1, high);
+    }
+}
+
+int main() {
+    int n;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    quickSort(a, 0, n - 1);
+
+    for (int i = 0; i &lt; n; i++)
+        printf("%d ", a[i]);
+
+    return 0;
+}</code></pre>
+
+<div class="input-output">
+<div class="io-box">
+<h4>Sample Input</h4>
+<pre><code>6
+10 7 8 9 1 5</code></pre>
+</div>
+
+<div class="io-box">
+<h4>Sample Output</h4>
+<pre><code>1 5 7 8 9 10</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
 <div class="cb-binary-tracer-wrap">
 <button class="program-toggle" onclick="cbQuickTracer.toggle()">▶ Program Tracing</button>
 
@@ -2505,10 +2671,39 @@ int main() {
 </div>
 </div>
 
+<h3>⚡ Complexity</h3>
+<div class="complexity-list">
+<div class="complexity-item"><strong>Best: O(n log n)</strong> The pivot divides the array into balanced parts.</div>
+<div class="complexity-item"><strong>Average: O(n log n)</strong> Good partitions keep the recursion depth near log n.</div>
+<div class="complexity-item"><strong>Worst: O(n²)</strong> Very unbalanced partitions can occur repeatedly, such as with a poor pivot choice.</div>
+</div>
+
+<p><strong>Space: O(log n)</strong> on average for the recursion stack, but it can grow to O(n) in the worst case.</p>
+
+
+
+</div>
+
+
+
+
+
+
 
 <div class="tip-box">
 <strong>Interview note:</strong> Quick Sort is usually very fast in practice and sorts in place,
 but the standard implementation is not stable and its worst case is O(n²).
+</div>
+
+
+<div class="cb-topic-nav" aria-label="Sorting topic navigation">
+  <a class="cb-topic-prev" href="#merge-sort">
+    <span><span class="cb-nav-small">← Previous</span><span class="cb-nav-name">Merge Sort</span></span>
+  </a>
+  <a class="cb-topic-home" href="#introduction">Sorting Overview</a>
+  <a class="cb-topic-next" href="#heap-sort">
+    <span><span class="cb-nav-small">Next →</span><span class="cb-nav-name">Heap Sort</span></span>
+  </a>
 </div>
 
 </section>
@@ -2554,93 +2749,8 @@ Final array → <code>[5, 6, 7, 11, 12, 13]</code>
 <li>Repeat until the array is fully sorted.</li>
 </ol>
 
-<div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('heapProgram')">Show Program</button>
-
-<div class="program-content" id="heapProgram">
-<pre><code>#include &lt;stdio.h&gt;
-
-void heapify(int a[], int n, int i) {
-    int largest = i;
-    int left = 2 * i + 1;
-    int right = 2 * i + 2;
-
-    if (left &lt; n &amp;&amp; a[left] &gt; a[largest])
-        largest = left;
-
-    if (right &lt; n &amp;&amp; a[right] &gt; a[largest])
-        largest = right;
-
-    if (largest != i) {
-        int temp = a[i];
-        a[i] = a[largest];
-        a[largest] = temp;
-
-        heapify(a, n, largest);
-    }
-}
-
-void heapSort(int a[], int n) {
-    for (int i = n / 2 - 1; i &gt;= 0; i--)
-        heapify(a, n, i);
-
-    for (int i = n - 1; i &gt; 0; i--) {
-        int temp = a[0];
-        a[0] = a[i];
-        a[i] = temp;
-
-        heapify(a, i, 0);
-    }
-}
-
-int main() {
-    int n;
-
-    scanf("%d", &amp;n);
-
-    int a[n];
-
-    for (int i = 0; i &lt; n; i++)
-        scanf("%d", &amp;a[i]);
-
-    heapSort(a, n);
-
-    for (int i = 0; i &lt; n; i++)
-        printf("%d ", a[i]);
-
-    return 0;
-}</code></pre>
-
-<div class="input-output">
-<div class="io-box">
-<h4>Sample Input</h4>
-<pre><code>6
-12 11 13 5 6 7</code></pre>
-</div>
-
-<div class="io-box">
-<h4>Sample Output</h4>
-<pre><code>5 6 7 11 12 13</code></pre>
-</div>
-</div>
 
 
-
-</div>
-</div>
-
-<h3>⚡ Complexity</h3>
-<div class="complexity-list">
-<div class="complexity-item"><strong>Best: O(n log n)</strong> Heap construction and repeated extraction still dominate the running time.</div>
-<div class="complexity-item"><strong>Average: O(n log n)</strong> Each extraction may require heapifying through the heap height.</div>
-<div class="complexity-item"><strong>Worst: O(n log n)</strong> Heap Sort guarantees O(n log n) even for unfavorable input order.</div>
-</div>
-
-<p><strong>Space: O(log n)</strong> for this recursive <code>heapify()</code> implementation because of the call stack. An iterative heapify version can use O(1) auxiliary space.</p>
-
-
-
-</div>
 
 
 <div class="cb-av-card" id="heap-av-visualizer">
@@ -2721,6 +2831,80 @@ int main() {
   </div>
 </div>
 
+<div class="program-box">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content algorithm-program-visible" id="heapProgram">
+<pre><code>#include &lt;stdio.h&gt;
+
+void heapify(int a[], int n, int i) {
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+
+    if (left &lt; n &amp;&amp; a[left] &gt; a[largest])
+        largest = left;
+
+    if (right &lt; n &amp;&amp; a[right] &gt; a[largest])
+        largest = right;
+
+    if (largest != i) {
+        int temp = a[i];
+        a[i] = a[largest];
+        a[largest] = temp;
+
+        heapify(a, n, largest);
+    }
+}
+
+void heapSort(int a[], int n) {
+    for (int i = n / 2 - 1; i &gt;= 0; i--)
+        heapify(a, n, i);
+
+    for (int i = n - 1; i &gt; 0; i--) {
+        int temp = a[0];
+        a[0] = a[i];
+        a[i] = temp;
+
+        heapify(a, i, 0);
+    }
+}
+
+int main() {
+    int n;
+
+    scanf("%d", &amp;n);
+
+    int a[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf("%d", &amp;a[i]);
+
+    heapSort(a, n);
+
+    for (int i = 0; i &lt; n; i++)
+        printf("%d ", a[i]);
+
+    return 0;
+}</code></pre>
+
+<div class="input-output">
+<div class="io-box">
+<h4>Sample Input</h4>
+<pre><code>6
+12 11 13 5 6 7</code></pre>
+</div>
+
+<div class="io-box">
+<h4>Sample Output</h4>
+<pre><code>5 6 7 11 12 13</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
 <div class="cb-binary-tracer-wrap">
 <button class="program-toggle" onclick="cbHeapTracer.toggle()">▶ Program Tracing</button>
 
@@ -2768,10 +2952,39 @@ int main() {
 </div>
 </div>
 
+<h3>⚡ Complexity</h3>
+<div class="complexity-list">
+<div class="complexity-item"><strong>Best: O(n log n)</strong> Heap construction and repeated extraction still dominate the running time.</div>
+<div class="complexity-item"><strong>Average: O(n log n)</strong> Each extraction may require heapifying through the heap height.</div>
+<div class="complexity-item"><strong>Worst: O(n log n)</strong> Heap Sort guarantees O(n log n) even for unfavorable input order.</div>
+</div>
+
+<p><strong>Space: O(log n)</strong> for this recursive <code>heapify()</code> implementation because of the call stack. An iterative heapify version can use O(1) auxiliary space.</p>
+
+
+
+</div>
+
+
+
+
+
+
 
 <div class="tip-box">
 <strong>Interview note:</strong> Heap Sort guarantees O(n log n) worst-case time and sorts in place,
 but the standard algorithm is not stable and is often less cache-friendly than Quick Sort.
+</div>
+
+
+<div class="cb-topic-nav" aria-label="Sorting topic navigation">
+  <a class="cb-topic-prev" href="#quick-sort">
+    <span><span class="cb-nav-small">← Previous</span><span class="cb-nav-name">Quick Sort</span></span>
+  </a>
+  <a class="cb-topic-home" href="#introduction">Sorting Overview</a>
+  <a class="cb-topic-next" href="#comparison">
+    <span><span class="cb-nav-small">Next →</span><span class="cb-nav-name">Algorithm Comparison</span></span>
+  </a>
 </div>
 
 </section>
@@ -2986,7 +3199,7 @@ but the standard algorithm is not stable and is often less cache-friendly than Q
 </div>
 
 
-<div class="content-card">
+<div class="content-card" id="practice-section">
 <span class="section-label">PRACTICE</span>
 <h2>🎯 20 Sorting Practice Problems</h2>
 <p>Try each problem yourself first. Use <strong>💻 Solve It Yourself</strong> to write and test your C program. Use <strong>Hint</strong> only when needed, and <strong>Show Program</strong> if you want to study the complete solution.</p>
@@ -7216,6 +7429,36 @@ window.CBAV=(()=>{
   document.addEventListener('DOMContentLoaded',init);
   return {load,random,next,prev,reset,auto,pause};
 })();
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const links = Array.from(document.querySelectorAll('.sorting-side-link'));
+    const entries = links
+        .map(link => {
+            const id = link.getAttribute('href');
+            return { link, section: id && id.startsWith('#') ? document.querySelector(id) : null };
+        })
+        .filter(item => item.section);
+
+    function setActiveSidebarTopic() {
+        const marker = window.scrollY + 150;
+        let active = entries[0];
+
+        entries.forEach(item => {
+            if (item.section.offsetTop <= marker) {
+                active = item;
+            }
+        });
+
+        links.forEach(link => link.classList.remove('active'));
+        if (active) active.link.classList.add('active');
+    }
+
+    setActiveSidebarTopic();
+    window.addEventListener('scroll', setActiveSidebarTopic, { passive: true });
+});
 </script>
 
 </body>
