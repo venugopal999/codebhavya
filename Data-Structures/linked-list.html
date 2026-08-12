@@ -2003,22 +2003,85 @@ window.LLTrace = (() => {
         requestAnimationFrame(() => {
             const active = code.querySelector(".ll-code-line.active");
 
-            if (active) {
-                /*
-                   Scroll ONLY the program-code pane.
-                   Do not use active.scrollIntoView(), because that can
-                   move the entire browser window when Next is pressed.
-                */
-                const targetTop =
-                    active.offsetTop
-                    - (code.clientHeight / 2)
-                    + (active.offsetHeight / 2);
+            if (!active) {
+                return;
+            }
+
+            /*
+               Scroll ONLY inside the tracer program window.
+
+               Important:
+               active.offsetTop can be relative to another ancestor,
+               which may produce a large value and make the code-pane
+               scrollbar jump down on the very first Next click.
+
+               Instead, calculate the active line position relative
+               to the visible code pane itself.
+            */
+            const codeRect = code.getBoundingClientRect();
+            const activeRect = active.getBoundingClientRect();
+
+            const activeTopInsideCode =
+                code.scrollTop +
+                (activeRect.top - codeRect.top);
+
+            const activeBottomInsideCode =
+                activeTopInsideCode +
+                activeRect.height;
+
+            /*
+               Keep a comfortable visible zone.
+               We scroll only when the active line leaves this zone.
+               Therefore the first lines remain at the top instead of
+               forcing the scrollbar toward the middle/bottom.
+            */
+            const topSafe =
+                code.scrollTop + 42;
+
+            const bottomSafe =
+                code.scrollTop +
+                code.clientHeight -
+                42;
+
+            let newScrollTop = code.scrollTop;
+
+            if (activeTopInsideCode < topSafe) {
+
+                newScrollTop =
+                    Math.max(
+                        0,
+                        activeTopInsideCode - 42
+                    );
+
+            } else if (activeBottomInsideCode > bottomSafe) {
+
+                newScrollTop =
+                    Math.max(
+                        0,
+                        activeBottomInsideCode -
+                        code.clientHeight +
+                        42
+                    );
+
+            }
+
+            /*
+               Change the code-pane scroll only when necessary.
+               The browser page position is never touched.
+            */
+            if (
+                Math.abs(
+                    newScrollTop -
+                    code.scrollTop
+                ) > 1
+            ) {
 
                 code.scrollTo({
-                    top: Math.max(0, targetTop),
+                    top: newScrollTop,
                     left: code.scrollLeft,
                     behavior: "smooth"
                 });
+
             }
         });
     }
