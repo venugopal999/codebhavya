@@ -1918,3 +1918,192 @@ body {
 
 }
 
+/* ============================================================
+   CODEBHAVYA GLOBAL LAYOUT — FULL-WIDTH RESPONSIVE UPDATE
+   Applies to every page that links to the root style.css.
+   Keeps page content close to the sidebar on desktop and uses
+   almost the full mobile screen width without page overflow.
+   ============================================================ */
+
+/* Never allow a child component to widen the whole website. */
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* ---------- Desktop / laptop documentation pages ---------- */
+.docs-layout {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+}
+
+.sidebar {
+    width: 250px;
+    flex: 0 0 250px;
+    min-width: 0;
+}
+
+.main-content {
+    flex: 1 1 auto;
+    width: auto;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+    padding: 28px 22px;
+}
+
+/* Let normal learning content use all available main-column width. */
+.main-content > *,
+.content-section,
+.content-card,
+.subject-hero {
+    max-width: 100%;
+}
+
+.content-section,
+.content-card {
+    min-width: 0;
+}
+
+/* Responsive media must stay inside its own content area. */
+img,
+video,
+svg,
+canvas {
+    max-width: 100%;
+}
+
+/* Wide code/tables scroll internally instead of widening the page. */
+.main-content pre,
+.comparison-table-wrapper {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ---------- Medium screens ---------- */
+@media (max-width: 1100px) and (min-width: 769px) {
+    .sidebar {
+        width: 230px;
+        flex-basis: 230px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .main-content {
+        padding: 24px 16px;
+    }
+}
+
+/* ---------- Mobile / tablet ---------- */
+@media (max-width: 768px) {
+    .docs-layout {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .sidebar {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 0;
+        position: relative;
+        top: 0;
+        padding: 16px 8px;
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .main-content {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        margin: 0;
+        padding: 12px 8px;
+    }
+
+    .content-section {
+        width: 100%;
+        max-width: 100%;
+        margin: 24px 0;
+    }
+
+    .content-card {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        padding: 18px 14px;
+        margin-bottom: 18px;
+    }
+
+    .subject-hero {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 22px;
+    }
+
+    .page-title {
+        font-size: 30px;
+    }
+
+    /* Inputs/buttons should not create accidental horizontal overflow. */
+    input,
+    select,
+    textarea,
+    button {
+        max-width: 100%;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    /* Footer also uses the available mobile width efficiently. */
+    .footer {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+}
+
+/* ---------- Small phones: use nearly edge-to-edge content ---------- */
+@media (max-width: 520px) {
+    .sidebar {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .main-content {
+        padding: 8px 5px;
+    }
+
+    .content-card {
+        padding: 15px 10px;
+        border-radius: 10px;
+    }
+
+    .content-section {
+        margin: 20px 0;
+    }
+
+    .example-box,
+    .formula-box,
+    .tip-box,
+    .warning-box,
+    .practice-question {
+        max-width: 100%;
+    }
+
+    .footer {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
