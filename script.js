@@ -1,5 +1,5 @@
 /* =========================================
-   VENU LEARNING - COMMON JAVASCRIPT
+   CODEBHAVYA - COMMON JAVASCRIPT
    ========================================= */
 
 
@@ -9,23 +9,17 @@
 
 function toggleSolution(id) {
 
-    const element =
-        document.getElementById(id);
+    const element = document.getElementById(id);
 
     if (!element) {
         return;
     }
 
     if (element.style.display === "block") {
-
         element.style.display = "none";
-
     } else {
-
         element.style.display = "block";
-
     }
-
 }
 
 
@@ -35,34 +29,24 @@ function toggleSolution(id) {
 
 function searchTopics() {
 
-    const input =
-        document.getElementById("topicSearch");
+    const input = document.getElementById("topicSearch");
 
     if (!input) {
         return;
     }
 
-    const searchText =
-        input.value.toLowerCase();
+    const searchText = input.value.toLowerCase();
 
-    const links =
-        document.querySelectorAll(
-            ".sidebar a"
-        );
+    const links = document.querySelectorAll(".sidebar a");
 
     links.forEach(function(link) {
 
-        const text =
-            link.textContent.toLowerCase();
+        const text = link.textContent.toLowerCase();
 
         if (text.includes(searchText)) {
-
             link.style.display = "block";
-
         } else {
-
             link.style.display = "none";
-
         }
 
     });
@@ -71,72 +55,57 @@ function searchTopics() {
 
 
 /* ============================================================
-   CODEBHAVYA GLOBAL FIXED SIDEBAR CONTROLLER
-   Desktop:
-   - one browser/page scrollbar
-   - sidebar remains stationary while main content scrolls
-   - footer spans full width and sits above the fixed sidebar
-   Mobile:
-   - normal document flow
+   CODEBHAVYA DESKTOP LAYOUT CONTROLLER
+
+   DESKTOP:
+   ✓ Header stays fixed
+   ✓ Sidebar stays fixed
+   ✓ Main content scrolls normally
+   ✓ One normal page scrollbar
+   ✓ Footer stays full width
+   ✓ Sidebar stops ABOVE footer
+   ✓ Footer never covers sidebar
+
+   MOBILE:
+   ✓ Normal page layout
+   ✓ Header scrolls normally
+   ✓ Sidebar returns to normal flow
    ============================================================ */
+
 (function () {
+
     "use strict";
 
-    const MANAGED = [
-        "position",
-        "left",
-        "top",
-        "bottom",
-        "width",
-        "height",
-        "min-height",
-        "max-height",
-        "margin",
-        "padding",
-        "overflow-y",
-        "overflow-x",
-        "z-index",
-        "box-sizing",
-        "display",
-        "max-width",
-        "min-width",
-        "margin-left",
-        "background",
-        "border",
-        "border-right",
-        "border-bottom",
-        "border-radius",
-        "flex",
-        "align-self"
-    ];
 
-    function clearManagedStyles(el) {
+    let ticking = false;
 
-        if (!el) {
+
+    /* =========================================
+       HELPER
+       ========================================= */
+
+    function setImportant(element, property, value) {
+
+        if (!element) {
             return;
         }
 
-        MANAGED.forEach(function(prop) {
-            el.style.removeProperty(prop);
-        });
-
+        element.style.setProperty(
+            property,
+            value,
+            "important"
+        );
     }
 
 
-    function setImportant(el, prop, value) {
+    /* =========================================
+       REMOVE DESKTOP INLINE STYLES
+       ========================================= */
 
-        if (el) {
-            el.style.setProperty(
-                prop,
-                value,
-                "important"
-            );
-        }
+    function resetMobileLayout() {
 
-    }
-
-
-    function applyCodeBhavyaLayout() {
+        const header =
+            document.querySelector(".top-header");
 
         const docs =
             document.querySelector(".docs-layout");
@@ -151,12 +120,150 @@ function searchTopics() {
                 ".docs-layout > .main-content"
             );
 
+        const footer =
+            document.querySelector(".footer");
+
+
+        document.body.style.removeProperty(
+            "padding-top"
+        );
+
+
+        if (header) {
+
+            [
+                "position",
+                "top",
+                "left",
+                "right",
+                "width",
+                "z-index"
+            ].forEach(function(property) {
+
+                header.style.removeProperty(property);
+
+            });
+
+        }
+
+
+        if (docs) {
+
+            [
+                "display",
+                "width",
+                "max-width",
+                "margin",
+                "padding",
+                "background"
+            ].forEach(function(property) {
+
+                docs.style.removeProperty(property);
+
+            });
+
+        }
+
+
+        if (sidebar) {
+
+            [
+                "position",
+                "top",
+                "left",
+                "bottom",
+                "width",
+                "height",
+                "min-height",
+                "max-height",
+                "margin",
+                "padding",
+                "overflow-y",
+                "overflow-x",
+                "z-index",
+                "background",
+                "border",
+                "border-right",
+                "border-radius",
+                "box-sizing"
+            ].forEach(function(property) {
+
+                sidebar.style.removeProperty(property);
+
+            });
+
+        }
+
+
+        if (main) {
+
+            [
+                "display",
+                "width",
+                "max-width",
+                "min-width",
+                "margin",
+                "margin-left",
+                "padding",
+                "box-sizing"
+            ].forEach(function(property) {
+
+                main.style.removeProperty(property);
+
+            });
+
+        }
+
+
+        if (footer) {
+
+            [
+                "position",
+                "z-index",
+                "width",
+                "max-width",
+                "margin-left"
+            ].forEach(function(property) {
+
+                footer.style.removeProperty(property);
+
+            });
+
+        }
+
+    }
+
+
+    /* =========================================
+       MAIN DESKTOP LAYOUT
+       ========================================= */
+
+    function applyDesktopLayout() {
+
         const header =
             document.querySelector(".top-header");
+
+        const docs =
+            document.querySelector(".docs-layout");
+
+        const sidebar =
+            document.querySelector(
+                ".docs-layout > .sidebar"
+            );
+
+        const main =
+            document.querySelector(
+                ".docs-layout > .main-content"
+            );
 
         const footer =
             document.querySelector(".footer");
 
+
+        /*
+        Only documentation pages need
+        this sidebar layout.
+        */
 
         if (!docs || !sidebar || !main) {
             return;
@@ -169,39 +276,90 @@ function searchTopics() {
             ).matches;
 
 
-        /* ==============================
-           MOBILE
-           ============================== */
-
         if (mobile) {
 
-            [
-                docs,
-                sidebar,
-                main,
-                footer
-            ].forEach(clearManagedStyles);
+            resetMobileLayout();
 
             return;
         }
 
 
-        /* ==============================
-           DESKTOP
-           ============================== */
+        /* =====================================
+           HEADER
+           ===================================== */
 
-        const headerHeight =
-            header
-                ? Math.max(
-                    0,
-                    Math.round(
-                        header
-                            .getBoundingClientRect()
-                            .height
-                    )
-                )
-                : 72;
+        let headerHeight = 72;
 
+
+        if (header) {
+
+            headerHeight =
+                Math.round(
+                    header.getBoundingClientRect()
+                        .height
+                );
+
+
+            if (headerHeight <= 0) {
+                headerHeight = 72;
+            }
+
+
+            setImportant(
+                header,
+                "position",
+                "fixed"
+            );
+
+            setImportant(
+                header,
+                "top",
+                "0"
+            );
+
+            setImportant(
+                header,
+                "left",
+                "0"
+            );
+
+            setImportant(
+                header,
+                "right",
+                "0"
+            );
+
+            setImportant(
+                header,
+                "width",
+                "100%"
+            );
+
+            setImportant(
+                header,
+                "z-index",
+                "2000"
+            );
+
+        }
+
+
+        /*
+        Because fixed header is removed
+        from normal document flow,
+        reserve its height.
+        */
+
+        document.body.style.setProperty(
+            "padding-top",
+            headerHeight + "px",
+            "important"
+        );
+
+
+        /* =====================================
+           SIDEBAR WIDTH
+           ===================================== */
 
         const sidebarWidth =
             window.innerWidth <= 1100
@@ -209,9 +367,9 @@ function searchTopics() {
                 : 235;
 
 
-        /* ==============================
-           PAGE WRAPPER
-           ============================== */
+        /* =====================================
+           DOCUMENT LAYOUT
+           ===================================== */
 
         setImportant(
             docs,
@@ -233,14 +391,6 @@ function searchTopics() {
 
         setImportant(
             docs,
-            "min-height",
-            "calc(100vh - " +
-                headerHeight +
-                "px)"
-        );
-
-        setImportant(
-            docs,
             "margin",
             "0"
         );
@@ -258,9 +408,9 @@ function searchTopics() {
         );
 
 
-        /* ==============================
+        /* =====================================
            FIXED SIDEBAR
-           ============================== */
+           ===================================== */
 
         setImportant(
             sidebar,
@@ -282,32 +432,8 @@ function searchTopics() {
 
         setImportant(
             sidebar,
-            "bottom",
-            "0"
-        );
-
-        setImportant(
-            sidebar,
             "width",
             sidebarWidth + "px"
-        );
-
-        setImportant(
-            sidebar,
-            "height",
-            "auto"
-        );
-
-        setImportant(
-            sidebar,
-            "min-height",
-            "0"
-        );
-
-        setImportant(
-            sidebar,
-            "max-height",
-            "none"
         );
 
         setImportant(
@@ -336,18 +462,6 @@ function searchTopics() {
 
         setImportant(
             sidebar,
-            "z-index",
-            "50"
-        );
-
-        setImportant(
-            sidebar,
-            "box-sizing",
-            "border-box"
-        );
-
-        setImportant(
-            sidebar,
             "background",
             "#ffffff"
         );
@@ -370,10 +484,22 @@ function searchTopics() {
             "0"
         );
 
+        setImportant(
+            sidebar,
+            "box-sizing",
+            "border-box"
+        );
 
-        /* ==============================
+        setImportant(
+            sidebar,
+            "z-index",
+            "100"
+        );
+
+
+        /* =====================================
            MAIN CONTENT
-           ============================== */
+           ===================================== */
 
         setImportant(
             main,
@@ -422,9 +548,9 @@ function searchTopics() {
         );
 
 
-        /* ==============================
-           FULL WIDTH FOOTER
-           ============================== */
+        /* =====================================
+           FOOTER
+           ===================================== */
 
         if (footer) {
 
@@ -437,7 +563,7 @@ function searchTopics() {
             setImportant(
                 footer,
                 "z-index",
-                "1000"
+                "500"
             );
 
             setImportant(
@@ -458,29 +584,190 @@ function searchTopics() {
                 "0"
             );
 
-            setImportant(
-                footer,
-                "box-sizing",
-                "border-box"
-            );
-
         }
+
+
+        /*
+        Calculate sidebar bottom so it
+        stops before the footer.
+        */
+
+        updateSidebarFooterPosition();
 
     }
 
 
     /* =========================================
-       INITIALIZE LAYOUT
+       STOP SIDEBAR BEFORE FOOTER
        ========================================= */
 
-    function initCodeBhavyaLayout() {
+    function updateSidebarFooterPosition() {
 
-        applyCodeBhavyaLayout();
+        const sidebar =
+            document.querySelector(
+                ".docs-layout > .sidebar"
+            );
+
+        const footer =
+            document.querySelector(".footer");
+
+        const header =
+            document.querySelector(".top-header");
+
+
+        if (!sidebar) {
+            return;
+        }
+
+
+        if (
+            window.matchMedia(
+                "(max-width: 768px)"
+            ).matches
+        ) {
+            return;
+        }
+
+
+        let headerHeight = 72;
+
+
+        if (header) {
+
+            headerHeight =
+                Math.round(
+                    header.getBoundingClientRect()
+                        .height
+                );
+
+        }
+
+
+        let bottomSpace = 0;
+
+
+        if (footer) {
+
+            const footerRect =
+                footer.getBoundingClientRect();
+
+
+            /*
+            Footer starts entering screen.
+            Increase sidebar bottom distance
+            by exactly the amount occupied
+            by the footer.
+            */
+
+            if (
+                footerRect.top <
+                window.innerHeight
+            ) {
+
+                bottomSpace =
+                    window.innerHeight -
+                    footerRect.top;
+
+            }
+
+        }
+
+
+        /*
+        Never allow the footer adjustment
+        to make sidebar height negative.
+        */
+
+        const maximumBottom =
+            window.innerHeight -
+            headerHeight;
+
+
+        bottomSpace =
+            Math.min(
+                Math.max(
+                    bottomSpace,
+                    0
+                ),
+                maximumBottom
+            );
+
+
+        setImportant(
+            sidebar,
+            "bottom",
+            bottomSpace + "px"
+        );
+
+
+        setImportant(
+            sidebar,
+            "height",
+            "auto"
+        );
+
+
+        setImportant(
+            sidebar,
+            "max-height",
+            "none"
+        );
+
+    }
+
+
+    /* =========================================
+       SCROLL HANDLER
+       ========================================= */
+
+    function handleScroll() {
+
+        if (ticking) {
+            return;
+        }
+
+
+        ticking = true;
+
+
+        window.requestAnimationFrame(
+            function() {
+
+                updateSidebarFooterPosition();
+
+                ticking = false;
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+       INITIALIZE
+       ========================================= */
+
+    function initializeCodeBhavyaLayout() {
+
+        applyDesktopLayout();
+
+
+        window.addEventListener(
+            "scroll",
+            handleScroll,
+            {
+                passive: true
+            }
+        );
 
 
         window.addEventListener(
             "resize",
-            applyCodeBhavyaLayout,
+            function() {
+
+                applyDesktopLayout();
+
+            },
             {
                 passive: true
             }
@@ -489,7 +776,14 @@ function searchTopics() {
 
         window.addEventListener(
             "orientationchange",
-            applyCodeBhavyaLayout,
+            function() {
+
+                setTimeout(
+                    applyDesktopLayout,
+                    100
+                );
+
+            },
             {
                 passive: true
             }
@@ -497,22 +791,28 @@ function searchTopics() {
 
 
         /*
-        Re-apply after the page finishes
-        loading fonts, images and other scripts.
+        Run again after fonts,
+        images and page-specific JS
+        finish loading.
         */
 
         setTimeout(
-            applyCodeBhavyaLayout,
+            applyDesktopLayout,
             100
         );
 
+
         setTimeout(
-            applyCodeBhavyaLayout,
-            600
+            applyDesktopLayout,
+            500
         );
 
     }
 
+
+    /* =========================================
+       START
+       ========================================= */
 
     if (
         document.readyState ===
@@ -521,12 +821,12 @@ function searchTopics() {
 
         document.addEventListener(
             "DOMContentLoaded",
-            initCodeBhavyaLayout
+            initializeCodeBhavyaLayout
         );
 
     } else {
 
-        initCodeBhavyaLayout();
+        initializeCodeBhavyaLayout();
 
     }
 
