@@ -339,10 +339,6 @@
 
 
 /* ===== Final CodeBhavya Tracer Presentation Tuning ===== */
-/* Use the available page width more efficiently. */
-.docs-layout{
-    column-gap:18px !important;
-}
 .main-content{
     min-width:0 !important;
 }
@@ -409,10 +405,7 @@
 
 /* Mobile: preserve the two-pane tracer; scroll horizontally instead of stacking. */
 @media(max-width:750px){
-    .docs-layout{
-        column-gap:10px !important;
-    }
-    .main-content{
+.main-content{
         min-width:0 !important;
     }
     .cb-tracer{
@@ -631,6 +624,118 @@
 @media(max-width:750px){.cb-practice-overall-grid{grid-template-columns:1fr 1fr}}
 </style>
 
+<style>
+/* CodeBhavya Premium Searching Visualizers */
+.cb-sv-card{margin:22px 0;width:100%;max-width:100%;min-width:0;overflow:hidden;border:1px solid #dbe3ec;border-radius:16px;background:#fff;padding:18px;box-shadow:0 8px 24px rgba(15,23,42,.06)}
+.cb-sv-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.cb-sv-label{color:#2563eb;font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}.cb-sv-brand{display:inline-flex;align-items:center;font-weight:900;font-size:18px;white-space:nowrap}.cb-sv-brand-mark{width:28px;height:28px;margin-right:7px;display:inline-flex;border:1px solid #dbe3ec;border-radius:8px;background:#fff;overflow:hidden;box-shadow:0 4px 10px rgba(37,99,235,.12)}.cb-sv-brand-mark img{width:100%;height:100%;object-fit:contain}.cb-sv-code{color:#2563eb}.cb-sv-bhavya{color:#d4af37}.cb-sv-card h3{margin:7px 0 6px;color:#0f172a}.cb-sv-intro{margin:0;color:#64748b;line-height:1.55}
+.cb-sv-toolbar{display:grid;grid-template-columns:minmax(0,1fr) minmax(115px,.32fr) auto auto;gap:8px;align-items:end;margin-top:14px}.cb-sv-field{min-width:0}.cb-sv-field label{display:block;margin-bottom:5px;color:#64748b;font-size:10px;font-weight:800;text-transform:uppercase}.cb-sv-input{width:100%;max-width:100%;min-width:0;border:1px solid #cbd5e1;border-radius:9px;padding:9px 10px;background:#fff}.cb-sv-btn{border:0;border-radius:8px;padding:9px 12px;font-weight:800;cursor:pointer;background:#2563eb;color:#fff}.cb-sv-btn.secondary{background:#475569}.cb-sv-btn.green{background:#15803d}.cb-sv-btn.gold{background:#d97706}.cb-sv-btn:disabled{background:#94a3b8;cursor:not-allowed}.cb-sv-options{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.cb-sv-speed{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.cb-sv-speed label{font-size:11px;font-weight:800;color:#64748b}.cb-sv-speed input{width:140px;max-width:100%}
+.cb-sv-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(270px,.65fr);gap:14px;margin-top:14px;min-width:0}.cb-sv-stage,.cb-sv-sidecard{min-width:0;max-width:100%;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;padding:14px}.cb-sv-stage-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:11px}.cb-sv-stage-head h4,.cb-sv-sidecard h4{margin:0}.cb-sv-pill{padding:5px 9px;border-radius:999px;background:#e0e7ff;color:#3730a3;font-size:10px;font-weight:800}.cb-sv-array-wrap{width:100%;max-width:100%;min-width:0;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;padding:20px 2px 14px}.cb-sv-array{display:flex;align-items:flex-end;gap:8px;width:max-content;min-width:max-content;min-height:100px}.cb-sv-cell{width:64px;height:70px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid #cbd5e1;border-radius:10px;background:#fff;transition:.25s ease}.cb-sv-cell .idx{font-size:9px;color:#64748b;margin-bottom:3px}.cb-sv-cell .val{font-size:19px;font-weight:900}.cb-sv-cell.active{background:#fef3c7;border-color:#f59e0b;transform:translateY(-6px)}.cb-sv-cell.mid{background:#ede9fe;border-color:#7c3aed;transform:translateY(-6px)}.cb-sv-cell.range{box-shadow:0 0 0 2px rgba(37,99,235,.13)}.cb-sv-cell.visited{background:#dbeafe;border-color:#60a5fa}.cb-sv-cell.found{background:#dcfce7;border-color:#16a34a;transform:translateY(-7px) scale(1.04)}.cb-sv-cell.discarded{opacity:.42;background:#f1f5f9}.cb-sv-cell.jump{background:#fff7ed;border-color:#fb923c;transform:translateY(-6px)}.cb-sv-tag{position:absolute;top:-18px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:8px;font-weight:900;color:#1d4ed8}.cb-sv-cell.found .cb-sv-tag{color:#15803d}.cb-sv-cell.mid .cb-sv-tag{color:#6d28d9}.cb-sv-cell.jump .cb-sv-tag{color:#c2410c}
+.cb-sv-explain{margin-top:11px;min-height:58px;border-left:4px solid #2563eb;border-radius:8px;background:#eff6ff;padding:10px 12px;color:#1e3a8a;line-height:1.55;font-weight:650}.cb-sv-track{height:8px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin-top:10px}.cb-sv-fill{height:100%;width:0;background:linear-gradient(90deg,#2563eb,#16a34a);transition:width .2s}.cb-sv-progress-row{display:flex;justify-content:space-between;margin-top:4px;color:#64748b;font-size:10px}.cb-sv-controls{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}.cb-sv-side{display:grid;gap:10px;min-width:0}.cb-sv-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:8px}.cb-sv-stat{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:8px;min-width:0}.cb-sv-stat span{display:block;color:#64748b;font-size:9px;font-weight:800;text-transform:uppercase}.cb-sv-stat strong{display:block;margin-top:3px;font-size:14px;overflow-wrap:anywhere}.cb-sv-condition{margin-top:8px;min-height:39px;padding:9px 10px;border-radius:8px;background:#0f172a;color:#e2e8f0;font-family:Consolas,monospace;font-size:11px;overflow-wrap:anywhere}.cb-sv-extra{margin-top:8px;padding:9px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;color:#334155;font-size:11px;line-height:1.5}.cb-sv-history{max-height:160px;overflow:auto;margin-top:8px;display:grid;gap:5px}.cb-sv-history-item{padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;color:#475569;font-size:10px}.cb-sv-complete{display:none;margin-top:10px;padding:9px;border-radius:8px;border:1px solid #86efac;background:#ecfdf5;color:#166534;font-weight:900;text-align:center}.cb-sv-complete.show{display:block}
+.search-algorithm-program-visible{display:block!important;margin-top:10px}.cb-visible-program-heading{margin:17px 0 8px;color:#0f172a;font-size:18px;font-weight:800}.practice-start-button{background:#D4AF37;color:#0D1B2A;border:none;padding:9px 16px;border-radius:7px;cursor:pointer;font-weight:800;box-shadow:0 3px 8px rgba(212,175,55,.18)}.practice-start-button:hover{background:#F5D76E}.sidebar a.searching-side-link{position:relative}.sidebar a.searching-side-link.active{background:#eaf3ff;color:#1d4ed8;font-weight:800}.sidebar a.searching-side-link.active::before{content:"";position:absolute;left:3px;top:8px;bottom:8px;width:3px;border-radius:3px;background:#d4af37}
+@media(max-width:850px){.cb-sv-card{padding:13px;border-radius:12px}.cb-sv-toolbar{grid-template-columns:minmax(0,1fr)}.cb-sv-layout{grid-template-columns:minmax(0,1fr);gap:9px}.cb-sv-speed{width:100%}.cb-sv-speed input{flex:1 1 130px;width:auto}.cb-sv-controls .cb-sv-btn{flex:1 1 100px}}
+@media(max-width:520px){.cb-sv-card{padding:10px}.cb-sv-brand{font-size:15px}.cb-sv-brand-mark{width:24px;height:24px}.cb-sv-cell{width:56px;height:64px}.cb-sv-cell .val{font-size:17px}.cb-sv-stage,.cb-sv-sidecard{padding:10px}}
+</style>
+
+<style>
+/* ============================================================
+   CODEBHAVYA SEARCHING — FINAL SORTING-FORMAT VISUALIZER PARITY
+   ============================================================ */
+
+.cb-sv-card{
+    margin-top:24px !important;
+    margin-bottom:24px !important;
+    padding:20px !important;
+    border:1px solid #dbe3ec !important;
+    border-radius:16px !important;
+    background:#ffffff !important;
+    box-shadow:0 8px 24px rgba(15,23,42,.06) !important;
+}
+
+.cb-sv-topbar{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    gap:14px !important;
+    margin-bottom:2px !important;
+    flex-wrap:nowrap !important;
+}
+
+.cb-sv-label{
+    font-size:11px !important;
+    letter-spacing:1.4px !important;
+    font-weight:800 !important;
+    color:#2563eb !important;
+    text-transform:uppercase !important;
+}
+
+.cb-sv-brand{
+    display:inline-flex !important;
+    align-items:center !important;
+    gap:0 !important;
+    font-weight:900 !important;
+    font-size:20px !important;
+    letter-spacing:-.5px !important;
+    white-space:nowrap !important;
+    user-select:none !important;
+}
+
+.cb-sv-brand-mark{
+    width:30px !important;
+    height:30px !important;
+    border-radius:9px !important;
+    margin-right:8px !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    background:#ffffff !important;
+    border:1px solid #dbe3ec !important;
+    overflow:hidden !important;
+    box-shadow:0 5px 12px rgba(37,99,235,.12) !important;
+}
+
+.cb-sv-brand-mark img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    display:block !important;
+    border-radius:9px !important;
+}
+
+.cb-sv-code{
+    color:#2563eb !important;
+}
+
+.cb-sv-bhavya{
+    color:#f59e0b !important;
+}
+
+.cb-sv-card h3{
+    margin:6px 0 6px !important;
+    color:#0f172a !important;
+}
+
+.cb-sv-intro{
+    margin:0 !important;
+    color:#64748b !important;
+    line-height:1.6 !important;
+}
+
+@media(max-width:560px){
+    .cb-sv-topbar{
+        align-items:flex-start !important;
+    }
+
+    .cb-sv-brand{
+        font-size:17px !important;
+    }
+
+    .cb-sv-brand-mark{
+        width:27px !important;
+        height:27px !important;
+    }
+}
+</style>
+
 </head>
 <body>
 <header class="top-header">
@@ -653,16 +758,17 @@
 <input class="search-box" id="topicSearch" onkeyup="searchTopics()" placeholder="🔍 Search topics..." type="text"/>
 <details class="sidebar-topic" open="">
 <summary>🔍 Searching</summary>
-<a href="#introduction">Introduction</a>
-<a href="#linear-search">Linear Search</a>
-<a href="#binary-search">Binary Search</a>
-<a href="#rotated-binary-search">Rotated Binary Search</a>
-<a href="#jump-search">Jump Search</a>
-<a href="#interpolation-search">Interpolation Search</a>
-<a href="#fibonacci-search">Fibonacci Search</a>
-<a href="#skip-list-search">Skip List Search</a>
-<a href="#comparison">Algorithm Comparison</a>
-<a href="#interview-section">Interview &amp; Practice</a>
+<a class="searching-side-link" href="#introduction">Searching Overview</a>
+<a class="searching-side-link" href="#linear-search">Linear Search</a>
+<a class="searching-side-link" href="#binary-search">Binary Search</a>
+<a class="searching-side-link" href="#rotated-binary-search">Rotated Binary Search</a>
+<a class="searching-side-link" href="#jump-search">Jump Search</a>
+<a class="searching-side-link" href="#interpolation-search">Interpolation Search</a>
+<a class="searching-side-link" href="#fibonacci-search">Fibonacci Search</a>
+<a class="searching-side-link" href="#skip-list-search">Skip List Search</a>
+<a class="searching-side-link" href="#comparison">Algorithm Comparison</a>
+<a class="searching-side-link" href="#interview-section">Interview Questions</a>
+<a class="searching-side-link" href="#practice-section">Practice Problems</a>
 </details>
 <details class="sidebar-topic"><summary>🔄 Sorting</summary><a href="sorting.html">Open Topic</a></details>
 <details class="sidebar-topic"><summary>🔗 Linked List</summary><a href="linked-list.html">Open Topic</a></details>
@@ -710,6 +816,7 @@ Start from the first element and compare every element with the target.
 The first matching position is returned. If no element matches, report that
 the target is not present.
 </p></div>
+<div class="example-presentation"><h3>🧠 Example</h3><p>For <code>[12, 7, 25, 9, 18]</code> and target <code>25</code>,<br/>compare 12 → 7 → 25.<br/>The target is found at index 2.</p></div>
 <h3>🔹 Step-by-Step Algorithm</h3>
 <ol>
 <li>Read the array and target value.</li>
@@ -719,10 +826,14 @@ the target is not present.
 <li>Otherwise move to the next element.</li>
 <li>If the array ends, report not found.</li>
 </ol>
-<div class="example-presentation"><h3>🧠 Example</h3><p>For <code>[12, 7, 25, 9, 18]</code> and target <code>25</code>,<br/>compare 12 → 7 → 25.<br/>The target is found at index 2.</p></div>
+
+
+
+<div class="cb-sv-card" id="linear-av-visualizer"><div class="cb-sv-topbar"><div class="cb-sv-label">Interactive Algorithm Visualization</div><div class="cb-sv-brand"><span class="cb-sv-brand-mark"><img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo"></span><span class="cb-sv-code">Code</span><span class="cb-sv-bhavya">Bhavya</span></div></div><h3>🎬 Premium Linear Search Visualizer</h3><p class="cb-sv-intro">Watch the search pointer move one element at a time until the target is found.</p><div class="cb-sv-toolbar"><div class="cb-sv-field"><label>Array values</label><input id="linear-av-input" class="cb-sv-input" value="12,7,25,9,18"></div><div class="cb-sv-field"><label>Target</label><input id="linear-av-target" class="cb-sv-input" value="25"></div><button class="cb-sv-btn" onclick="CodeBhavyaSearchViz.load('linear-av')">Load</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.random('linear-av')">🎲 Random</button></div><div class="cb-sv-options"><div class="cb-sv-speed"><label>Speed</label><input id="linear-av-speed" type="range" min="250" max="1600" value="850" step="50" oninput="document.getElementById('linear-av-speedText').textContent=this.value+' ms'"><span id="linear-av-speedText">850 ms</span></div></div><div class="cb-sv-layout"><div class="cb-sv-stage"><div class="cb-sv-stage-head"><h4>📦 Live Search State</h4><span id="linear-av-pill" class="cb-sv-pill">Ready</span></div><div class="cb-sv-array-wrap"><div id="linear-av-array" class="cb-sv-array"></div></div><div id="linear-av-explain" class="cb-sv-explain">Press Next to begin.</div><div class="cb-sv-track"><div id="linear-av-fill" class="cb-sv-fill"></div></div><div class="cb-sv-progress-row"><span id="linear-av-stepText">Step 0</span><span id="linear-av-percent">0%</span></div><div class="cb-sv-controls"><button id="linear-av-prev" class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.prev('linear-av')">← Previous</button><button id="linear-av-next" class="cb-sv-btn" onclick="CodeBhavyaSearchViz.next('linear-av')">Next →</button><button id="linear-av-auto" class="cb-sv-btn green" onclick="CodeBhavyaSearchViz.auto('linear-av')">▶ Auto Run</button><button class="cb-sv-btn gold" onclick="CodeBhavyaSearchViz.pause('linear-av')">⏸ Pause</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.reset('linear-av')">↺ Reset</button></div><div id="linear-av-complete" class="cb-sv-complete">✅ Search visualization completed.</div></div><div class="cb-sv-side"><div class="cb-sv-sidecard"><h4>📊 Live Statistics</h4><div id="linear-av-stats" class="cb-sv-stats"></div><div id="linear-av-condition" class="cb-sv-condition">No comparison yet.</div></div><div class="cb-sv-sidecard"><h4>🧠 Current Search State</h4><div id="linear-av-extra" class="cb-sv-extra">Waiting to start.</div></div><div class="cb-sv-sidecard"><h4>🧾 Recent Actions</h4><div id="linear-av-history" class="cb-sv-history"></div></div></div></div></div>
+
 <div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('linearProgram')">Show Program</button>
-<div class="program-content" id="linearProgram">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content search-algorithm-program-visible" id="linearProgram">
 <pre><code>#include &lt;stdio.h&gt;
 
 int main() {
@@ -758,6 +869,8 @@ int main() {
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 2</code></pre></div>
 </div>
 <p><strong>Input explanation:</strong> First enter the number of elements, then the elements, followed by the target.</p>
+</div>
+</div>
 
 <div class="cb-tracer-wrap">
   <button class="program-toggle" onclick="cbLinearTracer.toggle()">▶ Program Tracing</button>
@@ -789,8 +902,8 @@ int main() {
     <div id="cbLinearStatus" class="cb-tracer-status">Ready to execute.</div>
   </div>
 </div>
-</div>
-</div>
+
+
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
 <div class="complexity-item"><strong>Best: O(1)</strong> Target is the first element.</div>
@@ -813,7 +926,8 @@ Binary Search compares the target with the middle element. If the target is
 smaller, continue in the left half; if larger, continue in the right half.
 The process continues until the target is found or the range becomes empty.
 </p></div>
-<h3 class="approaches-heading">🔁 Approaches</h3><h3>🔹 Iterative Algorithm</h3>
+<h3 class="approaches-heading">🔁 Approaches</h3><div class="example-presentation"><h3>💡 Example</h3><p>For <code>[3, 7, 11, 18, 25, 31, 40]</code>, searching for 25<br/>starts at the middle, eliminates the left or right half based on comparison,<br/>and quickly reaches 25.</p></div>
+<h3>🔹 Iterative Algorithm</h3>
 <ol>
 <li>Set <code>low = 0</code> and <code>high = n - 1</code>.</li>
 <li>Calculate <code>mid = low + (high - low) / 2</code>.</li>
@@ -822,11 +936,14 @@ The process continues until the target is found or the range becomes empty.
 <li>Otherwise set <code>low = mid + 1</code>.</li>
 <li>Repeat while <code>low &lt;= high</code>.</li>
 </ol>
-<div class="example-presentation"><h3>💡 Example</h3><p>For <code>[3, 7, 11, 18, 25, 31, 40]</code>, searching for 25<br/>starts at the middle, eliminates the left or right half based on comparison,<br/>and quickly reaches 25.</p></div>
-<h3>💻 Iterative C Program</h3>
+
+
+
+<div class="cb-sv-card" id="binary-iterative-av-visualizer"><div class="cb-sv-topbar"><div class="cb-sv-label">Interactive Algorithm Visualization</div><div class="cb-sv-brand"><span class="cb-sv-brand-mark"><img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo"></span><span class="cb-sv-code">Code</span><span class="cb-sv-bhavya">Bhavya</span></div></div><h3>🎬 Premium Iterative Binary Search Visualizer</h3><p class="cb-sv-intro">See low, high and mid shrink the sorted search range after each comparison.</p><div class="cb-sv-toolbar"><div class="cb-sv-field"><label>Array values</label><input id="binary-iterative-av-input" class="cb-sv-input" value="3,7,11,18,25,31,40"></div><div class="cb-sv-field"><label>Target</label><input id="binary-iterative-av-target" class="cb-sv-input" value="25"></div><button class="cb-sv-btn" onclick="CodeBhavyaSearchViz.load('binary-iterative-av')">Load</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.random('binary-iterative-av')">🎲 Random</button></div><div class="cb-sv-options"><div class="cb-sv-speed"><label>Speed</label><input id="binary-iterative-av-speed" type="range" min="250" max="1600" value="850" step="50" oninput="document.getElementById('binary-iterative-av-speedText').textContent=this.value+' ms'"><span id="binary-iterative-av-speedText">850 ms</span></div></div><div class="cb-sv-layout"><div class="cb-sv-stage"><div class="cb-sv-stage-head"><h4>📦 Live Search State</h4><span id="binary-iterative-av-pill" class="cb-sv-pill">Ready</span></div><div class="cb-sv-array-wrap"><div id="binary-iterative-av-array" class="cb-sv-array"></div></div><div id="binary-iterative-av-explain" class="cb-sv-explain">Press Next to begin.</div><div class="cb-sv-track"><div id="binary-iterative-av-fill" class="cb-sv-fill"></div></div><div class="cb-sv-progress-row"><span id="binary-iterative-av-stepText">Step 0</span><span id="binary-iterative-av-percent">0%</span></div><div class="cb-sv-controls"><button id="binary-iterative-av-prev" class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.prev('binary-iterative-av')">← Previous</button><button id="binary-iterative-av-next" class="cb-sv-btn" onclick="CodeBhavyaSearchViz.next('binary-iterative-av')">Next →</button><button id="binary-iterative-av-auto" class="cb-sv-btn green" onclick="CodeBhavyaSearchViz.auto('binary-iterative-av')">▶ Auto Run</button><button class="cb-sv-btn gold" onclick="CodeBhavyaSearchViz.pause('binary-iterative-av')">⏸ Pause</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.reset('binary-iterative-av')">↺ Reset</button></div><div id="binary-iterative-av-complete" class="cb-sv-complete">✅ Search visualization completed.</div></div><div class="cb-sv-side"><div class="cb-sv-sidecard"><h4>📊 Live Statistics</h4><div id="binary-iterative-av-stats" class="cb-sv-stats"></div><div id="binary-iterative-av-condition" class="cb-sv-condition">No comparison yet.</div></div><div class="cb-sv-sidecard"><h4>🧠 Current Search State</h4><div id="binary-iterative-av-extra" class="cb-sv-extra">Waiting to start.</div></div><div class="cb-sv-sidecard"><h4>🧾 Recent Actions</h4><div id="binary-iterative-av-history" class="cb-sv-history"></div></div></div></div></div>
+
 <div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('binaryIterative')">Show Program</button>
-<div class="program-content" id="binaryIterative">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content search-algorithm-program-visible" id="binaryIterative">
 <pre><code>#include &lt;stdio.h&gt;
 
 int main() {
@@ -869,6 +986,8 @@ int main() {
 25</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 4</code></pre></div>
 </div>
+</div>
+</div>
 
 <div class="cb-binary-tracer-wrap">
   <button class="program-toggle" onclick="cbBinaryTracer.toggle()">▶ Program Tracing</button>
@@ -900,8 +1019,8 @@ int main() {
     <div id="cbBinaryStatus" class="cb-binary-status">Ready to execute.</div>
   </div>
 </div>
-</div>
-</div>
+
+
 <h3>🔁 Recursive Binary Search</h3>
 <p>
 The recursive version uses the same divide-and-conquer idea. Instead of
@@ -913,9 +1032,13 @@ updating the search range inside a loop, it calls itself on the appropriate half
 <li>If the middle value is the target, return it.</li>
 <li>Search the left or right half recursively.</li>
 </ol>
+
+
+<div class="cb-sv-card" id="binary-recursive-av-visualizer"><div class="cb-sv-topbar"><div class="cb-sv-label">Interactive Algorithm Visualization</div><div class="cb-sv-brand"><span class="cb-sv-brand-mark"><img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo"></span><span class="cb-sv-code">Code</span><span class="cb-sv-bhavya">Bhavya</span></div></div><h3>🎬 Premium Recursive Binary Search Visualizer</h3><p class="cb-sv-intro">Follow each recursive call, active range and midpoint at every depth.</p><div class="cb-sv-toolbar"><div class="cb-sv-field"><label>Array values</label><input id="binary-recursive-av-input" class="cb-sv-input" value="3,7,11,18,25,31,40"></div><div class="cb-sv-field"><label>Target</label><input id="binary-recursive-av-target" class="cb-sv-input" value="31"></div><button class="cb-sv-btn" onclick="CodeBhavyaSearchViz.load('binary-recursive-av')">Load</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.random('binary-recursive-av')">🎲 Random</button></div><div class="cb-sv-options"><div class="cb-sv-speed"><label>Speed</label><input id="binary-recursive-av-speed" type="range" min="250" max="1600" value="850" step="50" oninput="document.getElementById('binary-recursive-av-speedText').textContent=this.value+' ms'"><span id="binary-recursive-av-speedText">850 ms</span></div></div><div class="cb-sv-layout"><div class="cb-sv-stage"><div class="cb-sv-stage-head"><h4>📦 Live Search State</h4><span id="binary-recursive-av-pill" class="cb-sv-pill">Ready</span></div><div class="cb-sv-array-wrap"><div id="binary-recursive-av-array" class="cb-sv-array"></div></div><div id="binary-recursive-av-explain" class="cb-sv-explain">Press Next to begin.</div><div class="cb-sv-track"><div id="binary-recursive-av-fill" class="cb-sv-fill"></div></div><div class="cb-sv-progress-row"><span id="binary-recursive-av-stepText">Step 0</span><span id="binary-recursive-av-percent">0%</span></div><div class="cb-sv-controls"><button id="binary-recursive-av-prev" class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.prev('binary-recursive-av')">← Previous</button><button id="binary-recursive-av-next" class="cb-sv-btn" onclick="CodeBhavyaSearchViz.next('binary-recursive-av')">Next →</button><button id="binary-recursive-av-auto" class="cb-sv-btn green" onclick="CodeBhavyaSearchViz.auto('binary-recursive-av')">▶ Auto Run</button><button class="cb-sv-btn gold" onclick="CodeBhavyaSearchViz.pause('binary-recursive-av')">⏸ Pause</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.reset('binary-recursive-av')">↺ Reset</button></div><div id="binary-recursive-av-complete" class="cb-sv-complete">✅ Search visualization completed.</div></div><div class="cb-sv-side"><div class="cb-sv-sidecard"><h4>📊 Live Statistics</h4><div id="binary-recursive-av-stats" class="cb-sv-stats"></div><div id="binary-recursive-av-condition" class="cb-sv-condition">No comparison yet.</div></div><div class="cb-sv-sidecard"><h4>🧠 Current Search State</h4><div id="binary-recursive-av-extra" class="cb-sv-extra">Waiting to start.</div></div><div class="cb-sv-sidecard"><h4>🧾 Recent Actions</h4><div id="binary-recursive-av-history" class="cb-sv-history"></div></div></div></div></div>
+
 <div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('binaryRecursive')">Show Program</button>
-<div class="program-content" id="binaryRecursive">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content search-algorithm-program-visible" id="binaryRecursive">
 <pre><code>#include &lt;stdio.h&gt;
 
 int binarySearch(int a[], int low, int high, int target) {
@@ -958,6 +1081,8 @@ int main() {
 3 7 11 18 25 31 40
 31</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 5</code></pre></div>
+</div>
+</div>
 </div>
 
 <div class="cb-binary-tracer-wrap">
@@ -1005,8 +1130,7 @@ int main() {
   </div>
 </div>
 
-</div>
-</div>
+
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
 <div class="complexity-item"><strong>Best: O(1)</strong> The first middle element is the target.</div>
@@ -1029,6 +1153,7 @@ At least one half of a rotated sorted array is always normally sorted.
 Identify the sorted half, determine whether the target lies inside it, and
 discard the appropriate half.
 </p></div>
+<div class="example-presentation"><h3>💡 Example</h3><p>For <code>[15, 18, 2, 3, 6, 12]</code>, the array was originally sorted but rotated.<br/>The algorithm determines which half remains sorted at every step.</p></div>
 <h3>🔹 Step-by-Step Algorithm</h3>
 <ol>
 <li>Set low and high.</li>
@@ -1038,10 +1163,14 @@ discard the appropriate half.
 <li>If the target belongs to the sorted half, search there; otherwise search the other half.</li>
 <li>Repeat until the range is empty.</li>
 </ol>
-<div class="example-presentation"><h3>💡 Example</h3><p>For <code>[15, 18, 2, 3, 6, 12]</code>, the array was originally sorted but rotated.<br/>The algorithm determines which half remains sorted at every step.</p></div>
+
+
+
+<div class="cb-sv-card" id="rotated-av-visualizer"><div class="cb-sv-topbar"><div class="cb-sv-label">Interactive Algorithm Visualization</div><div class="cb-sv-brand"><span class="cb-sv-brand-mark"><img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo"></span><span class="cb-sv-code">Code</span><span class="cb-sv-bhavya">Bhavya</span></div></div><h3>🎬 Premium Rotated Binary Search Visualizer</h3><p class="cb-sv-intro">See which half is sorted and which half can be discarded.</p><div class="cb-sv-toolbar"><div class="cb-sv-field"><label>Array values</label><input id="rotated-av-input" class="cb-sv-input" value="15,18,2,3,6,12"></div><div class="cb-sv-field"><label>Target</label><input id="rotated-av-target" class="cb-sv-input" value="3"></div><button class="cb-sv-btn" onclick="CodeBhavyaSearchViz.load('rotated-av')">Load</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.random('rotated-av')">🎲 Random</button></div><div class="cb-sv-options"><div class="cb-sv-speed"><label>Speed</label><input id="rotated-av-speed" type="range" min="250" max="1600" value="850" step="50" oninput="document.getElementById('rotated-av-speedText').textContent=this.value+' ms'"><span id="rotated-av-speedText">850 ms</span></div></div><div class="cb-sv-layout"><div class="cb-sv-stage"><div class="cb-sv-stage-head"><h4>📦 Live Search State</h4><span id="rotated-av-pill" class="cb-sv-pill">Ready</span></div><div class="cb-sv-array-wrap"><div id="rotated-av-array" class="cb-sv-array"></div></div><div id="rotated-av-explain" class="cb-sv-explain">Press Next to begin.</div><div class="cb-sv-track"><div id="rotated-av-fill" class="cb-sv-fill"></div></div><div class="cb-sv-progress-row"><span id="rotated-av-stepText">Step 0</span><span id="rotated-av-percent">0%</span></div><div class="cb-sv-controls"><button id="rotated-av-prev" class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.prev('rotated-av')">← Previous</button><button id="rotated-av-next" class="cb-sv-btn" onclick="CodeBhavyaSearchViz.next('rotated-av')">Next →</button><button id="rotated-av-auto" class="cb-sv-btn green" onclick="CodeBhavyaSearchViz.auto('rotated-av')">▶ Auto Run</button><button class="cb-sv-btn gold" onclick="CodeBhavyaSearchViz.pause('rotated-av')">⏸ Pause</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.reset('rotated-av')">↺ Reset</button></div><div id="rotated-av-complete" class="cb-sv-complete">✅ Search visualization completed.</div></div><div class="cb-sv-side"><div class="cb-sv-sidecard"><h4>📊 Live Statistics</h4><div id="rotated-av-stats" class="cb-sv-stats"></div><div id="rotated-av-condition" class="cb-sv-condition">No comparison yet.</div></div><div class="cb-sv-sidecard"><h4>🧠 Current Search State</h4><div id="rotated-av-extra" class="cb-sv-extra">Waiting to start.</div></div><div class="cb-sv-sidecard"><h4>🧾 Recent Actions</h4><div id="rotated-av-history" class="cb-sv-history"></div></div></div></div></div>
+
 <div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('rotatedProgram')">Show Program</button>
-<div class="program-content" id="rotatedProgram">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content search-algorithm-program-visible" id="rotatedProgram">
 <pre><code>#include &lt;stdio.h&gt;
 
 int searchRotated(int a[], int n, int target) {
@@ -1095,6 +1224,9 @@ int main() {
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 3</code></pre></div>
 </div>
 <!-- ===== CodeBhavya Rotated Binary Search Tracer ===== -->
+</div>
+</div>
+
 <div class="cb-binary-tracer-wrap">
 <button class="program-toggle" onclick="cbRotatedTracer.toggle()">▶ Program Tracing</button>
 <div id="cbRotatedTracer" class="cb-binary-tracer" hidden>
@@ -1135,7 +1267,8 @@ int main() {
 <div id="cbRotatedStatus" class="cb-binary-status">Ready to execute.</div>
 </div>
 </div>
-</div>
+
+
 
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
@@ -1165,9 +1298,13 @@ is identified, perform a linear search inside that block.
 <li>Linearly search the identified block.</li>
 <li>Return the index if found; otherwise return -1.</li>
 </ol>
+
+
+<div class="cb-sv-card" id="jump-av-visualizer"><div class="cb-sv-topbar"><div class="cb-sv-label">Interactive Algorithm Visualization</div><div class="cb-sv-brand"><span class="cb-sv-brand-mark"><img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo"></span><span class="cb-sv-code">Code</span><span class="cb-sv-bhavya">Bhavya</span></div></div><h3>🎬 Premium Jump Search Visualizer</h3><p class="cb-sv-intro">Watch fixed-size jumps locate a candidate block, then a linear scan finish the search.</p><div class="cb-sv-toolbar"><div class="cb-sv-field"><label>Array values</label><input id="jump-av-input" class="cb-sv-input" value="2,5,8,12,16,21,27,31,36,40"></div><div class="cb-sv-field"><label>Target</label><input id="jump-av-target" class="cb-sv-input" value="27"></div><button class="cb-sv-btn" onclick="CodeBhavyaSearchViz.load('jump-av')">Load</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.random('jump-av')">🎲 Random</button></div><div class="cb-sv-options"><div class="cb-sv-speed"><label>Speed</label><input id="jump-av-speed" type="range" min="250" max="1600" value="850" step="50" oninput="document.getElementById('jump-av-speedText').textContent=this.value+' ms'"><span id="jump-av-speedText">850 ms</span></div></div><div class="cb-sv-layout"><div class="cb-sv-stage"><div class="cb-sv-stage-head"><h4>📦 Live Search State</h4><span id="jump-av-pill" class="cb-sv-pill">Ready</span></div><div class="cb-sv-array-wrap"><div id="jump-av-array" class="cb-sv-array"></div></div><div id="jump-av-explain" class="cb-sv-explain">Press Next to begin.</div><div class="cb-sv-track"><div id="jump-av-fill" class="cb-sv-fill"></div></div><div class="cb-sv-progress-row"><span id="jump-av-stepText">Step 0</span><span id="jump-av-percent">0%</span></div><div class="cb-sv-controls"><button id="jump-av-prev" class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.prev('jump-av')">← Previous</button><button id="jump-av-next" class="cb-sv-btn" onclick="CodeBhavyaSearchViz.next('jump-av')">Next →</button><button id="jump-av-auto" class="cb-sv-btn green" onclick="CodeBhavyaSearchViz.auto('jump-av')">▶ Auto Run</button><button class="cb-sv-btn gold" onclick="CodeBhavyaSearchViz.pause('jump-av')">⏸ Pause</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.reset('jump-av')">↺ Reset</button></div><div id="jump-av-complete" class="cb-sv-complete">✅ Search visualization completed.</div></div><div class="cb-sv-side"><div class="cb-sv-sidecard"><h4>📊 Live Statistics</h4><div id="jump-av-stats" class="cb-sv-stats"></div><div id="jump-av-condition" class="cb-sv-condition">No comparison yet.</div></div><div class="cb-sv-sidecard"><h4>🧠 Current Search State</h4><div id="jump-av-extra" class="cb-sv-extra">Waiting to start.</div></div><div class="cb-sv-sidecard"><h4>🧾 Recent Actions</h4><div id="jump-av-history" class="cb-sv-history"></div></div></div></div></div>
+
 <div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('jumpProgram')">Show Program</button>
-<div class="program-content" id="jumpProgram">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content search-algorithm-program-visible" id="jumpProgram">
 <pre><code>#include &lt;stdio.h&gt;
 
 int jumpSearch(int a[], int n, int target) {
@@ -1223,6 +1360,9 @@ int main() {
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 6</code></pre></div>
 </div>
 <!-- ===== CodeBhavya Jump Search Tracer ===== -->
+</div>
+</div>
+
 <div class="cb-binary-tracer-wrap">
 <button class="program-toggle" onclick="cbJumpTracer.toggle()">▶ Program Tracing</button>
 <div id="cbJumpTracer" class="cb-binary-tracer" hidden>
@@ -1250,6 +1390,8 @@ int main() {
 </div>
 <div id="cbJumpStatus" class="cb-binary-status">Ready to execute.</div>
 </div></div>
+
+
 
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
@@ -1285,9 +1427,13 @@ pos = low + ((target - a[low]) × (high - low)) / (a[high] - a[low])
 <li>Move low or high accordingly.</li>
 <li>Repeat until found or the range becomes invalid.</li>
 </ol>
+
+
+<div class="cb-sv-card" id="interpolation-av-visualizer"><div class="cb-sv-topbar"><div class="cb-sv-label">Interactive Algorithm Visualization</div><div class="cb-sv-brand"><span class="cb-sv-brand-mark"><img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo"></span><span class="cb-sv-code">Code</span><span class="cb-sv-bhavya">Bhavya</span></div></div><h3>🎬 Premium Interpolation Search Visualizer</h3><p class="cb-sv-intro">See the estimated probe position move according to the target and boundary values.</p><div class="cb-sv-toolbar"><div class="cb-sv-field"><label>Array values</label><input id="interpolation-av-input" class="cb-sv-input" value="10,20,30,40,50,60,70,80,90"></div><div class="cb-sv-field"><label>Target</label><input id="interpolation-av-target" class="cb-sv-input" value="70"></div><button class="cb-sv-btn" onclick="CodeBhavyaSearchViz.load('interpolation-av')">Load</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.random('interpolation-av')">🎲 Random</button></div><div class="cb-sv-options"><div class="cb-sv-speed"><label>Speed</label><input id="interpolation-av-speed" type="range" min="250" max="1600" value="850" step="50" oninput="document.getElementById('interpolation-av-speedText').textContent=this.value+' ms'"><span id="interpolation-av-speedText">850 ms</span></div></div><div class="cb-sv-layout"><div class="cb-sv-stage"><div class="cb-sv-stage-head"><h4>📦 Live Search State</h4><span id="interpolation-av-pill" class="cb-sv-pill">Ready</span></div><div class="cb-sv-array-wrap"><div id="interpolation-av-array" class="cb-sv-array"></div></div><div id="interpolation-av-explain" class="cb-sv-explain">Press Next to begin.</div><div class="cb-sv-track"><div id="interpolation-av-fill" class="cb-sv-fill"></div></div><div class="cb-sv-progress-row"><span id="interpolation-av-stepText">Step 0</span><span id="interpolation-av-percent">0%</span></div><div class="cb-sv-controls"><button id="interpolation-av-prev" class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.prev('interpolation-av')">← Previous</button><button id="interpolation-av-next" class="cb-sv-btn" onclick="CodeBhavyaSearchViz.next('interpolation-av')">Next →</button><button id="interpolation-av-auto" class="cb-sv-btn green" onclick="CodeBhavyaSearchViz.auto('interpolation-av')">▶ Auto Run</button><button class="cb-sv-btn gold" onclick="CodeBhavyaSearchViz.pause('interpolation-av')">⏸ Pause</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.reset('interpolation-av')">↺ Reset</button></div><div id="interpolation-av-complete" class="cb-sv-complete">✅ Search visualization completed.</div></div><div class="cb-sv-side"><div class="cb-sv-sidecard"><h4>📊 Live Statistics</h4><div id="interpolation-av-stats" class="cb-sv-stats"></div><div id="interpolation-av-condition" class="cb-sv-condition">No comparison yet.</div></div><div class="cb-sv-sidecard"><h4>🧠 Current Search State</h4><div id="interpolation-av-extra" class="cb-sv-extra">Waiting to start.</div></div><div class="cb-sv-sidecard"><h4>🧾 Recent Actions</h4><div id="interpolation-av-history" class="cb-sv-history"></div></div></div></div></div>
+
 <div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('interpolationProgram')">Show Program</button>
-<div class="program-content" id="interpolationProgram">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content search-algorithm-program-visible" id="interpolationProgram">
 <pre><code>#include &lt;stdio.h&gt;
 
 int interpolationSearch(int a[], int n, int target) {
@@ -1342,6 +1488,8 @@ int main() {
 70</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 6</code></pre></div>
 </div>
+</div>
+</div>
 
 <div class="cb-binary-tracer-wrap">
 <button class="program-toggle" onclick="cbInterpolationTracer.toggle()">▶ Program Tracing</button>
@@ -1384,8 +1532,7 @@ int main() {
 </div>
 </div>
 
-</div>
-</div>
+
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
 <div class="complexity-item"><strong>Best: O(1)</strong> The estimated position directly contains the target.</div>
@@ -1416,9 +1563,13 @@ search time.
 <li>Reduce the Fibonacci range toward the left or right.</li>
 <li>Continue until the target is found or the range is exhausted.</li>
 </ol>
+
+
+<div class="cb-sv-card" id="fibonacci-av-visualizer"><div class="cb-sv-topbar"><div class="cb-sv-label">Interactive Algorithm Visualization</div><div class="cb-sv-brand"><span class="cb-sv-brand-mark"><img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo"></span><span class="cb-sv-code">Code</span><span class="cb-sv-bhavya">Bhavya</span></div></div><h3>🎬 Premium Fibonacci Search Visualizer</h3><p class="cb-sv-intro">Follow Fibonacci offsets as they choose probe positions and reduce the remaining range.</p><div class="cb-sv-toolbar"><div class="cb-sv-field"><label>Array values</label><input id="fibonacci-av-input" class="cb-sv-input" value="10,22,35,40,45,50,80,82,85,90,100"></div><div class="cb-sv-field"><label>Target</label><input id="fibonacci-av-target" class="cb-sv-input" value="85"></div><button class="cb-sv-btn" onclick="CodeBhavyaSearchViz.load('fibonacci-av')">Load</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.random('fibonacci-av')">🎲 Random</button></div><div class="cb-sv-options"><div class="cb-sv-speed"><label>Speed</label><input id="fibonacci-av-speed" type="range" min="250" max="1600" value="850" step="50" oninput="document.getElementById('fibonacci-av-speedText').textContent=this.value+' ms'"><span id="fibonacci-av-speedText">850 ms</span></div></div><div class="cb-sv-layout"><div class="cb-sv-stage"><div class="cb-sv-stage-head"><h4>📦 Live Search State</h4><span id="fibonacci-av-pill" class="cb-sv-pill">Ready</span></div><div class="cb-sv-array-wrap"><div id="fibonacci-av-array" class="cb-sv-array"></div></div><div id="fibonacci-av-explain" class="cb-sv-explain">Press Next to begin.</div><div class="cb-sv-track"><div id="fibonacci-av-fill" class="cb-sv-fill"></div></div><div class="cb-sv-progress-row"><span id="fibonacci-av-stepText">Step 0</span><span id="fibonacci-av-percent">0%</span></div><div class="cb-sv-controls"><button id="fibonacci-av-prev" class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.prev('fibonacci-av')">← Previous</button><button id="fibonacci-av-next" class="cb-sv-btn" onclick="CodeBhavyaSearchViz.next('fibonacci-av')">Next →</button><button id="fibonacci-av-auto" class="cb-sv-btn green" onclick="CodeBhavyaSearchViz.auto('fibonacci-av')">▶ Auto Run</button><button class="cb-sv-btn gold" onclick="CodeBhavyaSearchViz.pause('fibonacci-av')">⏸ Pause</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.reset('fibonacci-av')">↺ Reset</button></div><div id="fibonacci-av-complete" class="cb-sv-complete">✅ Search visualization completed.</div></div><div class="cb-sv-side"><div class="cb-sv-sidecard"><h4>📊 Live Statistics</h4><div id="fibonacci-av-stats" class="cb-sv-stats"></div><div id="fibonacci-av-condition" class="cb-sv-condition">No comparison yet.</div></div><div class="cb-sv-sidecard"><h4>🧠 Current Search State</h4><div id="fibonacci-av-extra" class="cb-sv-extra">Waiting to start.</div></div><div class="cb-sv-sidecard"><h4>🧾 Recent Actions</h4><div id="fibonacci-av-history" class="cb-sv-history"></div></div></div></div></div>
+
 <div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('fibonacciProgram')">Show Program</button>
-<div class="program-content" id="fibonacciProgram">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content search-algorithm-program-visible" id="fibonacciProgram">
 <pre><code>#include &lt;stdio.h&gt;
 
 int fibonacciSearch(int a[], int n, int target) {
@@ -1486,6 +1637,8 @@ int main() {
 80</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found at index 7</code></pre></div>
 </div>
+</div>
+</div>
 
 <div class="cb-binary-tracer-wrap">
 <button class="program-toggle" onclick="cbFibonacciTracer.toggle()">▶ Program Tracing</button>
@@ -1528,8 +1681,7 @@ int main() {
 </div>
 </div>
 
-</div>
-</div>
+
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
 <div class="complexity-item"><strong>Best: O(1)</strong> Target is found at the first probe.</div>
@@ -1559,9 +1711,13 @@ drop down to lower levels near the target.
 <li>Repeat until level 0.</li>
 <li>Check the next node for equality.</li>
 </ol>
+
+
+<div class="cb-sv-card" id="skip-av-visualizer"><div class="cb-sv-topbar"><div class="cb-sv-label">Interactive Algorithm Visualization</div><div class="cb-sv-brand"><span class="cb-sv-brand-mark"><img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo"></span><span class="cb-sv-code">Code</span><span class="cb-sv-bhavya">Bhavya</span></div></div><h3>🎬 Premium Skip List Search Visualizer</h3><p class="cb-sv-intro">Move across higher levels first and drop down when the next jump would pass the target.</p><div class="cb-sv-toolbar"><div class="cb-sv-field"><label>Array values</label><input id="skip-av-input" class="cb-sv-input" value="10,20,30,40,50,60,70,80,90"></div><div class="cb-sv-field"><label>Target</label><input id="skip-av-target" class="cb-sv-input" value="70"></div><button class="cb-sv-btn" onclick="CodeBhavyaSearchViz.load('skip-av')">Load</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.random('skip-av')">🎲 Random</button></div><div class="cb-sv-options"><div class="cb-sv-speed"><label>Speed</label><input id="skip-av-speed" type="range" min="250" max="1600" value="850" step="50" oninput="document.getElementById('skip-av-speedText').textContent=this.value+' ms'"><span id="skip-av-speedText">850 ms</span></div></div><div class="cb-sv-layout"><div class="cb-sv-stage"><div class="cb-sv-stage-head"><h4>📦 Live Search State</h4><span id="skip-av-pill" class="cb-sv-pill">Ready</span></div><div class="cb-sv-array-wrap"><div id="skip-av-array" class="cb-sv-array"></div></div><div id="skip-av-explain" class="cb-sv-explain">Press Next to begin.</div><div class="cb-sv-track"><div id="skip-av-fill" class="cb-sv-fill"></div></div><div class="cb-sv-progress-row"><span id="skip-av-stepText">Step 0</span><span id="skip-av-percent">0%</span></div><div class="cb-sv-controls"><button id="skip-av-prev" class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.prev('skip-av')">← Previous</button><button id="skip-av-next" class="cb-sv-btn" onclick="CodeBhavyaSearchViz.next('skip-av')">Next →</button><button id="skip-av-auto" class="cb-sv-btn green" onclick="CodeBhavyaSearchViz.auto('skip-av')">▶ Auto Run</button><button class="cb-sv-btn gold" onclick="CodeBhavyaSearchViz.pause('skip-av')">⏸ Pause</button><button class="cb-sv-btn secondary" onclick="CodeBhavyaSearchViz.reset('skip-av')">↺ Reset</button></div><div id="skip-av-complete" class="cb-sv-complete">✅ Search visualization completed.</div></div><div class="cb-sv-side"><div class="cb-sv-sidecard"><h4>📊 Live Statistics</h4><div id="skip-av-stats" class="cb-sv-stats"></div><div id="skip-av-condition" class="cb-sv-condition">No comparison yet.</div></div><div class="cb-sv-sidecard"><h4>🧠 Current Search State</h4><div id="skip-av-extra" class="cb-sv-extra">Waiting to start.</div></div><div class="cb-sv-sidecard"><h4>🧾 Recent Actions</h4><div id="skip-av-history" class="cb-sv-history"></div></div></div></div></div>
+
 <div class="program-box">
-<button class="program-toggle" onclick="toggleProgram('skipProgram')">Show Program</button>
-<div class="program-content" id="skipProgram">
+<div class="cb-visible-program-heading">💻 C Program</div>
+<div class="program-content search-algorithm-program-visible" id="skipProgram">
 <pre><code>#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 
@@ -1648,6 +1804,8 @@ int main() {
 <div class="io-box"><h4>Sample Input</h4><pre><code>40</code></pre></div>
 <div class="io-box"><h4>Sample Output</h4><pre><code>Element found</code></pre></div>
 </div>
+</div>
+</div>
 
 <div class="cb-binary-tracer-wrap">
 <button class="program-toggle" onclick="cbSkipListTracer.toggle()">▶ Program Tracing</button>
@@ -1691,8 +1849,7 @@ int main() {
 </div>
 </div>
 
-</div>
-</div>
+
 <h3>⚡ Complexity</h3>
 <div class="complexity-list">
 <div class="complexity-item"><strong>Best: O(1)</strong> The target is found immediately after the starting point.</div>
@@ -1867,10 +2024,10 @@ Ordered linked structure → Skip List.
 
 </div>
 </div>
-<div class="content-card">
+<div class="content-card" id="practice-section">
 <span class="section-label">PRACTICE</span>
-<h2>🎯 20 Practice Problems</h2>
-<p>Try each problem yourself first. Use <strong>💻 Practice Yourself</strong> to write and test your C program. Use <strong>Hint</strong> only when needed, and <strong>Show Program</strong> if you want to study the complete solution.</p>
+<h2>🎯 20 Searching Practice Problems</h2>
+<p>Try each problem yourself first. Use <strong>💻 Solve It Yourself</strong> to write and test your C program. Use <strong>Hint</strong> only when needed, and <strong>Show Program</strong> if you want to study the complete solution.</p>
 
 <div class="cb-practice-overall">
 <div class="cb-practice-overall-title">📈 Searching Practice Progress</div>
@@ -1893,7 +2050,7 @@ Ordered linked structure → Skip List.
 <p><strong>Input:</strong> n, n integers, target</p><p><strong>Output:</strong> index or -1</p>
 
 <div class="practice-buttons">
-<button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-linear-1')">💻 Practice Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-linear-1\')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-linear-1'); toggleHint('h1')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-linear-1'); toggleProgram('p1')">Show Program</button>
 </div>
@@ -1901,7 +2058,7 @@ Ordered linked structure → Skip List.
 <div class="hint" id="h1">Scan from index 0 to n-1 and stop when the target is found.</div>
 
 <div id="practiceWorkspace-search-linear-1" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Linear Search</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Linear Search</div>
 
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
@@ -1974,11 +2131,11 @@ int main() {
 <span id="practiceBadge-search-count-2" class="cb-practice-badge"></span>
 </div><p>Count how many times a value occurs in an array.</p>
 <p><strong>Input:</strong> n, array, target</p><p><strong>Output:</strong> count</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-count-2')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-count-2'); toggleHint('h2')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-count-2'); toggleProgram('p2')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-count-2\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-count-2'); toggleHint('h2')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-count-2'); toggleProgram('p2')">Show Program</button></div>
 <div class="hint" id="h2">Increment a counter every time a[i] equals target.</div>
 
 <div id="practiceWorkspace-search-count-2" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Count occurrences of a target</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Count occurrences of a target</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -2039,11 +2196,11 @@ int main() {
 <span id="practiceBadge-search-first-3" class="cb-practice-badge"></span>
 </div><p>Find the first index of a target.</p>
 <p><strong>Input:</strong> n, array, target</p><p><strong>Output:</strong> first index or -1</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-first-3')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-first-3'); toggleHint('h3')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-first-3'); toggleProgram('p3')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-first-3\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-first-3'); toggleHint('h3')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-first-3'); toggleProgram('p3')">Show Program</button></div>
 <div class="hint" id="h3">Scan from left to right and stop at the first match.</div>
 
 <div id="practiceWorkspace-search-first-3" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Find first occurrence</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Find first occurrence</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -2107,11 +2264,11 @@ int main() {
 <span id="practiceBadge-search-last-4" class="cb-practice-badge"></span>
 </div><p>Find the last index of a target.</p>
 <p><strong>Input:</strong> n, array, target</p><p><strong>Output:</strong> last index or -1</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-last-4')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-last-4'); toggleHint('h4')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-last-4'); toggleProgram('p4')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-last-4\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-last-4'); toggleHint('h4')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-last-4'); toggleProgram('p4')">Show Program</button></div>
 <div class="hint" id="h4">Do not stop at the first match. Update the position every time the target is found.</div>
 
 <div id="practiceWorkspace-search-last-4" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Find last occurrence</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Find last occurrence</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -2172,11 +2329,11 @@ int main() {
 <span id="practiceBadge-search-binary-iterative-5" class="cb-practice-badge"></span>
 </div><p>Search for a target in a sorted array using iteration.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-binary-iterative-5')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-binary-iterative-5'); toggleHint('h5')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-binary-iterative-5'); toggleProgram('p5')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-binary-iterative-5\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-binary-iterative-5'); toggleHint('h5')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-binary-iterative-5'); toggleProgram('p5')">Show Program</button></div>
 <div class="hint" id="h5">Maintain low and high and compare the target with the middle element.</div>
 
 <div id="practiceWorkspace-search-binary-iterative-5" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Binary Search — iterative</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Binary Search — iterative</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -2250,11 +2407,11 @@ int main() {
 <span id="practiceBadge-search-binary-recursive-6" class="cb-practice-badge"></span>
 </div><p>Implement Binary Search using recursion.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-binary-recursive-6')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-binary-recursive-6'); toggleHint('h6')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-binary-recursive-6'); toggleProgram('p6')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-binary-recursive-6\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-binary-recursive-6'); toggleHint('h6')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-binary-recursive-6'); toggleProgram('p6')">Show Program</button></div>
 <div class="hint" id="h6">Create a recursive function with low and high parameters.</div>
 
 <div id="practiceWorkspace-search-binary-recursive-6" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Binary Search — recursive</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Binary Search — recursive</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -2326,11 +2483,11 @@ int main() {
 <span id="practiceBadge-search-first-sorted-7" class="cb-practice-badge"></span>
 </div><p>Find the first occurrence of a duplicate target using Binary Search.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> first index</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-first-sorted-7')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-first-sorted-7'); toggleHint('h7')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-first-sorted-7'); toggleProgram('p7')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-first-sorted-7\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-first-sorted-7'); toggleHint('h7')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-first-sorted-7'); toggleProgram('p7')">Show Program</button></div>
 <div class="hint" id="h7">When target is found, store mid and continue searching the left half.</div>
 
 <div id="practiceWorkspace-search-first-sorted-7" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — First occurrence in sorted array</div>
+<div class="cb-practice-title">💻 Solve It Yourself — First occurrence in sorted array</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -2402,11 +2559,11 @@ int main() {
 <span id="practiceBadge-search-last-sorted-8" class="cb-practice-badge"></span>
 </div><p>Find the last occurrence of a target using Binary Search.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> last index</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-last-sorted-8')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-last-sorted-8'); toggleHint('h8')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-last-sorted-8'); toggleProgram('p8')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-last-sorted-8\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-last-sorted-8'); toggleHint('h8')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-last-sorted-8'); toggleProgram('p8')">Show Program</button></div>
 <div class="hint" id="h8">When target is found, store mid and continue searching the right half.</div>
 
 <div id="practiceWorkspace-search-last-sorted-8" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Last occurrence in sorted array</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Last occurrence in sorted array</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -2478,11 +2635,11 @@ int main() {
 <span id="practiceBadge-search-count-sorted-9" class="cb-practice-badge"></span>
 </div><p>Find how many times a target occurs.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> count</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-count-sorted-9')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-count-sorted-9'); toggleHint('h9')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-count-sorted-9'); toggleProgram('p9')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-count-sorted-9\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-count-sorted-9'); toggleHint('h9')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-count-sorted-9'); toggleProgram('p9')">Show Program</button></div>
 <div class="hint" id="h9">Find first and last occurrence; count = last - first + 1.</div>
 
 <div id="practiceWorkspace-search-count-sorted-9" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Count occurrences in sorted array</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Count occurrences in sorted array</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -2579,11 +2736,11 @@ int main() {
 <span id="practiceBadge-search-rotated-10" class="cb-practice-badge"></span>
 </div><p>Search a target in a rotated sorted array.</p>
 <p><strong>Input:</strong> rotated sorted array and target</p><p><strong>Output:</strong> index or -1</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-rotated-10')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-rotated-10'); toggleHint('h10')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-rotated-10'); toggleProgram('p10')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-rotated-10\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-rotated-10'); toggleHint('h10')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-rotated-10'); toggleProgram('p10')">Show Program</button></div>
 <div class="hint" id="h10">At every step, identify which half is sorted.</div>
 
 <div id="practiceWorkspace-search-rotated-10" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Search in rotated sorted array</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Search in rotated sorted array</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -2663,11 +2820,11 @@ int main() {
 <span id="practiceBadge-search-jump-11" class="cb-practice-badge"></span>
 </div><p>Search a sorted array using Jump Search.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-jump-11')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-jump-11'); toggleHint('h11')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-jump-11'); toggleProgram('p11')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-jump-11\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-jump-11'); toggleHint('h11')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-jump-11'); toggleProgram('p11')">Show Program</button></div>
 <div class="hint" id="h11">Jump √n positions until you cross the target, then linearly scan that block.</div>
 
 <div id="practiceWorkspace-search-jump-11" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Jump Search</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Jump Search</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -2749,11 +2906,11 @@ int main() {
 <span id="practiceBadge-search-interpolation-12" class="cb-practice-badge"></span>
 </div><p>Search uniformly distributed sorted data using interpolation.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-interpolation-12')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-interpolation-12'); toggleHint('h12')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-interpolation-12'); toggleProgram('p12')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-interpolation-12\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-interpolation-12'); toggleHint('h12')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-interpolation-12'); toggleProgram('p12')">Show Program</button></div>
 <div class="hint" id="h12">Estimate the position using the values at low and high.</div>
 
 <div id="practiceWorkspace-search-interpolation-12" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Interpolation Search</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Interpolation Search</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -2832,11 +2989,11 @@ int main() {
 <span id="practiceBadge-search-fibonacci-13" class="cb-practice-badge"></span>
 </div><p>Search a sorted array using Fibonacci partitions.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> index or -1</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-fibonacci-13')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-fibonacci-13'); toggleHint('h13')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-fibonacci-13'); toggleProgram('p13')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-fibonacci-13\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-fibonacci-13'); toggleHint('h13')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-fibonacci-13'); toggleProgram('p13')">Show Program</button></div>
 <div class="hint" id="h13">Generate Fibonacci numbers until the largest one is at least n, then use the Fibonacci offsets to probe.</div>
 
 <div id="practiceWorkspace-search-fibonacci-13" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Fibonacci Search</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Fibonacci Search</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -2927,11 +3084,11 @@ int main() {
 <span id="practiceBadge-search-lower-bound-14" class="cb-practice-badge"></span>
 </div><p>Find the first index whose value is greater than or equal to the target.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> lower-bound index</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-lower-bound-14')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-lower-bound-14'); toggleHint('h14')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-lower-bound-14'); toggleProgram('p14')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-lower-bound-14\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-lower-bound-14'); toggleHint('h14')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-lower-bound-14'); toggleProgram('p14')">Show Program</button></div>
 <div class="hint" id="h14">If a[mid] is at least target, store mid and move left.</div>
 
 <div id="practiceWorkspace-search-lower-bound-14" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Lower Bound</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Lower Bound</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -3002,11 +3159,11 @@ int main() {
 <span id="practiceBadge-search-upper-bound-15" class="cb-practice-badge"></span>
 </div><p>Find the first index whose value is greater than the target.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> upper-bound index</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-upper-bound-15')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-upper-bound-15'); toggleHint('h15')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-upper-bound-15'); toggleProgram('p15')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-upper-bound-15\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-upper-bound-15'); toggleHint('h15')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-upper-bound-15'); toggleProgram('p15')">Show Program</button></div>
 <div class="hint" id="h15">If a[mid] is greater than target, store mid and move left; otherwise move right.</div>
 
 <div id="practiceWorkspace-search-upper-bound-15" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Upper Bound</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Upper Bound</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -3077,11 +3234,11 @@ int main() {
 <span id="practiceBadge-search-insertion-position-16" class="cb-practice-badge"></span>
 </div><p>Find the position where a target should be inserted in sorted order.</p>
 <p><strong>Input:</strong> sorted array and target</p><p><strong>Output:</strong> insertion index</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-insertion-position-16')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-insertion-position-16'); toggleHint('h16')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-insertion-position-16'); toggleProgram('p16')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-insertion-position-16\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-insertion-position-16'); toggleHint('h16')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-insertion-position-16'); toggleProgram('p16')">Show Program</button></div>
 <div class="hint" id="h16">The insertion position is the lower bound of the target.</div>
 
 <div id="practiceWorkspace-search-insertion-position-16" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Search insertion position</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Search insertion position</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -3149,11 +3306,11 @@ int main() {
 <span id="practiceBadge-search-peak-17" class="cb-practice-badge"></span>
 </div><p>Find an index of an element that is not smaller than its neighbors.</p>
 <p><strong>Input:</strong> n and array</p><p><strong>Output:</strong> peak index</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-peak-17')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-peak-17'); toggleHint('h17')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-peak-17'); toggleProgram('p17')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-peak-17\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-peak-17'); toggleHint('h17')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-peak-17'); toggleProgram('p17')">Show Program</button></div>
 <div class="hint" id="h17">Compare mid with mid+1. If a[mid] is smaller, move right; otherwise move left including mid.</div>
 
 <div id="practiceWorkspace-search-peak-17" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Find peak element</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Find peak element</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -3218,11 +3375,11 @@ int main() {
 <span id="practiceBadge-search-integer-sqrt-18" class="cb-practice-badge"></span>
 </div><p>Find floor(√x) without using a square-root library.</p>
 <p><strong>Input:</strong> non-negative integer x</p><p><strong>Output:</strong> floor square root</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-integer-sqrt-18')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-integer-sqrt-18'); toggleHint('h18')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-integer-sqrt-18'); toggleProgram('p18')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-integer-sqrt-18\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-integer-sqrt-18'); toggleHint('h18')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-integer-sqrt-18'); toggleProgram('p18')">Show Program</button></div>
 <div class="hint" id="h18">Binary-search the answer from 0 to x and keep the largest mid whose square is at most x.</div>
 
 <div id="practiceWorkspace-search-integer-sqrt-18" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Integer square root using Binary Search</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Integer square root using Binary Search</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -3283,11 +3440,11 @@ int main() {
 <span id="practiceBadge-search-nearly-sorted-19" class="cb-practice-badge"></span>
 </div><p>Each element may be at its correct position or one position away. Find the target.</p>
 <p><strong>Input:</strong> nearly sorted array and target</p><p><strong>Output:</strong> index or -1</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-nearly-sorted-19')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-nearly-sorted-19'); toggleHint('h19')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-nearly-sorted-19'); toggleProgram('p19')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-nearly-sorted-19\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-nearly-sorted-19'); toggleHint('h19')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-nearly-sorted-19'); toggleProgram('p19')">Show Program</button></div>
 <div class="hint" id="h19">Check mid, mid-1, and mid+1 before moving the search range.</div>
 
 <div id="practiceWorkspace-search-nearly-sorted-19" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Search in a nearly sorted array</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Search in a nearly sorted array</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -3370,11 +3527,11 @@ int main() {
 <span id="practiceBadge-search-rotated-minimum-20" class="cb-practice-badge"></span>
 </div><p>Find the minimum element in a rotated sorted array.</p>
 <p><strong>Input:</strong> rotated sorted array</p><p><strong>Output:</strong> minimum value</p>
-<div class="practice-buttons"><button class="program-toggle" onclick="CodeBhavyaPractice.toggle('search-rotated-minimum-20')">💻 Practice Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-rotated-minimum-20'); toggleHint('h20')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-rotated-minimum-20'); toggleProgram('p20')">Show Program</button></div>
+<div class="practice-buttons"><button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'search-rotated-minimum-20\')">💻 Solve It Yourself</button><button class="secondary-small" onclick="CodeBhavyaPractice.markHint('search-rotated-minimum-20'); toggleHint('h20')">Hint</button><button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('search-rotated-minimum-20'); toggleProgram('p20')">Show Program</button></div>
 <div class="hint" id="h20">Compare a[mid] with a[high]. If a[mid] is greater, the minimum lies to the right; otherwise it lies at mid or to the left.</div>
 
 <div id="practiceWorkspace-search-rotated-minimum-20" class="cb-practice-workspace">
-<div class="cb-practice-title">💻 Practice Yourself — Find minimum in rotated sorted array</div>
+<div class="cb-practice-title">💻 Solve It Yourself — Find minimum in rotated sorted array</div>
 <div class="cb-practice-grid">
 <div class="cb-practice-panel">
 <h4>C Code Editor</h4>
@@ -3435,7 +3592,6 @@ int main() {
 15 18 2 3 6 12 13</code></pre></div><div class="io-box"><h4>Sample Output</h4><pre><code>2</code></pre></div></div></div></div>
 </div>
 </section>
-<div class="topic-navigation"><div class="topic-nav-side previous"><a class="primary-button" href="index.html">← Previous Topic</a></div><div class="topic-nav-side next"><span class="nav-label">Next Topic</span><strong class="nav-topic-name">🔄 Sorting</strong><a class="primary-button" href="sorting.html">Continue to Sorting →</a></div></div>
 </main>
 </div>
 <footer class="footer">
@@ -3496,6 +3652,18 @@ function searchTopics() {
     });
 }
 
+
+
+/* ============================================================
+   CODEBHAVYA SEARCHING — SAFE PROGRAM-CODE PANE SCROLLING
+   ============================================================ */
+window.cbScrollSearchTracerCode = function(codeEl, selector) {
+    if (!codeEl) return;
+
+    cbScrollSearchTracerCode(codeEl, 
+            selector || ".cb-binary-code-line.active"
+        );
+};
 
 /* ===== CodeBhavya Iterative Binary Search Tracer Engine ===== */
 const cbBinaryProgram = [
@@ -3610,15 +3778,7 @@ const cbBinaryTracer = {
     const active=this.activeLine();
     codeEl.innerHTML=cbBinaryProgram.map((line,i)=>`<span class="cb-binary-code-line ${i===active?'active':''}">${i===active?'👉 ':'   '}${this.escape(line)}</span>`).join('');
     /* Keep the currently executing statement centered inside the code window. */
-    requestAnimationFrame(()=>{
-      const activeEl = codeEl.querySelector('.cb-binary-code-line.active');
-      if(activeEl){
-        const activeTop = activeEl.offsetTop - codeEl.offsetTop;
-        const target = activeTop - (codeEl.clientHeight / 2) + (activeEl.offsetHeight / 2);
-        const maxScroll = Math.max(0, codeEl.scrollHeight - codeEl.clientHeight);
-        codeEl.scrollTop = Math.max(0, Math.min(target, maxScroll));
-      }
-    });
+    cbScrollSearchTracerCode(codeEl, '.cb-binary-code-line.active');
 
     const step=this.current===0?{explain:'Press Next to start executing the program.',op:''}:this.steps[Math.min(this.current-1,this.steps.length-1)];
     document.getElementById('cbBinaryExplain').textContent=step.explain;
@@ -3920,15 +4080,7 @@ const cbRotatedTracer = {
 
     /* Blank source lines remain visible for readability, but they are
        NEVER execution steps. The active statement is always a real line. */
-    requestAnimationFrame(()=>{
-      const activeEl=codeEl.querySelector('.cb-binary-code-line.active');
-      if(activeEl){
-        const activeTop=activeEl.offsetTop-codeEl.offsetTop;
-        const target=activeTop-(codeEl.clientHeight/2)+(activeEl.offsetHeight/2);
-        const maxScroll=Math.max(0,codeEl.scrollHeight-codeEl.clientHeight);
-        codeEl.scrollTop=Math.max(0,Math.min(target,maxScroll));
-      }
-    });
+    cbScrollSearchTracerCode(codeEl, '.cb-binary-code-line.active');
 
     const step=this.current===0
       ? {explain:'Press Next to start the program from main().',op:''}
@@ -4126,15 +4278,7 @@ const cbLinearTracer = {
     const code=document.getElementById('cbLinearCode');if(!code)return;
     code.innerHTML=cbLinearProgram.map((line,i)=>`<span class="cb-code-line ${i===this.activeLine()?'active':''}">${i===this.activeLine()?'👉 ': '   '}${this.escape(line)}</span>`).join('');
     /* Keep the currently executing statement centered inside the code window. */
-    requestAnimationFrame(()=>{
-      const active=code.querySelector('.cb-code-line.active');
-      if(active){
-        const activeTop = active.offsetTop - code.offsetTop;
-        const target = activeTop - (code.clientHeight / 2) + (active.offsetHeight / 2);
-        const maxScroll = Math.max(0, code.scrollHeight - code.clientHeight);
-        code.scrollTop = Math.max(0, Math.min(target, maxScroll));
-      }
-    });
+    cbScrollSearchTracerCode(code, '.cb-code-line.active');
     const step=this.current>0?this.steps[this.current-1]:this.steps[0];
     document.getElementById('cbLinearExplain').textContent=this.current===0?'Press Next to start executing the program.':step.explain;
     const vars={};Object.keys(this.state).forEach(k=>{if(k!=='a'&&k!=='done'&&k!=='inputIndex'&&k!=='current'&&k!=='check'&&k!=='output')vars[k]=this.state[k];});
@@ -4306,15 +4450,7 @@ const cbRecursiveBinaryTracer = {
     auto.disabled=done;
 
     // Same scrolling behavior as finalized Iterative Binary Search / Linear Search.
-    requestAnimationFrame(()=>{
-      const activeEl=codeEl.querySelector('.cb-binary-code-line.active');
-      if(activeEl){
-        const activeTop=activeEl.offsetTop-codeEl.offsetTop;
-        const target=activeTop-(codeEl.clientHeight/2)+(activeEl.offsetHeight/2);
-        const maxScroll=Math.max(0,codeEl.scrollHeight-codeEl.clientHeight);
-        codeEl.scrollTop=Math.max(0,Math.min(target,maxScroll));
-      }
-    });
+    cbScrollSearchTracerCode(codeEl, '.cb-binary-code-line.active');
 
     document.getElementById('cbRecursiveStatus').textContent=
       done?'✓ Execution completed. Press Reset to run again.':'Step '+(this.current+1)+' of '+this.steps.length;
@@ -4471,7 +4607,7 @@ this.add(42,'The result is printed.',s=>{s.output='Element found at index 6'},'O
 this.add(46,'The program finishes.',s=>{s.done=true;s.callStack=[]},'return 0');},apply(n){this.state={};for(let i=0;i<n;i++)this.steps[i].mutate(this.state)},active(){return this.current?this.steps[Math.min(this.current-1,this.steps.length-1)].line:29},render(){const e=document.getElementById('cbJumpCode'),s=this.current?this.steps[Math.min(this.current-1,this.steps.length-1)]:{explain:'Press Next to start the program from main().',op:''},a=this.state; e.innerHTML=cbJumpProgram.map((l,i)=>`<span class="cb-binary-code-line ${i===this.active()?'active':''}">${i===this.active()?'👉 ':'   '}${this.esc(l)}</span>`).join('');document.getElementById('cbJumpExplain').textContent=s.explain;
 const vars={};['n','target','i','step','prev','next','pos','position','currentValue','condition','check'].forEach(k=>{if(a[k]!==undefined)vars[k]=a[k]});document.getElementById('cbJumpVars').innerHTML=Object.keys(vars).length?Object.entries(vars).map(([k,v])=>`<div class="cb-binary-var"><strong>${this.esc(k)}</strong><span>${this.esc(v)}</span></div>`).join(''):'<div class="cb-binary-var"><strong>State</strong><span>Not started</span></div>';document.getElementById('cbJumpStack').textContent=a.callStack&&a.callStack.length?a.callStack.join('\n'):'Program completed.';document.getElementById('cbJumpOperation').innerHTML=s.op?`<strong>⚡ Current operation:</strong> ${this.esc(s.op)}`:'';
 const el=document.getElementById('cbJumpArray');if(!Array.isArray(a.a)){el.innerHTML='<div style="padding:12px;color:#64748b">Array has not been declared yet.</div>'}else{const lo=Number.isInteger(a.prev)?a.prev:null,hi=Number.isInteger(a.next)?a.next-1:null,ci=Number.isInteger(a.checkIndex)?a.checkIndex:null,mi=Number.isInteger(a.currentValue)?a.currentValue:null;el.innerHTML='<div class="cb-binary-array-row">'+a.a.map((v,i)=>{let c=[];if(lo!==null&&hi!==null&&i>=lo&&i<=hi)c.push('active-range');if(lo!==null&&i<lo)c.push('outside');if(hi!==null&&i>hi)c.push('outside');if(i===lo)c.push('low');if(i===hi)c.push('high');if(i===ci)c.push('mid');if(v===mi&&mi!==null)c.push('found');return `<div class="cb-binary-cell ${c.join(' ')}"><div class="cb-binary-index">index ${i}</div><div class="cb-binary-value">${this.esc(v)}</div></div>`}).join('')+'</div><div style="font-size:11px;color:#64748b;margin-top:4px">Highlighted block = current Jump Search range.</div>'}
-requestAnimationFrame(()=>{const x=e.querySelector('.cb-binary-code-line.active');if(x){const t=x.offsetTop-e.offsetTop-e.clientHeight/2+x.offsetHeight/2,m=Math.max(0,e.scrollHeight-e.clientHeight);e.scrollTop=Math.max(0,Math.min(t,m))}});const done=this.current>=this.steps.length;document.getElementById('cbJumpStatus').textContent=done?'✓ Program execution completed.':`Step ${this.current} of ${this.steps.length}`;document.getElementById('cbJumpNext').disabled=done;document.getElementById('cbJumpAuto').disabled=done||!!this.timer;document.getElementById('cbJumpNext').textContent=done?'✓ Completed':'Next →'},next(){if(this.current>=this.steps.length)return;this.steps[this.current].mutate(this.state);this.current++;this.render()},prev(){if(this.current<=0)return;this.current--;this.apply(this.current);this.render()},reset(){if(this.timer){clearInterval(this.timer);this.timer=null}this.current=0;this.state={};this.render()},autoRun(){if(this.timer||this.current>=this.steps.length)return;this.timer=setInterval(()=>{if(this.current>=this.steps.length){clearInterval(this.timer);this.timer=null;this.render();return}this.next();if(this.current>=this.steps.length){clearInterval(this.timer);this.timer=null;this.render()}},900)}};cbJumpTracer.init();
+cbScrollSearchTracerCode(e, '.cb-binary-code-line.active');const done=this.current>=this.steps.length;document.getElementById('cbJumpStatus').textContent=done?'✓ Program execution completed.':`Step ${this.current} of ${this.steps.length}`;document.getElementById('cbJumpNext').disabled=done;document.getElementById('cbJumpAuto').disabled=done||!!this.timer;document.getElementById('cbJumpNext').textContent=done?'✓ Completed':'Next →'},next(){if(this.current>=this.steps.length)return;this.steps[this.current].mutate(this.state);this.current++;this.render()},prev(){if(this.current<=0)return;this.current--;this.apply(this.current);this.render()},reset(){if(this.timer){clearInterval(this.timer);this.timer=null}this.current=0;this.state={};this.render()},autoRun(){if(this.timer||this.current>=this.steps.length)return;this.timer=setInterval(()=>{if(this.current>=this.steps.length){clearInterval(this.timer);this.timer=null;this.render();return}this.next();if(this.current>=this.steps.length){clearInterval(this.timer);this.timer=null;this.render()}},900)}};cbJumpTracer.init();
 </script>
 <script>
 /* ============================================================
@@ -4559,15 +4695,10 @@ window.CodeBhavyaTracer = (() => {
           return `<span class="${config.codeLineClass || "cb-binary-code-line"} ${isActive ? "active" : ""}">${isActive ? "👉 " : "   "}${escapeHtml(line)}</span>`;
         }).join("");
 
-        requestAnimationFrame(() => {
-          const activeEl = code.querySelector("." + (config.codeLineClass || "cb-binary-code-line") + ".active");
-          if (!activeEl) return;
-
-          const activeTop = activeEl.offsetTop - code.offsetTop;
-          const target = activeTop - (code.clientHeight / 2) + (activeEl.offsetHeight / 2);
-          const maxScroll = Math.max(0, code.scrollHeight - code.clientHeight);
-          code.scrollTop = Math.max(0, Math.min(target, maxScroll));
-        });
+        cbScrollSearchTracerCode(
+          code,
+          "." + (config.codeLineClass || "cb-binary-code-line") + ".active"
+        );
       },
 
       renderVariables() {
@@ -6643,5 +6774,17 @@ const codeBhavyaSearchingPracticeConfigs = [
 codeBhavyaSearchingPracticeConfigs.forEach(config=>CodeBhavyaPractice.register(config));
 </script>
 
+<script>
+window.CodeBhavyaSearchViz=(()=>{const R={},M={'linear-av':'linear','binary-iterative-av':'binary','binary-recursive-av':'recursive','rotated-av':'rotated','jump-av':'jump','interpolation-av':'interpolation','fibonacci-av':'fibonacci','skip-av':'skip'},$=i=>document.getElementById(i);function S(a,m={}){return Object.assign({array:[...a],active:[],mid:[],range:[],visited:[],discarded:[],found:[],jump:[],tags:{},stats:{},condition:'—',explanation:'',history:'',pill:'Ready',extra:''},m)}function parse(id){const a=$(id+'-input').value.split(',').map(x=>+x.trim()).filter(x=>!Number.isNaN(x)),t=+$(id+'-target').value;if(!a.length||Number.isNaN(t)||a.length>16){alert('Enter a valid array (maximum 16 elements) and target.');return null}return[a,t]}
+function linear(a,t){let q=[S(a,{pill:'Start',stats:{Comparisons:0,Index:'—',Target:t},explanation:'Start from index 0.',history:'Linear Search started.',extra:`Target = ${t}`})],v=[],c=0;for(let i=0;i<a.length;i++){c++;let ok=a[i]===t;q.push(S(a,{active:[i],visited:[...v],tags:{[i]:'CHECK'},pill:`Index ${i}`,stats:{Comparisons:c,Index:i,Target:t},condition:`${a[i]} == ${t} → ${ok?'TRUE':'FALSE'}`,explanation:`Compare a[${i}] = ${a[i]} with target ${t}.`,history:`Checked index ${i}.`,extra:`Visited: ${v.length}`}));if(ok){q.push(S(a,{found:[i],tags:{[i]:'FOUND'},pill:'Found',stats:{Comparisons:c,Index:i,Target:t},condition:`Found at index ${i}`,explanation:`Target ${t} is found at index ${i}.`,history:'Target found.',extra:'Search completed.'}));return q}v.push(i)}q.push(S(a,{visited:v,pill:'Not Found',stats:{Comparisons:c,Index:'—',Target:t},condition:'End of array',explanation:`${t} is not present.`,history:'Target not found.',extra:'Search completed.'}));return q}
+function binary(a,t,rec=false){let q=[S(a,{range:a.map((_,i)=>i),pill:'Start',stats:{Comparisons:0,Low:0,High:a.length-1,Mid:'—'},explanation:'Start with the complete sorted range.',history:'Binary Search started.',extra:`Target = ${t}`})],c=0;function go(l,h,d){if(l>h){q.push(S(a,{discarded:a.map((_,i)=>i),pill:'Not Found',stats:{Comparisons:c,Low:l,High:h,Mid:'—'},condition:'low > high',explanation:`${t} is not present.`,history:'Search range became empty.',extra:rec?`Recursive depth ${d}`:'No range remains.'}));return}let m=Math.floor((l+h)/2),rg=Array.from({length:h-l+1},(_,k)=>l+k),ds=a.map((_,i)=>i).filter(i=>i<l||i>h);c++;q.push(S(a,{mid:[m],range:rg,discarded:ds,tags:{[m]:'MID'},pill:rec?`Depth ${d}`:`Range ${l}..${h}`,stats:{Comparisons:c,Low:l,High:h,Mid:m},condition:`a[${m}] = ${a[m]}`,explanation:`Check midpoint ${m}, value ${a[m]}.`,history:`Checked mid ${m}.`,extra:rec?`Call search(${l}, ${h})`:`Active range [${l}, ${h}]`}));if(a[m]===t){q.push(S(a,{found:[m],range:rg,discarded:ds,tags:{[m]:'FOUND'},pill:'Found',stats:{Comparisons:c,Low:l,High:h,Mid:m},condition:`${a[m]} == ${t}`,explanation:`Target ${t} is found at index ${m}.`,history:'Target found.',extra:rec?'Return through recursive calls.':'Search completed.'}));return}if(a[m]<t){q.push(S(a,{mid:[m],discarded:[...ds,...rg.filter(i=>i<=m)],pill:'Move Right',stats:{Comparisons:c,Low:m+1,High:h,Mid:m},condition:`${a[m]} < ${t}`,explanation:'Discard the left half and midpoint.',history:'Moved right.',extra:rec?`Next call search(${m+1}, ${h})`:`low = ${m+1}`}));go(m+1,h,d+1)}else{q.push(S(a,{mid:[m],discarded:[...ds,...rg.filter(i=>i>=m)],pill:'Move Left',stats:{Comparisons:c,Low:l,High:m-1,Mid:m},condition:`${a[m]} > ${t}`,explanation:'Discard the right half and midpoint.',history:'Moved left.',extra:rec?`Next call search(${l}, ${m-1})`:`high = ${m-1}`}));go(l,m-1,d+1)}}go(0,a.length-1,1);return q}
+function rotated(a,t){let q=[S(a,{range:a.map((_,i)=>i),pill:'Start',stats:{Comparisons:0,Low:0,High:a.length-1,Mid:'—'},explanation:'Start with the complete rotated array.',history:'Rotated search started.',extra:`Target = ${t}`})],l=0,h=a.length-1,c=0;while(l<=h){let m=Math.floor((l+h)/2),rg=Array.from({length:h-l+1},(_,k)=>l+k),ds=a.map((_,i)=>i).filter(i=>i<l||i>h);c++;q.push(S(a,{mid:[m],range:rg,discarded:ds,tags:{[m]:'MID'},pill:`Range ${l}..${h}`,stats:{Comparisons:c,Low:l,High:h,Mid:m},condition:`a[${m}] = ${a[m]}`,explanation:`Check midpoint ${m}.`,history:`Checked mid ${m}.`,extra:`Active range [${l}, ${h}]`}));if(a[m]===t){q.push(S(a,{found:[m],pill:'Found',stats:{Comparisons:c,Low:l,High:h,Mid:m},condition:'Target found',explanation:`${t} is found at index ${m}.`,history:'Target found.',extra:'Search completed.'}));return q}if(a[l]<=a[m]){let inside=a[l]<=t&&t<a[m];q.push(S(a,{mid:[m],range:rg,pill:'Left Half Sorted',stats:{Comparisons:c,Low:l,High:h,Mid:m},condition:`${a[l]} <= ${a[m]}`,explanation:`Left half is sorted; target ${inside?'is':'is not'} in its value range.`,history:'Left half identified as sorted.',extra:inside?`Next [${l}, ${m-1}]`:`Next [${m+1}, ${h}]`}));if(inside)h=m-1;else l=m+1}else{let inside=a[m]<t&&t<=a[h];q.push(S(a,{mid:[m],range:rg,pill:'Right Half Sorted',stats:{Comparisons:c,Low:l,High:h,Mid:m},condition:'Right half sorted',explanation:`Right half is sorted; target ${inside?'is':'is not'} in its value range.`,history:'Right half identified as sorted.',extra:inside?`Next [${m+1}, ${h}]`:`Next [${l}, ${m-1}]`}));if(inside)l=m+1;else h=m-1}}q.push(S(a,{pill:'Not Found',stats:{Comparisons:c,Low:l,High:h,Mid:'—'},condition:'Range empty',explanation:`${t} is not present.`,history:'Target not found.',extra:'Search completed.'}));return q}
+function jump(a,t){let n=a.length,j=Math.max(1,Math.floor(Math.sqrt(n))),p=0,nx=j,c=0,q=[S(a,{pill:'Start',stats:{Comparisons:0,JumpSize:j,BlockStart:0,BlockEnd:Math.min(j-1,n-1)},explanation:`Jump size √n ≈ ${j}.`,history:'Jump Search started.',extra:`Target = ${t}`})];while(p<n&&a[Math.min(nx,n)-1]<t){let i=Math.min(nx,n)-1;c++;q.push(S(a,{jump:[i],visited:Array.from({length:Math.min(nx,n)},(_,k)=>k),tags:{[i]:'JUMP'},pill:'Jump',stats:{Comparisons:c,JumpSize:j,BlockStart:p,BlockEnd:i},condition:`${a[i]} < ${t}`,explanation:'Target is beyond this block; jump ahead.',history:`Jumped past index ${i}.`,extra:`Next block starts at ${Math.min(nx,n)}`}));p=nx;nx+=j;if(p>=n)break}if(p>=n){q.push(S(a,{visited:a.map((_,i)=>i),pill:'Not Found',stats:{Comparisons:c,JumpSize:j,BlockStart:p,BlockEnd:n-1},condition:'Passed array end',explanation:`${t} is not present.`,history:'Target not found.',extra:'Search completed.'}));return q}let e=Math.min(nx,n),rg=Array.from({length:e-p},(_,k)=>p+k);q.push(S(a,{range:rg,pill:'Linear Scan',stats:{Comparisons:c,JumpSize:j,BlockStart:p,BlockEnd:e-1},condition:`Block [${p}, ${e-1}]`,explanation:'Search linearly inside the candidate block.',history:'Candidate block found.',extra:`Scan indexes ${p}..${e-1}`}));for(let i=p;i<e;i++){c++;let ok=a[i]===t;q.push(S(a,{active:[i],range:rg,tags:{[i]:'CHECK'},pill:'Linear Scan',stats:{Comparisons:c,JumpSize:j,BlockStart:p,BlockEnd:e-1},condition:`${a[i]} == ${t} → ${ok?'TRUE':'FALSE'}`,explanation:`Check index ${i}.`,history:`Scanned index ${i}.`,extra:`Block [${p}, ${e-1}]`}));if(ok){q.push(S(a,{found:[i],pill:'Found',stats:{Comparisons:c,JumpSize:j,BlockStart:p,BlockEnd:e-1},condition:'Target found',explanation:`${t} is found at index ${i}.`,history:'Target found.',extra:'Search completed.'}));return q}if(a[i]>t)break}q.push(S(a,{pill:'Not Found',stats:{Comparisons:c,JumpSize:j,BlockStart:p,BlockEnd:e-1},condition:'Block scan ended',explanation:`${t} is not present.`,history:'Target not found.',extra:'Search completed.'}));return q}
+function interpolation(a,t){let q=[S(a,{range:a.map((_,i)=>i),pill:'Start',stats:{Comparisons:0,Low:0,High:a.length-1,Pos:'—'},explanation:'Estimate the likely position from endpoint values.',history:'Interpolation Search started.',extra:`Target = ${t}`})],l=0,h=a.length-1,c=0;while(l<=h&&t>=a[l]&&t<=a[h]){let p=a[h]===a[l]?l:l+Math.floor(((t-a[l])*(h-l))/(a[h]-a[l]));p=Math.max(l,Math.min(h,p));c++;let rg=Array.from({length:h-l+1},(_,k)=>l+k);q.push(S(a,{mid:[p],range:rg,tags:{[p]:'POS'},pill:`Probe ${p}`,stats:{Comparisons:c,Low:l,High:h,Pos:p},condition:`pos = ${p}`,explanation:`Estimate index ${p}, where value is ${a[p]}.`,history:`Probed index ${p}.`,extra:`low=${l}, high=${h}`}));if(a[p]===t){q.push(S(a,{found:[p],pill:'Found',stats:{Comparisons:c,Low:l,High:h,Pos:p},condition:'Target found',explanation:`${t} is found at index ${p}.`,history:'Target found.',extra:'Search completed.'}));return q}if(a[p]<t){l=p+1;q.push(S(a,{pill:'Move Right',stats:{Comparisons:c,Low:l,High:h,Pos:p},condition:`${a[p]} < ${t}`,explanation:`low becomes ${l}.`,history:'Moved right.',extra:`New range [${l}, ${h}]`}))}else{h=p-1;q.push(S(a,{pill:'Move Left',stats:{Comparisons:c,Low:l,High:h,Pos:p},condition:`${a[p]} > ${t}`,explanation:`high becomes ${h}.`,history:'Moved left.',extra:`New range [${l}, ${h}]`}))}}q.push(S(a,{pill:'Not Found',stats:{Comparisons:c,Low:l,High:h,Pos:'—'},condition:'Target outside range',explanation:`${t} is not present.`,history:'Target not found.',extra:'Search completed.'}));return q}
+function fibonacci(a,t){let n=a.length,f2=0,f1=1,f=f1+f2,c=0,o=-1,q=[];while(f<n){f2=f1;f1=f;f=f1+f2}q.push(S(a,{pill:'Start',stats:{Comparisons:0,FibM:f,FibM1:f1,FibM2:f2,Offset:o},explanation:`Smallest Fibonacci number ≥ n is ${f}.`,history:'Fibonacci Search started.',extra:`Target = ${t}`}));while(f>1){let i=Math.min(o+f2,n-1);c++;q.push(S(a,{mid:[i],tags:{[i]:'PROBE'},pill:'Fibonacci Probe',stats:{Comparisons:c,FibM:f,FibM1:f1,FibM2:f2,Offset:o},condition:`a[${i}] = ${a[i]}`,explanation:`Probe index ${i}.`,history:`Probed index ${i}.`,extra:`fibM=${f}, fibM1=${f1}, fibM2=${f2}, offset=${o}`}));if(a[i]<t){f=f1;f1=f2;f2=f-f1;o=i;q.push(S(a,{visited:Array.from({length:i+1},(_,k)=>k),pill:'Move Right',stats:{Comparisons:c,FibM:f,FibM1:f1,FibM2:f2,Offset:o},condition:`${a[i]} < ${t}`,explanation:'Shift Fibonacci window right.',history:'Moved right.',extra:`offset = ${o}`}))}else if(a[i]>t){f=f2;f1=f1-f2;f2=f-f1;q.push(S(a,{pill:'Move Left',stats:{Comparisons:c,FibM:f,FibM1:f1,FibM2:f2,Offset:o},condition:`${a[i]} > ${t}`,explanation:'Reduce Fibonacci window to the left.',history:'Moved left.',extra:`offset remains ${o}`}))}else{q.push(S(a,{found:[i],pill:'Found',stats:{Comparisons:c,FibM:f,FibM1:f1,FibM2:f2,Offset:o},condition:'Target found',explanation:`${t} is found at index ${i}.`,history:'Target found.',extra:'Search completed.'}));return q}}if(f1&&o+1<n){let i=o+1,ok=a[i]===t;c++;q.push(S(a,{active:[i],pill:'Final Check',stats:{Comparisons:c,FibM:f,FibM1:f1,FibM2:f2,Offset:o},condition:`${a[i]} == ${t}`,explanation:`Final check at index ${i}.`,history:'Final check.',extra:'One possible item remains.'}));if(ok){q.push(S(a,{found:[i],pill:'Found',stats:{Comparisons:c,FibM:f,FibM1:f1,FibM2:f2,Offset:o},condition:'Target found',explanation:`${t} is found at index ${i}.`,history:'Target found.',extra:'Search completed.'}));return q}}q.push(S(a,{pill:'Not Found',stats:{Comparisons:c,FibM:f,FibM1:f1,FibM2:f2,Offset:o},condition:'No range remains',explanation:`${t} is not present.`,history:'Target not found.',extra:'Search completed.'}));return q}
+function skip(a,t){let L=[a.map((_,i)=>i),a.map((_,i)=>i).filter(i=>i%2===1),a.map((_,i)=>i).filter(i=>i%4===3)],q=[],cur=-1,c=0,v=[];let info=()=>`L2: ${L[2].map(i=>a[i]).join(' → ')||'—'}<br>L1: ${L[1].map(i=>a[i]).join(' → ')||'—'}<br>L0: ${a.join(' → ')}`;q.push(S(a,{pill:'Start',stats:{Comparisons:0,Level:2,Current:'HEAD',Target:t},explanation:'Start at the highest level.',history:'Skip List Search started.',extra:info()}));for(let level=2;level>=0;level--){q.push(S(a,{visited:[...v],pill:`Level ${level}`,stats:{Comparisons:c,Level:level,Current:cur<0?'HEAD':cur,Target:t},condition:`Search level ${level}`,explanation:`Move right on level ${level} without passing ${t}.`,history:`Entered level ${level}.`,extra:info()}));for(const i of L[level]){if(i<=cur)continue;c++;let eq=a[i]===t,less=a[i]<t;q.push(S(a,{jump:[i],visited:[...v],tags:{[i]:'NEXT'},pill:`Level ${level}`,stats:{Comparisons:c,Level:level,Current:cur<0?'HEAD':cur,Target:t},condition:`next = ${a[i]}`,explanation:`Inspect node ${a[i]} at base index ${i}.`,history:`Inspected ${a[i]}.`,extra:info()}));if(eq){q.push(S(a,{found:[i],pill:'Found',stats:{Comparisons:c,Level:level,Current:i,Target:t},condition:'Target found',explanation:`${t} is found at index ${i}.`,history:'Target found.',extra:info()}));return q}if(less){cur=i;if(!v.includes(i))v.push(i)}else break}}q.push(S(a,{visited:v,pill:'Not Found',stats:{Comparisons:c,Level:0,Current:cur<0?'HEAD':cur,Target:t},condition:'Level 0 ended',explanation:`${t} is not present.`,history:'Target not found.',extra:info()}));return q}
+function build(id,a,t){switch(M[id]){case'linear':return linear(a,t);case'binary':return binary(a,t,false);case'recursive':return binary(a,t,true);case'rotated':return rotated(a,t);case'jump':return jump(a,t);case'interpolation':return interpolation(a,t);case'fibonacci':return fibonacci(a,t);case'skip':return skip(a,t)}}function render(id){let r=R[id],s=r.steps[r.index],w=$(id+'-array');w.innerHTML='';s.array.forEach((v,i)=>{let c=document.createElement('div');c.className='cb-sv-cell';if(s.range.includes(i))c.classList.add('range');if(s.visited.includes(i))c.classList.add('visited');if(s.discarded.includes(i))c.classList.add('discarded');if(s.active.includes(i))c.classList.add('active');if(s.mid.includes(i))c.classList.add('mid');if(s.jump.includes(i))c.classList.add('jump');if(s.found.includes(i))c.classList.add('found');let tag=s.tags[i]||'';c.innerHTML=`<div class="idx">index ${i}</div><div class="val">${v}</div>${tag?`<div class="cb-sv-tag">${tag}</div>`:''}`;w.appendChild(c)});$(id+'-pill').textContent=s.pill;$(id+'-explain').textContent=s.explanation;$(id+'-condition').textContent=s.condition;$(id+'-extra').innerHTML=s.extra;let st=$(id+'-stats');st.innerHTML='';Object.entries(s.stats).forEach(([k,v])=>st.insertAdjacentHTML('beforeend',`<div class="cb-sv-stat"><span>${k}</span><strong>${v}</strong></div>`));let p=Math.round(r.index/(r.steps.length-1)*100);$(id+'-fill').style.width=p+'%';$(id+'-percent').textContent=p+'%';$(id+'-stepText').textContent=`Step ${r.index} / ${r.steps.length-1}`;$(id+'-history').innerHTML=r.steps.slice(Math.max(0,r.index-5),r.index+1).reverse().map((x,n)=>`<div class="cb-sv-history-item">${n===0?'▶ ':''}${x.history}</div>`).join('');let done=r.index===r.steps.length-1;$(id+'-complete').classList.toggle('show',done);$(id+'-prev').disabled=r.index===0;$(id+'-next').disabled=done;$(id+'-auto').disabled=done;$(id+'-next').textContent=done?'✓ Completed':'Next →';if(done)pause(id)}function load(id){pause(id);let p=parse(id);if(!p)return;R[id]={steps:build(id,p[0],p[1]),index:0,timer:null};render(id)}function random(id){let mode=M[id],n=mode==='linear'?7:9,a=Array.from({length:n},()=>Math.floor(Math.random()*90)+10);if(mode!=='linear'&&mode!=='rotated')a.sort((x,y)=>x-y);if(mode==='rotated'){a.sort((x,y)=>x-y);let p=Math.floor(n/2);a=a.slice(p).concat(a.slice(0,p))}let t=a[Math.floor(Math.random()*a.length)];$(id+'-input').value=a.join(',');$(id+'-target').value=t;load(id)}function next(id){let r=R[id];if(r&&r.index<r.steps.length-1){r.index++;render(id)}}function prev(id){pause(id);let r=R[id];if(r&&r.index>0){r.index--;render(id)}}function reset(id){pause(id);let r=R[id];if(r){r.index=0;render(id)}}function auto(id){let r=R[id];if(!r||r.timer||r.index>=r.steps.length-1)return;let tick=()=>{if(r.index>=r.steps.length-1){pause(id);return}r.index++;render(id);r.timer=setTimeout(tick,+$(id+'-speed').value)};r.timer=setTimeout(tick,+$(id+'-speed').value)}function pause(id){let r=R[id];if(r&&r.timer){clearTimeout(r.timer);r.timer=null}}document.addEventListener('DOMContentLoaded',()=>Object.keys(M).forEach(load));return{load,random,next,prev,reset,auto,pause}})();
+</script>
+<script>document.addEventListener('DOMContentLoaded',function(){const links=[...document.querySelectorAll('.searching-side-link')],items=links.map(link=>({link,section:document.querySelector(link.getAttribute('href'))})).filter(x=>x.section);function u(){let mark=window.scrollY+150,a=items[0];items.forEach(x=>{if(x.section.offsetTop<=mark)a=x});links.forEach(x=>x.classList.remove('active'));if(a)a.link.classList.add('active')}u();window.addEventListener('scroll',u,{passive:true})});</script>
 </body>
 </html>
