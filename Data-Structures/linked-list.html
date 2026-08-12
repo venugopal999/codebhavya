@@ -1,1 +1,2229 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Linked List | Data Structures | CodeBhavya</title>
+<link rel="icon" type="image/png" href="../images/codebhavya-icon-32.png"/>
+<link rel="stylesheet" href="../style.css"/>
+
+<style>
+/* ============================================================
+   LINKED LIST PAGE — PAGE-SPECIFIC STYLES ONLY
+   Global header/sidebar/footer/layout continue to come from style.css.
+   ============================================================ */
+
+.sidebar details { margin: 4px 0; }
+.sidebar summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 9px 12px;
+    border-radius: 6px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+.sidebar summary::-webkit-details-marker { display:none; }
+.sidebar summary::before {
+    content:"▸";
+    display:inline-block;
+    width:18px;
+    color:#64748b;
+    transition:transform .2s ease;
+}
+.sidebar details[open] summary::before { transform:rotate(90deg); }
+.sidebar details[open] summary {
+    background:#f8fafc;
+    color:#1d4ed8;
+}
+.sidebar details a {
+    margin-left:16px;
+    font-size:13px;
+    padding:7px 12px;
+}
+.sidebar details[open] a.ll-side-link {
+    position:relative;
+}
+.sidebar details[open] a.ll-side-link.active {
+    background:#eaf3ff;
+    color:#1d4ed8;
+    font-weight:800;
+}
+.sidebar details[open] a.ll-side-link.active::before {
+    content:"";
+    position:absolute;
+    left:3px;
+    top:9px;
+    bottom:9px;
+    width:3px;
+    border-radius:3px;
+    background:#d4af37;
+}
+
+.ll-key-box,
+.ll-example-box {
+    border-radius:10px;
+    padding:18px 20px;
+    margin:18px 0;
+}
+.ll-key-box {
+    background:#f8fafc;
+    border:1px solid #dce7f0;
+    border-left:5px solid #8cc8f0;
+}
+.ll-example-box {
+    background:#fffdf7;
+    border:1px solid #eadca8;
+    border-left:5px solid #d4af37;
+}
+.ll-key-box h3,
+.ll-example-box h3 {
+    margin-top:0;
+    color:#0f172a;
+}
+
+.ll-node-anatomy {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:0;
+    flex-wrap:wrap;
+    margin:25px 0;
+}
+.ll-node {
+    display:grid;
+    grid-template-columns:92px 110px;
+    min-width:202px;
+    border:2px solid #0d1b2a;
+    border-radius:9px;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:0 5px 16px rgba(15,23,42,.06);
+}
+.ll-node-data,
+.ll-node-next {
+    min-height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:3px;
+}
+.ll-node-data {
+    background:#f8f3e4;
+    border-right:2px solid #0d1b2a;
+}
+.ll-node-next { background:#f8fafc; }
+.ll-node small {
+    color:#64748b;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+}
+.ll-node strong {
+    color:#0f172a;
+    font-family:Consolas,"Courier New",monospace;
+}
+.ll-arrow {
+    font-size:28px;
+    padding:0 9px;
+    color:#d4af37;
+    font-weight:900;
+}
+.ll-null {
+    padding:12px 15px;
+    border:2px dashed #94a3b8;
+    border-radius:8px;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:800;
+    color:#64748b;
+    background:#f8fafc;
+}
+.ll-head-label {
+    text-align:center;
+    color:#2563eb;
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+/* ===== Premium Linked List Visualizer ===== */
+.ll-viz {
+    margin:22px 0;
+    background:#ffffff;
+    border:1px solid #dbe3ec;
+    border-radius:14px;
+    box-shadow:0 6px 22px rgba(15,23,42,.06);
+    overflow:hidden;
+}
+.ll-viz-header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:16px 18px;
+    background:#0d1b2a;
+    color:#fff;
+    border-bottom:2px solid #d4af37;
+}
+.ll-viz-brand {
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.ll-viz-brand img {
+    width:28px;
+    height:28px;
+    object-fit:contain;
+}
+.ll-viz-brand strong {
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:18px;
+}
+.ll-viz-brand .gold { color:#d4af37; }
+.ll-viz-subtitle {
+    color:#cbd5e1;
+    font-size:12px;
+}
+.ll-viz-body { padding:16px; }
+.ll-viz-controls {
+    display:grid;
+    grid-template-columns:1fr 150px auto;
+    gap:10px;
+    align-items:end;
+    margin-bottom:14px;
+}
+.ll-field label {
+    display:block;
+    margin-bottom:5px;
+    color:#475569;
+    font-size:12px;
+    font-weight:700;
+}
+.ll-field input,
+.ll-field select {
+    width:100%;
+    padding:9px 10px;
+    border:1px solid #cbd5e1;
+    border-radius:7px;
+    background:#fff;
+    color:#0f172a;
+    box-sizing:border-box;
+}
+.ll-viz-actions {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:12px 0;
+}
+.ll-viz-actions button {
+    border:0;
+    border-radius:7px;
+    padding:9px 13px;
+    cursor:pointer;
+    font-weight:700;
+}
+.ll-viz-actions .primary { background:#2563eb; color:#fff; }
+.ll-viz-actions .primary:hover { background:#1d4ed8; }
+.ll-viz-actions .gold { background:#d4af37; color:#0d1b2a; }
+.ll-viz-actions .gold:hover { background:#f5d76e; }
+.ll-viz-actions .muted { background:#64748b; color:#fff; }
+.ll-viz-actions button:disabled { opacity:.5; cursor:not-allowed; }
+
+.ll-viz-stage {
+    min-height:190px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+    padding:18px 12px;
+    overflow-x:auto;
+}
+.ll-viz-chain {
+    min-width:max-content;
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    padding:34px 12px 18px;
+}
+.ll-viz-node {
+    position:relative;
+    display:grid;
+    grid-template-columns:72px 56px;
+    min-width:128px;
+    border:2px solid #0d1b2a;
+    border-radius:8px;
+    overflow:visible;
+    background:#fff;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.ll-viz-node .data,
+.ll-viz-node .next {
+    min-height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+}
+.ll-viz-node .data {
+    background:#f8f3e4;
+    border-right:2px solid #0d1b2a;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:18px;
+    font-weight:800;
+}
+.ll-viz-node .next {
+    background:#f8fafc;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:11px;
+    color:#475569;
+}
+.ll-viz-node.current {
+    border-color:#2563eb;
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+    transform:translateY(-4px);
+}
+.ll-viz-node.new {
+    border-color:#d4af37;
+    box-shadow:0 0 0 4px rgba(212,175,55,.15);
+}
+.ll-viz-node.visited .data {
+    background:#dcfce7;
+}
+.ll-viz-node .badge {
+    position:absolute;
+    top:-28px;
+    left:50%;
+    transform:translateX(-50%);
+    white-space:nowrap;
+    padding:3px 7px;
+    border-radius:999px;
+    background:#2563eb;
+    color:#fff;
+    font-size:10px;
+    font-weight:800;
+}
+.ll-viz-arrow {
+    min-width:52px;
+    text-align:center;
+    color:#d4af37;
+    font-size:26px;
+    font-weight:900;
+}
+.ll-viz-null {
+    min-width:68px;
+    text-align:center;
+    padding:10px 12px;
+    border:2px dashed #94a3b8;
+    border-radius:7px;
+    color:#64748b;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:800;
+}
+.ll-viz-info {
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
+    gap:10px;
+    margin-top:12px;
+}
+.ll-viz-message,
+.ll-viz-stats {
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    background:#fff;
+    padding:10px 12px;
+}
+.ll-viz-message {
+    border-left:4px solid #d4af37;
+    color:#334155;
+    min-height:46px;
+}
+.ll-viz-stats {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+}
+.ll-viz-stat {
+    text-align:center;
+    padding:7px;
+    background:#f8fafc;
+    border-radius:6px;
+}
+.ll-viz-stat strong {
+    display:block;
+    color:#64748b;
+    font-size:10px;
+    text-transform:uppercase;
+}
+.ll-viz-stat span {
+    display:block;
+    color:#0f172a;
+    font-weight:800;
+    margin-top:2px;
+}
+.ll-progress {
+    height:7px;
+    background:#e2e8f0;
+    border-radius:999px;
+    overflow:hidden;
+    margin-top:12px;
+}
+.ll-progress > div {
+    height:100%;
+    width:0;
+    background:#d4af37;
+    transition:width .2s ease;
+}
+
+/* ===== Visible programs ===== */
+.ll-program-title {
+    margin:20px 0 8px;
+    color:#0f172a;
+    font-size:18px;
+    font-weight:800;
+}
+.ll-io {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin:15px 0;
+}
+.ll-io-box {
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    padding:13px;
+}
+.ll-io-box h4 { margin:0 0 7px; color:#0f172a; }
+
+/* ===== Program Tracer ===== */
+.ll-tracer-wrap { margin-top:14px; }
+.ll-tracer-toggle {
+    background:#2563eb;
+    color:#fff;
+    border:0;
+    border-radius:7px;
+    padding:9px 15px;
+    font-weight:700;
+    cursor:pointer;
+}
+.ll-tracer {
+    margin-top:8px;
+    padding:12px;
+    border:1px solid #dbe3ec;
+    border-radius:12px;
+    background:#f8fafc;
+    overflow-x:auto;
+}
+.ll-tracer-title {
+    text-align:center;
+    font-weight:800;
+    letter-spacing:1px;
+    color:#0f172a;
+    margin-bottom:9px;
+}
+.ll-tracer-grid {
+    display:grid;
+    grid-template-columns:minmax(390px,1.08fr) minmax(330px,.92fr);
+    gap:10px;
+    min-width:740px;
+}
+.ll-tracer-panel {
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    padding:9px;
+}
+.ll-tracer-panel h4 { margin:0 0 7px; color:#0f172a; font-size:14px; }
+.ll-tracer-code {
+    margin:0;
+    height:330px;
+    max-height:330px;
+    overflow:auto;
+    background:#0f172a;
+    color:#e2e8f0;
+    border-radius:7px;
+    padding:10px;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:12.5px;
+    line-height:1.5;
+    white-space:pre;
+}
+.ll-code-line {
+    display:block;
+    padding:1px 5px;
+    border-radius:4px;
+    white-space:pre;
+    scroll-margin-block:120px;
+}
+.ll-code-line.active {
+    background:#334155;
+    color:#fff;
+    font-weight:700;
+    box-shadow:inset 4px 0 #d4af37;
+}
+.ll-tracer-explain {
+    min-height:52px;
+    padding:9px;
+    margin-bottom:8px;
+    border-left:4px solid #8cc8f0;
+    border-radius:6px;
+    background:#f8fafc;
+    color:#334155;
+    line-height:1.5;
+}
+.ll-vars {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:6px;
+}
+.ll-var {
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:6px;
+    padding:7px;
+}
+.ll-var strong {
+    display:block;
+    color:#64748b;
+    font-size:10px;
+    margin-bottom:2px;
+}
+.ll-var span {
+    color:#0f172a;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:800;
+    font-size:12px;
+}
+.ll-trace-memory {
+    margin-top:9px;
+    padding:9px;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    background:#fff;
+    overflow-x:auto;
+}
+.ll-trace-chain {
+    min-width:max-content;
+    display:flex;
+    align-items:center;
+    padding:23px 3px 5px;
+}
+.ll-trace-node {
+    position:relative;
+    display:grid;
+    grid-template-columns:60px 48px;
+    border:2px solid #0d1b2a;
+    border-radius:7px;
+    overflow:visible;
+}
+.ll-trace-node > div {
+    min-height:45px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:12px;
+    font-weight:700;
+}
+.ll-trace-node .d { background:#f8f3e4; border-right:2px solid #0d1b2a; }
+.ll-trace-node .n { background:#f8fafc; }
+.ll-trace-node.current { border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.12); }
+.ll-trace-node.new { border-color:#d4af37; box-shadow:0 0 0 3px rgba(212,175,55,.15); }
+.ll-trace-node .label {
+    position:absolute;
+    top:-21px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#2563eb;
+    color:#fff;
+    padding:2px 6px;
+    border-radius:999px;
+    font-size:9px;
+    white-space:nowrap;
+}
+.ll-trace-arrow { padding:0 7px; color:#d4af37; font-size:20px; font-weight:900; }
+.ll-trace-null {
+    padding:8px 10px;
+    border:1px dashed #94a3b8;
+    border-radius:6px;
+    color:#64748b;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:11px;
+}
+.ll-operation {
+    margin-top:8px;
+    padding:8px 10px;
+    min-height:19px;
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-left:4px solid #d4af37;
+    border-radius:7px;
+    color:#334155;
+}
+.ll-tracer-controls {
+    display:flex;
+    justify-content:center;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-top:8px;
+}
+.ll-tracer-controls button {
+    border:0;
+    border-radius:7px;
+    padding:8px 12px;
+    background:#2563eb;
+    color:#fff;
+    cursor:pointer;
+    font-weight:700;
+}
+.ll-tracer-controls button:disabled { background:#94a3b8; cursor:not-allowed; }
+.ll-tracer-status {
+    text-align:center;
+    color:#64748b;
+    font-size:12px;
+    margin-top:6px;
+}
+.ll-complexity {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin:14px 0;
+}
+.ll-complexity > div {
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    padding:12px;
+}
+.ll-complexity strong { display:block; color:#0f172a; margin-bottom:4px; }
+
+@media(max-width:760px) {
+    .ll-viz-controls { grid-template-columns:1fr; }
+    .ll-viz-info { grid-template-columns:1fr; }
+    .ll-viz-stats { grid-template-columns:repeat(3,1fr); }
+    .ll-io,
+    .ll-complexity { grid-template-columns:1fr; }
+    .ll-tracer-grid { grid-template-columns:390px 350px; min-width:748px; }
+    .ll-tracer-controls { justify-content:flex-start; min-width:748px; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="top-header">
+<a class="logo" href="../index.html">
+<span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a>
+<nav class="top-nav">
+<a href="../index.html">Home</a>
+<a href="../Mathematics/">Maths</a>
+<a href="../C-Programming/">C</a>
+<a class="active" href="index.html">DSA</a>
+<a href="../Python/">Python</a>
+<a href="../AI-ML/">AI &amp; ML</a>
+<a href="../Placement/">Placement</a>
+</nav>
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar">
+<div class="sidebar-title">Data Structures</div>
+
+<input
+    type="text"
+    id="topicSearch"
+    class="search-box"
+    placeholder="🔍 Search topics..."
+    onkeyup="searchTopics()"
+/>
+
+<details class="sidebar-topic">
+<summary>🔍 Searching</summary>
+<a href="searching.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🔄 Sorting</summary>
+<a href="sorting.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic" open>
+<summary>🔗 Linked List</summary>
+<a class="ll-side-link" href="#introduction">Linked List Overview</a>
+<a class="ll-side-link" href="#node-structure">Node Structure</a>
+<a class="ll-side-link" href="#singly-linked-list">Singly Linked List</a>
+<a class="ll-side-link" href="#create-traverse">Create &amp; Traverse</a>
+<a class="ll-side-link" href="#insert-beginning">Insert at Beginning</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>📚 Stack</summary>
+<a href="stack.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🚶 Queue</summary>
+<a href="queue.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🌳 Trees</summary>
+<a href="trees.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🕸️ Graphs</summary>
+<a href="graphs.html">Open Topic</a>
+</details>
+</aside>
+
+<main class="main-content">
+
+<section class="subject-hero">
+<span class="subject-label">CODEBHAVYA • DATA STRUCTURES</span>
+<h1 class="page-title">🔗 Linked List</h1>
+<p class="page-description">
+Learn how nodes are connected using pointers, visualize pointer changes step by step,
+and understand how linked-list operations are implemented in C.
+</p>
+</section>
+
+<section class="content-card" id="introduction">
+<span class="section-label">LINKED LIST</span>
+<h2>📖 Introduction to Linked List</h2>
+
+<p>
+A <strong>linked list</strong> is a linear data structure made of separate memory blocks called
+<strong>nodes</strong>. Unlike an array, the nodes do not need to be stored in consecutive memory locations.
+</p>
+
+<p>
+Each node stores the actual data and a pointer that tells us where the next node is located.
+The first node is reached using a pointer called <strong>head</strong>.
+</p>
+
+<div class="ll-key-box">
+<h3>💡 Key Idea</h3>
+<p>
+In an array, elements are connected by <strong>index positions</strong>. In a linked list,
+nodes are connected by <strong>addresses stored in pointers</strong>.
+</p>
+</div>
+
+<div class="ll-example-box">
+<h3>🧠 Simple Example</h3>
+<p>
+If the list stores <code>10, 20, 30</code>, the logical connection is:
+<strong>head → 10 → 20 → 30 → NULL</strong>.
+The final <code>NULL</code> tells us that the list has ended.
+</p>
+</div>
+
+<h3>Why do we use Linked Lists?</h3>
+<ul>
+<li>Nodes can be created dynamically when needed.</li>
+<li>Insertion and deletion do not require shifting all later elements.</li>
+<li>The structure can grow or shrink during program execution.</li>
+<li>Linked lists are used to build stacks, queues, graph adjacency lists and many other structures.</li>
+</ul>
+
+<div class="tip-box">
+<strong>Important:</strong> A linked list gives flexible memory usage, but direct random access such as
+<code>a[5]</code> is not available. To reach a node, we usually move from the head one link at a time.
+</div>
+</section>
+
+
+<section class="content-section" id="node-structure">
+<div class="section-heading">
+<span class="section-label">01 • FOUNDATION</span>
+<h2>🧩 Node Structure in C</h2>
+<p>Every singly linked-list node contains data and a pointer to the next node.</p>
+</div>
+
+<div class="content-card">
+
+<div class="ll-head-label">A single node</div>
+
+<div class="ll-node-anatomy">
+<div class="ll-node">
+<div class="ll-node-data">
+<small>data</small>
+<strong>10</strong>
+</div>
+<div class="ll-node-next">
+<small>next</small>
+<strong>address</strong>
+</div>
+</div>
+<div class="ll-arrow">→</div>
+<div class="ll-null">next node</div>
+</div>
+
+<h3>C Structure</h3>
+
+<pre><code>struct Node
+{
+    int data;
+    struct Node *next;
+};</code></pre>
+
+<h3>Understanding each line</h3>
+
+<ul>
+<li><code>struct Node</code> defines the format of one node.</li>
+<li><code>int data;</code> stores the actual value.</li>
+<li><code>struct Node *next;</code> stores the address of another node of the same type.</li>
+</ul>
+
+<div class="warning-box">
+<strong>Remember:</strong> <code>next</code> does not store the next value. It stores the
+<strong>address of the next node</strong>.
+</div>
+
+</div>
+</section>
+
+
+<section class="content-section" id="singly-linked-list">
+<div class="section-heading">
+<span class="section-label">02 • LINKED LIST TYPE</span>
+<h2>➡️ Singly Linked List</h2>
+<p>Each node has one link: a pointer to the next node.</p>
+</div>
+
+<div class="content-card">
+
+<div class="ll-node-anatomy">
+<div class="ll-node">
+<div class="ll-node-data"><small>data</small><strong>10</strong></div>
+<div class="ll-node-next"><small>next</small><strong>•</strong></div>
+</div>
+<div class="ll-arrow">→</div>
+
+<div class="ll-node">
+<div class="ll-node-data"><small>data</small><strong>20</strong></div>
+<div class="ll-node-next"><small>next</small><strong>•</strong></div>
+</div>
+<div class="ll-arrow">→</div>
+
+<div class="ll-node">
+<div class="ll-node-data"><small>data</small><strong>30</strong></div>
+<div class="ll-node-next"><small>next</small><strong>NULL</strong></div>
+</div>
+</div>
+
+<div class="ll-key-box">
+<h3>💡 Direction of movement</h3>
+<p>
+A singly linked list can naturally be traversed only in the forward direction:
+<strong>head → first node → second node → ... → NULL</strong>.
+</p>
+</div>
+
+</div>
+</section>
+
+
+<section class="content-section" id="create-traverse">
+<div class="section-heading">
+<span class="section-label">03 • BASIC OPERATION</span>
+<h2>🚶 Create and Traverse a Singly Linked List</h2>
+<p>Create nodes dynamically, connect them, and visit every node from head to NULL.</p>
+</div>
+
+<div class="content-card">
+
+<div class="ll-key-box">
+<h3>💡 Traversal Idea</h3>
+<p>
+Use a temporary pointer, usually called <code>temp</code>. Start it at <code>head</code>.
+Read the current node, then move using <code>temp = temp-&gt;next</code>.
+Stop when <code>temp == NULL</code>.
+</p>
+</div>
+
+<h3>Algorithm</h3>
+<pre><code>1. Set temp = head
+2. While temp != NULL
+      a. Process temp->data
+      b. Move temp = temp->next
+3. Stop when temp becomes NULL</code></pre>
+
+<div class="ll-viz" id="traverseViz">
+<div class="ll-viz-header">
+<div class="ll-viz-brand">
+<img src="../images/codebhavya-icon-32.png" alt="CodeBhavya"/>
+<strong><span>Code</span><span class="gold">Bhavya</span></strong>
+</div>
+<div>
+<div><strong>Singly Linked List Visualizer</strong></div>
+<div class="ll-viz-subtitle">Create &amp; Traverse</div>
+</div>
+</div>
+
+<div class="ll-viz-body">
+
+<div class="ll-viz-controls">
+<div class="ll-field">
+<label>Node values (comma separated)</label>
+<input id="traverseInput" value="10,20,30,40"/>
+</div>
+
+<div class="ll-field">
+<label>Speed</label>
+<select id="traverseSpeed">
+<option value="1200">Slow</option>
+<option value="800" selected>Normal</option>
+<option value="450">Fast</option>
+</select>
+</div>
+
+<div class="ll-field">
+<label>&nbsp;</label>
+<button class="primary-button" type="button" onclick="LLViz.load('traverse')">Load List</button>
+</div>
+</div>
+
+<div class="ll-viz-stage">
+<div class="ll-viz-chain" id="traverseChain"></div>
+</div>
+
+<div class="ll-viz-actions">
+<button class="primary" onclick="LLViz.prev('traverse')">← Previous</button>
+<button class="primary" id="traverseNext" onclick="LLViz.next('traverse')">Next →</button>
+<button class="gold" id="traverseAuto" onclick="LLViz.auto('traverse')">▶ Auto Run</button>
+<button class="muted" onclick="LLViz.pause('traverse')">Ⅱ Pause</button>
+<button class="muted" onclick="LLViz.reset('traverse')">↺ Reset</button>
+</div>
+
+<div class="ll-viz-info">
+<div class="ll-viz-message" id="traverseMessage">Load the list, then press Next to begin traversal.</div>
+
+<div class="ll-viz-stats">
+<div class="ll-viz-stat"><strong>Current</strong><span id="traverseCurrent">—</span></div>
+<div class="ll-viz-stat"><strong>Visited</strong><span id="traverseVisited">0</span></div>
+<div class="ll-viz-stat"><strong>Nodes</strong><span id="traverseCount">0</span></div>
+</div>
+</div>
+
+<div class="ll-progress"><div id="traverseProgress"></div></div>
+
+</div>
+</div>
+
+<h3 class="ll-program-title">💻 C Program — Create and Traverse</h3>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+int main()
+{
+    int n, value;
+    struct Node *head = NULL;
+    struct Node *tail = NULL;
+    struct Node *newNode;
+    struct Node *temp;
+
+    scanf("%d", &amp;n);
+
+    for(int i = 0; i &lt; n; i++)
+    {
+        scanf("%d", &amp;value);
+
+        newNode = (struct Node *)malloc(sizeof(struct Node));
+        newNode-&gt;data = value;
+        newNode-&gt;next = NULL;
+
+        if(head == NULL)
+        {
+            head = newNode;
+            tail = newNode;
+        }
+        else
+        {
+            tail-&gt;next = newNode;
+            tail = newNode;
+        }
+    }
+
+    temp = head;
+
+    while(temp != NULL)
+    {
+        printf("%d ", temp-&gt;data);
+        temp = temp-&gt;next;
+    }
+
+    return 0;
+}</code></pre>
+
+<div class="ll-io">
+<div class="ll-io-box">
+<h4>Sample Input</h4>
+<pre><code>4
+10 20 30 40</code></pre>
+</div>
+<div class="ll-io-box">
+<h4>Sample Output</h4>
+<pre><code>10 20 30 40</code></pre>
+</div>
+</div>
+
+<div class="ll-tracer-wrap">
+<button class="ll-tracer-toggle" type="button" onclick="LLTrace.toggle('traverseTrace')">
+▶ Program Tracing
+</button>
+
+<div class="ll-tracer" id="traverseTrace" hidden>
+<div class="ll-tracer-title">PROGRAM TRACING — CREATE &amp; TRAVERSE</div>
+
+<div class="ll-tracer-grid">
+
+<div class="ll-tracer-panel">
+<h4>💻 Program</h4>
+<pre class="ll-tracer-code" id="traverseTraceCode"></pre>
+</div>
+
+<div class="ll-tracer-panel">
+<h4>🧠 What is happening?</h4>
+<div class="ll-tracer-explain" id="traverseTraceExplain"></div>
+
+<h4>📊 Live Variables</h4>
+<div class="ll-vars" id="traverseTraceVars"></div>
+</div>
+
+</div>
+
+<div class="ll-trace-memory">
+<h4 style="margin:0 0 5px;">🔗 Live Linked List</h4>
+<div class="ll-trace-chain" id="traverseTraceChain"></div>
+</div>
+
+<div class="ll-operation" id="traverseTraceOperation"></div>
+
+<div class="ll-tracer-controls">
+<button onclick="LLTrace.prev('traverseTrace')">← Previous</button>
+<button onclick="LLTrace.reset('traverseTrace')">↺ Reset</button>
+<button id="traverseTraceNext" onclick="LLTrace.next('traverseTrace')">Next →</button>
+<button id="traverseTraceAuto" onclick="LLTrace.auto('traverseTrace')">▶ Auto Run</button>
+</div>
+
+<div class="ll-tracer-status" id="traverseTraceStatus">Ready to execute.</div>
+</div>
+</div>
+
+<h3>⚡ Complexity</h3>
+
+<div class="ll-complexity">
+<div><strong>Traversal: O(n)</strong>Every node is visited once.</div>
+<div><strong>Extra Space: O(1)</strong>Only a temporary pointer is used during traversal.</div>
+<div><strong>Direct Access: O(n)</strong>Reaching the kth node may require moving through earlier nodes.</div>
+</div>
+
+<div class="tip-box">
+<strong>Interview note:</strong> Traversal is the foundation for most linked-list operations.
+Searching, counting, printing and reaching a position all depend on moving pointer-by-pointer.
+</div>
+
+</div>
+</section>
+
+
+<section class="content-section" id="insert-beginning">
+<div class="section-heading">
+<span class="section-label">04 • INSERTION</span>
+<h2>➕ Insert a Node at the Beginning</h2>
+<p>Create a new node, point it to the current head, then make it the new head.</p>
+</div>
+
+<div class="content-card">
+
+<div class="ll-example-box">
+<h3>🧠 Example</h3>
+<p>
+Before insertion: <strong>head → 10 → 20 → 30 → NULL</strong><br/>
+Insert <code>5</code> at the beginning.<br/>
+After insertion: <strong>head → 5 → 10 → 20 → 30 → NULL</strong>
+</p>
+</div>
+
+<h3>Algorithm</h3>
+<pre><code>1. Create newNode
+2. Store the new value in newNode->data
+3. Set newNode->next = head
+4. Set head = newNode</code></pre>
+
+<div class="ll-viz" id="insertViz">
+<div class="ll-viz-header">
+<div class="ll-viz-brand">
+<img src="../images/codebhavya-icon-32.png" alt="CodeBhavya"/>
+<strong><span>Code</span><span class="gold">Bhavya</span></strong>
+</div>
+<div>
+<div><strong>Singly Linked List Visualizer</strong></div>
+<div class="ll-viz-subtitle">Insert at Beginning</div>
+</div>
+</div>
+
+<div class="ll-viz-body">
+
+<div class="ll-viz-controls">
+<div class="ll-field">
+<label>Existing list</label>
+<input id="insertInput" value="10,20,30"/>
+</div>
+
+<div class="ll-field">
+<label>New value</label>
+<input id="insertValue" value="5"/>
+</div>
+
+<div class="ll-field">
+<label>&nbsp;</label>
+<button class="primary-button" type="button" onclick="LLViz.load('insert')">Load</button>
+</div>
+</div>
+
+<div class="ll-viz-stage">
+<div class="ll-viz-chain" id="insertChain"></div>
+</div>
+
+<div class="ll-viz-actions">
+<button class="primary" onclick="LLViz.prev('insert')">← Previous</button>
+<button class="primary" id="insertNext" onclick="LLViz.next('insert')">Next →</button>
+<button class="gold" id="insertAuto" onclick="LLViz.auto('insert')">▶ Auto Run</button>
+<button class="muted" onclick="LLViz.pause('insert')">Ⅱ Pause</button>
+<button class="muted" onclick="LLViz.reset('insert')">↺ Reset</button>
+</div>
+
+<div class="ll-viz-info">
+<div class="ll-viz-message" id="insertMessage">Load the list, then press Next to see each pointer update.</div>
+
+<div class="ll-viz-stats">
+<div class="ll-viz-stat"><strong>Head</strong><span id="insertCurrent">10</span></div>
+<div class="ll-viz-stat"><strong>Step</strong><span id="insertVisited">0</span></div>
+<div class="ll-viz-stat"><strong>Nodes</strong><span id="insertCount">3</span></div>
+</div>
+</div>
+
+<div class="ll-progress"><div id="insertProgress"></div></div>
+
+</div>
+</div>
+
+<h3 class="ll-program-title">💻 C Program — Insert at Beginning</h3>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+struct Node *insertBeginning(struct Node *head, int value)
+{
+    struct Node *newNode;
+
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+
+    newNode-&gt;data = value;
+    newNode-&gt;next = head;
+
+    head = newNode;
+
+    return head;
+}
+
+int main()
+{
+    struct Node *first;
+    struct Node *second;
+    struct Node *third;
+    struct Node *head;
+
+    first = (struct Node *)malloc(sizeof(struct Node));
+    second = (struct Node *)malloc(sizeof(struct Node));
+    third = (struct Node *)malloc(sizeof(struct Node));
+
+    first-&gt;data = 10;
+    second-&gt;data = 20;
+    third-&gt;data = 30;
+
+    first-&gt;next = second;
+    second-&gt;next = third;
+    third-&gt;next = NULL;
+
+    head = first;
+
+    head = insertBeginning(head, 5);
+
+    while(head != NULL)
+    {
+        printf("%d ", head-&gt;data);
+        head = head-&gt;next;
+    }
+
+    return 0;
+}</code></pre>
+
+<div class="ll-io">
+<div class="ll-io-box">
+<h4>Initial List</h4>
+<pre><code>10 20 30</code></pre>
+</div>
+<div class="ll-io-box">
+<h4>Output After Inserting 5</h4>
+<pre><code>5 10 20 30</code></pre>
+</div>
+</div>
+
+<div class="ll-tracer-wrap">
+<button class="ll-tracer-toggle" type="button" onclick="LLTrace.toggle('insertTrace')">
+▶ Program Tracing
+</button>
+
+<div class="ll-tracer" id="insertTrace" hidden>
+<div class="ll-tracer-title">PROGRAM TRACING — INSERT AT BEGINNING</div>
+
+<div class="ll-tracer-grid">
+<div class="ll-tracer-panel">
+<h4>💻 Program</h4>
+<pre class="ll-tracer-code" id="insertTraceCode"></pre>
+</div>
+
+<div class="ll-tracer-panel">
+<h4>🧠 What is happening?</h4>
+<div class="ll-tracer-explain" id="insertTraceExplain"></div>
+
+<h4>📊 Live Variables</h4>
+<div class="ll-vars" id="insertTraceVars"></div>
+</div>
+</div>
+
+<div class="ll-trace-memory">
+<h4 style="margin:0 0 5px;">🔗 Live Linked List</h4>
+<div class="ll-trace-chain" id="insertTraceChain"></div>
+</div>
+
+<div class="ll-operation" id="insertTraceOperation"></div>
+
+<div class="ll-tracer-controls">
+<button onclick="LLTrace.prev('insertTrace')">← Previous</button>
+<button onclick="LLTrace.reset('insertTrace')">↺ Reset</button>
+<button id="insertTraceNext" onclick="LLTrace.next('insertTrace')">Next →</button>
+<button id="insertTraceAuto" onclick="LLTrace.auto('insertTrace')">▶ Auto Run</button>
+</div>
+
+<div class="ll-tracer-status" id="insertTraceStatus">Ready to execute.</div>
+</div>
+</div>
+
+<h3>⚡ Complexity</h3>
+<div class="ll-complexity">
+<div><strong>Time: O(1)</strong>No traversal is required.</div>
+<div><strong>Extra Space: O(1)</strong>One new node is allocated.</div>
+<div><strong>Pointer Changes: 2</strong>Update <code>newNode-&gt;next</code> and <code>head</code>.</div>
+</div>
+
+<div class="tip-box">
+<strong>Interview note:</strong> Inserting at the beginning of a singly linked list is a constant-time operation
+because we already have direct access to the head pointer.
+</div>
+
+</div>
+</section>
+
+</main>
+</div>
+
+<footer class="footer">
+<div class="footer-container">
+
+<div class="footer-brand-section">
+<div class="footer-brand">
+<span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+</div>
+<p class="footer-tagline">From Learning to Limitless Possibilities.</p>
+<p class="footer-description">
+Learn, practice, build and grow with structured learning resources.
+</p>
+</div>
+
+<div class="footer-column">
+<h3>Quick Links</h3>
+<a href="../index.html">Home</a>
+<a href="../Mathematics/">Maths</a>
+<a href="../C-Programming/">C Programming</a>
+</div>
+
+<div class="footer-column">
+<h3>Learning</h3>
+<a href="index.html">Data Structures &amp; DSA</a>
+<a href="../Python/">Python</a>
+<a href="../AI-ML/">AI &amp; Machine Learning</a>
+</div>
+
+<div class="footer-column">
+<h3>Practice</h3>
+<a href="#create-traverse">Linked List Learning</a>
+<a href="#insert-beginning">Pointer Practice</a>
+</div>
+
+</div>
+
+<div class="footer-bottom">
+<p>© 2026 CodeBhavya. All Rights Reserved.</p>
+<p>From Learning to Limitless Possibilities.</p>
+</div>
+</footer>
+
+
+<script>
+/* ============================================================
+   PREMIUM LINKED LIST VISUALIZER
+   ============================================================ */
+window.LLViz = (() => {
+    const registry = {};
+
+    function byId(id) {
+        return document.getElementById(id);
+    }
+
+    function parseList(text) {
+        return String(text || "")
+            .split(",")
+            .map(v => v.trim())
+            .filter(Boolean)
+            .map(Number)
+            .filter(Number.isFinite)
+            .slice(0, 10);
+    }
+
+    function makeTraverseSteps(values) {
+        const steps = [
+            {
+                index: -1,
+                visited: 0,
+                message: "head points to the first node. temp is set to head.",
+                op: "temp = head"
+            }
+        ];
+
+        values.forEach((value, index) => {
+            steps.push({
+                index,
+                visited: index,
+                message: `temp points to node ${index}. Read temp->data = ${value}.`,
+                op: `visit ${value}`
+            });
+
+            steps.push({
+                index: index + 1 < values.length ? index + 1 : -1,
+                visited: index + 1,
+                message: index + 1 < values.length
+                    ? `Move temp to the next node.`
+                    : `temp becomes NULL. Traversal is complete.`,
+                op: "temp = temp->next"
+            });
+        });
+
+        return steps;
+    }
+
+    function makeInsertSteps(values, newValue) {
+        const result = [newValue, ...values];
+
+        return [
+            {
+                mode: "original",
+                values,
+                head: values.length ? 0 : -1,
+                message: values.length
+                    ? `Current head points to ${values[0]}.`
+                    : "The current list is empty and head is NULL.",
+                op: "Observe current head"
+            },
+            {
+                mode: "new-only",
+                values,
+                newValue,
+                head: values.length ? 0 : -1,
+                message: `A new node is created and ${newValue} is stored in newNode->data.`,
+                op: `newNode->data = ${newValue}`
+            },
+            {
+                mode: "link",
+                values,
+                newValue,
+                head: values.length ? 0 : -1,
+                message: values.length
+                    ? `newNode->next is set to the current head node ${values[0]}.`
+                    : "newNode->next is set to NULL because the old head is NULL.",
+                op: "newNode->next = head"
+            },
+            {
+                mode: "finished",
+                values: result,
+                head: 0,
+                message: `head is updated. ${newValue} is now the first node.`,
+                op: "head = newNode"
+            }
+        ];
+    }
+
+    function renderChain(id, state, index) {
+        const chain = byId(id + "Chain");
+        if (!chain) return;
+
+        let values = state.values || [];
+        let html = "";
+
+        if (id === "insert" && state.mode === "new-only") {
+            html += `
+                <div class="ll-viz-node new">
+                    <span class="badge">newNode</span>
+                    <div class="data">${state.newValue}</div>
+                    <div class="next">?</div>
+                </div>
+                <div class="ll-viz-arrow" style="min-width:35px;">&nbsp;</div>
+            `;
+        }
+
+        if (id === "insert" && state.mode === "link") {
+            html += `
+                <div class="ll-viz-node new">
+                    <span class="badge">newNode</span>
+                    <div class="data">${state.newValue}</div>
+                    <div class="next">head</div>
+                </div>
+                <div class="ll-viz-arrow">→</div>
+            `;
+        }
+
+        values.forEach((value, i) => {
+            const classes = ["ll-viz-node"];
+
+            if (id === "traverse") {
+                if (i < (state.visited || 0)) classes.push("visited");
+                if (i === state.index) classes.push("current");
+            }
+
+            if (id === "insert" && state.mode === "finished" && i === 0) {
+                classes.push("new");
+            }
+
+            let badge = "";
+
+            if (id === "traverse" && i === state.index) {
+                badge = `<span class="badge">temp</span>`;
+            }
+
+            if (id === "insert") {
+                if (state.mode === "original" && i === 0) {
+                    badge = `<span class="badge">head</span>`;
+                } else if (state.mode === "link" && i === 0) {
+                    badge = `<span class="badge">head</span>`;
+                } else if (state.mode === "finished" && i === 0) {
+                    badge = `<span class="badge">head / newNode</span>`;
+                }
+            }
+
+            html += `
+                <div class="${classes.join(" ")}">
+                    ${badge}
+                    <div class="data">${value}</div>
+                    <div class="next">${i === values.length - 1 ? "NULL" : "next"}</div>
+                </div>
+            `;
+
+            if (i < values.length - 1) {
+                html += `<div class="ll-viz-arrow">→</div>`;
+            }
+        });
+
+        if (values.length) {
+            html += `<div class="ll-viz-arrow">→</div><div class="ll-viz-null">NULL</div>`;
+        } else if (!(id === "insert" && (state.mode === "new-only" || state.mode === "link"))) {
+            html += `<div class="ll-viz-null">head = NULL</div>`;
+        }
+
+        chain.innerHTML = html;
+    }
+
+    function render(id) {
+        const r = registry[id];
+        if (!r) return;
+
+        const step = r.steps[r.index] || r.steps[0];
+        const total = r.steps.length;
+        const progress = total <= 1 ? 100 : Math.round((r.index / (total - 1)) * 100);
+
+        if (id === "traverse") {
+            renderChain(id, {
+                values: r.values,
+                index: step.index,
+                visited: step.visited
+            });
+
+            byId("traverseCurrent").textContent =
+                step.index >= 0 && step.index < r.values.length
+                    ? r.values[step.index]
+                    : "NULL";
+
+            byId("traverseVisited").textContent = step.visited;
+            byId("traverseCount").textContent = r.values.length;
+        } else {
+            renderChain(id, step);
+
+            const displayValues = step.mode === "finished"
+                ? step.values
+                : r.values;
+
+            byId("insertCurrent").textContent =
+                step.mode === "finished"
+                    ? r.newValue
+                    : (r.values.length ? r.values[0] : "NULL");
+
+            byId("insertVisited").textContent = `${r.index + 1}/${r.steps.length}`;
+            byId("insertCount").textContent =
+                step.mode === "finished"
+                    ? displayValues.length
+                    : r.values.length;
+        }
+
+        byId(id + "Message").innerHTML =
+            `<strong>${step.op || ""}</strong><br>${step.message || ""}`;
+
+        byId(id + "Progress").style.width = progress + "%";
+
+        const next = byId(id + "Next");
+        const auto = byId(id + "Auto");
+
+        if (next) {
+            next.disabled = r.index >= r.steps.length - 1;
+            next.textContent = r.index >= r.steps.length - 1 ? "✓ Completed" : "Next →";
+        }
+
+        if (auto) {
+            auto.disabled = r.index >= r.steps.length - 1;
+        }
+    }
+
+    function load(id) {
+        pause(id);
+
+        if (id === "traverse") {
+            const values = parseList(byId("traverseInput").value);
+
+            if (!values.length) {
+                byId("traverseMessage").textContent = "Enter at least one valid number.";
+                return;
+            }
+
+            registry[id] = {
+                values,
+                steps: makeTraverseSteps(values),
+                index: 0,
+                timer: null
+            };
+        } else {
+            const values = parseList(byId("insertInput").value);
+            const newValue = Number(byId("insertValue").value);
+
+            if (!Number.isFinite(newValue)) {
+                byId("insertMessage").textContent = "Enter a valid new value.";
+                return;
+            }
+
+            registry[id] = {
+                values,
+                newValue,
+                steps: makeInsertSteps(values, newValue),
+                index: 0,
+                timer: null
+            };
+        }
+
+        render(id);
+    }
+
+    function next(id) {
+        const r = registry[id];
+        if (!r || r.index >= r.steps.length - 1) return;
+        r.index++;
+        render(id);
+    }
+
+    function prev(id) {
+        const r = registry[id];
+        if (!r || r.index <= 0) return;
+        pause(id);
+        r.index--;
+        render(id);
+    }
+
+    function reset(id) {
+        const r = registry[id];
+        if (!r) return load(id);
+        pause(id);
+        r.index = 0;
+        render(id);
+    }
+
+    function auto(id) {
+        const r = registry[id];
+        if (!r || r.timer || r.index >= r.steps.length - 1) return;
+
+        const speedEl = byId(id + "Speed");
+        const delay = speedEl ? Number(speedEl.value) : 800;
+
+        const tick = () => {
+            if (r.index >= r.steps.length - 1) {
+                pause(id);
+                return;
+            }
+
+            r.index++;
+            render(id);
+
+            if (r.index < r.steps.length - 1) {
+                r.timer = setTimeout(tick, delay);
+            } else {
+                r.timer = null;
+            }
+        };
+
+        r.timer = setTimeout(tick, delay);
+    }
+
+    function pause(id) {
+        const r = registry[id];
+        if (r && r.timer) {
+            clearTimeout(r.timer);
+            r.timer = null;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        load("traverse");
+        load("insert");
+    });
+
+    return { load, next, prev, reset, auto, pause };
+})();
+</script>
+
+
+<script>
+/* ============================================================
+   LINKED LIST PROGRAM TRACER
+   ============================================================ */
+window.LLTrace = (() => {
+    const registry = {};
+
+    function escapeHtml(value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+    }
+
+    function deepClone(value) {
+        return JSON.parse(JSON.stringify(value));
+    }
+
+    function add(config, line, explain, op, mutate) {
+        config.steps.push({
+            line,
+            explain,
+            op,
+            mutate
+        });
+    }
+
+    function createTraverseConfig() {
+        const program = [
+            "int main()",
+            "{",
+            "    int n, value;",
+            "    struct Node *head = NULL;",
+            "    struct Node *tail = NULL;",
+            "    struct Node *newNode;",
+            "    struct Node *temp;",
+            "",
+            "    scanf(\"%d\", &n);",
+            "",
+            "    for(int i = 0; i < n; i++)",
+            "    {",
+            "        scanf(\"%d\", &value);",
+            "",
+            "        newNode = (struct Node *)malloc(sizeof(struct Node));",
+            "        newNode->data = value;",
+            "        newNode->next = NULL;",
+            "",
+            "        if(head == NULL)",
+            "        {",
+            "            head = newNode;",
+            "            tail = newNode;",
+            "        }",
+            "        else",
+            "        {",
+            "            tail->next = newNode;",
+            "            tail = newNode;",
+            "        }",
+            "    }",
+            "",
+            "    temp = head;",
+            "",
+            "    while(temp != NULL)",
+            "    {",
+            "        printf(\"%d \", temp->data);",
+            "        temp = temp->next;",
+            "    }",
+            "",
+            "    return 0;",
+            "}"
+        ];
+
+        const values = [10,20,30,40];
+
+        const config = {
+            program,
+            steps: [],
+            initial: {
+                callStack: ["main()"],
+                n: "indeterminate",
+                value: "indeterminate",
+                i: "indeterminate",
+                head: "NULL",
+                tail: "NULL",
+                newNode: "indeterminate",
+                temp: "indeterminate",
+                nodes: [],
+                output: ""
+            }
+        };
+
+        add(config, 0,
+            "Execution begins in main().",
+            "Enter main()",
+            s => {});
+
+        add(config, 2,
+            "Integer variables n and value are declared. Their values are not meaningful yet.",
+            "Declare n, value",
+            s => { s.n = "indeterminate"; s.value = "indeterminate"; });
+
+        add(config, 3,
+            "head is initialized to NULL, so the linked list is empty.",
+            "head = NULL",
+            s => { s.head = "NULL"; });
+
+        add(config, 4,
+            "tail is initialized to NULL because no last node exists yet.",
+            "tail = NULL",
+            s => { s.tail = "NULL"; });
+
+        add(config, 5,
+            "newNode is declared. It will later hold the address of each newly allocated node.",
+            "Declare newNode",
+            s => { s.newNode = "indeterminate"; });
+
+        add(config, 6,
+            "temp is declared. It will later be used for traversal.",
+            "Declare temp",
+            s => { s.temp = "indeterminate"; });
+
+        add(config, 8,
+            "The program reads n = 4.",
+            "Input: n = 4",
+            s => { s.n = 4; });
+
+        values.forEach((value, i) => {
+            add(config, 10,
+                `The for-loop selects iteration i = ${i}.`,
+                `${i} < 4 → TRUE`,
+                s => { s.i = i; });
+
+            add(config, 12,
+                `The next input value ${value} is read.`,
+                `value = ${value}`,
+                s => { s.value = value; });
+
+            add(config, 14,
+                "Memory for one new node is dynamically allocated.",
+                "malloc(sizeof(struct Node))",
+                s => { s.newNode = `N${i+1}`; });
+
+            add(config, 15,
+                `The data field of ${`N${i+1}`} receives ${value}.`,
+                `newNode->data = ${value}`,
+                s => {
+                    const exists = s.nodes.some(n => n.id === `N${i+1}`);
+                    if (!exists) {
+                        s.nodes.push({ id:`N${i+1}`, data:value, next:"NULL" });
+                    }
+                });
+
+            add(config, 16,
+                "The new node initially points to NULL.",
+                "newNode->next = NULL",
+                s => {
+                    const n = s.nodes.find(n => n.id === `N${i+1}`);
+                    if (n) n.next = "NULL";
+                });
+
+            add(config, 18,
+                i === 0
+                    ? "head is NULL, so this is the first node."
+                    : "head is not NULL, so the new node must be attached after tail.",
+                i === 0 ? "head == NULL → TRUE" : "head == NULL → FALSE",
+                s => {});
+
+            if (i === 0) {
+                add(config, 20,
+                    "head is updated to point to the first node.",
+                    "head = newNode",
+                    s => { s.head = "N1"; });
+
+                add(config, 21,
+                    "tail also points to the first node because it is currently the last node.",
+                    "tail = newNode",
+                    s => { s.tail = "N1"; });
+            } else {
+                add(config, 25,
+                    `The current tail node is connected to ${`N${i+1}`}.`,
+                    `tail->next = N${i+1}`,
+                    s => {
+                        const tailNode = s.nodes.find(n => n.id === s.tail);
+                        if (tailNode) tailNode.next = `N${i+1}`;
+                    });
+
+                add(config, 26,
+                    `tail moves to the new last node ${`N${i+1}`}.`,
+                    `tail = N${i+1}`,
+                    s => { s.tail = `N${i+1}`; });
+            }
+        });
+
+        add(config, 10,
+            "The loop checks i = 4. Since 4 < 4 is false, node creation is complete.",
+            "4 < 4 → FALSE",
+            s => { s.i = 4; });
+
+        add(config, 30,
+            "temp is set to head so traversal begins at the first node.",
+            "temp = head",
+            s => { s.temp = s.head; delete s.i; });
+
+        values.forEach((value, i) => {
+            add(config, 32,
+                `temp points to ${`N${i+1}`}, so temp != NULL is true.`,
+                "temp != NULL → TRUE",
+                s => { s.temp = `N${i+1}`; });
+
+            add(config, 34,
+                `The current data value ${value} is printed.`,
+                `Print ${value}`,
+                s => {
+                    s.output = (s.output ? s.output + " " : "") + value;
+                });
+
+            add(config, 35,
+                i + 1 < values.length
+                    ? `temp moves from ${`N${i+1}`} to ${`N${i+2}`}.`
+                    : "The last node points to NULL, so temp becomes NULL.",
+                "temp = temp->next",
+                s => {
+                    s.temp = i + 1 < values.length ? `N${i+2}` : "NULL";
+                });
+        });
+
+        add(config, 32,
+            "temp is now NULL, so the traversal loop ends.",
+            "temp != NULL → FALSE",
+            s => { s.temp = "NULL"; });
+
+        add(config, 38,
+            "The program finishes successfully.",
+            "return 0",
+            s => {});
+
+        return config;
+    }
+
+    function createInsertConfig() {
+        const program = [
+            "struct Node *insertBeginning(struct Node *head, int value)",
+            "{",
+            "    struct Node *newNode;",
+            "",
+            "    newNode = (struct Node *)malloc(sizeof(struct Node));",
+            "",
+            "    newNode->data = value;",
+            "    newNode->next = head;",
+            "",
+            "    head = newNode;",
+            "",
+            "    return head;",
+            "}"
+        ];
+
+        const config = {
+            program,
+            steps: [],
+            initial: {
+                callStack:["main()", "insertBeginning(head, 5)"],
+                head:"N1",
+                value:5,
+                newNode:"indeterminate",
+                nodes:[
+                    {id:"N1", data:10, next:"N2"},
+                    {id:"N2", data:20, next:"N3"},
+                    {id:"N3", data:30, next:"NULL"}
+                ],
+                output:""
+            }
+        };
+
+        add(config, 0,
+            "insertBeginning() is called with head pointing to N1 and value = 5.",
+            "insertBeginning(head, 5)",
+            s => {});
+
+        add(config, 2,
+            "A pointer named newNode is declared.",
+            "Declare newNode",
+            s => { s.newNode = "indeterminate"; });
+
+        add(config, 4,
+            "Memory is allocated for the new node.",
+            "newNode = malloc(...)",
+            s => { s.newNode = "N0"; });
+
+        add(config, 6,
+            "The new value 5 is stored in the new node.",
+            "newNode->data = 5",
+            s => {
+                if (!s.nodes.some(n => n.id === "N0")) {
+                    s.nodes.unshift({id:"N0", data:5, next:"?"});
+                }
+            });
+
+        add(config, 7,
+            "The new node is linked to the old first node by copying the current head address into newNode->next.",
+            "newNode->next = head",
+            s => {
+                const n = s.nodes.find(n => n.id === "N0");
+                if (n) n.next = "N1";
+            });
+
+        add(config, 9,
+            "head is updated to the new node. The new node is now the first node.",
+            "head = newNode",
+            s => { s.head = "N0"; });
+
+        add(config, 11,
+            "The updated head pointer is returned to main().",
+            "return head",
+            s => { s.callStack = ["main()"]; });
+
+        return config;
+    }
+
+    function makeRegistryEntry(id, config) {
+        return {
+            id,
+            config,
+            current:0,
+            state:deepClone(config.initial),
+            timer:null
+        };
+    }
+
+    function initialize() {
+        registry.traverseTrace = makeRegistryEntry("traverseTrace", createTraverseConfig());
+        registry.insertTrace = makeRegistryEntry("insertTrace", createInsertConfig());
+
+        render("traverseTrace");
+        render("insertTrace");
+    }
+
+    function toggle(id) {
+        const box = document.getElementById(id);
+        if (!box) return;
+        box.hidden = !box.hidden;
+
+        if (!box.hidden) {
+            render(id);
+        }
+    }
+
+    function applyThrough(r, count) {
+        r.state = deepClone(r.config.initial);
+
+        for (let i = 0; i < count; i++) {
+            r.config.steps[i].mutate(r.state);
+        }
+    }
+
+    function currentStep(r) {
+        if (r.current === 0) {
+            return {
+                line:0,
+                explain:"Press Next to start executing the program.",
+                op:""
+            };
+        }
+        return r.config.steps[Math.min(r.current - 1, r.config.steps.length - 1)];
+    }
+
+    function renderCode(r, step) {
+        const code = document.getElementById(r.id + "Code");
+        if (!code) return;
+
+        code.innerHTML = r.config.program.map((line, index) => {
+            const active = index === step.line ? " active" : "";
+            return `<span class="ll-code-line${active}" data-line="${index}">${escapeHtml(line)}</span>`;
+        }).join("");
+
+        requestAnimationFrame(() => {
+            const active = code.querySelector(".ll-code-line.active");
+            if (active) {
+                active.scrollIntoView({block:"center", inline:"nearest", behavior:"smooth"});
+            }
+        });
+    }
+
+    function renderVars(r) {
+        const box = document.getElementById(r.id + "Vars");
+        if (!box) return;
+
+        const keys = r.id === "traverseTrace"
+            ? ["n","i","value","head","tail","newNode","temp","output"]
+            : ["head","value","newNode"];
+
+        box.innerHTML = keys.map(key => {
+            let value = r.state[key];
+            if (value === undefined) value = "—";
+            if (value === "") value = '""';
+
+            return `
+                <div class="ll-var">
+                    <strong>${escapeHtml(key)}</strong>
+                    <span>${escapeHtml(value)}</span>
+                </div>
+            `;
+        }).join("");
+    }
+
+    function renderChain(r) {
+        const box = document.getElementById(r.id + "Chain");
+        if (!box) return;
+
+        const nodes = r.state.nodes || [];
+
+        if (!nodes.length) {
+            box.innerHTML = `<div class="ll-trace-null">head = NULL</div>`;
+            return;
+        }
+
+        let html = "";
+        const head = r.state.head;
+        const temp = r.state.temp;
+        const newNode = r.state.newNode;
+
+        nodes.forEach((node, i) => {
+            const classes = ["ll-trace-node"];
+
+            if (node.id === temp) classes.push("current");
+            if (node.id === newNode || node.id === "N0") {
+                if (r.id === "insertTrace" && r.current >= 3) classes.push("new");
+            }
+
+            const labels = [];
+
+            if (node.id === head) labels.push("head");
+            if (node.id === temp) labels.push("temp");
+            if (node.id === newNode) labels.push("newNode");
+
+            html += `
+                <div class="${classes.join(" ")}">
+                    ${labels.length ? `<span class="label">${labels.join(" / ")}</span>` : ""}
+                    <div class="d">${escapeHtml(node.data)}</div>
+                    <div class="n">${escapeHtml(node.next)}</div>
+                </div>
+            `;
+
+            if (i < nodes.length - 1) {
+                html += `<div class="ll-trace-arrow">→</div>`;
+            }
+        });
+
+        html += `<div class="ll-trace-arrow">→</div><div class="ll-trace-null">NULL</div>`;
+        box.innerHTML = html;
+    }
+
+    function render(id) {
+        const r = registry[id];
+        if (!r) return;
+
+        const step = currentStep(r);
+
+        renderCode(r, step);
+        renderVars(r);
+        renderChain(r);
+
+        document.getElementById(id + "Explain").textContent = step.explain || "";
+        document.getElementById(id + "Operation").innerHTML =
+            step.op ? `<strong>Current Operation:</strong> ${escapeHtml(step.op)}` : "";
+
+        const completed = r.current >= r.config.steps.length;
+        const next = document.getElementById(id + "Next");
+        const auto = document.getElementById(id + "Auto");
+        const status = document.getElementById(id + "Status");
+
+        if (next) {
+            next.disabled = completed;
+            next.textContent = completed ? "✓ Completed" : "Next →";
+        }
+
+        if (auto) {
+            auto.disabled = completed || !!r.timer;
+        }
+
+        if (status) {
+            status.textContent = completed
+                ? "✓ Program execution completed. Press Reset to run again."
+                : `Step ${r.current} of ${r.config.steps.length}`;
+        }
+    }
+
+    function next(id) {
+        const r = registry[id];
+        if (!r || r.current >= r.config.steps.length) return;
+
+        r.config.steps[r.current].mutate(r.state);
+        r.current++;
+        render(id);
+    }
+
+    function prev(id) {
+        const r = registry[id];
+        if (!r || r.current <= 0) return;
+
+        pause(id);
+        r.current--;
+        applyThrough(r, r.current);
+        render(id);
+    }
+
+    function reset(id) {
+        const r = registry[id];
+        if (!r) return;
+
+        pause(id);
+        r.current = 0;
+        r.state = deepClone(r.config.initial);
+        render(id);
+
+        const code = document.getElementById(id + "Code");
+        if (code) {
+            requestAnimationFrame(() => {
+                code.scrollTo({top:0, left:0, behavior:"auto"});
+            });
+        }
+    }
+
+    function auto(id) {
+        const r = registry[id];
+        if (!r || r.timer || r.current >= r.config.steps.length) return;
+
+        r.timer = setInterval(() => {
+            if (r.current >= r.config.steps.length) {
+                pause(id);
+                render(id);
+                return;
+            }
+
+            next(id);
+
+            if (r.current >= r.config.steps.length) {
+                pause(id);
+                render(id);
+            }
+        }, 850);
+
+        render(id);
+    }
+
+    function pause(id) {
+        const r = registry[id];
+        if (r && r.timer) {
+            clearInterval(r.timer);
+            r.timer = null;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", initialize);
+
+    return { toggle, next, prev, reset, auto, pause };
+})();
+</script>
+
+
+<script>
+/* Active linked-list sidebar section */
+document.addEventListener("DOMContentLoaded", function () {
+    const links = Array.from(document.querySelectorAll(".ll-side-link"));
+
+    const entries = links
+        .map(link => {
+            const href = link.getAttribute("href");
+            return {
+                link,
+                section: href && href.startsWith("#") ? document.querySelector(href) : null
+            };
+        })
+        .filter(item => item.section);
+
+    function updateActive() {
+        const marker = window.scrollY + 160;
+        let active = entries[0];
+
+        entries.forEach(item => {
+            if (item.section.offsetTop <= marker) {
+                active = item;
+            }
+        });
+
+        links.forEach(link => link.classList.remove("active"));
+
+        if (active) {
+            active.link.classList.add("active");
+        }
+    }
+
+    updateActive();
+    window.addEventListener("scroll", updateActive, { passive:true });
+});
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
+
