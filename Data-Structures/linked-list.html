@@ -2002,8 +2002,23 @@ window.LLTrace = (() => {
 
         requestAnimationFrame(() => {
             const active = code.querySelector(".ll-code-line.active");
+
             if (active) {
-                active.scrollIntoView({block:"center", inline:"nearest", behavior:"smooth"});
+                /*
+                   Scroll ONLY the program-code pane.
+                   Do not use active.scrollIntoView(), because that can
+                   move the entire browser window when Next is pressed.
+                */
+                const targetTop =
+                    active.offsetTop
+                    - (code.clientHeight / 2)
+                    + (active.offsetHeight / 2);
+
+                code.scrollTo({
+                    top: Math.max(0, targetTop),
+                    left: code.scrollLeft,
+                    behavior: "smooth"
+                });
             }
         });
     }
@@ -2226,4 +2241,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
-
