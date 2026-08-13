@@ -1,1 +1,4648 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Stack | Data Structures | CodeBhavya</title>
+<link rel="icon" type="image/png" href="../images/codebhavya-icon-32.png"/>
+<link rel="stylesheet" href="../style.css"/>
+
+<style>
+/* ============================================================
+   CODEBHAVYA STACK — PART 1
+   Page-specific styles only.
+   Global header/sidebar/footer/layout come from ../style.css
+   ============================================================ */
+
+.sidebar details { margin:4px 0; }
+.sidebar summary {
+    list-style:none;
+    cursor:pointer;
+    padding:9px 12px;
+    border-radius:6px;
+    color:#334155;
+    font-size:14px;
+    font-weight:600;
+}
+.sidebar summary::-webkit-details-marker { display:none; }
+.sidebar summary::before {
+    content:"▸";
+    display:inline-block;
+    width:18px;
+    color:#64748b;
+    transition:transform .2s ease;
+}
+.sidebar details[open] summary::before { transform:rotate(90deg); }
+.sidebar details[open] summary {
+    background:#f8fafc;
+    color:#1d4ed8;
+}
+.sidebar details a {
+    margin-left:16px;
+    font-size:13px;
+    padding:7px 12px;
+}
+.sidebar details[open] a.stack-side-link {
+    position:relative;
+}
+.sidebar details[open] a.stack-side-link.active {
+    background:#eaf3ff;
+    color:#1d4ed8;
+    font-weight:800;
+}
+.sidebar details[open] a.stack-side-link.active::before {
+    content:"";
+    position:absolute;
+    left:3px;
+    top:9px;
+    bottom:9px;
+    width:3px;
+    border-radius:3px;
+    background:#d4af37;
+}
+
+.stack-key-box,
+.stack-example-box {
+    border-radius:10px;
+    padding:18px 20px;
+    margin:18px 0;
+}
+.stack-key-box {
+    background:#f8fafc;
+    border:1px solid #dce7f0;
+    border-left:5px solid #8cc8f0;
+}
+.stack-example-box {
+    background:#fffdf7;
+    border:1px solid #eadca8;
+    border-left:5px solid #d4af37;
+}
+.stack-key-box h3,
+.stack-example-box h3 {
+    margin-top:0;
+    color:#0f172a;
+}
+
+.stack-lifo-demo {
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    gap:30px;
+    flex-wrap:wrap;
+    margin:24px 0;
+}
+.stack-lifo-column {
+    display:flex;
+    flex-direction:column-reverse;
+    width:145px;
+    border-left:3px solid #0d1b2a;
+    border-right:3px solid #0d1b2a;
+    border-bottom:3px solid #0d1b2a;
+    border-radius:0 0 9px 9px;
+    padding:7px;
+    background:#f8fafc;
+}
+.stack-lifo-item {
+    margin:3px 0;
+    min-height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #0d1b2a;
+    border-radius:7px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:800;
+}
+.stack-lifo-item.top {
+    border-color:#d4af37;
+    background:#fff9df;
+}
+.stack-lifo-label {
+    text-align:center;
+    margin-top:8px;
+    font-weight:800;
+    color:#2563eb;
+}
+
+.stack-op-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin:16px 0;
+}
+.stack-op-card {
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    padding:13px;
+    background:#f8fafc;
+}
+.stack-op-card strong {
+    display:block;
+    color:#0d1b2a;
+    margin-bottom:5px;
+}
+
+/* ===== Premium visualizer ===== */
+.stack-viz {
+    margin:22px 0;
+    background:#fff;
+    border:1px solid #dbe3ec;
+    border-radius:16px;
+    box-shadow:0 8px 24px rgba(15,23,42,.06);
+    overflow:hidden;
+}
+.stack-viz-header {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:8px 14px;
+    align-items:center;
+    padding:18px 20px 8px;
+}
+.stack-viz-label {
+    grid-column:1;
+    grid-row:1;
+    color:#2563eb;
+    font-size:11px;
+    letter-spacing:1.4px;
+    font-weight:800;
+}
+.stack-viz-brand {
+    grid-column:2;
+    grid-row:1;
+    justify-self:end;
+    display:inline-flex;
+    align-items:center;
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:-.5px;
+    white-space:nowrap;
+}
+.stack-viz-brand img {
+    width:30px;
+    height:30px;
+    margin-right:8px;
+    object-fit:contain;
+    border:1px solid #dbe3ec;
+    border-radius:9px;
+    background:#fff;
+    box-shadow:0 5px 12px rgba(37,99,235,.12);
+}
+.stack-viz-brand .code { color:#2563eb; }
+.stack-viz-brand .bhavya { color:#f59e0b; }
+.stack-viz-title {
+    grid-column:1 / -1;
+    grid-row:2;
+}
+.stack-viz-title strong {
+    display:block;
+    color:#0f172a;
+    font-size:18px;
+}
+.stack-viz-title span {
+    display:block;
+    margin-top:3px;
+    color:#64748b;
+    font-size:12px;
+}
+.stack-viz-body { padding:16px 18px 18px; }
+.stack-viz-controls {
+    display:grid;
+    grid-template-columns:minmax(220px,1.2fr) 110px 155px minmax(170px,.8fr) auto;
+    align-items:end;
+    gap:10px;
+}
+.stack-field label {
+    display:block;
+    margin-bottom:5px;
+    color:#475569;
+    font-size:12px;
+    font-weight:700;
+}
+.stack-field input,
+.stack-field select {
+    width:100%;
+    box-sizing:border-box;
+    padding:9px 10px;
+    border:1px solid #cbd5e1;
+    border-radius:7px;
+    background:#fff;
+    color:#0f172a;
+}
+.stack-viz-stage {
+    min-height:360px;
+    margin-top:14px;
+    overflow:auto;
+    padding:18px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+}
+
+.stack-viz-canvas {
+    position:relative;
+    width:max-content;
+    min-width:500px;
+    min-height:320px;
+    margin:0 auto;
+    padding:14px 235px 14px 55px;
+    display:flex;
+    align-items:flex-end;
+}
+
+.stack-array-frame {
+    position:relative;
+    display:flex;
+    flex-direction:column-reverse;
+    justify-content:flex-start;
+    width:170px;
+    min-height:260px;
+    padding:8px;
+    border-left:3px solid #0d1b2a;
+    border-right:3px solid #0d1b2a;
+    border-bottom:3px solid #0d1b2a;
+    border-radius:0 0 9px 9px;
+    background:#fff;
+}
+.stack-slot {
+    position:relative;
+    height:45px;
+    margin:3px 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px dashed #cbd5e1;
+    border-radius:7px;
+    color:#94a3b8;
+    font-family:Consolas,"Courier New",monospace;
+    transition:.22s ease;
+}
+.stack-slot.filled {
+    border-style:solid;
+    border-color:#0d1b2a;
+    color:#0f172a;
+    background:#fff;
+    font-weight:800;
+}
+.stack-slot.top {
+    border-color:#d4af37;
+    background:#fff9df;
+    box-shadow:0 0 0 4px rgba(212,175,55,.12);
+}
+.stack-slot.current {
+    border-color:#2563eb;
+    background:#eff6ff;
+    box-shadow:0 0 0 4px rgba(37,99,235,.10);
+}
+.stack-slot.removing {
+    border-color:#dc2626;
+    background:#fee2e2;
+}
+.stack-slot .idx {
+    position:absolute;
+    left:-34px;
+    color:#64748b;
+    font-size:11px;
+    font-weight:700;
+}
+.stack-top-pointer {
+    position:absolute;
+    left:255px;
+    top:50%;
+    transform:translateY(-50%);
+    min-width:165px;
+    padding:12px 14px;
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    background:#fff;
+    box-shadow:0 4px 14px rgba(15,23,42,.06);
+    transition:top .28s ease, opacity .2s ease;
+    z-index:3;
+}
+.stack-top-pointer strong {
+    color:#0d1b2a;
+}
+.stack-top-arrow {
+    margin-top:8px;
+    color:#d4af37;
+    font-weight:900;
+    font-size:18px;
+    white-space:nowrap;
+}
+.stack-top-pointer.empty {
+    opacity:.75;
+}
+.stack-viz-actions {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:13px 0;
+}
+.stack-viz-actions button {
+    border:0;
+    border-radius:7px;
+    padding:9px 13px;
+    cursor:pointer;
+    font-weight:700;
+}
+.stack-viz-actions .primary { background:#2563eb; color:#fff; }
+.stack-viz-actions .gold { background:#d4af37; color:#0d1b2a; }
+.stack-viz-actions .muted { background:#64748b; color:#fff; }
+.stack-viz-actions button:disabled { opacity:.5; cursor:not-allowed; }
+.stack-viz-info {
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:10px;
+}
+.stack-viz-message,
+.stack-viz-stats {
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    background:#fff;
+    padding:10px 12px;
+}
+.stack-viz-message {
+    border-left:4px solid #d4af37;
+    color:#334155;
+    min-height:45px;
+}
+.stack-viz-stats {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+}
+.stack-viz-stat {
+    text-align:center;
+    padding:7px;
+    border-radius:6px;
+    background:#f8fafc;
+}
+.stack-viz-stat strong {
+    display:block;
+    color:#64748b;
+    font-size:10px;
+    text-transform:uppercase;
+}
+.stack-viz-stat span {
+    display:block;
+    margin-top:2px;
+    color:#0f172a;
+    font-weight:800;
+}
+.stack-progress {
+    height:7px;
+    margin-top:12px;
+    overflow:hidden;
+    border-radius:999px;
+    background:#e2e8f0;
+}
+.stack-progress > div {
+    height:100%;
+    width:0;
+    background:#d4af37;
+    transition:width .2s ease;
+}
+
+/* ===== Programs ===== */
+.stack-program-title {
+    margin:20px 0 8px;
+    color:#0f172a;
+    font-size:18px;
+    font-weight:800;
+}
+.stack-io {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin:15px 0;
+}
+.stack-io-box {
+    padding:13px;
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    background:#f8fafc;
+}
+.stack-io-box h4 { margin:0 0 7px; }
+
+/* ===== Program tracer ===== */
+.stack-tracer-wrap { margin-top:15px; }
+.stack-tracer-toggle {
+    border:0;
+    border-radius:7px;
+    padding:9px 15px;
+    background:#2563eb;
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+}
+.stack-tracer {
+    margin-top:8px;
+    padding:12px;
+    border:1px solid #dbe3ec;
+    border-radius:12px;
+    background:#f8fafc;
+    overflow-x:auto;
+}
+.stack-tracer-title {
+    text-align:center;
+    margin-bottom:9px;
+    color:#0f172a;
+    font-weight:800;
+    letter-spacing:1px;
+}
+.stack-tracer-grid {
+    display:grid;
+    grid-template-columns:minmax(390px,1.08fr) minmax(330px,.92fr);
+    gap:10px;
+    min-width:740px;
+}
+.stack-tracer-panel {
+    padding:9px;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    background:#fff;
+}
+.stack-tracer-panel h4 {
+    margin:0 0 7px;
+    color:#0f172a;
+    font-size:14px;
+}
+.stack-tracer-code {
+    height:330px;
+    max-height:330px;
+    margin:0;
+    overflow:auto;
+    padding:10px;
+    border-radius:7px;
+    background:#0f172a;
+    color:#e2e8f0;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:12.5px;
+    line-height:1.5;
+    white-space:pre;
+}
+.stack-code-line {
+    display:block;
+    padding:1px 5px;
+    border-radius:4px;
+    white-space:pre;
+}
+.stack-code-line.active {
+    background:#334155;
+    color:#fff;
+    font-weight:700;
+    box-shadow:inset 4px 0 #d4af37;
+}
+.stack-tracer-explain {
+    min-height:54px;
+    margin-bottom:8px;
+    padding:9px;
+    border-left:4px solid #8cc8f0;
+    border-radius:6px;
+    background:#f8fafc;
+    color:#334155;
+    line-height:1.5;
+}
+.stack-vars {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:6px;
+}
+.stack-var {
+    padding:7px;
+    border:1px solid #e2e8f0;
+    border-radius:6px;
+    background:#f8fafc;
+}
+.stack-var strong {
+    display:block;
+    margin-bottom:2px;
+    color:#64748b;
+    font-size:10px;
+}
+.stack-var span {
+    color:#0f172a;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:800;
+    font-size:12px;
+}
+.stack-trace-memory {
+    margin-top:9px;
+    padding:10px;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    background:#fff;
+}
+.stack-trace-memory h4 { margin:0 0 8px; }
+.stack-trace-array {
+    display:flex;
+    align-items:flex-end;
+    gap:5px;
+    min-width:max-content;
+    overflow:auto;
+    padding:7px 3px;
+}
+.stack-trace-cell {
+    min-width:60px;
+    padding:9px 6px;
+    text-align:center;
+    border:2px solid #0d1b2a;
+    border-radius:7px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:800;
+}
+.stack-trace-cell.empty {
+    border-style:dashed;
+    border-color:#cbd5e1;
+    color:#94a3b8;
+}
+.stack-trace-cell.top {
+    border-color:#d4af37;
+    background:#fff9df;
+}
+.stack-trace-cell.current {
+    border-color:#2563eb;
+    background:#eff6ff;
+}
+.stack-trace-index {
+    display:block;
+    margin-top:4px;
+    color:#64748b;
+    font-size:10px;
+}
+.stack-operation {
+    min-height:20px;
+    margin-top:8px;
+    padding:8px 10px;
+    border:1px solid #e2e8f0;
+    border-left:4px solid #d4af37;
+    border-radius:7px;
+    background:#fff;
+    color:#334155;
+}
+.stack-tracer-controls {
+    display:flex;
+    justify-content:center;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-top:8px;
+}
+.stack-tracer-controls button {
+    border:0;
+    border-radius:7px;
+    padding:8px 12px;
+    background:#2563eb;
+    color:#fff;
+    cursor:pointer;
+    font-weight:700;
+}
+.stack-tracer-controls button:disabled {
+    background:#94a3b8;
+    cursor:not-allowed;
+}
+.stack-tracer-status {
+    margin-top:6px;
+    text-align:center;
+    color:#64748b;
+    font-size:12px;
+}
+
+.stack-complexity {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin:14px 0;
+}
+.stack-complexity > div {
+    padding:12px;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    background:#f8fafc;
+}
+.stack-complexity strong {
+    display:block;
+    margin-bottom:4px;
+    color:#0f172a;
+}
+
+/* ===== First interview preview ===== */
+.stack-interview-preview {
+    display:grid;
+    gap:12px;
+    margin-top:15px;
+}
+.stack-interview-item {
+    border:1px solid #dbe3ec;
+    border-radius:10px;
+    background:#f8fafc;
+}
+.stack-interview-q {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:14px 16px;
+    color:#0d1b2a;
+    font-weight:800;
+}
+.stack-interview-q button {
+    flex:0 0 auto;
+    border:0;
+    border-radius:8px;
+    padding:8px 12px;
+    background:#2563eb;
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+}
+.stack-interview-answer {
+    display:none;
+    margin:0 16px 15px;
+    padding:14px 16px;
+    border-left:5px solid #7dd3fc;
+    border-radius:8px;
+    background:#fff;
+    color:#334155;
+    line-height:1.65;
+}
+.stack-interview-answer.show { display:block; }
+.stack-interview-short {
+    margin-top:11px;
+    padding:10px 11px;
+    border:1px solid #93c5fd;
+    border-radius:7px;
+    background:#eff6ff;
+}
+.stack-interview-short strong { color:#1d4ed8; }
+
+@media(max-width:900px) {
+    .stack-viz-controls { grid-template-columns:1fr 1fr; }
+    .stack-op-grid,
+    .stack-complexity { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:760px) {
+    .stack-viz-info,
+    .stack-io { grid-template-columns:1fr; }
+    .stack-tracer-grid {
+        grid-template-columns:390px 350px;
+        min-width:748px;
+    }
+    .stack-tracer-controls {
+        justify-content:flex-start;
+        min-width:748px;
+    }
+}
+@media(max-width:560px) {
+    .stack-viz-controls,
+    .stack-op-grid,
+    .stack-complexity { grid-template-columns:1fr; }
+
+    .stack-viz-canvas {
+        margin:0;
+        min-width:480px;
+    }
+    .stack-viz-header { padding:14px 12px 7px; }
+    .stack-viz-label {
+        font-size:9px;
+        letter-spacing:1px;
+    }
+    .stack-viz-brand { font-size:17px; }
+    .stack-viz-brand img {
+        width:27px;
+        height:27px;
+        margin-right:6px;
+    }
+    .stack-interview-q {
+        align-items:flex-start;
+        flex-direction:column;
+    }
+}
+
+/* ============================================================
+   STACK PART 2 — STACK USING LINKED LIST
+   Page-specific only. Existing approved layout is unchanged.
+   ============================================================ */
+
+.stack-linked-idea-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin:16px 0;
+}
+
+.stack-linked-idea-grid > div {
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    padding:14px;
+    background:#f8fafc;
+}
+
+.stack-linked-idea-grid strong {
+    display:block;
+    margin-bottom:5px;
+    color:#0d1b2a;
+}
+
+.stack-linked-viz-stage {
+    min-height:420px;
+    margin-top:14px;
+    overflow:auto;
+    padding:18px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+}
+
+.stack-linked-canvas {
+    position:relative;
+    width:max-content;
+    min-width:650px;
+    min-height:380px;
+    margin:0 auto;
+    padding:18px 250px 18px 95px;
+}
+
+.stack-linked-chain {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:200px;
+    min-height:340px;
+}
+
+.stack-linked-node {
+    position:relative;
+    display:grid;
+    grid-template-columns:90px 85px;
+    min-width:175px;
+    border:2px solid #0d1b2a;
+    border-radius:8px;
+    background:#fff;
+    transition:.22s ease;
+}
+
+.stack-linked-node .data,
+.stack-linked-node .next {
+    min-height:55px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    font-family:Consolas,"Courier New",monospace;
+}
+
+.stack-linked-node .data {
+    border-right:2px solid #0d1b2a;
+    background:#f8f3e4;
+    font-size:18px;
+    font-weight:800;
+}
+
+.stack-linked-node .next {
+    background:#f8fafc;
+    color:#475569;
+    font-size:11px;
+}
+
+.stack-linked-node.top {
+    border-color:#d4af37;
+    box-shadow:0 0 0 4px rgba(212,175,55,.13);
+}
+
+.stack-linked-node.current {
+    border-color:#2563eb;
+    box-shadow:0 0 0 4px rgba(37,99,235,.11);
+}
+
+.stack-linked-node.removing {
+    border-color:#dc2626;
+    background:#fee2e2;
+}
+
+.stack-linked-node.new {
+    border-color:#d4af37;
+    box-shadow:0 0 0 4px rgba(212,175,55,.14);
+}
+
+.stack-linked-address {
+    position:absolute;
+    right:calc(100% + 12px);
+    top:50%;
+    transform:translateY(-50%);
+    color:#64748b;
+    font-size:11px;
+    font-weight:800;
+    font-family:Consolas,"Courier New",monospace;
+}
+
+.stack-linked-badge {
+    position:absolute;
+    left:50%;
+    top:-26px;
+    transform:translateX(-50%);
+    padding:3px 7px;
+    border-radius:999px;
+    background:#2563eb;
+    color:#fff;
+    font-size:10px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.stack-linked-arrow {
+    height:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#2563eb;
+    font-size:21px;
+    font-weight:900;
+}
+
+.stack-linked-null {
+    padding:7px 10px;
+    border:1px dashed #94a3b8;
+    border-radius:7px;
+    background:#fff;
+    color:#64748b;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:800;
+}
+
+.stack-linked-top-pointer {
+    position:absolute;
+    left:335px;
+    top:58px;
+    min-width:185px;
+    padding:12px 14px;
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    background:#fff;
+    box-shadow:0 4px 14px rgba(15,23,42,.06);
+    transition:top .25s ease;
+}
+
+.stack-linked-top-pointer strong {
+    color:#0d1b2a;
+}
+
+.stack-linked-top-arrow {
+    margin-top:7px;
+    color:#d4af37;
+    font-size:18px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+.stack-linked-detached {
+    position:absolute;
+    left:360px;
+    bottom:55px;
+}
+
+.stack-linked-caption {
+    margin-top:8px;
+    text-align:center;
+    color:#64748b;
+    font-size:11px;
+}
+
+.stack-linked-comparison {
+    overflow-x:auto;
+    margin:16px 0;
+}
+
+.stack-linked-comparison table {
+    width:100%;
+    min-width:700px;
+    border-collapse:collapse;
+}
+
+.stack-linked-comparison th,
+.stack-linked-comparison td {
+    border:1px solid #dbe3ec;
+    padding:10px 12px;
+    text-align:left;
+}
+
+.stack-linked-comparison th {
+    background:#0d1b2a;
+    color:#fff;
+}
+
+/* Linked Stack tracer memory */
+.stack-linked-trace-chain {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:max-content;
+    padding:8px 0;
+}
+
+.stack-linked-trace-node {
+    position:relative;
+    display:grid;
+    grid-template-columns:75px 70px;
+    min-width:145px;
+    border:2px solid #0d1b2a;
+    border-radius:7px;
+    background:#fff;
+}
+
+.stack-linked-trace-node .d,
+.stack-linked-trace-node .n {
+    min-height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Consolas,"Courier New",monospace;
+}
+
+.stack-linked-trace-node .d {
+    border-right:2px solid #0d1b2a;
+    background:#f8f3e4;
+    font-weight:800;
+}
+
+.stack-linked-trace-node .n {
+    background:#f8fafc;
+    color:#475569;
+    font-size:10px;
+}
+
+.stack-linked-trace-node.top {
+    border-color:#d4af37;
+    box-shadow:0 0 0 3px rgba(212,175,55,.12);
+}
+
+.stack-linked-trace-node.current {
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.10);
+}
+
+.stack-linked-trace-node.detached {
+    border-style:dashed;
+    border-color:#d4af37;
+}
+
+.stack-linked-trace-badge {
+    position:absolute;
+    left:50%;
+    top:-22px;
+    transform:translateX(-50%);
+    padding:2px 6px;
+    border-radius:999px;
+    background:#2563eb;
+    color:#fff;
+    font-size:9px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.stack-linked-trace-address {
+    position:absolute;
+    right:calc(100% + 8px);
+    top:50%;
+    transform:translateY(-50%);
+    color:#64748b;
+    font-size:10px;
+    font-family:Consolas,"Courier New",monospace;
+}
+
+.stack-linked-trace-arrow {
+    height:23px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#2563eb;
+    font-weight:900;
+}
+
+.stack-linked-trace-detached {
+    margin-top:12px;
+    padding-top:12px;
+    border-top:1px dashed #cbd5e1;
+}
+
+.stack-linked-trace-detached-title {
+    margin-bottom:7px;
+    color:#64748b;
+    font-size:11px;
+    font-weight:800;
+}
+
+@media(max-width:760px) {
+    .stack-linked-idea-grid {
+        grid-template-columns:1fr;
+    }
+
+    .stack-linked-canvas {
+        margin:0;
+        min-width:620px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="top-header">
+<a class="logo" href="../index.html">
+<span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a>
+<nav class="top-nav">
+<a href="../index.html">Home</a>
+<a href="../Mathematics/">Maths</a>
+<a href="../C-Programming/">C</a>
+<a class="active" href="index.html">DSA</a>
+<a href="../Python/">Python</a>
+<a href="../AI-ML/">AI &amp; ML</a>
+<a href="../Placement/">Placement</a>
+</nav>
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar">
+<div class="sidebar-title">Data Structures</div>
+
+<input
+    type="text"
+    id="topicSearch"
+    class="search-box"
+    placeholder="🔍 Search topics..."
+    onkeyup="searchTopics()"
+/>
+
+<details class="sidebar-topic">
+<summary>🔍 Searching</summary>
+<a href="searching.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🔄 Sorting</summary>
+<a href="sorting.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🔗 Linked List</summary>
+<a href="linked-list.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic" open>
+<summary>📚 Stack</summary>
+<a class="stack-side-link" href="#stack-overview">Stack Overview</a>
+<a class="stack-side-link" href="#stack-operations">Stack Operations</a>
+<a class="stack-side-link" href="#array-stack">Stack Using Array</a>
+<a class="stack-side-link" href="#push-operation">Push Operation</a>
+<a class="stack-side-link" href="#pop-operation">Pop Operation</a>
+<a class="stack-side-link" href="#peek-operation">Peek Operation</a>
+<a class="stack-side-link" href="#stack-tracing">Program Tracing</a>
+<a class="stack-side-link" href="#stack-complexity">Complexity</a>
+<a class="stack-side-link" href="#linked-stack">Stack Using Linked List</a>
+<a class="stack-side-link" href="#linked-stack-operations">Linked Stack Operations</a>
+<a class="stack-side-link" href="#linked-stack-program">Linked Stack Program Tracing</a>
+<a class="stack-side-link" href="#linked-stack-complexity">Linked Stack Complexity</a>
+<a class="stack-side-link" href="#stack-interview">Interview Questions</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🚶 Queue</summary>
+<a href="queue.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🌳 Trees</summary>
+<a href="trees.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🕸️ Graphs</summary>
+<a href="graphs.html">Open Topic</a>
+</details>
+</aside>
+
+<main class="main-content">
+
+<section class="subject-hero">
+<span class="subject-label">CODEBHAVYA • DATA STRUCTURES</span>
+<h1 class="page-title">📚 Stack</h1>
+<p class="page-description">
+Learn the LIFO principle, understand push/pop/peek operations, visualize an array-based stack,
+and trace the exact C program step by step.
+</p>
+</section>
+
+<section class="content-card" id="stack-overview">
+<span class="section-label">STACK</span>
+<h2>📖 Stack Overview</h2>
+
+<p>
+A <strong>stack</strong> is a linear data structure in which insertion and deletion happen at only one end,
+called the <strong>top</strong>.
+</p>
+
+<div class="stack-key-box">
+<h3>💡 LIFO Principle</h3>
+<p>
+Stack follows <strong>Last In, First Out (LIFO)</strong>. The most recently inserted element is the first
+element removed.
+</p>
+</div>
+
+<div class="stack-lifo-demo">
+<div>
+<div class="stack-lifo-column">
+<div class="stack-lifo-item">10</div>
+<div class="stack-lifo-item">20</div>
+<div class="stack-lifo-item top">30</div>
+</div>
+<div class="stack-lifo-label">TOP → 30</div>
+</div>
+
+<div class="stack-example-box" style="max-width:430px;">
+<h3>🧠 Simple Example</h3>
+<p>
+Push <code>10</code>, then <code>20</code>, then <code>30</code>.
+The stack becomes <strong>10, 20, 30</strong> from bottom to top.
+A Pop operation removes <strong>30</strong> first.
+</p>
+</div>
+</div>
+
+<h3>Real-life examples</h3>
+<ul>
+<li>A pile of plates.</li>
+<li>Undo operations in an editor.</li>
+<li>Function-call management using the runtime call stack.</li>
+<li>Expression conversion and evaluation.</li>
+<li>Backtracking algorithms.</li>
+</ul>
+
+<div class="tip-box">
+<strong>Important:</strong> In a stack, both insertion and deletion are performed at the
+<strong>same end — TOP</strong>.
+</div>
+</section>
+
+
+<section class="content-card" id="stack-operations">
+<span class="section-label">OPERATIONS</span>
+<h2>⚙️ Basic Stack Operations</h2>
+
+<div class="stack-op-grid">
+<div class="stack-op-card">
+<strong>Push</strong>
+Insert a new element at the top.
+</div>
+<div class="stack-op-card">
+<strong>Pop</strong>
+Remove and return the top element.
+</div>
+<div class="stack-op-card">
+<strong>Peek / Top</strong>
+Read the top element without removing it.
+</div>
+<div class="stack-op-card">
+<strong>isEmpty / isFull</strong>
+Check whether an operation is currently possible.
+</div>
+</div>
+
+<div class="stack-key-box">
+<h3>Array Stack Rule</h3>
+<p>
+For an array implementation, <code>top = -1</code> means the stack is empty.
+After a successful push, <code>top</code> increases by one.
+After a successful pop, <code>top</code> decreases by one.
+</p>
+</div>
+</section>
+
+
+<section class="content-card" id="array-stack">
+<span class="section-label">ARRAY IMPLEMENTATION</span>
+<h2>🧱 Stack Using Array</h2>
+
+<p>
+An array can store the stack elements, while an integer variable named <code>top</code>
+records the index of the current top element.
+</p>
+
+<pre><code>#define MAX 5
+
+int stack[MAX];
+int top = -1;</code></pre>
+
+<div class="stack-example-box">
+<h3>Example</h3>
+<p>
+If the array contains <code>10, 20, 30</code>, then <code>top = 2</code>.
+The top element is <code>stack[2] = 30</code>.
+</p>
+</div>
+
+<div class="stack-viz" id="arrayStackViz">
+<div class="stack-viz-header">
+<div class="stack-viz-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+<div class="stack-viz-brand">
+<img src="../images/codebhavya-icon-32.png" alt="CodeBhavya"/>
+<span class="code">Code</span><span class="bhavya">Bhavya</span>
+</div>
+
+<div class="stack-viz-title">
+<strong>🎬 Premium Array Stack Visualizer</strong>
+<span>Push multiple values, pop multiple elements, and watch TOP move with the stack</span>
+</div>
+</div>
+
+<div class="stack-viz-body">
+
+<div class="stack-viz-controls">
+<div class="stack-field">
+<label>Initial stack (bottom → top)</label>
+<input id="stackVizInput" value="10,20,30"/>
+</div>
+
+<div class="stack-field">
+<label>Capacity</label>
+<input id="stackVizCapacity" type="number" min="1" max="12" value="8"/>
+</div>
+
+<div class="stack-field">
+<label>Operation</label>
+<select id="stackVizOperation" onchange="StackViz.syncOperationUI()">
+<option value="push" selected>Push Values</option>
+<option value="pop">Pop Multiple</option>
+<option value="peek">Peek</option>
+</select>
+</div>
+
+<div class="stack-field">
+<label id="stackVizValueLabel">Values to push</label>
+<input id="stackVizValue" value="40,50,60" placeholder="40,50,60"/>
+</div>
+
+<div class="stack-field">
+<label>&nbsp;</label>
+<button class="primary-button" type="button" onclick="StackViz.load()">Prepare Operation</button>
+</div>
+</div>
+
+<div class="stack-viz-stage" id="stackVizStage">
+<div class="stack-viz-canvas" id="stackVizCanvas">
+
+<div class="stack-array-frame" id="stackVizFrame"></div>
+
+<div class="stack-top-pointer" id="stackTopPointer">
+<div><strong>top = </strong><span id="stackVizTop">2</span></div>
+<div class="stack-top-arrow">← TOP pointer</div>
+</div>
+
+</div>
+</div>
+
+<div class="stack-viz-actions">
+<button class="primary" onclick="StackViz.prev()">← Previous</button>
+<button class="primary" id="stackVizNext" onclick="StackViz.next()">Next →</button>
+<button class="gold" id="stackVizAuto" onclick="StackViz.auto()">▶ Auto Run</button>
+<button class="muted" onclick="StackViz.pause()">Ⅱ Pause</button>
+<button class="muted" onclick="StackViz.reset()">↺ Reset</button>
+</div>
+
+<div class="stack-viz-info">
+<div class="stack-viz-message" id="stackVizMessage">
+Choose an operation and press Load Operation.
+</div>
+
+<div class="stack-viz-stats">
+<div class="stack-viz-stat"><strong>Operation</strong><span id="stackVizOp">Push</span></div>
+<div class="stack-viz-stat"><strong>Elements</strong><span id="stackVizCount">3</span></div>
+<div class="stack-viz-stat"><strong>Step</strong><span id="stackVizStep">1</span></div>
+</div>
+</div>
+
+<div class="stack-progress"><div id="stackVizProgress"></div></div>
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="push-operation">
+<span class="section-label">PUSH</span>
+<h2>⬆️ Push Operation</h2>
+
+<p>
+Push inserts a new value at the top of the stack.
+Before insertion, an array stack must check for <strong>overflow</strong>.
+</p>
+
+<h3>Algorithm</h3>
+<pre><code>PUSH(value)
+
+1. If top == MAX - 1
+      report Stack Overflow
+      stop
+
+2. top = top + 1
+
+3. stack[top] = value</code></pre>
+
+<div class="tip-box">
+<strong>Order matters:</strong> increment <code>top</code> first, then store the new value in
+<code>stack[top]</code>.
+</div>
+</section>
+
+
+<section class="content-card" id="pop-operation">
+<span class="section-label">POP</span>
+<h2>⬇️ Pop Operation</h2>
+
+<p>
+Pop removes the current top element. Before removal, the stack must check for
+<strong>underflow</strong>.
+</p>
+
+<h3>Algorithm</h3>
+<pre><code>POP()
+
+1. If top == -1
+      report Stack Underflow
+      stop
+
+2. value = stack[top]
+
+3. top = top - 1
+
+4. return value</code></pre>
+
+<div class="tip-box">
+<strong>Important:</strong> logically, the element is removed by reducing <code>top</code>.
+The old array value may still exist in memory, but it is no longer part of the stack.
+</div>
+</section>
+
+
+<section class="content-card" id="peek-operation">
+<span class="section-label">PEEK</span>
+<h2>👀 Peek Operation</h2>
+
+<p>
+Peek returns the top value without changing the stack.
+</p>
+
+<h3>Algorithm</h3>
+<pre><code>PEEK()
+
+1. If top == -1
+      report Stack Empty
+      stop
+
+2. return stack[top]</code></pre>
+
+<div class="stack-example-box">
+<h3>Example</h3>
+<p>
+For stack <code>10, 20, 30</code> with <code>top = 2</code>,
+Peek returns <strong>30</strong> and <code>top</code> remains <strong>2</strong>.
+</p>
+</div>
+</section>
+
+
+<section class="content-card" id="stack-tracing">
+<span class="section-label">C PROGRAM + TRACING</span>
+<h2>💻 Array Stack Program in C</h2>
+
+<h3 class="stack-program-title">Visible Learning Program</h3>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+#define MAX 5
+
+int stack[MAX];
+int top = -1;
+
+void push(int value)
+{
+    if(top == MAX - 1)
+    {
+        printf("Overflow\n");
+        return;
+    }
+
+    top++;
+    stack[top] = value;
+}
+
+int pop()
+{
+    int value;
+
+    if(top == -1)
+        return -1;
+
+    value = stack[top];
+    top--;
+
+    return value;
+}
+
+int peek()
+{
+    if(top == -1)
+        return -1;
+
+    return stack[top];
+}
+
+int main()
+{
+    push(10);
+    push(20);
+    push(30);
+
+    printf("Popped: %d\n", pop());
+    printf("Top: %d\n", peek());
+
+    return 0;
+}</code></pre>
+
+<div class="stack-io">
+<div class="stack-io-box">
+<h4>Output</h4>
+<pre><code>Popped: 30
+Top: 20</code></pre>
+</div>
+<div class="stack-io-box">
+<h4>Final Stack</h4>
+<pre><code>20  ← TOP
+10</code></pre>
+</div>
+</div>
+
+<div class="stack-tracer-wrap">
+<button class="stack-tracer-toggle" type="button" onclick="StackTrace.toggle()">
+▶ Program Tracing — Array Stack
+</button>
+
+<div class="stack-tracer" id="stackTrace" hidden>
+<div class="stack-tracer-title">PROGRAM TRACING — ARRAY STACK</div>
+
+<div class="stack-tracer-grid">
+
+<div class="stack-tracer-panel">
+<h4>💻 Program</h4>
+<pre class="stack-tracer-code" id="stackTraceCode"></pre>
+</div>
+
+<div class="stack-tracer-panel">
+<h4>🧠 What is happening?</h4>
+<div class="stack-tracer-explain" id="stackTraceExplain"></div>
+
+<h4>📊 Live Variables</h4>
+<div class="stack-vars" id="stackTraceVars"></div>
+</div>
+
+</div>
+
+<div class="stack-trace-memory">
+<h4>📦 Live Stack Array</h4>
+<div class="stack-trace-array" id="stackTraceArray"></div>
+</div>
+
+<div class="stack-operation" id="stackTraceOperation"></div>
+
+<div class="stack-tracer-controls">
+<button onclick="StackTrace.prev()">← Previous</button>
+<button onclick="StackTrace.reset()">↺ Reset</button>
+<button id="stackTraceNext" onclick="StackTrace.next()">Next →</button>
+<button id="stackTraceAuto" onclick="StackTrace.auto()">▶ Auto Run</button>
+</div>
+
+<div class="stack-tracer-status" id="stackTraceStatus">Ready to execute.</div>
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="stack-complexity">
+<span class="section-label">COMPLEXITY</span>
+<h2>⚡ Time and Space Complexity</h2>
+
+<div class="stack-complexity">
+<div>
+<strong>Push — O(1)</strong>
+Only the top index and one array element are updated.
+</div>
+<div>
+<strong>Pop — O(1)</strong>
+Only the current top value and top index are used.
+</div>
+<div>
+<strong>Peek — O(1)</strong>
+Directly reads <code>stack[top]</code>.
+</div>
+<div>
+<strong>Space — O(MAX)</strong>
+The fixed array reserves space for MAX elements.
+</div>
+</div>
+
+<div class="tip-box">
+<strong>Interview note:</strong> Array-based stacks provide O(1) push, pop and peek,
+but a fixed-size array may cause overflow when the capacity is exhausted.
+</div>
+</section>
+
+
+
+
+<section class="content-card" id="linked-stack">
+<span class="section-label">LINKED LIST IMPLEMENTATION</span>
+<h2>🔗 Stack Using Linked List</h2>
+
+<p>
+A stack can also be implemented using a singly linked list. In this implementation,
+the <strong>head node acts as TOP</strong>.
+</p>
+
+<div class="stack-key-box">
+<h3>💡 Core Idea</h3>
+<p>
+Push inserts a new node at the beginning of the linked list.
+Pop deletes the first node.
+Because both operations work at the head, they take <strong>O(1)</strong> time.
+</p>
+</div>
+
+<h3>Node Structure</h3>
+
+<pre><code>struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+struct Node *top = NULL;</code></pre>
+
+<div class="stack-linked-idea-grid">
+<div>
+<strong>TOP is the head pointer</strong>
+<code>top</code> always stores the address of the most recently pushed node.
+</div>
+
+<div>
+<strong>No fixed array capacity</strong>
+The stack grows dynamically while memory allocation succeeds.
+</div>
+</div>
+
+<div class="tip-box">
+<strong>Key difference from an array stack:</strong>
+there is no <code>top</code> integer index. Here, <code>top</code> is a
+<strong>pointer to the first node</strong>.
+</div>
+</section>
+
+
+<section class="content-card" id="linked-stack-operations">
+<span class="section-label">PUSH • POP • PEEK</span>
+<h2>⚙️ Linked Stack Operations</h2>
+
+<h3>Push Algorithm</h3>
+<pre><code>PUSH(value)
+
+1. Create newNode
+2. newNode->data = value
+3. newNode->next = top
+4. top = newNode</code></pre>
+
+<h3>Pop Algorithm</h3>
+<pre><code>POP()
+
+1. If top == NULL
+      report Underflow
+      stop
+
+2. temp = top
+3. value = temp->data
+4. top = top->next
+5. free(temp)
+6. return value</code></pre>
+
+<h3>Peek Algorithm</h3>
+<pre><code>PEEK()
+
+1. If top == NULL
+      report Empty Stack
+      stop
+
+2. return top->data</code></pre>
+
+<div class="stack-viz" id="linkedStackViz">
+
+<div class="stack-viz-header">
+<div class="stack-viz-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+<div class="stack-viz-brand">
+<img src="../images/codebhavya-icon-32.png" alt="CodeBhavya"/>
+<span class="code">Code</span><span class="bhavya">Bhavya</span>
+</div>
+
+<div class="stack-viz-title">
+<strong>🎬 Premium Linked List Stack Visualizer</strong>
+<span>Push multiple values, pop multiple nodes, and watch the TOP pointer change</span>
+</div>
+</div>
+
+<div class="stack-viz-body">
+
+<div class="stack-viz-controls" style="grid-template-columns:minmax(230px,1.2fr) 170px minmax(180px,.8fr) auto;">
+<div class="stack-field">
+<label>Initial stack (bottom → top)</label>
+<input id="linkedStackInput" value="10,20,30"/>
+</div>
+
+<div class="stack-field">
+<label>Operation</label>
+<select id="linkedStackOperation" onchange="LinkedStackViz.syncOperationUI()">
+<option value="push" selected>Push Values</option>
+<option value="pop">Pop Multiple</option>
+<option value="peek">Peek</option>
+</select>
+</div>
+
+<div class="stack-field">
+<label id="linkedStackValueLabel">Values to push</label>
+<input id="linkedStackValue" value="40,50" placeholder="40,50"/>
+</div>
+
+<div class="stack-field">
+<label>&nbsp;</label>
+<button class="primary-button" type="button" onclick="LinkedStackViz.load()">Prepare Operation</button>
+</div>
+</div>
+
+<div class="stack-linked-viz-stage">
+<div class="stack-linked-canvas" id="linkedStackCanvas">
+
+<div class="stack-linked-chain" id="linkedStackChain"></div>
+
+<div class="stack-linked-top-pointer" id="linkedStackTopPointer">
+<div><strong>top = </strong><span id="linkedStackTop">N3</span></div>
+<div class="stack-linked-top-arrow">← TOP / head</div>
+</div>
+
+<div class="stack-linked-detached" id="linkedStackDetached"></div>
+
+</div>
+</div>
+
+<div class="stack-viz-actions">
+<button class="primary" onclick="LinkedStackViz.prev()">← Previous</button>
+<button class="primary" id="linkedStackNext" onclick="LinkedStackViz.next()">Next →</button>
+<button class="gold" id="linkedStackAuto" onclick="LinkedStackViz.auto()">▶ Auto Run</button>
+<button class="muted" onclick="LinkedStackViz.pause()">Ⅱ Pause</button>
+<button class="muted" onclick="LinkedStackViz.reset()">↺ Reset</button>
+</div>
+
+<div class="stack-viz-info">
+<div class="stack-viz-message" id="linkedStackMessage">
+Choose an operation and press Prepare Operation.
+</div>
+
+<div class="stack-viz-stats">
+<div class="stack-viz-stat"><strong>Operation</strong><span id="linkedStackOp">Push Values</span></div>
+<div class="stack-viz-stat"><strong>Nodes</strong><span id="linkedStackCount">3</span></div>
+<div class="stack-viz-stat"><strong>Step</strong><span id="linkedStackStep">1</span></div>
+</div>
+</div>
+
+<div class="stack-progress"><div id="linkedStackProgress"></div></div>
+
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="linked-stack-program">
+<span class="section-label">C PROGRAM + TRACING</span>
+<h2>💻 Linked List Stack Program in C</h2>
+
+<h3 class="stack-program-title">Visible Learning Program</h3>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+struct Node *top = NULL;
+
+void push(int value)
+{
+    struct Node *newNode =
+        (struct Node *)malloc(sizeof(struct Node));
+
+    newNode-&gt;data = value;
+    newNode-&gt;next = top;
+    top = newNode;
+}
+
+int pop()
+{
+    struct Node *temp;
+    int value;
+
+    if(top == NULL)
+        return -1;
+
+    temp = top;
+    value = temp-&gt;data;
+
+    top = top-&gt;next;
+    free(temp);
+
+    return value;
+}
+
+int peek()
+{
+    if(top == NULL)
+        return -1;
+
+    return top-&gt;data;
+}
+
+int main()
+{
+    push(10);
+    push(20);
+    push(30);
+
+    printf("Popped: %d\n", pop());
+    printf("Top: %d\n", peek());
+
+    return 0;
+}</code></pre>
+
+<div class="stack-io">
+<div class="stack-io-box">
+<h4>Output</h4>
+<pre><code>Popped: 30
+Top: 20</code></pre>
+</div>
+
+<div class="stack-io-box">
+<h4>Final Linked Stack</h4>
+<pre><code>TOP → 20 → 10 → NULL</code></pre>
+</div>
+</div>
+
+<div class="stack-tracer-wrap">
+<button class="stack-tracer-toggle" type="button" onclick="LinkedStackTrace.toggle()">
+▶ Program Tracing — Linked List Stack
+</button>
+
+<div class="stack-tracer" id="linkedStackTrace" hidden>
+
+<div class="stack-tracer-title">PROGRAM TRACING — LINKED LIST STACK</div>
+
+<div class="stack-tracer-grid">
+
+<div class="stack-tracer-panel">
+<h4>💻 Program</h4>
+<pre class="stack-tracer-code" id="linkedStackTraceCode"></pre>
+</div>
+
+<div class="stack-tracer-panel">
+<h4>🧠 What is happening?</h4>
+<div class="stack-tracer-explain" id="linkedStackTraceExplain"></div>
+
+<h4>📊 Live Variables</h4>
+<div class="stack-vars" id="linkedStackTraceVars"></div>
+</div>
+
+</div>
+
+<div class="stack-trace-memory">
+<h4>🔗 Live Linked Stack Memory</h4>
+<div class="stack-linked-trace-chain" id="linkedStackTraceChain"></div>
+</div>
+
+<div class="stack-operation" id="linkedStackTraceOperation"></div>
+
+<div class="stack-tracer-controls">
+<button onclick="LinkedStackTrace.prev()">← Previous</button>
+<button onclick="LinkedStackTrace.reset()">↺ Reset</button>
+<button id="linkedStackTraceNext" onclick="LinkedStackTrace.next()">Next →</button>
+<button id="linkedStackTraceAuto" onclick="LinkedStackTrace.auto()">▶ Auto Run</button>
+</div>
+
+<div class="stack-tracer-status" id="linkedStackTraceStatus">
+Ready to execute.
+</div>
+
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="linked-stack-complexity">
+<span class="section-label">COMPLEXITY + INTERVIEW NOTE</span>
+<h2>⚡ Linked List Stack Complexity</h2>
+
+<div class="stack-complexity">
+<div>
+<strong>Push — O(1)</strong>
+Insert the new node directly before the current TOP.
+</div>
+
+<div>
+<strong>Pop — O(1)</strong>
+Move TOP to the next node and free the old first node.
+</div>
+
+<div>
+<strong>Peek — O(1)</strong>
+Read <code>top-&gt;data</code> directly.
+</div>
+
+<div>
+<strong>Space — O(n)</strong>
+Each element requires one dynamically allocated node.
+</div>
+</div>
+
+<div class="stack-linked-comparison">
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Array Stack</th>
+<th>Linked List Stack</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TOP representation</td>
+<td>Integer index</td>
+<td>Node pointer</td>
+</tr>
+<tr>
+<td>Capacity</td>
+<td>Usually fixed</td>
+<td>Dynamic while memory is available</td>
+</tr>
+<tr>
+<td>Push / Pop / Peek</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Extra memory per element</td>
+<td>No link pointer</td>
+<td>One <code>next</code> pointer</td>
+</tr>
+<tr>
+<td>Main failure case</td>
+<td>Array overflow</td>
+<td>Memory allocation failure</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="tip-box">
+<strong>Interview note:</strong>
+A linked-list stack avoids a fixed array capacity, but every element needs pointer memory
+and dynamic allocation. The head must be used as TOP to preserve O(1) Push and Pop.
+</div>
+</section>
+
+
+<section class="content-card" id="stack-interview">
+<span class="section-label">COMMON QUESTIONS</span>
+<h2>❓ Interview Questions — Part 1</h2>
+<p>These first questions cover the core Stack ADT and array implementation.</p>
+
+<div class="stack-interview-preview">
+
+<div class="stack-interview-item">
+<div class="stack-interview-q">
+<span>1. What is LIFO?</span>
+<button type="button" onclick="toggleStackInterview('stackIa1',this)">Show Answer</button>
+</div>
+<div class="stack-interview-answer" id="stackIa1">
+LIFO means <strong>Last In, First Out</strong>. The element inserted most recently is removed first.
+<div class="stack-interview-short">
+<strong>Interview answer:</strong> A stack removes elements in the reverse order of insertion.
+</div>
+</div>
+</div>
+
+<div class="stack-interview-item">
+<div class="stack-interview-q">
+<span>2. What are stack overflow and stack underflow?</span>
+<button type="button" onclick="toggleStackInterview('stackIa2',this)">Show Answer</button>
+</div>
+<div class="stack-interview-answer" id="stackIa2">
+For a fixed array stack, <strong>overflow</strong> occurs when Push is attempted while
+<code>top == MAX - 1</code>. <strong>Underflow</strong> occurs when Pop or Peek is attempted while
+<code>top == -1</code>.
+<div class="stack-interview-short">
+<strong>Interview answer:</strong> Overflow means no free stack capacity; underflow means no element is available to remove/read.
+</div>
+</div>
+</div>
+
+<div class="stack-interview-item">
+<div class="stack-interview-q">
+<span>3. Why are Push and Pop O(1)?</span>
+<button type="button" onclick="toggleStackInterview('stackIa3',this)">Show Answer</button>
+</div>
+<div class="stack-interview-answer" id="stackIa3">
+Both operations work only at the top. They do not traverse the stack or shift all elements.
+Only a constant number of assignments is required.
+<div class="stack-interview-short">
+<strong>Interview answer:</strong> Stack operations access only TOP, so the work does not grow with the number of elements.
+</div>
+</div>
+</div>
+
+<div class="stack-interview-item">
+<div class="stack-interview-q">
+<span>4. Why should TOP be the head node in a linked-list stack?</span>
+<button type="button" onclick="toggleStackInterview('stackIa4',this)">Show Answer</button>
+</div>
+<div class="stack-interview-answer" id="stackIa4">
+Insertion and deletion at the head require only pointer updates, so Push and Pop remain O(1).
+If TOP were kept at the tail of a singly linked list, Pop would normally need traversal to find
+the previous node.
+<div class="stack-interview-short">
+<strong>Interview answer:</strong> Using the head as TOP gives O(1) insertion and deletion in a singly linked stack.
+</div>
+</div>
+</div>
+
+<div class="stack-interview-item">
+<div class="stack-interview-q">
+<span>5. What is the main trade-off between an array stack and a linked-list stack?</span>
+<button type="button" onclick="toggleStackInterview('stackIa5',this)">Show Answer</button>
+</div>
+<div class="stack-interview-answer" id="stackIa5">
+An array stack is compact and simple but commonly has a fixed capacity.
+A linked-list stack grows dynamically, but each node stores an additional pointer and requires
+dynamic memory allocation.
+<div class="stack-interview-short">
+<strong>Interview answer:</strong> Arrays use less per-element memory; linked stacks provide dynamic size at the cost of pointer and allocation overhead.
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+</main>
+</div>
+
+<footer class="footer">
+<div class="footer-container">
+
+<div class="footer-brand-section">
+<div class="footer-brand">
+<span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+</div>
+<p class="footer-tagline">From Learning to Limitless Possibilities.</p>
+<p class="footer-description">
+Learn, practice, build and grow with structured learning resources.
+</p>
+</div>
+
+<div class="footer-column">
+<h3>Quick Links</h3>
+<a href="../index.html">Home</a>
+<a href="../Mathematics/">Maths</a>
+<a href="../C-Programming/">C Programming</a>
+</div>
+
+<div class="footer-column">
+<h3>Learning</h3>
+<a href="index.html">Data Structures &amp; DSA</a>
+<a href="../Python/">Python</a>
+<a href="../AI-ML/">AI &amp; Machine Learning</a>
+</div>
+
+<div class="footer-column">
+<h3>Practice</h3>
+<a href="#array-stack">Stack Learning</a>
+<a href="#stack-tracing">Program Tracing</a>
+</div>
+
+</div>
+
+<div class="footer-bottom">
+<p>© 2026 CodeBhavya. All Rights Reserved.</p>
+<p>From Learning to Limitless Possibilities.</p>
+</div>
+</footer>
+
+
+<script>
+/* ============================================================
+   ARRAY STACK VISUALIZER — MULTI PUSH / MULTI POP
+   ============================================================ */
+window.StackViz = (() => {
+    const byId = id => document.getElementById(id);
+
+    const state = {
+        capacity:8,
+        steps:[],
+        index:0,
+        timer:null
+    };
+
+    function parseNumbers(text) {
+        return String(text || "")
+            .split(",")
+            .map(v => v.trim())
+            .filter(Boolean)
+            .map(Number)
+            .filter(Number.isFinite);
+    }
+
+    function getCapacity() {
+        let capacity = Number(byId("stackVizCapacity").value);
+
+        if (!Number.isInteger(capacity)) capacity = 8;
+
+        capacity = Math.max(1, Math.min(12, capacity));
+        byId("stackVizCapacity").value = capacity;
+
+        return capacity;
+    }
+
+    function parseInitialStack(capacity) {
+        return parseNumbers(byId("stackVizInput").value)
+            .slice(0,capacity);
+    }
+
+    function pushSteps(initial, values, capacity) {
+        const working = [...initial];
+        const steps = [{
+            values:[...working],
+            top:working.length-1,
+            current:working.length-1,
+            op:"Ready for multiple Push operations",
+            message:values.length
+                ? `Values queued for Push: ${values.join(", ")}.`
+                : "Enter one or more comma-separated values to push."
+        }];
+
+        if (!values.length) return steps;
+
+        values.forEach((value, sequenceIndex) => {
+            if (working.length >= capacity) {
+                steps.push({
+                    values:[...working],
+                    top:working.length-1,
+                    current:working.length-1,
+                    overflow:true,
+                    op:"top == capacity - 1",
+                    message:
+                        `Cannot push ${value}. Stack Overflow occurs at capacity ${capacity}. ` +
+                        `${values.length-sequenceIndex} queued value(s) remain unpushed.`
+                });
+                return;
+            }
+
+            steps.push({
+                values:[...working],
+                top:working.length-1,
+                current:working.length-1,
+                op:`Push ${value}: check overflow`,
+                message:
+                    `top = ${working.length-1}. Capacity = ${capacity}. A free slot is available.`
+            });
+
+            const newTop = working.length;
+
+            steps.push({
+                values:[...working],
+                top:newTop,
+                current:newTop,
+                pending:value,
+                op:"top++",
+                message:
+                    `Move TOP from ${newTop-1} to ${newTop} before storing ${value}.`
+            });
+
+            working.push(value);
+
+            steps.push({
+                values:[...working],
+                top:working.length-1,
+                current:working.length-1,
+                op:`stack[top] = ${value}`,
+                message:
+                    `${value} is now at the top of the stack.`
+            });
+        });
+
+        return steps;
+    }
+
+    function popSteps(initial, count) {
+        const working = [...initial];
+        const steps = [{
+            values:[...working],
+            top:working.length-1,
+            current:working.length-1,
+            op:"Ready for multiple Pop operations",
+            message:
+                `Requested Pop count: ${count}.`
+        }];
+
+        if (count <= 0) {
+            steps[0].message =
+                "Enter a positive Pop count such as 1, 2, or 3.";
+            return steps;
+        }
+
+        for (let k=1; k<=count; k++) {
+            if (!working.length) {
+                steps.push({
+                    values:[],
+                    top:-1,
+                    current:-1,
+                    underflow:true,
+                    op:"top == -1",
+                    message:
+                        `Pop ${k} cannot continue. Stack Underflow: the stack is empty.`
+                });
+                break;
+            }
+
+            const oldTop = working.length-1;
+            const value = working[oldTop];
+
+            steps.push({
+                values:[...working],
+                top:oldTop,
+                current:oldTop,
+                op:`Pop ${k}: check underflow`,
+                message:
+                    `top = ${oldTop}, so Pop can proceed.`
+            });
+
+            steps.push({
+                values:[...working],
+                top:oldTop,
+                current:oldTop,
+                removing:true,
+                op:"value = stack[top]",
+                message:
+                    `Read ${value} from stack[${oldTop}].`
+            });
+
+            working.pop();
+
+            steps.push({
+                values:[...working],
+                top:working.length-1,
+                current:working.length-1,
+                popped:value,
+                op:"top--",
+                message:
+                    `${value} is removed. TOP moves to ${working.length-1}.`
+            });
+        }
+
+        return steps;
+    }
+
+    function peekSteps(initial) {
+        if (!initial.length) {
+            return [{
+                values:[],
+                top:-1,
+                current:-1,
+                op:"top == -1",
+                message:"Stack is empty, so Peek has no value to return."
+            }];
+        }
+
+        const top = initial.length-1;
+        const value = initial[top];
+
+        return [
+            {
+                values:[...initial],
+                top,
+                current:top,
+                op:"Check empty stack",
+                message:`top = ${top}, so Peek can continue.`
+            },
+            {
+                values:[...initial],
+                top,
+                current:top,
+                op:"return stack[top]",
+                message:
+                    `Peek returns ${value}. No element is removed and TOP remains ${top}.`
+            }
+        ];
+    }
+
+    function makeSteps(initial, operation, rawValue, capacity) {
+        if (operation === "push") {
+            return pushSteps(
+                initial,
+                parseNumbers(rawValue),
+                capacity
+            );
+        }
+
+        if (operation === "pop") {
+            let count = Number(rawValue);
+            if (!Number.isFinite(count)) count = 0;
+            count = Math.max(0, Math.floor(count));
+
+            return popSteps(initial,count);
+        }
+
+        return peekSteps(initial);
+    }
+
+    function moveTopPointer(step) {
+        const pointer = byId("stackTopPointer");
+        const frame = byId("stackVizFrame");
+        const canvas = byId("stackVizCanvas");
+
+        if (!pointer || !frame || !canvas) return;
+
+        let targetTop;
+
+        if (step.top >= 0) {
+            const slot =
+                frame.querySelector(
+                    `.stack-slot[data-index="${step.top}"]`
+                );
+
+            if (slot) {
+                targetTop =
+                    frame.offsetTop +
+                    slot.offsetTop +
+                    slot.offsetHeight / 2;
+            }
+        }
+
+        /*
+           Empty stack: keep TOP just below index 0 to represent top = -1.
+        */
+        if (targetTop === undefined) {
+            const zeroSlot =
+                frame.querySelector(
+                    '.stack-slot[data-index="0"]'
+                );
+
+            targetTop =
+                zeroSlot
+                    ? frame.offsetTop +
+                      zeroSlot.offsetTop +
+                      zeroSlot.offsetHeight +
+                      22
+                    : frame.offsetTop +
+                      frame.offsetHeight -
+                      8;
+        }
+
+        pointer.style.left =
+            (frame.offsetLeft + frame.offsetWidth + 38) + "px";
+
+        pointer.style.top =
+            targetTop + "px";
+
+        pointer.classList.toggle(
+            "empty",
+            step.top < 0
+        );
+    }
+
+    function render() {
+        const step = state.steps[state.index];
+        const frame = byId("stackVizFrame");
+
+        let slots = "";
+
+        for (let i=0;i<state.capacity;i++) {
+            const filled = i < step.values.length;
+            const classes = ["stack-slot"];
+
+            if (filled) classes.push("filled");
+            if (i === step.top && filled) classes.push("top");
+            if (i === step.current) classes.push("current");
+            if (
+                i === step.current &&
+                step.removing
+            ) {
+                classes.push("removing");
+            }
+
+            let content =
+                filled
+                    ? step.values[i]
+                    : "empty";
+
+            if (
+                step.pending !== undefined &&
+                i === step.current &&
+                !filled
+            ) {
+                content = `next: ${step.pending}`;
+            }
+
+            slots += `
+                <div class="${classes.join(" ")}" data-index="${i}">
+                    <span class="idx">${i}</span>
+                    ${content}
+                </div>
+            `;
+        }
+
+        frame.innerHTML = slots;
+
+        byId("stackVizTop").textContent = step.top;
+
+        byId("stackVizMessage").innerHTML =
+            `<strong>${step.op}</strong><br>${step.message}`;
+
+        const operation =
+            byId("stackVizOperation").value;
+
+        const operationName = {
+            push:"Push Values",
+            pop:"Pop Multiple",
+            peek:"Peek"
+        }[operation];
+
+        byId("stackVizOp").textContent =
+            operationName;
+
+        byId("stackVizCount").textContent =
+            step.values.length;
+
+        byId("stackVizStep").textContent =
+            `${state.index+1}/${state.steps.length}`;
+
+        const pct =
+            state.steps.length <= 1
+                ? 100
+                : Math.round(
+                    state.index /
+                    (state.steps.length-1) *
+                    100
+                );
+
+        byId("stackVizProgress").style.width =
+            pct + "%";
+
+        const done =
+            state.index >=
+            state.steps.length-1;
+
+        const next = byId("stackVizNext");
+        const auto = byId("stackVizAuto");
+
+        next.disabled = done;
+        next.textContent =
+            done
+                ? "✓ Completed"
+                : "Next →";
+
+        auto.disabled = done;
+
+        requestAnimationFrame(() => {
+            moveTopPointer(step);
+        });
+    }
+
+    function load() {
+        pause();
+
+        state.capacity = getCapacity();
+
+        const initial =
+            parseInitialStack(
+                state.capacity
+            );
+
+        const operation =
+            byId("stackVizOperation").value;
+
+        const rawValue =
+            byId("stackVizValue").value;
+
+        state.steps = makeSteps(
+            initial,
+            operation,
+            rawValue,
+            state.capacity
+        );
+
+        state.index = 0;
+        render();
+    }
+
+    function syncOperationUI() {
+        const operation =
+            byId("stackVizOperation").value;
+
+        const label =
+            byId("stackVizValueLabel");
+
+        const input =
+            byId("stackVizValue");
+
+        if (operation === "push") {
+            label.textContent =
+                "Values to push";
+            input.disabled = false;
+            input.placeholder =
+                "40,50,60";
+
+            if (
+                !input.value.trim() ||
+                /^\d+$/.test(input.value.trim())
+            ) {
+                input.value = "40,50,60";
+            }
+        }
+        else if (operation === "pop") {
+            label.textContent =
+                "How many to pop";
+            input.disabled = false;
+            input.placeholder = "2";
+            input.value = "2";
+        }
+        else {
+            label.textContent =
+                "Value / count";
+            input.disabled = true;
+            input.value = "";
+            input.placeholder =
+                "Not needed for Peek";
+        }
+    }
+
+    function next() {
+        if (
+            state.index >=
+            state.steps.length-1
+        ) return;
+
+        state.index++;
+        render();
+    }
+
+    function prev() {
+        if (state.index <= 0) return;
+
+        pause();
+        state.index--;
+        render();
+    }
+
+    function reset() {
+        pause();
+        state.index = 0;
+        render();
+    }
+
+    function auto() {
+        if (
+            state.timer ||
+            state.index >=
+            state.steps.length-1
+        ) return;
+
+        state.timer =
+            setInterval(() => {
+                if (
+                    state.index >=
+                    state.steps.length-1
+                ) {
+                    pause();
+                    render();
+                    return;
+                }
+
+                state.index++;
+                render();
+
+                if (
+                    state.index >=
+                    state.steps.length-1
+                ) {
+                    pause();
+                }
+            },800);
+    }
+
+    function pause() {
+        if (state.timer) {
+            clearInterval(state.timer);
+            state.timer = null;
+        }
+    }
+
+    window.addEventListener(
+        "resize",
+        () => {
+            if (
+                state.steps.length
+            ) {
+                moveTopPointer(
+                    state.steps[state.index]
+                );
+            }
+        }
+    );
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+            syncOperationUI();
+            load();
+        }
+    );
+
+    return {
+        load,
+        next,
+        prev,
+        reset,
+        auto,
+        pause,
+        syncOperationUI
+    };
+})();
+</script>
+
+
+<script>
+/* ============================================================
+   ARRAY STACK PROGRAM TRACER
+   Only actual C variables are shown.
+   ============================================================ */
+window.StackTrace = (() => {
+    const program = [
+        "int main()",
+        "{",
+        "    push(10);",
+        "    push(20);",
+        "    push(30);",
+        "",
+        "    printf(\"Popped: %d\\n\", pop());",
+        "    printf(\"Top: %d\\n\", peek());",
+        "",
+        "    return 0;",
+        "}",
+        "",
+        "void push(int value)",
+        "{",
+        "    if(top == MAX - 1)",
+        "    {",
+        "        printf(\"Overflow\\n\");",
+        "        return;",
+        "    }",
+        "",
+        "    top++;",
+        "    stack[top] = value;",
+        "}",
+        "",
+        "int pop()",
+        "{",
+        "    int value;",
+        "",
+        "    if(top == -1)",
+        "        return -1;",
+        "",
+        "    value = stack[top];",
+        "    top--;",
+        "",
+        "    return value;",
+        "}",
+        "",
+        "int peek()",
+        "{",
+        "    if(top == -1)",
+        "        return -1;",
+        "",
+        "    return stack[top];",
+        "}"
+    ];
+
+    const initial = {
+        top:-1,
+        stack:["—","—","—","—","—"],
+        value:"—",
+        output:"",
+        callStack:["main()"],
+        currentIndex:-1
+    };
+
+    const steps = [];
+
+    function add(line,explain,op,mutate) {
+        steps.push({line,explain,op,mutate});
+    }
+
+    function addPush(value, mainLine) {
+        add(
+            mainLine,
+            `main() calls push(${value}).`,
+            `push(${value})`,
+            s => {
+                s.callStack = ["main()",`push(${value})`];
+                s.value = value;
+                s.currentIndex = s.top;
+            }
+        );
+
+        add(
+            14,
+            `Check whether top equals MAX - 1. top = ${value===10?-1:value===20?0:1}, so overflow is false.`,
+            "top == MAX - 1 → FALSE",
+            s => {}
+        );
+
+        add(
+            20,
+            "Increment top by one.",
+            "top++",
+            s => {
+                s.top++;
+                s.currentIndex = s.top;
+            }
+        );
+
+        add(
+            21,
+            `Store ${value} at stack[top].`,
+            `stack[${value===10?0:value===20?1:2}] = ${value}`,
+            s => {
+                s.stack[s.top] = value;
+            }
+        );
+
+        add(
+            22,
+            `push(${value}) finishes and control returns to main().`,
+            "Return to main()",
+            s => {
+                s.callStack = ["main()"];
+                s.value = "—";
+                s.currentIndex = s.top;
+            }
+        );
+    }
+
+    add(
+        0,
+        "Program execution starts in main(). The global stack is empty and top = -1.",
+        "Enter main()",
+        s => {}
+    );
+
+    addPush(10,2);
+    addPush(20,3);
+    addPush(30,4);
+
+    add(
+        6,
+        "main() calls pop() while top points to 30.",
+        "pop()",
+        s => {
+            s.callStack = ["main()","pop()"];
+            s.currentIndex = s.top;
+        }
+    );
+
+    add(
+        26,
+        "The local variable value is declared.",
+        "Declare value",
+        s => {
+            s.value = "indeterminate";
+        }
+    );
+
+    add(
+        28,
+        "Check whether top == -1. top = 2, so the stack is not empty.",
+        "top == -1 → FALSE",
+        s => {}
+    );
+
+    add(
+        31,
+        "Copy stack[top] into value. stack[2] is 30.",
+        "value = stack[top]",
+        s => {
+            s.value = s.stack[s.top];
+            s.currentIndex = s.top;
+        }
+    );
+
+    add(
+        32,
+        "Decrement top from 2 to 1. The logical stack now contains 10 and 20.",
+        "top--",
+        s => {
+            s.top--;
+            s.currentIndex = s.top;
+        }
+    );
+
+    add(
+        34,
+        "Return 30 to main().",
+        "return value",
+        s => {
+            s.callStack = ["main()"];
+        }
+    );
+
+    add(
+        6,
+        "printf() receives the value returned by pop() and prints it.",
+        "Print Popped: 30",
+        s => {
+            s.output = "Popped: 30";
+            s.value = "—";
+        }
+    );
+
+    add(
+        7,
+        "main() calls peek().",
+        "peek()",
+        s => {
+            s.callStack = ["main()","peek()"];
+            s.currentIndex = s.top;
+        }
+    );
+
+    add(
+        39,
+        "Check whether top == -1. top = 1, so Peek can continue.",
+        "top == -1 → FALSE",
+        s => {}
+    );
+
+    add(
+        42,
+        "Return stack[top]. stack[1] contains 20. Peek does not change top.",
+        "return stack[top]",
+        s => {
+            s.value = s.stack[s.top];
+        }
+    );
+
+    add(
+        7,
+        "printf() prints the value returned by peek().",
+        "Print Top: 20",
+        s => {
+            s.callStack = ["main()"];
+            s.output = "Popped: 30\nTop: 20";
+            s.value = "—";
+        }
+    );
+
+    add(
+        9,
+        "main() returns 0 and the program finishes.",
+        "return 0",
+        s => {
+            s.currentIndex = s.top;
+        }
+    );
+
+    const registry = {
+        current:0,
+        state:clone(initial),
+        timer:null
+    };
+
+    function clone(value) {
+        return JSON.parse(JSON.stringify(value));
+    }
+
+    function escapeHtml(value) {
+        return String(value ?? "")
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;");
+    }
+
+    function applyThrough(count) {
+        registry.state = clone(initial);
+
+        for(let i=0;i<count;i++) {
+            steps[i].mutate(registry.state);
+        }
+    }
+
+    function currentStep() {
+        if (registry.current === 0) {
+            return {
+                line:0,
+                explain:"Press Next to start executing the program.",
+                op:""
+            };
+        }
+
+        return steps[
+            Math.min(
+                registry.current-1,
+                steps.length-1
+            )
+        ];
+    }
+
+    function renderCode(step) {
+        const code =
+            document.getElementById("stackTraceCode");
+
+        code.innerHTML = program.map((line,index)=>{
+            const active =
+                index === step.line
+                    ? " active"
+                    : "";
+
+            return `<span class="stack-code-line${active}">${escapeHtml(line)}</span>`;
+        }).join("");
+
+        /* Approved CodeBhavya internal code-pane scrolling */
+        requestAnimationFrame(() => {
+            const active =
+                code.querySelector(
+                    ".stack-code-line.active"
+                );
+
+            if (!active) return;
+
+            const codeRect =
+                code.getBoundingClientRect();
+
+            const activeRect =
+                active.getBoundingClientRect();
+
+            const activeTopInsideCode =
+                code.scrollTop +
+                (activeRect.top - codeRect.top);
+
+            const activeBottomInsideCode =
+                activeTopInsideCode +
+                activeRect.height;
+
+            const topSafe =
+                code.scrollTop + 42;
+
+            const bottomSafe =
+                code.scrollTop +
+                code.clientHeight -
+                42;
+
+            let newScrollTop = code.scrollTop;
+
+            if (activeTopInsideCode < topSafe) {
+                newScrollTop =
+                    Math.max(
+                        0,
+                        activeTopInsideCode - 42
+                    );
+            }
+            else if (
+                activeBottomInsideCode >
+                bottomSafe
+            ) {
+                newScrollTop =
+                    Math.max(
+                        0,
+                        activeBottomInsideCode -
+                        code.clientHeight +
+                        42
+                    );
+            }
+
+            if (
+                Math.abs(
+                    newScrollTop -
+                    code.scrollTop
+                ) > 1
+            ) {
+                code.scrollTo({
+                    top:newScrollTop,
+                    left:code.scrollLeft,
+                    behavior:"smooth"
+                });
+            }
+        });
+    }
+
+    function renderVars() {
+        const s = registry.state;
+
+        const vars = [
+            ["top",s.top],
+            ["value",s.value],
+            ["output",s.output || '""']
+        ];
+
+        document.getElementById(
+            "stackTraceVars"
+        ).innerHTML = vars.map(([k,v])=>`
+            <div class="stack-var">
+                <strong>${escapeHtml(k)}</strong>
+                <span>${escapeHtml(v)}</span>
+            </div>
+        `).join("");
+    }
+
+    function renderArray() {
+        const s = registry.state;
+
+        document.getElementById(
+            "stackTraceArray"
+        ).innerHTML = s.stack.map((value,index)=>{
+            const classes = ["stack-trace-cell"];
+
+            if (value === "—")
+                classes.push("empty");
+
+            if (index === s.top && s.top >= 0)
+                classes.push("top");
+
+            if (index === s.currentIndex)
+                classes.push("current");
+
+            /*
+               Cells above top are logically outside the stack.
+               Display them as empty even if an old popped value
+               still exists physically in the array.
+            */
+            const display =
+                index <= s.top
+                    ? value
+                    : "—";
+
+            if (index > s.top) {
+                classes.push("empty");
+            }
+
+            return `
+                <div class="${classes.join(" ")}">
+                    ${escapeHtml(display)}
+                    <span class="stack-trace-index">[${index}]</span>
+                </div>
+            `;
+        }).join("");
+    }
+
+    function render() {
+        const step = currentStep();
+
+        renderCode(step);
+        renderVars();
+        renderArray();
+
+        document.getElementById(
+            "stackTraceExplain"
+        ).textContent =
+            step.explain || "";
+
+        document.getElementById(
+            "stackTraceOperation"
+        ).innerHTML =
+            step.op
+                ? `<strong>Current Operation:</strong> ${escapeHtml(step.op)}`
+                : "";
+
+        const done =
+            registry.current >= steps.length;
+
+        const next =
+            document.getElementById("stackTraceNext");
+
+        const auto =
+            document.getElementById("stackTraceAuto");
+
+        next.disabled = done;
+        next.textContent =
+            done ? "✓ Completed" : "Next →";
+
+        auto.disabled =
+            done || !!registry.timer;
+
+        document.getElementById(
+            "stackTraceStatus"
+        ).textContent =
+            done
+                ? "✓ Program execution completed. Press Reset to run again."
+                : `Step ${registry.current} of ${steps.length}`;
+    }
+
+    function toggle() {
+        const box =
+            document.getElementById("stackTrace");
+
+        box.hidden = !box.hidden;
+
+        if (!box.hidden) render();
+    }
+
+    function next() {
+        if (
+            registry.current >=
+            steps.length
+        ) return;
+
+        steps[registry.current]
+            .mutate(registry.state);
+
+        registry.current++;
+        render();
+    }
+
+    function prev() {
+        if (registry.current <= 0) return;
+
+        pause();
+
+        registry.current--;
+
+        applyThrough(
+            registry.current
+        );
+
+        render();
+    }
+
+    function reset() {
+        pause();
+
+        registry.current = 0;
+        registry.state = clone(initial);
+        render();
+
+        const code =
+            document.getElementById("stackTraceCode");
+
+        requestAnimationFrame(()=>{
+            code.scrollTo({
+                top:0,
+                left:0,
+                behavior:"auto"
+            });
+        });
+    }
+
+    function auto() {
+        if (
+            registry.timer ||
+            registry.current >=
+            steps.length
+        ) return;
+
+        registry.timer =
+            setInterval(() => {
+                if (
+                    registry.current >=
+                    steps.length
+                ) {
+                    pause();
+                    render();
+                    return;
+                }
+
+                next();
+
+                if (
+                    registry.current >=
+                    steps.length
+                ) {
+                    pause();
+                    render();
+                }
+            },850);
+
+        render();
+    }
+
+    function pause() {
+        if (registry.timer) {
+            clearInterval(
+                registry.timer
+            );
+            registry.timer = null;
+        }
+    }
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        render
+    );
+
+    return {
+        toggle,
+        next,
+        prev,
+        reset,
+        auto,
+        pause
+    };
+})();
+</script>
+
+
+<script>
+function toggleStackInterview(id,button) {
+    const answer =
+        document.getElementById(id);
+
+    if (!answer || !button) return;
+
+    const open =
+        answer.classList.toggle("show");
+
+    button.textContent =
+        open
+            ? "Hide Answer"
+            : "Show Answer";
+}
+</script>
+
+
+
+<script>
+/* ============================================================
+   LINKED LIST STACK VISUALIZER
+   Multi-push / multi-pop / peek
+   ============================================================ */
+window.LinkedStackViz = (() => {
+    const byId = id => document.getElementById(id);
+
+    const state = {
+        steps:[],
+        index:0,
+        timer:null
+    };
+
+    function parseNumbers(text) {
+        return String(text || "")
+            .split(",")
+            .map(v => v.trim())
+            .filter(Boolean)
+            .map(Number)
+            .filter(Number.isFinite)
+            .slice(0,12);
+    }
+
+    function buildInitial(values) {
+        const nodes = [];
+
+        values.forEach((value,index) => {
+            nodes.push({
+                id:`N${index+1}`,
+                data:value,
+                next:index === 0
+                    ? null
+                    : `N${index}`
+            });
+        });
+
+        return {
+            nodes,
+            top:nodes.length
+                ? nodes[nodes.length-1].id
+                : null,
+            nextId:nodes.length+1
+        };
+    }
+
+    function clone(value) {
+        return JSON.parse(JSON.stringify(value));
+    }
+
+    function topToBottom(nodes, top) {
+        const map =
+            Object.fromEntries(
+                nodes.map(n => [n.id,n])
+            );
+
+        const order = [];
+        const seen = new Set();
+
+        let current = top;
+
+        while (
+            current &&
+            map[current] &&
+            !seen.has(current)
+        ) {
+            seen.add(current);
+            order.push(map[current]);
+            current = map[current].next;
+        }
+
+        return order;
+    }
+
+    function pushSteps(initialValues, pushValues) {
+        const working = buildInitial(initialValues);
+
+        const steps = [{
+            nodes:clone(working.nodes),
+            top:working.top,
+            detached:null,
+            current:working.top,
+            op:"Ready for multiple Push operations",
+            message:pushValues.length
+                ? `Values queued for Push: ${pushValues.join(", ")}.`
+                : "Enter comma-separated values to push."
+        }];
+
+        if (!pushValues.length) return steps;
+
+        pushValues.forEach(value => {
+            const id = `N${working.nextId++}`;
+
+            const newNode = {
+                id,
+                data:"indeterminate",
+                next:"indeterminate"
+            };
+
+            steps.push({
+                nodes:clone(working.nodes),
+                top:working.top,
+                detached:clone(newNode),
+                current:id,
+                op:"malloc(sizeof(struct Node))",
+                message:`Allocate ${id} for the new top node.`
+            });
+
+            newNode.data = value;
+
+            steps.push({
+                nodes:clone(working.nodes),
+                top:working.top,
+                detached:clone(newNode),
+                current:id,
+                op:`newNode->data = ${value}`,
+                message:`Store ${value} in ${id}.data.`
+            });
+
+            newNode.next = working.top;
+
+            steps.push({
+                nodes:clone(working.nodes),
+                top:working.top,
+                detached:clone(newNode),
+                current:id,
+                op:"newNode->next = top",
+                message:
+                    `${id}.next now points to ${working.top || "NULL"}.`
+            });
+
+            working.nodes.push(clone(newNode));
+            working.top = id;
+
+            steps.push({
+                nodes:clone(working.nodes),
+                top:working.top,
+                detached:null,
+                current:id,
+                op:"top = newNode",
+                message:
+                    `${id} becomes the new TOP. Push of ${value} is complete.`
+            });
+        });
+
+        return steps;
+    }
+
+    function popSteps(initialValues, count) {
+        const working = buildInitial(initialValues);
+
+        const steps = [{
+            nodes:clone(working.nodes),
+            top:working.top,
+            detached:null,
+            current:working.top,
+            op:"Ready for multiple Pop operations",
+            message:`Requested Pop count: ${count}.`
+        }];
+
+        if (count <= 0) {
+            steps[0].message =
+                "Enter a positive Pop count such as 1, 2, or 3.";
+            return steps;
+        }
+
+        for (let k=1; k<=count; k++) {
+            if (!working.top) {
+                steps.push({
+                    nodes:clone(working.nodes),
+                    top:null,
+                    detached:null,
+                    current:null,
+                    underflow:true,
+                    op:"top == NULL",
+                    message:
+                        `Pop ${k} cannot continue. Stack Underflow: TOP is NULL.`
+                });
+                break;
+            }
+
+            const map =
+                Object.fromEntries(
+                    working.nodes.map(n => [n.id,n])
+                );
+
+            const target =
+                clone(map[working.top]);
+
+            steps.push({
+                nodes:clone(working.nodes),
+                top:working.top,
+                detached:null,
+                current:working.top,
+                op:`Pop ${k}: check top`,
+                message:
+                    `TOP points to ${working.top}, so Pop can continue.`
+            });
+
+            steps.push({
+                nodes:clone(working.nodes),
+                top:working.top,
+                detached:null,
+                current:working.top,
+                removing:working.top,
+                op:"temp = top",
+                message:
+                    `temp points to ${working.top}; value = ${target.data}.`
+            });
+
+            const oldTop = working.top;
+            working.top = target.next;
+
+            steps.push({
+                nodes:clone(working.nodes),
+                top:working.top,
+                detached:null,
+                current:working.top,
+                removing:oldTop,
+                op:"top = top->next",
+                message:
+                    `TOP moves from ${oldTop} to ${working.top || "NULL"}.`
+            });
+
+            working.nodes =
+                working.nodes.filter(
+                    n => n.id !== oldTop
+                );
+
+            steps.push({
+                nodes:clone(working.nodes),
+                top:working.top,
+                detached:null,
+                current:working.top,
+                op:"free(temp)",
+                message:
+                    `${oldTop} is freed. Pop returned ${target.data}.`
+            });
+        }
+
+        return steps;
+    }
+
+    function peekSteps(initialValues) {
+        const working = buildInitial(initialValues);
+
+        if (!working.top) {
+            return [{
+                nodes:[],
+                top:null,
+                detached:null,
+                current:null,
+                op:"top == NULL",
+                message:"The linked stack is empty."
+            }];
+        }
+
+        const map =
+            Object.fromEntries(
+                working.nodes.map(n => [n.id,n])
+            );
+
+        const value = map[working.top].data;
+
+        return [
+            {
+                nodes:clone(working.nodes),
+                top:working.top,
+                detached:null,
+                current:working.top,
+                op:"Check top",
+                message:`TOP points to ${working.top}.`
+            },
+            {
+                nodes:clone(working.nodes),
+                top:working.top,
+                detached:null,
+                current:working.top,
+                op:"return top->data",
+                message:
+                    `Peek returns ${value}. TOP does not change.`
+            }
+        ];
+    }
+
+    function makeSteps(initialValues, operation, rawValue) {
+        if (operation === "push") {
+            return pushSteps(
+                initialValues,
+                parseNumbers(rawValue)
+            );
+        }
+
+        if (operation === "pop") {
+            let count = Number(rawValue);
+
+            if (!Number.isFinite(count))
+                count = 0;
+
+            return popSteps(
+                initialValues,
+                Math.max(0,Math.floor(count))
+            );
+        }
+
+        return peekSteps(initialValues);
+    }
+
+    function renderNode(node, step, isTop) {
+        const classes = ["stack-linked-node"];
+
+        if (isTop) classes.push("top");
+        if (node.id === step.current)
+            classes.push("current");
+
+        if (node.id === step.removing)
+            classes.push("removing");
+
+        const labels = [];
+
+        if (isTop) labels.push("TOP");
+        if (node.id === step.current)
+            labels.push("current");
+
+        return `
+            <div class="${classes.join(" ")}" data-node="${node.id}">
+                <span class="stack-linked-address">${node.id}</span>
+                ${labels.length
+                    ? `<span class="stack-linked-badge">${labels.join(" / ")}</span>`
+                    : ""}
+                <div class="data">${node.data}</div>
+                <div class="next">${node.next || "NULL"}</div>
+            </div>
+        `;
+    }
+
+    function render() {
+        const step = state.steps[state.index];
+
+        const chain =
+            byId("linkedStackChain");
+
+        const order =
+            topToBottom(
+                step.nodes,
+                step.top
+            );
+
+        let html = "";
+
+        if (!order.length) {
+            html =
+                `<div class="stack-linked-null">TOP = NULL</div>`;
+        }
+        else {
+            order.forEach((node,index) => {
+                html +=
+                    renderNode(
+                        node,
+                        step,
+                        index === 0
+                    );
+
+                if (index < order.length-1) {
+                    html +=
+                        `<div class="stack-linked-arrow">↓</div>`;
+                }
+            });
+
+            html +=
+                `<div class="stack-linked-arrow">↓</div>
+                 <div class="stack-linked-null">NULL</div>`;
+        }
+
+        chain.innerHTML = html;
+
+        const detached =
+            byId("linkedStackDetached");
+
+        if (step.detached) {
+            detached.innerHTML = `
+                <div class="stack-linked-node new current">
+                    <span class="stack-linked-address">${step.detached.id}</span>
+                    <span class="stack-linked-badge">newNode</span>
+                    <div class="data">${step.detached.data}</div>
+                    <div class="next">${step.detached.next || "NULL"}</div>
+                </div>
+                <div class="stack-linked-caption">Detached allocated node</div>
+            `;
+        }
+        else {
+            detached.innerHTML = "";
+        }
+
+        byId("linkedStackTop").textContent =
+            step.top || "NULL";
+
+        byId("linkedStackMessage").innerHTML =
+            `<strong>${step.op}</strong><br>${step.message}`;
+
+        const operation =
+            byId("linkedStackOperation").value;
+
+        byId("linkedStackOp").textContent =
+            {
+                push:"Push Values",
+                pop:"Pop Multiple",
+                peek:"Peek"
+            }[operation];
+
+        byId("linkedStackCount").textContent =
+            step.nodes.length;
+
+        byId("linkedStackStep").textContent =
+            `${state.index+1}/${state.steps.length}`;
+
+        const pct =
+            state.steps.length <= 1
+                ? 100
+                : Math.round(
+                    state.index /
+                    (state.steps.length-1) *
+                    100
+                );
+
+        byId("linkedStackProgress").style.width =
+            pct + "%";
+
+        const done =
+            state.index >=
+            state.steps.length-1;
+
+        const next =
+            byId("linkedStackNext");
+
+        const auto =
+            byId("linkedStackAuto");
+
+        next.disabled = done;
+        next.textContent =
+            done ? "✓ Completed" : "Next →";
+
+        auto.disabled = done;
+
+        requestAnimationFrame(() => {
+            const pointer =
+                byId("linkedStackTopPointer");
+
+            const firstNode =
+                chain.querySelector(
+                    ".stack-linked-node"
+                );
+
+            if (pointer && firstNode) {
+                pointer.style.top =
+                    (
+                        chain.offsetTop +
+                        firstNode.offsetTop +
+                        firstNode.offsetHeight/2 -
+                        34
+                    ) + "px";
+            }
+            else if (pointer) {
+                pointer.style.top = "95px";
+            }
+        });
+    }
+
+    function load() {
+        pause();
+
+        const initial =
+            parseNumbers(
+                byId("linkedStackInput").value
+            );
+
+        const operation =
+            byId("linkedStackOperation").value;
+
+        const rawValue =
+            byId("linkedStackValue").value;
+
+        state.steps =
+            makeSteps(
+                initial,
+                operation,
+                rawValue
+            );
+
+        state.index = 0;
+        render();
+    }
+
+    function syncOperationUI() {
+        const operation =
+            byId("linkedStackOperation").value;
+
+        const label =
+            byId("linkedStackValueLabel");
+
+        const input =
+            byId("linkedStackValue");
+
+        if (operation === "push") {
+            label.textContent =
+                "Values to push";
+            input.disabled = false;
+            input.value = "40,50";
+            input.placeholder = "40,50";
+        }
+        else if (operation === "pop") {
+            label.textContent =
+                "How many to pop";
+            input.disabled = false;
+            input.value = "2";
+            input.placeholder = "2";
+        }
+        else {
+            label.textContent =
+                "Value / count";
+            input.disabled = true;
+            input.value = "";
+            input.placeholder =
+                "Not needed for Peek";
+        }
+    }
+
+    function next() {
+        if (
+            state.index >=
+            state.steps.length-1
+        ) return;
+
+        state.index++;
+        render();
+    }
+
+    function prev() {
+        if (state.index <= 0) return;
+
+        pause();
+        state.index--;
+        render();
+    }
+
+    function reset() {
+        pause();
+        state.index = 0;
+        render();
+    }
+
+    function auto() {
+        if (
+            state.timer ||
+            state.index >=
+            state.steps.length-1
+        ) return;
+
+        state.timer =
+            setInterval(() => {
+                if (
+                    state.index >=
+                    state.steps.length-1
+                ) {
+                    pause();
+                    render();
+                    return;
+                }
+
+                state.index++;
+                render();
+
+                if (
+                    state.index >=
+                    state.steps.length-1
+                ) {
+                    pause();
+                }
+            },800);
+    }
+
+    function pause() {
+        if (state.timer) {
+            clearInterval(state.timer);
+            state.timer = null;
+        }
+    }
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+            syncOperationUI();
+            load();
+        }
+    );
+
+    return {
+        load,
+        next,
+        prev,
+        reset,
+        auto,
+        pause,
+        syncOperationUI
+    };
+})();
+</script>
+
+
+
+<script>
+/* ============================================================
+   LINKED LIST STACK PROGRAM TRACER
+   Shows only actual C variables + linked memory.
+   ============================================================ */
+window.LinkedStackTrace = (() => {
+    const program = [
+        "int main()",
+        "{",
+        "    push(10);",
+        "    push(20);",
+        "    push(30);",
+        "",
+        "    printf(\"Popped: %d\\n\", pop());",
+        "    printf(\"Top: %d\\n\", peek());",
+        "",
+        "    return 0;",
+        "}",
+        "",
+        "void push(int value)",
+        "{",
+        "    struct Node *newNode =",
+        "        (struct Node *)malloc(sizeof(struct Node));",
+        "",
+        "    newNode->data = value;",
+        "    newNode->next = top;",
+        "    top = newNode;",
+        "}",
+        "",
+        "int pop()",
+        "{",
+        "    struct Node *temp;",
+        "    int value;",
+        "",
+        "    if(top == NULL)",
+        "        return -1;",
+        "",
+        "    temp = top;",
+        "    value = temp->data;",
+        "",
+        "    top = top->next;",
+        "    free(temp);",
+        "",
+        "    return value;",
+        "}",
+        "",
+        "int peek()",
+        "{",
+        "    if(top == NULL)",
+        "        return -1;",
+        "",
+        "    return top->data;",
+        "}"
+    ];
+
+    const initial = {
+        top:"NULL",
+        newNode:"—",
+        temp:"—",
+        value:"—",
+        output:"",
+        nodes:{},
+        currentNode:null,
+        detachedNode:null
+    };
+
+    const steps = [];
+    let nextNodeNumber = 1;
+
+    function add(line,explain,op,mutate) {
+        steps.push({
+            line,
+            explain,
+            op,
+            mutate
+        });
+    }
+
+    function addPush(value,mainLine) {
+        const id = `N${nextNodeNumber++}`;
+
+        add(
+            mainLine,
+            `main() calls push(${value}).`,
+            `push(${value})`,
+            s => {
+                s.value = value;
+                s.currentNode = null;
+            }
+        );
+
+        add(
+            14,
+            `Allocate memory for newNode ${id}.`,
+            "malloc(sizeof(struct Node))",
+            s => {
+                s.newNode = id;
+                s.detachedNode = id;
+                s.nodes[id] = {
+                    data:"indeterminate",
+                    next:"indeterminate"
+                };
+                s.currentNode = id;
+            }
+        );
+
+        add(
+            17,
+            `Store ${value} in ${id}.data.`,
+            `newNode->data = ${value}`,
+            s => {
+                s.nodes[id].data = value;
+                s.currentNode = id;
+            }
+        );
+
+        add(
+            18,
+            `Set ${id}.next to the current TOP (${safestr("TOP")}).`,
+            "newNode->next = top",
+            s => {
+                s.nodes[id].next =
+                    s.top === "NULL"
+                        ? null
+                        : s.top;
+                s.currentNode = id;
+            }
+        );
+
+        add(
+            19,
+            `${id} becomes the new TOP.`,
+            "top = newNode",
+            s => {
+                s.top = id;
+                s.detachedNode = null;
+                s.currentNode = id;
+            }
+        );
+
+        add(
+            20,
+            `push(${value}) finishes.`,
+            "Return to main()",
+            s => {
+                s.newNode = "—";
+                s.value = "—";
+                s.currentNode = s.top;
+            }
+        );
+    }
+
+    function safestr(value) {
+        return value;
+    }
+
+    add(
+        0,
+        "Program execution starts in main(). The linked stack is empty, so top = NULL.",
+        "Enter main()",
+        s => {}
+    );
+
+    addPush(10,2);
+    addPush(20,3);
+    addPush(30,4);
+
+    add(
+        6,
+        "main() calls pop(). TOP currently points to N3.",
+        "pop()",
+        s => {
+            s.currentNode = s.top;
+        }
+    );
+
+    add(
+        24,
+        "The local pointer temp is declared.",
+        "Declare temp",
+        s => {
+            s.temp = "indeterminate";
+        }
+    );
+
+    add(
+        25,
+        "The local integer value is declared.",
+        "Declare value",
+        s => {
+            s.value = "indeterminate";
+        }
+    );
+
+    add(
+        27,
+        "Check whether top == NULL. TOP is N3, so the stack is not empty.",
+        "top == NULL → FALSE",
+        s => {}
+    );
+
+    add(
+        30,
+        "temp receives the current TOP address N3.",
+        "temp = top",
+        s => {
+            s.temp = s.top;
+            s.currentNode = s.temp;
+        }
+    );
+
+    add(
+        31,
+        "Copy the data stored in temp. N3 contains 30.",
+        "value = temp->data",
+        s => {
+            s.value =
+                s.nodes[s.temp].data;
+        }
+    );
+
+    add(
+        33,
+        "Move TOP to the next node. N3.next points to N2.",
+        "top = top->next",
+        s => {
+            s.top =
+                s.nodes[s.top].next || "NULL";
+            s.currentNode =
+                s.top === "NULL"
+                    ? null
+                    : s.top;
+        }
+    );
+
+    add(
+        34,
+        "Free the old TOP node N3.",
+        "free(temp)",
+        s => {
+            delete s.nodes[s.temp];
+        }
+    );
+
+    add(
+        36,
+        "Return the popped value 30.",
+        "return value",
+        s => {}
+    );
+
+    add(
+        6,
+        "printf() prints the value returned by pop().",
+        "Print Popped: 30",
+        s => {
+            s.output = "Popped: 30";
+            s.temp = "—";
+            s.value = "—";
+        }
+    );
+
+    add(
+        7,
+        "main() calls peek(). TOP currently points to N2.",
+        "peek()",
+        s => {
+            s.currentNode =
+                s.top === "NULL"
+                    ? null
+                    : s.top;
+        }
+    );
+
+    add(
+        41,
+        "Check whether top == NULL. TOP is N2, so Peek can continue.",
+        "top == NULL → FALSE",
+        s => {}
+    );
+
+    add(
+        44,
+        "Return top->data. N2 contains 20.",
+        "return top->data",
+        s => {
+            s.value =
+                s.nodes[s.top].data;
+        }
+    );
+
+    add(
+        7,
+        "printf() prints the value returned by peek(). TOP does not change.",
+        "Print Top: 20",
+        s => {
+            s.output =
+                "Popped: 30\nTop: 20";
+            s.value = "—";
+        }
+    );
+
+    add(
+        9,
+        "main() returns 0 and the program finishes.",
+        "return 0",
+        s => {
+            s.currentNode =
+                s.top === "NULL"
+                    ? null
+                    : s.top;
+        }
+    );
+
+    const registry = {
+        current:0,
+        state:clone(initial),
+        timer:null
+    };
+
+    function clone(value) {
+        return JSON.parse(JSON.stringify(value));
+    }
+
+    function escapeHtml(value) {
+        return String(value ?? "")
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;");
+    }
+
+    function applyThrough(count) {
+        registry.state =
+            clone(initial);
+
+        for (let i=0;i<count;i++) {
+            steps[i].mutate(
+                registry.state
+            );
+        }
+    }
+
+    function currentStep() {
+        if (registry.current === 0) {
+            return {
+                line:0,
+                explain:
+                    "Press Next to start executing the linked-list stack program.",
+                op:""
+            };
+        }
+
+        return steps[
+            Math.min(
+                registry.current-1,
+                steps.length-1
+            )
+        ];
+    }
+
+    function renderCode(step) {
+        const code =
+            document.getElementById(
+                "linkedStackTraceCode"
+            );
+
+        code.innerHTML =
+            program.map((line,index)=>{
+                const active =
+                    index === step.line
+                        ? " active"
+                        : "";
+
+                return `<span class="stack-code-line${active}">${escapeHtml(line)}</span>`;
+            }).join("");
+
+        /* Approved CodeBhavya internal code-pane scrolling */
+        requestAnimationFrame(() => {
+            const active =
+                code.querySelector(
+                    ".stack-code-line.active"
+                );
+
+            if (!active) return;
+
+            const codeRect =
+                code.getBoundingClientRect();
+
+            const activeRect =
+                active.getBoundingClientRect();
+
+            const activeTopInsideCode =
+                code.scrollTop +
+                (activeRect.top -
+                 codeRect.top);
+
+            const activeBottomInsideCode =
+                activeTopInsideCode +
+                activeRect.height;
+
+            const topSafe =
+                code.scrollTop + 42;
+
+            const bottomSafe =
+                code.scrollTop +
+                code.clientHeight -
+                42;
+
+            let newScrollTop =
+                code.scrollTop;
+
+            if (
+                activeTopInsideCode <
+                topSafe
+            ) {
+                newScrollTop =
+                    Math.max(
+                        0,
+                        activeTopInsideCode -
+                        42
+                    );
+            }
+            else if (
+                activeBottomInsideCode >
+                bottomSafe
+            ) {
+                newScrollTop =
+                    Math.max(
+                        0,
+                        activeBottomInsideCode -
+                        code.clientHeight +
+                        42
+                    );
+            }
+
+            if (
+                Math.abs(
+                    newScrollTop -
+                    code.scrollTop
+                ) > 1
+            ) {
+                code.scrollTo({
+                    top:newScrollTop,
+                    left:code.scrollLeft,
+                    behavior:"smooth"
+                });
+            }
+        });
+    }
+
+    function renderVars() {
+        const s = registry.state;
+
+        const vars = [
+            ["top",s.top],
+            ["newNode",s.newNode],
+            ["temp",s.temp],
+            ["value",s.value],
+            ["output",s.output || '""']
+        ];
+
+        document.getElementById(
+            "linkedStackTraceVars"
+        ).innerHTML =
+            vars.map(([key,value]) => `
+                <div class="stack-var">
+                    <strong>${escapeHtml(key)}</strong>
+                    <span>${escapeHtml(value)}</span>
+                </div>
+            `).join("");
+    }
+
+    function chainOrder(state) {
+        const order = [];
+        const seen = new Set();
+
+        let current =
+            state.top === "NULL"
+                ? null
+                : state.top;
+
+        while (
+            current &&
+            state.nodes[current] &&
+            !seen.has(current)
+        ) {
+            seen.add(current);
+            order.push(current);
+            current =
+                state.nodes[current].next;
+        }
+
+        return order;
+    }
+
+    function renderNode(id,state,detached) {
+        const node = state.nodes[id];
+
+        if (!node) return "";
+
+        const classes =
+            ["stack-linked-trace-node"];
+
+        if (id === state.top)
+            classes.push("top");
+
+        if (id === state.currentNode)
+            classes.push("current");
+
+        if (detached)
+            classes.push("detached");
+
+        const labels = [];
+
+        if (id === state.top)
+            labels.push("TOP");
+
+        if (id === state.newNode)
+            labels.push("newNode");
+
+        if (id === state.temp)
+            labels.push("temp");
+
+        return `
+            <div class="${classes.join(" ")}">
+                <span class="stack-linked-trace-address">${id}</span>
+
+                ${labels.length
+                    ? `<span class="stack-linked-trace-badge">${labels.join(" / ")}</span>`
+                    : ""}
+
+                <div class="d">${escapeHtml(node.data)}</div>
+                <div class="n">${escapeHtml(node.next === null ? "NULL" : node.next)}</div>
+            </div>
+        `;
+    }
+
+    function renderMemory() {
+        const s = registry.state;
+        const order = chainOrder(s);
+
+        let html = "";
+
+        if (!order.length) {
+            html =
+                `<div class="stack-linked-null">TOP = NULL</div>`;
+        }
+        else {
+            order.forEach((id,index) => {
+                html +=
+                    renderNode(
+                        id,
+                        s,
+                        false
+                    );
+
+                if (index < order.length-1) {
+                    html +=
+                        `<div class="stack-linked-trace-arrow">↓</div>`;
+                }
+            });
+
+            html +=
+                `<div class="stack-linked-trace-arrow">↓</div>
+                 <div class="stack-linked-null">NULL</div>`;
+        }
+
+        if (
+            s.detachedNode &&
+            s.nodes[s.detachedNode] &&
+            !order.includes(s.detachedNode)
+        ) {
+            html += `
+                <div class="stack-linked-trace-detached">
+                    <div class="stack-linked-trace-detached-title">
+                        Allocated node not linked to TOP yet
+                    </div>
+                    ${renderNode(
+                        s.detachedNode,
+                        s,
+                        true
+                    )}
+                </div>
+            `;
+        }
+
+        document.getElementById(
+            "linkedStackTraceChain"
+        ).innerHTML = html;
+    }
+
+    function render() {
+        const step =
+            currentStep();
+
+        renderCode(step);
+        renderVars();
+        renderMemory();
+
+        document.getElementById(
+            "linkedStackTraceExplain"
+        ).textContent =
+            step.explain || "";
+
+        document.getElementById(
+            "linkedStackTraceOperation"
+        ).innerHTML =
+            step.op
+                ? `<strong>Current Operation:</strong> ${escapeHtml(step.op)}`
+                : "";
+
+        const done =
+            registry.current >=
+            steps.length;
+
+        const next =
+            document.getElementById(
+                "linkedStackTraceNext"
+            );
+
+        const auto =
+            document.getElementById(
+                "linkedStackTraceAuto"
+            );
+
+        next.disabled = done;
+        next.textContent =
+            done
+                ? "✓ Completed"
+                : "Next →";
+
+        auto.disabled =
+            done || !!registry.timer;
+
+        document.getElementById(
+            "linkedStackTraceStatus"
+        ).textContent =
+            done
+                ? "✓ Program execution completed. Press Reset to run again."
+                : `Step ${registry.current} of ${steps.length}`;
+    }
+
+    function toggle() {
+        const box =
+            document.getElementById(
+                "linkedStackTrace"
+            );
+
+        box.hidden =
+            !box.hidden;
+
+        if (!box.hidden)
+            render();
+    }
+
+    function next() {
+        if (
+            registry.current >=
+            steps.length
+        ) return;
+
+        steps[
+            registry.current
+        ].mutate(
+            registry.state
+        );
+
+        registry.current++;
+        render();
+    }
+
+    function prev() {
+        if (
+            registry.current <= 0
+        ) return;
+
+        pause();
+
+        registry.current--;
+
+        applyThrough(
+            registry.current
+        );
+
+        render();
+    }
+
+    function reset() {
+        pause();
+
+        registry.current = 0;
+        registry.state =
+            clone(initial);
+
+        render();
+
+        const code =
+            document.getElementById(
+                "linkedStackTraceCode"
+            );
+
+        requestAnimationFrame(() => {
+            code.scrollTo({
+                top:0,
+                left:0,
+                behavior:"auto"
+            });
+        });
+    }
+
+    function auto() {
+        if (
+            registry.timer ||
+            registry.current >=
+            steps.length
+        ) return;
+
+        registry.timer =
+            setInterval(() => {
+                if (
+                    registry.current >=
+                    steps.length
+                ) {
+                    pause();
+                    render();
+                    return;
+                }
+
+                next();
+
+                if (
+                    registry.current >=
+                    steps.length
+                ) {
+                    pause();
+                    render();
+                }
+            },850);
+
+        render();
+    }
+
+    function pause() {
+        if (
+            registry.timer
+        ) {
+            clearInterval(
+                registry.timer
+            );
+
+            registry.timer = null;
+        }
+    }
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        render
+    );
+
+    return {
+        toggle,
+        next,
+        prev,
+        reset,
+        auto,
+        pause
+    };
+})();
+</script>
+
+
+<script>
+/* Active Stack sidebar section */
+document.addEventListener("DOMContentLoaded", function () {
+    const links =
+        Array.from(
+            document.querySelectorAll(
+                ".stack-side-link"
+            )
+        );
+
+    const entries = links
+        .map(link => {
+            const href =
+                link.getAttribute("href");
+
+            return {
+                link,
+                section:
+                    href &&
+                    href.startsWith("#")
+                        ? document.querySelector(href)
+                        : null
+            };
+        })
+        .filter(item => item.section);
+
+    function updateActive() {
+        const marker =
+            window.scrollY + 160;
+
+        let active = entries[0];
+
+        entries.forEach(item => {
+            if (
+                item.section.offsetTop <=
+                marker
+            ) {
+                active = item;
+            }
+        });
+
+        links.forEach(link =>
+            link.classList.remove("active")
+        );
+
+        if (active) {
+            active.link.classList.add(
+                "active"
+            );
+        }
+    }
+
+    updateActive();
+
+    window.addEventListener(
+        "scroll",
+        updateActive,
+        {passive:true}
+    );
+});
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
+
