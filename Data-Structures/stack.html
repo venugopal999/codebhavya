@@ -746,7 +746,7 @@
 }
 
 .stack-linked-viz-stage {
-    min-height:420px;
+    min-height:610px;
     margin-top:14px;
     overflow:auto;
     padding:18px;
@@ -758,8 +758,8 @@
 .stack-linked-canvas {
     position:relative;
     width:max-content;
-    min-width:650px;
-    min-height:380px;
+    min-width:760px;
+    min-height:575px;
     margin:0 auto;
     padding:18px 250px 18px 95px;
 }
@@ -768,15 +768,33 @@
     display:flex;
     flex-direction:column;
     align-items:center;
+    justify-content:flex-end;
+
+    width:200px;
     min-width:200px;
-    min-height:340px;
+
+    /*
+       Keep a fixed visual stack area so the bottom stays in one place.
+       As nodes are pushed, the TOP node moves upward.
+       As nodes are popped, TOP moves downward.
+    */
+    height:540px;
+    min-height:540px;
 }
 
 .stack-linked-node {
     position:relative;
+    flex:0 0 auto;
     display:grid;
-    grid-template-columns:90px 85px;
-    min-width:175px;
+
+    /*
+       Wider cells prevent long teaching-state values such as
+       "indeterminate" from crossing the node border.
+    */
+    grid-template-columns:120px 110px;
+    width:230px;
+    min-width:230px;
+
     border:2px solid #0d1b2a;
     border-radius:8px;
     background:#fff;
@@ -785,25 +803,37 @@
 
 .stack-linked-node .data,
 .stack-linked-node .next {
-    min-height:55px;
+    min-width:0;
+    min-height:58px;
+
     display:flex;
     align-items:center;
     justify-content:center;
     flex-direction:column;
+
+    box-sizing:border-box;
+    padding:5px 7px;
+
+    overflow:hidden;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+    text-align:center;
+
     font-family:Consolas,"Courier New",monospace;
+    line-height:1.12;
 }
 
 .stack-linked-node .data {
     border-right:2px solid #0d1b2a;
     background:#f8f3e4;
-    font-size:18px;
+    font-size:13px;
     font-weight:800;
 }
 
 .stack-linked-node .next {
     background:#f8fafc;
     color:#475569;
-    font-size:11px;
+    font-size:10.5px;
 }
 
 .stack-linked-node.top {
@@ -852,6 +882,7 @@
 }
 
 .stack-linked-arrow {
+    flex:0 0 28px;
     height:28px;
     display:flex;
     align-items:center;
@@ -862,6 +893,7 @@
 }
 
 .stack-linked-null {
+    flex:0 0 auto;
     padding:7px 10px;
     border:1px dashed #94a3b8;
     border-radius:7px;
@@ -898,8 +930,9 @@
 
 .stack-linked-detached {
     position:absolute;
-    left:360px;
+    left:390px;
     bottom:55px;
+    min-width:230px;
 }
 
 .stack-linked-caption {
@@ -944,8 +977,15 @@
 .stack-linked-trace-node {
     position:relative;
     display:grid;
-    grid-template-columns:75px 70px;
-    min-width:145px;
+
+    /*
+       Wider cells so values such as "indeterminate" stay inside
+       the node instead of spilling across the border.
+    */
+    grid-template-columns:112px 105px;
+    width:217px;
+    min-width:217px;
+
     border:2px solid #0d1b2a;
     border-radius:7px;
     background:#fff;
@@ -953,11 +993,24 @@
 
 .stack-linked-trace-node .d,
 .stack-linked-trace-node .n {
-    min-height:44px;
+    min-width:0;
+    min-height:48px;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
+    box-sizing:border-box;
+    padding:4px 6px;
+
+    overflow:hidden;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+    text-align:center;
+
     font-family:Consolas,"Courier New",monospace;
+    font-size:11px;
+    line-height:1.15;
 }
 
 .stack-linked-trace-node .d {
@@ -969,7 +1022,7 @@
 .stack-linked-trace-node .n {
     background:#f8fafc;
     color:#475569;
-    font-size:10px;
+    font-size:10.5px;
 }
 
 .stack-linked-trace-node.top {
@@ -1023,6 +1076,8 @@
 .stack-linked-trace-detached {
     margin-top:12px;
     padding-top:12px;
+    padding-left:10px;
+    padding-right:10px;
     border-top:1px dashed #cbd5e1;
 }
 
@@ -1040,7 +1095,1092 @@
 
     .stack-linked-canvas {
         margin:0;
-        min-width:620px;
+        min-width:720px;
+    }
+}
+
+
+/* ============================================================
+   STACK PART 3 — PARENTHESES BALANCING
+   ============================================================ */
+
+.paren-rules-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin:16px 0;
+}
+
+.paren-rule-card {
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    padding:13px;
+    background:#f8fafc;
+}
+
+.paren-rule-card strong {
+    display:block;
+    margin-bottom:5px;
+    color:#0d1b2a;
+}
+
+.paren-viz-stage {
+    min-height:350px;
+    margin-top:14px;
+    overflow:auto;
+    padding:18px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+}
+
+.paren-expression-row {
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    justify-content:center;
+    margin-bottom:20px;
+}
+
+.paren-char {
+    min-width:36px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #cbd5e1;
+    border-radius:7px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:800;
+    color:#0f172a;
+}
+
+.paren-char.current {
+    border:2px solid #2563eb;
+    background:#eff6ff;
+    box-shadow:0 0 0 4px rgba(37,99,235,.10);
+}
+
+.paren-char.matched {
+    border-color:#16a34a;
+    background:#dcfce7;
+}
+
+.paren-char.error {
+    border-color:#dc2626;
+    background:#fee2e2;
+}
+
+.paren-main-area {
+    display:grid;
+    grid-template-columns:minmax(220px,1fr) minmax(220px,1fr);
+    gap:28px;
+    align-items:end;
+    justify-items:center;
+}
+
+.paren-stack-frame {
+    width:170px;
+    min-height:235px;
+    display:flex;
+    flex-direction:column-reverse;
+    justify-content:flex-start;
+    padding:8px;
+    border-left:3px solid #0d1b2a;
+    border-right:3px solid #0d1b2a;
+    border-bottom:3px solid #0d1b2a;
+    border-radius:0 0 9px 9px;
+    background:#fff;
+}
+
+.paren-stack-cell {
+    min-height:44px;
+    margin:3px 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #0d1b2a;
+    border-radius:7px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:18px;
+    font-weight:900;
+}
+
+.paren-stack-cell.top {
+    border-color:#d4af37;
+    background:#fff9df;
+}
+
+.paren-status-card {
+    width:100%;
+    max-width:320px;
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+    background:#fff;
+    padding:14px;
+}
+
+.paren-status-card strong {
+    color:#0d1b2a;
+}
+
+.paren-status-line {
+    margin-top:8px;
+    color:#475569;
+    line-height:1.5;
+}
+
+.paren-result {
+    display:inline-flex;
+    align-items:center;
+    padding:5px 9px;
+    border-radius:999px;
+    font-weight:800;
+}
+
+.paren-result.pending {
+    background:#eef2ff;
+    color:#3730a3;
+}
+
+.paren-result.success {
+    background:#dcfce7;
+    color:#166534;
+}
+
+.paren-result.fail {
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+/* Tracer stack */
+.paren-trace-stack {
+    width:160px;
+    min-height:200px;
+    display:flex;
+    flex-direction:column-reverse;
+    justify-content:flex-start;
+    padding:7px;
+    border-left:3px solid #0d1b2a;
+    border-right:3px solid #0d1b2a;
+    border-bottom:3px solid #0d1b2a;
+    border-radius:0 0 8px 8px;
+    background:#fff;
+}
+
+.paren-trace-cell {
+    min-height:38px;
+    margin:3px 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #0d1b2a;
+    border-radius:6px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:900;
+}
+
+.paren-trace-cell.top {
+    border-color:#d4af37;
+    background:#fff9df;
+}
+
+.paren-trace-layout {
+    display:grid;
+    grid-template-columns:200px 1fr;
+    gap:18px;
+    align-items:start;
+}
+
+.paren-trace-expression {
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    margin-bottom:10px;
+}
+
+.paren-trace-char {
+    min-width:30px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #cbd5e1;
+    border-radius:6px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:800;
+}
+
+.paren-trace-char.current {
+    border-color:#2563eb;
+    background:#eff6ff;
+}
+
+.paren-trace-char.done {
+    border-color:#16a34a;
+    background:#dcfce7;
+}
+
+@media(max-width:800px) {
+    .paren-rules-grid {
+        grid-template-columns:1fr;
+    }
+
+    .paren-main-area {
+        grid-template-columns:1fr;
+        align-items:start;
+    }
+}
+
+
+/* ============================================================
+   STACK PART 4 — INFIX TO POSTFIX
+   ============================================================ */
+
+.infix-rule-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin:16px 0;
+}
+.infix-rule-card {
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    padding:13px;
+    background:#f8fafc;
+}
+.infix-rule-card strong {
+    display:block;
+    margin-bottom:5px;
+    color:#0d1b2a;
+}
+
+.infix-table-wrap {
+    overflow-x:auto;
+    margin:14px 0;
+}
+.infix-table {
+    width:100%;
+    min-width:580px;
+    border-collapse:collapse;
+}
+.infix-table th,
+.infix-table td {
+    border:1px solid #dbe3ec;
+    padding:9px 11px;
+    text-align:center;
+}
+.infix-table th {
+    background:#0d1b2a;
+    color:#fff;
+}
+
+.infix-viz-stage {
+    min-height:420px;
+    margin-top:14px;
+    overflow:auto;
+    padding:18px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+}
+
+.infix-expression-row {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-bottom:18px;
+}
+
+.infix-token {
+    min-width:36px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #cbd5e1;
+    border-radius:7px;
+    background:#fff;
+    color:#0f172a;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:800;
+}
+.infix-token.current {
+    border:2px solid #2563eb;
+    background:#eff6ff;
+    box-shadow:0 0 0 4px rgba(37,99,235,.10);
+}
+.infix-token.done {
+    border-color:#16a34a;
+    background:#dcfce7;
+}
+
+.infix-viz-grid {
+    display:grid;
+    grid-template-columns:230px minmax(300px,1fr);
+    gap:30px;
+    align-items:end;
+}
+
+.infix-op-stack {
+    width:170px;
+    min-height:250px;
+    display:flex;
+    flex-direction:column-reverse;
+    justify-content:flex-start;
+    padding:8px;
+    border-left:3px solid #0d1b2a;
+    border-right:3px solid #0d1b2a;
+    border-bottom:3px solid #0d1b2a;
+    border-radius:0 0 9px 9px;
+    background:#fff;
+}
+
+.infix-op-cell {
+    min-height:44px;
+    margin:3px 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #0d1b2a;
+    border-radius:7px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:18px;
+    font-weight:900;
+}
+.infix-op-cell.top {
+    border-color:#d4af37;
+    background:#fff9df;
+}
+
+.infix-output-box {
+    min-height:72px;
+    padding:13px 15px;
+    border:1px solid #dbe3ec;
+    border-radius:9px;
+    background:#fff;
+}
+.infix-output-label {
+    margin-bottom:7px;
+    color:#64748b;
+    font-size:11px;
+    font-weight:800;
+    text-transform:uppercase;
+}
+.infix-output-value {
+    min-height:32px;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:22px;
+    font-weight:900;
+    letter-spacing:1px;
+    color:#0d1b2a;
+    overflow-wrap:anywhere;
+}
+.infix-decision-box {
+    margin-top:12px;
+    padding:11px 13px;
+    border-left:4px solid #d4af37;
+    border-radius:7px;
+    background:#fff;
+    color:#334155;
+    line-height:1.55;
+}
+
+.infix-trace-memory-grid {
+    display:grid;
+    grid-template-columns:190px 1fr;
+    gap:18px;
+    align-items:start;
+}
+.infix-trace-stack {
+    width:150px;
+    min-height:210px;
+    display:flex;
+    flex-direction:column-reverse;
+    justify-content:flex-start;
+    padding:7px;
+    border-left:3px solid #0d1b2a;
+    border-right:3px solid #0d1b2a;
+    border-bottom:3px solid #0d1b2a;
+    border-radius:0 0 8px 8px;
+    background:#fff;
+}
+.infix-trace-cell {
+    min-height:38px;
+    margin:3px 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #0d1b2a;
+    border-radius:6px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:900;
+}
+.infix-trace-cell.top {
+    border-color:#d4af37;
+    background:#fff9df;
+}
+.infix-trace-expression {
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    margin-bottom:10px;
+}
+.infix-trace-token {
+    min-width:30px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #cbd5e1;
+    border-radius:6px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:800;
+}
+.infix-trace-token.current {
+    border-color:#2563eb;
+    background:#eff6ff;
+}
+.infix-trace-token.done {
+    border-color:#16a34a;
+    background:#dcfce7;
+}
+
+@media(max-width:900px) {
+    .infix-rule-grid { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:760px) {
+    .infix-viz-grid,
+    .infix-trace-memory-grid {
+        grid-template-columns:1fr;
+    }
+}
+@media(max-width:560px) {
+    .infix-rule-grid { grid-template-columns:1fr; }
+}
+
+
+/* ============================================================
+   STACK PART 5 — POSTFIX EVALUATION
+   ============================================================ */
+
+.postfix-rule-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin:16px 0;
+}
+.postfix-rule-card {
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    padding:13px;
+    background:#f8fafc;
+}
+.postfix-rule-card strong {
+    display:block;
+    margin-bottom:5px;
+    color:#0d1b2a;
+}
+.postfix-viz-stage {
+    min-height:420px;
+    margin-top:14px;
+    overflow:auto;
+    padding:18px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+}
+.postfix-expression-row {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-bottom:18px;
+}
+.postfix-token {
+    min-width:36px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #cbd5e1;
+    border-radius:7px;
+    background:#fff;
+    color:#0f172a;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:800;
+}
+.postfix-token.current {
+    border:2px solid #2563eb;
+    background:#eff6ff;
+    box-shadow:0 0 0 4px rgba(37,99,235,.10);
+}
+.postfix-token.done {
+    border-color:#16a34a;
+    background:#dcfce7;
+}
+.postfix-viz-grid {
+    display:grid;
+    grid-template-columns:230px minmax(300px,1fr);
+    gap:30px;
+    align-items:end;
+}
+.postfix-value-stack {
+    width:170px;
+    min-height:260px;
+    display:flex;
+    flex-direction:column-reverse;
+    justify-content:flex-start;
+    padding:8px;
+    border-left:3px solid #0d1b2a;
+    border-right:3px solid #0d1b2a;
+    border-bottom:3px solid #0d1b2a;
+    border-radius:0 0 9px 9px;
+    background:#fff;
+}
+.postfix-value-cell {
+    min-height:44px;
+    margin:3px 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #0d1b2a;
+    border-radius:7px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:17px;
+    font-weight:900;
+}
+.postfix-value-cell.top {
+    border-color:#d4af37;
+    background:#fff9df;
+}
+.postfix-eval-box {
+    border:1px solid #dbe3ec;
+    border-radius:10px;
+    background:#fff;
+    padding:14px;
+}
+.postfix-eval-line {
+    margin:7px 0;
+    color:#475569;
+    line-height:1.5;
+}
+.postfix-result-box {
+    margin-top:12px;
+    padding:13px 15px;
+    border:1px solid #dbe3ec;
+    border-radius:9px;
+    background:#fff;
+}
+.postfix-result-label {
+    margin-bottom:6px;
+    color:#64748b;
+    font-size:11px;
+    font-weight:800;
+    text-transform:uppercase;
+}
+.postfix-result-value {
+    min-height:30px;
+    color:#0d1b2a;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:22px;
+    font-weight:900;
+}
+.postfix-trace-memory-grid {
+    display:grid;
+    grid-template-columns:190px 1fr;
+    gap:18px;
+    align-items:start;
+}
+.postfix-trace-stack {
+    width:150px;
+    min-height:210px;
+    display:flex;
+    flex-direction:column-reverse;
+    justify-content:flex-start;
+    padding:7px;
+    border-left:3px solid #0d1b2a;
+    border-right:3px solid #0d1b2a;
+    border-bottom:3px solid #0d1b2a;
+    border-radius:0 0 8px 8px;
+    background:#fff;
+}
+.postfix-trace-cell {
+    min-height:38px;
+    margin:3px 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #0d1b2a;
+    border-radius:6px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:900;
+}
+.postfix-trace-cell.top {
+    border-color:#d4af37;
+    background:#fff9df;
+}
+.postfix-trace-expression {
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    margin-bottom:10px;
+}
+.postfix-trace-token {
+    min-width:30px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #cbd5e1;
+    border-radius:6px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:800;
+}
+.postfix-trace-token.current {
+    border-color:#2563eb;
+    background:#eff6ff;
+}
+.postfix-trace-token.done {
+    border-color:#16a34a;
+    background:#dcfce7;
+}
+@media(max-width:850px) {
+    .postfix-rule-grid { grid-template-columns:1fr; }
+}
+@media(max-width:760px) {
+    .postfix-viz-grid,
+    .postfix-trace-memory-grid { grid-template-columns:1fr; }
+}
+
+
+/* ============================================================
+   STACK FINAL PRACTICE
+   ============================================================ */
+
+.stack-practice-overall {
+    margin:14px 0 18px;
+    padding:14px;
+    border:1px solid #dbe3ec;
+    border-radius:10px;
+    background:#f8fafc;
+}
+
+.stack-practice-overall-title {
+    margin-bottom:10px;
+    color:#0d1b2a;
+    font-weight:900;
+}
+
+.stack-practice-overall-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+}
+
+.stack-practice-overall-item {
+    padding:10px;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    background:#fff;
+    text-align:center;
+}
+
+.stack-practice-overall-item strong {
+    display:block;
+    margin-bottom:3px;
+    color:#64748b;
+    font-size:11px;
+}
+
+.stack-practice-overall-item span {
+    color:#0d1b2a;
+    font-size:18px;
+    font-weight:900;
+}
+
+.stack-practice-progress-track {
+    height:8px;
+    margin-top:11px;
+    overflow:hidden;
+    border-radius:999px;
+    background:#e2e8f0;
+}
+
+.stack-practice-progress-fill {
+    height:100%;
+    width:0;
+    background:#d4af37;
+    transition:width .2s ease;
+}
+
+.stack-practice-list {
+    display:grid;
+    gap:14px;
+}
+
+.stack-practice-item {
+    border:1px solid #dbe3ec;
+    border-radius:12px;
+    background:#fff;
+    overflow:hidden;
+    box-shadow:0 4px 16px rgba(15,23,42,.05);
+}
+
+.stack-practice-head {
+    padding:14px 16px;
+    background:#f8fafc;
+    border-bottom:1px solid #e2e8f0;
+}
+
+.stack-practice-title-row {
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.stack-practice-title {
+    margin:0;
+    color:#0d1b2a;
+    font-size:17px;
+}
+
+.stack-practice-badges {
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+}
+
+.stack-practice-difficulty,
+.stack-practice-status {
+    display:inline-flex;
+    align-items:center;
+    min-height:25px;
+    padding:3px 8px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.stack-practice-difficulty {
+    background:#eef2ff;
+    color:#3730a3;
+}
+
+.stack-practice-status {
+    background:#eef2f7;
+    color:#475569;
+}
+
+.stack-practice-status.solved {
+    background:#dcfce7;
+    color:#166534;
+}
+
+.stack-practice-status.completed {
+    background:#fff7d6;
+    color:#7a5d00;
+}
+
+.stack-practice-body {
+    padding:15px 16px;
+}
+
+.stack-practice-spec-grid,
+.stack-practice-sample-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin:12px 0;
+}
+
+.stack-practice-spec {
+    padding:10px 11px;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    background:#f8fafc;
+}
+
+.stack-practice-spec strong {
+    display:block;
+    margin-bottom:4px;
+    color:#0d1b2a;
+}
+
+.stack-practice-sample {
+    overflow:hidden;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+}
+
+.stack-practice-sample h5 {
+    margin:0;
+    padding:8px 10px;
+    background:#0d1b2a;
+    color:#fff;
+    font-size:12px;
+}
+
+.stack-practice-sample pre {
+    margin:0;
+    min-height:54px;
+    padding:10px;
+    overflow:auto;
+    background:#0b1220;
+    color:#e5e7eb;
+}
+
+.stack-practice-buttons {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:13px;
+}
+
+.stack-solve-btn,
+.stack-hint-btn,
+.stack-solution-btn,
+.stack-run-btn,
+.stack-check-btn,
+.stack-reset-btn {
+    border:0;
+    border-radius:7px;
+    padding:9px 12px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.stack-solve-btn {
+    background:#d4af37;
+    color:#0d1b2a;
+}
+.stack-solve-btn:hover {
+    background:#f5d76e;
+}
+.stack-hint-btn,
+.stack-reset-btn {
+    background:#e2e8f0;
+    color:#0f172a;
+}
+.stack-solution-btn {
+    background:#0d1b2a;
+    color:#fff;
+}
+.stack-run-btn {
+    background:#2563eb;
+    color:#fff;
+}
+.stack-check-btn {
+    background:#16a34a;
+    color:#fff;
+}
+
+.stack-practice-hint,
+.stack-practice-solution,
+.stack-practice-workspace {
+    display:none;
+    margin-top:12px;
+}
+
+.stack-practice-hint.show,
+.stack-practice-solution.show,
+.stack-practice-workspace.show {
+    display:block;
+}
+
+.stack-practice-hint {
+    padding:11px 12px;
+    border-left:4px solid #d4af37;
+    border-radius:6px;
+    background:#fff9df;
+}
+
+.stack-practice-solution {
+    overflow:hidden;
+    border:1px solid #dbe3ec;
+    border-radius:9px;
+}
+
+.stack-practice-solution h5 {
+    margin:0;
+    padding:9px 11px;
+    background:#0d1b2a;
+    color:#fff;
+}
+
+.stack-practice-solution pre {
+    margin:0;
+    max-height:390px;
+    overflow:auto;
+    padding:12px;
+    background:#0b1220;
+    color:#e5e7eb;
+}
+
+.stack-practice-workspace {
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    background:#f8fafc;
+}
+
+.stack-practice-workspace-title {
+    margin-bottom:10px;
+    color:#0d1b2a;
+    font-weight:900;
+}
+
+.stack-practice-editor-grid {
+    display:grid;
+    grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);
+    gap:12px;
+}
+
+.stack-practice-panel {
+    min-width:0;
+}
+
+.stack-practice-panel label {
+    display:block;
+    margin-bottom:6px;
+    color:#334155;
+    font-weight:800;
+}
+
+.stack-practice-code,
+.stack-practice-input {
+    width:100%;
+    box-sizing:border-box;
+    resize:vertical;
+    padding:10px;
+    border:1px solid #cbd5e1;
+    border-radius:7px;
+    background:#fff;
+    color:#0f172a;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.stack-practice-code {
+    min-height:360px;
+}
+
+.stack-practice-input {
+    min-height:120px;
+}
+
+.stack-practice-output {
+    min-height:110px;
+    max-height:230px;
+    overflow:auto;
+    white-space:pre-wrap;
+    padding:10px;
+    border:1px solid #cbd5e1;
+    border-radius:7px;
+    background:#0b1220;
+    color:#e5e7eb;
+}
+
+.stack-practice-actions {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:8px;
+}
+
+.stack-practice-tests {
+    display:grid;
+    gap:6px;
+    margin-top:9px;
+}
+
+.stack-practice-test {
+    padding:8px 10px;
+    border-radius:7px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.stack-practice-test.pass {
+    background:#dcfce7;
+    color:#166534;
+}
+
+.stack-practice-test.fail {
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.stack-practice-score-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin-top:10px;
+}
+
+.stack-practice-score-grid > div {
+    padding:9px;
+    border:1px solid #e2e8f0;
+    border-radius:7px;
+    background:#fff;
+    text-align:center;
+}
+
+.stack-practice-score-grid strong {
+    display:block;
+    margin-bottom:3px;
+    color:#0d1b2a;
+}
+
+.stack-practice-message {
+    margin-top:9px;
+    padding:9px 10px;
+    border-radius:7px;
+    background:#eef2ff;
+    color:#3730a3;
+    font-size:12px;
+    font-weight:700;
+}
+
+@media(max-width:920px) {
+    .stack-practice-overall-grid {
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stack-practice-editor-grid {
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px) {
+    .stack-practice-overall-grid,
+    .stack-practice-spec-grid,
+    .stack-practice-sample-grid,
+    .stack-practice-score-grid {
+        grid-template-columns:1fr;
+    }
+
+    .stack-practice-title-row {
+        flex-direction:column;
+    }
+
+    .stack-practice-badges {
+        justify-content:flex-start;
     }
 }
 
@@ -1106,7 +2246,17 @@
 <a class="stack-side-link" href="#linked-stack-operations">Linked Stack Operations</a>
 <a class="stack-side-link" href="#linked-stack-program">Linked Stack Program Tracing</a>
 <a class="stack-side-link" href="#linked-stack-complexity">Linked Stack Complexity</a>
+<a class="stack-side-link" href="#parentheses-balancing">Parentheses Balancing</a>
+<a class="stack-side-link" href="#parentheses-program">Balancing Program Tracing</a>
+<a class="stack-side-link" href="#parentheses-complexity">Balancing Complexity</a>
+<a class="stack-side-link" href="#infix-postfix">Infix to Postfix</a>
+<a class="stack-side-link" href="#infix-postfix-program">Infix to Postfix Tracing</a>
+<a class="stack-side-link" href="#infix-postfix-complexity">Conversion Complexity</a>
+<a class="stack-side-link" href="#postfix-evaluation">Postfix Evaluation</a>
+<a class="stack-side-link" href="#postfix-program">Postfix Evaluation Tracing</a>
+<a class="stack-side-link" href="#postfix-complexity">Evaluation Complexity</a>
 <a class="stack-side-link" href="#stack-interview">Interview Questions</a>
+<a class="stack-side-link" href="#stack-practice">Practice Problems</a>
 </details>
 
 <details class="sidebar-topic">
@@ -1930,10 +3080,984 @@ and dynamic allocation. The head must be used as TOP to preserve O(1) Push and P
 </section>
 
 
+
+
+<section class="content-card" id="parentheses-balancing">
+<span class="section-label">STACK APPLICATION</span>
+<h2>🧩 Parentheses Balancing Using Stack</h2>
+
+<p>
+A stack is commonly used to verify whether brackets in an expression are properly balanced.
+The important bracket pairs are <code>()</code>, <code>{}</code>, and <code>[]</code>.
+</p>
+
+<div class="stack-key-box">
+<h3>💡 Core Idea</h3>
+<p>
+Push every opening bracket onto the stack. For a closing bracket, the stack must not be empty,
+and its TOP must contain the matching opening bracket. After the full expression is processed,
+the stack must be empty.
+</p>
+</div>
+
+<div class="paren-rules-grid">
+<div class="paren-rule-card">
+<strong>Opening Bracket</strong>
+For <code>(</code>, <code>{</code>, or <code>[</code>, push it onto the stack.
+</div>
+
+<div class="paren-rule-card">
+<strong>Closing Bracket</strong>
+For <code>)</code>, <code>}</code>, or <code>]</code>, compare it with the current TOP.
+</div>
+
+<div class="paren-rule-card">
+<strong>Final Check</strong>
+The expression is balanced only if no mismatch occurred and the stack is empty at the end.
+</div>
+</div>
+
+<div class="stack-example-box">
+<h3>🧠 Example</h3>
+<p>
+For <code>{[()]}</code>: push <code>{</code>, push <code>[</code>, push <code>(</code>,
+then each closing bracket matches and removes its corresponding opening bracket.
+The final stack is empty, so the expression is balanced.
+</p>
+</div>
+
+<h3>Algorithm</h3>
+
+<pre><code>IS_BALANCED(expression)
+
+1. Create an empty stack
+
+2. For each character ch in expression:
+
+      If ch is an opening bracket
+            Push ch
+
+      Else if ch is a closing bracket
+
+            If stack is empty
+                  return Not Balanced
+
+            Pop top bracket
+
+            If popped bracket does not match ch
+                  return Not Balanced
+
+3. If stack is empty
+      return Balanced
+   Else
+      return Not Balanced</code></pre>
+
+<div class="stack-viz" id="parenViz">
+
+<div class="stack-viz-header">
+<div class="stack-viz-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+<div class="stack-viz-brand">
+<img src="../images/codebhavya-icon-32.png" alt="CodeBhavya"/>
+<span class="code">Code</span><span class="bhavya">Bhavya</span>
+</div>
+
+<div class="stack-viz-title">
+<strong>🎬 Premium Parentheses Balancing Visualizer</strong>
+<span>Follow every character, stack Push/Pop, match, and final result</span>
+</div>
+</div>
+
+<div class="stack-viz-body">
+
+<div class="stack-viz-controls" style="grid-template-columns:minmax(260px,1fr) auto;">
+<div class="stack-field">
+<label>Expression</label>
+<input id="parenVizInput" value="{[()]}"/>
+</div>
+
+<div class="stack-field">
+<label>&nbsp;</label>
+<button class="primary-button" type="button" onclick="ParenViz.load()">Load Expression</button>
+</div>
+</div>
+
+<div class="paren-viz-stage">
+
+<div class="paren-expression-row" id="parenExpression"></div>
+
+<div class="paren-main-area">
+<div>
+<div class="paren-stack-frame" id="parenStack"></div>
+<div style="text-align:center;margin-top:8px;font-weight:800;color:#2563eb;">Bracket Stack</div>
+</div>
+
+<div class="paren-status-card">
+<div><strong>Current Character:</strong> <span id="parenCurrent">—</span></div>
+<div class="paren-status-line"><strong>Action:</strong> <span id="parenAction">Ready</span></div>
+<div class="paren-status-line"><strong>TOP:</strong> <span id="parenTop">—</span></div>
+<div class="paren-status-line"><strong>Result:</strong> <span id="parenResult" class="paren-result pending">Pending</span></div>
+</div>
+</div>
+
+</div>
+
+<div class="stack-viz-actions">
+<button class="primary" onclick="ParenViz.prev()">← Previous</button>
+<button class="primary" id="parenNext" onclick="ParenViz.next()">Next →</button>
+<button class="gold" id="parenAuto" onclick="ParenViz.auto()">▶ Auto Run</button>
+<button class="muted" onclick="ParenViz.pause()">Ⅱ Pause</button>
+<button class="muted" onclick="ParenViz.reset()">↺ Reset</button>
+</div>
+
+<div class="stack-viz-message" id="parenMessage">
+Load an expression and press Next.
+</div>
+
+<div class="stack-progress"><div id="parenProgress"></div></div>
+
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="parentheses-program">
+<span class="section-label">C PROGRAM + TRACING</span>
+<h2>💻 Parentheses Balancing Program in C</h2>
+
+<h3 class="stack-program-title">Visible Learning Program</h3>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int isMatching(char open, char close)
+{
+    return (open == '(' &amp;&amp; close == ')') ||
+           (open == '{' &amp;&amp; close == '}') ||
+           (open == '[' &amp;&amp; close == ']');
+}
+
+int main()
+{
+    char expr[100];
+    char stack[100];
+
+    int top = -1;
+    int balanced = 1;
+
+    scanf("%99s", expr);
+
+    for(int i = 0; expr[i] != '\0'; i++)
+    {
+        char ch = expr[i];
+
+        if(ch == '(' || ch == '{' || ch == '[')
+        {
+            top++;
+            stack[top] = ch;
+        }
+        else if(ch == ')' || ch == '}' || ch == ']')
+        {
+            if(top == -1)
+            {
+                balanced = 0;
+                break;
+            }
+
+            if(!isMatching(stack[top], ch))
+            {
+                balanced = 0;
+                break;
+            }
+
+            top--;
+        }
+    }
+
+    if(top != -1)
+        balanced = 0;
+
+    if(balanced)
+        printf("Balanced\n");
+    else
+        printf("Not Balanced\n");
+
+    return 0;
+}</code></pre>
+
+<div class="stack-io">
+<div class="stack-io-box">
+<h4>Sample Input</h4>
+<pre><code>{[()]}</code></pre>
+</div>
+
+<div class="stack-io-box">
+<h4>Sample Output</h4>
+<pre><code>Balanced</code></pre>
+</div>
+</div>
+
+<div class="stack-tracer-wrap">
+<button class="stack-tracer-toggle" type="button" onclick="ParenTrace.toggle()">
+▶ Program Tracing — Parentheses Balancing
+</button>
+
+<div class="stack-tracer" id="parenTrace" hidden>
+
+<div class="stack-tracer-title">PROGRAM TRACING — PARENTHESES BALANCING</div>
+
+<div class="stack-tracer-grid">
+
+<div class="stack-tracer-panel">
+<h4>💻 Program</h4>
+<pre class="stack-tracer-code" id="parenTraceCode"></pre>
+</div>
+
+<div class="stack-tracer-panel">
+<h4>🧠 What is happening?</h4>
+<div class="stack-tracer-explain" id="parenTraceExplain"></div>
+
+<h4>📊 Live Variables</h4>
+<div class="stack-vars" id="parenTraceVars"></div>
+</div>
+
+</div>
+
+<div class="stack-trace-memory">
+<h4>🧩 Live Expression + Stack</h4>
+
+<div class="paren-trace-layout">
+
+<div>
+<div class="paren-trace-stack" id="parenTraceStack"></div>
+<div style="text-align:center;margin-top:7px;font-size:11px;font-weight:800;color:#2563eb;">Bracket Stack</div>
+</div>
+
+<div>
+<div class="paren-trace-expression" id="parenTraceExpression"></div>
+<div class="stack-operation" id="parenTraceOperation"></div>
+</div>
+
+</div>
+</div>
+
+<div class="stack-tracer-controls">
+<button onclick="ParenTrace.prev()">← Previous</button>
+<button onclick="ParenTrace.reset()">↺ Reset</button>
+<button id="parenTraceNext" onclick="ParenTrace.next()">Next →</button>
+<button id="parenTraceAuto" onclick="ParenTrace.auto()">▶ Auto Run</button>
+</div>
+
+<div class="stack-tracer-status" id="parenTraceStatus">
+Ready to execute.
+</div>
+
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="parentheses-complexity">
+<span class="section-label">COMPLEXITY + INTERVIEW NOTE</span>
+<h2>⚡ Parentheses Balancing Complexity</h2>
+
+<div class="stack-complexity">
+<div>
+<strong>Time — O(n)</strong>
+Every expression character is processed once.
+</div>
+
+<div>
+<strong>Push — O(1)</strong>
+Each opening bracket is pushed once.
+</div>
+
+<div>
+<strong>Pop — O(1)</strong>
+Each matching closing bracket removes at most one stack item.
+</div>
+
+<div>
+<strong>Auxiliary Space — O(n)</strong>
+In the worst case, all characters may be opening brackets.
+</div>
+</div>
+
+<div class="tip-box">
+<strong>Interview note:</strong>
+A balanced-bracket solution must check both <strong>order</strong> and <strong>type</strong>.
+For example, <code>(]</code> has the correct count of opening/closing brackets but is still invalid
+because the bracket types do not match.
+</div>
+</section>
+
+
+
+
+<section class="content-card" id="infix-postfix">
+<span class="section-label">STACK APPLICATION</span>
+<h2>🔁 Infix to Postfix Conversion</h2>
+
+<p>
+In an <strong>infix expression</strong>, operators appear between operands, such as
+<code>A+B*C</code>. In a <strong>postfix expression</strong>, operators appear after their operands,
+such as <code>ABC*+</code>.
+</p>
+
+<div class="stack-key-box">
+<h3>💡 Why use a Stack?</h3>
+<p>
+Operands can be copied directly to the postfix output, but operators must wait until their
+precedence and parentheses rules are resolved. A stack temporarily stores those operators.
+</p>
+</div>
+
+<div class="infix-rule-grid">
+<div class="infix-rule-card">
+<strong>Operand</strong>
+Append it directly to postfix.
+</div>
+<div class="infix-rule-card">
+<strong>Opening (</strong>
+Push it onto the operator stack.
+</div>
+<div class="infix-rule-card">
+<strong>Closing )</strong>
+Pop operators until <code>(</code> is found, then discard the pair.
+</div>
+<div class="infix-rule-card">
+<strong>Operator</strong>
+Pop stronger/equal-precedence operators first, then push the current operator.
+</div>
+</div>
+
+<h3>Operator Precedence</h3>
+
+<div class="infix-table-wrap">
+<table class="infix-table">
+<thead>
+<tr>
+<th>Operator</th>
+<th>Meaning</th>
+<th>Precedence</th>
+<th>Associativity</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><code>^</code></td><td>Exponent</td><td>3</td><td>Right to Left</td></tr>
+<tr><td><code>* / %</code></td><td>Multiply / Divide / Mod</td><td>2</td><td>Left to Right</td></tr>
+<tr><td><code>+ -</code></td><td>Add / Subtract</td><td>1</td><td>Left to Right</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="stack-example-box">
+<h3>🧠 Example</h3>
+<p>
+For <code>A+B*(C-D)</code>, the postfix form is <strong><code>ABCD-*+</code></strong>.
+The parentheses control when <code>-</code> is emitted, and multiplication is emitted before addition.
+</p>
+</div>
+
+<h3>Algorithm</h3>
+
+<pre><code>INFIX_TO_POSTFIX(expression)
+
+1. Create an empty operator stack
+
+2. Scan expression from left to right
+
+3. If token is an operand
+      append token to postfix
+
+4. Else if token is '('
+      push it
+
+5. Else if token is ')'
+      pop and append until '(' is found
+      pop '(' and discard it
+
+6. Else token is an operator
+      while stack TOP contains an operator with
+      higher precedence, or equal precedence
+      for a left-associative operator:
+            pop TOP and append it
+
+      push current operator
+
+7. After scanning the expression,
+      pop all remaining operators to postfix</code></pre>
+
+<div class="stack-viz" id="infixViz">
+
+<div class="stack-viz-header">
+<div class="stack-viz-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+<div class="stack-viz-brand">
+<img src="../images/codebhavya-icon-32.png" alt="CodeBhavya"/>
+<span class="code">Code</span><span class="bhavya">Bhavya</span>
+</div>
+
+<div class="stack-viz-title">
+<strong>🎬 Premium Infix to Postfix Visualizer</strong>
+<span>Watch operands move to output and operators move through the stack</span>
+</div>
+</div>
+
+<div class="stack-viz-body">
+
+<div class="stack-viz-controls" style="grid-template-columns:minmax(280px,1fr) auto;">
+<div class="stack-field">
+<label>Infix Expression</label>
+<input id="infixVizInput" value="A+B*(C-D)"/>
+</div>
+
+<div class="stack-field">
+<label>&nbsp;</label>
+<button class="primary-button" type="button" onclick="InfixViz.load()">Load Expression</button>
+</div>
+</div>
+
+<div class="infix-viz-stage">
+
+<div class="infix-expression-row" id="infixExpression"></div>
+
+<div class="infix-viz-grid">
+<div>
+<div class="infix-op-stack" id="infixStack"></div>
+<div style="text-align:center;margin-top:8px;font-weight:800;color:#2563eb;">Operator Stack</div>
+</div>
+
+<div>
+<div class="infix-output-box">
+<div class="infix-output-label">Postfix Output</div>
+<div class="infix-output-value" id="infixOutput">—</div>
+</div>
+
+<div class="infix-decision-box">
+<div><strong>Current Token:</strong> <span id="infixCurrent">—</span></div>
+<div style="margin-top:6px;"><strong>Action:</strong> <span id="infixAction">Ready</span></div>
+<div style="margin-top:6px;"><strong>TOP:</strong> <span id="infixTop">—</span></div>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="stack-viz-actions">
+<button class="primary" onclick="InfixViz.prev()">← Previous</button>
+<button class="primary" id="infixNext" onclick="InfixViz.next()">Next →</button>
+<button class="gold" id="infixAuto" onclick="InfixViz.auto()">▶ Auto Run</button>
+<button class="muted" onclick="InfixViz.pause()">Ⅱ Pause</button>
+<button class="muted" onclick="InfixViz.reset()">↺ Reset</button>
+</div>
+
+<div class="stack-viz-message" id="infixMessage">
+Load an infix expression and press Next.
+</div>
+
+<div class="stack-progress"><div id="infixProgress"></div></div>
+
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="infix-postfix-program">
+<span class="section-label">C PROGRAM + TRACING</span>
+<h2>💻 Infix to Postfix Program in C</h2>
+
+<h3 class="stack-program-title">Visible Learning Program</h3>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+#include &lt;string.h&gt;
+
+int precedence(char op)
+{
+    if(op == '^')
+        return 3;
+
+    if(op == '*' || op == '/' || op == '%')
+        return 2;
+
+    if(op == '+' || op == '-')
+        return 1;
+
+    return 0;
+}
+
+int isRightAssociative(char op)
+{
+    return op == '^';
+}
+
+int main()
+{
+    char infix[100];
+    char stack[100];
+    char postfix[100];
+
+    int top = -1;
+    int k = 0;
+
+    scanf("%99s", infix);
+
+    for(int i = 0; infix[i] != '\0'; i++)
+    {
+        char ch = infix[i];
+
+        if(isalnum((unsigned char)ch))
+        {
+            postfix[k++] = ch;
+        }
+        else if(ch == '(')
+        {
+            stack[++top] = ch;
+        }
+        else if(ch == ')')
+        {
+            while(top != -1 &amp;&amp; stack[top] != '(')
+                postfix[k++] = stack[top--];
+
+            if(top != -1)
+                top--;
+        }
+        else
+        {
+            while(top != -1 &amp;&amp;
+                  stack[top] != '(' &amp;&amp;
+                  (precedence(stack[top]) &gt; precedence(ch) ||
+                  (precedence(stack[top]) == precedence(ch) &amp;&amp;
+                   !isRightAssociative(ch))))
+            {
+                postfix[k++] = stack[top--];
+            }
+
+            stack[++top] = ch;
+        }
+    }
+
+    while(top != -1)
+        postfix[k++] = stack[top--];
+
+    postfix[k] = '\0';
+
+    printf("%s\n", postfix);
+
+    return 0;
+}</code></pre>
+
+<div class="stack-io">
+<div class="stack-io-box">
+<h4>Sample Input</h4>
+<pre><code>A+B*(C-D)</code></pre>
+</div>
+
+<div class="stack-io-box">
+<h4>Sample Output</h4>
+<pre><code>ABCD-*+</code></pre>
+</div>
+</div>
+
+<div class="stack-tracer-wrap">
+<button class="stack-tracer-toggle" type="button" onclick="InfixTrace.toggle()">
+▶ Program Tracing — Infix to Postfix
+</button>
+
+<div class="stack-tracer" id="infixTrace" hidden>
+<div class="stack-tracer-title">PROGRAM TRACING — INFIX TO POSTFIX</div>
+
+<div class="stack-tracer-grid">
+<div class="stack-tracer-panel">
+<h4>💻 Program</h4>
+<pre class="stack-tracer-code" id="infixTraceCode"></pre>
+</div>
+
+<div class="stack-tracer-panel">
+<h4>🧠 What is happening?</h4>
+<div class="stack-tracer-explain" id="infixTraceExplain"></div>
+
+<h4>📊 Live Variables</h4>
+<div class="stack-vars" id="infixTraceVars"></div>
+</div>
+</div>
+
+<div class="stack-trace-memory">
+<h4>🔁 Live Expression + Operator Stack + Postfix</h4>
+
+<div class="infix-trace-memory-grid">
+<div>
+<div class="infix-trace-stack" id="infixTraceStack"></div>
+<div style="text-align:center;margin-top:7px;font-size:11px;font-weight:800;color:#2563eb;">Operator Stack</div>
+</div>
+
+<div>
+<div class="infix-trace-expression" id="infixTraceExpression"></div>
+
+<div class="infix-output-box">
+<div class="infix-output-label">Current Postfix</div>
+<div class="infix-output-value" id="infixTracePostfix">—</div>
+</div>
+
+<div class="stack-operation" id="infixTraceOperation"></div>
+</div>
+</div>
+</div>
+
+<div class="stack-tracer-controls">
+<button onclick="InfixTrace.prev()">← Previous</button>
+<button onclick="InfixTrace.reset()">↺ Reset</button>
+<button id="infixTraceNext" onclick="InfixTrace.next()">Next →</button>
+<button id="infixTraceAuto" onclick="InfixTrace.auto()">▶ Auto Run</button>
+</div>
+
+<div class="stack-tracer-status" id="infixTraceStatus">Ready to execute.</div>
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="infix-postfix-complexity">
+<span class="section-label">COMPLEXITY + INTERVIEW NOTE</span>
+<h2>⚡ Infix to Postfix Complexity</h2>
+
+<div class="stack-complexity">
+<div>
+<strong>Time — O(n)</strong>
+Each token is processed once and each operator is pushed/popped at most once.
+</div>
+
+<div>
+<strong>Push — O(1)</strong>
+Operators and opening parentheses are pushed in constant time.
+</div>
+
+<div>
+<strong>Pop — O(1)</strong>
+Each operator pop is constant time.
+</div>
+
+<div>
+<strong>Auxiliary Space — O(n)</strong>
+The operator stack can contain O(n) symbols in the worst case.
+</div>
+</div>
+
+<div class="tip-box">
+<strong>Interview note:</strong>
+For equal precedence, left-associative operators such as <code>+</code>, <code>-</code>,
+<code>*</code>, and <code>/</code> cause the existing TOP operator to be popped first.
+The exponent operator <code>^</code> is usually treated as right-associative, so equal-precedence
+<code>^</code> is not popped before pushing the new one.
+</div>
+</section>
+
+
+
+<section class="content-card" id="postfix-evaluation">
+<span class="section-label">STACK APPLICATION</span>
+<h2>🧮 Postfix Expression Evaluation</h2>
+
+<p>
+A postfix expression places each operator after its operands.
+For example, <code>23*</code> means <code>2 * 3</code>.
+A stack evaluates postfix expressions naturally in one left-to-right scan.
+</p>
+
+<div class="stack-key-box">
+<h3>💡 Core Idea</h3>
+<p>
+Push every operand onto the stack. When an operator is found, pop the
+<strong>second operand first</strong> as <code>b</code>, then pop the
+<strong>first operand</strong> as <code>a</code>, compute <code>a operator b</code>,
+and push the result back.
+</p>
+</div>
+
+<div class="postfix-rule-grid">
+<div class="postfix-rule-card">
+<strong>Operand</strong>
+Convert the digit to an integer and push it.
+</div>
+<div class="postfix-rule-card">
+<strong>Operator</strong>
+Pop <code>b</code>, pop <code>a</code>, compute <code>a op b</code>.
+</div>
+<div class="postfix-rule-card">
+<strong>Final Result</strong>
+After the scan, exactly one value should remain on the stack.
+</div>
+</div>
+
+<div class="stack-example-box">
+<h3>🧠 Example</h3>
+<p>
+For <code>23*54*+9-</code>:
+<code>2*3 = 6</code>, <code>5*4 = 20</code>,
+<code>6+20 = 26</code>, and <code>26-9 = 17</code>.
+The final answer is <strong>17</strong>.
+</p>
+</div>
+
+<h3>Algorithm</h3>
+
+<pre><code>EVALUATE_POSTFIX(expression)
+
+1. Create an empty value stack
+
+2. Scan postfix expression from left to right
+
+3. If token is an operand
+      push its numeric value
+
+4. Else token is an operator
+      b = pop()
+      a = pop()
+
+      result = a operator b
+
+      push(result)
+
+5. After scanning all tokens
+      answer = pop()
+
+6. The stack should now be empty</code></pre>
+
+<div class="tip-box">
+<strong>Important:</strong>
+For subtraction and division, operand order matters.
+If the stack contains <code>... a, b</code>, then evaluate
+<strong><code>a - b</code></strong> or <strong><code>a / b</code></strong>,
+not the reverse.
+</div>
+
+<div class="stack-viz" id="postfixViz">
+<div class="stack-viz-header">
+<div class="stack-viz-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+<div class="stack-viz-brand">
+<img src="../images/codebhavya-icon-32.png" alt="CodeBhavya"/>
+<span class="code">Code</span><span class="bhavya">Bhavya</span>
+</div>
+<div class="stack-viz-title">
+<strong>🎬 Premium Postfix Evaluation Visualizer</strong>
+<span>Watch operands enter the stack and operators combine the top two values</span>
+</div>
+</div>
+
+<div class="stack-viz-body">
+<div class="stack-viz-controls" style="grid-template-columns:minmax(280px,1fr) auto;">
+<div class="stack-field">
+<label>Postfix Expression (single-digit operands)</label>
+<input id="postfixVizInput" value="23*54*+9-"/>
+</div>
+<div class="stack-field">
+<label>&nbsp;</label>
+<button class="primary-button" type="button" onclick="PostfixViz.load()">Load Expression</button>
+</div>
+</div>
+
+<div class="postfix-viz-stage">
+<div class="postfix-expression-row" id="postfixExpression"></div>
+
+<div class="postfix-viz-grid">
+<div>
+<div class="postfix-value-stack" id="postfixStack"></div>
+<div style="text-align:center;margin-top:8px;font-weight:800;color:#2563eb;">Value Stack</div>
+</div>
+
+<div>
+<div class="postfix-eval-box">
+<div class="postfix-eval-line"><strong>Current Token:</strong> <span id="postfixCurrent">—</span></div>
+<div class="postfix-eval-line"><strong>First Operand (a):</strong> <span id="postfixA">—</span></div>
+<div class="postfix-eval-line"><strong>Second Operand (b):</strong> <span id="postfixB">—</span></div>
+<div class="postfix-eval-line"><strong>Operation:</strong> <span id="postfixAction">Ready</span></div>
+</div>
+
+<div class="postfix-result-box">
+<div class="postfix-result-label">Current / Final Result</div>
+<div class="postfix-result-value" id="postfixResult">—</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="stack-viz-actions">
+<button class="primary" onclick="PostfixViz.prev()">← Previous</button>
+<button class="primary" id="postfixNext" onclick="PostfixViz.next()">Next →</button>
+<button class="gold" id="postfixAuto" onclick="PostfixViz.auto()">▶ Auto Run</button>
+<button class="muted" onclick="PostfixViz.pause()">Ⅱ Pause</button>
+<button class="muted" onclick="PostfixViz.reset()">↺ Reset</button>
+</div>
+
+<div class="stack-viz-message" id="postfixMessage">
+Load a postfix expression and press Next.
+</div>
+<div class="stack-progress"><div id="postfixProgress"></div></div>
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="postfix-program">
+<span class="section-label">C PROGRAM + TRACING</span>
+<h2>💻 Postfix Evaluation Program in C</h2>
+
+<h3 class="stack-program-title">Visible Learning Program</h3>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char postfix[100];
+    int stack[100];
+
+    int top = -1;
+
+    scanf("%99s", postfix);
+
+    for(int i = 0; postfix[i] != '\0'; i++)
+    {
+        char ch = postfix[i];
+
+        if(isdigit((unsigned char)ch))
+        {
+            stack[++top] = ch - '0';
+        }
+        else
+        {
+            int b = stack[top--];
+            int a = stack[top--];
+            int result = 0;
+
+            switch(ch)
+            {
+                case '+':
+                    result = a + b;
+                    break;
+
+                case '-':
+                    result = a - b;
+                    break;
+
+                case '*':
+                    result = a * b;
+                    break;
+
+                case '/':
+                    result = a / b;
+                    break;
+            }
+
+            stack[++top] = result;
+        }
+    }
+
+    printf("%d\n", stack[top]);
+
+    return 0;
+}</code></pre>
+
+<div class="stack-io">
+<div class="stack-io-box">
+<h4>Sample Input</h4>
+<pre><code>23*54*+9-</code></pre>
+</div>
+<div class="stack-io-box">
+<h4>Sample Output</h4>
+<pre><code>17</code></pre>
+</div>
+</div>
+
+<div class="stack-tracer-wrap">
+<button class="stack-tracer-toggle" type="button" onclick="PostfixTrace.toggle()">
+▶ Program Tracing — Postfix Evaluation
+</button>
+
+<div class="stack-tracer" id="postfixTrace" hidden>
+<div class="stack-tracer-title">PROGRAM TRACING — POSTFIX EVALUATION</div>
+
+<div class="stack-tracer-grid">
+<div class="stack-tracer-panel">
+<h4>💻 Program</h4>
+<pre class="stack-tracer-code" id="postfixTraceCode"></pre>
+</div>
+<div class="stack-tracer-panel">
+<h4>🧠 What is happening?</h4>
+<div class="stack-tracer-explain" id="postfixTraceExplain"></div>
+<h4>📊 Live Variables</h4>
+<div class="stack-vars" id="postfixTraceVars"></div>
+</div>
+</div>
+
+<div class="stack-trace-memory">
+<h4>🧮 Live Postfix Expression + Value Stack</h4>
+<div class="postfix-trace-memory-grid">
+<div>
+<div class="postfix-trace-stack" id="postfixTraceStack"></div>
+<div style="text-align:center;margin-top:7px;font-size:11px;font-weight:800;color:#2563eb;">Value Stack</div>
+</div>
+<div>
+<div class="postfix-trace-expression" id="postfixTraceExpression"></div>
+<div class="postfix-result-box">
+<div class="postfix-result-label">Current Result / Output</div>
+<div class="postfix-result-value" id="postfixTraceResult">—</div>
+</div>
+<div class="stack-operation" id="postfixTraceOperation"></div>
+</div>
+</div>
+</div>
+
+<div class="stack-tracer-controls">
+<button onclick="PostfixTrace.prev()">← Previous</button>
+<button onclick="PostfixTrace.reset()">↺ Reset</button>
+<button id="postfixTraceNext" onclick="PostfixTrace.next()">Next →</button>
+<button id="postfixTraceAuto" onclick="PostfixTrace.auto()">▶ Auto Run</button>
+</div>
+
+<div class="stack-tracer-status" id="postfixTraceStatus">Ready to execute.</div>
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="postfix-complexity">
+<span class="section-label">COMPLEXITY + INTERVIEW NOTE</span>
+<h2>⚡ Postfix Evaluation Complexity</h2>
+
+<div class="stack-complexity">
+<div>
+<strong>Time — O(n)</strong>
+Each postfix token is processed exactly once.
+</div>
+<div>
+<strong>Operand Push — O(1)</strong>
+Each operand is pushed in constant time.
+</div>
+<div>
+<strong>Operator Evaluation — O(1)</strong>
+Each operator performs two pops, one arithmetic operation, and one push.
+</div>
+<div>
+<strong>Auxiliary Space — O(n)</strong>
+The operand stack may hold O(n) values in the worst case.
+</div>
+</div>
+
+<div class="tip-box">
+<strong>Interview note:</strong>
+When evaluating an operator, always pop the second operand first.
+For postfix <code>82-</code>, the stack pops <code>b = 2</code> and then <code>a = 8</code>,
+so the result is <code>8 - 2 = 6</code>.
+</div>
+</section>
+
+
 <section class="content-card" id="stack-interview">
 <span class="section-label">COMMON QUESTIONS</span>
-<h2>❓ Interview Questions — Part 1</h2>
-<p>These first questions cover the core Stack ADT and array implementation.</p>
+<h2>❓ Common Stack Interview Questions</h2>
+<p>Review the most important Stack ADT, implementation, balancing, conversion, and evaluation questions.</p>
 
 <div class="stack-interview-preview">
 
@@ -2009,7 +4133,144 @@ dynamic memory allocation.
 </div>
 </div>
 
+<div class="stack-interview-item">
+<div class="stack-interview-q">
+<span>6. Why is a stack suitable for parentheses balancing?</span>
+<button type="button" onclick="toggleStackInterview('stackIa6',this)">Show Answer</button>
 </div>
+<div class="stack-interview-answer" id="stackIa6">
+The most recently seen unmatched opening bracket must be matched first.
+That is exactly the Last In, First Out behavior provided by a stack.
+<div class="stack-interview-short">
+<strong>Interview answer:</strong> The latest unmatched opening bracket must close first, so LIFO matches the required nesting order.
+</div>
+</div>
+</div>
+
+<div class="stack-interview-item">
+<div class="stack-interview-q">
+<span>7. Why is counting opening and closing brackets not enough?</span>
+<button type="button" onclick="toggleStackInterview('stackIa7',this)">Show Answer</button>
+</div>
+<div class="stack-interview-answer" id="stackIa7">
+Balanced expressions require correct nesting and matching types, not just equal counts.
+For example, <code>(]</code> contains one opening and one closing bracket but is invalid.
+<div class="stack-interview-short">
+<strong>Interview answer:</strong> Counts cannot verify nesting order or bracket type; a stack can verify both.
+</div>
+</div>
+</div>
+
+<div class="stack-interview-item">
+<div class="stack-interview-q">
+<span>8. Why is postfix easier for a computer to evaluate than infix?</span>
+<button type="button" onclick="toggleStackInterview('stackIa8',this)">Show Answer</button>
+</div>
+<div class="stack-interview-answer" id="stackIa8">
+Postfix does not require parentheses or repeated precedence decisions during evaluation.
+The operator appears only after its operands, so a stack can evaluate the expression in a single scan.
+<div class="stack-interview-short">
+<strong>Interview answer:</strong> Postfix encodes evaluation order directly, so precedence and parentheses are not needed during evaluation.
+</div>
+</div>
+</div>
+
+<div class="stack-interview-item">
+<div class="stack-interview-q">
+<span>9. Why is ^ treated differently when two operators have equal precedence?</span>
+<button type="button" onclick="toggleStackInterview('stackIa9',this)">Show Answer</button>
+</div>
+<div class="stack-interview-answer" id="stackIa9">
+Exponentiation is normally right-associative. For <code>A^B^C</code>, the intended grouping is
+<code>A^(B^C)</code>. Therefore an existing <code>^</code> of equal precedence should not be popped
+before pushing the new <code>^</code>.
+<div class="stack-interview-short">
+<strong>Interview answer:</strong> Equal-precedence ^ is kept on the stack because exponentiation associates from right to left.
+</div>
+</div>
+</div>
+
+<div class="stack-interview-item">
+<div class="stack-interview-q">
+<span>10. Why must the second operand be popped before the first operand in postfix evaluation?</span>
+<button type="button" onclick="toggleStackInterview('stackIa10',this)">Show Answer</button>
+</div>
+<div class="stack-interview-answer" id="stackIa10">
+When an operator is reached, the most recently pushed value is the right-hand operand.
+Therefore the first pop gives <code>b</code>, the second pop gives <code>a</code>,
+and the expression must be evaluated as <code>a op b</code>.
+<div class="stack-interview-short">
+<strong>Interview answer:</strong> Stack order makes the first pop the right operand and the second pop the left operand.
+</div>
+</div>
+</div>
+
+<div class="stack-interview-item">
+<div class="stack-interview-q">
+<span>11. What condition should hold after a valid postfix expression is fully evaluated?</span>
+<button type="button" onclick="toggleStackInterview('stackIa11',this)">Show Answer</button>
+</div>
+<div class="stack-interview-answer" id="stackIa11">
+Exactly one result should remain in the stack. If too many values remain, or an operator tries to
+pop more operands than available, the postfix expression is invalid.
+<div class="stack-interview-short">
+<strong>Interview answer:</strong> A valid postfix evaluation ends with exactly one stack value — the final result.
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+
+<section class="content-card" id="stack-practice">
+<span class="section-label">PRACTICE</span>
+<h2>🎯 20 Stack Practice Problems</h2>
+
+<p>
+Try every problem yourself first. Use <strong>💻 Solve It Yourself</strong> to write and test your C program.
+Open <strong>Hint</strong> only when necessary, and use <strong>Show Program</strong> when you want to study
+the complete solution.
+</p>
+
+<div class="stack-practice-overall">
+<div class="stack-practice-overall-title">📈 Stack Practice Progress</div>
+
+<div class="stack-practice-overall-grid">
+<div class="stack-practice-overall-item">
+<strong>Solved</strong>
+<span id="stackPracticeSolved">0 / 20</span>
+</div>
+<div class="stack-practice-overall-item">
+<strong>Completed with Solution</strong>
+<span id="stackPracticeCompleted">0</span>
+</div>
+<div class="stack-practice-overall-item">
+<strong>Total Score</strong>
+<span id="stackPracticeScore">0 / 2000</span>
+</div>
+<div class="stack-practice-overall-item">
+<strong>Completion</strong>
+<span id="stackPracticePercent">0%</span>
+</div>
+</div>
+
+<div class="stack-practice-progress-track">
+<div id="stackPracticeBar" class="stack-practice-progress-fill"></div>
+</div>
+</div>
+
+<div class="stack-key-box">
+<h3>🏆 Scoring</h3>
+<p>
+Pass all 5 tests without help for up to <strong>100 points</strong>.
+Opening a hint caps the competitive score at <strong>90</strong>.
+Opening the official program still lets you complete the problem,
+but it is recorded as <strong>Completed</strong> rather than competitively solved.
+</p>
+</div>
+
+<div id="stackPracticeContainer" class="stack-practice-list"></div>
 </section>
 
 </main>
@@ -3645,22 +5906,79 @@ window.LinkedStackViz = (() => {
             const pointer =
                 byId("linkedStackTopPointer");
 
+            const canvas =
+                byId("linkedStackCanvas");
+
             const firstNode =
                 chain.querySelector(
                     ".stack-linked-node"
                 );
 
-            if (pointer && firstNode) {
+            if (
+                pointer &&
+                canvas &&
+                firstNode
+            ) {
+                /*
+                   Position TOP from the real rendered node rectangle.
+                   Because the stack bottom is anchored, this moves
+                   vertically on every Push and Pop.
+                */
+                const canvasRect =
+                    canvas.getBoundingClientRect();
+
+                const nodeRect =
+                    firstNode.getBoundingClientRect();
+
+                pointer.style.left =
+                    (
+                        nodeRect.right -
+                        canvasRect.left +
+                        38
+                    ) + "px";
+
                 pointer.style.top =
                     (
-                        chain.offsetTop +
-                        firstNode.offsetTop +
-                        firstNode.offsetHeight/2 -
-                        34
+                        nodeRect.top -
+                        canvasRect.top +
+                        nodeRect.height / 2 -
+                        pointer.offsetHeight / 2
                     ) + "px";
             }
-            else if (pointer) {
-                pointer.style.top = "95px";
+            else if (
+                pointer &&
+                canvas
+            ) {
+                /*
+                   Empty stack: place TOP near the NULL marker.
+                */
+                const nullBox =
+                    chain.querySelector(
+                        ".stack-linked-null"
+                    );
+
+                if (nullBox) {
+                    const canvasRect =
+                        canvas.getBoundingClientRect();
+
+                    const nullRect =
+                        nullBox.getBoundingClientRect();
+
+                    pointer.style.left =
+                        (
+                            nullRect.right -
+                            canvasRect.left +
+                            38
+                        ) + "px";
+
+                    pointer.style.top =
+                        (
+                            nullRect.top -
+                            canvasRect.top +
+                            nullRect.height / 2 -
+                            pointer.offsetHeight / 2
+                        ) + "px";
+                }
             }
         });
     }
@@ -4579,6 +6897,2960 @@ window.LinkedStackTrace = (() => {
 </script>
 
 
+
+<script>
+window.ParenViz = (() => {
+    const byId = id => document.getElementById(id);
+
+    const state = {
+        expression:"",
+        steps:[],
+        index:0,
+        timer:null
+    };
+
+    function isOpen(ch) {
+        return ch === "(" || ch === "{" || ch === "[";
+    }
+
+    function isClose(ch) {
+        return ch === ")" || ch === "}" || ch === "]";
+    }
+
+    function matches(open,close) {
+        return (
+            (open === "(" && close === ")") ||
+            (open === "{" && close === "}") ||
+            (open === "[" && close === "]")
+        );
+    }
+
+    function buildSteps(expr) {
+        const stack = [];
+        const steps = [{
+            index:-1,
+            stack:[],
+            current:"—",
+            action:"Start",
+            message:"The bracket stack is empty.",
+            result:"Pending",
+            resultClass:"pending",
+            matched:[]
+        }];
+
+        const matchedIndices = [];
+        let failed = false;
+
+        for (let i=0;i<expr.length;i++) {
+            const ch = expr[i];
+
+            if (isOpen(ch)) {
+                steps.push({
+                    index:i,
+                    stack:stack.map(x => x.ch),
+                    current:ch,
+                    action:`Opening bracket ${ch}`,
+                    message:`${ch} is an opening bracket, so it will be pushed.`,
+                    result:"Pending",
+                    resultClass:"pending",
+                    matched:[...matchedIndices]
+                });
+
+                stack.push({ch,index:i});
+
+                steps.push({
+                    index:i,
+                    stack:stack.map(x => x.ch),
+                    current:ch,
+                    action:`Push ${ch}`,
+                    message:`${ch} is now on TOP of the stack.`,
+                    result:"Pending",
+                    resultClass:"pending",
+                    matched:[...matchedIndices]
+                });
+            }
+            else if (isClose(ch)) {
+                steps.push({
+                    index:i,
+                    stack:stack.map(x => x.ch),
+                    current:ch,
+                    action:`Closing bracket ${ch}`,
+                    message:`${ch} must match the current TOP opening bracket.`,
+                    result:"Pending",
+                    resultClass:"pending",
+                    matched:[...matchedIndices]
+                });
+
+                if (!stack.length) {
+                    steps.push({
+                        index:i,
+                        stack:[],
+                        current:ch,
+                        action:"Underflow / mismatch",
+                        message:`Stack is empty, so ${ch} has no matching opening bracket.`,
+                        result:"Not Balanced",
+                        resultClass:"fail",
+                        matched:[...matchedIndices],
+                        errorIndex:i
+                    });
+
+                    failed = true;
+                    break;
+                }
+
+                const top = stack[stack.length-1];
+
+                if (!matches(top.ch,ch)) {
+                    steps.push({
+                        index:i,
+                        stack:stack.map(x => x.ch),
+                        current:ch,
+                        action:"Bracket mismatch",
+                        message:`TOP is ${top.ch}, which does not match ${ch}.`,
+                        result:"Not Balanced",
+                        resultClass:"fail",
+                        matched:[...matchedIndices],
+                        errorIndex:i
+                    });
+
+                    failed = true;
+                    break;
+                }
+
+                stack.pop();
+                matchedIndices.push(top.index,i);
+
+                steps.push({
+                    index:i,
+                    stack:stack.map(x => x.ch),
+                    current:ch,
+                    action:`Match ${top.ch}${ch}`,
+                    message:`${top.ch} matches ${ch}. Pop ${top.ch}.`,
+                    result:"Pending",
+                    resultClass:"pending",
+                    matched:[...matchedIndices]
+                });
+            }
+            else {
+                steps.push({
+                    index:i,
+                    stack:stack.map(x => x.ch),
+                    current:ch,
+                    action:"Ignore non-bracket",
+                    message:`${ch} is not a bracket, so no stack operation is required.`,
+                    result:"Pending",
+                    resultClass:"pending",
+                    matched:[...matchedIndices]
+                });
+            }
+        }
+
+        if (!failed) {
+            if (stack.length === 0) {
+                steps.push({
+                    index:expr.length,
+                    stack:[],
+                    current:"—",
+                    action:"Final stack check",
+                    message:"All brackets matched and the stack is empty.",
+                    result:"Balanced",
+                    resultClass:"success",
+                    matched:[...matchedIndices]
+                });
+            }
+            else {
+                steps.push({
+                    index:expr.length,
+                    stack:stack.map(x => x.ch),
+                    current:"—",
+                    action:"Final stack check",
+                    message:"Opening brackets remain in the stack, so the expression is not balanced.",
+                    result:"Not Balanced",
+                    resultClass:"fail",
+                    matched:[...matchedIndices]
+                });
+            }
+        }
+
+        return steps;
+    }
+
+    function render() {
+        const step = state.steps[state.index];
+
+        byId("parenExpression").innerHTML =
+            state.expression.split("").map((ch,i) => {
+                const classes = ["paren-char"];
+
+                if (i === step.index)
+                    classes.push("current");
+
+                if ((step.matched || []).includes(i))
+                    classes.push("matched");
+
+                if (i === step.errorIndex)
+                    classes.push("error");
+
+                return `<div class="${classes.join(" ")}">${ch}</div>`;
+            }).join("");
+
+        const stack = step.stack || [];
+
+        byId("parenStack").innerHTML =
+            stack.length
+                ? stack.map((ch,i) => `
+                    <div class="paren-stack-cell ${i === stack.length-1 ? "top" : ""}">
+                        ${ch}
+                    </div>
+                `).join("")
+                : `<div style="align-self:center;margin:auto;color:#94a3b8;font-weight:800;">empty</div>`;
+
+        byId("parenCurrent").textContent =
+            step.current;
+
+        byId("parenAction").textContent =
+            step.action;
+
+        byId("parenTop").textContent =
+            stack.length
+                ? stack[stack.length-1]
+                : "—";
+
+        const result = byId("parenResult");
+        result.textContent = step.result;
+        result.className =
+            `paren-result ${step.resultClass}`;
+
+        byId("parenMessage").innerHTML =
+            `<strong>${step.action}</strong><br>${step.message}`;
+
+        const done =
+            state.index >= state.steps.length-1;
+
+        const next = byId("parenNext");
+        const auto = byId("parenAuto");
+
+        next.disabled = done;
+        next.textContent =
+            done ? "✓ Completed" : "Next →";
+        auto.disabled = done;
+
+        const pct =
+            state.steps.length <= 1
+                ? 100
+                : Math.round(
+                    state.index /
+                    (state.steps.length-1) *
+                    100
+                );
+
+        byId("parenProgress").style.width =
+            pct + "%";
+    }
+
+    function load() {
+        pause();
+
+        state.expression =
+            String(byId("parenVizInput").value || "");
+
+        state.steps =
+            buildSteps(state.expression);
+
+        state.index = 0;
+        render();
+    }
+
+    function next() {
+        if (state.index >= state.steps.length-1) return;
+        state.index++;
+        render();
+    }
+
+    function prev() {
+        if (state.index <= 0) return;
+        pause();
+        state.index--;
+        render();
+    }
+
+    function reset() {
+        pause();
+        state.index = 0;
+        render();
+    }
+
+    function auto() {
+        if (
+            state.timer ||
+            state.index >= state.steps.length-1
+        ) return;
+
+        state.timer =
+            setInterval(() => {
+                if (
+                    state.index >= state.steps.length-1
+                ) {
+                    pause();
+                    render();
+                    return;
+                }
+
+                state.index++;
+                render();
+
+                if (
+                    state.index >= state.steps.length-1
+                ) {
+                    pause();
+                }
+            },800);
+    }
+
+    function pause() {
+        if (state.timer) {
+            clearInterval(state.timer);
+            state.timer = null;
+        }
+    }
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        load
+    );
+
+    return {
+        load,
+        next,
+        prev,
+        reset,
+        auto,
+        pause
+    };
+})();
+</script>
+
+
+
+<script>
+window.ParenTrace = (() => {
+    const program = [
+        "int main()",
+        "{",
+        "    char expr[100];",
+        "    char stack[100];",
+        "",
+        "    int top = -1;",
+        "    int balanced = 1;",
+        "",
+        "    scanf(\"%99s\", expr);",
+        "",
+        "    for(int i = 0; expr[i] != '\\0'; i++)",
+        "    {",
+        "        char ch = expr[i];",
+        "",
+        "        if(ch == '(' || ch == '{' || ch == '[')",
+        "        {",
+        "            top++;",
+        "            stack[top] = ch;",
+        "        }",
+        "        else if(ch == ')' || ch == '}' || ch == ']')",
+        "        {",
+        "            if(top == -1)",
+        "            {",
+        "                balanced = 0;",
+        "                break;",
+        "            }",
+        "",
+        "            if(!isMatching(stack[top], ch))",
+        "            {",
+        "                balanced = 0;",
+        "                break;",
+        "            }",
+        "",
+        "            top--;",
+        "        }",
+        "    }",
+        "",
+        "    if(top != -1)",
+        "        balanced = 0;",
+        "",
+        "    if(balanced)",
+        "        printf(\"Balanced\\n\");",
+        "    else",
+        "        printf(\"Not Balanced\\n\");",
+        "",
+        "    return 0;",
+        "}"
+    ];
+
+    const expr = "{[()]}";
+
+    const initial = {
+        expr,
+        stack:["—","—","—","—","—","—"],
+        top:-1,
+        i:"indeterminate",
+        ch:"indeterminate",
+        balanced:1,
+        output:"",
+        currentIndex:-1
+    };
+
+    const steps = [];
+
+    function clone(v) {
+        return JSON.parse(JSON.stringify(v));
+    }
+
+    function add(line,explain,op,mutate) {
+        steps.push({line,explain,op,mutate});
+    }
+
+    add(
+        0,
+        "Program execution starts in main().",
+        "Enter main()",
+        s => {}
+    );
+
+    add(
+        5,
+        "top is initialized to -1, so the bracket stack is empty.",
+        "top = -1",
+        s => { s.top = -1; }
+    );
+
+    add(
+        6,
+        "balanced starts as 1, meaning no error has been found yet.",
+        "balanced = 1",
+        s => { s.balanced = 1; }
+    );
+
+    add(
+        8,
+        "The expression {[()]} is read into expr.",
+        'scanf("%99s", expr)',
+        s => {}
+    );
+
+    const sequence = [
+        {i:0,ch:"{",action:"push"},
+        {i:1,ch:"[",action:"push"},
+        {i:2,ch:"(",action:"push"},
+        {i:3,ch:")",action:"pop"},
+        {i:4,ch:"]",action:"pop"},
+        {i:5,ch:"}",action:"pop"},
+    ];
+
+    sequence.forEach(item => {
+        add(
+            10,
+            `Loop selects expr[${item.i}] = '${item.ch}'.`,
+            `i = ${item.i}`,
+            s => {
+                s.i = item.i;
+                s.currentIndex = item.i;
+            }
+        );
+
+        add(
+            12,
+            `ch receives '${item.ch}'.`,
+            `ch = '${item.ch}'`,
+            s => {
+                s.ch = item.ch;
+            }
+        );
+
+        if (item.action === "push") {
+            add(
+                14,
+                `${item.ch} is an opening bracket, so the condition is true.`,
+                "Opening-bracket test → TRUE",
+                s => {}
+            );
+
+            add(
+                16,
+                "Increment top before storing the opening bracket.",
+                "top++",
+                s => {
+                    s.top++;
+                }
+            );
+
+            add(
+                17,
+                `Store '${item.ch}' at stack[top].`,
+                `stack[${item.i}] = '${item.ch}'`,
+                s => {
+                    s.stack[s.top] = item.ch;
+                }
+            );
+        }
+        else {
+            add(
+                19,
+                `${item.ch} is a closing bracket, so enter the closing-bracket branch.`,
+                "Closing-bracket test → TRUE",
+                s => {}
+            );
+
+            add(
+                21,
+                "Check top == -1. The stack is not empty.",
+                "top == -1 → FALSE",
+                s => {}
+            );
+
+            add(
+                27,
+                `Compare TOP '${item.i===3?"(":item.i===4?"[":"{"}' with '${item.ch}'. They match.`,
+                "isMatching(...) → TRUE",
+                s => {}
+            );
+
+            add(
+                33,
+                "The pair matches, so pop the opening bracket by decrementing top.",
+                "top--",
+                s => {
+                    s.stack[s.top] = "—";
+                    s.top--;
+                }
+            );
+        }
+    });
+
+    add(
+        38,
+        "After the loop, check whether any unmatched opening brackets remain.",
+        "top != -1 → FALSE",
+        s => {}
+    );
+
+    add(
+        41,
+        "balanced is still 1, so print Balanced.",
+        "balanced → TRUE",
+        s => {}
+    );
+
+    add(
+        42,
+        'Print "Balanced".',
+        "Print Balanced",
+        s => {
+            s.output = "Balanced";
+        }
+    );
+
+    add(
+        46,
+        "main() returns 0 and the program finishes.",
+        "return 0",
+        s => {
+            s.currentIndex = expr.length;
+        }
+    );
+
+    const registry = {
+        current:0,
+        state:clone(initial),
+        timer:null
+    };
+
+    function escapeHtml(value) {
+        return String(value ?? "")
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;");
+    }
+
+    function applyThrough(count) {
+        registry.state = clone(initial);
+
+        for (let i=0;i<count;i++) {
+            steps[i].mutate(registry.state);
+        }
+    }
+
+    function currentStep() {
+        if (registry.current === 0) {
+            return {
+                line:0,
+                explain:"Press Next to start executing the program.",
+                op:""
+            };
+        }
+
+        return steps[
+            Math.min(
+                registry.current-1,
+                steps.length-1
+            )
+        ];
+    }
+
+    function renderCode(step) {
+        const code =
+            document.getElementById("parenTraceCode");
+
+        code.innerHTML =
+            program.map((line,index) => {
+                const active =
+                    index === step.line
+                        ? " active"
+                        : "";
+
+                return `<span class="stack-code-line${active}">${escapeHtml(line)}</span>`;
+            }).join("");
+
+        requestAnimationFrame(() => {
+            const active =
+                code.querySelector(
+                    ".stack-code-line.active"
+                );
+
+            if (!active) return;
+
+            const codeRect =
+                code.getBoundingClientRect();
+
+            const activeRect =
+                active.getBoundingClientRect();
+
+            const activeTopInsideCode =
+                code.scrollTop +
+                (activeRect.top - codeRect.top);
+
+            const activeBottomInsideCode =
+                activeTopInsideCode +
+                activeRect.height;
+
+            const topSafe =
+                code.scrollTop + 42;
+
+            const bottomSafe =
+                code.scrollTop +
+                code.clientHeight -
+                42;
+
+            let newScrollTop =
+                code.scrollTop;
+
+            if (
+                activeTopInsideCode <
+                topSafe
+            ) {
+                newScrollTop =
+                    Math.max(
+                        0,
+                        activeTopInsideCode - 42
+                    );
+            }
+            else if (
+                activeBottomInsideCode >
+                bottomSafe
+            ) {
+                newScrollTop =
+                    Math.max(
+                        0,
+                        activeBottomInsideCode -
+                        code.clientHeight +
+                        42
+                    );
+            }
+
+            if (
+                Math.abs(
+                    newScrollTop -
+                    code.scrollTop
+                ) > 1
+            ) {
+                code.scrollTo({
+                    top:newScrollTop,
+                    left:code.scrollLeft,
+                    behavior:"smooth"
+                });
+            }
+        });
+    }
+
+    function renderVars() {
+        const s = registry.state;
+
+        const vars = [
+            ["top",s.top],
+            ["i",s.i],
+            ["ch",s.ch],
+            ["balanced",s.balanced],
+            ["output",s.output || '""']
+        ];
+
+        document.getElementById(
+            "parenTraceVars"
+        ).innerHTML =
+            vars.map(([k,v]) => `
+                <div class="stack-var">
+                    <strong>${escapeHtml(k)}</strong>
+                    <span>${escapeHtml(v)}</span>
+                </div>
+            `).join("");
+    }
+
+    function renderMemory() {
+        const s = registry.state;
+
+        document.getElementById(
+            "parenTraceStack"
+        ).innerHTML =
+            s.top >= 0
+                ? s.stack
+                    .slice(0,s.top+1)
+                    .map((ch,i) => `
+                        <div class="paren-trace-cell ${i === s.top ? "top" : ""}">
+                            ${escapeHtml(ch)}
+                        </div>
+                    `).join("")
+                : `<div style="margin:auto;align-self:center;color:#94a3b8;font-weight:800;">empty</div>`;
+
+        document.getElementById(
+            "parenTraceExpression"
+        ).innerHTML =
+            expr.split("").map((ch,i) => {
+                const classes =
+                    ["paren-trace-char"];
+
+                if (i === s.currentIndex)
+                    classes.push("current");
+
+                if (
+                    typeof s.currentIndex === "number" &&
+                    i < s.currentIndex
+                ) {
+                    classes.push("done");
+                }
+
+                return `<div class="${classes.join(" ")}">${ch}</div>`;
+            }).join("");
+    }
+
+    function render() {
+        const step = currentStep();
+
+        renderCode(step);
+        renderVars();
+        renderMemory();
+
+        document.getElementById(
+            "parenTraceExplain"
+        ).textContent =
+            step.explain || "";
+
+        document.getElementById(
+            "parenTraceOperation"
+        ).innerHTML =
+            step.op
+                ? `<strong>Current Operation:</strong> ${escapeHtml(step.op)}`
+                : "";
+
+        const done =
+            registry.current >= steps.length;
+
+        const next =
+            document.getElementById(
+                "parenTraceNext"
+            );
+
+        const auto =
+            document.getElementById(
+                "parenTraceAuto"
+            );
+
+        next.disabled = done;
+        next.textContent =
+            done ? "✓ Completed" : "Next →";
+
+        auto.disabled =
+            done || !!registry.timer;
+
+        document.getElementById(
+            "parenTraceStatus"
+        ).textContent =
+            done
+                ? "✓ Program execution completed. Press Reset to run again."
+                : `Step ${registry.current} of ${steps.length}`;
+    }
+
+    function toggle() {
+        const box =
+            document.getElementById(
+                "parenTrace"
+            );
+
+        box.hidden = !box.hidden;
+
+        if (!box.hidden) render();
+    }
+
+    function next() {
+        if (
+            registry.current >=
+            steps.length
+        ) return;
+
+        steps[
+            registry.current
+        ].mutate(
+            registry.state
+        );
+
+        registry.current++;
+        render();
+    }
+
+    function prev() {
+        if (registry.current <= 0) return;
+
+        pause();
+        registry.current--;
+
+        applyThrough(
+            registry.current
+        );
+
+        render();
+    }
+
+    function reset() {
+        pause();
+
+        registry.current = 0;
+        registry.state =
+            clone(initial);
+
+        render();
+
+        const code =
+            document.getElementById(
+                "parenTraceCode"
+            );
+
+        requestAnimationFrame(() => {
+            code.scrollTo({
+                top:0,
+                left:0,
+                behavior:"auto"
+            });
+        });
+    }
+
+    function auto() {
+        if (
+            registry.timer ||
+            registry.current >=
+            steps.length
+        ) return;
+
+        registry.timer =
+            setInterval(() => {
+                if (
+                    registry.current >=
+                    steps.length
+                ) {
+                    pause();
+                    render();
+                    return;
+                }
+
+                next();
+
+                if (
+                    registry.current >=
+                    steps.length
+                ) {
+                    pause();
+                    render();
+                }
+            },850);
+
+        render();
+    }
+
+    function pause() {
+        if (registry.timer) {
+            clearInterval(registry.timer);
+            registry.timer = null;
+        }
+    }
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        render
+    );
+
+    return {
+        toggle,
+        next,
+        prev,
+        reset,
+        auto,
+        pause
+    };
+})();
+</script>
+
+
+
+<script>
+window.InfixViz = (() => {
+    const byId = id => document.getElementById(id);
+
+    const state = {
+        expression:"",
+        steps:[],
+        index:0,
+        timer:null
+    };
+
+    function isOperand(ch) {
+        return /^[A-Za-z0-9]$/.test(ch);
+    }
+
+    function precedence(op) {
+        if (op === "^") return 3;
+        if (op === "*" || op === "/" || op === "%") return 2;
+        if (op === "+" || op === "-") return 1;
+        return 0;
+    }
+
+    function isRightAssociative(op) {
+        return op === "^";
+    }
+
+    function buildSteps(expr) {
+        const stack = [];
+        let postfix = "";
+
+        const steps = [{
+            index:-1,
+            stack:[],
+            postfix:"",
+            current:"—",
+            action:"Start",
+            message:"Operator stack and postfix output are empty."
+        }];
+
+        for (let i=0;i<expr.length;i++) {
+            const ch = expr[i];
+
+            steps.push({
+                index:i,
+                stack:[...stack],
+                postfix,
+                current:ch,
+                action:`Read ${ch}`,
+                message:`Process token ${ch}.`
+            });
+
+            if (isOperand(ch)) {
+                postfix += ch;
+
+                steps.push({
+                    index:i,
+                    stack:[...stack],
+                    postfix,
+                    current:ch,
+                    action:"Append operand",
+                    message:`${ch} is an operand, so append it directly to postfix.`
+                });
+            }
+            else if (ch === "(") {
+                stack.push(ch);
+
+                steps.push({
+                    index:i,
+                    stack:[...stack],
+                    postfix,
+                    current:ch,
+                    action:"Push (",
+                    message:"Opening parenthesis is pushed to mark a subexpression."
+                });
+            }
+            else if (ch === ")") {
+                while (stack.length && stack[stack.length-1] !== "(") {
+                    const op = stack.pop();
+                    postfix += op;
+
+                    steps.push({
+                        index:i,
+                        stack:[...stack],
+                        postfix,
+                        current:ch,
+                        action:`Pop ${op}`,
+                        message:`Closing parenthesis found: pop ${op} to postfix.`
+                    });
+                }
+
+                if (stack.length && stack[stack.length-1] === "(") {
+                    stack.pop();
+
+                    steps.push({
+                        index:i,
+                        stack:[...stack],
+                        postfix,
+                        current:ch,
+                        action:"Discard (",
+                        message:"Matching opening parenthesis is removed, but not copied to postfix."
+                    });
+                }
+            }
+            else {
+                while (
+                    stack.length &&
+                    stack[stack.length-1] !== "(" &&
+                    (
+                        precedence(stack[stack.length-1]) > precedence(ch) ||
+                        (
+                            precedence(stack[stack.length-1]) === precedence(ch) &&
+                            !isRightAssociative(ch)
+                        )
+                    )
+                ) {
+                    const op = stack.pop();
+                    postfix += op;
+
+                    steps.push({
+                        index:i,
+                        stack:[...stack],
+                        postfix,
+                        current:ch,
+                        action:`Pop ${op}`,
+                        message:`${op} must be emitted before ${ch} because of precedence/associativity.`
+                    });
+                }
+
+                stack.push(ch);
+
+                steps.push({
+                    index:i,
+                    stack:[...stack],
+                    postfix,
+                    current:ch,
+                    action:`Push ${ch}`,
+                    message:`Push ${ch} onto the operator stack.`
+                });
+            }
+        }
+
+        while (stack.length) {
+            const op = stack.pop();
+
+            if (op === "(") continue;
+
+            postfix += op;
+
+            steps.push({
+                index:expr.length,
+                stack:[...stack],
+                postfix,
+                current:"—",
+                action:`Final pop ${op}`,
+                message:`Input is finished, so move remaining operator ${op} to postfix.`
+            });
+        }
+
+        steps.push({
+            index:expr.length,
+            stack:[],
+            postfix,
+            current:"—",
+            action:"Completed",
+            message:`Final postfix expression is ${postfix}.`
+        });
+
+        return steps;
+    }
+
+    function render() {
+        const step = state.steps[state.index];
+
+        byId("infixExpression").innerHTML =
+            state.expression.split("").map((ch,i) => {
+                const classes = ["infix-token"];
+                if (i === step.index) classes.push("current");
+                if (typeof step.index === "number" && i < step.index)
+                    classes.push("done");
+                return `<div class="${classes.join(" ")}">${ch}</div>`;
+            }).join("");
+
+        byId("infixStack").innerHTML =
+            step.stack.length
+                ? step.stack.map((op,i) => `
+                    <div class="infix-op-cell ${i === step.stack.length-1 ? "top" : ""}">
+                        ${op}
+                    </div>
+                `).join("")
+                : `<div style="margin:auto;align-self:center;color:#94a3b8;font-weight:800;">empty</div>`;
+
+        byId("infixOutput").textContent =
+            step.postfix || "—";
+
+        byId("infixCurrent").textContent =
+            step.current;
+
+        byId("infixAction").textContent =
+            step.action;
+
+        byId("infixTop").textContent =
+            step.stack.length
+                ? step.stack[step.stack.length-1]
+                : "—";
+
+        byId("infixMessage").innerHTML =
+            `<strong>${step.action}</strong><br>${step.message}`;
+
+        const done =
+            state.index >= state.steps.length-1;
+
+        byId("infixNext").disabled = done;
+        byId("infixNext").textContent =
+            done ? "✓ Completed" : "Next →";
+
+        byId("infixAuto").disabled = done;
+
+        const pct =
+            state.steps.length <= 1
+                ? 100
+                : Math.round(
+                    state.index /
+                    (state.steps.length-1) *
+                    100
+                );
+
+        byId("infixProgress").style.width =
+            pct + "%";
+    }
+
+    function load() {
+        pause();
+
+        state.expression =
+            String(
+                byId("infixVizInput").value || ""
+            ).replace(/\s+/g,"");
+
+        state.steps =
+            buildSteps(state.expression);
+
+        state.index = 0;
+        render();
+    }
+
+    function next() {
+        if (state.index >= state.steps.length-1) return;
+        state.index++;
+        render();
+    }
+
+    function prev() {
+        if (state.index <= 0) return;
+        pause();
+        state.index--;
+        render();
+    }
+
+    function reset() {
+        pause();
+        state.index = 0;
+        render();
+    }
+
+    function auto() {
+        if (
+            state.timer ||
+            state.index >= state.steps.length-1
+        ) return;
+
+        state.timer =
+            setInterval(() => {
+                if (state.index >= state.steps.length-1) {
+                    pause();
+                    render();
+                    return;
+                }
+
+                state.index++;
+                render();
+
+                if (state.index >= state.steps.length-1)
+                    pause();
+            },800);
+    }
+
+    function pause() {
+        if (state.timer) {
+            clearInterval(state.timer);
+            state.timer = null;
+        }
+    }
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        load
+    );
+
+    return {
+        load,
+        next,
+        prev,
+        reset,
+        auto,
+        pause
+    };
+})();
+</script>
+
+
+
+<script>
+window.InfixTrace = (() => {
+    const program = [
+        "int main()",
+        "{",
+        "    char infix[100];",
+        "    char stack[100];",
+        "    char postfix[100];",
+        "",
+        "    int top = -1;",
+        "    int k = 0;",
+        "",
+        "    scanf(\"%99s\", infix);",
+        "",
+        "    for(int i = 0; infix[i] != '\\0'; i++)",
+        "    {",
+        "        char ch = infix[i];",
+        "",
+        "        if(isalnum((unsigned char)ch))",
+        "        {",
+        "            postfix[k++] = ch;",
+        "        }",
+        "        else if(ch == '(')",
+        "        {",
+        "            stack[++top] = ch;",
+        "        }",
+        "        else if(ch == ')')",
+        "        {",
+        "            while(top != -1 && stack[top] != '(')",
+        "                postfix[k++] = stack[top--];",
+        "",
+        "            if(top != -1)",
+        "                top--;",
+        "        }",
+        "        else",
+        "        {",
+        "            while(top != -1 &&",
+        "                  stack[top] != '(' &&",
+        "                  (precedence(stack[top]) > precedence(ch) ||",
+        "                  (precedence(stack[top]) == precedence(ch) &&",
+        "                   !isRightAssociative(ch))))",
+        "            {",
+        "                postfix[k++] = stack[top--];",
+        "            }",
+        "",
+        "            stack[++top] = ch;",
+        "        }",
+        "    }",
+        "",
+        "    while(top != -1)",
+        "        postfix[k++] = stack[top--];",
+        "",
+        "    postfix[k] = '\\0';",
+        "",
+        "    printf(\"%s\\n\", postfix);",
+        "",
+        "    return 0;",
+        "}"
+    ];
+
+    const infix = "A+B*(C-D)";
+
+    const initial = {
+        infix,
+        stack:["—","—","—","—","—","—","—","—","—","—"],
+        postfix:["—","—","—","—","—","—","—","—","—","—"],
+        top:-1,
+        k:0,
+        i:"indeterminate",
+        ch:"indeterminate",
+        output:"",
+        currentIndex:-1
+    };
+
+    const steps = [];
+
+    function clone(v) {
+        return JSON.parse(JSON.stringify(v));
+    }
+
+    function add(line,explain,op,mutate) {
+        steps.push({line,explain,op,mutate});
+    }
+
+    function pushOperator(op,lineNo=42) {
+        add(
+            lineNo,
+            `Increment top and push '${op}' onto the operator stack.`,
+            `stack[++top] = '${op}'`,
+            s => {
+                s.top++;
+                s.stack[s.top] = op;
+            }
+        );
+    }
+
+    function appendPostfix(ch,lineNo=17) {
+        add(
+            lineNo,
+            `Append '${ch}' to postfix at index k = ${ch}.`,
+            `postfix[k++] = '${ch}'`,
+            s => {
+                s.postfix[s.k] = ch;
+                s.k++;
+            }
+        );
+    }
+
+    add(0,"Program starts in main().","Enter main()",s=>{});
+    add(6,"top is initialized to -1, so the operator stack is empty.","top = -1",s=>{s.top=-1;});
+    add(7,"k is initialized to 0, the first free postfix position.","k = 0",s=>{s.k=0;});
+    add(9,"Read A+B*(C-D) into infix.","scanf(\"%99s\", infix)",s=>{});
+
+    // A
+    add(11,"Loop selects infix[0] = 'A'.","i = 0",s=>{s.i=0;s.currentIndex=0;});
+    add(13,"ch receives 'A'.","ch = 'A'",s=>{s.ch="A";});
+    add(15,"A is alphanumeric, so it is an operand.","isalnum(A) → TRUE",s=>{});
+    add(17,"Append A to postfix.","postfix[0] = 'A'; k = 1",s=>{s.postfix[0]="A";s.k=1;});
+
+    // +
+    add(11,"Loop selects infix[1] = '+'.","i = 1",s=>{s.i=1;s.currentIndex=1;});
+    add(13,"ch receives '+'.","ch = '+'",s=>{s.ch="+";});
+    add(32,"+ is an operator, so use the operator branch.","Operator branch",s=>{});
+    add(33,"Operator stack is empty, so the while condition is false.","top != -1 → FALSE",s=>{});
+    add(42,"Push + onto the operator stack.","stack[++top] = '+'",s=>{s.top=0;s.stack[0]="+";});
+
+    // B
+    add(11,"Loop selects infix[2] = 'B'.","i = 2",s=>{s.i=2;s.currentIndex=2;});
+    add(13,"ch receives 'B'.","ch = 'B'",s=>{s.ch="B";});
+    add(15,"B is an operand.","isalnum(B) → TRUE",s=>{});
+    add(17,"Append B to postfix.","postfix[1] = 'B'; k = 2",s=>{s.postfix[1]="B";s.k=2;});
+
+    // *
+    add(11,"Loop selects infix[3] = '*'.","i = 3",s=>{s.i=3;s.currentIndex=3;});
+    add(13,"ch receives '*'.","ch = '*'",s=>{s.ch="*";});
+    add(33,"TOP is +. Since precedence(+) < precedence(*), do not pop +.","Precedence test → FALSE",s=>{});
+    add(42,"Push * above +.","stack[++top] = '*'",s=>{s.top=1;s.stack[1]="*";});
+
+    // (
+    add(11,"Loop selects infix[4] = '('.","i = 4",s=>{s.i=4;s.currentIndex=4;});
+    add(13,"ch receives '('.","ch = '('",s=>{s.ch="(";});
+    add(19,"Opening parenthesis branch is selected.","ch == '(' → TRUE",s=>{});
+    add(21,"Push ( onto the stack.","stack[++top] = '('",s=>{s.top=2;s.stack[2]="(";});
+
+    // C
+    add(11,"Loop selects infix[5] = 'C'.","i = 5",s=>{s.i=5;s.currentIndex=5;});
+    add(13,"ch receives 'C'.","ch = 'C'",s=>{s.ch="C";});
+    add(15,"C is an operand.","isalnum(C) → TRUE",s=>{});
+    add(17,"Append C to postfix.","postfix[2] = 'C'; k = 3",s=>{s.postfix[2]="C";s.k=3;});
+
+    // -
+    add(11,"Loop selects infix[6] = '-'.","i = 6",s=>{s.i=6;s.currentIndex=6;});
+    add(13,"ch receives '-'.","ch = '-'",s=>{s.ch="-";});
+    add(33,"TOP is (, so precedence popping stops at the parenthesis.","stack[top] != '(' → FALSE",s=>{});
+    add(42,"Push - above the opening parenthesis.","stack[++top] = '-'",s=>{s.top=3;s.stack[3]="-";});
+
+    // D
+    add(11,"Loop selects infix[7] = 'D'.","i = 7",s=>{s.i=7;s.currentIndex=7;});
+    add(13,"ch receives 'D'.","ch = 'D'",s=>{s.ch="D";});
+    add(15,"D is an operand.","isalnum(D) → TRUE",s=>{});
+    add(17,"Append D to postfix.","postfix[3] = 'D'; k = 4",s=>{s.postfix[3]="D";s.k=4;});
+
+    // )
+    add(11,"Loop selects infix[8] = ')'.","i = 8",s=>{s.i=8;s.currentIndex=8;});
+    add(13,"ch receives ')'.","ch = ')'",s=>{s.ch=")";});
+    add(23,"Closing parenthesis branch is selected.","ch == ')' → TRUE",s=>{});
+    add(25,"TOP is -, so pop it to postfix.","stack[top] != '(' → TRUE",s=>{});
+    add(26,"Append - and pop it from the stack.","postfix[4] = '-'; top--",s=>{
+        s.postfix[4]="-";s.k=5;s.stack[3]="—";s.top=2;
+    });
+    add(28,"TOP is now (, so stop the while loop.","stack[top] != '(' → FALSE",s=>{});
+    add(29,"Discard the matching opening parenthesis.","top--",s=>{s.stack[2]="—";s.top=1;});
+
+    // final pops
+    add(46,"Input is finished. TOP is *, so remaining operators must be emitted.","top != -1 → TRUE",s=>{});
+    add(47,"Append * to postfix and pop it.","postfix[5] = '*'; top--",s=>{
+        s.postfix[5]="*";s.k=6;s.stack[1]="—";s.top=0;
+    });
+    add(46,"TOP is +, so continue final popping.","top != -1 → TRUE",s=>{});
+    add(47,"Append + to postfix and pop it.","postfix[6] = '+'; top--",s=>{
+        s.postfix[6]="+";s.k=7;s.stack[0]="—";s.top=-1;
+    });
+    add(46,"Operator stack is empty, so final popping stops.","top != -1 → FALSE",s=>{});
+    add(49,"Terminate postfix with the null character.","postfix[k] = '\\0'",s=>{});
+    add(51,"Print ABCD-*+.","printf(\"%s\\n\", postfix)",s=>{s.output="ABCD-*+";});
+    add(53,"main() returns 0.","return 0",s=>{s.currentIndex=infix.length;});
+
+    const registry = {
+        current:0,
+        state:clone(initial),
+        timer:null
+    };
+
+    function escapeHtml(v) {
+        return String(v ?? "")
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;");
+    }
+
+    function applyThrough(count) {
+        registry.state = clone(initial);
+        for (let i=0;i<count;i++) {
+            steps[i].mutate(registry.state);
+        }
+    }
+
+    function currentStep() {
+        if (registry.current === 0) {
+            return {
+                line:0,
+                explain:"Press Next to start executing the program.",
+                op:""
+            };
+        }
+
+        return steps[
+            Math.min(
+                registry.current-1,
+                steps.length-1
+            )
+        ];
+    }
+
+    function renderCode(step) {
+        const code =
+            document.getElementById("infixTraceCode");
+
+        code.innerHTML =
+            program.map((line,index) => {
+                const active =
+                    index === step.line
+                        ? " active"
+                        : "";
+
+                return `<span class="stack-code-line${active}">${escapeHtml(line)}</span>`;
+            }).join("");
+
+        requestAnimationFrame(() => {
+            const active =
+                code.querySelector(".stack-code-line.active");
+
+            if (!active) return;
+
+            const codeRect = code.getBoundingClientRect();
+            const activeRect = active.getBoundingClientRect();
+
+            const activeTopInsideCode =
+                code.scrollTop +
+                (activeRect.top - codeRect.top);
+
+            const activeBottomInsideCode =
+                activeTopInsideCode +
+                activeRect.height;
+
+            const topSafe =
+                code.scrollTop + 42;
+
+            const bottomSafe =
+                code.scrollTop +
+                code.clientHeight -
+                42;
+
+            let newScrollTop = code.scrollTop;
+
+            if (activeTopInsideCode < topSafe) {
+                newScrollTop =
+                    Math.max(
+                        0,
+                        activeTopInsideCode - 42
+                    );
+            }
+            else if (activeBottomInsideCode > bottomSafe) {
+                newScrollTop =
+                    Math.max(
+                        0,
+                        activeBottomInsideCode -
+                        code.clientHeight +
+                        42
+                    );
+            }
+
+            if (
+                Math.abs(
+                    newScrollTop -
+                    code.scrollTop
+                ) > 1
+            ) {
+                code.scrollTo({
+                    top:newScrollTop,
+                    left:code.scrollLeft,
+                    behavior:"smooth"
+                });
+            }
+        });
+    }
+
+    function postfixString(s) {
+        return s.postfix
+            .slice(0,s.k)
+            .filter(v => v !== "—")
+            .join("");
+    }
+
+    function renderVars() {
+        const s = registry.state;
+
+        const vars = [
+            ["top",s.top],
+            ["k",s.k],
+            ["i",s.i],
+            ["ch",s.ch],
+            ["output",s.output || '""']
+        ];
+
+        document.getElementById(
+            "infixTraceVars"
+        ).innerHTML =
+            vars.map(([k,v]) => `
+                <div class="stack-var">
+                    <strong>${escapeHtml(k)}</strong>
+                    <span>${escapeHtml(v)}</span>
+                </div>
+            `).join("");
+    }
+
+    function renderMemory() {
+        const s = registry.state;
+
+        document.getElementById(
+            "infixTraceStack"
+        ).innerHTML =
+            s.top >= 0
+                ? s.stack.slice(0,s.top+1).map((op,i)=>`
+                    <div class="infix-trace-cell ${i === s.top ? "top" : ""}">
+                        ${escapeHtml(op)}
+                    </div>
+                `).join("")
+                : `<div style="margin:auto;align-self:center;color:#94a3b8;font-weight:800;">empty</div>`;
+
+        document.getElementById(
+            "infixTraceExpression"
+        ).innerHTML =
+            infix.split("").map((ch,i)=>{
+                const classes = ["infix-trace-token"];
+
+                if (i === s.currentIndex)
+                    classes.push("current");
+
+                if (
+                    typeof s.currentIndex === "number" &&
+                    i < s.currentIndex
+                ) {
+                    classes.push("done");
+                }
+
+                return `<div class="${classes.join(" ")}">${escapeHtml(ch)}</div>`;
+            }).join("");
+
+        document.getElementById(
+            "infixTracePostfix"
+        ).textContent =
+            postfixString(s) || "—";
+    }
+
+    function render() {
+        const step = currentStep();
+
+        renderCode(step);
+        renderVars();
+        renderMemory();
+
+        document.getElementById(
+            "infixTraceExplain"
+        ).textContent =
+            step.explain || "";
+
+        document.getElementById(
+            "infixTraceOperation"
+        ).innerHTML =
+            step.op
+                ? `<strong>Current Operation:</strong> ${escapeHtml(step.op)}`
+                : "";
+
+        const done =
+            registry.current >= steps.length;
+
+        const next =
+            document.getElementById("infixTraceNext");
+
+        const auto =
+            document.getElementById("infixTraceAuto");
+
+        next.disabled = done;
+        next.textContent =
+            done ? "✓ Completed" : "Next →";
+
+        auto.disabled =
+            done || !!registry.timer;
+
+        document.getElementById(
+            "infixTraceStatus"
+        ).textContent =
+            done
+                ? "✓ Program execution completed. Press Reset to run again."
+                : `Step ${registry.current} of ${steps.length}`;
+    }
+
+    function toggle() {
+        const box =
+            document.getElementById("infixTrace");
+
+        box.hidden = !box.hidden;
+
+        if (!box.hidden) render();
+    }
+
+    function next() {
+        if (registry.current >= steps.length) return;
+
+        steps[registry.current]
+            .mutate(registry.state);
+
+        registry.current++;
+        render();
+    }
+
+    function prev() {
+        if (registry.current <= 0) return;
+
+        pause();
+        registry.current--;
+        applyThrough(registry.current);
+        render();
+    }
+
+    function reset() {
+        pause();
+
+        registry.current = 0;
+        registry.state = clone(initial);
+        render();
+
+        const code =
+            document.getElementById("infixTraceCode");
+
+        requestAnimationFrame(() => {
+            code.scrollTo({
+                top:0,
+                left:0,
+                behavior:"auto"
+            });
+        });
+    }
+
+    function auto() {
+        if (
+            registry.timer ||
+            registry.current >= steps.length
+        ) return;
+
+        registry.timer =
+            setInterval(() => {
+                if (registry.current >= steps.length) {
+                    pause();
+                    render();
+                    return;
+                }
+
+                next();
+
+                if (registry.current >= steps.length) {
+                    pause();
+                    render();
+                }
+            },850);
+
+        render();
+    }
+
+    function pause() {
+        if (registry.timer) {
+            clearInterval(registry.timer);
+            registry.timer = null;
+        }
+    }
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        render
+    );
+
+    return {
+        toggle,
+        next,
+        prev,
+        reset,
+        auto,
+        pause
+    };
+})();
+</script>
+
+
+
+<script>
+window.PostfixViz = (() => {
+    const byId = id => document.getElementById(id);
+    const state = { expression:"", steps:[], index:0, timer:null };
+
+    function isDigit(ch) {
+        return /^[0-9]$/.test(ch);
+    }
+
+    function isOperator(ch) {
+        return ch === "+" || ch === "-" || ch === "*" || ch === "/";
+    }
+
+    function calculate(a,b,op) {
+        if (op === "+") return a + b;
+        if (op === "-") return a - b;
+        if (op === "*") return a * b;
+        if (op === "/") return Math.trunc(a / b);
+        return NaN;
+    }
+
+    function buildSteps(expr) {
+        const stack = [];
+        const steps = [{
+            index:-1, stack:[], current:"—",
+            a:"—", b:"—", result:"—",
+            action:"Start",
+            message:"The value stack is empty."
+        }];
+
+        let invalid = false;
+
+        for (let i=0; i<expr.length; i++) {
+            const ch = expr[i];
+
+            steps.push({
+                index:i, stack:[...stack], current:ch,
+                a:"—", b:"—",
+                result:stack.length ? stack[stack.length-1] : "—",
+                action:`Read ${ch}`,
+                message:`Process token ${ch}.`
+            });
+
+            if (isDigit(ch)) {
+                const value = Number(ch);
+                stack.push(value);
+
+                steps.push({
+                    index:i, stack:[...stack], current:ch,
+                    a:"—", b:"—", result:value,
+                    action:`Push ${value}`,
+                    message:`${ch} is an operand. Push ${value} onto the value stack.`
+                });
+                continue;
+            }
+
+            if (isOperator(ch)) {
+                if (stack.length < 2) {
+                    steps.push({
+                        index:i, stack:[...stack], current:ch,
+                        a:"—", b:"—", result:"Invalid",
+                        action:"Insufficient operands",
+                        message:`Operator ${ch} requires two operands, but fewer than two values are available.`
+                    });
+                    invalid = true;
+                    break;
+                }
+
+                const b = stack.pop();
+                steps.push({
+                    index:i, stack:[...stack], current:ch,
+                    a:"—", b, result:"—",
+                    action:`b = pop() → ${b}`,
+                    message:`Pop the right-hand operand first: b = ${b}.`
+                });
+
+                const a = stack.pop();
+                steps.push({
+                    index:i, stack:[...stack], current:ch,
+                    a, b, result:"—",
+                    action:`a = pop() → ${a}`,
+                    message:`Pop the left-hand operand second: a = ${a}.`
+                });
+
+                if (ch === "/" && b === 0) {
+                    steps.push({
+                        index:i, stack:[...stack], current:ch,
+                        a, b, result:"Division by zero",
+                        action:`${a} / ${b}`,
+                        message:"Division by zero is invalid."
+                    });
+                    invalid = true;
+                    break;
+                }
+
+                const result = calculate(a,b,ch);
+
+                steps.push({
+                    index:i, stack:[...stack], current:ch,
+                    a, b, result,
+                    action:`${a} ${ch} ${b} = ${result}`,
+                    message:`Evaluate ${a} ${ch} ${b}.`
+                });
+
+                stack.push(result);
+
+                steps.push({
+                    index:i, stack:[...stack], current:ch,
+                    a, b, result,
+                    action:`Push ${result}`,
+                    message:`Push the intermediate result ${result} back onto the stack.`
+                });
+                continue;
+            }
+
+            steps.push({
+                index:i, stack:[...stack], current:ch,
+                a:"—", b:"—", result:"Invalid",
+                action:"Invalid token",
+                message:`${ch} is neither a single-digit operand nor a supported operator.`
+            });
+            invalid = true;
+            break;
+        }
+
+        if (!invalid) {
+            if (stack.length === 1) {
+                steps.push({
+                    index:expr.length, stack:[...stack], current:"—",
+                    a:"—", b:"—", result:stack[0],
+                    action:"Completed",
+                    message:`Exactly one value remains. Final result = ${stack[0]}.`
+                });
+            } else {
+                steps.push({
+                    index:expr.length, stack:[...stack], current:"—",
+                    a:"—", b:"—", result:"Invalid",
+                    action:"Final stack check",
+                    message:`${stack.length} values remain. A valid postfix expression must finish with exactly one value.`
+                });
+            }
+        }
+
+        return steps;
+    }
+
+    function render() {
+        const step = state.steps[state.index];
+
+        byId("postfixExpression").innerHTML =
+            state.expression.split("").map((ch,i) => {
+                const classes = ["postfix-token"];
+                if (i === step.index) classes.push("current");
+                if (typeof step.index === "number" && i < step.index)
+                    classes.push("done");
+                return `<div class="${classes.join(" ")}">${ch}</div>`;
+            }).join("");
+
+        byId("postfixStack").innerHTML =
+            step.stack.length
+                ? step.stack.map((value,i) => `
+                    <div class="postfix-value-cell ${i === step.stack.length-1 ? "top" : ""}">
+                        ${value}
+                    </div>
+                `).join("")
+                : `<div style="margin:auto;align-self:center;color:#94a3b8;font-weight:800;">empty</div>`;
+
+        byId("postfixCurrent").textContent = step.current;
+        byId("postfixA").textContent = step.a;
+        byId("postfixB").textContent = step.b;
+        byId("postfixAction").textContent = step.action;
+        byId("postfixResult").textContent = step.result;
+        byId("postfixMessage").innerHTML =
+            `<strong>${step.action}</strong><br>${step.message}`;
+
+        const done = state.index >= state.steps.length-1;
+        byId("postfixNext").disabled = done;
+        byId("postfixNext").textContent = done ? "✓ Completed" : "Next →";
+        byId("postfixAuto").disabled = done;
+
+        const pct = state.steps.length <= 1
+            ? 100
+            : Math.round(state.index / (state.steps.length - 1) * 100);
+        byId("postfixProgress").style.width = pct + "%";
+    }
+
+    function load() {
+        pause();
+        state.expression =
+            String(byId("postfixVizInput").value || "").replace(/\s+/g,"");
+        state.steps = buildSteps(state.expression);
+        state.index = 0;
+        render();
+    }
+
+    function next() {
+        if (state.index >= state.steps.length-1) return;
+        state.index++;
+        render();
+    }
+
+    function prev() {
+        if (state.index <= 0) return;
+        pause();
+        state.index--;
+        render();
+    }
+
+    function reset() {
+        pause();
+        state.index = 0;
+        render();
+    }
+
+    function auto() {
+        if (state.timer || state.index >= state.steps.length-1) return;
+
+        state.timer = setInterval(() => {
+            if (state.index >= state.steps.length-1) {
+                pause();
+                render();
+                return;
+            }
+
+            state.index++;
+            render();
+
+            if (state.index >= state.steps.length-1)
+                pause();
+        },800);
+    }
+
+    function pause() {
+        if (state.timer) {
+            clearInterval(state.timer);
+            state.timer = null;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", load);
+
+    return { load, next, prev, reset, auto, pause };
+})();
+</script>
+
+
+
+<script>
+window.PostfixTrace = (() => {
+    const program = [
+        "int main()",
+        "{",
+        "    char postfix[100];",
+        "    int stack[100];",
+        "",
+        "    int top = -1;",
+        "",
+        "    scanf(\"%99s\", postfix);",
+        "",
+        "    for(int i = 0; postfix[i] != '\\0'; i++)",
+        "    {",
+        "        char ch = postfix[i];",
+        "",
+        "        if(isdigit((unsigned char)ch))",
+        "        {",
+        "            stack[++top] = ch - '0';",
+        "        }",
+        "        else",
+        "        {",
+        "            int b = stack[top--];",
+        "            int a = stack[top--];",
+        "            int result = 0;",
+        "",
+        "            switch(ch)",
+        "            {",
+        "                case '+':",
+        "                    result = a + b;",
+        "                    break;",
+        "",
+        "                case '-':",
+        "                    result = a - b;",
+        "                    break;",
+        "",
+        "                case '*':",
+        "                    result = a * b;",
+        "                    break;",
+        "",
+        "                case '/':",
+        "                    result = a / b;",
+        "                    break;",
+        "            }",
+        "",
+        "            stack[++top] = result;",
+        "        }",
+        "    }",
+        "",
+        "    printf(\"%d\\n\", stack[top]);",
+        "",
+        "    return 0;",
+        "}"
+    ];
+
+    const postfix = "23*54*+9-";
+
+    const initial = {
+        postfix,
+        stack:["—","—","—","—","—","—","—","—","—","—"],
+        top:-1,
+        i:"indeterminate",
+        ch:"indeterminate",
+        a:"—",
+        b:"—",
+        result:"—",
+        output:"",
+        currentIndex:-1
+    };
+
+    const steps = [];
+
+    function clone(v) {
+        return JSON.parse(JSON.stringify(v));
+    }
+
+    function add(line,explain,op,mutate) {
+        steps.push({line,explain,op,mutate});
+    }
+
+    add(0,"Program execution starts in main().","Enter main()",s=>{});
+    add(5,"top is initialized to -1, so the value stack is empty.","top = -1",s=>{s.top=-1;});
+    add(7,"Read postfix expression 23*54*+9-.",'scanf("%99s", postfix)',s=>{});
+
+    const tokens = [
+        {i:0,ch:"2",type:"digit"},
+        {i:1,ch:"3",type:"digit"},
+        {i:2,ch:"*",type:"op",a:2,b:3,r:6,line:33},
+        {i:3,ch:"5",type:"digit"},
+        {i:4,ch:"4",type:"digit"},
+        {i:5,ch:"*",type:"op",a:5,b:4,r:20,line:33},
+        {i:6,ch:"+",type:"op",a:6,b:20,r:26,line:26},
+        {i:7,ch:"9",type:"digit"},
+        {i:8,ch:"-",type:"op",a:26,b:9,r:17,line:30}
+    ];
+
+    tokens.forEach(token => {
+        add(
+            9,
+            `Loop selects postfix[${token.i}] = '${token.ch}'.`,
+            `i = ${token.i}`,
+            s => {
+                s.i = token.i;
+                s.currentIndex = token.i;
+            }
+        );
+
+        add(
+            11,
+            `ch receives '${token.ch}'.`,
+            `ch = '${token.ch}'`,
+            s => { s.ch = token.ch; }
+        );
+
+        if (token.type === "digit") {
+            add(
+                13,
+                `${token.ch} is a digit, so it is an operand.`,
+                `isdigit('${token.ch}') → TRUE`,
+                s => {}
+            );
+
+            add(
+                15,
+                `Convert '${token.ch}' to ${Number(token.ch)} and push it.`,
+                `stack[++top] = ${Number(token.ch)}`,
+                s => {
+                    s.top++;
+                    s.stack[s.top] = Number(token.ch);
+                    s.a = "—";
+                    s.b = "—";
+                    s.result = Number(token.ch);
+                }
+            );
+        } else {
+            add(
+                17,
+                `${token.ch} is an operator, so enter the operator branch.`,
+                "Operator branch",
+                s => {}
+            );
+
+            add(
+                19,
+                `Pop the right-hand operand first: b = ${token.b}.`,
+                `b = stack[top--] → ${token.b}`,
+                s => {
+                    s.b = s.stack[s.top];
+                    s.stack[s.top] = "—";
+                    s.top--;
+                }
+            );
+
+            add(
+                20,
+                `Pop the left-hand operand second: a = ${token.a}.`,
+                `a = stack[top--] → ${token.a}`,
+                s => {
+                    s.a = s.stack[s.top];
+                    s.stack[s.top] = "—";
+                    s.top--;
+                }
+            );
+
+            add(
+                21,
+                "result is initialized to 0 before the switch statement.",
+                "result = 0",
+                s => { s.result = 0; }
+            );
+
+            add(
+                23,
+                `switch selects the '${token.ch}' case.`,
+                `switch('${token.ch}')`,
+                s => {}
+            );
+
+            add(
+                token.line,
+                `Compute ${token.a} ${token.ch} ${token.b} = ${token.r}.`,
+                `result = ${token.r}`,
+                s => { s.result = token.r; }
+            );
+
+            add(
+                42,
+                `Push intermediate result ${token.r} back onto the stack.`,
+                `stack[++top] = ${token.r}`,
+                s => {
+                    s.top++;
+                    s.stack[s.top] = token.r;
+                }
+            );
+        }
+    });
+
+    add(
+        46,
+        "All postfix tokens have been processed. The stack contains one final value: 17.",
+        "Final stack value = 17",
+        s => { s.currentIndex = postfix.length; }
+    );
+
+    add(
+        46,
+        "Print stack[top], which is 17.",
+        "Print 17",
+        s => { s.output = "17"; }
+    );
+
+    add(
+        48,
+        "main() returns 0 and the program finishes.",
+        "return 0",
+        s => {}
+    );
+
+    const registry = {
+        current:0,
+        state:clone(initial),
+        timer:null
+    };
+
+    function escapeHtml(v) {
+        return String(v ?? "")
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;");
+    }
+
+    function applyThrough(count) {
+        registry.state = clone(initial);
+        for (let i=0;i<count;i++)
+            steps[i].mutate(registry.state);
+    }
+
+    function currentStep() {
+        if (registry.current === 0) {
+            return {
+                line:0,
+                explain:"Press Next to start executing the postfix evaluation program.",
+                op:""
+            };
+        }
+        return steps[Math.min(registry.current-1, steps.length-1)];
+    }
+
+    function renderCode(step) {
+        const code = document.getElementById("postfixTraceCode");
+
+        code.innerHTML = program.map((line,index) => {
+            const active = index === step.line ? " active" : "";
+            return `<span class="stack-code-line${active}">${escapeHtml(line)}</span>`;
+        }).join("");
+
+        requestAnimationFrame(() => {
+            const active = code.querySelector(".stack-code-line.active");
+            if (!active) return;
+
+            const codeRect = code.getBoundingClientRect();
+            const activeRect = active.getBoundingClientRect();
+
+            const activeTopInsideCode =
+                code.scrollTop + (activeRect.top - codeRect.top);
+
+            const activeBottomInsideCode =
+                activeTopInsideCode + activeRect.height;
+
+            const topSafe = code.scrollTop + 42;
+            const bottomSafe =
+                code.scrollTop + code.clientHeight - 42;
+
+            let newScrollTop = code.scrollTop;
+
+            if (activeTopInsideCode < topSafe) {
+                newScrollTop = Math.max(0, activeTopInsideCode - 42);
+            } else if (activeBottomInsideCode > bottomSafe) {
+                newScrollTop = Math.max(
+                    0,
+                    activeBottomInsideCode - code.clientHeight + 42
+                );
+            }
+
+            if (Math.abs(newScrollTop - code.scrollTop) > 1) {
+                code.scrollTo({
+                    top:newScrollTop,
+                    left:code.scrollLeft,
+                    behavior:"smooth"
+                });
+            }
+        });
+    }
+
+    function renderVars() {
+        const s = registry.state;
+        const vars = [
+            ["top",s.top],
+            ["i",s.i],
+            ["ch",s.ch],
+            ["a",s.a],
+            ["b",s.b],
+            ["result",s.result],
+            ["output",s.output || '""']
+        ];
+
+        document.getElementById("postfixTraceVars").innerHTML =
+            vars.map(([k,v]) => `
+                <div class="stack-var">
+                    <strong>${escapeHtml(k)}</strong>
+                    <span>${escapeHtml(v)}</span>
+                </div>
+            `).join("");
+    }
+
+    function renderMemory() {
+        const s = registry.state;
+
+        document.getElementById("postfixTraceStack").innerHTML =
+            s.top >= 0
+                ? s.stack.slice(0,s.top+1).map((value,i) => `
+                    <div class="postfix-trace-cell ${i === s.top ? "top" : ""}">
+                        ${escapeHtml(value)}
+                    </div>
+                `).join("")
+                : `<div style="margin:auto;align-self:center;color:#94a3b8;font-weight:800;">empty</div>`;
+
+        document.getElementById("postfixTraceExpression").innerHTML =
+            postfix.split("").map((ch,i) => {
+                const classes = ["postfix-trace-token"];
+
+                if (i === s.currentIndex)
+                    classes.push("current");
+
+                if (
+                    typeof s.currentIndex === "number" &&
+                    i < s.currentIndex
+                ) {
+                    classes.push("done");
+                }
+
+                return `<div class="${classes.join(" ")}">${escapeHtml(ch)}</div>`;
+            }).join("");
+
+        document.getElementById("postfixTraceResult").textContent =
+            s.output || (s.result !== "—" ? s.result : "—");
+    }
+
+    function render() {
+        const step = currentStep();
+
+        renderCode(step);
+        renderVars();
+        renderMemory();
+
+        document.getElementById("postfixTraceExplain").textContent =
+            step.explain || "";
+
+        document.getElementById("postfixTraceOperation").innerHTML =
+            step.op
+                ? `<strong>Current Operation:</strong> ${escapeHtml(step.op)}`
+                : "";
+
+        const done = registry.current >= steps.length;
+        const next = document.getElementById("postfixTraceNext");
+        const auto = document.getElementById("postfixTraceAuto");
+
+        next.disabled = done;
+        next.textContent = done ? "✓ Completed" : "Next →";
+        auto.disabled = done || !!registry.timer;
+
+        document.getElementById("postfixTraceStatus").textContent =
+            done
+                ? "✓ Program execution completed. Press Reset to run again."
+                : `Step ${registry.current} of ${steps.length}`;
+    }
+
+    function toggle() {
+        const box = document.getElementById("postfixTrace");
+        box.hidden = !box.hidden;
+        if (!box.hidden) render();
+    }
+
+    function next() {
+        if (registry.current >= steps.length) return;
+        steps[registry.current].mutate(registry.state);
+        registry.current++;
+        render();
+    }
+
+    function prev() {
+        if (registry.current <= 0) return;
+        pause();
+        registry.current--;
+        applyThrough(registry.current);
+        render();
+    }
+
+    function reset() {
+        pause();
+        registry.current = 0;
+        registry.state = clone(initial);
+        render();
+
+        const code = document.getElementById("postfixTraceCode");
+        requestAnimationFrame(() => {
+            code.scrollTo({ top:0, left:0, behavior:"auto" });
+        });
+    }
+
+    function auto() {
+        if (registry.timer || registry.current >= steps.length) return;
+
+        registry.timer = setInterval(() => {
+            if (registry.current >= steps.length) {
+                pause();
+                render();
+                return;
+            }
+
+            next();
+
+            if (registry.current >= steps.length) {
+                pause();
+                render();
+            }
+        },850);
+
+        render();
+    }
+
+    function pause() {
+        if (registry.timer) {
+            clearInterval(registry.timer);
+            registry.timer = null;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", render);
+
+    return { toggle, next, prev, reset, auto, pause };
+})();
+</script>
+
+
+
+<script>
+window.CodeBhavyaStackPractice = (() => {
+    const judge0Base = "https://ce.judge0.com";
+    const judge0CLanguageId = 103;
+    const configs = [{"key": "stack-practice-1", "number": 1, "title": "Display Stack from Top to Bottom", "difficulty": "Easy", "statement": "Read N integers, treat them as pushes in the given order, and print the stack from TOP to bottom.", "inputSpec": "First line: N. Second line: N integers pushed from left to right.", "outputSpec": "Print values from top to bottom, separated by spaces. Print EMPTY when N = 0.", "sampleInput": "5\n10 20 30 40 50", "sampleOutput": "50 40 30 20 10", "hint": "After reading the values into an array stack, traverse from top down to index 0.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint main(){\n    int n; scanf(\"%d\",&n);\n    int stack[100], top=-1;\n    for(int i=0;i<n;i++) scanf(\"%d\",&stack[++top]);\n    if(top==-1){ printf(\"EMPTY\"); return 0; }\n    for(int i=top;i>=0;i--){\n        if(i!=top) printf(\" \");\n        printf(\"%d\",stack[i]);\n    }\n    return 0;\n}", "tests": [{"input": "5\n10 20 30 40 50", "expected": "50 40 30 20 10"}, {"input": "1\n7", "expected": "7"}, {"input": "4\n-1 0 2 5", "expected": "5 2 0 -1"}, {"input": "0\n", "expected": "EMPTY"}, {"input": "6\n1 1 2 3 5 8", "expected": "8 5 3 2 1 1"}]}, {"key": "stack-practice-2", "number": 2, "title": "Push One Value", "difficulty": "Easy", "statement": "Build an array stack, push one additional value, and print the stack from bottom to top.", "inputSpec": "First line: N. Second line: N integers. Third line: value to push.", "outputSpec": "Print the updated stack from bottom to top.", "sampleInput": "3\n10 20 30\n40", "sampleOutput": "10 20 30 40", "hint": "Increment top first and store the new value at stack[top].", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint main(){\n    int n; scanf(\"%d\",&n);\n    int stack[100], top=-1;\n    for(int i=0;i<n;i++) scanf(\"%d\",&stack[++top]);\n    int x; scanf(\"%d\",&x);\n    stack[++top]=x;\n    for(int i=0;i<=top;i++){\n        if(i) printf(\" \");\n        printf(\"%d\",stack[i]);\n    }\n    return 0;\n}", "tests": [{"input": "3\n10 20 30\n40", "expected": "10 20 30 40"}, {"input": "0\n\n5", "expected": "5"}, {"input": "1\n9\n2", "expected": "9 2"}, {"input": "4\n-4 -3 -2 -1\n0", "expected": "-4 -3 -2 -1 0"}, {"input": "5\n1 2 3 4 5\n99", "expected": "1 2 3 4 5 99"}]}, {"key": "stack-practice-3", "number": 3, "title": "Pop One Value", "difficulty": "Easy", "statement": "Build an array stack and pop one element. Print the popped value followed by the remaining stack from bottom to top.", "inputSpec": "First line: N (N >= 1). Second line: N integers.", "outputSpec": "Line 1: popped value. Line 2: remaining stack or EMPTY.", "sampleInput": "4\n10 20 30 40", "sampleOutput": "40\n10 20 30", "hint": "Read stack[top] before decrementing top.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint main(){\n    int n; scanf(\"%d\",&n);\n    int stack[100], top=-1;\n    for(int i=0;i<n;i++) scanf(\"%d\",&stack[++top]);\n    int popped=stack[top--];\n    printf(\"%d\\n\",popped);\n    if(top==-1){ printf(\"EMPTY\"); return 0; }\n    for(int i=0;i<=top;i++){\n        if(i) printf(\" \");\n        printf(\"%d\",stack[i]);\n    }\n    return 0;\n}", "tests": [{"input": "4\n10 20 30 40", "expected": "40\n10 20 30"}, {"input": "1\n7", "expected": "7\nEMPTY"}, {"input": "2\n-1 -2", "expected": "-2\n-1"}, {"input": "5\n1 2 3 4 5", "expected": "5\n1 2 3 4"}, {"input": "3\n100 200 300", "expected": "300\n100 200"}]}, {"key": "stack-practice-4", "number": 4, "title": "Peek at TOP", "difficulty": "Easy", "statement": "Read a non-empty stack and print the top value without removing it.", "inputSpec": "First line: N (N >= 1). Second line: N integers.", "outputSpec": "Print the top value.", "sampleInput": "4\n10 20 30 40", "sampleOutput": "40", "hint": "TOP is at index n-1 after all pushes.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint main(){\n    int n; scanf(\"%d\",&n);\n    int stack[100], top=-1;\n    for(int i=0;i<n;i++) scanf(\"%d\",&stack[++top]);\n    printf(\"%d\",stack[top]);\n    return 0;\n}", "tests": [{"input": "4\n10 20 30 40", "expected": "40"}, {"input": "1\n9", "expected": "9"}, {"input": "3\n-1 0 1", "expected": "1"}, {"input": "5\n2 4 6 8 10", "expected": "10"}, {"input": "2\n100 50", "expected": "50"}]}, {"key": "stack-practice-5", "number": 5, "title": "Reverse a String Using Stack", "difficulty": "Easy", "statement": "Reverse a string using stack behavior.", "inputSpec": "One word without spaces.", "outputSpec": "Print the reversed string.", "sampleInput": "CodeBhavya", "sampleOutput": "ayvahBedoC", "hint": "Push characters in order, then pop them in reverse order.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\n#include <string.h>\nint main(){\n    char s[200], stack[200];\n    scanf(\"%199s\",s);\n    int top=-1;\n    for(int i=0;s[i];i++) stack[++top]=s[i];\n    while(top!=-1) putchar(stack[top--]);\n    return 0;\n}", "tests": [{"input": "CodeBhavya", "expected": "ayvahBedoC"}, {"input": "stack", "expected": "kcats"}, {"input": "A", "expected": "A"}, {"input": "12345", "expected": "54321"}, {"input": "level", "expected": "level"}]}, {"key": "stack-practice-6", "number": 6, "title": "Check Balanced Parentheses", "difficulty": "Medium", "statement": "Check whether an expression containing (), {}, and [] is balanced.", "inputSpec": "One expression without spaces.", "outputSpec": "Print Balanced or Not Balanced.", "sampleInput": "{[()]}", "sampleOutput": "Balanced", "hint": "Push opening brackets. On a closing bracket, check the current stack top and pop only when types match.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint match(char a,char b){\n    return (a=='('&&b==')') || (a=='{'&&b=='}') || (a=='['&&b==']');\n}\nint main(){\n    char s[200], stack[200];\n    scanf(\"%199s\",s);\n    int top=-1;\n    for(int i=0;s[i];i++){\n        char ch=s[i];\n        if(ch=='('||ch=='{'||ch=='[') stack[++top]=ch;\n        else if(ch==')'||ch=='}'||ch==']'){\n            if(top==-1 || !match(stack[top],ch)){ printf(\"Not Balanced\"); return 0; }\n            top--;\n        }\n    }\n    printf(top==-1 ? \"Balanced\" : \"Not Balanced\");\n    return 0;\n}", "tests": [{"input": "{[()]}", "expected": "Balanced"}, {"input": "([)]", "expected": "Not Balanced"}, {"input": "()[]{}", "expected": "Balanced"}, {"input": "(((", "expected": "Not Balanced"}, {"input": "}{", "expected": "Not Balanced"}]}, {"key": "stack-practice-7", "number": 7, "title": "Maximum Nesting Depth", "difficulty": "Medium", "statement": "Find the maximum nesting depth of round parentheses in a valid parentheses expression.", "inputSpec": "One valid string containing '(' and ')'.", "outputSpec": "Print the maximum depth.", "sampleInput": "((())())", "sampleOutput": "3", "hint": "Increase depth on '(', decrease on ')', and track the maximum value reached.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint main(){\n    char s[200]; scanf(\"%199s\",s);\n    int depth=0,maxDepth=0;\n    for(int i=0;s[i];i++){\n        if(s[i]=='('){\n            depth++;\n            if(depth>maxDepth) maxDepth=depth;\n        } else if(s[i]==')') depth--;\n    }\n    printf(\"%d\",maxDepth);\n    return 0;\n}", "tests": [{"input": "((())())", "expected": "3"}, {"input": "()", "expected": "1"}, {"input": "()()", "expected": "1"}, {"input": "(((())))", "expected": "4"}, {"input": "(()(()))", "expected": "3"}]}, {"key": "stack-practice-8", "number": 8, "title": "Infix to Postfix", "difficulty": "Medium", "statement": "Convert an infix expression with single-character operands and operators +, -, *, /, %, ^ to postfix.", "inputSpec": "One infix expression without spaces.", "outputSpec": "Print the postfix expression.", "sampleInput": "A+B*(C-D)", "sampleOutput": "ABCD-*+", "hint": "Operands go directly to output. Use an operator stack for precedence, parentheses, and associativity.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\n#include <ctype.h>\nint prec(char c){\n    if(c=='^') return 3;\n    if(c=='*'||c=='/'||c=='%') return 2;\n    if(c=='+'||c=='-') return 1;\n    return 0;\n}\nint rightAssoc(char c){ return c=='^'; }\nint main(){\n    char s[200], st[200], out[200];\n    scanf(\"%199s\",s);\n    int top=-1,k=0;\n    for(int i=0;s[i];i++){\n        char ch=s[i];\n        if(isalnum((unsigned char)ch)) out[k++]=ch;\n        else if(ch=='(') st[++top]=ch;\n        else if(ch==')'){\n            while(top!=-1 && st[top]!='(') out[k++]=st[top--];\n            if(top!=-1) top--;\n        } else {\n            while(top!=-1 && st[top]!='(' &&\n                 (prec(st[top])>prec(ch) ||\n                 (prec(st[top])==prec(ch) && !rightAssoc(ch))))\n                out[k++]=st[top--];\n            st[++top]=ch;\n        }\n    }\n    while(top!=-1) out[k++]=st[top--];\n    out[k]='\\0';\n    printf(\"%s\",out);\n    return 0;\n}", "tests": [{"input": "A+B*(C-D)", "expected": "ABCD-*+"}, {"input": "A+B*C", "expected": "ABC*+"}, {"input": "(A+B)*C", "expected": "AB+C*"}, {"input": "A^B^C", "expected": "ABC^^"}, {"input": "A*(B+C)/D", "expected": "ABC+*D/"}]}, {"key": "stack-practice-9", "number": 9, "title": "Evaluate Postfix Expression", "difficulty": "Medium", "statement": "Evaluate a valid postfix expression containing single-digit operands and operators +, -, *, /.", "inputSpec": "One postfix expression without spaces.", "outputSpec": "Print the integer result. Division uses C integer division.", "sampleInput": "23*54*+9-", "sampleOutput": "17", "hint": "On an operator, pop b first and a second, then compute a op b.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\n#include <ctype.h>\nint main(){\n    char s[200]; int st[200],top=-1;\n    scanf(\"%199s\",s);\n    for(int i=0;s[i];i++){\n        char ch=s[i];\n        if(isdigit((unsigned char)ch)) st[++top]=ch-'0';\n        else{\n            int b=st[top--], a=st[top--], r=0;\n            if(ch=='+') r=a+b;\n            else if(ch=='-') r=a-b;\n            else if(ch=='*') r=a*b;\n            else if(ch=='/') r=a/b;\n            st[++top]=r;\n        }\n    }\n    printf(\"%d\",st[top]);\n    return 0;\n}", "tests": [{"input": "23*54*+9-", "expected": "17"}, {"input": "23+", "expected": "5"}, {"input": "82-", "expected": "6"}, {"input": "84/", "expected": "2"}, {"input": "234*+", "expected": "14"}]}, {"key": "stack-practice-10", "number": 10, "title": "Linked List Stack — Push and Display", "difficulty": "Medium", "statement": "Implement a stack using a linked list. Push all N values and print the stack from TOP to bottom.", "inputSpec": "First line: N. Second line: N integers.", "outputSpec": "Print TOP to bottom or EMPTY.", "sampleInput": "4\n10 20 30 40", "sampleOutput": "40 30 20 10", "hint": "Insert every new node at the head.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\n#include <stdlib.h>\nstruct Node{ int data; struct Node *next; };\nint main(){\n    int n; scanf(\"%d\",&n);\n    struct Node *top=NULL;\n    for(int i=0;i<n;i++){\n        int x; scanf(\"%d\",&x);\n        struct Node *p=malloc(sizeof(struct Node));\n        p->data=x; p->next=top; top=p;\n    }\n    if(!top){ printf(\"EMPTY\"); return 0; }\n    for(struct Node *t=top;t;t=t->next){\n        if(t!=top) printf(\" \");\n        printf(\"%d\",t->data);\n    }\n    return 0;\n}", "tests": [{"input": "4\n10 20 30 40", "expected": "40 30 20 10"}, {"input": "1\n7", "expected": "7"}, {"input": "0\n", "expected": "EMPTY"}, {"input": "3\n-1 0 1", "expected": "1 0 -1"}, {"input": "5\n1 2 3 4 5", "expected": "5 4 3 2 1"}]}, {"key": "stack-practice-11", "number": 11, "title": "Linked List Stack — Pop", "difficulty": "Medium", "statement": "Build a linked-list stack, pop one node, and print the popped value and remaining stack from TOP to bottom.", "inputSpec": "First line: N (N >= 1). Second line: N integers.", "outputSpec": "Line 1: popped value. Line 2: remaining stack or EMPTY.", "sampleInput": "4\n10 20 30 40", "sampleOutput": "40\n30 20 10", "hint": "Save top in temp, move top to top->next, then free temp.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\n#include <stdlib.h>\nstruct Node{ int data; struct Node *next; };\nint main(){\n    int n; scanf(\"%d\",&n);\n    struct Node *top=NULL;\n    for(int i=0;i<n;i++){\n        int x; scanf(\"%d\",&x);\n        struct Node *p=malloc(sizeof(struct Node));\n        p->data=x; p->next=top; top=p;\n    }\n    struct Node *temp=top;\n    int value=temp->data;\n    top=top->next;\n    free(temp);\n    printf(\"%d\\n\",value);\n    if(!top){ printf(\"EMPTY\"); return 0; }\n    for(struct Node *t=top;t;t=t->next){\n        if(t!=top) printf(\" \");\n        printf(\"%d\",t->data);\n    }\n    return 0;\n}", "tests": [{"input": "4\n10 20 30 40", "expected": "40\n30 20 10"}, {"input": "1\n7", "expected": "7\nEMPTY"}, {"input": "2\n-1 -2", "expected": "-2\n-1"}, {"input": "5\n1 2 3 4 5", "expected": "5\n4 3 2 1"}, {"input": "3\n100 200 300", "expected": "300\n200 100"}]}, {"key": "stack-practice-12", "number": 12, "title": "Decimal to Binary Using Stack", "difficulty": "Medium", "statement": "Convert a non-negative decimal integer to binary using stack behavior.", "inputSpec": "One integer N.", "outputSpec": "Print binary representation.", "sampleInput": "13", "sampleOutput": "1101", "hint": "Push N % 2 repeatedly, then pop remainders in reverse order.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint main(){\n    unsigned int n; scanf(\"%u\",&n);\n    if(n==0){ printf(\"0\"); return 0; }\n    int st[64],top=-1;\n    while(n>0){\n        st[++top]=n%2;\n        n/=2;\n    }\n    while(top!=-1) printf(\"%d\",st[top--]);\n    return 0;\n}", "tests": [{"input": "13", "expected": "1101"}, {"input": "0", "expected": "0"}, {"input": "1", "expected": "1"}, {"input": "8", "expected": "1000"}, {"input": "31", "expected": "11111"}]}, {"key": "stack-practice-13", "number": 13, "title": "Remove Adjacent Duplicate Characters", "difficulty": "Medium", "statement": "Repeatedly remove adjacent duplicate characters using a stack. When the current character equals stack TOP, pop it; otherwise push it.", "inputSpec": "One lowercase word.", "outputSpec": "Print the final string. Print EMPTY if all characters are removed.", "sampleInput": "abbaca", "sampleOutput": "ca", "hint": "Treat the output buffer itself as a character stack.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint main(){\n    char s[300],st[300];\n    scanf(\"%299s\",s);\n    int top=-1;\n    for(int i=0;s[i];i++){\n        if(top!=-1 && st[top]==s[i]) top--;\n        else st[++top]=s[i];\n    }\n    if(top==-1){ printf(\"EMPTY\"); return 0; }\n    for(int i=0;i<=top;i++) putchar(st[i]);\n    return 0;\n}", "tests": [{"input": "abbaca", "expected": "ca"}, {"input": "azxxzy", "expected": "ay"}, {"input": "aaaa", "expected": "EMPTY"}, {"input": "abc", "expected": "abc"}, {"input": "aabbcc", "expected": "EMPTY"}]}, {"key": "stack-practice-14", "number": 14, "title": "Next Greater Element", "difficulty": "Medium", "statement": "For each array element, print the first greater element to its right. Print -1 when none exists.", "inputSpec": "First line: N. Second line: N integers.", "outputSpec": "Print N answers separated by spaces.", "sampleInput": "4\n4 5 2 25", "sampleOutput": "5 25 25 -1", "hint": "Scan from right to left and maintain a decreasing stack of candidate greater values.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint main(){\n    int n; scanf(\"%d\",&n);\n    int a[200],ans[200],st[200],top=-1;\n    for(int i=0;i<n;i++) scanf(\"%d\",&a[i]);\n    for(int i=n-1;i>=0;i--){\n        while(top!=-1 && st[top]<=a[i]) top--;\n        ans[i]=(top==-1)?-1:st[top];\n        st[++top]=a[i];\n    }\n    for(int i=0;i<n;i++){\n        if(i) printf(\" \");\n        printf(\"%d\",ans[i]);\n    }\n    return 0;\n}", "tests": [{"input": "4\n4 5 2 25", "expected": "5 25 25 -1"}, {"input": "5\n13 7 6 12 10", "expected": "-1 12 12 -1 -1"}, {"input": "3\n1 2 3", "expected": "2 3 -1"}, {"input": "3\n3 2 1", "expected": "-1 -1 -1"}, {"input": "1\n9", "expected": "-1"}]}, {"key": "stack-practice-15", "number": 15, "title": "Stock Span", "difficulty": "Hard", "statement": "For each day's price, compute the number of consecutive days ending today for which the price was less than or equal to today's price.", "inputSpec": "First line: N. Second line: N stock prices.", "outputSpec": "Print N span values.", "sampleInput": "7\n100 80 60 70 60 75 85", "sampleOutput": "1 1 1 2 1 4 6", "hint": "Store indices in a monotonic decreasing stack.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint main(){\n    int n; scanf(\"%d\",&n);\n    int p[200],span[200],st[200],top=-1;\n    for(int i=0;i<n;i++) scanf(\"%d\",&p[i]);\n    for(int i=0;i<n;i++){\n        while(top!=-1 && p[st[top]]<=p[i]) top--;\n        span[i]=(top==-1)?i+1:i-st[top];\n        st[++top]=i;\n    }\n    for(int i=0;i<n;i++){\n        if(i) printf(\" \");\n        printf(\"%d\",span[i]);\n    }\n    return 0;\n}", "tests": [{"input": "7\n100 80 60 70 60 75 85", "expected": "1 1 1 2 1 4 6"}, {"input": "5\n10 20 30 40 50", "expected": "1 2 3 4 5"}, {"input": "5\n50 40 30 20 10", "expected": "1 1 1 1 1"}, {"input": "1\n100", "expected": "1"}, {"input": "6\n31 27 14 21 30 22", "expected": "1 1 1 2 4 1"}]}, {"key": "stack-practice-16", "number": 16, "title": "Previous Smaller Element", "difficulty": "Medium", "statement": "For each array element, print the nearest smaller element on its left. Print -1 if none exists.", "inputSpec": "First line: N. Second line: N integers.", "outputSpec": "Print N answers separated by spaces.", "sampleInput": "5\n4 5 2 10 8", "sampleOutput": "-1 4 -1 2 2", "hint": "Scan left to right. Pop values greater than or equal to the current value.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint main(){\n    int n; scanf(\"%d\",&n);\n    int a[200],st[200],top=-1;\n    for(int i=0;i<n;i++) scanf(\"%d\",&a[i]);\n    for(int i=0;i<n;i++){\n        while(top!=-1 && st[top]>=a[i]) top--;\n        if(i) printf(\" \");\n        printf(\"%d\",top==-1?-1:st[top]);\n        st[++top]=a[i];\n    }\n    return 0;\n}", "tests": [{"input": "5\n4 5 2 10 8", "expected": "-1 4 -1 2 2"}, {"input": "4\n1 2 3 4", "expected": "-1 1 2 3"}, {"input": "4\n4 3 2 1", "expected": "-1 -1 -1 -1"}, {"input": "1\n7", "expected": "-1"}, {"input": "6\n2 2 3 1 5 4", "expected": "-1 -1 2 -1 1 1"}]}, {"key": "stack-practice-17", "number": 17, "title": "Minimum Additions for Valid Parentheses", "difficulty": "Medium", "statement": "Find the minimum number of parentheses that must be added to make a round-parentheses string valid.", "inputSpec": "One string containing only '(' and ')'.", "outputSpec": "Print the minimum number of additions.", "sampleInput": "()))((", "sampleOutput": "4", "hint": "Track unmatched opening parentheses and unmatched closing parentheses.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint main(){\n    char s[300]; scanf(\"%299s\",s);\n    int open=0,add=0;\n    for(int i=0;s[i];i++){\n        if(s[i]=='(') open++;\n        else{\n            if(open>0) open--;\n            else add++;\n        }\n    }\n    printf(\"%d\",add+open);\n    return 0;\n}", "tests": [{"input": "()))((", "expected": "4"}, {"input": "()", "expected": "0"}, {"input": "(((", "expected": "3"}, {"input": ")))", "expected": "3"}, {"input": "())(", "expected": "2"}]}, {"key": "stack-practice-18", "number": 18, "title": "Validate Stack Sequences", "difficulty": "Hard", "statement": "Given pushed and popped sequences containing the same distinct values, determine whether popped can be produced by a stack.", "inputSpec": "First line: N. Second line: pushed sequence. Third line: popped sequence.", "outputSpec": "Print YES or NO.", "sampleInput": "5\n1 2 3 4 5\n4 5 3 2 1", "sampleOutput": "YES", "hint": "Simulate pushes and greedily pop whenever stack TOP equals the next required popped value.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint main(){\n    int n; scanf(\"%d\",&n);\n    int pushed[200],popped[200],st[200],top=-1,j=0;\n    for(int i=0;i<n;i++) scanf(\"%d\",&pushed[i]);\n    for(int i=0;i<n;i++) scanf(\"%d\",&popped[i]);\n    for(int i=0;i<n;i++){\n        st[++top]=pushed[i];\n        while(top!=-1 && j<n && st[top]==popped[j]){\n            top--; j++;\n        }\n    }\n    printf(j==n ? \"YES\" : \"NO\");\n    return 0;\n}", "tests": [{"input": "5\n1 2 3 4 5\n4 5 3 2 1", "expected": "YES"}, {"input": "5\n1 2 3 4 5\n4 3 5 1 2", "expected": "NO"}, {"input": "3\n1 2 3\n3 2 1", "expected": "YES"}, {"input": "3\n1 2 3\n1 2 3", "expected": "YES"}, {"input": "4\n10 20 30 40\n30 40 20 10", "expected": "YES"}]}, {"key": "stack-practice-19", "number": 19, "title": "Largest Rectangle in Histogram", "difficulty": "Hard", "statement": "Given bar heights, find the largest rectangular area in the histogram using a stack of indices.", "inputSpec": "First line: N. Second line: N non-negative heights.", "outputSpec": "Print the maximum rectangle area.", "sampleInput": "6\n2 1 5 6 2 3", "sampleOutput": "10", "hint": "Maintain increasing bar indices. When a shorter bar appears, pop and calculate areas.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\nint main(){\n    int n; scanf(\"%d\",&n);\n    int h[300],st[300],top=-1;\n    for(int i=0;i<n;i++) scanf(\"%d\",&h[i]);\n    long long best=0;\n    for(int i=0;i<=n;i++){\n        int cur=(i==n)?0:h[i];\n        while(top!=-1 && h[st[top]]>cur){\n            int height=h[st[top--]];\n            int left=(top==-1)?0:st[top]+1;\n            long long width=i-left;\n            long long area=(long long)height*width;\n            if(area>best) best=area;\n        }\n        if(i<n) st[++top]=i;\n    }\n    printf(\"%lld\",best);\n    return 0;\n}", "tests": [{"input": "6\n2 1 5 6 2 3", "expected": "10"}, {"input": "5\n2 4 2 1 10", "expected": "10"}, {"input": "4\n1 1 1 1", "expected": "4"}, {"input": "1\n7", "expected": "7"}, {"input": "5\n5 4 3 2 1", "expected": "9"}]}, {"key": "stack-practice-20", "number": 20, "title": "Min Stack Simulation", "difficulty": "Hard", "statement": "Simulate a stack that supports PUSH x, POP, TOP, and MIN. MIN must print the current minimum value.", "inputSpec": "First line: Q. Next Q lines: commands PUSH x, POP, TOP, or MIN. Commands are valid.", "outputSpec": "Print one line for every POP, TOP, and MIN command. POP prints the removed value.", "sampleInput": "7\nPUSH 5\nPUSH 2\nMIN\nPUSH 4\nTOP\nPOP\nMIN", "sampleOutput": "2\n4\n4\n2", "hint": "Maintain a second stack whose TOP stores the minimum corresponding to each main-stack depth.", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}", "solution": "#include <stdio.h>\n#include <string.h>\nint main(){\n    int q; scanf(\"%d\",&q);\n    int st[300],mn[300],top=-1;\n    char cmd[20];\n    for(int i=0;i<q;i++){\n        scanf(\"%19s\",cmd);\n        if(strcmp(cmd,\"PUSH\")==0){\n            int x; scanf(\"%d\",&x);\n            st[++top]=x;\n            mn[top]=(top==0 || x<mn[top-1])?x:mn[top-1];\n        } else if(strcmp(cmd,\"POP\")==0){\n            printf(\"%d\\n\",st[top--]);\n        } else if(strcmp(cmd,\"TOP\")==0){\n            printf(\"%d\\n\",st[top]);\n        } else if(strcmp(cmd,\"MIN\")==0){\n            printf(\"%d\\n\",mn[top]);\n        }\n    }\n    return 0;\n}", "tests": [{"input": "7\nPUSH 5\nPUSH 2\nMIN\nPUSH 4\nTOP\nPOP\nMIN", "expected": "2\n4\n4\n2"}, {"input": "5\nPUSH 3\nMIN\nPUSH 1\nMIN\nTOP", "expected": "3\n1\n1"}, {"input": "6\nPUSH 2\nPUSH 2\nMIN\nPOP\nMIN\nTOP", "expected": "2\n2\n2\n2"}, {"input": "4\nPUSH -1\nPUSH -5\nMIN\nTOP", "expected": "-5\n-5"}, {"input": "8\nPUSH 10\nPUSH 7\nPUSH 12\nMIN\nPOP\nTOP\nPOP\nMIN", "expected": "7\n12\n7\n7\n10"}]}];
+
+    const byId = id => document.getElementById(id);
+    const storageKey = key => `codebhavya.practice.${key}`;
+
+    function escapeHtml(value) {
+        return String(value ?? "")
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;");
+    }
+
+    function normalizeOutput(value) {
+        return String(value ?? "")
+            .replace(/\r/g,"")
+            .split("\n")
+            .map(line => line.replace(/[ \t]+$/g,""))
+            .join("\n")
+            .trim();
+    }
+
+    function getConfig(key) {
+        return configs.find(c => c.key === key);
+    }
+
+    function defaultProgress() {
+        return {
+            attempts:0,
+            bestScore:0,
+            hintUsed:false,
+            solutionViewed:false,
+            solved:false,
+            completed:false
+        };
+    }
+
+    function loadProgress(key) {
+        try {
+            const raw = localStorage.getItem(storageKey(key));
+            return raw ? {...defaultProgress(), ...JSON.parse(raw)} : defaultProgress();
+        } catch {
+            return defaultProgress();
+        }
+    }
+
+    function saveProgress(key, progress) {
+        try {
+            localStorage.setItem(storageKey(key), JSON.stringify(progress));
+        } catch {}
+    }
+
+    function renderCards() {
+        const container = byId("stackPracticeContainer");
+        if (!container) return;
+
+        container.innerHTML = configs.map(c => `
+            <article class="stack-practice-item" id="${c.key}">
+                <div class="stack-practice-head">
+                    <div class="stack-practice-title-row">
+                        <h3 class="stack-practice-title">${c.number}. ${escapeHtml(c.title)}</h3>
+
+                        <div class="stack-practice-badges">
+                            <span class="stack-practice-difficulty">${escapeHtml(c.difficulty)}</span>
+                            <span id="stackBadge-${c.key}" class="stack-practice-status">Not Solved</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stack-practice-body">
+                    <p>${escapeHtml(c.statement)}</p>
+
+                    <div class="stack-practice-spec-grid">
+                        <div class="stack-practice-spec">
+                            <strong>Input</strong>
+                            ${escapeHtml(c.inputSpec)}
+                        </div>
+
+                        <div class="stack-practice-spec">
+                            <strong>Output</strong>
+                            ${escapeHtml(c.outputSpec)}
+                        </div>
+                    </div>
+
+                    <div class="stack-practice-sample-grid">
+                        <div class="stack-practice-sample">
+                            <h5>Sample Input</h5>
+                            <pre>${escapeHtml(c.sampleInput)}</pre>
+                        </div>
+
+                        <div class="stack-practice-sample">
+                            <h5>Sample Output</h5>
+                            <pre>${escapeHtml(c.sampleOutput)}</pre>
+                        </div>
+                    </div>
+
+                    <div class="stack-practice-buttons">
+                        <button class="stack-solve-btn"
+                                onclick="CodeBhavyaStackPractice.toggleWorkspace('${c.key}')">
+                            💻 Solve It Yourself
+                        </button>
+
+                        <button class="stack-hint-btn"
+                                onclick="CodeBhavyaStackPractice.toggleHint('${c.key}')">
+                            Hint
+                        </button>
+
+                        <button class="stack-solution-btn"
+                                onclick="CodeBhavyaStackPractice.toggleSolution('${c.key}')">
+                            Show Program
+                        </button>
+                    </div>
+
+                    <div id="stackHint-${c.key}" class="stack-practice-hint">
+                        <strong>Hint:</strong> ${escapeHtml(c.hint)}
+                    </div>
+
+                    <div id="stackSolution-${c.key}" class="stack-practice-solution">
+                        <h5>Official C Program</h5>
+                        <pre><code>${escapeHtml(c.solution)}</code></pre>
+                    </div>
+
+                    <div id="stackWorkspace-${c.key}" class="stack-practice-workspace">
+                        <div class="stack-practice-workspace-title">
+                            💻 Solve It Yourself — ${escapeHtml(c.title)}
+                        </div>
+
+                        <div class="stack-practice-editor-grid">
+                            <div class="stack-practice-panel">
+                                <label>Your C Program</label>
+
+                                <textarea id="stackCode-${c.key}"
+                                          class="stack-practice-code"
+                                          spellcheck="false">${escapeHtml(c.starterCode)}</textarea>
+
+                                <div class="stack-practice-actions">
+                                    <button id="stackRun-${c.key}"
+                                            class="stack-run-btn"
+                                            onclick="CodeBhavyaStackPractice.runSample('${c.key}')">
+                                        ▶ Run Code
+                                    </button>
+
+                                    <button id="stackCheck-${c.key}"
+                                            class="stack-check-btn"
+                                            onclick="CodeBhavyaStackPractice.checkAnswer('${c.key}')">
+                                        ✓ Check Answer
+                                    </button>
+
+                                    <button class="stack-reset-btn"
+                                            onclick="CodeBhavyaStackPractice.resetEditor('${c.key}')">
+                                        ↺ Reset Editor
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="stack-practice-panel">
+                                <label>Custom / Sample Input</label>
+
+                                <textarea id="stackInput-${c.key}"
+                                          class="stack-practice-input"
+                                          spellcheck="false">${escapeHtml(c.sampleInput)}</textarea>
+
+                                <label style="margin-top:9px;">Program Output</label>
+
+                                <pre id="stackOutput-${c.key}"
+                                     class="stack-practice-output">Run your program to see the output.</pre>
+
+                                <div id="stackTests-${c.key}" class="stack-practice-tests"></div>
+                            </div>
+                        </div>
+
+                        <div class="stack-practice-score-grid">
+                            <div>
+                                <strong>Best Score</strong>
+                                <span id="stackScore-${c.key}">0 / 100</span>
+                            </div>
+
+                            <div>
+                                <strong>Attempts</strong>
+                                <span id="stackAttempts-${c.key}">0</span>
+                            </div>
+
+                            <div>
+                                <strong>Status</strong>
+                                <span id="stackStatus-${c.key}">Not Solved</span>
+                            </div>
+                        </div>
+
+                        <div id="stackMessage-${c.key}" class="stack-practice-message">
+                            Write your C program and test it. You can do it! 💪
+                        </div>
+                    </div>
+                </div>
+            </article>
+        `).join("");
+
+        configs.forEach(c => updateProblemUI(c.key));
+        updateOverall();
+    }
+
+    function toggleWorkspace(key) {
+        const box = byId(`stackWorkspace-${key}`);
+        if (!box) return;
+        box.classList.toggle("show");
+    }
+
+    function toggleHint(key) {
+        const box = byId(`stackHint-${key}`);
+        if (!box) return;
+
+        box.classList.toggle("show");
+
+        const p = loadProgress(key);
+        p.hintUsed = true;
+        saveProgress(key,p);
+        updateProblemUI(key);
+        updateOverall();
+    }
+
+    function toggleSolution(key) {
+        const box = byId(`stackSolution-${key}`);
+        if (!box) return;
+
+        box.classList.toggle("show");
+
+        const p = loadProgress(key);
+        p.solutionViewed = true;
+        saveProgress(key,p);
+        updateProblemUI(key);
+        updateOverall();
+    }
+
+    async function judge(code, stdin) {
+        const response = await fetch(
+            `${judge0Base}/submissions?base64_encoded=false&wait=true`,
+            {
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({
+                    source_code:code,
+                    language_id:judge0CLanguageId,
+                    stdin
+                })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Judge0 request failed (${response.status})`);
+        }
+
+        return await response.json();
+    }
+
+    function formatJudgeError(result) {
+        if (result.compile_output) return `Compilation Error:\n${result.compile_output}`;
+        if (result.stderr) return `Runtime Error:\n${result.stderr}`;
+        if (result.message) return result.message;
+        return result.status?.description || "Execution failed.";
+    }
+
+    async function runSample(key) {
+        const config = getConfig(key);
+        if (!config) return;
+
+        const code = byId(`stackCode-${key}`)?.value || "";
+        const stdin = byId(`stackInput-${key}`)?.value || "";
+        const output = byId(`stackOutput-${key}`);
+        const button = byId(`stackRun-${key}`);
+
+        if (!code.trim()) {
+            output.textContent = "Write your C program first.";
+            return;
+        }
+
+        if (button) button.disabled = true;
+        output.textContent = "Running...";
+
+        try {
+            const result = await judge(code,stdin);
+
+            if (result.status?.id === 3) {
+                output.textContent = result.stdout ?? "";
+            } else {
+                output.textContent = formatJudgeError(result);
+            }
+        } catch (error) {
+            output.textContent =
+                "Could not contact the code execution service.\n" +
+                "Please check your internet connection and try again.\n\n" +
+                error.message;
+        } finally {
+            if (button) button.disabled = false;
+        }
+    }
+
+    async function checkAnswer(key) {
+        const config = getConfig(key);
+        if (!config) return;
+
+        const code = byId(`stackCode-${key}`)?.value || "";
+        const output = byId(`stackOutput-${key}`);
+        const testsEl = byId(`stackTests-${key}`);
+        const button = byId(`stackCheck-${key}`);
+
+        if (!code.trim()) {
+            output.textContent = "Write your C program first.";
+            return;
+        }
+
+        const p = loadProgress(key);
+        p.attempts += 1;
+        saveProgress(key,p);
+        updateProblemUI(key);
+        updateOverall();
+
+        if (button) button.disabled = true;
+        testsEl.innerHTML = "";
+        output.textContent = "Checking 5 test cases...";
+
+        let passed = 0;
+        let serviceFailed = false;
+
+        for (let i=0;i<config.tests.length;i++) {
+            const test = config.tests[i];
+
+            try {
+                const result = await judge(code,test.input);
+
+                if (result.status?.id !== 3) {
+                    testsEl.innerHTML += `
+                        <div class="stack-practice-test fail">
+                            Test ${i+1}: Failed — ${escapeHtml(result.status?.description || "Execution Error")}
+                        </div>
+                    `;
+                    continue;
+                }
+
+                const actual = normalizeOutput(result.stdout);
+                const expected = normalizeOutput(test.expected);
+
+                if (actual === expected) {
+                    passed++;
+
+                    testsEl.innerHTML += `
+                        <div class="stack-practice-test pass">
+                            Test ${i+1}: Passed ✓
+                        </div>
+                    `;
+                } else {
+                    testsEl.innerHTML += `
+                        <div class="stack-practice-test fail">
+                            Test ${i+1}: Failed — Expected: ${escapeHtml(expected)} | Got: ${escapeHtml(actual)}
+                        </div>
+                    `;
+                }
+            } catch {
+                serviceFailed = true;
+
+                testsEl.innerHTML += `
+                    <div class="stack-practice-test fail">
+                        Test ${i+1}: Judge service unavailable.
+                    </div>
+                `;
+                break;
+            }
+        }
+
+        if (serviceFailed) {
+            output.textContent =
+                "The Judge0 execution service could not be reached. Please try again later.";
+
+            if (button) button.disabled = false;
+            return;
+        }
+
+        const latest = loadProgress(key);
+        const rawScore = passed * 20;
+
+        if (latest.solutionViewed) {
+            latest.completed = passed === config.tests.length;
+            latest.solved = false;
+        } else {
+            const capped =
+                latest.hintUsed
+                    ? Math.min(rawScore,90)
+                    : rawScore;
+
+            latest.bestScore = Math.max(latest.bestScore,capped);
+
+            if (passed === config.tests.length) {
+                latest.solved = true;
+                latest.completed = true;
+            }
+        }
+
+        saveProgress(key,latest);
+        updateProblemUI(key);
+        updateOverall();
+
+        output.textContent =
+            `${passed} / ${config.tests.length} tests passed.`;
+
+        if (button) button.disabled = false;
+    }
+
+    function resetEditor(key) {
+        const config = getConfig(key);
+        if (!config) return;
+
+        const code = byId(`stackCode-${key}`);
+        const input = byId(`stackInput-${key}`);
+        const output = byId(`stackOutput-${key}`);
+        const tests = byId(`stackTests-${key}`);
+
+        if (code) code.value = config.starterCode;
+        if (input) input.value = config.sampleInput;
+        if (output) output.textContent = "Run your program to see the output.";
+        if (tests) tests.innerHTML = "";
+    }
+
+    function updateProblemUI(key) {
+        const p = loadProgress(key);
+
+        const score = byId(`stackScore-${key}`);
+        const attempts = byId(`stackAttempts-${key}`);
+        const status = byId(`stackStatus-${key}`);
+        const badge = byId(`stackBadge-${key}`);
+        const message = byId(`stackMessage-${key}`);
+
+        if (score) score.textContent = `${p.bestScore || 0} / 100`;
+        if (attempts) attempts.textContent = p.attempts || 0;
+
+        let statusText = "Not Solved";
+
+        if (p.solutionViewed && p.completed) {
+            statusText = "Completed";
+        } else if (p.solved) {
+            statusText = "Solved";
+        } else if ((p.attempts || 0) > 0) {
+            statusText = "In Progress";
+        }
+
+        if (status) status.textContent = statusText;
+
+        if (badge) {
+            badge.textContent = statusText;
+            badge.className = "stack-practice-status";
+
+            if (statusText === "Solved") badge.classList.add("solved");
+            if (statusText === "Completed") badge.classList.add("completed");
+        }
+
+        if (message) {
+            if (p.solutionViewed) {
+                message.textContent =
+                    "📘 You opened the official program. You can still complete the problem, but it will not receive a competitive score.";
+            } else if (p.hintUsed) {
+                message.textContent =
+                    "💡 Hint used. Your competitive score for this problem is capped at 90.";
+            } else if (p.solved) {
+                message.textContent =
+                    "🏆 Excellent! All test cases passed.";
+            } else {
+                message.textContent =
+                    "Write your C program and test it. You can do it! 💪";
+            }
+        }
+    }
+
+    function updateOverall() {
+        let solved = 0;
+        let completedWithSolution = 0;
+        let totalScore = 0;
+        let completedAny = 0;
+
+        configs.forEach(c => {
+            const p = loadProgress(c.key);
+
+            if (p.solved) solved++;
+            if (p.solutionViewed && p.completed) completedWithSolution++;
+            if (p.completed) completedAny++;
+
+            totalScore += Number(p.bestScore || 0);
+        });
+
+        const percent =
+            Math.round(
+                completedAny /
+                configs.length *
+                100
+            );
+
+        const solvedEl = byId("stackPracticeSolved");
+        const completedEl = byId("stackPracticeCompleted");
+        const scoreEl = byId("stackPracticeScore");
+        const percentEl = byId("stackPracticePercent");
+        const bar = byId("stackPracticeBar");
+
+        if (solvedEl)
+            solvedEl.textContent = `${solved} / ${configs.length}`;
+
+        if (completedEl)
+            completedEl.textContent = completedWithSolution;
+
+        if (scoreEl)
+            scoreEl.textContent = `${totalScore} / ${configs.length * 100}`;
+
+        if (percentEl)
+            percentEl.textContent = `${percent}%`;
+
+        if (bar)
+            bar.style.width = `${percent}%`;
+    }
+
+    document.addEventListener("DOMContentLoaded", renderCards);
+
+    return {
+        toggleWorkspace,
+        toggleHint,
+        toggleSolution,
+        runSample,
+        checkAnswer,
+        resetEditor,
+        updateProblemUI,
+        updateOverall
+    };
+})();
+</script>
+
+
 <script>
 /* Active Stack sidebar section */
 document.addEventListener("DOMContentLoaded", function () {
@@ -4645,4 +9917,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
-
