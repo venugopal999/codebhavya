@@ -5523,6 +5523,123 @@
     }
 }
 
+
+/* ============================================================
+   CODEBHAVYA — STANDARD PROGRAM TRACING CONTROLS
+   Same control order/colors as the approved Sorting format.
+   Previous | Next | Auto Run | Pause | Reset
+   ============================================================ */
+
+.graph-tracer-controls,
+.matrix-tracer-controls,
+.list-tracer-controls,
+.bfs-tracer-controls,
+.dfs-tracer-controls,
+.cycle-tracer-controls,
+.topo-tracer-controls,
+.cc-tracer-controls,
+.sp-tracer-controls {
+    display:flex !important;
+    flex-wrap:wrap !important;
+    gap:8px !important;
+    align-items:center !important;
+}
+
+.graph-tracer-controls button,
+.matrix-tracer-controls button,
+.list-tracer-controls button,
+.bfs-tracer-controls button,
+.dfs-tracer-controls button,
+.cycle-tracer-controls button,
+.topo-tracer-controls button,
+.cc-tracer-controls button,
+.sp-tracer-controls button {
+    border:0 !important;
+    border-radius:8px !important;
+    padding:9px 12px !important;
+    color:#fff !important;
+    font-weight:800 !important;
+    cursor:pointer !important;
+}
+
+/* ← Previous */
+.graph-tracer-controls .cb-trace-previous,
+.matrix-tracer-controls .cb-trace-previous,
+.list-tracer-controls .cb-trace-previous,
+.bfs-tracer-controls .cb-trace-previous,
+.dfs-tracer-controls .cb-trace-previous,
+.cycle-tracer-controls .cb-trace-previous,
+.topo-tracer-controls .cb-trace-previous,
+.cc-tracer-controls .cb-trace-previous,
+.sp-tracer-controls .cb-trace-previous {
+    background:#475569 !important;
+}
+
+/* Next → */
+.graph-tracer-controls .cb-trace-next,
+.matrix-tracer-controls .cb-trace-next,
+.list-tracer-controls .cb-trace-next,
+.bfs-tracer-controls .cb-trace-next,
+.dfs-tracer-controls .cb-trace-next,
+.cycle-tracer-controls .cb-trace-next,
+.topo-tracer-controls .cb-trace-next,
+.cc-tracer-controls .cb-trace-next,
+.sp-tracer-controls .cb-trace-next {
+    background:#2563eb !important;
+}
+
+/* ▶ Auto Run */
+.graph-tracer-controls .cb-trace-auto,
+.matrix-tracer-controls .cb-trace-auto,
+.list-tracer-controls .cb-trace-auto,
+.bfs-tracer-controls .cb-trace-auto,
+.dfs-tracer-controls .cb-trace-auto,
+.cycle-tracer-controls .cb-trace-auto,
+.topo-tracer-controls .cb-trace-auto,
+.cc-tracer-controls .cb-trace-auto,
+.sp-tracer-controls .cb-trace-auto {
+    background:#15803d !important;
+}
+
+/* Ⅱ Pause */
+.graph-tracer-controls .cb-trace-pause,
+.matrix-tracer-controls .cb-trace-pause,
+.list-tracer-controls .cb-trace-pause,
+.bfs-tracer-controls .cb-trace-pause,
+.dfs-tracer-controls .cb-trace-pause,
+.cycle-tracer-controls .cb-trace-pause,
+.topo-tracer-controls .cb-trace-pause,
+.cc-tracer-controls .cb-trace-pause,
+.sp-tracer-controls .cb-trace-pause {
+    background:#d97706 !important;
+}
+
+/* ↺ Reset */
+.graph-tracer-controls .cb-trace-reset,
+.matrix-tracer-controls .cb-trace-reset,
+.list-tracer-controls .cb-trace-reset,
+.bfs-tracer-controls .cb-trace-reset,
+.dfs-tracer-controls .cb-trace-reset,
+.cycle-tracer-controls .cb-trace-reset,
+.topo-tracer-controls .cb-trace-reset,
+.cc-tracer-controls .cb-trace-reset,
+.sp-tracer-controls .cb-trace-reset {
+    background:#475569 !important;
+}
+
+.graph-tracer-controls button:disabled,
+.matrix-tracer-controls button:disabled,
+.list-tracer-controls button:disabled,
+.bfs-tracer-controls button:disabled,
+.dfs-tracer-controls button:disabled,
+.cycle-tracer-controls button:disabled,
+.topo-tracer-controls button:disabled,
+.cc-tracer-controls button:disabled,
+.sp-tracer-controls button:disabled {
+    background:#94a3b8 !important;
+    cursor:not-allowed !important;
+}
+
 </style>
 </head>
 
@@ -6165,10 +6282,11 @@ PROGRAM TRACING — GRAPH EDGE LIST REPRESENTATION
 </div>
 
 <div class="graph-tracer-controls">
-<button onclick="GraphTrace.prev()">← Previous</button>
-<button onclick="GraphTrace.reset()">↺ Reset</button>
-<button id="graphTraceNext" onclick="GraphTrace.next()">Next →</button>
-<button id="graphTraceAuto" onclick="GraphTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-previous" onclick="GraphTrace.prev()">← Previous</button>
+<button class="cb-trace-next" id="graphTraceNext" onclick="GraphTrace.next()">Next →</button>
+<button class="cb-trace-auto" id="graphTraceAuto" onclick="GraphTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-pause" onclick="GraphTrace.pause()">Ⅱ Pause</button>
+<button class="cb-trace-reset" onclick="GraphTrace.reset()">↺ Reset</button>
 </div>
 
 <div class="graph-tracer-status" id="graphTraceStatus">
@@ -6560,10 +6678,11 @@ Edge 1 -&gt; 4 exists with value 6</code></pre>
 </div>
 
 <div class="matrix-tracer-controls">
-<button onclick="MatrixTrace.prev()">← Previous</button>
-<button onclick="MatrixTrace.reset()">↺ Reset</button>
-<button id="matrixTraceNext" onclick="MatrixTrace.next()">Next →</button>
-<button id="matrixTraceAuto" onclick="MatrixTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-previous" onclick="MatrixTrace.prev()">← Previous</button>
+<button class="cb-trace-next" id="matrixTraceNext" onclick="MatrixTrace.next()">Next →</button>
+<button class="cb-trace-auto" id="matrixTraceAuto" onclick="MatrixTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-pause" onclick="MatrixTrace.pause()">Ⅱ Pause</button>
+<button class="cb-trace-reset" onclick="MatrixTrace.reset()">↺ Reset</button>
 </div>
 
 <div class="matrix-tracer-status" id="matrixTraceStatus">Ready to execute.</div>
@@ -7025,10 +7144,11 @@ PROGRAM TRACING — ADJACENCY LIST
 </div>
 
 <div class="list-tracer-controls">
-<button onclick="ListTrace.prev()">← Previous</button>
-<button onclick="ListTrace.reset()">↺ Reset</button>
-<button id="listTraceNext" onclick="ListTrace.next()">Next →</button>
-<button id="listTraceAuto" onclick="ListTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-previous" onclick="ListTrace.prev()">← Previous</button>
+<button class="cb-trace-next" id="listTraceNext" onclick="ListTrace.next()">Next →</button>
+<button class="cb-trace-auto" id="listTraceAuto" onclick="ListTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-pause" onclick="ListTrace.pause()">Ⅱ Pause</button>
+<button class="cb-trace-reset" onclick="ListTrace.reset()">↺ Reset</button>
 </div>
 
 <div class="list-tracer-status" id="listTraceStatus">
@@ -7521,10 +7641,11 @@ PROGRAM TRACING — BREADTH-FIRST SEARCH
 </div>
 
 <div class="bfs-tracer-controls">
-<button onclick="BFSTrace.prev()">← Previous</button>
-<button onclick="BFSTrace.reset()">↺ Reset</button>
-<button id="bfsTraceNext" onclick="BFSTrace.next()">Next →</button>
-<button id="bfsTraceAuto" onclick="BFSTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-previous" onclick="BFSTrace.prev()">← Previous</button>
+<button class="cb-trace-next" id="bfsTraceNext" onclick="BFSTrace.next()">Next →</button>
+<button class="cb-trace-auto" id="bfsTraceAuto" onclick="BFSTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-pause" onclick="BFSTrace.pause()">Ⅱ Pause</button>
+<button class="cb-trace-reset" onclick="BFSTrace.reset()">↺ Reset</button>
 </div>
 
 <div class="bfs-tracer-status" id="bfsTraceStatus">
@@ -8047,10 +8168,11 @@ PROGRAM TRACING — DEPTH-FIRST SEARCH
 </div>
 
 <div class="dfs-tracer-controls">
-<button onclick="DFSTrace.prev()">← Previous</button>
-<button onclick="DFSTrace.reset()">↺ Reset</button>
-<button id="dfsTraceNext" onclick="DFSTrace.next()">Next →</button>
-<button id="dfsTraceAuto" onclick="DFSTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-previous" onclick="DFSTrace.prev()">← Previous</button>
+<button class="cb-trace-next" id="dfsTraceNext" onclick="DFSTrace.next()">Next →</button>
+<button class="cb-trace-auto" id="dfsTraceAuto" onclick="DFSTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-pause" onclick="DFSTrace.pause()">Ⅱ Pause</button>
+<button class="cb-trace-reset" onclick="DFSTrace.reset()">↺ Reset</button>
 </div>
 
 <div class="dfs-tracer-status" id="dfsTraceStatus">
@@ -8646,10 +8768,11 @@ PROGRAM TRACING — UNDIRECTED CYCLE DETECTION
 </div>
 
 <div class="cycle-tracer-controls">
-<button onclick="UndirectedCycleTrace.prev()">← Previous</button>
-<button onclick="UndirectedCycleTrace.reset()">↺ Reset</button>
-<button id="undirectedCycleTraceNext" onclick="UndirectedCycleTrace.next()">Next →</button>
-<button id="undirectedCycleTraceAuto" onclick="UndirectedCycleTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-previous" onclick="UndirectedCycleTrace.prev()">← Previous</button>
+<button class="cb-trace-next" id="undirectedCycleTraceNext" onclick="UndirectedCycleTrace.next()">Next →</button>
+<button class="cb-trace-auto" id="undirectedCycleTraceAuto" onclick="UndirectedCycleTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-pause" onclick="UndirectedCycleTrace.pause()">Ⅱ Pause</button>
+<button class="cb-trace-reset" onclick="UndirectedCycleTrace.reset()">↺ Reset</button>
 </div>
 
 <div class="cycle-tracer-status" id="undirectedCycleTraceStatus">
@@ -8830,10 +8953,11 @@ PROGRAM TRACING — DIRECTED CYCLE DETECTION
 </div>
 
 <div class="cycle-tracer-controls">
-<button onclick="DirectedCycleTrace.prev()">← Previous</button>
-<button onclick="DirectedCycleTrace.reset()">↺ Reset</button>
-<button id="directedCycleTraceNext" onclick="DirectedCycleTrace.next()">Next →</button>
-<button id="directedCycleTraceAuto" onclick="DirectedCycleTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-previous" onclick="DirectedCycleTrace.prev()">← Previous</button>
+<button class="cb-trace-next" id="directedCycleTraceNext" onclick="DirectedCycleTrace.next()">Next →</button>
+<button class="cb-trace-auto" id="directedCycleTraceAuto" onclick="DirectedCycleTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-pause" onclick="DirectedCycleTrace.pause()">Ⅱ Pause</button>
+<button class="cb-trace-reset" onclick="DirectedCycleTrace.reset()">↺ Reset</button>
 </div>
 
 <div class="cycle-tracer-status" id="directedCycleTraceStatus">
@@ -9398,10 +9522,11 @@ PROGRAM TRACING — KAHN'S TOPOLOGICAL SORT
 </div>
 
 <div class="topo-tracer-controls">
-<button onclick="TopoTrace.prev()">← Previous</button>
-<button onclick="TopoTrace.reset()">↺ Reset</button>
-<button id="topoTraceNext" onclick="TopoTrace.next()">Next →</button>
-<button id="topoTraceAuto" onclick="TopoTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-previous" onclick="TopoTrace.prev()">← Previous</button>
+<button class="cb-trace-next" id="topoTraceNext" onclick="TopoTrace.next()">Next →</button>
+<button class="cb-trace-auto" id="topoTraceAuto" onclick="TopoTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-pause" onclick="TopoTrace.pause()">Ⅱ Pause</button>
+<button class="cb-trace-reset" onclick="TopoTrace.reset()">↺ Reset</button>
 </div>
 
 <div class="topo-tracer-status" id="topoTraceStatus">
@@ -9924,10 +10049,11 @@ PROGRAM TRACING — CONNECTED COMPONENTS
 </div>
 
 <div class="cc-tracer-controls">
-<button onclick="CCTrace.prev()">← Previous</button>
-<button onclick="CCTrace.reset()">↺ Reset</button>
-<button id="ccTraceNext" onclick="CCTrace.next()">Next →</button>
-<button id="ccTraceAuto" onclick="CCTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-previous" onclick="CCTrace.prev()">← Previous</button>
+<button class="cb-trace-next" id="ccTraceNext" onclick="CCTrace.next()">Next →</button>
+<button class="cb-trace-auto" id="ccTraceAuto" onclick="CCTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-pause" onclick="CCTrace.pause()">Ⅱ Pause</button>
+<button class="cb-trace-reset" onclick="CCTrace.reset()">↺ Reset</button>
 </div>
 
 <div class="cc-tracer-status" id="ccTraceStatus">
@@ -10526,10 +10652,11 @@ PROGRAM TRACING — UNWEIGHTED SHORTEST PATH
 </div>
 
 <div class="sp-tracer-controls">
-<button onclick="SPTrace.prev()">← Previous</button>
-<button onclick="SPTrace.reset()">↺ Reset</button>
-<button id="spTraceNext" onclick="SPTrace.next()">Next →</button>
-<button id="spTraceAuto" onclick="SPTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-previous" onclick="SPTrace.prev()">← Previous</button>
+<button class="cb-trace-next" id="spTraceNext" onclick="SPTrace.next()">Next →</button>
+<button class="cb-trace-auto" id="spTraceAuto" onclick="SPTrace.auto()">▶ Auto Run</button>
+<button class="cb-trace-pause" onclick="SPTrace.pause()">Ⅱ Pause</button>
+<button class="cb-trace-reset" onclick="SPTrace.reset()">↺ Reset</button>
 </div>
 
 <div class="sp-tracer-status" id="spTraceStatus">
