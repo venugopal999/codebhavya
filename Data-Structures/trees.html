@@ -1,1 +1,2327 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Trees | Data Structures | CodeBhavya</title>
+<link rel="icon" type="image/png" href="../images/codebhavya-icon-32.png"/>
+<link rel="stylesheet" href="../style.css"/>
+
+<style>
+
+/* ============================================================
+   CODEBHAVYA TREES — PART 1
+   Tree Introduction + Binary Tree Basics
+   Global header/sidebar/footer/layout come from ../style.css
+   Approved palette preserved.
+   ============================================================ */
+
+.sidebar details { margin:4px 0; }
+.sidebar summary {
+    list-style:none;
+    cursor:pointer;
+    padding:9px 12px;
+    border-radius:6px;
+    color:#334155;
+    font-size:14px;
+    font-weight:600;
+}
+.sidebar summary::-webkit-details-marker { display:none; }
+.sidebar summary::before {
+    content:"▸";
+    display:inline-block;
+    width:18px;
+    color:#64748b;
+    transition:transform .2s ease;
+}
+.sidebar details[open] summary::before { transform:rotate(90deg); }
+.sidebar details[open] summary {
+    background:#f8fafc;
+    color:#1d4ed8;
+}
+.sidebar details a {
+    margin-left:16px;
+    font-size:13px;
+    padding:7px 12px;
+}
+.sidebar details[open] a.tree-side-link {
+    position:relative;
+}
+.sidebar details[open] a.tree-side-link.active {
+    background:#eaf3ff;
+    color:#1d4ed8;
+    font-weight:800;
+}
+.sidebar details[open] a.tree-side-link.active::before {
+    content:"";
+    position:absolute;
+    left:3px;
+    top:9px;
+    bottom:9px;
+    width:3px;
+    border-radius:3px;
+    background:#d4af37;
+}
+
+.tree-key-box,
+.tree-example-box {
+    border-radius:10px;
+    padding:18px 20px;
+    margin:18px 0;
+}
+.tree-key-box {
+    background:#f8fafc;
+    border:1px solid #dce7f0;
+    border-left:5px solid #8cc8f0;
+}
+.tree-example-box {
+    background:#fffdf7;
+    border:1px solid #eadca8;
+    border-left:5px solid #d4af37;
+}
+.tree-key-box h3,
+.tree-example-box h3 {
+    margin-top:0;
+    color:#0f172a;
+}
+
+.tree-term-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin:16px 0;
+}
+.tree-term-card {
+    padding:13px;
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    background:#f8fafc;
+}
+.tree-term-card strong {
+    display:block;
+    margin-bottom:5px;
+    color:#0d1b2a;
+}
+
+.tree-rule-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin:16px 0;
+}
+.tree-rule-card {
+    padding:13px;
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    background:#f8fafc;
+}
+.tree-rule-card strong {
+    display:block;
+    margin-bottom:5px;
+    color:#0d1b2a;
+}
+
+.tree-static-demo {
+    position:relative;
+    min-width:650px;
+    width:650px;
+    height:315px;
+    margin:24px auto;
+}
+.tree-static-wrap {
+    overflow:auto;
+}
+.tree-static-node {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    width:64px;
+    height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #0d1b2a;
+    border-radius:50%;
+    background:#fff;
+    color:#0d1b2a;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:900;
+    z-index:2;
+}
+.tree-static-node.root {
+    border-color:#2563eb;
+    background:#eff6ff;
+}
+.tree-static-node.leaf {
+    border-color:#d4af37;
+    background:#fff9df;
+}
+.tree-static-label {
+    position:absolute;
+    transform:translateX(-50%);
+    color:#64748b;
+    font-size:10px;
+    font-weight:900;
+    white-space:nowrap;
+    z-index:3;
+}
+.tree-static-demo svg {
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+}
+.tree-static-demo line {
+    stroke:#64748b;
+    stroke-width:2;
+}
+
+.tree-node-structure {
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    max-width:520px;
+    margin:20px auto;
+    border:2px solid #0d1b2a;
+    border-radius:9px;
+    overflow:hidden;
+    background:#fff;
+}
+.tree-node-structure div {
+    padding:16px 10px;
+    text-align:center;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:900;
+}
+.tree-node-structure div + div {
+    border-left:1px solid #cbd5e1;
+}
+.tree-node-structure .data {
+    background:#eff6ff;
+    color:#2563eb;
+}
+
+/* ===== Premium Tree Visualizer ===== */
+.tree-viz {
+    margin:22px 0;
+    background:#fff;
+    border:1px solid #dbe3ec;
+    border-radius:16px;
+    box-shadow:0 8px 24px rgba(15,23,42,.06);
+    overflow:hidden;
+}
+.tree-viz-header {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:8px 14px;
+    align-items:center;
+    padding:18px 20px 8px;
+}
+.tree-viz-label {
+    grid-column:1;
+    grid-row:1;
+    color:#2563eb;
+    font-size:11px;
+    letter-spacing:1.4px;
+    font-weight:800;
+}
+.tree-viz-brand {
+    grid-column:2;
+    grid-row:1;
+    justify-self:end;
+    display:inline-flex;
+    align-items:center;
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:-.5px;
+    white-space:nowrap;
+}
+.tree-viz-brand img {
+    width:30px;
+    height:30px;
+    margin-right:8px;
+    object-fit:contain;
+    border:1px solid #dbe3ec;
+    border-radius:9px;
+    background:#fff;
+    box-shadow:0 5px 12px rgba(37,99,235,.12);
+}
+.tree-viz-brand .code { color:#2563eb; }
+.tree-viz-brand .bhavya { color:#f59e0b; }
+.tree-viz-title {
+    grid-column:1 / -1;
+    grid-row:2;
+}
+.tree-viz-title strong {
+    display:block;
+    color:#0f172a;
+    font-size:18px;
+}
+.tree-viz-title span {
+    display:block;
+    margin-top:3px;
+    color:#64748b;
+    font-size:12px;
+}
+.tree-viz-body {
+    padding:16px 18px 18px;
+}
+.tree-viz-controls {
+    display:grid;
+    grid-template-columns:minmax(260px,1fr) 150px auto;
+    gap:10px;
+    align-items:end;
+}
+.tree-field label {
+    display:block;
+    margin-bottom:5px;
+    color:#475569;
+    font-size:12px;
+    font-weight:700;
+}
+.tree-field input,
+.tree-field select {
+    width:100%;
+    min-height:40px;
+    box-sizing:border-box;
+    padding:8px 10px;
+    border:1px solid #cbd5e1;
+    border-radius:7px;
+    background:#fff;
+    color:#0f172a;
+}
+.tree-viz-stage {
+    min-height:455px;
+    margin-top:14px;
+    overflow:auto;
+    padding:18px;
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+    background:#f8fafc;
+}
+.tree-canvas-wrap {
+    min-width:780px;
+}
+.tree-canvas {
+    position:relative;
+    width:760px;
+    height:365px;
+    margin:0 auto;
+}
+.tree-canvas svg {
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+}
+.tree-canvas line {
+    stroke:#64748b;
+    stroke-width:2;
+}
+.tree-viz-node {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    width:62px;
+    height:62px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #0d1b2a;
+    border-radius:50%;
+    background:#fff;
+    color:#0d1b2a;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:900;
+    z-index:2;
+    transition:.2s ease;
+}
+.tree-viz-node.root {
+    border-color:#2563eb;
+    background:#eff6ff;
+}
+.tree-viz-node.current {
+    border-color:#d4af37;
+    background:#fff9df;
+    box-shadow:0 0 0 5px rgba(212,175,55,.12);
+    transform:translate(-50%,-50%) scale(1.08);
+}
+.tree-viz-node-label {
+    position:absolute;
+    transform:translateX(-50%);
+    color:#64748b;
+    font-size:10px;
+    font-weight:900;
+    white-space:nowrap;
+    z-index:3;
+}
+.tree-viz-actions {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin-top:14px;
+}
+.tree-viz-actions button {
+    border:0;
+    border-radius:7px;
+    padding:9px 13px;
+    font-weight:800;
+    cursor:pointer;
+}
+.tree-viz-actions .primary {
+    background:#2563eb;
+    color:#fff;
+}
+.tree-viz-actions .gold {
+    background:#d4af37;
+    color:#0d1b2a;
+}
+.tree-viz-actions .muted {
+    background:#64748b;
+    color:#fff;
+}
+.tree-viz-actions button:disabled {
+    opacity:.5;
+    cursor:not-allowed;
+}
+.tree-viz-message {
+    margin-top:12px;
+    min-height:48px;
+    padding:11px 13px;
+    border:1px solid #e2e8f0;
+    border-left:4px solid #d4af37;
+    border-radius:8px;
+    background:#fff;
+    color:#334155;
+    line-height:1.5;
+}
+.tree-progress {
+    height:7px;
+    margin-top:10px;
+    overflow:hidden;
+    border-radius:999px;
+    background:#e2e8f0;
+}
+.tree-progress > div {
+    height:100%;
+    width:0;
+    background:#d4af37;
+    transition:width .2s ease;
+}
+.tree-state-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin-top:12px;
+}
+.tree-state-item {
+    padding:9px;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    background:#fff;
+    text-align:center;
+}
+.tree-state-item strong {
+    display:block;
+    margin-bottom:3px;
+    color:#64748b;
+    font-size:10px;
+    text-transform:uppercase;
+}
+.tree-state-item span {
+    color:#0d1b2a;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:900;
+}
+
+/* ===== Program / Output ===== */
+.tree-program-title {
+    margin-top:20px;
+}
+.tree-io {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin:14px 0;
+}
+.tree-io-box {
+    overflow:hidden;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+}
+.tree-io-box h4 {
+    margin:0;
+    padding:8px 10px;
+    background:#0d1b2a;
+    color:#fff;
+    font-size:12px;
+}
+.tree-io-box pre {
+    margin:0;
+    padding:10px;
+    background:#0b1220;
+    color:#e5e7eb;
+}
+
+/* ===== Program Tracer ===== */
+.tree-tracer-wrap {
+    margin:18px 0;
+}
+.tree-tracer-toggle {
+    border:0;
+    border-radius:7px;
+    padding:9px 15px;
+    background:#2563eb;
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+}
+.tree-tracer {
+    margin-top:10px;
+    overflow-x:auto;
+    border:1px solid #dbe3ec;
+    border-radius:12px;
+    background:#f8fafc;
+}
+.tree-tracer[hidden] {
+    display:none !important;
+}
+.tree-tracer-title {
+    min-width:760px;
+    padding:11px 14px;
+    border-bottom:1px solid #e2e8f0;
+    background:#f8fafc;
+    color:#2563eb;
+    font-size:11px;
+    letter-spacing:1.1px;
+    font-weight:900;
+}
+.tree-tracer-grid {
+    min-width:760px;
+    display:grid;
+    grid-template-columns:minmax(390px,1.15fr) minmax(320px,.85fr);
+    gap:12px;
+    padding:12px;
+}
+.tree-tracer-panel {
+    min-width:0;
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    background:#fff;
+    overflow:hidden;
+}
+.tree-tracer-panel h4 {
+    margin:0;
+    padding:9px 11px;
+    border-bottom:1px solid #e2e8f0;
+    background:#f8fafc;
+    color:#0d1b2a;
+}
+.tree-tracer-code {
+    height:390px;
+    max-height:390px;
+    margin:0;
+    overflow:auto;
+    overflow-anchor:none;
+    padding:10px;
+    background:#0b1220;
+    color:#e5e7eb;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:12px;
+    line-height:1.5;
+}
+.tree-code-line {
+    display:block;
+    min-height:18px;
+    padding:1px 6px;
+    border-radius:4px;
+    white-space:pre;
+}
+.tree-code-line.active {
+    background:#1d4ed8;
+    color:#fff;
+}
+.tree-tracer-explain {
+    min-height:86px;
+    padding:11px;
+    color:#334155;
+    line-height:1.55;
+}
+.tree-vars {
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:7px;
+    padding:10px;
+}
+.tree-var {
+    padding:8px;
+    border:1px solid #e2e8f0;
+    border-radius:7px;
+    background:#f8fafc;
+}
+.tree-var strong {
+    display:block;
+    margin-bottom:3px;
+    color:#64748b;
+    font-size:10px;
+}
+.tree-var span {
+    color:#0d1b2a;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:900;
+}
+.tree-trace-memory {
+    min-width:760px;
+    padding:0 12px 12px;
+}
+.tree-trace-memory h4 {
+    margin:0 0 8px;
+    color:#0d1b2a;
+}
+.tree-trace-stage {
+    overflow:auto;
+    min-height:345px;
+    padding:12px;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    background:#fff;
+}
+.tree-trace-canvas {
+    position:relative;
+    width:720px;
+    height:300px;
+    margin:0 auto;
+}
+.tree-trace-canvas svg {
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+}
+.tree-trace-canvas line {
+    stroke:#64748b;
+    stroke-width:2;
+}
+.tree-trace-node {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    width:56px;
+    height:56px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #0d1b2a;
+    border-radius:50%;
+    background:#fff;
+    color:#0d1b2a;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:900;
+    z-index:2;
+}
+.tree-trace-node.root {
+    border-color:#2563eb;
+    background:#eff6ff;
+}
+.tree-trace-node.processing {
+    border-color:#d4af37;
+    background:#fff9df;
+    box-shadow:0 0 0 4px rgba(212,175,55,.11);
+}
+.tree-operation {
+    margin-top:8px;
+    padding:8px 10px;
+    border:1px solid #e2e8f0;
+    border-left:4px solid #d4af37;
+    border-radius:7px;
+    background:#fff;
+    color:#334155;
+}
+.tree-output {
+    margin-top:8px;
+    padding:8px 10px;
+    border:1px solid #e2e8f0;
+    border-radius:7px;
+    background:#fff;
+}
+.tree-output strong {
+    display:block;
+    margin-bottom:4px;
+    color:#0d1b2a;
+}
+.tree-output pre {
+    margin:0;
+    white-space:pre-wrap;
+    color:#334155;
+}
+.tree-tracer-controls {
+    min-width:760px;
+    display:flex;
+    justify-content:center;
+    gap:7px;
+    flex-wrap:wrap;
+    padding:0 12px 12px;
+}
+.tree-tracer-controls button {
+    border:0;
+    border-radius:7px;
+    padding:8px 12px;
+    background:#2563eb;
+    color:#fff;
+    cursor:pointer;
+    font-weight:700;
+}
+.tree-tracer-controls button:disabled {
+    background:#94a3b8;
+    cursor:not-allowed;
+}
+.tree-tracer-status {
+    min-width:760px;
+    padding:0 12px 12px;
+    text-align:center;
+    color:#64748b;
+    font-size:12px;
+}
+
+.tree-complexity {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin:14px 0;
+}
+.tree-complexity > div {
+    padding:12px;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    background:#f8fafc;
+}
+.tree-complexity strong {
+    display:block;
+    margin-bottom:5px;
+    color:#0d1b2a;
+}
+
+/* ===== Interview ===== */
+.tree-interview-list {
+    display:grid;
+    gap:10px;
+}
+.tree-interview-item {
+    overflow:hidden;
+    border:1px solid #dbe3ec;
+    border-radius:10px;
+    background:#f8fafc;
+}
+.tree-interview-q {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:14px 16px;
+    color:#0d1b2a;
+    font-weight:800;
+}
+.tree-interview-q button {
+    flex:0 0 auto;
+    border:0;
+    border-radius:8px;
+    padding:8px 12px;
+    background:#2563eb;
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+}
+.tree-interview-answer {
+    display:none;
+    margin:0 16px 15px;
+    padding:14px 16px;
+    border-left:5px solid #7dd3fc;
+    border-radius:8px;
+    background:#fff;
+    color:#334155;
+    line-height:1.65;
+}
+.tree-interview-answer.show {
+    display:block;
+}
+.tree-interview-short {
+    margin-top:10px;
+    padding:9px 11px;
+    border-left:4px solid #2563eb;
+    border-radius:7px;
+    background:#eff6ff;
+}
+
+@media(max-width:850px) {
+    .tree-term-grid,
+    .tree-rule-grid,
+    .tree-state-grid,
+    .tree-complexity {
+        grid-template-columns:1fr 1fr;
+    }
+}
+@media(max-width:760px) {
+    .tree-tracer-grid {
+        grid-template-columns:390px 350px;
+        min-width:748px;
+    }
+    .tree-tracer-controls {
+        justify-content:flex-start;
+        min-width:748px;
+    }
+}
+@media(max-width:560px) {
+    .tree-term-grid,
+    .tree-rule-grid,
+    .tree-state-grid,
+    .tree-complexity {
+        grid-template-columns:1fr;
+    }
+    .tree-viz-controls {
+        grid-template-columns:1fr;
+    }
+    .tree-viz-header {
+        padding:14px 12px 7px;
+    }
+    .tree-viz-label {
+        font-size:9px;
+        letter-spacing:1px;
+    }
+    .tree-viz-brand {
+        font-size:17px;
+    }
+    .tree-viz-brand img {
+        width:26px;
+        height:26px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="top-header">
+<a class="logo" href="../index.html">
+<span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a>
+
+<nav class="top-nav">
+<a href="../index.html">Home</a>
+<a href="../Mathematics/">Maths</a>
+<a href="../C-Programming/">C</a>
+<a class="active" href="index.html">DSA</a>
+<a href="../Python/">Python</a>
+<a href="../AI-ML/">AI &amp; ML</a>
+<a href="../Placement/">Placement</a>
+</nav>
+</header>
+
+<div class="docs-layout">
+
+
+<aside class="sidebar">
+<div class="sidebar-title">Data Structures</div>
+
+<input
+    type="text"
+    id="topicSearch"
+    class="search-box"
+    placeholder="🔍 Search topics..."
+    onkeyup="searchTopics()"
+/>
+
+<details class="sidebar-topic">
+<summary>🔍 Searching</summary>
+<a href="searching.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🔄 Sorting</summary>
+<a href="sorting.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🔗 Linked List</summary>
+<a href="linked-list.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>📚 Stack</summary>
+<a href="stack.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🚶 Queue</summary>
+<a href="queue.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic" open>
+<summary>🌳 Trees</summary>
+<a class="tree-side-link" href="#tree-overview">Tree Overview</a>
+<a class="tree-side-link" href="#tree-terminology">Tree Terminology</a>
+<a class="tree-side-link" href="#binary-tree">Binary Tree</a>
+<a class="tree-side-link" href="#node-structure">Node Structure</a>
+<a class="tree-side-link" href="#tree-construction">Tree Construction</a>
+<a class="tree-side-link" href="#tree-visualizer">Tree Visualizer</a>
+<a class="tree-side-link" href="#tree-program">C Program</a>
+<a class="tree-side-link" href="#tree-tracing">Program Tracing</a>
+<a class="tree-side-link" href="#tree-complexity">Complexity</a>
+<a class="tree-side-link" href="#tree-interview">Interview Questions</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🕸️ Graphs</summary>
+<a href="graphs.html">Open Topic</a>
+</details>
+</aside>
+
+
+
+<main class="main-content">
+
+<section class="subject-hero">
+<span class="subject-label">CODEBHAVYA • DATA STRUCTURES</span>
+<h1 class="page-title">🌳 Trees</h1>
+<p class="page-description">
+Understand hierarchical data, learn essential Tree terminology,
+study Binary Tree structure, build a small Binary Tree,
+and trace the exact C program step by step.
+</p>
+</section>
+
+<section class="content-card" id="tree-overview">
+<span class="section-label">TREE INTRODUCTION</span>
+<h2>📖 What is a Tree?</h2>
+
+<p>
+A <strong>tree</strong> is a non-linear hierarchical data structure made of
+<strong>nodes</strong> connected by <strong>edges</strong>.
+Unlike an array, linked list, stack, or queue, Tree data is organized in levels.
+</p>
+
+<div class="tree-key-box">
+<h3>💡 Hierarchical Structure</h3>
+<p>
+A Tree begins with one top node called the <strong>root</strong>.
+A node can connect downward to child nodes, and those children can have their own children.
+</p>
+</div>
+
+<div class="tree-example-box">
+<h3>🧠 Real-Life Examples</h3>
+<p>
+Folder structures, organization charts, HTML DOM, family hierarchies,
+decision trees, expression trees, and database indexes can all be modeled using Trees.
+</p>
+</div>
+
+<div class="tree-static-wrap">
+<div class="tree-static-demo">
+
+<svg viewBox="0 0 650 315" aria-hidden="true">
+<line x1="325" y1="55" x2="190" y2="145"></line>
+<line x1="325" y1="55" x2="460" y2="145"></line>
+<line x1="190" y1="145" x2="115" y2="245"></line>
+<line x1="190" y1="145" x2="255" y2="245"></line>
+<line x1="460" y1="145" x2="395" y2="245"></line>
+<line x1="460" y1="145" x2="535" y2="245"></line>
+</svg>
+
+<div class="tree-static-node root" style="left:325px;top:55px;">10</div>
+<div class="tree-static-label" style="left:325px;top:91px;">ROOT</div>
+
+<div class="tree-static-node" style="left:190px;top:145px;">20</div>
+<div class="tree-static-node" style="left:460px;top:145px;">30</div>
+
+<div class="tree-static-node leaf" style="left:115px;top:245px;">40</div>
+<div class="tree-static-node leaf" style="left:255px;top:245px;">50</div>
+<div class="tree-static-node leaf" style="left:395px;top:245px;">60</div>
+<div class="tree-static-node leaf" style="left:535px;top:245px;">70</div>
+
+<div class="tree-static-label" style="left:115px;top:282px;">LEAF</div>
+<div class="tree-static-label" style="left:535px;top:282px;">LEAF</div>
+
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="tree-terminology">
+<span class="section-label">TERMINOLOGY</span>
+<h2>🧩 Important Tree Terms</h2>
+
+<div class="tree-term-grid">
+
+<div class="tree-term-card">
+<strong>Root</strong>
+The topmost node. A non-empty Tree has exactly one root.
+</div>
+
+<div class="tree-term-card">
+<strong>Parent</strong>
+A node that has one or more child nodes.
+</div>
+
+<div class="tree-term-card">
+<strong>Child</strong>
+A node directly connected below another node.
+</div>
+
+<div class="tree-term-card">
+<strong>Siblings</strong>
+Nodes that share the same parent.
+</div>
+
+<div class="tree-term-card">
+<strong>Leaf Node</strong>
+A node with no children.
+</div>
+
+<div class="tree-term-card">
+<strong>Internal Node</strong>
+A node with at least one child.
+</div>
+
+<div class="tree-term-card">
+<strong>Edge</strong>
+A connection between a parent and a child.
+</div>
+
+<div class="tree-term-card">
+<strong>Depth</strong>
+Number of edges from the root to a node.
+</div>
+
+<div class="tree-term-card">
+<strong>Height</strong>
+Number of edges on the longest downward path from a node to a leaf.
+</div>
+
+<div class="tree-term-card">
+<strong>Subtree</strong>
+A node together with all of its descendants.
+</div>
+
+<div class="tree-term-card">
+<strong>Ancestor</strong>
+Any node on the path from the root to a given node, excluding the node itself.
+</div>
+
+<div class="tree-term-card">
+<strong>Descendant</strong>
+Any node reachable by moving downward from a given node.
+</div>
+
+</div>
+
+<div class="tree-key-box">
+<h3>📌 Convention Used on CodeBhavya</h3>
+<p>
+The root is at <strong>depth 0</strong>. Tree height is measured in
+<strong>edges</strong>, so a single-node Tree has height 0.
+</p>
+</div>
+</section>
+
+
+<section class="content-card" id="binary-tree">
+<span class="section-label">BINARY TREE</span>
+<h2>🌿 Binary Tree Basics</h2>
+
+<p>
+A <strong>Binary Tree</strong> is a Tree in which every node has at most
+<strong>two children</strong>.
+These are called the <strong>left child</strong> and <strong>right child</strong>.
+</p>
+
+<div class="tree-rule-grid">
+
+<div class="tree-rule-card">
+<strong>Maximum Children</strong>
+Each node can have 0, 1, or 2 children.
+</div>
+
+<div class="tree-rule-card">
+<strong>Left Child</strong>
+Stored using the node's <code>left</code> pointer.
+</div>
+
+<div class="tree-rule-card">
+<strong>Right Child</strong>
+Stored using the node's <code>right</code> pointer.
+</div>
+
+</div>
+
+<div class="tree-example-box">
+<h3>🧠 In Our Example</h3>
+<p>
+Node 10 is the root. Nodes 20 and 30 are its children.
+Nodes 40 and 50 are children of 20.
+Nodes 60 and 70 are children of 30.
+</p>
+</div>
+</section>
+
+
+<section class="content-card" id="node-structure">
+<span class="section-label">NODE STRUCTURE</span>
+<h2>🧱 Binary Tree Node in C</h2>
+
+<p>
+A Binary Tree node normally stores one data field and two pointer fields.
+</p>
+
+<div class="tree-node-structure">
+<div>left</div>
+<div class="data">data</div>
+<div>right</div>
+</div>
+
+<pre><code>struct Node
+{
+    int data;
+    struct Node *left;
+    struct Node *right;
+};</code></pre>
+
+<div class="tree-key-box">
+<h3>💡 Meaning of NULL</h3>
+<p>
+If <code>left == NULL</code>, the node has no left child.
+If <code>right == NULL</code>, the node has no right child.
+A leaf node has both pointers equal to <code>NULL</code>.
+</p>
+</div>
+</section>
+
+
+<section class="content-card" id="tree-construction">
+<span class="section-label">CONSTRUCTION</span>
+<h2>⚙️ Building a Small Binary Tree</h2>
+
+<p>
+For this first Tree lesson, we create nodes individually and connect them using
+left and right pointers.
+</p>
+
+<pre><code>CREATE_NODE(value)
+
+1. Allocate memory for a new node
+2. newNode->data = value
+3. newNode->left = NULL
+4. newNode->right = NULL
+5. Return newNode</code></pre>
+
+<pre><code>BUILD EXAMPLE
+
+root = createNode(10)
+
+root->left  = createNode(20)
+root->right = createNode(30)
+
+root->left->left  = createNode(40)
+root->left->right = createNode(50)
+
+root->right->left  = createNode(60)
+root->right->right = createNode(70)</code></pre>
+
+<div class="tree-key-box">
+<h3>🔗 Pointer View</h3>
+<p>
+The values do not have to be stored next to each other in memory.
+The Tree structure is created by the <strong>left</strong> and <strong>right</strong> pointer connections.
+</p>
+</div>
+</section>
+
+
+<section class="content-card" id="tree-visualizer">
+<span class="section-label">VISUALIZER</span>
+<h2>🎬 Build a Binary Tree Visually</h2>
+
+<div class="tree-viz" id="treeViz">
+
+<div class="tree-viz-header">
+
+<div class="tree-viz-label">
+INTERACTIVE ALGORITHM VISUALIZATION
+</div>
+
+<div class="tree-viz-brand">
+<img src="../images/codebhavya-icon-32.png" alt="CodeBhavya"/>
+<span class="code">Code</span><span class="bhavya">Bhavya</span>
+</div>
+
+<div class="tree-viz-title">
+<strong>🎬 Premium Binary Tree Builder</strong>
+<span>
+Enter level-order values and watch each node attach to its parent.
+Use <code>null</code> or <code>-</code> for an empty position.
+</span>
+</div>
+
+</div>
+
+<div class="tree-viz-body">
+
+<div class="tree-viz-controls">
+
+<div class="tree-field">
+<label>Level-Order Values</label>
+<input id="treeVizInput" value="10,20,30,40,50,60,70"/>
+</div>
+
+<div class="tree-field">
+<label>Maximum Positions</label>
+<select id="treeVizLimit">
+<option value="7" selected>7 positions</option>
+<option value="15">15 positions</option>
+</select>
+</div>
+
+<div class="tree-field">
+<label>&nbsp;</label>
+<button class="primary-button" type="button" onclick="TreeViz.load()">
+Load / Apply
+</button>
+</div>
+
+</div>
+
+<div class="tree-viz-stage">
+
+<div class="tree-canvas-wrap">
+<div class="tree-canvas" id="treeVizCanvas"></div>
+</div>
+
+<div class="tree-state-grid">
+
+<div class="tree-state-item">
+<strong>Root</strong>
+<span id="treeVizRoot">—</span>
+</div>
+
+<div class="tree-state-item">
+<strong>Current Node</strong>
+<span id="treeVizCurrent">—</span>
+</div>
+
+<div class="tree-state-item">
+<strong>Parent</strong>
+<span id="treeVizParent">—</span>
+</div>
+
+<div class="tree-state-item">
+<strong>Nodes Built</strong>
+<span id="treeVizCount">0</span>
+</div>
+
+</div>
+</div>
+
+<div class="tree-viz-actions">
+<button class="primary" onclick="TreeViz.prev()">← Previous</button>
+<button class="primary" id="treeVizNext" onclick="TreeViz.next()">Next →</button>
+<button class="gold" id="treeVizAuto" onclick="TreeViz.auto()">▶ Auto Run</button>
+<button class="muted" onclick="TreeViz.pause()">Ⅱ Pause</button>
+<button class="muted" onclick="TreeViz.reset()">↺ Reset</button>
+</div>
+
+<div class="tree-viz-message" id="treeVizMessage">
+Press Next to begin building the Binary Tree.
+</div>
+
+<div class="tree-progress">
+<div id="treeVizProgress"></div>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="tree-program">
+<span class="section-label">C PROGRAM</span>
+<h2>💻 Create a Binary Tree in C</h2>
+
+<h3 class="tree-program-title">Visible Learning Program</h3>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node
+{
+    int data;
+    struct Node *left;
+    struct Node *right;
+};
+
+struct Node *createNode(int value)
+{
+    struct Node *newNode =
+        (struct Node *)malloc(sizeof(struct Node));
+
+    newNode-&gt;data = value;
+    newNode-&gt;left = NULL;
+    newNode-&gt;right = NULL;
+
+    return newNode;
+}
+
+int main()
+{
+    struct Node *root;
+
+    root = createNode(10);
+
+    root-&gt;left = createNode(20);
+    root-&gt;right = createNode(30);
+
+    root-&gt;left-&gt;left = createNode(40);
+    root-&gt;left-&gt;right = createNode(50);
+
+    root-&gt;right-&gt;left = createNode(60);
+    root-&gt;right-&gt;right = createNode(70);
+
+    printf(&quot;Root: %d\n&quot;, root-&gt;data);
+    printf(&quot;Left Child: %d\n&quot;, root-&gt;left-&gt;data);
+    printf(&quot;Right Child: %d\n&quot;, root-&gt;right-&gt;data);
+
+    return 0;
+}</code></pre>
+
+<div class="tree-io">
+
+<div class="tree-io-box">
+<h4>Program Output</h4>
+<pre><code>Root: 10
+Left Child: 20
+Right Child: 30</code></pre>
+</div>
+
+<div class="tree-io-box">
+<h4>Final Tree</h4>
+<pre><code>          10
+        /    \
+      20      30
+     /  \    /  \
+   40   50  60   70</code></pre>
+</div>
+
+</div>
+
+<div class="tree-example-box">
+<h3>📘 Learning Note</h3>
+<p>
+This short program focuses on node creation and pointer connections.
+In long-running programs, dynamically allocated Tree nodes should also be released when no longer needed.
+</p>
+</div>
+</section>
+
+
+<section class="content-card" id="tree-tracing">
+<span class="section-label">PROGRAM TRACING</span>
+<h2>🔎 Trace the Binary Tree Construction</h2>
+
+<div class="tree-tracer-wrap">
+
+<button
+    class="tree-tracer-toggle"
+    type="button"
+    onclick="TreeTrace.toggle()"
+>
+▶ Program Tracing — Binary Tree Construction
+</button>
+
+<div class="tree-tracer" id="treeTrace" hidden>
+
+<div class="tree-tracer-title">
+PROGRAM TRACING — BINARY TREE CONSTRUCTION
+</div>
+
+<div class="tree-tracer-grid">
+
+<div class="tree-tracer-panel">
+<h4>💻 Program</h4>
+<pre class="tree-tracer-code" id="treeTraceCode"></pre>
+</div>
+
+<div class="tree-tracer-panel">
+<h4>🧠 What is happening?</h4>
+<div class="tree-tracer-explain" id="treeTraceExplain"></div>
+
+<h4>📊 Live Variables</h4>
+<div class="tree-vars" id="treeTraceVars"></div>
+</div>
+
+</div>
+
+<div class="tree-trace-memory">
+
+<h4>🌳 Live Binary Tree Memory</h4>
+
+<div class="tree-trace-stage">
+<div class="tree-trace-canvas" id="treeTraceCanvas"></div>
+</div>
+
+<div class="tree-operation" id="treeTraceOperation"></div>
+
+<div class="tree-output">
+<strong>Program Output</strong>
+<pre id="treeTraceOutput">—</pre>
+</div>
+
+</div>
+
+<div class="tree-tracer-controls">
+<button onclick="TreeTrace.prev()">← Previous</button>
+<button onclick="TreeTrace.reset()">↺ Reset</button>
+<button id="treeTraceNext" onclick="TreeTrace.next()">Next →</button>
+<button id="treeTraceAuto" onclick="TreeTrace.auto()">▶ Auto Run</button>
+</div>
+
+<div class="tree-tracer-status" id="treeTraceStatus">
+Ready to execute.
+</div>
+
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="tree-complexity">
+<span class="section-label">COMPLEXITY + INTERVIEW NOTE</span>
+<h2>⚡ Binary Tree Basics — Complexity</h2>
+
+<div class="tree-complexity">
+
+<div>
+<strong>Create One Node — O(1)</strong>
+One allocation and constant number of assignments.
+</div>
+
+<div>
+<strong>Connect One Child — O(1)</strong>
+A left or right pointer assignment is constant time.
+</div>
+
+<div>
+<strong>Build n Nodes — O(n)</strong>
+Creating and connecting n nodes takes linear work.
+</div>
+
+<div>
+<strong>Space — O(n)</strong>
+Each node occupies memory for data and two pointers.
+</div>
+
+</div>
+
+<div class="tree-key-box">
+<h3>🎯 Interview Note</h3>
+<p>
+If the root is at depth 0, the maximum number of nodes at depth <code>d</code> is
+<code>2^d</code>. A perfect Binary Tree of height <code>h</code> can contain
+<code>2^(h+1) - 1</code> nodes.
+</p>
+</div>
+</section>
+
+
+<section class="content-card" id="tree-interview">
+<span class="section-label">INTERVIEW</span>
+<h2>❓ Tree Interview Questions — Part 1</h2>
+
+<div class="tree-interview-list">
+
+<div class="tree-interview-item">
+<div class="tree-interview-q">
+<span>1. What is the difference between a linear data structure and a Tree?</span>
+<button type="button" onclick="toggleTreeInterview('treeIa1',this)">Show Answer</button>
+</div>
+<div class="tree-interview-answer" id="treeIa1">
+A linear structure organizes elements in a sequence, while a Tree organizes nodes hierarchically
+using parent-child relationships.
+<div class="tree-interview-short">
+<strong>Interview answer:</strong> Linear structures are sequential; Trees are hierarchical and non-linear.
+</div>
+</div>
+</div>
+
+<div class="tree-interview-item">
+<div class="tree-interview-q">
+<span>2. What is a Binary Tree?</span>
+<button type="button" onclick="toggleTreeInterview('treeIa2',this)">Show Answer</button>
+</div>
+<div class="tree-interview-answer" id="treeIa2">
+A Binary Tree is a Tree in which every node has at most two children,
+called the left child and right child.
+<div class="tree-interview-short">
+<strong>Interview answer:</strong> A Binary Tree allows 0, 1, or 2 children per node.
+</div>
+</div>
+</div>
+
+<div class="tree-interview-item">
+<div class="tree-interview-q">
+<span>3. What is the difference between depth and height?</span>
+<button type="button" onclick="toggleTreeInterview('treeIa3',this)">Show Answer</button>
+</div>
+<div class="tree-interview-answer" id="treeIa3">
+Depth measures the number of edges from the root to a node.
+Height measures the longest number of edges from a node down to a leaf.
+<div class="tree-interview-short">
+<strong>Interview answer:</strong> Depth looks upward toward the root; height looks downward toward the deepest leaf.
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+</main>
+
+
+</div>
+
+<footer class="footer">
+<div class="footer-container">
+
+<div class="footer-brand-section">
+<div class="footer-brand">
+<span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+</div>
+<p class="footer-tagline">From Learning to Limitless Possibilities.</p>
+<p class="footer-description">
+Learn, practice, build and grow with structured learning resources.
+</p>
+</div>
+
+<div class="footer-column">
+<h3>Quick Links</h3>
+<a href="../index.html">Home</a>
+<a href="../Mathematics/">Maths</a>
+<a href="../C-Programming/">C Programming</a>
+</div>
+
+<div class="footer-column">
+<h3>Learning</h3>
+<a href="index.html">Data Structures &amp; DSA</a>
+<a href="../Python/">Python</a>
+<a href="../AI-ML/">AI &amp; Machine Learning</a>
+</div>
+
+<div class="footer-column">
+<h3>Practice</h3>
+<a href="#binary-tree">Tree Learning</a>
+<a href="#tree-tracing">Program Tracing</a>
+</div>
+
+</div>
+
+<div class="footer-bottom">
+<p>© 2026 CodeBhavya. All Rights Reserved.</p>
+<p>From Learning to Limitless Possibilities.</p>
+</div>
+</footer>
+
+
+<script>
+window.TreeViz = (() => {
+    const $ = id => document.getElementById(id);
+    const state = { steps:[], index:0, timer:null };
+
+    function parseValues() {
+        const limit = Number($("treeVizLimit").value) || 7;
+
+        return String($("treeVizInput").value || "")
+            .split(",")
+            .map(v => v.trim())
+            .slice(0, limit)
+            .map(v => {
+                if (!v || /^(null|-|x)$/i.test(v))
+                    return null;
+
+                const n = Number(v);
+                return Number.isFinite(n) ? n : v;
+            });
+    }
+
+    function buildSteps() {
+        const values = parseValues();
+        const steps = [{
+            built:[],
+            current:-1,
+            op:"Ready",
+            message:"Press Next to create the root and attach each later node to its parent."
+        }];
+
+        const built = Array(values.length).fill(null);
+
+        values.forEach((value,index) => {
+            if (value === null)
+                return;
+
+            if (index > 0) {
+                const parent = Math.floor((index - 1) / 2);
+
+                if (values[parent] === null) {
+                    steps.push({
+                        built:[...built],
+                        current:index,
+                        op:`Skip position ${index}`,
+                        message:`Position ${index} has no existing parent, so ${value} is not attached.`
+                    });
+                    return;
+                }
+            }
+
+            built[index] = value;
+
+            if (index === 0) {
+                steps.push({
+                    built:[...built],
+                    current:index,
+                    op:`Create ROOT ${value}`,
+                    message:`${value} becomes the root node.`
+                });
+            } else {
+                const parent = Math.floor((index - 1) / 2);
+                const side = index % 2 === 1 ? "LEFT" : "RIGHT";
+
+                steps.push({
+                    built:[...built],
+                    current:index,
+                    op:`Attach ${value}`,
+                    message:`${value} becomes the ${side} child of ${values[parent]}.`
+                });
+            }
+        });
+
+        if (steps.length === 1) {
+            steps.push({
+                built:[...built],
+                current:-1,
+                op:"No nodes",
+                message:"Enter at least one node value."
+            });
+        }
+
+        return steps;
+    }
+
+    function position(index) {
+        const level = Math.floor(Math.log2(index + 1));
+        const first = Math.pow(2, level) - 1;
+        const offset = index - first;
+        const count = Math.pow(2, level);
+
+        const y = [48,145,250,335][level] || 335;
+        const width = 680;
+        const x = 40 + ((offset + 0.5) * width / count);
+
+        return {x,y,level};
+    }
+
+    function renderTree(step) {
+        const canvas = $("treeVizCanvas");
+        const built = step.built;
+
+        let svg = `<svg viewBox="0 0 760 365" aria-hidden="true">`;
+
+        built.forEach((value,index) => {
+            if (value === null)
+                return;
+
+            if (index === 0)
+                return;
+
+            const parent = Math.floor((index - 1) / 2);
+
+            if (built[parent] === null)
+                return;
+
+            const p1 = position(parent);
+            const p2 = position(index);
+
+            svg += `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}"></line>`;
+        });
+
+        svg += `</svg>`;
+
+        let nodes = "";
+
+        built.forEach((value,index) => {
+            if (value === null)
+                return;
+
+            const p = position(index);
+
+            const classes = [
+                "tree-viz-node",
+                index === 0 ? "root" : "",
+                index === step.current ? "current" : ""
+            ].filter(Boolean).join(" ");
+
+            nodes += `
+                <div
+                    class="${classes}"
+                    style="left:${p.x}px;top:${p.y}px;"
+                >${value}</div>
+            `;
+
+            if (index === 0) {
+                nodes += `
+                    <div
+                        class="tree-viz-node-label"
+                        style="left:${p.x}px;top:${p.y + 36}px;"
+                    >ROOT</div>
+                `;
+            }
+        });
+
+        canvas.innerHTML = svg + nodes;
+    }
+
+    function render() {
+        const step = state.steps[state.index];
+
+        renderTree(step);
+
+        const built = step.built;
+        const current = step.current;
+
+        $("treeVizRoot").textContent =
+            built[0] === null || built[0] === undefined
+                ? "—"
+                : built[0];
+
+        $("treeVizCurrent").textContent =
+            current < 0 || built[current] === null
+                ? "—"
+                : built[current];
+
+        if (current <= 0) {
+            $("treeVizParent").textContent = "—";
+        } else {
+            const parent = Math.floor((current - 1) / 2);
+            $("treeVizParent").textContent =
+                built[parent] === null || built[parent] === undefined
+                    ? "—"
+                    : built[parent];
+        }
+
+        $("treeVizCount").textContent =
+            built.filter(v => v !== null).length;
+
+        $("treeVizMessage").innerHTML =
+            `<strong>${step.op}</strong><br>${step.message}`;
+
+        const done = state.index >= state.steps.length - 1;
+
+        $("treeVizNext").disabled = done;
+        $("treeVizNext").textContent =
+            done ? "✓ Completed" : "Next →";
+
+        $("treeVizAuto").disabled = done;
+
+        const pct =
+            state.steps.length <= 1
+                ? 100
+                : Math.round(
+                    state.index /
+                    (state.steps.length - 1) *
+                    100
+                );
+
+        $("treeVizProgress").style.width = `${pct}%`;
+    }
+
+    function load() {
+        pause();
+        state.steps = buildSteps();
+        state.index = 0;
+        render();
+    }
+
+    function next() {
+        if (state.index >= state.steps.length - 1)
+            return;
+
+        state.index++;
+        render();
+    }
+
+    function prev() {
+        if (state.index <= 0)
+            return;
+
+        pause();
+        state.index--;
+        render();
+    }
+
+    function reset() {
+        pause();
+        state.index = 0;
+        render();
+    }
+
+    function auto() {
+        if (
+            state.timer ||
+            state.index >= state.steps.length - 1
+        ) return;
+
+        state.timer = setInterval(() => {
+            if (state.index >= state.steps.length - 1) {
+                pause();
+                render();
+                return;
+            }
+
+            state.index++;
+            render();
+
+            if (state.index >= state.steps.length - 1)
+                pause();
+        }, 850);
+    }
+
+    function pause() {
+        if (state.timer) {
+            clearInterval(state.timer);
+            state.timer = null;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", load);
+
+    return {
+        load,
+        next,
+        prev,
+        reset,
+        auto,
+        pause
+    };
+})();
+</script>
+
+
+
+<script>
+window.TreeTrace = (() => {
+    const program = ["#include <stdio.h>", "#include <stdlib.h>", "", "struct Node", "{", "    int data;", "    struct Node *left;", "    struct Node *right;", "};", "", "struct Node *createNode(int value)", "{", "    struct Node *newNode =", "        (struct Node *)malloc(sizeof(struct Node));", "", "    newNode->data = value;", "    newNode->left = NULL;", "    newNode->right = NULL;", "", "    return newNode;", "}", "", "int main()", "{", "    struct Node *root;", "", "    root = createNode(10);", "", "    root->left = createNode(20);", "    root->right = createNode(30);", "", "    root->left->left = createNode(40);", "    root->left->right = createNode(50);", "", "    root->right->left = createNode(60);", "    root->right->right = createNode(70);", "", "    printf(\"Root: %d\\n\", root->data);", "    printf(\"Left Child: %d\\n\", root->left->data);", "    printf(\"Right Child: %d\\n\", root->right->data);", "", "    return 0;", "}"];
+    const steps = [{"line": 22, "explain": "Program execution starts in main().", "op": "Enter main()", "state": {"nodes": [], "root": "indeterminate", "value": "out of scope", "newNode": "out of scope", "output": "", "processing": null}}, {"line": 24, "explain": "Pointer variable root is declared. Before assignment, its value is indeterminate.", "op": "struct Node *root;", "state": {"nodes": [], "root": "indeterminate", "value": "out of scope", "newNode": "out of scope", "output": "", "processing": null}}, {"line": 26, "explain": "createNode(10) is called to create the root.", "op": "createNode(10)", "state": {"nodes": [], "root": "indeterminate", "value": 10, "newNode": "indeterminate", "output": "", "processing": null}}, {"line": 12, "explain": "malloc reserves memory for one struct Node and newNode points to that memory.", "op": "newNode = malloc(...)", "state": {"nodes": [], "root": "indeterminate", "value": 10, "newNode": "Node(10)", "output": "", "processing": 10}}, {"line": 15, "explain": "Store 10 in the new node's data field.", "op": "newNode->data = 10", "state": {"nodes": [], "root": "indeterminate", "value": 10, "newNode": "Node(10)", "output": "", "processing": 10}}, {"line": 16, "explain": "Initialize the left pointer to NULL because the node has no left child yet.", "op": "newNode->left = NULL", "state": {"nodes": [], "root": "indeterminate", "value": 10, "newNode": "Node(10)", "output": "", "processing": 10}}, {"line": 17, "explain": "Initialize the right pointer to NULL because the node has no right child yet.", "op": "newNode->right = NULL", "state": {"nodes": [], "root": "indeterminate", "value": 10, "newNode": "Node(10)", "output": "", "processing": 10}}, {"line": 19, "explain": "createNode() returns the pointer to Node(10).", "op": "return newNode", "state": {"nodes": [], "root": "indeterminate", "value": 10, "newNode": "Node(10)", "output": "", "processing": 10}}, {"line": 26, "explain": "root now points to Node(10).", "op": "root = Node(10)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}], "root": "Node(10)", "value": "out of scope", "newNode": "out of scope", "output": "", "processing": 10}}, {"line": 28, "explain": "createNode(20) is called to create the LEFT child of Node(10).", "op": "createNode(20)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}], "root": "Node(10)", "value": 20, "newNode": "indeterminate", "output": "", "processing": null}}, {"line": 12, "explain": "malloc reserves memory for one struct Node and newNode points to that memory.", "op": "newNode = malloc(...)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}], "root": "Node(10)", "value": 20, "newNode": "Node(20)", "output": "", "processing": 20}}, {"line": 15, "explain": "Store 20 in the new node's data field.", "op": "newNode->data = 20", "state": {"nodes": [{"value": 10, "parent": null, "side": null}], "root": "Node(10)", "value": 20, "newNode": "Node(20)", "output": "", "processing": 20}}, {"line": 16, "explain": "Initialize the left pointer to NULL because the node has no left child yet.", "op": "newNode->left = NULL", "state": {"nodes": [{"value": 10, "parent": null, "side": null}], "root": "Node(10)", "value": 20, "newNode": "Node(20)", "output": "", "processing": 20}}, {"line": 17, "explain": "Initialize the right pointer to NULL because the node has no right child yet.", "op": "newNode->right = NULL", "state": {"nodes": [{"value": 10, "parent": null, "side": null}], "root": "Node(10)", "value": 20, "newNode": "Node(20)", "output": "", "processing": 20}}, {"line": 19, "explain": "createNode() returns the pointer to Node(20).", "op": "return newNode", "state": {"nodes": [{"value": 10, "parent": null, "side": null}], "root": "Node(10)", "value": 20, "newNode": "Node(20)", "output": "", "processing": 20}}, {"line": 28, "explain": "Node(20) is connected as the LEFT child of Node(10).", "op": "LEFT child of Node(10) = Node(20)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}], "root": "Node(10)", "value": "out of scope", "newNode": "out of scope", "output": "", "processing": 20}}, {"line": 29, "explain": "createNode(30) is called to create the RIGHT child of Node(10).", "op": "createNode(30)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}], "root": "Node(10)", "value": 30, "newNode": "indeterminate", "output": "", "processing": null}}, {"line": 12, "explain": "malloc reserves memory for one struct Node and newNode points to that memory.", "op": "newNode = malloc(...)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}], "root": "Node(10)", "value": 30, "newNode": "Node(30)", "output": "", "processing": 30}}, {"line": 15, "explain": "Store 30 in the new node's data field.", "op": "newNode->data = 30", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}], "root": "Node(10)", "value": 30, "newNode": "Node(30)", "output": "", "processing": 30}}, {"line": 16, "explain": "Initialize the left pointer to NULL because the node has no left child yet.", "op": "newNode->left = NULL", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}], "root": "Node(10)", "value": 30, "newNode": "Node(30)", "output": "", "processing": 30}}, {"line": 17, "explain": "Initialize the right pointer to NULL because the node has no right child yet.", "op": "newNode->right = NULL", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}], "root": "Node(10)", "value": 30, "newNode": "Node(30)", "output": "", "processing": 30}}, {"line": 19, "explain": "createNode() returns the pointer to Node(30).", "op": "return newNode", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}], "root": "Node(10)", "value": 30, "newNode": "Node(30)", "output": "", "processing": 30}}, {"line": 29, "explain": "Node(30) is connected as the RIGHT child of Node(10).", "op": "RIGHT child of Node(10) = Node(30)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}], "root": "Node(10)", "value": "out of scope", "newNode": "out of scope", "output": "", "processing": 30}}, {"line": 31, "explain": "createNode(40) is called to create the LEFT child of Node(20).", "op": "createNode(40)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}], "root": "Node(10)", "value": 40, "newNode": "indeterminate", "output": "", "processing": null}}, {"line": 12, "explain": "malloc reserves memory for one struct Node and newNode points to that memory.", "op": "newNode = malloc(...)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}], "root": "Node(10)", "value": 40, "newNode": "Node(40)", "output": "", "processing": 40}}, {"line": 15, "explain": "Store 40 in the new node's data field.", "op": "newNode->data = 40", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}], "root": "Node(10)", "value": 40, "newNode": "Node(40)", "output": "", "processing": 40}}, {"line": 16, "explain": "Initialize the left pointer to NULL because the node has no left child yet.", "op": "newNode->left = NULL", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}], "root": "Node(10)", "value": 40, "newNode": "Node(40)", "output": "", "processing": 40}}, {"line": 17, "explain": "Initialize the right pointer to NULL because the node has no right child yet.", "op": "newNode->right = NULL", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}], "root": "Node(10)", "value": 40, "newNode": "Node(40)", "output": "", "processing": 40}}, {"line": 19, "explain": "createNode() returns the pointer to Node(40).", "op": "return newNode", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}], "root": "Node(10)", "value": 40, "newNode": "Node(40)", "output": "", "processing": 40}}, {"line": 31, "explain": "Node(40) is connected as the LEFT child of Node(20).", "op": "LEFT child of Node(20) = Node(40)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}], "root": "Node(10)", "value": "out of scope", "newNode": "out of scope", "output": "", "processing": 40}}, {"line": 32, "explain": "createNode(50) is called to create the RIGHT child of Node(20).", "op": "createNode(50)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}], "root": "Node(10)", "value": 50, "newNode": "indeterminate", "output": "", "processing": null}}, {"line": 12, "explain": "malloc reserves memory for one struct Node and newNode points to that memory.", "op": "newNode = malloc(...)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}], "root": "Node(10)", "value": 50, "newNode": "Node(50)", "output": "", "processing": 50}}, {"line": 15, "explain": "Store 50 in the new node's data field.", "op": "newNode->data = 50", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}], "root": "Node(10)", "value": 50, "newNode": "Node(50)", "output": "", "processing": 50}}, {"line": 16, "explain": "Initialize the left pointer to NULL because the node has no left child yet.", "op": "newNode->left = NULL", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}], "root": "Node(10)", "value": 50, "newNode": "Node(50)", "output": "", "processing": 50}}, {"line": 17, "explain": "Initialize the right pointer to NULL because the node has no right child yet.", "op": "newNode->right = NULL", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}], "root": "Node(10)", "value": 50, "newNode": "Node(50)", "output": "", "processing": 50}}, {"line": 19, "explain": "createNode() returns the pointer to Node(50).", "op": "return newNode", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}], "root": "Node(10)", "value": 50, "newNode": "Node(50)", "output": "", "processing": 50}}, {"line": 32, "explain": "Node(50) is connected as the RIGHT child of Node(20).", "op": "RIGHT child of Node(20) = Node(50)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}], "root": "Node(10)", "value": "out of scope", "newNode": "out of scope", "output": "", "processing": 50}}, {"line": 34, "explain": "createNode(60) is called to create the LEFT child of Node(30).", "op": "createNode(60)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}], "root": "Node(10)", "value": 60, "newNode": "indeterminate", "output": "", "processing": null}}, {"line": 12, "explain": "malloc reserves memory for one struct Node and newNode points to that memory.", "op": "newNode = malloc(...)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}], "root": "Node(10)", "value": 60, "newNode": "Node(60)", "output": "", "processing": 60}}, {"line": 15, "explain": "Store 60 in the new node's data field.", "op": "newNode->data = 60", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}], "root": "Node(10)", "value": 60, "newNode": "Node(60)", "output": "", "processing": 60}}, {"line": 16, "explain": "Initialize the left pointer to NULL because the node has no left child yet.", "op": "newNode->left = NULL", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}], "root": "Node(10)", "value": 60, "newNode": "Node(60)", "output": "", "processing": 60}}, {"line": 17, "explain": "Initialize the right pointer to NULL because the node has no right child yet.", "op": "newNode->right = NULL", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}], "root": "Node(10)", "value": 60, "newNode": "Node(60)", "output": "", "processing": 60}}, {"line": 19, "explain": "createNode() returns the pointer to Node(60).", "op": "return newNode", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}], "root": "Node(10)", "value": 60, "newNode": "Node(60)", "output": "", "processing": 60}}, {"line": 34, "explain": "Node(60) is connected as the LEFT child of Node(30).", "op": "LEFT child of Node(30) = Node(60)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}, {"value": 60, "parent": 30, "side": "LEFT"}], "root": "Node(10)", "value": "out of scope", "newNode": "out of scope", "output": "", "processing": 60}}, {"line": 35, "explain": "createNode(70) is called to create the RIGHT child of Node(30).", "op": "createNode(70)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}, {"value": 60, "parent": 30, "side": "LEFT"}], "root": "Node(10)", "value": 70, "newNode": "indeterminate", "output": "", "processing": null}}, {"line": 12, "explain": "malloc reserves memory for one struct Node and newNode points to that memory.", "op": "newNode = malloc(...)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}, {"value": 60, "parent": 30, "side": "LEFT"}], "root": "Node(10)", "value": 70, "newNode": "Node(70)", "output": "", "processing": 70}}, {"line": 15, "explain": "Store 70 in the new node's data field.", "op": "newNode->data = 70", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}, {"value": 60, "parent": 30, "side": "LEFT"}], "root": "Node(10)", "value": 70, "newNode": "Node(70)", "output": "", "processing": 70}}, {"line": 16, "explain": "Initialize the left pointer to NULL because the node has no left child yet.", "op": "newNode->left = NULL", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}, {"value": 60, "parent": 30, "side": "LEFT"}], "root": "Node(10)", "value": 70, "newNode": "Node(70)", "output": "", "processing": 70}}, {"line": 17, "explain": "Initialize the right pointer to NULL because the node has no right child yet.", "op": "newNode->right = NULL", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}, {"value": 60, "parent": 30, "side": "LEFT"}], "root": "Node(10)", "value": 70, "newNode": "Node(70)", "output": "", "processing": 70}}, {"line": 19, "explain": "createNode() returns the pointer to Node(70).", "op": "return newNode", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}, {"value": 60, "parent": 30, "side": "LEFT"}], "root": "Node(10)", "value": 70, "newNode": "Node(70)", "output": "", "processing": 70}}, {"line": 35, "explain": "Node(70) is connected as the RIGHT child of Node(30).", "op": "RIGHT child of Node(30) = Node(70)", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}, {"value": 60, "parent": 30, "side": "LEFT"}, {"value": 70, "parent": 30, "side": "RIGHT"}], "root": "Node(10)", "value": "out of scope", "newNode": "out of scope", "output": "", "processing": 70}}, {"line": 37, "explain": "printf reads root->data and prints \"Root: 10\".", "op": "Print \"Root: 10\"", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}, {"value": 60, "parent": 30, "side": "LEFT"}, {"value": 70, "parent": 30, "side": "RIGHT"}], "root": "Node(10)", "value": "out of scope", "newNode": "out of scope", "output": "Root: 10", "processing": null}}, {"line": 38, "explain": "printf reads root->left->data and prints \"Left Child: 20\".", "op": "Print \"Left Child: 20\"", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}, {"value": 60, "parent": 30, "side": "LEFT"}, {"value": 70, "parent": 30, "side": "RIGHT"}], "root": "Node(10)", "value": "out of scope", "newNode": "out of scope", "output": "Root: 10\nLeft Child: 20", "processing": null}}, {"line": 39, "explain": "printf reads root->right->data and prints \"Right Child: 30\".", "op": "Print \"Right Child: 30\"", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}, {"value": 60, "parent": 30, "side": "LEFT"}, {"value": 70, "parent": 30, "side": "RIGHT"}], "root": "Node(10)", "value": "out of scope", "newNode": "out of scope", "output": "Root: 10\nLeft Child: 20\nRight Child: 30", "processing": null}}, {"line": 41, "explain": "main() returns 0 and the program finishes.", "op": "return 0", "state": {"nodes": [{"value": 10, "parent": null, "side": null}, {"value": 20, "parent": 10, "side": "LEFT"}, {"value": 30, "parent": 10, "side": "RIGHT"}, {"value": 40, "parent": 20, "side": "LEFT"}, {"value": 50, "parent": 20, "side": "RIGHT"}, {"value": 60, "parent": 30, "side": "LEFT"}, {"value": 70, "parent": 30, "side": "RIGHT"}], "root": "Node(10)", "value": "out of scope", "newNode": "out of scope", "output": "Root: 10\nLeft Child: 20\nRight Child: 30", "processing": null}}];
+    const $ = id => document.getElementById(id);
+
+    let index = 0;
+    let timer = null;
+
+    function esc(value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+    }
+
+    function current() {
+        if (index === 0) {
+            return {
+                line: steps[0].line,
+                explain: "Press Next to start executing main().",
+                op: "",
+                state: {
+                    nodes: [],
+                    root: "indeterminate",
+                    value: "out of scope",
+                    newNode: "out of scope",
+                    output: "",
+                    processing: null
+                }
+            };
+        }
+
+        return steps[index - 1];
+    }
+
+    function renderCode(step) {
+        const code = $("treeTraceCode");
+
+        code.innerHTML =
+            program
+                .map((line, i) => {
+                    const active =
+                        i === step.line
+                            ? " active"
+                            : "";
+
+                    return `<span class="tree-code-line${active}">${esc(line)}</span>`;
+                })
+                .join("");
+
+        requestAnimationFrame(() => {
+            const active =
+                code.querySelector(
+                    ".tree-code-line.active"
+                );
+
+            if (!active)
+                return;
+
+            const codeRect =
+                code.getBoundingClientRect();
+
+            const activeRect =
+                active.getBoundingClientRect();
+
+            const activeTopInsideCode =
+                code.scrollTop +
+                (activeRect.top - codeRect.top);
+
+            const activeBottomInsideCode =
+                activeTopInsideCode +
+                activeRect.height;
+
+            const topSafe =
+                code.scrollTop + 42;
+
+            const bottomSafe =
+                code.scrollTop +
+                code.clientHeight -
+                42;
+
+            let newScrollTop =
+                code.scrollTop;
+
+            if (
+                activeTopInsideCode <
+                topSafe
+            ) {
+                newScrollTop =
+                    Math.max(
+                        0,
+                        activeTopInsideCode -
+                        42
+                    );
+            }
+            else if (
+                activeBottomInsideCode >
+                bottomSafe
+            ) {
+                newScrollTop =
+                    Math.max(
+                        0,
+                        activeBottomInsideCode -
+                        code.clientHeight +
+                        42
+                    );
+            }
+
+            if (
+                Math.abs(
+                    newScrollTop -
+                    code.scrollTop
+                ) > 1
+            ) {
+                code.scrollTo({
+                    top: newScrollTop,
+                    left: code.scrollLeft,
+                    behavior: "smooth"
+                });
+            }
+        });
+    }
+
+    function layoutNodes(nodes) {
+        const byValue = new Map();
+
+        nodes.forEach(node => {
+            byValue.set(
+                String(node.value),
+                node
+            );
+        });
+
+        const positions = new Map();
+
+        const fixed = {
+            "10": {x:360,y:45},
+            "20": {x:205,y:135},
+            "30": {x:515,y:135},
+            "40": {x:120,y:245},
+            "50": {x:285,y:245},
+            "60": {x:435,y:245},
+            "70": {x:600,y:245}
+        };
+
+        nodes.forEach(node => {
+            const key = String(node.value);
+
+            positions.set(
+                key,
+                fixed[key] || {
+                    x: 360,
+                    y: 280
+                }
+            );
+        });
+
+        return {positions,byValue};
+    }
+
+    function renderTree(s) {
+        const canvas =
+            $("treeTraceCanvas");
+
+        if (!s.nodes.length) {
+            canvas.innerHTML =
+                `<div style="
+                    position:absolute;
+                    inset:0;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    color:#64748b;
+                    font-weight:800;
+                ">Tree memory is empty.</div>`;
+            return;
+        }
+
+        const {positions} =
+            layoutNodes(s.nodes);
+
+        let svg =
+            `<svg viewBox="0 0 720 300" aria-hidden="true">`;
+
+        s.nodes.forEach(node => {
+            if (node.parent === null)
+                return;
+
+            const p =
+                positions.get(
+                    String(node.parent)
+                );
+
+            const c =
+                positions.get(
+                    String(node.value)
+                );
+
+            if (p && c) {
+                svg +=
+                    `<line x1="${p.x}" y1="${p.y}" x2="${c.x}" y2="${c.y}"></line>`;
+            }
+        });
+
+        svg += `</svg>`;
+
+        const nodesHtml =
+            s.nodes
+                .map(node => {
+                    const p =
+                        positions.get(
+                            String(node.value)
+                        );
+
+                    const cls = [
+                        "tree-trace-node",
+                        node.parent === null
+                            ? "root"
+                            : "",
+                        s.processing === node.value
+                            ? "processing"
+                            : ""
+                    ]
+                        .filter(Boolean)
+                        .join(" ");
+
+                    return `
+                        <div
+                            class="${cls}"
+                            style="left:${p.x}px;top:${p.y}px;"
+                        >${esc(node.value)}</div>
+                    `;
+                })
+                .join("");
+
+        canvas.innerHTML =
+            svg + nodesHtml;
+    }
+
+    function render() {
+        const step = current();
+        const s = step.state;
+
+        renderCode(step);
+        renderTree(s);
+
+        $("treeTraceExplain").textContent =
+            step.explain || "";
+
+        const vars = [
+            ["root", s.root],
+            ["value", s.value],
+            ["newNode", s.newNode]
+        ];
+
+        $("treeTraceVars").innerHTML =
+            vars
+                .map(([key,value]) => `
+                    <div class="tree-var">
+                        <strong>${esc(key)}</strong>
+                        <span>${esc(value)}</span>
+                    </div>
+                `)
+                .join("");
+
+        $("treeTraceOperation").innerHTML =
+            step.op
+                ? `<strong>Current Operation:</strong> ${esc(step.op)}`
+                : "";
+
+        $("treeTraceOutput").textContent =
+            s.output || "—";
+
+        const done =
+            index >= steps.length;
+
+        $("treeTraceNext").disabled =
+            done;
+
+        $("treeTraceNext").textContent =
+            done
+                ? "✓ Completed"
+                : "Next →";
+
+        $("treeTraceAuto").disabled =
+            done || !!timer;
+
+        $("treeTraceStatus").textContent =
+            done
+                ? "✓ Program execution completed. Press Reset to run again."
+                : `Step ${index} of ${steps.length}`;
+    }
+
+    function toggle() {
+        const box =
+            $("treeTrace");
+
+        box.hidden =
+            !box.hidden;
+
+        if (!box.hidden)
+            render();
+    }
+
+    function next() {
+        if (index >= steps.length)
+            return;
+
+        index++;
+        render();
+    }
+
+    function prev() {
+        if (index <= 0)
+            return;
+
+        pause();
+        index--;
+        render();
+    }
+
+    function reset() {
+        pause();
+        index = 0;
+        render();
+
+        requestAnimationFrame(() => {
+            $("treeTraceCode")
+                .scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "auto"
+                });
+        });
+    }
+
+    function auto() {
+        if (
+            timer ||
+            index >= steps.length
+        ) return;
+
+        timer =
+            setInterval(() => {
+                if (
+                    index >= steps.length
+                ) {
+                    pause();
+                    render();
+                    return;
+                }
+
+                index++;
+                render();
+
+                if (
+                    index >= steps.length
+                ) {
+                    pause();
+                    render();
+                }
+            }, 850);
+
+        render();
+    }
+
+    function pause() {
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
+    }
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        render
+    );
+
+    return {
+        toggle,
+        next,
+        prev,
+        reset,
+        auto,
+        pause
+    };
+})();
+</script>
+
+
+
+<script>
+function toggleTreeInterview(id, button) {
+    const answer =
+        document.getElementById(id);
+
+    if (!answer)
+        return;
+
+    const show =
+        !answer.classList.contains("show");
+
+    answer.classList.toggle(
+        "show",
+        show
+    );
+
+    if (button) {
+        button.textContent =
+            show
+                ? "Hide Answer"
+                : "Show Answer";
+    }
+}
+</script>
+
+<script>
+/* Active Trees sidebar section */
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+        const links =
+            Array.from(
+                document.querySelectorAll(
+                    ".tree-side-link"
+                )
+            );
+
+        const entries =
+            links
+                .map(
+                    link => {
+                        const href =
+                            link.getAttribute(
+                                "href"
+                            );
+
+                        return {
+                            link,
+                            section:
+                                href &&
+                                href.startsWith(
+                                    "#"
+                                )
+                                    ? document.querySelector(
+                                        href
+                                    )
+                                    : null
+                        };
+                    }
+                )
+                .filter(
+                    item =>
+                        item.section
+                );
+
+        function updateActive() {
+            const marker =
+                window.scrollY +
+                160;
+
+            let active =
+                entries[0];
+
+            entries.forEach(
+                item => {
+                    if (
+                        item.section.offsetTop <=
+                        marker
+                    ) {
+                        active =
+                            item;
+                    }
+                }
+            );
+
+            links.forEach(
+                link =>
+                    link.classList.remove(
+                        "active"
+                    )
+            );
+
+            if (active) {
+                active.link.classList.add(
+                    "active"
+                );
+            }
+        }
+
+        updateActive();
+
+        window.addEventListener(
+            "scroll",
+            updateActive,
+            {
+                passive:true
+            }
+        );
+    }
+);
+</script>
+
+
+<script src="../script.js"></script>
+
+</body>
+</html>
+
