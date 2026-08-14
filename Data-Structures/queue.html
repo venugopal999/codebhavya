@@ -1,1 +1,2937 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Queue | Data Structures | CodeBhavya</title>
+<link rel="icon" type="image/png" href="../images/codebhavya-icon-32.png"/>
+<link rel="stylesheet" href="../style.css"/>
+
+<style>
+/* ============================================================
+   CODEBHAVYA QUEUE — PART 1
+   Array Queue + FIFO + Enqueue / Dequeue / Front / Rear
+   Global header/sidebar/footer/layout come from ../style.css
+   ============================================================ */
+
+.sidebar details { margin:4px 0; }
+.sidebar summary {
+    list-style:none;
+    cursor:pointer;
+    padding:9px 12px;
+    border-radius:6px;
+    color:#334155;
+    font-size:14px;
+    font-weight:600;
+}
+.sidebar summary::-webkit-details-marker { display:none; }
+.sidebar summary::before {
+    content:"▸";
+    display:inline-block;
+    width:18px;
+    color:#64748b;
+    transition:transform .2s ease;
+}
+.sidebar details[open] summary::before { transform:rotate(90deg); }
+.sidebar details[open] summary {
+    background:#f8fafc;
+    color:#1d4ed8;
+}
+.sidebar details a {
+    margin-left:16px;
+    font-size:13px;
+    padding:7px 12px;
+}
+.sidebar details[open] a.queue-side-link {
+    position:relative;
+}
+.sidebar details[open] a.queue-side-link.active {
+    background:#eaf3ff;
+    color:#1d4ed8;
+    font-weight:800;
+}
+.sidebar details[open] a.queue-side-link.active::before {
+    content:"";
+    position:absolute;
+    left:3px;
+    top:9px;
+    bottom:9px;
+    width:3px;
+    border-radius:3px;
+    background:#d4af37;
+}
+
+.queue-key-box,
+.queue-example-box {
+    border-radius:10px;
+    padding:18px 20px;
+    margin:18px 0;
+}
+.queue-key-box {
+    background:#f8fafc;
+    border:1px solid #dce7f0;
+    border-left:5px solid #8cc8f0;
+}
+.queue-example-box {
+    background:#fffdf7;
+    border:1px solid #eadca8;
+    border-left:5px solid #d4af37;
+}
+.queue-key-box h3,
+.queue-example-box h3 {
+    margin-top:0;
+    color:#0f172a;
+}
+
+.queue-fifo-demo {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin:24px 0;
+}
+.queue-fifo-arrow {
+    color:#2563eb;
+    font-size:24px;
+    font-weight:900;
+}
+.queue-fifo-cell {
+    min-width:82px;
+    min-height:58px;
+    padding:6px 10px;
+    box-sizing:border-box;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #0d1b2a;
+    border-radius:8px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:18px;
+    font-weight:900;
+}
+.queue-fifo-cell.front {
+    border-color:#2563eb;
+    background:#eff6ff;
+}
+.queue-fifo-cell.rear {
+    border-color:#d4af37;
+    background:#fff9df;
+}
+.queue-fifo-caption {
+    margin-top:4px;
+    text-align:center;
+    color:#64748b;
+    font-size:11px;
+    font-weight:800;
+}
+
+.queue-op-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin:16px 0;
+}
+.queue-op-card {
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    padding:13px;
+    background:#f8fafc;
+}
+.queue-op-card strong {
+    display:block;
+    color:#0d1b2a;
+    margin-bottom:5px;
+}
+
+/* ===== Premium visualizer ===== */
+.queue-viz {
+    margin:22px 0;
+    background:#fff;
+    border:1px solid #dbe3ec;
+    border-radius:16px;
+    box-shadow:0 8px 24px rgba(15,23,42,.06);
+    overflow:hidden;
+}
+.queue-viz-header {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:8px 14px;
+    align-items:center;
+    padding:18px 20px 8px;
+}
+.queue-viz-label {
+    grid-column:1;
+    grid-row:1;
+    color:#2563eb;
+    font-size:11px;
+    letter-spacing:1.4px;
+    font-weight:800;
+}
+.queue-viz-brand {
+    grid-column:2;
+    grid-row:1;
+    justify-self:end;
+    display:inline-flex;
+    align-items:center;
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:-.5px;
+    white-space:nowrap;
+}
+.queue-viz-brand img {
+    width:30px;
+    height:30px;
+    margin-right:8px;
+    object-fit:contain;
+    border:1px solid #dbe3ec;
+    border-radius:9px;
+    background:#fff;
+    box-shadow:0 5px 12px rgba(37,99,235,.12);
+}
+.queue-viz-brand .code { color:#2563eb; }
+.queue-viz-brand .bhavya { color:#f59e0b; }
+.queue-viz-title {
+    grid-column:1 / -1;
+    grid-row:2;
+}
+.queue-viz-title strong {
+    display:block;
+    color:#0f172a;
+    font-size:18px;
+}
+.queue-viz-title span {
+    display:block;
+    margin-top:3px;
+    color:#64748b;
+    font-size:12px;
+}
+.queue-viz-body { padding:16px 18px 18px; }
+.queue-viz-controls {
+    display:grid;
+    grid-template-columns:minmax(220px,1.15fr) 105px 170px minmax(170px,.8fr) auto;
+    align-items:end;
+    gap:10px;
+}
+.queue-field label {
+    display:block;
+    margin-bottom:5px;
+    color:#475569;
+    font-size:12px;
+    font-weight:700;
+}
+.queue-field input,
+.queue-field select {
+    width:100%;
+    min-height:40px;
+    box-sizing:border-box;
+    padding:8px 10px;
+    border:1px solid #cbd5e1;
+    border-radius:7px;
+    background:#fff;
+    color:#0f172a;
+}
+.queue-viz-stage {
+    min-height:310px;
+    margin-top:14px;
+    overflow:auto;
+    padding:22px 18px;
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+    background:#f8fafc;
+}
+.queue-array-wrap {
+    position:relative;
+    width:max-content;
+    min-width:100%;
+    padding:72px 24px 78px;
+    box-sizing:border-box;
+}
+.queue-array {
+    display:flex;
+    justify-content:center;
+    gap:8px;
+}
+.queue-slot-wrap {
+    position:relative;
+    flex:0 0 auto;
+}
+.queue-slot {
+    width:78px;
+    height:68px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #0d1b2a;
+    border-radius:8px;
+    background:#fff;
+    color:#0f172a;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:18px;
+    font-weight:900;
+    transition:.2s ease;
+}
+.queue-slot.active-front {
+    border-color:#2563eb;
+    background:#eff6ff;
+    box-shadow:0 0 0 4px rgba(37,99,235,.10);
+}
+.queue-slot.active-rear {
+    border-color:#d4af37;
+    background:#fff9df;
+    box-shadow:0 0 0 4px rgba(212,175,55,.10);
+}
+.queue-slot.active-both {
+    border-color:#7c3aed;
+    background:#f5f3ff;
+    box-shadow:0 0 0 4px rgba(124,58,237,.10);
+}
+.queue-slot.processing {
+    transform:translateY(-4px);
+}
+.queue-index {
+    margin-top:6px;
+    text-align:center;
+    color:#64748b;
+    font-size:11px;
+    font-weight:800;
+}
+.queue-pointer {
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    min-width:74px;
+    text-align:center;
+    font-size:11px;
+    font-weight:900;
+    white-space:nowrap;
+    pointer-events:none;
+}
+.queue-pointer.front {
+    top:-50px;
+    color:#2563eb;
+}
+.queue-pointer.front::after {
+    content:"↓";
+    display:block;
+    margin-top:2px;
+    font-size:18px;
+}
+.queue-pointer.rear {
+    bottom:-52px;
+    color:#b8860b;
+}
+.queue-pointer.rear::before {
+    content:"↑";
+    display:block;
+    margin-bottom:2px;
+    font-size:18px;
+}
+.queue-empty-pointer {
+    text-align:center;
+    color:#64748b;
+    font-size:13px;
+    font-weight:800;
+    margin-top:18px;
+}
+.queue-viz-actions {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin-top:14px;
+}
+.queue-viz-actions button {
+    border:0;
+    border-radius:7px;
+    padding:9px 13px;
+    font-weight:800;
+    cursor:pointer;
+}
+.queue-viz-actions .primary {
+    background:#2563eb;
+    color:#fff;
+}
+.queue-viz-actions .gold {
+    background:#d4af37;
+    color:#0d1b2a;
+}
+.queue-viz-actions .muted {
+    background:#e2e8f0;
+    color:#0f172a;
+}
+.queue-viz-actions button:disabled {
+    opacity:.5;
+    cursor:not-allowed;
+}
+.queue-viz-message {
+    margin-top:12px;
+    min-height:48px;
+    padding:11px 13px;
+    border-left:4px solid #d4af37;
+    border-radius:7px;
+    background:#fffdf7;
+    color:#334155;
+    line-height:1.5;
+}
+.queue-progress {
+    height:7px;
+    margin-top:10px;
+    overflow:hidden;
+    border-radius:999px;
+    background:#e2e8f0;
+}
+.queue-progress > div {
+    height:100%;
+    width:0;
+    background:#2563eb;
+    transition:width .2s ease;
+}
+
+.queue-program-title {
+    margin-top:20px;
+}
+.queue-io {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin:14px 0;
+}
+.queue-io-box {
+    overflow:hidden;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+}
+.queue-io-box h4 {
+    margin:0;
+    padding:8px 10px;
+    background:#0d1b2a;
+    color:#fff;
+    font-size:12px;
+}
+.queue-io-box pre {
+    margin:0;
+    padding:10px;
+    background:#0b1220;
+    color:#e5e7eb;
+}
+
+/* ===== Program tracer ===== */
+.queue-tracer-wrap {
+    margin:18px 0;
+}
+.queue-tracer-toggle {
+    width:100%;
+    border:0;
+    border-radius:8px;
+    padding:11px 14px;
+    background:#0d1b2a;
+    color:#fff;
+    text-align:left;
+    font-weight:900;
+    cursor:pointer;
+}
+.queue-tracer {
+    margin-top:10px;
+    overflow-x:auto;
+    border:1px solid #dbe3ec;
+    border-radius:12px;
+    background:#fff;
+}
+.queue-tracer[hidden] { display:none !important; }
+.queue-tracer-title {
+    min-width:760px;
+    padding:11px 14px;
+    border-bottom:1px solid #e2e8f0;
+    background:#f8fafc;
+    color:#2563eb;
+    font-size:11px;
+    letter-spacing:1.1px;
+    font-weight:900;
+}
+.queue-tracer-grid {
+    min-width:760px;
+    display:grid;
+    grid-template-columns:minmax(390px,1.15fr) minmax(320px,.85fr);
+    gap:12px;
+    padding:12px;
+}
+.queue-tracer-panel {
+    min-width:0;
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    background:#fff;
+    overflow:hidden;
+}
+.queue-tracer-panel h4 {
+    margin:0;
+    padding:9px 11px;
+    border-bottom:1px solid #e2e8f0;
+    background:#f8fafc;
+    color:#0d1b2a;
+}
+.queue-tracer-code {
+    height:390px;
+    max-height:390px;
+    margin:0;
+    overflow:auto;
+    overflow-anchor:none;
+    padding:10px;
+    background:#0b1220;
+    color:#e5e7eb;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:12px;
+    line-height:1.5;
+}
+.queue-code-line {
+    display:block;
+    min-height:18px;
+    padding:1px 6px;
+    border-radius:4px;
+    white-space:pre;
+}
+.queue-code-line.active {
+    background:#1d4ed8;
+    color:#fff;
+}
+.queue-tracer-explain {
+    min-height:86px;
+    padding:11px;
+    color:#334155;
+    line-height:1.55;
+}
+.queue-vars {
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:7px;
+    padding:10px;
+}
+.queue-var {
+    padding:8px;
+    border:1px solid #e2e8f0;
+    border-radius:7px;
+    background:#f8fafc;
+}
+.queue-var strong {
+    display:block;
+    margin-bottom:3px;
+    color:#64748b;
+    font-size:10px;
+}
+.queue-var span {
+    color:#0d1b2a;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:900;
+}
+.queue-trace-memory {
+    min-width:760px;
+    padding:0 12px 12px;
+}
+.queue-trace-memory h4 {
+    margin:0 0 8px;
+    color:#0d1b2a;
+}
+.queue-trace-array {
+    display:flex;
+    gap:7px;
+    align-items:flex-start;
+    min-height:110px;
+    overflow-x:auto;
+    padding:54px 8px 42px;
+}
+.queue-trace-cell-wrap {
+    position:relative;
+    flex:0 0 auto;
+}
+.queue-trace-cell {
+    width:72px;
+    height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #0d1b2a;
+    border-radius:7px;
+    background:#fff;
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:900;
+}
+.queue-trace-cell.front {
+    border-color:#2563eb;
+    background:#eff6ff;
+}
+.queue-trace-cell.rear {
+    border-color:#d4af37;
+    background:#fff9df;
+}
+.queue-trace-cell.both {
+    border-color:#7c3aed;
+    background:#f5f3ff;
+}
+.queue-trace-index {
+    margin-top:5px;
+    text-align:center;
+    color:#64748b;
+    font-size:10px;
+}
+.queue-trace-pointer {
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:10px;
+    font-weight:900;
+    white-space:nowrap;
+}
+.queue-trace-pointer.front {
+    top:-40px;
+    color:#2563eb;
+}
+.queue-trace-pointer.front::after {
+    content:"↓";
+    display:block;
+    text-align:center;
+    font-size:15px;
+}
+.queue-trace-pointer.rear {
+    bottom:-35px;
+    color:#b8860b;
+}
+.queue-trace-pointer.rear::before {
+    content:"↑";
+    display:block;
+    text-align:center;
+    font-size:15px;
+}
+.queue-operation,
+.queue-output {
+    margin-top:9px;
+    padding:9px 11px;
+    border:1px solid #e2e8f0;
+    border-radius:7px;
+    background:#f8fafc;
+    color:#334155;
+}
+.queue-output pre {
+    margin:5px 0 0;
+    min-height:40px;
+    white-space:pre-wrap;
+    color:#0d1b2a;
+}
+.queue-tracer-controls {
+    min-width:760px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    padding:0 12px 10px;
+}
+.queue-tracer-controls button {
+    border:0;
+    border-radius:7px;
+    padding:8px 12px;
+    background:#2563eb;
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+}
+.queue-tracer-controls button:nth-child(2) {
+    background:#e2e8f0;
+    color:#0f172a;
+}
+.queue-tracer-controls button:disabled {
+    opacity:.5;
+    cursor:not-allowed;
+}
+.queue-tracer-status {
+    min-width:760px;
+    padding:9px 12px 12px;
+    text-align:center;
+    color:#64748b;
+    font-size:12px;
+}
+
+.queue-complexity {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin:16px 0;
+}
+.queue-complexity > div {
+    padding:13px;
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    background:#f8fafc;
+}
+.queue-complexity strong {
+    display:block;
+    margin-bottom:5px;
+    color:#0d1b2a;
+}
+
+.queue-interview-item {
+    margin:10px 0;
+    border:1px solid #dbe3ec;
+    border-radius:9px;
+    overflow:hidden;
+}
+.queue-interview-q {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:12px 14px;
+    background:#f8fafc;
+    color:#0d1b2a;
+    font-weight:800;
+}
+.queue-interview-q button {
+    border:0;
+    border-radius:6px;
+    padding:7px 10px;
+    background:#2563eb;
+    color:#fff;
+    font-size:11px;
+    font-weight:800;
+    cursor:pointer;
+    white-space:nowrap;
+}
+.queue-interview-answer {
+    display:none;
+    padding:13px 14px;
+    color:#334155;
+    line-height:1.55;
+}
+.queue-interview-answer.show { display:block; }
+.queue-interview-short {
+    margin-top:10px;
+    padding:10px 12px;
+    border-left:4px solid #2563eb;
+    border-radius:6px;
+    background:#eff6ff;
+    color:#1e3a8a;
+}
+
+@media(max-width:930px) {
+    .queue-viz-controls {
+        grid-template-columns:1fr 100px 1fr;
+    }
+    .queue-op-grid,
+    .queue-complexity {
+        grid-template-columns:1fr 1fr;
+    }
+}
+@media(max-width:700px) {
+    .queue-op-grid,
+    .queue-complexity,
+    .queue-io {
+        grid-template-columns:1fr;
+    }
+    .queue-viz-controls {
+        grid-template-columns:1fr;
+    }
+    .queue-array-wrap {
+        min-width:760px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="top-header">
+<a class="logo" href="../index.html">
+<span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a>
+
+<nav class="top-nav">
+<a href="../index.html">Home</a>
+<a href="../Mathematics/">Maths</a>
+<a href="../C-Programming/">C</a>
+<a class="active" href="index.html">DSA</a>
+<a href="../Python/">Python</a>
+<a href="../AI-ML/">AI &amp; ML</a>
+<a href="../Placement/">Placement</a>
+</nav>
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar">
+<div class="sidebar-title">Data Structures</div>
+
+<input
+    type="text"
+    id="topicSearch"
+    class="search-box"
+    placeholder="🔍 Search topics..."
+    onkeyup="searchTopics()"
+/>
+
+<details class="sidebar-topic">
+<summary>🔍 Searching</summary>
+<a href="searching.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🔄 Sorting</summary>
+<a href="sorting.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🔗 Linked List</summary>
+<a href="linked-list.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>📚 Stack</summary>
+<a href="stack.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic" open>
+<summary>🚶 Queue</summary>
+<a class="queue-side-link" href="#queue-overview">Queue Overview</a>
+<a class="queue-side-link" href="#queue-operations">Queue Operations</a>
+<a class="queue-side-link" href="#array-queue">Queue Using Array</a>
+<a class="queue-side-link" href="#enqueue-operation">Enqueue Operation</a>
+<a class="queue-side-link" href="#dequeue-operation">Dequeue Operation</a>
+<a class="queue-side-link" href="#front-rear-operation">Front &amp; Rear</a>
+<a class="queue-side-link" href="#queue-tracing">Program Tracing</a>
+<a class="queue-side-link" href="#queue-complexity">Complexity</a>
+<a class="queue-side-link" href="#queue-interview">Interview Questions</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🌳 Trees</summary>
+<a href="trees.html">Open Topic</a>
+</details>
+
+<details class="sidebar-topic">
+<summary>🕸️ Graphs</summary>
+<a href="graphs.html">Open Topic</a>
+</details>
+</aside>
+
+<main class="main-content">
+
+<section class="subject-hero">
+<span class="subject-label">CODEBHAVYA • DATA STRUCTURES</span>
+<h1 class="page-title">🚶 Queue</h1>
+<p class="page-description">
+Learn the FIFO principle, understand enqueue/dequeue/front/rear operations,
+visualize a linear array queue, and trace the exact C program step by step.
+</p>
+</section>
+
+<section class="content-card" id="queue-overview">
+<span class="section-label">QUEUE</span>
+<h2>📖 Queue Overview</h2>
+
+<p>
+A <strong>queue</strong> is a linear data structure in which insertion happens at one end,
+called the <strong>rear</strong>, and deletion happens at the other end, called the
+<strong>front</strong>.
+</p>
+
+<div class="queue-key-box">
+<h3>💡 FIFO Principle</h3>
+<p>
+Queue follows <strong>First In, First Out (FIFO)</strong>.
+The element inserted first is the first element removed.
+</p>
+</div>
+
+<div class="queue-fifo-demo">
+<div>
+<div class="queue-fifo-cell front">10</div>
+<div class="queue-fifo-caption">FRONT</div>
+</div>
+<div class="queue-fifo-arrow">→</div>
+<div>
+<div class="queue-fifo-cell">20</div>
+<div class="queue-fifo-caption">waiting</div>
+</div>
+<div class="queue-fifo-arrow">→</div>
+<div>
+<div class="queue-fifo-cell rear">30</div>
+<div class="queue-fifo-caption">REAR</div>
+</div>
+</div>
+
+<div class="queue-example-box">
+<h3>🧠 Real-Life Example</h3>
+<p>
+Think about people standing in a ticket queue. The person who joins first is normally served first.
+New people join at the rear, while service happens from the front.
+</p>
+</div>
+</section>
+
+
+<section class="content-card" id="queue-operations">
+<span class="section-label">BASIC OPERATIONS</span>
+<h2>⚙️ Queue Operations</h2>
+
+<div class="queue-op-grid">
+<div class="queue-op-card">
+<strong>Enqueue</strong>
+Insert a new element at the REAR.
+</div>
+
+<div class="queue-op-card">
+<strong>Dequeue</strong>
+Remove the element at the FRONT.
+</div>
+
+<div class="queue-op-card">
+<strong>Front / Peek</strong>
+Read the first element without removing it.
+</div>
+
+<div class="queue-op-card">
+<strong>Rear</strong>
+Read the most recently inserted element.
+</div>
+</div>
+
+<div class="tip-box">
+<strong>Important:</strong>
+In a simple linear array queue, <code>front</code> and <code>rear</code> move only forward.
+Therefore, after <code>rear == MAX - 1</code>, no new element can be inserted even if earlier
+array positions became free after dequeues. Circular Queue solves this limitation.
+</div>
+</section>
+
+
+<section class="content-card" id="array-queue">
+<span class="section-label">ARRAY IMPLEMENTATION</span>
+<h2>🧱 Queue Using Array</h2>
+
+<p>
+A linear array queue uses two integer variables:
+<code>front</code> identifies the first valid element and
+<code>rear</code> identifies the last valid element.
+</p>
+
+<pre><code>#define MAX 5
+
+int queue[MAX];
+
+int front = -1;
+int rear  = -1;</code></pre>
+
+<div class="queue-key-box">
+<h3>Empty Queue</h3>
+<p>
+Initially, <code>front = -1</code> and <code>rear = -1</code>.
+When the first element is enqueued, <code>front</code> becomes <code>0</code>.
+</p>
+</div>
+</section>
+
+
+<section class="content-card" id="enqueue-operation">
+<span class="section-label">ENQUEUE</span>
+<h2>➕ Enqueue Operation</h2>
+
+<pre><code>ENQUEUE(value)
+
+1. If rear == MAX - 1
+      Queue Overflow
+
+2. If front == -1
+      front = 0
+
+3. rear = rear + 1
+
+4. queue[rear] = value</code></pre>
+
+<div class="queue-example-box">
+<h3>Example</h3>
+<p>
+If the queue contains <code>10, 20, 30</code> with
+<code>front = 0</code> and <code>rear = 2</code>,
+then Enqueue(40) makes <code>rear = 3</code> and stores 40 at <code>queue[3]</code>.
+</p>
+</div>
+</section>
+
+
+<section class="content-card" id="dequeue-operation">
+<span class="section-label">DEQUEUE</span>
+<h2>➖ Dequeue Operation</h2>
+
+<pre><code>DEQUEUE()
+
+1. If front == -1
+      Queue Underflow
+
+2. value = queue[front]
+
+3. If front == rear
+      front = rear = -1
+   Else
+      front = front + 1
+
+4. Return value</code></pre>
+
+<div class="queue-example-box">
+<h3>Example</h3>
+<p>
+For <code>10, 20, 30</code>, Dequeue removes <code>10</code>.
+After the operation, <code>front</code> moves from index 0 to index 1.
+</p>
+</div>
+</section>
+
+
+<section class="content-card" id="front-rear-operation">
+<span class="section-label">FRONT &amp; REAR</span>
+<h2>👀 Front and Rear Operations</h2>
+
+<p>
+<strong>Front</strong> returns <code>queue[front]</code> and
+<strong>Rear</strong> returns <code>queue[rear]</code>.
+Neither operation removes an element.
+</p>
+
+<pre><code>FRONT()
+    if front == -1
+        Queue is empty
+    else
+        return queue[front]
+
+REAR()
+    if rear == -1
+        Queue is empty
+    else
+        return queue[rear]</code></pre>
+
+<div class="queue-viz" id="queueViz">
+
+<div class="queue-viz-header">
+<div class="queue-viz-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+<div class="queue-viz-brand">
+<img src="../images/codebhavya-icon-32.png" alt="CodeBhavya"/>
+<span class="code">Code</span><span class="bhavya">Bhavya</span>
+</div>
+
+<div class="queue-viz-title">
+<strong>🎬 Premium Linear Array Queue Visualizer</strong>
+<span>Watch FRONT and REAR move during multiple queue operations</span>
+</div>
+</div>
+
+<div class="queue-viz-body">
+
+<div class="queue-viz-controls">
+
+<div class="queue-field">
+<label>Initial Queue (front → rear)</label>
+<input id="queueVizInput" value="10,20,30"/>
+</div>
+
+<div class="queue-field">
+<label>Capacity</label>
+<input id="queueVizCapacity" type="number" min="1" max="12" value="8"/>
+</div>
+
+<div class="queue-field">
+<label>Operation</label>
+<select id="queueVizOperation" onchange="QueueViz.operationChanged()">
+<option value="enqueue">Enqueue Values</option>
+<option value="dequeue">Dequeue Multiple</option>
+<option value="front">Front / Peek</option>
+<option value="rear">Rear</option>
+</select>
+</div>
+
+<div class="queue-field">
+<label id="queueVizValueLabel">Values to Enqueue</label>
+<input id="queueVizValue" value="40,50"/>
+</div>
+
+<div class="queue-field">
+<label>&nbsp;</label>
+<button class="primary-button" type="button" onclick="QueueViz.load()">Load / Apply</button>
+</div>
+
+</div>
+
+<div class="queue-viz-stage">
+<div class="queue-array-wrap">
+<div class="queue-array" id="queueVizArray"></div>
+<div id="queueVizEmptyPointers" class="queue-empty-pointer"></div>
+</div>
+</div>
+
+<div class="queue-viz-actions">
+<button class="primary" onclick="QueueViz.prev()">← Previous</button>
+<button class="primary" id="queueVizNext" onclick="QueueViz.next()">Next →</button>
+<button class="gold" id="queueVizAuto" onclick="QueueViz.auto()">▶ Auto Run</button>
+<button class="muted" onclick="QueueViz.pause()">Ⅱ Pause</button>
+<button class="muted" onclick="QueueViz.reset()">↺ Reset</button>
+</div>
+
+<div class="queue-viz-message" id="queueVizMessage">
+Configure the queue operation and press Load / Apply.
+</div>
+
+<div class="queue-progress">
+<div id="queueVizProgress"></div>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="queue-tracing">
+<span class="section-label">C PROGRAM + TRACING</span>
+<h2>💻 Linear Array Queue Program in C</h2>
+
+<h3 class="queue-program-title">Visible Learning Program</h3>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+#define MAX 5
+
+int queue[MAX];
+int front = -1;
+int rear = -1;
+
+void enqueue(int value)
+{
+    if(rear == MAX - 1)
+    {
+        printf("Queue Overflow\n");
+        return;
+    }
+
+    if(front == -1)
+        front = 0;
+
+    rear++;
+    queue[rear] = value;
+}
+
+int dequeue()
+{
+    int value;
+
+    if(front == -1)
+        return -1;
+
+    value = queue[front];
+
+    if(front == rear)
+    {
+        front = -1;
+        rear = -1;
+    }
+    else
+    {
+        front++;
+    }
+
+    return value;
+}
+
+int peekFront()
+{
+    if(front == -1)
+        return -1;
+
+    return queue[front];
+}
+
+int peekRear()
+{
+    if(rear == -1)
+        return -1;
+
+    return queue[rear];
+}
+
+int main()
+{
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+
+    printf("Dequeued: %d\n", dequeue());
+
+    enqueue(40);
+
+    printf("Front: %d\n", peekFront());
+    printf("Rear: %d\n", peekRear());
+
+    return 0;
+}</code></pre>
+
+<div class="queue-io">
+<div class="queue-io-box">
+<h4>Program Output</h4>
+<pre><code>Dequeued: 10
+Front: 20
+Rear: 40</code></pre>
+</div>
+
+<div class="queue-io-box">
+<h4>Final Queue</h4>
+<pre><code>20 30 40
+
+front = 1
+rear  = 3</code></pre>
+</div>
+</div>
+
+<div class="queue-tracer-wrap">
+
+<button class="queue-tracer-toggle" type="button" onclick="QueueTrace.toggle()">
+▶ Program Tracing — Linear Array Queue
+</button>
+
+<div class="queue-tracer" id="queueTrace" hidden>
+
+<div class="queue-tracer-title">
+PROGRAM TRACING — LINEAR ARRAY QUEUE
+</div>
+
+<div class="queue-tracer-grid">
+
+<div class="queue-tracer-panel">
+<h4>💻 Program</h4>
+<pre class="queue-tracer-code" id="queueTraceCode"></pre>
+</div>
+
+<div class="queue-tracer-panel">
+<h4>🧠 What is happening?</h4>
+<div class="queue-tracer-explain" id="queueTraceExplain"></div>
+
+<h4>📊 Live Variables</h4>
+<div class="queue-vars" id="queueTraceVars"></div>
+</div>
+
+</div>
+
+<div class="queue-trace-memory">
+<h4>🧱 Live Queue Array</h4>
+
+<div class="queue-trace-array" id="queueTraceArray"></div>
+
+<div class="queue-operation" id="queueTraceOperation"></div>
+
+<div class="queue-output">
+<strong>Program Output</strong>
+<pre id="queueTraceOutput">—</pre>
+</div>
+</div>
+
+<div class="queue-tracer-controls">
+<button onclick="QueueTrace.prev()">← Previous</button>
+<button onclick="QueueTrace.reset()">↺ Reset</button>
+<button id="queueTraceNext" onclick="QueueTrace.next()">Next →</button>
+<button id="queueTraceAuto" onclick="QueueTrace.auto()">▶ Auto Run</button>
+</div>
+
+<div class="queue-tracer-status" id="queueTraceStatus">
+Ready to execute.
+</div>
+
+</div>
+</div>
+</section>
+
+
+<section class="content-card" id="queue-complexity">
+<span class="section-label">COMPLEXITY</span>
+<h2>⚡ Linear Queue Complexity</h2>
+
+<div class="queue-complexity">
+<div>
+<strong>Enqueue — O(1)</strong>
+Insertion happens directly at REAR.
+</div>
+
+<div>
+<strong>Dequeue — O(1)</strong>
+Removal moves FRONT by one position.
+</div>
+
+<div>
+<strong>Front / Rear — O(1)</strong>
+Both values are accessed directly.
+</div>
+
+<div>
+<strong>Space — O(MAX)</strong>
+The fixed array reserves MAX positions.
+</div>
+</div>
+
+<div class="tip-box">
+<strong>Interview note:</strong>
+A simple linear queue can waste free positions at the beginning of the array after dequeues.
+Do not shift all elements after every dequeue because that would make Dequeue <code>O(n)</code>.
+Use a <strong>Circular Queue</strong> to reuse freed positions while keeping operations <code>O(1)</code>.
+</div>
+</section>
+
+
+<section class="content-card" id="queue-interview">
+<span class="section-label">INTERVIEW QUESTIONS</span>
+<h2>❓ Queue Interview Questions — Part 1</h2>
+
+<div class="queue-interview-item">
+<div class="queue-interview-q">
+<span>1. What is FIFO?</span>
+<button type="button" onclick="toggleQueueInterview('queueIa1',this)">Show Answer</button>
+</div>
+<div class="queue-interview-answer" id="queueIa1">
+FIFO means <strong>First In, First Out</strong>. The element inserted earliest is removed first.
+<div class="queue-interview-short">
+<strong>Interview answer:</strong> Queue removes elements in the same order in which they were inserted.
+</div>
+</div>
+</div>
+
+<div class="queue-interview-item">
+<div class="queue-interview-q">
+<span>2. What are queue overflow and underflow?</span>
+<button type="button" onclick="toggleQueueInterview('queueIa2',this)">Show Answer</button>
+</div>
+<div class="queue-interview-answer" id="queueIa2">
+For this fixed linear array queue, <strong>overflow</strong> occurs when
+<code>rear == MAX - 1</code>. <strong>Underflow</strong> occurs when a dequeue or peek
+is attempted while <code>front == -1</code>.
+<div class="queue-interview-short">
+<strong>Interview answer:</strong> Overflow means no usable array position remains at the rear; underflow means the queue is empty.
+</div>
+</div>
+</div>
+
+<div class="queue-interview-item">
+<div class="queue-interview-q">
+<span>3. What is the main drawback of a linear array queue?</span>
+<button type="button" onclick="toggleQueueInterview('queueIa3',this)">Show Answer</button>
+</div>
+<div class="queue-interview-answer" id="queueIa3">
+After several dequeues, positions before FRONT become unused. Since REAR keeps moving forward,
+those free positions cannot be reused by the basic linear queue.
+<div class="queue-interview-short">
+<strong>Interview answer:</strong> A linear queue can suffer false overflow because freed positions at the beginning are wasted; Circular Queue fixes this.
+</div>
+</div>
+</div>
+
+</section>
+
+</main>
+</div>
+
+<footer class="footer">
+<div class="footer-container">
+
+<div class="footer-brand-section">
+<div class="footer-brand">
+<span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+</div>
+<p class="footer-tagline">From Learning to Limitless Possibilities.</p>
+<p class="footer-description">
+Learn, practice, build and grow with structured learning resources.
+</p>
+</div>
+
+<div class="footer-column">
+<h3>Quick Links</h3>
+<a href="../index.html">Home</a>
+<a href="../Mathematics/">Maths</a>
+<a href="../C-Programming/">C Programming</a>
+</div>
+
+<div class="footer-column">
+<h3>Learning</h3>
+<a href="index.html">Data Structures &amp; DSA</a>
+<a href="../Python/">Python</a>
+<a href="../AI-ML/">AI &amp; Machine Learning</a>
+</div>
+
+<div class="footer-column">
+<h3>Practice</h3>
+<a href="#array-queue">Queue Learning</a>
+<a href="#queue-tracing">Program Tracing</a>
+</div>
+
+</div>
+
+<div class="footer-bottom">
+<p>© 2026 CodeBhavya. All Rights Reserved.</p>
+<p>From Learning to Limitless Possibilities.</p>
+</div>
+</footer>
+
+
+<script>
+/* ============================================================
+   LINEAR ARRAY QUEUE VISUALIZER
+   Multiple Enqueue / Multiple Dequeue + FRONT / REAR
+   ============================================================ */
+window.QueueViz = (() => {
+    const byId = id => document.getElementById(id);
+
+    const state = {
+        capacity:8,
+        steps:[],
+        index:0,
+        timer:null
+    };
+
+    function parseNumbers(text) {
+        return String(text || "")
+            .split(",")
+            .map(v => v.trim())
+            .filter(Boolean)
+            .map(Number)
+            .filter(Number.isFinite);
+    }
+
+    function getCapacity() {
+        let capacity = Number(byId("queueVizCapacity").value);
+
+        if (!Number.isInteger(capacity))
+            capacity = 8;
+
+        capacity =
+            Math.max(
+                1,
+                Math.min(
+                    12,
+                    capacity
+                )
+            );
+
+        byId("queueVizCapacity").value =
+            capacity;
+
+        return capacity;
+    }
+
+    function initialState(capacity) {
+        const values =
+            parseNumbers(
+                byId("queueVizInput").value
+            ).slice(
+                0,
+                capacity
+            );
+
+        const cells =
+            Array(capacity).fill("—");
+
+        values.forEach((v,i) => {
+            cells[i] = v;
+        });
+
+        return {
+            cells,
+            front:
+                values.length
+                    ? 0
+                    : -1,
+            rear:
+                values.length
+                    ? values.length - 1
+                    : -1
+        };
+    }
+
+    function copyStep(s, op, message, processing=-1) {
+        return {
+            cells:[...s.cells],
+            front:s.front,
+            rear:s.rear,
+            op,
+            message,
+            processing
+        };
+    }
+
+    function buildSteps() {
+        const capacity =
+            getCapacity();
+
+        state.capacity =
+            capacity;
+
+        const working =
+            initialState(capacity);
+
+        const operation =
+            byId("queueVizOperation").value;
+
+        const rawValue =
+            byId("queueVizValue").value;
+
+        const steps = [
+            copyStep(
+                working,
+                "Ready",
+                "Queue loaded. FRONT and REAR identify the first and last valid elements."
+            )
+        ];
+
+        if (operation === "enqueue") {
+            const values =
+                parseNumbers(rawValue);
+
+            if (!values.length) {
+                steps.push(
+                    copyStep(
+                        working,
+                        "No values",
+                        "Enter one or more comma-separated values to enqueue."
+                    )
+                );
+            }
+
+            values.forEach(value => {
+                steps.push(
+                    copyStep(
+                        working,
+                        `Check space for ${value}`,
+                        `Before Enqueue(${value}), check whether rear == capacity - 1.`
+                    )
+                );
+
+                if (
+                    working.rear ===
+                    capacity - 1
+                ) {
+                    steps.push(
+                        copyStep(
+                            working,
+                            "Queue Overflow",
+                            `rear is already ${working.rear}. Linear Queue cannot reuse earlier free positions.`,
+                            working.rear
+                        )
+                    );
+
+                    return;
+                }
+
+                if (
+                    working.front === -1
+                ) {
+                    working.front = 0;
+
+                    steps.push(
+                        copyStep(
+                            working,
+                            "front = 0",
+                            "This is the first element, so FRONT becomes index 0."
+                        )
+                    );
+                }
+
+                working.rear++;
+
+                steps.push(
+                    copyStep(
+                        working,
+                        `rear = ${working.rear}`,
+                        "Move REAR one position forward.",
+                        working.rear
+                    )
+                );
+
+                working.cells[
+                    working.rear
+                ] = value;
+
+                steps.push(
+                    copyStep(
+                        working,
+                        `queue[${working.rear}] = ${value}`,
+                        `${value} is inserted at the REAR.`,
+                        working.rear
+                    )
+                );
+            });
+        }
+        else if (operation === "dequeue") {
+            let count =
+                Number(rawValue);
+
+            if (
+                !Number.isInteger(count) ||
+                count < 1
+            ) {
+                count = 1;
+            }
+
+            for (
+                let n=1;
+                n<=count;
+                n++
+            ) {
+                steps.push(
+                    copyStep(
+                        working,
+                        `Dequeue ${n}`,
+                        "Check whether the queue is empty."
+                    )
+                );
+
+                if (
+                    working.front === -1
+                ) {
+                    steps.push(
+                        copyStep(
+                            working,
+                            "Queue Underflow",
+                            "FRONT is -1, so there is no element to remove."
+                        )
+                    );
+
+                    break;
+                }
+
+                const removed =
+                    working.cells[
+                        working.front
+                    ];
+
+                steps.push(
+                    copyStep(
+                        working,
+                        `Remove ${removed}`,
+                        `${removed} at FRONT is the next element to leave the queue.`,
+                        working.front
+                    )
+                );
+
+                working.cells[
+                    working.front
+                ] = "—";
+
+                if (
+                    working.front ===
+                    working.rear
+                ) {
+                    working.front = -1;
+                    working.rear = -1;
+
+                    steps.push(
+                        copyStep(
+                            working,
+                            "Queue becomes empty",
+                            "The last element was removed, so FRONT and REAR reset to -1."
+                        )
+                    );
+                }
+                else {
+                    working.front++;
+
+                    steps.push(
+                        copyStep(
+                            working,
+                            `front = ${working.front}`,
+                            "Move FRONT one position forward."
+                        )
+                    );
+                }
+            }
+        }
+        else if (operation === "front") {
+            if (
+                working.front === -1
+            ) {
+                steps.push(
+                    copyStep(
+                        working,
+                        "Queue Empty",
+                        "FRONT cannot be read because the queue is empty."
+                    )
+                );
+            }
+            else {
+                steps.push(
+                    copyStep(
+                        working,
+                        `Front = ${working.cells[working.front]}`,
+                        `queue[front] = ${working.cells[working.front]}. The queue is unchanged.`,
+                        working.front
+                    )
+                );
+            }
+        }
+        else if (operation === "rear") {
+            if (
+                working.rear === -1
+            ) {
+                steps.push(
+                    copyStep(
+                        working,
+                        "Queue Empty",
+                        "REAR cannot be read because the queue is empty."
+                    )
+                );
+            }
+            else {
+                steps.push(
+                    copyStep(
+                        working,
+                        `Rear = ${working.cells[working.rear]}`,
+                        `queue[rear] = ${working.cells[working.rear]}. The queue is unchanged.`,
+                        working.rear
+                    )
+                );
+            }
+        }
+
+        return steps;
+    }
+
+    function render() {
+        const step =
+            state.steps[state.index];
+
+        const array =
+            byId("queueVizArray");
+
+        array.innerHTML =
+            step.cells
+                .map((value,index) => {
+                    const front =
+                        index === step.front;
+
+                    const rear =
+                        index === step.rear;
+
+                    let cls = "";
+
+                    if (front && rear)
+                        cls = "active-both";
+                    else if (front)
+                        cls = "active-front";
+                    else if (rear)
+                        cls = "active-rear";
+
+                    if (
+                        index ===
+                        step.processing
+                    ) {
+                        cls += " processing";
+                    }
+
+                    return `
+                        <div class="queue-slot-wrap">
+                            ${
+                                front
+                                    ? `<div class="queue-pointer front">FRONT</div>`
+                                    : ""
+                            }
+
+                            <div class="queue-slot ${cls}">
+                                ${value}
+                            </div>
+
+                            <div class="queue-index">
+                                index ${index}
+                            </div>
+
+                            ${
+                                rear
+                                    ? `<div class="queue-pointer rear">REAR</div>`
+                                    : ""
+                            }
+                        </div>
+                    `;
+                })
+                .join("");
+
+        byId("queueVizEmptyPointers")
+            .textContent =
+                step.front === -1
+                    ? "Empty Queue → front = -1, rear = -1"
+                    : `front = ${step.front}   •   rear = ${step.rear}`;
+
+        byId("queueVizMessage")
+            .innerHTML =
+                `<strong>${step.op}</strong><br>${step.message}`;
+
+        const done =
+            state.index >=
+            state.steps.length - 1;
+
+        byId("queueVizNext")
+            .disabled =
+                done;
+
+        byId("queueVizNext")
+            .textContent =
+                done
+                    ? "✓ Completed"
+                    : "Next →";
+
+        byId("queueVizAuto")
+            .disabled =
+                done;
+
+        const pct =
+            state.steps.length <= 1
+                ? 100
+                : Math.round(
+                    state.index /
+                    (
+                        state.steps.length -
+                        1
+                    ) *
+                    100
+                );
+
+        byId("queueVizProgress")
+            .style.width =
+                pct + "%";
+    }
+
+    function load() {
+        pause();
+
+        state.steps =
+            buildSteps();
+
+        state.index = 0;
+
+        render();
+    }
+
+    function operationChanged() {
+        const operation =
+            byId(
+                "queueVizOperation"
+            ).value;
+
+        const label =
+            byId(
+                "queueVizValueLabel"
+            );
+
+        const input =
+            byId(
+                "queueVizValue"
+            );
+
+        if (
+            operation ===
+            "enqueue"
+        ) {
+            label.textContent =
+                "Values to Enqueue";
+
+            input.disabled = false;
+
+            if (
+                !input.value ||
+                /^\d+$/.test(
+                    input.value.trim()
+                )
+            ) {
+                input.value =
+                    "40,50";
+            }
+        }
+        else if (
+            operation ===
+            "dequeue"
+        ) {
+            label.textContent =
+                "Number to Dequeue";
+
+            input.disabled = false;
+
+            input.value = "2";
+        }
+        else {
+            label.textContent =
+                "No Extra Value";
+
+            input.disabled = true;
+
+            input.value = "";
+        }
+    }
+
+    function next() {
+        if (
+            state.index >=
+            state.steps.length - 1
+        ) return;
+
+        state.index++;
+        render();
+    }
+
+    function prev() {
+        if (
+            state.index <= 0
+        ) return;
+
+        pause();
+
+        state.index--;
+        render();
+    }
+
+    function reset() {
+        pause();
+
+        state.index = 0;
+
+        render();
+    }
+
+    function auto() {
+        if (
+            state.timer ||
+            state.index >=
+            state.steps.length - 1
+        ) return;
+
+        state.timer =
+            setInterval(() => {
+                if (
+                    state.index >=
+                    state.steps.length - 1
+                ) {
+                    pause();
+                    render();
+                    return;
+                }
+
+                state.index++;
+                render();
+
+                if (
+                    state.index >=
+                    state.steps.length - 1
+                ) {
+                    pause();
+                }
+            },850);
+    }
+
+    function pause() {
+        if (
+            state.timer
+        ) {
+            clearInterval(
+                state.timer
+            );
+
+            state.timer = null;
+        }
+    }
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+            operationChanged();
+            load();
+        }
+    );
+
+    return {
+        load,
+        next,
+        prev,
+        reset,
+        auto,
+        pause,
+        operationChanged
+    };
+})();
+</script>
+
+
+<script>
+/* ============================================================
+   LINEAR ARRAY QUEUE PROGRAM TRACER
+   Exact visible program semantics
+   ============================================================ */
+window.QueueTrace = (() => {
+    const program = [
+        "#include <stdio.h>",
+        "",
+        "#define MAX 5",
+        "",
+        "int queue[MAX];",
+        "int front = -1;",
+        "int rear = -1;",
+        "",
+        "void enqueue(int value)",
+        "{",
+        "    if(rear == MAX - 1)",
+        "    {",
+        "        printf(\"Queue Overflow\\n\");",
+        "        return;",
+        "    }",
+        "",
+        "    if(front == -1)",
+        "        front = 0;",
+        "",
+        "    rear++;",
+        "    queue[rear] = value;",
+        "}",
+        "",
+        "int dequeue()",
+        "{",
+        "    int value;",
+        "",
+        "    if(front == -1)",
+        "        return -1;",
+        "",
+        "    value = queue[front];",
+        "",
+        "    if(front == rear)",
+        "    {",
+        "        front = -1;",
+        "        rear = -1;",
+        "    }",
+        "    else",
+        "    {",
+        "        front++;",
+        "    }",
+        "",
+        "    return value;",
+        "}",
+        "",
+        "int peekFront()",
+        "{",
+        "    if(front == -1)",
+        "        return -1;",
+        "",
+        "    return queue[front];",
+        "}",
+        "",
+        "int peekRear()",
+        "{",
+        "    if(rear == -1)",
+        "        return -1;",
+        "",
+        "    return queue[rear];",
+        "}",
+        "",
+        "int main()",
+        "{",
+        "    enqueue(10);",
+        "    enqueue(20);",
+        "    enqueue(30);",
+        "",
+        "    printf(\"Dequeued: %d\\n\", dequeue());",
+        "",
+        "    enqueue(40);",
+        "",
+        "    printf(\"Front: %d\\n\", peekFront());",
+        "    printf(\"Rear: %d\\n\", peekRear());",
+        "",
+        "    return 0;",
+        "}"
+    ];
+
+    const initial = {
+        queue:["—","—","—","—","—"],
+        front:-1,
+        rear:-1,
+        value:"indeterminate",
+        output:"",
+        processing:-1
+    };
+
+    const steps = [];
+
+    function clone(value) {
+        return JSON.parse(
+            JSON.stringify(
+                value
+            )
+        );
+    }
+
+    function add(
+        line,
+        explain,
+        op,
+        mutate
+    ) {
+        steps.push({
+            line,
+            explain,
+            op,
+            mutate
+        });
+    }
+
+    function enqueueSteps(
+        callLine,
+        value
+    ) {
+        add(
+            callLine,
+            `main() calls enqueue(${value}).`,
+            `enqueue(${value})`,
+            s => {
+                s.value = value;
+                s.processing = -1;
+            }
+        );
+
+        add(
+            10,
+            "Check whether REAR has reached the final array index.",
+            "rear == MAX - 1",
+            s => {}
+        );
+
+        if (
+            value === 10
+        ) {
+            add(
+                16,
+                "The queue is empty, so front == -1 is true.",
+                "front == -1 → TRUE",
+                s => {}
+            );
+
+            add(
+                17,
+                "Set FRONT to index 0 for the first element.",
+                "front = 0",
+                s => {
+                    s.front = 0;
+                }
+            );
+        }
+        else {
+            add(
+                16,
+                "The queue already contains elements, so FRONT stays unchanged.",
+                "front == -1 → FALSE",
+                s => {}
+            );
+        }
+
+        add(
+            19,
+            "Move REAR one array position forward.",
+            "rear++",
+            s => {
+                s.rear++;
+                s.processing =
+                    s.rear;
+            }
+        );
+
+        add(
+            20,
+            `Store ${value} at queue[rear].`,
+            `queue[${value === 10 ? 0 : value === 20 ? 1 : value === 30 ? 2 : 3}] = ${value}`,
+            s => {
+                s.queue[
+                    s.rear
+                ] = value;
+
+                s.processing =
+                    s.rear;
+            }
+        );
+
+        add(
+            callLine,
+            `enqueue(${value}) finishes and control returns to main().`,
+            "Return to main()",
+            s => {
+                s.value =
+                    "indeterminate";
+
+                s.processing = -1;
+            }
+        );
+    }
+
+    add(
+        61,
+        "Program execution starts in main().",
+        "Enter main()",
+        s => {}
+    );
+
+    enqueueSteps(
+        63,
+        10
+    );
+
+    enqueueSteps(
+        64,
+        20
+    );
+
+    enqueueSteps(
+        65,
+        30
+    );
+
+    add(
+        67,
+        "printf needs the value returned by dequeue(), so dequeue() is called first.",
+        "dequeue()",
+        s => {
+            s.value =
+                "indeterminate";
+
+            s.processing =
+                s.front;
+        }
+    );
+
+    add(
+        25,
+        "dequeue() declares local variable value. It has an indeterminate value until assignment.",
+        "int value;",
+        s => {
+            s.value =
+                "indeterminate";
+        }
+    );
+
+    add(
+        27,
+        "FRONT is not -1, so the queue is not empty.",
+        "front == -1 → FALSE",
+        s => {}
+    );
+
+    add(
+        30,
+        "Copy the FRONT element into value.",
+        "value = queue[front] → 10",
+        s => {
+            s.value =
+                s.queue[
+                    s.front
+                ];
+
+            s.processing =
+                s.front;
+        }
+    );
+
+    add(
+        32,
+        "FRONT and REAR are different, so more elements remain after this dequeue.",
+        "front == rear → FALSE",
+        s => {}
+    );
+
+    add(
+        40,
+        "Move FRONT from index 0 to index 1.",
+        "front++",
+        s => {
+            s.queue[
+                s.front
+            ] = "—";
+
+            s.front++;
+
+            s.processing =
+                s.front;
+        }
+    );
+
+    add(
+        43,
+        "dequeue() returns the removed value 10.",
+        "return value → 10",
+        s => {}
+    );
+
+    add(
+        67,
+        "printf prints the value returned by dequeue().",
+        'Print "Dequeued: 10"',
+        s => {
+            s.output =
+                "Dequeued: 10";
+            s.value =
+                "indeterminate";
+            s.processing = -1;
+        }
+    );
+
+    enqueueSteps(
+        69,
+        40
+    );
+
+    add(
+        71,
+        "printf calls peekFront() to read the first queue element without removing it.",
+        "peekFront()",
+        s => {
+            s.processing =
+                s.front;
+        }
+    );
+
+    add(
+        48,
+        "FRONT is not -1, so the queue is not empty.",
+        "front == -1 → FALSE",
+        s => {}
+    );
+
+    add(
+        51,
+        "peekFront() returns queue[front], which is 20.",
+        "return queue[front] → 20",
+        s => {}
+    );
+
+    add(
+        71,
+        "printf prints the front value.",
+        'Print "Front: 20"',
+        s => {
+            s.output +=
+                "\nFront: 20";
+
+            s.processing = -1;
+        }
+    );
+
+    add(
+        72,
+        "printf calls peekRear() to read the most recently inserted queue element.",
+        "peekRear()",
+        s => {
+            s.processing =
+                s.rear;
+        }
+    );
+
+    add(
+        56,
+        "REAR is not -1, so the queue is not empty.",
+        "rear == -1 → FALSE",
+        s => {}
+    );
+
+    add(
+        59,
+        "peekRear() returns queue[rear], which is 40.",
+        "return queue[rear] → 40",
+        s => {}
+    );
+
+    add(
+        72,
+        "printf prints the rear value.",
+        'Print "Rear: 40"',
+        s => {
+            s.output +=
+                "\nRear: 40";
+
+            s.processing = -1;
+        }
+    );
+
+    add(
+        74,
+        "main() returns 0 and the program finishes.",
+        "return 0",
+        s => {}
+    );
+
+    const registry = {
+        current:0,
+        state:clone(initial),
+        timer:null
+    };
+
+    function escapeHtml(value) {
+        return String(
+            value ?? ""
+        )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        );
+    }
+
+    function applyThrough(count) {
+        registry.state =
+            clone(initial);
+
+        for (
+            let i=0;
+            i<count;
+            i++
+        ) {
+            steps[i].mutate(
+                registry.state
+            );
+        }
+    }
+
+    function currentStep() {
+        if (
+            registry.current === 0
+        ) {
+            return {
+                line:61,
+                explain:
+                    "Press Next to start executing main().",
+                op:""
+            };
+        }
+
+        return steps[
+            Math.min(
+                registry.current - 1,
+                steps.length - 1
+            )
+        ];
+    }
+
+    function renderCode(step) {
+        const code =
+            document.getElementById(
+                "queueTraceCode"
+            );
+
+        code.innerHTML =
+            program
+                .map(
+                    (
+                        line,
+                        index
+                    ) => {
+                        const active =
+                            index ===
+                            step.line
+                                ? " active"
+                                : "";
+
+                        return `<span class="queue-code-line${active}">${escapeHtml(line)}</span>`;
+                    }
+                )
+                .join("");
+
+        requestAnimationFrame(
+            () => {
+                const active =
+                    code.querySelector(
+                        ".queue-code-line.active"
+                    );
+
+                if (!active)
+                    return;
+
+                const codeRect =
+                    code.getBoundingClientRect();
+
+                const activeRect =
+                    active.getBoundingClientRect();
+
+                const activeTopInsideCode =
+                    code.scrollTop +
+                    (
+                        activeRect.top -
+                        codeRect.top
+                    );
+
+                const activeBottomInsideCode =
+                    activeTopInsideCode +
+                    activeRect.height;
+
+                const topSafe =
+                    code.scrollTop +
+                    42;
+
+                const bottomSafe =
+                    code.scrollTop +
+                    code.clientHeight -
+                    42;
+
+                let newScrollTop =
+                    code.scrollTop;
+
+                if (
+                    activeTopInsideCode <
+                    topSafe
+                ) {
+                    newScrollTop =
+                        Math.max(
+                            0,
+                            activeTopInsideCode -
+                            42
+                        );
+                }
+                else if (
+                    activeBottomInsideCode >
+                    bottomSafe
+                ) {
+                    newScrollTop =
+                        Math.max(
+                            0,
+                            activeBottomInsideCode -
+                            code.clientHeight +
+                            42
+                        );
+                }
+
+                if (
+                    Math.abs(
+                        newScrollTop -
+                        code.scrollTop
+                    ) > 1
+                ) {
+                    code.scrollTo({
+                        top:newScrollTop,
+                        left:code.scrollLeft,
+                        behavior:"smooth"
+                    });
+                }
+            }
+        );
+    }
+
+    function renderVars() {
+        const s =
+            registry.state;
+
+        const vars = [
+            ["front",s.front],
+            ["rear",s.rear],
+            ["value",s.value]
+        ];
+
+        document.getElementById(
+            "queueTraceVars"
+        ).innerHTML =
+            vars
+                .map(
+                    (
+                        [key,value]
+                    ) => `
+                        <div class="queue-var">
+                            <strong>${escapeHtml(key)}</strong>
+                            <span>${escapeHtml(value)}</span>
+                        </div>
+                    `
+                )
+                .join("");
+    }
+
+    function renderArray() {
+        const s =
+            registry.state;
+
+        document.getElementById(
+            "queueTraceArray"
+        ).innerHTML =
+            s.queue
+                .map(
+                    (
+                        value,
+                        index
+                    ) => {
+                        const isFront =
+                            index ===
+                            s.front;
+
+                        const isRear =
+                            index ===
+                            s.rear;
+
+                        let cls = "";
+
+                        if (
+                            isFront &&
+                            isRear
+                        ) {
+                            cls = "both";
+                        }
+                        else if (
+                            isFront
+                        ) {
+                            cls = "front";
+                        }
+                        else if (
+                            isRear
+                        ) {
+                            cls = "rear";
+                        }
+
+                        return `
+                            <div class="queue-trace-cell-wrap">
+                                ${
+                                    isFront
+                                        ? `<div class="queue-trace-pointer front">FRONT</div>`
+                                        : ""
+                                }
+
+                                <div class="queue-trace-cell ${cls}" style="${
+                                    index === s.processing
+                                        ? "transform:translateY(-3px);"
+                                        : ""
+                                }">
+                                    ${escapeHtml(value)}
+                                </div>
+
+                                <div class="queue-trace-index">
+                                    ${index}
+                                </div>
+
+                                ${
+                                    isRear
+                                        ? `<div class="queue-trace-pointer rear">REAR</div>`
+                                        : ""
+                                }
+                            </div>
+                        `;
+                    }
+                )
+                .join("");
+
+        document.getElementById(
+            "queueTraceOutput"
+        ).textContent =
+            s.output || "—";
+    }
+
+    function render() {
+        const step =
+            currentStep();
+
+        renderCode(step);
+        renderVars();
+        renderArray();
+
+        document.getElementById(
+            "queueTraceExplain"
+        ).textContent =
+            step.explain || "";
+
+        document.getElementById(
+            "queueTraceOperation"
+        ).innerHTML =
+            step.op
+                ? `<strong>Current Operation:</strong> ${escapeHtml(step.op)}`
+                : "";
+
+        const done =
+            registry.current >=
+            steps.length;
+
+        const next =
+            document.getElementById(
+                "queueTraceNext"
+            );
+
+        const auto =
+            document.getElementById(
+                "queueTraceAuto"
+            );
+
+        next.disabled =
+            done;
+
+        next.textContent =
+            done
+                ? "✓ Completed"
+                : "Next →";
+
+        auto.disabled =
+            done ||
+            !!registry.timer;
+
+        document.getElementById(
+            "queueTraceStatus"
+        ).textContent =
+            done
+                ? "✓ Program execution completed. Press Reset to run again."
+                : `Step ${registry.current} of ${steps.length}`;
+    }
+
+    function toggle() {
+        const box =
+            document.getElementById(
+                "queueTrace"
+            );
+
+        box.hidden =
+            !box.hidden;
+
+        if (
+            !box.hidden
+        ) {
+            render();
+        }
+    }
+
+    function next() {
+        if (
+            registry.current >=
+            steps.length
+        ) return;
+
+        steps[
+            registry.current
+        ].mutate(
+            registry.state
+        );
+
+        registry.current++;
+
+        render();
+    }
+
+    function prev() {
+        if (
+            registry.current <= 0
+        ) return;
+
+        pause();
+
+        registry.current--;
+
+        applyThrough(
+            registry.current
+        );
+
+        render();
+    }
+
+    function reset() {
+        pause();
+
+        registry.current = 0;
+
+        registry.state =
+            clone(initial);
+
+        render();
+
+        const code =
+            document.getElementById(
+                "queueTraceCode"
+            );
+
+        requestAnimationFrame(
+            () => {
+                code.scrollTo({
+                    top:0,
+                    left:0,
+                    behavior:"auto"
+                });
+            }
+        );
+    }
+
+    function auto() {
+        if (
+            registry.timer ||
+            registry.current >=
+            steps.length
+        ) return;
+
+        registry.timer =
+            setInterval(
+                () => {
+                    if (
+                        registry.current >=
+                        steps.length
+                    ) {
+                        pause();
+                        render();
+                        return;
+                    }
+
+                    next();
+
+                    if (
+                        registry.current >=
+                        steps.length
+                    ) {
+                        pause();
+                        render();
+                    }
+                },
+                850
+            );
+
+        render();
+    }
+
+    function pause() {
+        if (
+            registry.timer
+        ) {
+            clearInterval(
+                registry.timer
+            );
+
+            registry.timer = null;
+        }
+    }
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        render
+    );
+
+    return {
+        toggle,
+        next,
+        prev,
+        reset,
+        auto,
+        pause
+    };
+})();
+</script>
+
+
+<script>
+function toggleQueueInterview(id,button) {
+    const answer =
+        document.getElementById(id);
+
+    if (
+        !answer ||
+        !button
+    ) return;
+
+    const open =
+        answer.classList.toggle(
+            "show"
+        );
+
+    button.textContent =
+        open
+            ? "Hide Answer"
+            : "Show Answer";
+}
+</script>
+
+
+<script>
+/* Active Queue sidebar section */
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+        const links =
+            Array.from(
+                document.querySelectorAll(
+                    ".queue-side-link"
+                )
+            );
+
+        const entries =
+            links
+                .map(
+                    link => {
+                        const href =
+                            link.getAttribute(
+                                "href"
+                            );
+
+                        return {
+                            link,
+                            section:
+                                href &&
+                                href.startsWith(
+                                    "#"
+                                )
+                                    ? document.querySelector(
+                                        href
+                                    )
+                                    : null
+                        };
+                    }
+                )
+                .filter(
+                    item =>
+                        item.section
+                );
+
+        function updateActive() {
+            const marker =
+                window.scrollY +
+                160;
+
+            let active =
+                entries[0];
+
+            entries.forEach(
+                item => {
+                    if (
+                        item.section.offsetTop <=
+                        marker
+                    ) {
+                        active =
+                            item;
+                    }
+                }
+            );
+
+            links.forEach(
+                link =>
+                    link.classList.remove(
+                        "active"
+                    )
+            );
+
+            if (
+                active
+            ) {
+                active.link.classList.add(
+                    "active"
+                );
+            }
+        }
+
+        updateActive();
+
+        window.addEventListener(
+            "scroll",
+            updateActive,
+            {
+                passive:true
+            }
+        );
+    }
+);
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
+
