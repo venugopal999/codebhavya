@@ -1,0 +1,4917 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C Programming | CodeBhavya</title>
+
+ <link rel="icon" type="image/png" sizes="32x32"
+      href="../images/codebhavya-icon-32.png">
+
+<link rel="icon" type="image/png" sizes="128x128"
+      href="../images/codebhavya-icon-128.png">
+
+<link rel="icon" type="image/png" sizes="512x512"
+      href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="c-programming.css">
+</head>
+
+<body class="cb-c-topic-page cb-structures-page">
+
+<header class="top-header">
+
+<!-- <a href="../index.html" class="logo">
+    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a> -->
+    
+<a href="../index.html" class="logo codebhavya-new-logo">
+
+    <img
+        src="../images/codebhavya-main-logo.png"
+        alt="CodeBhavya Logo"
+        class="main-logo"
+    >
+
+    <span class="brand-name">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </span>
+
+</a>
+
+    <nav class="top-nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="../Maths/">
+            Maths
+        </a>
+
+        <a href="index.html" class="active">
+            C
+        </a>
+
+<a href="../Data-Structures/index.html">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/index.html">
+    Advanced Data Structures
+</a>
+
+        <a href="../Python/">
+            Python
+        </a>
+
+        <a href="../AI-ML/">
+            AI & ML
+        </a>
+
+        <a href="../Placement/">
+            Placement
+        </a>
+
+    </nav>
+
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar cb-c-topic-sidebar">
+    <div class="sidebar-title">💻 C Programming</div>
+
+    <input
+        type="text"
+        id="topicSearch"
+        class="search-box"
+        placeholder="🔍 Search topics..."
+        onkeyup="searchTopics()"
+    >
+
+    <div class="sidebar-title">Fundamentals</div>
+    <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
+    <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
+    <a class="cb-topic-link" data-topic-link="1" href="data-types.html">📦 Data Types</a>
+    <a class="cb-topic-link" data-topic-link="1" href="input-output.html">⌨️ Input &amp; Output</a>
+
+    <div class="sidebar-title">Operators &amp; Control</div>
+    <a class="cb-topic-link" data-topic-link="1" href="operators.html">➕ Operators</a>
+    <a class="cb-topic-link" data-topic-link="1" href="expressions.html">🧮 Expressions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="decision-making.html">🔀 Decision Making</a>
+    <a class="cb-topic-link" data-topic-link="1" href="loops.html">🔁 Loops</a>
+
+    <div class="sidebar-title">Programming Concepts</div>
+    <a class="cb-topic-link" data-topic-link="1" href="arrays.html">📊 Arrays</a>
+    <a class="cb-topic-link" data-topic-link="1" href="strings.html">🔤 Strings</a>
+    <a class="cb-topic-link" data-topic-link="1" href="functions.html">🧩 Functions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="pointers.html">👉 Pointers</a>
+    <a class="cb-topic-link active" data-topic-link="1" href="structures-unions.html">🏗️ Structures &amp; Unions</a>
+
+    <div class="sidebar-title">Advanced C</div>
+    <a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">⚙️ Preprocessor &amp; Header Files</a>
+    <a class="cb-topic-link" data-topic-link="1" href="file-handling.html">📁 File Handling</a>
+    <a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">🧠 Dynamic Memory Allocation</a>
+    <a class="cb-topic-link" data-topic-link="1" href="command-line.html">💻 Command Line Arguments</a>
+    <a class="cb-topic-link" data-topic-link="1" href="bitwise.html">🔢 Bitwise Programming</a>
+    <a class="cb-topic-link" data-topic-link="1" href="enum-typedef.html">🔤 Enumerations &amp; typedef</a>
+    <a class="cb-topic-link" data-topic-link="1" href="precedence.html">🧮 Operator Precedence &amp; Associativity</a>
+    <a class="cb-topic-link" data-topic-link="1" href="storage-classes.html">💾 Storage Classes</a>
+    <a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">🛠️ Advanced C Preprocessor</a>
+
+    <div class="sidebar-title">Practice</div>
+    <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
+</aside>
+
+<main class="main-content">
+
+<section id="structures" class="content-card">
+
+    <h2>🏗️ 14. Structures & Unions</h2>
+
+    <!-- 14.1 INTRODUCTION -->
+
+    <h3>14.1 What is a Structure?</h3>
+
+    <p>
+        A structure is a user-defined data type that allows
+        us to group different types of data under one name.
+    </p>
+
+    <p>
+        For example, a student may have:
+    </p>
+
+    <ul>
+        <li>Name → character array</li>
+        <li>Age → integer</li>
+        <li>Marks → float</li>
+        <li>Roll number → integer</li>
+    </ul>
+
+    <p>
+        Instead of storing these as unrelated variables,
+        we can group them using a structure.
+    </p>
+
+    <div class="formula-box">
+
+        Student
+
+        <br><br>
+
+        ├── Roll Number
+
+        <br>
+
+        ├── Name
+
+        <br>
+
+        ├── Age
+
+        <br>
+
+        └── Marks
+
+    </div>
+
+
+    <!-- 14.2 SYNTAX -->
+
+    <h3>14.2 Structure Syntax</h3>
+
+    <pre><code>struct Student
+{
+    int roll;
+    char name[50];
+    float marks;
+};</code></pre>
+
+    <p>
+        Here <strong>Student</strong> is the structure tag.
+    </p>
+
+
+    <!-- 14.3 STRUCTURE VARIABLE -->
+
+    <h3>14.3 Creating a Structure Variable</h3>
+
+    <pre><code>struct Student s1;</code></pre>
+
+    <p>
+        Now <strong>s1</strong> is a variable of type
+        <strong>struct Student</strong>.
+    </p>
+
+
+    <!-- 14.4 ACCESSING MEMBERS -->
+
+    <h3>14.4 Accessing Structure Members</h3>
+
+    <p>
+        The dot <strong>.</strong> operator is used to access
+        members of a structure variable.
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[50];
+    float marks;
+};
+
+int main()
+{
+    struct Student s1;
+
+    s1.roll = 101;
+
+    s1.marks = 85.5;
+
+    printf("Roll = %d\n", s1.roll);
+
+    printf("Marks = %.2f\n", s1.marks);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        Roll = 101
+        <br>
+        Marks = 85.50
+
+    </div>
+
+
+    <!-- 14.5 STRING MEMBER -->
+
+    <h3>14.5 Assigning a String to a Structure Member</h3>
+
+    <p>
+        A character array cannot normally be assigned using
+        the <strong>=</strong> operator after declaration.
+        Use <strong>strcpy()</strong> instead.
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[50];
+};
+
+int main()
+{
+    struct Student s1;
+
+    s1.roll = 101;
+
+    strcpy(s1.name, "Venu");
+
+    printf("%d\n", s1.roll);
+
+    printf("%s\n", s1.name);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        101
+        <br>
+        Venu
+
+    </div>
+
+
+    <!-- 14.6 INITIALIZATION -->
+
+    <h3>14.6 Structure Initialization</h3>
+
+    <pre><code>struct Student
+{
+    int roll;
+    char name[50];
+    float marks;
+};
+
+struct Student s1 =
+{
+    101,
+    "Venu",
+    85.5
+};</code></pre>
+
+
+    <!-- 14.7 DESIGNATED INITIALIZATION -->
+
+    <h3>14.7 Designated Initialization</h3>
+
+    <p>
+        C also allows members to be initialized by name.
+    </p>
+
+    <pre><code>struct Student s1 =
+{
+    .roll = 101,
+    .name = "Venu",
+    .marks = 85.5
+};</code></pre>
+
+    <div class="tip-box">
+
+        💡 Designated initialization makes the code easier
+        to understand, especially when a structure has many members.
+
+    </div>
+
+
+    <!-- 14.8 STRUCTURE INPUT -->
+
+    <h3>14.8 Taking Input into a Structure</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[50];
+    float marks;
+};
+
+int main()
+{
+    struct Student s;
+
+    scanf("%d", &amp;s.roll);
+
+    scanf("%49s", s.name);
+
+    scanf("%f", &amp;s.marks);
+
+    printf("Roll = %d\n", s.roll);
+
+    printf("Name = %s\n", s.name);
+
+    printf("Marks = %.2f\n", s.marks);
+
+    return 0;
+}</code></pre>
+
+
+    <!-- 14.9 ARRAY OF STRUCTURES -->
+
+    <h3>14.9 Array of Structures</h3>
+
+    <p>
+        We can create an array containing multiple structure
+        variables.
+    </p>
+
+    <pre><code>struct Student
+{
+    int roll;
+    char name[50];
+    float marks;
+};
+
+struct Student students[3];</code></pre>
+
+
+    <!-- 14.10 ARRAY EXAMPLE -->
+
+    <h3>14.10 Example: Multiple Students</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[50];
+    float marks;
+};
+
+int main()
+{
+    struct Student s[3];
+
+    for(int i = 0; i &lt; 3; i++)
+    {
+        scanf("%d", &amp;s[i].roll);
+
+        scanf("%49s", s[i].name);
+
+        scanf("%f", &amp;s[i].marks);
+    }
+
+    for(int i = 0; i &lt; 3; i++)
+    {
+        printf("%d %s %.2f\n",
+               s[i].roll,
+               s[i].name,
+               s[i].marks);
+    }
+
+    return 0;
+}</code></pre>
+
+
+    <!-- 14.11 STRUCTURE WITH FUNCTION -->
+
+    <h3>14.11 Passing Structure to a Function</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    float marks;
+};
+
+void display(struct Student s)
+{
+    printf("Roll = %d\n", s.roll);
+
+    printf("Marks = %.2f\n", s.marks);
+}
+
+int main()
+{
+    struct Student s = {101, 90.5};
+
+    display(s);
+
+    return 0;
+}</code></pre>
+
+
+    <!-- 14.12 RETURN STRUCTURE -->
+
+    <h3>14.12 Returning a Structure from a Function</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+struct Point
+{
+    int x;
+    int y;
+};
+
+struct Point createPoint()
+{
+    struct Point p = {10, 20};
+
+    return p;
+}
+
+int main()
+{
+    struct Point p = createPoint();
+
+    printf("%d %d", p.x, p.y);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        10 20
+
+    </div>
+
+
+    <!-- 14.13 POINTER TO STRUCTURE -->
+
+    <h3>14.13 Pointer to Structure</h3>
+
+    <pre><code>struct Student
+{
+    int roll;
+    float marks;
+};
+
+int main()
+{
+    struct Student s = {101, 85.5};
+
+    struct Student *p = &amp;s;
+
+    printf("%d\n", p-&gt;roll);
+
+    printf("%.2f\n", p-&gt;marks);
+
+    return 0;
+}</code></pre>
+
+
+    <!-- 14.14 ARROW OPERATOR -->
+
+    <h3>14.14 Arrow Operator -&gt;</h3>
+
+    <p>
+        When we have a pointer to a structure, we can use
+        <strong>-&gt;</strong> to access its members.
+    </p>
+
+    <pre><code>struct Student *p = &amp;s;
+
+p-&gt;roll;</code></pre>
+
+    <p>
+        The following two expressions are equivalent:
+    </p>
+
+    <pre><code>p-&gt;roll
+
+(*p).roll</code></pre>
+
+    <div class="tip-box">
+
+        📌 Structure variable → use <strong>.</strong>
+
+        <br><br>
+
+        📌 Structure pointer → use <strong>-&gt;</strong>
+
+    </div>
+
+
+    <!-- 14.15 NESTED STRUCTURE -->
+
+    <h3>14.15 Nested Structure</h3>
+
+    <p>
+        A structure can contain another structure as a member.
+    </p>
+
+    <pre><code>struct Date
+{
+    int day;
+    int month;
+    int year;
+};
+
+struct Student
+{
+    int roll;
+    char name[50];
+
+    struct Date dob;
+};</code></pre>
+
+
+    <!-- 14.16 NESTED ACCESS -->
+
+    <h3>14.16 Accessing Nested Structure</h3>
+
+    <pre><code>struct Student s =
+{
+    101,
+    "Venu",
+    {5, 8, 2000}
+};
+
+printf("%d", s.dob.year);</code></pre>
+
+    <div class="output-box">
+
+        2000
+
+    </div>
+
+
+    <!-- 14.17 STRUCTURE CONTAINING ARRAY -->
+
+    <h3>14.17 Structure Containing an Array</h3>
+
+    <pre><code>struct Student
+{
+    int roll;
+    char name[50];
+    int marks[5];
+};</code></pre>
+
+    <p>
+        A structure member can itself be an array.
+    </p>
+
+
+    <!-- 14.18 REAL WORLD EXAMPLE -->
+
+    <h3>14.18 Real-World Example: Employee</h3>
+
+    <pre><code>struct Employee
+{
+    int id;
+    char name[50];
+    float salary;
+};
+
+int main()
+{
+    struct Employee e =
+    {
+        101,
+        "Ravi",
+        45000
+    };
+
+    printf("ID = %d\n", e.id);
+
+    printf("Name = %s\n", e.name);
+
+    printf("Salary = %.2f\n", e.salary);
+
+    return 0;
+}</code></pre>
+
+
+    <!-- 14.19 STRUCTURE VS ARRAY -->
+
+    <h3>14.19 Structure vs Array</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Structure</th>
+                    <th>Array</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Can store different data types</td>
+                    <td>Normally stores elements of one type</td>
+                </tr>
+
+                <tr>
+                    <td>Members have names</td>
+                    <td>Elements use indexes</td>
+                </tr>
+
+                <tr>
+                    <td>Useful for records</td>
+                    <td>Useful for collections of similar elements</td>
+                </tr>
+
+                <tr>
+                    <td>Example: Student record</td>
+                    <td>Example: Marks list</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 14.20 UNION -->
+
+    <h3>14.20 What is a Union?</h3>
+
+    <p>
+        A union is a user-defined data type similar to a
+        structure, but all members share the same memory location.
+    </p>
+
+    <pre><code>union Data
+{
+    int i;
+    float f;
+    char c;
+};</code></pre>
+
+
+    <!-- 14.21 UNION EXAMPLE -->
+
+    <h3>14.21 Union Example</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int i;
+    float f;
+    char c;
+};
+
+int main()
+{
+    union Data d;
+
+    d.i = 100;
+
+    printf("%d\n", d.i);
+
+    d.f = 3.14f;
+
+    printf("%.2f\n", d.f);
+
+    return 0;
+}</code></pre>
+
+    <p>
+        A union should generally be read through the member
+        that was most recently written, subject to the rules
+        of the C standard.
+    </p>
+
+
+    <!-- 14.22 STRUCTURE MEMORY -->
+
+    <h3>14.22 Structure Memory</h3>
+
+    <p>
+        In a structure, each member has its own storage.
+    </p>
+
+    <pre><code>struct Data
+{
+    int a;
+    float b;
+    char c;
+};</code></pre>
+
+    <div class="formula-box">
+
+        Structure
+
+        <br><br>
+
+        a → storage
+
+        <br>
+
+        b → storage
+
+        <br>
+
+        c → storage
+
+    </div>
+
+
+    <!-- 14.23 UNION MEMORY -->
+
+   <h3>14.23 Union Memory</h3>
+
+<p>
+    In a union, all members share the same memory location.
+    Only one member's value is normally stored at a time.
+</p>
+
+<div class="union-memory-diagram">
+
+    <div class="union-title">
+        union Data
+    </div>
+
+    <div class="union-memory-box">
+
+        <div class="union-shared-label">
+            Shared Memory
+        </div>
+
+        <div class="union-member">
+            int
+        </div>
+
+        <div class="union-member">
+            float
+        </div>
+
+        <div class="union-member">
+            char
+        </div>
+
+    </div>
+
+    <div class="union-note">
+        All members use the same memory location
+    </div>
+
+</div>
+
+    <!-- 14.24 STRUCTURE VS UNION -->
+
+    <h3>14.24 Structure vs Union</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Structure</th>
+                    <th>Union</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Memory</td>
+                    <td>Separate storage for members</td>
+                    <td>Shared storage</td>
+                </tr>
+
+                <tr>
+                    <td>Members usable simultaneously</td>
+                    <td>Yes</td>
+                    <td>Only one stored value at a time</td>
+                </tr>
+
+                <tr>
+                    <td>Size</td>
+                    <td>Generally reflects all members plus padding</td>
+                    <td>Generally based on the largest member plus alignment</td>
+                </tr>
+
+                <tr>
+                    <td>Typical use</td>
+                    <td>Records</td>
+                    <td>Memory-efficient alternatives / variant data</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+<div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">Structure</div>
+            <div class="cb-mini-step-text">Each member has separate storage</div>
+            <div class="cb-mini-step-subtext">All structure members can hold valid values at the same time.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">Member Access</div>
+            <div class="cb-mini-step-text">student.roll &nbsp; / &nbsp; ptr-&gt;roll</div>
+            <div class="cb-mini-step-subtext">Use . with a structure variable and -&gt; with a structure pointer.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">Union</div>
+            <div class="cb-mini-step-text">Members share the same storage</div>
+            <div class="cb-mini-step-subtext">Writing one union member can replace the representation used by another member.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">Memory Idea</div>
+            <div class="cb-mini-step-text">Structure = separate &nbsp; | &nbsp; Union = shared</div>
+        </div>
+
+    </div>
+
+    </div>
+
+
+    <!-- 14.25 TYPEDEF -->
+
+    <h3>14.25 typedef with Structure</h3>
+
+    <p>
+        <strong>typedef</strong> can create a convenient alias
+        for a type.
+    </p>
+
+    <pre><code>typedef struct
+{
+    int roll;
+    char name[50];
+} Student;</code></pre>
+
+    <p>
+        Now we can write:
+    </p>
+
+    <pre><code>Student s1;</code></pre>
+
+    <p>
+        instead of:
+    </p>
+
+    <pre><code>struct Student s1;</code></pre>
+
+
+    <!-- 14.26 TYPEDEF EXAMPLE -->
+
+    <h3>14.26 typedef Example</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+typedef struct
+{
+    int id;
+    float salary;
+} Employee;
+
+int main()
+{
+    Employee e = {101, 45000};
+
+    printf("%d\n", e.id);
+
+    printf("%.2f\n", e.salary);
+
+    return 0;
+}</code></pre>
+
+
+    <!-- 14.27 SELF REFERENTIAL -->
+
+    <h3>14.27 Self-Referential Structure</h3>
+
+    <p>
+        A structure can contain a pointer to another object
+        of the same structure type.
+    </p>
+
+    <pre><code>struct Node
+{
+    int data;
+
+    struct Node *next;
+};</code></pre>
+
+    <div class="tip-box">
+
+        🎯 This concept is the foundation of
+        <strong>Linked Lists</strong> and many other
+        data structures.
+
+    </div>
+
+
+    <!-- 14.28 STRUCTURE PADDING -->
+
+    <h3>14.28 Structure Padding</h3>
+
+    <p>
+        The compiler may insert unused bytes between structure
+        members to satisfy alignment requirements.
+    </p>
+
+    <pre><code>struct Example
+{
+    char c;
+    int x;
+};</code></pre>
+
+    <p>
+        Therefore, you should not assume that the structure
+        size is always exactly the sum of the individual
+        member sizes.
+    </p>
+
+    <pre><code>printf("%zu", sizeof(struct Example));</code></pre>
+
+
+    <!-- 14.29 STRUCTURE COPY -->
+
+    <h3>14.29 Copying Structures</h3>
+
+    <p>
+        Structures of the same type can be assigned directly.
+    </p>
+
+    <pre><code>struct Student s1 = {101, "Venu", 90};
+
+struct Student s2;
+
+s2 = s1;</code></pre>
+
+    <p>
+        The members are copied as part of the structure assignment.
+    </p>
+
+
+    <!-- 14.30 COMPARE STRUCTURES -->
+
+    <h3>14.30 Comparing Structures</h3>
+
+    <p>
+        C does not provide a general <strong>==</strong>
+        operator for comparing two structures.
+    </p>
+
+    <p>
+        Compare the required members individually.
+    </p>
+
+    <pre><code>if(s1.roll == s2.roll &&
+   s1.marks == s2.marks)
+{
+    printf("Equal");
+}</code></pre>
+
+
+    <!-- 14.31 COMMON MISTAKES -->
+
+    <h3>14.31 Common Structure Mistakes</h3>
+
+    <ul>
+
+        <li>
+            Forgetting the semicolon after the structure definition.
+        </li>
+
+        <li>
+            Using <strong>.</strong> incorrectly with a structure pointer.
+        </li>
+
+        <li>
+            Using <strong>-&gt;</strong> with an ordinary structure variable.
+        </li>
+
+        <li>
+            Trying to assign a character array using
+            <strong>=</strong> after declaration.
+        </li>
+
+        <li>
+            Assuming structure size is always the sum of member sizes.
+        </li>
+
+        <li>
+            Reading a union member different from the one most recently
+            written without understanding the relevant C rules.
+        </li>
+
+    </ul>
+
+
+    <!-- 14.32 QUICK REVISION -->
+
+    <h3>14.32 Quick Revision</h3>
+
+    <div class="tip-box">
+
+        📌 Structure → Groups different data types.
+
+        <br><br>
+
+        📌 Structure member access → <strong>.</strong>
+
+        <br><br>
+
+        📌 Structure pointer access → <strong>-&gt;</strong>
+
+        <br><br>
+
+        📌 Array of structures → Stores multiple records.
+
+        <br><br>
+
+        📌 Nested structure → Structure inside another structure.
+
+        <br><br>
+
+        📌 Union → Members share the same memory.
+
+        <br><br>
+
+        📌 typedef → Creates a convenient type alias.
+
+        <br><br>
+
+        📌 Self-referential structure → Important for linked lists.
+
+    </div>
+
+
+    <!-- 14.33 MCQs -->
+
+    
+<section class="content-card cb-added-section cb-compact-learning" id="structures-visualizer-extra">
+
+    <span class="cb-added-label">INTERACTIVE LEARNING</span>
+
+    <h2>🎬 Structures &amp; Unions — Memory Relationship</h2>
+
+    <p class="cb-added-note">
+        Compare how structures keep members separately while unions share storage.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBConceptViz.toggle('structures')"
+    >▶ Open Visualization</button>
+
+    <div class="cb-compact-panel" id="cbVizPanel-structures" hidden>
+
+        <div
+            class="cb-viz-card cb-viz-dsa-standard"
+            data-cb-viz="structures"
+            data-frames="[{&quot;title&quot;:&quot;1. Structure groups related members&quot;,&quot;detail&quot;:&quot;A structure can combine fields such as roll, name, and marks under one type.&quot;},{&quot;title&quot;:&quot;2. Structure members use separate storage&quot;,&quot;detail&quot;:&quot;All members can hold their own values at the same time.&quot;},{&quot;title&quot;:&quot;3. Access structure members&quot;,&quot;detail&quot;:&quot;Use the dot operator with a structure variable and the arrow operator with a structure pointer.&quot;},{&quot;title&quot;:&quot;4. Union members share storage&quot;,&quot;detail&quot;:&quot;A union provides one shared memory region for its members.&quot;},{&quot;title&quot;:&quot;5. Choose based on the data requirement&quot;,&quot;detail&quot;:&quot;Use a structure when members must coexist; use a union when alternative representations can share storage.&quot;}]"
+        >
+
+            <div class="cb-viz-dsa-topbar">
+                <div class="cb-viz-dsa-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+                <div class="cb-viz-dsa-brand" aria-label="CodeBhavya">
+                    <span class="cb-viz-dsa-brand-mark">
+                        <img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo">
+                    </span>
+                    <span class="cb-viz-dsa-code">Code</span><span class="cb-viz-dsa-bhavya">Bhavya</span>
+                </div>
+            </div>
+
+            <h3 class="cb-viz-dsa-title">🎬 Structure vs Union Visualizer</h3>
+
+            <p class="cb-viz-dsa-intro">
+                The active stage highlights the main relationship being explained.
+            </p>
+
+            <div class="cb-mini-step-flow">
+
+                <div class="cb-mini-step-card cb-mini-step-card-blue" data-cb-flow-step="0">
+                    <div class="cb-mini-step-badge">Structure</div>
+                    <div class="cb-mini-step-text">Group related fields</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-gold" data-cb-flow-step="1">
+                    <div class="cb-mini-step-badge">Storage</div>
+                    <div class="cb-mini-step-text">Separate member storage</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-purple" data-cb-flow-step="2">
+                    <div class="cb-mini-step-badge">Access</div>
+                    <div class="cb-mini-step-text">. and -&gt;</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-green" data-cb-flow-step="3">
+                    <div class="cb-mini-step-badge">Union</div>
+                    <div class="cb-mini-step-text">Shared storage</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-pink" data-cb-flow-step="4">
+                    <div class="cb-mini-step-badge">Decision</div>
+                    <div class="cb-mini-step-text">Coexistence vs shared representation</div>
+                </div>
+
+            </div>
+
+            <div class="cb-viz-stage">
+                <div class="cb-viz-step" id="cbVizStep-structures">Step 1</div>
+                <h3 id="cbVizTitle-structures"></h3>
+                <p id="cbVizDetail-structures"></p>
+                <div class="cb-viz-dots" id="cbVizDots-structures"></div>
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBConceptViz.prev('structures')">← Previous</button>
+                <button class="cb-control cb-next" id="cbVizNext-structures" onclick="CBConceptViz.next('structures')">Next →</button>
+                <button class="cb-control cb-auto" id="cbVizAuto-structures" onclick="CBConceptViz.auto('structures')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBConceptViz.pause('structures')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBConceptViz.reset('structures')">↺ Reset</button>
+            </div>
+
+            <div class="cb-mini-progress">
+                <div id="cbVizProgress-structures"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="content-card cb-added-section cb-compact-learning" id="structures-tracing-extra">
+
+    <span class="cb-added-label">PROGRAM TRACING</span>
+
+    <h2>🔎 Program Tracing — Structures &amp; Unions</h2>
+
+    <p class="cb-added-note">
+        Trace structure initialization, a structure pointer, and member access through the arrow operator.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBProgramTrace.toggle('structures')"
+    >▶ Program Tracing — Structures &amp; Unions</button>
+
+    <div class="cb-compact-panel" id="cbTracePanel-structures" hidden>
+
+        <div
+            class="cb-tracer"
+            data-cb-trace="structures"
+            data-config="{&quot;code&quot;:[&quot;struct Student&quot;,&quot;{&quot;,&quot;    int roll;&quot;,&quot;    float marks;&quot;,&quot;};&quot;,&quot;&quot;,&quot;int main()&quot;,&quot;{&quot;,&quot;    struct Student s = {101, 80.0f};&quot;,&quot;    struct Student *p = &amp;s;&quot;,&quot;    p-&gt;marks = p-&gt;marks + 5.0f;&quot;,&quot;    printf(\&quot;%d %.1f\&quot;, s.roll, s.marks);&quot;,&quot;    return 0;&quot;,&quot;}&quot;],&quot;steps&quot;:[{&quot;line&quot;:6,&quot;state&quot;:{&quot;s.roll&quot;:&quot;—&quot;,&quot;s.marks&quot;:&quot;—&quot;,&quot;p&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Execution begins at main(). The structure definition is a type declaration and is not executed like a statement.&quot;},{&quot;line&quot;:8,&quot;state&quot;:{&quot;s.roll&quot;:101,&quot;s.marks&quot;:&quot;80.0&quot;,&quot;p&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;The structure variable s is initialized with roll 101 and marks 80.0.&quot;},{&quot;line&quot;:9,&quot;state&quot;:{&quot;s.roll&quot;:101,&quot;s.marks&quot;:&quot;80.0&quot;,&quot;p&quot;:&quot;&amp;s&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;p receives the address of structure variable s.&quot;},{&quot;line&quot;:10,&quot;state&quot;:{&quot;s.roll&quot;:101,&quot;s.marks&quot;:&quot;85.0&quot;,&quot;p&quot;:&quot;&amp;s&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;p-&gt;marks accesses s.marks through the pointer and increases it by 5.0.&quot;},{&quot;line&quot;:11,&quot;state&quot;:{&quot;s.roll&quot;:101,&quot;s.marks&quot;:&quot;85.0&quot;,&quot;p&quot;:&quot;&amp;s&quot;,&quot;output&quot;:&quot;101 85.0&quot;},&quot;note&quot;:&quot;printf() reads the updated structure members and displays them.&quot;},{&quot;line&quot;:12,&quot;state&quot;:{&quot;s.roll&quot;:101,&quot;s.marks&quot;:&quot;85.0&quot;,&quot;p&quot;:&quot;&amp;s&quot;,&quot;output&quot;:&quot;101 85.0&quot;},&quot;note&quot;:&quot;return 0 ends the program successfully.&quot;}]}"
+        >
+
+            <div class="cb-tracer-grid">
+
+                <div class="cb-tracer-code-wrap">
+                    <div class="cb-tracer-heading">C Program</div>
+                    <pre class="cb-tracer-code" id="cbTraceCode-structures"></pre>
+                </div>
+
+                <div class="cb-tracer-state-wrap">
+                    <div class="cb-tracer-heading">Live Variables</div>
+                    <div class="cb-tracer-note" id="cbTraceNote-structures"></div>
+                    <div class="cb-live-state" id="cbTraceState-structures"></div>
+
+                    <div class="cb-tracer-output">
+                        <strong>Output</strong>
+                        <pre id="cbTraceOutput-structures">—</pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBProgramTrace.prev('structures')">← Previous</button>
+                <button class="cb-control cb-next" id="cbTraceNext-structures" onclick="CBProgramTrace.next('structures')">Next →</button>
+                <button class="cb-control cb-auto" id="cbTraceAuto-structures" onclick="CBProgramTrace.auto('structures')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBProgramTrace.pause('structures')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBProgramTrace.reset('structures')">↺ Reset</button>
+            </div>
+
+            <div class="cb-tracer-status" id="cbTraceStatus-structures">Step 0</div>
+
+        </div>
+    </div>
+</section>
+
+
+<h3>14.33 Quick MCQs</h3>
+
+    <p class="cb-mcq-guide">
+        Select an answer first, then click <strong>Check Answer</strong>.
+        A correct choice becomes green. If the answer is wrong, your choice becomes red
+        and the correct option becomes green. The explanation appears below.
+    </p>
+
+    <div class="cb-mcq-list">
+        
+    <div class="cb-mcq-card" id="structures-mcq1" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">1.</span>
+            <strong>Which keyword is used to define a structure?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="structures-mcq1" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">record</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="structures-mcq1" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">struct</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="structures-mcq1" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">structure</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="structures-mcq1" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">object</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('structures-mcq1')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('structures-mcq1')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>The keyword struct introduces a structure type in C.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="structures-mcq2" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">2.</span>
+            <strong>Which operator accesses a member through a structure variable?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="structures-mcq2" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">.</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="structures-mcq2" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">-&gt;</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="structures-mcq2" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">*</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="structures-mcq2" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">&amp;</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('structures-mcq2')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('structures-mcq2')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>The dot operator accesses a member of a structure or union object.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="structures-mcq3" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">3.</span>
+            <strong>Which operator is used with a pointer to a structure?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="structures-mcq3" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">.</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="structures-mcq3" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">-&gt;</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="structures-mcq3" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">::</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="structures-mcq3" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">%</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('structures-mcq3')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('structures-mcq3')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>The arrow operator accesses a structure or union member through a pointer.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="structures-mcq4" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">4.</span>
+            <strong>What is shared by members of a union?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="structures-mcq4" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">Different arrays</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="structures-mcq4" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">The same storage</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="structures-mcq4" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">Different functions</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="structures-mcq4" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Different files</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('structures-mcq4')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('structures-mcq4')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>Union members overlap the same storage region.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="structures-mcq5" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">5.</span>
+            <strong>Which keyword creates a type alias?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="structures-mcq5" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">alias</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="structures-mcq5" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">typedef</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="structures-mcq5" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">rename</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="structures-mcq5" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">type</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('structures-mcq5')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('structures-mcq5')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>typedef creates an additional name for an existing type.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="structures-mcq6" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">6.</span>
+            <strong>Which structure is important for linked lists?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="structures-mcq6" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">Nested structure only</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="structures-mcq6" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">Self-referential structure</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="structures-mcq6" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">Empty structure</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="structures-mcq6" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Union</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('structures-mcq6')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('structures-mcq6')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>A self-referential structure can contain a pointer to another object of the same structure type, which is fundamental for linked structures.</p>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+
+<div class="cb-c-dsa-practice-section">
+
+        <span class="cb-c-practice-label">PRACTICE</span>
+
+        <h3>14.34 🎯 Practice Problems</h3>
+
+        <p class="cb-c-practice-guide">
+            Practice structures, arrays of structures, nested structures, pointers,
+            unions, typedef, and self-referential structures.
+            Use <strong>💻 Solve It Yourself</strong> first,
+            open <strong>Hint</strong> only when needed,
+            and use <strong>Show Program</strong> after attempting the problem.
+        </p>
+
+        <div class="cb-practice-overall" data-practice-total="20">
+
+            <div class="cb-practice-overall-title">
+                📈 Structures &amp; Unions Practice Progress
+            </div>
+
+            <div class="cb-practice-overall-grid">
+
+                <div class="cb-practice-overall-item">
+                    <strong>Solved</strong>
+                    <span id="cbPracticeOverallSolved">0 / 20</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completed with Solution</strong>
+                    <span id="cbPracticeOverallCompleted">0</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Total Score</strong>
+                    <span id="cbPracticeOverallScore">0 / 2000</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completion</strong>
+                    <span id="cbPracticeOverallPercent">0%</span>
+                </div>
+
+            </div>
+
+            <div class="cb-practice-progress-track">
+                <div id="cbPracticeOverallBar" class="cb-practice-progress-fill"></div>
+            </div>
+
+            <div class="cb-practice-progress-note">
+                A problem counts as <strong>Solved</strong> when all test cases pass
+                without opening the full solution. Problems completed after viewing
+                the official solution are tracked separately.
+            </div>
+
+        </div>
+
+        <div class="cb-c-practice-list">
+            
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>1. Create a Student Structure</strong>
+                <span id="practiceBadge-structures-p1" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 1: Create a Student structure containing roll number, name, and marks, initialize one student, and print the fields.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print the initialized student data.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p1')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p1')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p1')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p1" hidden>
+                💡 <strong>Hint:</strong> Use struct Student with int, char array, and float members.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p1" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Create a Student Structure
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p1"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p1"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p1')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p1"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p1')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p1')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p1"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p1"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p1" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p1">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p1">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p1">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p1" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p1" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[30];
+    float marks;
+};
+
+int main()
+{
+    struct Student s = {101, &quot;Anu&quot;, 88.5f};
+
+    printf(&quot;%d %s %.1f&quot;, s.roll, s.name, s.marks);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>2. Read and Display One Student</strong>
+                <span id="practiceBadge-structures-p2" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 2: Read one student&#x27;s roll number, name, and marks and display the details.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Roll number, one-word name, and marks.</p>
+            <p><strong>Output:</strong> Print the same values.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p2')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p2')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p2')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p2" hidden>
+                💡 <strong>Hint:</strong> Use scanf() with structure members.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p2" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Read and Display One Student
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p2"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p2"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p2')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p2"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p2')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p2')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p2"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p2"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p2" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p2">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p2">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p2">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p2" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p2" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[30];
+    float marks;
+};
+
+int main()
+{
+    struct Student s;
+
+    scanf(&quot;%d %29s %f&quot;, &amp;s.roll, s.name, &amp;s.marks);
+
+    printf(&quot;%d %s %.1f&quot;, s.roll, s.name, s.marks);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>3. Store Details of 5 Students</strong>
+                <span id="practiceBadge-structures-p3" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 3: Store five students using an array of structures and print them.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Five lines: roll number, one-word name, marks.</p>
+            <p><strong>Output:</strong> Print five lines in the same order.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p3')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p3')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p3')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p3" hidden>
+                💡 <strong>Hint:</strong> Use struct Student students[5] and loop over the array.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p3" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Store Details of 5 Students
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p3"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p3"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p3')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p3"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p3')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p3')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p3"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p3"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p3" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p3">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p3">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p3">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p3" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p3" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[30];
+    float marks;
+};
+
+int main()
+{
+    struct Student students[5];
+
+    for (int i = 0; i &lt; 5; i++)
+        scanf(&quot;%d %29s %f&quot;, &amp;students[i].roll, students[i].name, &amp;students[i].marks);
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf(&quot;%d %s %.1f&quot;, students[i].roll, students[i].name, students[i].marks);
+
+        if (i &lt; 4)
+            printf(&quot;\n&quot;);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>4. Student with Highest Marks</strong>
+                <span id="practiceBadge-structures-p4" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 4: Read N students and print the student with the highest marks.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N lines: roll, one-word name, marks.</p>
+            <p><strong>Output:</strong> Print roll, name, and marks of the highest-scoring student.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p4')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p4')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p4')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p4" hidden>
+                💡 <strong>Hint:</strong> Track the index of the student with maximum marks.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p4" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Student with Highest Marks
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p4"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p4"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p4')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p4"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p4')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p4')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p4"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p4"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p4" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p4">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p4">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p4">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p4" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p4" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[30];
+    float marks;
+};
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    struct Student s[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d %29s %f&quot;, &amp;s[i].roll, s[i].name, &amp;s[i].marks);
+
+    int best = 0;
+
+    for (int i = 1; i &lt; n; i++)
+    {
+        if (s[i].marks &gt; s[best].marks)
+            best = i;
+    }
+
+    printf(&quot;%d %s %.1f&quot;, s[best].roll, s[best].name, s[best].marks);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>5. Student with Lowest Marks</strong>
+                <span id="practiceBadge-structures-p5" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 5: Read N students and print the student with the lowest marks.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N lines: roll, one-word name, marks.</p>
+            <p><strong>Output:</strong> Print roll, name, and marks of the lowest-scoring student.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p5')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p5')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p5')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p5" hidden>
+                💡 <strong>Hint:</strong> Track the index of the minimum marks.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p5" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Student with Lowest Marks
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p5"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p5"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p5')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p5"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p5')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p5')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p5"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p5"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p5" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p5">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p5">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p5">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p5" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p5" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[30];
+    float marks;
+};
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    struct Student s[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d %29s %f&quot;, &amp;s[i].roll, s[i].name, &amp;s[i].marks);
+
+    int lowest = 0;
+
+    for (int i = 1; i &lt; n; i++)
+    {
+        if (s[i].marks &lt; s[lowest].marks)
+            lowest = i;
+    }
+
+    printf(&quot;%d %s %.1f&quot;, s[lowest].roll, s[lowest].name, s[lowest].marks);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>6. Average Marks of Students</strong>
+                <span id="practiceBadge-structures-p6" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 6: Read N students and calculate their average marks.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N lines: roll, one-word name, marks.</p>
+            <p><strong>Output:</strong> Print average marks to two decimal places.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p6')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p6')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p6')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p6" hidden>
+                💡 <strong>Hint:</strong> Accumulate the marks member and divide by N.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p6" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Average Marks of Students
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p6"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p6"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p6')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p6"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p6')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p6')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p6"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p6"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p6" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p6">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p6">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p6">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p6" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p6" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[30];
+    float marks;
+};
+
+int main()
+{
+    int n;
+    double sum = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    struct Student s[n];
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        scanf(&quot;%d %29s %f&quot;, &amp;s[i].roll, s[i].name, &amp;s[i].marks);
+        sum += s[i].marks;
+    }
+
+    printf(&quot;%.2f&quot;, sum / n);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>7. Search Student by Roll Number</strong>
+                <span id="practiceBadge-structures-p7" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 7: Read N students and search for a student using a roll number.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N, N student records, then target roll number.</p>
+            <p><strong>Output:</strong> Print name and marks if found, otherwise Not Found.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p7')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p7')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p7')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p7" hidden>
+                💡 <strong>Hint:</strong> Compare target with s[i].roll.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p7" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Search Student by Roll Number
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p7"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p7"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p7')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p7"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p7')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p7')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p7"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p7"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p7" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p7">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p7">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p7">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p7" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p7" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[30];
+    float marks;
+};
+
+int main()
+{
+    int n, target;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    struct Student s[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d %29s %f&quot;, &amp;s[i].roll, s[i].name, &amp;s[i].marks);
+
+    scanf(&quot;%d&quot;, &amp;target);
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (s[i].roll == target)
+        {
+            printf(&quot;%s %.1f&quot;, s[i].name, s[i].marks);
+            return 0;
+        }
+    }
+
+    printf(&quot;Not Found&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>8. Sort Students by Marks</strong>
+                <span id="practiceBadge-structures-p8" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 8: Sort student records in ascending order of marks.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N lines: roll, one-word name, marks.</p>
+            <p><strong>Output:</strong> Print sorted records, one per line.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p8')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p8')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p8')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p8" hidden>
+                💡 <strong>Hint:</strong> Swap entire structure objects during bubble sort.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p8" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Sort Students by Marks
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p8"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p8"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p8')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p8"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p8')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p8')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p8"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p8"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p8" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p8">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p8">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p8">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p8" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p8" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[30];
+    float marks;
+};
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    struct Student s[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d %29s %f&quot;, &amp;s[i].roll, s[i].name, &amp;s[i].marks);
+
+    for (int i = 0; i &lt; n - 1; i++)
+    {
+        for (int j = 0; j &lt; n - 1 - i; j++)
+        {
+            if (s[j].marks &gt; s[j + 1].marks)
+            {
+                struct Student temp = s[j];
+                s[j] = s[j + 1];
+                s[j + 1] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        printf(&quot;%d %s %.1f&quot;, s[i].roll, s[i].name, s[i].marks);
+
+        if (i &lt; n - 1)
+            printf(&quot;\n&quot;);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>9. Employee Annual Salary</strong>
+                <span id="practiceBadge-structures-p9" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 9: Create an Employee structure, read monthly salary, and calculate annual salary.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Employee id, one-word name, monthly salary.</p>
+            <p><strong>Output:</strong> Print annual salary to two decimal places.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p9')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p9')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p9')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p9" hidden>
+                💡 <strong>Hint:</strong> Annual salary = monthly salary * 12.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p9" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Employee Annual Salary
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p9"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p9"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p9')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p9"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p9')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p9')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p9"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p9"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p9" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p9">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p9">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p9">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p9" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p9" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Employee
+{
+    int id;
+    char name[30];
+    double monthlySalary;
+};
+
+int main()
+{
+    struct Employee e;
+
+    scanf(&quot;%d %29s %lf&quot;, &amp;e.id, e.name, &amp;e.monthlySalary);
+
+    printf(&quot;%.2f&quot;, e.monthlySalary * 12.0);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>10. Pass a Structure to a Function</strong>
+                <span id="practiceBadge-structures-p10" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 10: Pass a Student structure to a function and display its members.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Roll number, one-word name, marks.</p>
+            <p><strong>Output:</strong> Print the structure values from the function.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p10')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p10')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p10')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p10" hidden>
+                💡 <strong>Hint:</strong> Use void display(struct Student s).
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p10" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Pass a Structure to a Function
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p10"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p10"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p10')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p10"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p10')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p10')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p10"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p10"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p10" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p10">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p10">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p10">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p10" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p10" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[30];
+    float marks;
+};
+
+void display(struct Student s)
+{
+    printf(&quot;%d %s %.1f&quot;, s.roll, s.name, s.marks);
+}
+
+int main()
+{
+    struct Student s;
+
+    scanf(&quot;%d %29s %f&quot;, &amp;s.roll, s.name, &amp;s.marks);
+
+    display(s);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>11. Return a Structure from a Function</strong>
+                <span id="practiceBadge-structures-p11" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 11: Read two integers through a function that returns a structure containing both values and their sum.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two integers.</p>
+            <p><strong>Output:</strong> Print the two values and their sum.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p11')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p11')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p11')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p11" hidden>
+                💡 <strong>Hint:</strong> Return a local structure value by value.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p11" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Return a Structure from a Function
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p11"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p11"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p11')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p11"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p11')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p11')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p11"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p11"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p11" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p11">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p11">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p11">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p11" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p11" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Result
+{
+    int a;
+    int b;
+    int sum;
+};
+
+struct Result makeResult(int a, int b)
+{
+    struct Result r = {a, b, a + b};
+    return r;
+}
+
+int main()
+{
+    int a, b;
+
+    scanf(&quot;%d %d&quot;, &amp;a, &amp;b);
+
+    struct Result r = makeResult(a, b);
+
+    printf(&quot;%d %d %d&quot;, r.a, r.b, r.sum);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>12. Access Members Using a Structure Pointer</strong>
+                <span id="practiceBadge-structures-p12" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 12: Read a student record and display it through a structure pointer.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Roll number and marks.</p>
+            <p><strong>Output:</strong> Print both members using the arrow operator.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p12')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p12')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p12')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p12" hidden>
+                💡 <strong>Hint:</strong> Use struct Student *p = &amp;s.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p12" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Access Members Using a Structure Pointer
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p12"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p12"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p12')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p12"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p12')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p12')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p12"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p12"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p12" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p12">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p12">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p12">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p12" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p12" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    float marks;
+};
+
+int main()
+{
+    struct Student s;
+
+    scanf(&quot;%d %f&quot;, &amp;s.roll, &amp;s.marks);
+
+    struct Student *p = &amp;s;
+
+    printf(&quot;%d %.1f&quot;, p-&gt;roll, p-&gt;marks);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>13. Nested Student and Date of Birth</strong>
+                <span id="practiceBadge-structures-p13" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 13: Create a nested structure where Student contains a Date of Birth.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Roll number followed by day, month, year.</p>
+            <p><strong>Output:</strong> Print roll and date as DD-MM-YYYY.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p13')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p13')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p13')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p13" hidden>
+                💡 <strong>Hint:</strong> Create struct Date and include it as a member inside struct Student.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p13" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Nested Student and Date of Birth
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p13"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p13"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p13')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p13"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p13')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p13')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p13"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p13"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p13" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p13">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p13">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p13">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p13" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p13" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Date
+{
+    int day, month, year;
+};
+
+struct Student
+{
+    int roll;
+    struct Date dob;
+};
+
+int main()
+{
+    struct Student s;
+
+    scanf(&quot;%d %d %d %d&quot;,
+          &amp;s.roll,
+          &amp;s.dob.day,
+          &amp;s.dob.month,
+          &amp;s.dob.year);
+
+    printf(&quot;%d %02d-%02d-%04d&quot;,
+           s.roll,
+           s.dob.day,
+           s.dob.month,
+           s.dob.year);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>14. Structure Containing an Array of 5 Marks</strong>
+                <span id="practiceBadge-structures-p14" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 14: Create a Student structure containing an array of five marks and calculate their total.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Five integer marks.</p>
+            <p><strong>Output:</strong> Print the total.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p14')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p14')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p14')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p14" hidden>
+                💡 <strong>Hint:</strong> Use int marks[5] as a structure member.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p14" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Structure Containing an Array of 5 Marks
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p14"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p14"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p14')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p14"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p14')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p14')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p14"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p14"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p14" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p14">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p14">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p14">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p14" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p14" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int marks[5];
+};
+
+int main()
+{
+    struct Student s;
+    int total = 0;
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        scanf(&quot;%d&quot;, &amp;s.marks[i]);
+        total += s.marks[i];
+    }
+
+    printf(&quot;%d&quot;, total);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>15. Employee Structure Using typedef</strong>
+                <span id="practiceBadge-structures-p15" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 15: Use typedef to create an Employee type, read id and salary, and print them.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Employee id and salary.</p>
+            <p><strong>Output:</strong> Print id and salary.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p15')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p15')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p15')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p15" hidden>
+                💡 <strong>Hint:</strong> Use typedef struct { ... } Employee;
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p15" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Employee Structure Using typedef
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p15"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p15"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p15')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p15"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p15')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p15')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p15"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p15"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p15" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p15">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p15">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p15">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p15" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p15" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef struct
+{
+    int id;
+    double salary;
+} Employee;
+
+int main()
+{
+    Employee e;
+
+    scanf(&quot;%d %lf&quot;, &amp;e.id, &amp;e.salary);
+
+    printf(&quot;%d %.2f&quot;, e.id, e.salary);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>16. Union with int, float and char</strong>
+                <span id="practiceBadge-structures-p16" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 16: Create a union containing int, float and char members. Assign and print each member one at a time.</strong>
+            </p>
+
+            <p><strong>Input:</strong> An integer, a float, and a character.</p>
+            <p><strong>Output:</strong> Print the value immediately after assigning each corresponding union member.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p16')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p16')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p16')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p16" hidden>
+                💡 <strong>Hint:</strong> Because members share storage, assign and print one member before assigning the next.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p16" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Union with int, float and char
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p16"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p16"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p16')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p16"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p16')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p16')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p16"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p16"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p16" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p16">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p16">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p16">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p16" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p16" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int i;
+    float f;
+    char c;
+};
+
+int main()
+{
+    union Data d;
+    int i;
+    float f;
+    char c;
+
+    scanf(&quot;%d %f %c&quot;, &amp;i, &amp;f, &amp;c);
+
+    d.i = i;
+    printf(&quot;%d\n&quot;, d.i);
+
+    d.f = f;
+    printf(&quot;%.1f\n&quot;, d.f);
+
+    d.c = c;
+    printf(&quot;%c&quot;, d.c);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>17. Structure vs Union Memory with sizeof()</strong>
+                <span id="practiceBadge-structures-p17" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 17: Create equivalent structure and union types and print whether the union size is less than or equal to the structure size.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print &quot;Union &lt;= Structure&quot;.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p17')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p17')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p17')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p17" hidden>
+                💡 <strong>Hint:</strong> Use sizeof() on both types; exact byte counts are implementation-dependent.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p17" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Structure vs Union Memory with sizeof()
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p17"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p17"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p17')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p17"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p17')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p17')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p17"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p17"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p17" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p17">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p17">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p17">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p17" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p17" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct S
+{
+    int i;
+    double d;
+    char c;
+};
+
+union U
+{
+    int i;
+    double d;
+    char c;
+};
+
+int main()
+{
+    if (sizeof(union U) &lt;= sizeof(struct S))
+        printf(&quot;Union &lt;= Structure&quot;);
+    else
+        printf(&quot;Unexpected&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>18. Self-Referential Node Structure</strong>
+                <span id="practiceBadge-structures-p18" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 18: Create two Node objects, link the first to the second, and print both values by following the link.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two integers.</p>
+            <p><strong>Output:</strong> Print the two values.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p18')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p18')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p18')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p18" hidden>
+                💡 <strong>Hint:</strong> Use struct Node *next inside struct Node.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p18" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Self-Referential Node Structure
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p18"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p18"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p18')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p18"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p18')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p18')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p18"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p18"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p18" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p18">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p18">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p18">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p18" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p18" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+int main()
+{
+    int a, b;
+
+    scanf(&quot;%d %d&quot;, &amp;a, &amp;b);
+
+    struct Node second = {b, NULL};
+    struct Node first = {a, &amp;second};
+
+    printf(&quot;%d %d&quot;, first.data, first.next-&gt;data);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>19. Bank Account Final Balance</strong>
+                <span id="practiceBadge-structures-p19" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 19: Create a BankAccount structure and calculate final balance after a deposit and withdrawal.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Account number, initial balance, deposit, withdrawal.</p>
+            <p><strong>Output:</strong> Print final balance to two decimal places.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p19')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p19')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p19')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p19" hidden>
+                💡 <strong>Hint:</strong> final = initial + deposit - withdrawal.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p19" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Bank Account Final Balance
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p19"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p19"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p19')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p19"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p19')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p19')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p19"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p19"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p19" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p19">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p19">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p19">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p19" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p19" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct BankAccount
+{
+    int accountNo;
+    double balance;
+};
+
+int main()
+{
+    struct BankAccount account;
+    double deposit, withdrawal;
+
+    scanf(&quot;%d %lf %lf %lf&quot;,
+          &amp;account.accountNo,
+          &amp;account.balance,
+          &amp;deposit,
+          &amp;withdrawal);
+
+    account.balance += deposit;
+    account.balance -= withdrawal;
+
+    printf(&quot;%.2f&quot;, account.balance);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>20. Student Management: Add, Display and Search</strong>
+                <span id="practiceBadge-structures-p20" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 20: Build a small student management program that reads N student records, displays all records, and searches for a target roll number.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N, then N lines of roll/name/marks, then target roll.</p>
+            <p><strong>Output:</strong> Print all records, then print Found: name marks or Not Found.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('structures-p20')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('structures-p20')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('structures-p20')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-structures-p20" hidden>
+                💡 <strong>Hint:</strong> Use an array of structures with separate loops for input, display, and search.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-structures-p20" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Student Management: Add, Display and Search
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-structures-p20"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-structures-p20"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('structures-p20')">▶ Run Code</button>
+
+                            <button id="practiceCheck-structures-p20"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('structures-p20')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('structures-p20')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-structures-p20"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-structures-p20"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-structures-p20" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-structures-p20">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-structures-p20">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-structures-p20">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-structures-p20" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-structures-p20" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[30];
+    float marks;
+};
+
+int main()
+{
+    int n, target;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    struct Student s[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d %29s %f&quot;, &amp;s[i].roll, s[i].name, &amp;s[i].marks);
+
+    for (int i = 0; i &lt; n; i++)
+        printf(&quot;%d %s %.1f\n&quot;, s[i].roll, s[i].name, s[i].marks);
+
+    scanf(&quot;%d&quot;, &amp;target);
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (s[i].roll == target)
+        {
+            printf(&quot;Found: %s %.1f&quot;, s[i].name, s[i].marks);
+            return 0;
+        }
+    }
+
+    printf(&quot;Not Found&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        </div>
+
+    </div>
+
+<h3>14.35 Key Takeaway</h3>
+
+    <div class="tip-box">
+
+        🎯 Remember:
+
+        <br><br>
+
+        <strong>
+        Structure = Different data + Separate storage
+        </strong>
+
+        <br><br>
+
+        <strong>
+        Union = Different data + Shared storage
+        </strong>
+
+        <br><br>
+
+        <strong>
+        Structure variable → .
+        </strong>
+
+        <br><br>
+
+        <strong>
+        Structure pointer → -&gt;
+        </strong>
+
+        <br><br>
+
+        <strong>
+        Self-referential structure → Foundation of Linked Lists
+        </strong>
+
+    </div>
+
+</section>
+
+        <!-- ================================
+            Preprocessor & Header Files
+        ================================= -->
+
+
+<section class="content-card cb-added-section" id="structures-interview-extra">
+
+    <span class="cb-added-label">INTERVIEW PREPARATION</span>
+
+    <h2>🎤 Structures &amp; Unions — Interview Questions</h2>
+
+    <div class="cb-original-qa-list cb-interview-qa-list">
+        
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">1.</span>
+                <span>What is the main difference between a structure and a union?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('structuresInterviewAnswer1', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="structuresInterviewAnswer1"
+                 hidden>
+                Structure members have separate storage so all can hold values simultaneously; union members overlap the same storage region.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">2.</span>
+                <span>What is the difference between . and -&gt;?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('structuresInterviewAnswer2', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="structuresInterviewAnswer2"
+                 hidden>
+                Use . with a structure or union object. Use -&gt; when accessing a member through a pointer to that structure or union.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">3.</span>
+                <span>Can one structure be assigned to another structure of the same type?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('structuresInterviewAnswer3', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="structuresInterviewAnswer3"
+                 hidden>
+                Yes. Structure assignment copies the member values from one object to another object of compatible structure type.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">4.</span>
+                <span>Can structures be compared directly using == in C?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('structuresInterviewAnswer4', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="structuresInterviewAnswer4"
+                 hidden>
+                No. C does not define == or != for complete structure objects; compare the relevant members individually.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">5.</span>
+                <span>What is a self-referential structure?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('structuresInterviewAnswer5', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="structuresInterviewAnswer5"
+                 hidden>
+                It is a structure that contains a pointer to an object of its own structure type, commonly used for linked data structures.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">6.</span>
+                <span>What is structure padding?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('structuresInterviewAnswer6', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="structuresInterviewAnswer6"
+                 hidden>
+                Compilers may insert unused bytes between or after members to satisfy alignment requirements.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">7.</span>
+                <span>What is typedef used for with structures?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('structuresInterviewAnswer7', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="structuresInterviewAnswer7"
+                 hidden>
+                typedef can create a shorter alias for a structure type so code can use the alias without repeatedly writing struct.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">8.</span>
+                <span>Why can union size differ from structure size?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('structuresInterviewAnswer8', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="structuresInterviewAnswer8"
+                 hidden>
+                A union needs enough storage for its largest member plus alignment requirements, while a structure must accommodate all members with any required padding.
+            </div>
+
+        </div>
+    
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="structures-tips-extra">
+
+    <span class="cb-added-label">PLACEMENT TIPS</span>
+
+    <h2>💡 Structures &amp; Unions — Placement Tips</h2>
+
+    <ul class="cb-tip-grid">
+        <li>For record-based problems, first identify the <strong>fields</strong> that belong together and define the structure clearly.</li>
+        <li>When sorting an array of structures, swap the <strong>entire structure object</strong>, not only one member.</li>
+        <li>Remember the member-access rule: object uses <code>.</code>, pointer uses <code>-&gt;</code>.</li>
+        <li>Do not memorize exact structure sizes across systems; alignment and padding can change the result.</li>
+        <li>For unions, remember that members share storage, so treat them as alternative representations rather than independent simultaneous fields.</li>
+        <li>Self-referential structures connect this C topic directly to linked lists, trees, and other dynamic data structures.</li>
+    </ul>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="structures-practice-extra">
+
+    <span class="cb-added-label">EXTRA PRACTICE</span>
+
+    <h2>✍️ Structures &amp; Unions — Extra Practice Questions</h2>
+
+    <ol class="cb-extra-practice">
+        <li>Create a Product structure and find the product with the highest price.</li>
+        <li>Store employee joining dates using a nested Date structure and sort by year.</li>
+        <li>Create a structure for complex numbers and write functions for addition and subtraction.</li>
+        <li>Use a union to store one of several simple sensor value types along with a separate type tag.</li>
+        <li>Build a singly linked list node structure and manually connect three nodes.</li>
+        <li>Investigate how changing member order affects <code>sizeof</code> for a structure on your compiler.</li>
+    </ol>
+
+</section>
+
+
+
+<section class="cb-topic-navigation" aria-label="C Programming topic navigation">
+
+    <a class="cb-topic-nav-btn cb-topic-nav-prev" href="pointers.html">
+        ← Previous Topic: Pointers
+    </a>
+
+    <a class="cb-topic-nav-btn cb-topic-nav-next" href="preprocessor.html">
+        Next Topic: Preprocessor &amp; Header Files →
+    </a>
+
+</section>
+
+
+</main>
+
+</div>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../Maths/index.html">
+                Maths
+            </a>
+
+            <a href="index.html">
+                C Programming
+            </a>
+
+        </div>
+
+
+        <!-- LEARNING -->
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+<a href="../Data-Structures/">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/">
+    Advanced Data Structures
+</a>
+
+            <a href="#">
+                Python
+            </a>
+
+            <a href="#">
+                AI & Machine Learning
+            </a>
+
+        </div>
+
+
+        <!-- PRACTICE -->
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="#practice">
+                Practice Problems
+            </a>
+
+            <a href="#practice">
+                Problem Solving
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="c-programming.js"></script>
+<script>
+const codeBhavyaStructuresPracticeConfigs =
+[{"key": "structures-p1", "title": "Create a Student Structure", "starterCode": "#include <stdio.h>\n\nstruct Student\n{\n    /* Add members */\n};\n\nint main()\n{\n    /* Create, initialize, and print one student */\n\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "101 Anu 88.5"}]}, {"key": "structures-p2", "title": "Read and Display One Student", "starterCode": "#include <stdio.h>\n\nstruct Student\n{\n    int roll;\n    char name[30];\n    float marks;\n};\n\nint main()\n{\n    struct Student s;\n\n    /* Read and display */\n\n    return 0;\n}", "sampleInput": "7 Ravi 91.5", "tests": [{"input": "7 Ravi 91.5", "expected": "7 Ravi 91.5"}, {"input": "12 Anu 80", "expected": "12 Anu 80.0"}]}, {"key": "structures-p3", "title": "Store Details of 5 Students", "starterCode": "#include <stdio.h>\n\nstruct Student\n{\n    int roll;\n    char name[30];\n    float marks;\n};\n\nint main()\n{\n    struct Student students[5];\n\n    /* Read and print 5 students */\n\n    return 0;\n}", "sampleInput": "1 A 80\n2 B 81\n3 C 82\n4 D 83\n5 E 84", "tests": [{"input": "1 A 80\n2 B 81\n3 C 82\n4 D 83\n5 E 84", "expected": "1 A 80.0\n2 B 81.0\n3 C 82.0\n4 D 83.0\n5 E 84.0"}]}, {"key": "structures-p4", "title": "Student with Highest Marks", "starterCode": "#include <stdio.h>\n\nstruct Student\n{\n    int roll;\n    char name[30];\n    float marks;\n};\n\nint main()\n{\n    int n;\n\n    /* Read students and find highest marks */\n\n    return 0;\n}", "sampleInput": "3\n1 A 70\n2 B 92\n3 C 85", "tests": [{"input": "3\n1 A 70\n2 B 92\n3 C 85", "expected": "2 B 92.0"}, {"input": "2\n5 X 88\n6 Y 79", "expected": "5 X 88.0"}]}, {"key": "structures-p5", "title": "Student with Lowest Marks", "starterCode": "#include <stdio.h>\n\nstruct Student\n{\n    int roll;\n    char name[30];\n    float marks;\n};\n\nint main()\n{\n    int n;\n\n    /* Find lowest marks */\n\n    return 0;\n}", "sampleInput": "3\n1 A 70\n2 B 92\n3 C 65", "tests": [{"input": "3\n1 A 70\n2 B 92\n3 C 65", "expected": "3 C 65.0"}, {"input": "2\n5 X 88\n6 Y 79", "expected": "6 Y 79.0"}]}, {"key": "structures-p6", "title": "Average Marks of Students", "starterCode": "#include <stdio.h>\n\nstruct Student\n{\n    int roll;\n    char name[30];\n    float marks;\n};\n\nint main()\n{\n    int n;\n\n    /* Calculate average marks */\n\n    return 0;\n}", "sampleInput": "3\n1 A 70\n2 B 80\n3 C 90", "tests": [{"input": "3\n1 A 70\n2 B 80\n3 C 90", "expected": "80.00"}, {"input": "2\n1 A 75.5\n2 B 84.5", "expected": "80.00"}]}, {"key": "structures-p7", "title": "Search Student by Roll Number", "starterCode": "#include <stdio.h>\n\nstruct Student\n{\n    int roll;\n    char name[30];\n    float marks;\n};\n\nint main()\n{\n    int n, target;\n\n    /* Search by roll */\n\n    return 0;\n}", "sampleInput": "3\n1 A 70\n2 B 80\n3 C 90\n2", "tests": [{"input": "3\n1 A 70\n2 B 80\n3 C 90\n2", "expected": "B 80.0"}, {"input": "2\n1 A 70\n2 B 80\n9", "expected": "Not Found"}]}, {"key": "structures-p8", "title": "Sort Students by Marks", "starterCode": "#include <stdio.h>\n\nstruct Student\n{\n    int roll;\n    char name[30];\n    float marks;\n};\n\nint main()\n{\n    int n;\n\n    /* Sort structures by marks */\n\n    return 0;\n}", "sampleInput": "3\n1 A 90\n2 B 70\n3 C 80", "tests": [{"input": "3\n1 A 90\n2 B 70\n3 C 80", "expected": "2 B 70.0\n3 C 80.0\n1 A 90.0"}]}, {"key": "structures-p9", "title": "Employee Annual Salary", "starterCode": "#include <stdio.h>\n\nstruct Employee\n{\n    int id;\n    char name[30];\n    double monthlySalary;\n};\n\nint main()\n{\n    struct Employee e;\n\n    /* Read and calculate annual salary */\n\n    return 0;\n}", "sampleInput": "10 Ravi 50000", "tests": [{"input": "10 Ravi 50000", "expected": "600000.00"}, {"input": "1 A 12500.5", "expected": "150006.00"}]}, {"key": "structures-p10", "title": "Pass a Structure to a Function", "starterCode": "#include <stdio.h>\n\nstruct Student\n{\n    int roll;\n    char name[30];\n    float marks;\n};\n\nvoid display(struct Student s)\n{\n    /* Print members */\n}\n\nint main()\n{\n    struct Student s;\n\n    return 0;\n}", "sampleInput": "5 Anu 88.5", "tests": [{"input": "5 Anu 88.5", "expected": "5 Anu 88.5"}]}, {"key": "structures-p11", "title": "Return a Structure from a Function", "starterCode": "#include <stdio.h>\n\nstruct Result\n{\n    int a;\n    int b;\n    int sum;\n};\n\nstruct Result makeResult(int a, int b)\n{\n    /* Build and return structure */\n}\n\nint main()\n{\n    int a, b;\n\n    return 0;\n}", "sampleInput": "7 8", "tests": [{"input": "7 8", "expected": "7 8 15"}, {"input": "-2 5", "expected": "-2 5 3"}]}, {"key": "structures-p12", "title": "Access Members Using a Structure Pointer", "starterCode": "#include <stdio.h>\n\nstruct Student\n{\n    int roll;\n    float marks;\n};\n\nint main()\n{\n    struct Student s;\n\n    /* Access through pointer */\n\n    return 0;\n}", "sampleInput": "101 86.5", "tests": [{"input": "101 86.5", "expected": "101 86.5"}]}, {"key": "structures-p13", "title": "Nested Student and Date of Birth", "starterCode": "#include <stdio.h>\n\nstruct Date\n{\n    int day, month, year;\n};\n\nstruct Student\n{\n    int roll;\n    struct Date dob;\n};\n\nint main()\n{\n    struct Student s;\n\n    return 0;\n}", "sampleInput": "7 18 9 2020", "tests": [{"input": "7 18 9 2020", "expected": "7 18-09-2020"}]}, {"key": "structures-p14", "title": "Structure Containing an Array of 5 Marks", "starterCode": "#include <stdio.h>\n\nstruct Student\n{\n    int marks[5];\n};\n\nint main()\n{\n    struct Student s;\n\n    /* Read marks and calculate total */\n\n    return 0;\n}", "sampleInput": "70 80 90 60 75", "tests": [{"input": "70 80 90 60 75", "expected": "375"}, {"input": "1 2 3 4 5", "expected": "15"}]}, {"key": "structures-p15", "title": "Employee Structure Using typedef", "starterCode": "#include <stdio.h>\n\ntypedef struct\n{\n    int id;\n    double salary;\n} Employee;\n\nint main()\n{\n    Employee e;\n\n    return 0;\n}", "sampleInput": "5 45000.5", "tests": [{"input": "5 45000.5", "expected": "5 45000.50"}]}, {"key": "structures-p16", "title": "Union with int, float and char", "starterCode": "#include <stdio.h>\n\nunion Data\n{\n    int i;\n    float f;\n    char c;\n};\n\nint main()\n{\n    union Data d;\n\n    return 0;\n}", "sampleInput": "10 3.5 Z", "tests": [{"input": "10 3.5 Z", "expected": "10\n3.5\nZ"}]}, {"key": "structures-p17", "title": "Structure vs Union Memory with sizeof()", "starterCode": "#include <stdio.h>\n\nstruct S\n{\n    int i;\n    double d;\n    char c;\n};\n\nunion U\n{\n    int i;\n    double d;\n    char c;\n};\n\nint main()\n{\n    /* Compare sizeof values portably */\n\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "Union <= Structure"}]}, {"key": "structures-p18", "title": "Self-Referential Node Structure", "starterCode": "#include <stdio.h>\n\nstruct Node\n{\n    int data;\n    struct Node *next;\n};\n\nint main()\n{\n    int a, b;\n\n    return 0;\n}", "sampleInput": "10 20", "tests": [{"input": "10 20", "expected": "10 20"}, {"input": "-1 5", "expected": "-1 5"}]}, {"key": "structures-p19", "title": "Bank Account Final Balance", "starterCode": "#include <stdio.h>\n\nstruct BankAccount\n{\n    int accountNo;\n    double balance;\n};\n\nint main()\n{\n    struct BankAccount account;\n    double deposit, withdrawal;\n\n    return 0;\n}", "sampleInput": "1001 5000 1500 700", "tests": [{"input": "1001 5000 1500 700", "expected": "5800.00"}, {"input": "1 1000 0 250.5", "expected": "749.50"}]}, {"key": "structures-p20", "title": "Student Management: Add, Display and Search", "starterCode": "#include <stdio.h>\n\nstruct Student\n{\n    int roll;\n    char name[30];\n    float marks;\n};\n\nint main()\n{\n    int n, target;\n\n    /* Add, display, and search */\n\n    return 0;\n}", "sampleInput": "3\n1 A 70\n2 B 80\n3 C 90\n2", "tests": [{"input": "3\n1 A 70\n2 B 80\n3 C 90\n2", "expected": "1 A 70.0\n2 B 80.0\n3 C 90.0\nFound: B 80.0"}, {"input": "2\n5 X 88\n6 Y 79\n9", "expected": "5 X 88.0\n6 Y 79.0\nNot Found"}]}];
+
+CodeBhavyaCPractice.registerAll(
+    codeBhavyaStructuresPracticeConfigs
+);
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
