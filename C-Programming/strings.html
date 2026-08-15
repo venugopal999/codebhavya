@@ -1,0 +1,5465 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C Programming | CodeBhavya</title>
+
+ <link rel="icon" type="image/png" sizes="32x32"
+      href="../images/codebhavya-icon-32.png">
+
+<link rel="icon" type="image/png" sizes="128x128"
+      href="../images/codebhavya-icon-128.png">
+
+<link rel="icon" type="image/png" sizes="512x512"
+      href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="c-programming.css">
+</head>
+
+<body class="cb-c-topic-page cb-strings-page">
+
+<header class="top-header">
+
+<!-- <a href="../index.html" class="logo">
+    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a> -->
+    
+<a href="../index.html" class="logo codebhavya-new-logo">
+
+    <img
+        src="../images/codebhavya-main-logo.png"
+        alt="CodeBhavya Logo"
+        class="main-logo"
+    >
+
+    <span class="brand-name">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </span>
+
+</a>
+
+    <nav class="top-nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="../Maths/">
+            Maths
+        </a>
+
+        <a href="index.html" class="active">
+            C
+        </a>
+
+<a href="../Data-Structures/index.html">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/index.html">
+    Advanced Data Structures
+</a>
+
+        <a href="../Python/">
+            Python
+        </a>
+
+        <a href="../AI-ML/">
+            AI & ML
+        </a>
+
+        <a href="../Placement/">
+            Placement
+        </a>
+
+    </nav>
+
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar cb-c-topic-sidebar">
+    <div class="sidebar-title">💻 C Programming</div>
+
+    <input
+        type="text"
+        id="topicSearch"
+        class="search-box"
+        placeholder="🔍 Search topics..."
+        onkeyup="searchTopics()"
+    >
+
+    <div class="sidebar-title">Fundamentals</div>
+    <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
+    <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
+    <a class="cb-topic-link" data-topic-link="1" href="data-types.html">📦 Data Types</a>
+    <a class="cb-topic-link" data-topic-link="1" href="input-output.html">⌨️ Input &amp; Output</a>
+
+    <div class="sidebar-title">Operators &amp; Control</div>
+    <a class="cb-topic-link" data-topic-link="1" href="operators.html">➕ Operators</a>
+    <a class="cb-topic-link" data-topic-link="1" href="expressions.html">🧮 Expressions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="decision-making.html">🔀 Decision Making</a>
+    <a class="cb-topic-link" data-topic-link="1" href="loops.html">🔁 Loops</a>
+
+    <div class="sidebar-title">Programming Concepts</div>
+    <a class="cb-topic-link" data-topic-link="1" href="arrays.html">📊 Arrays</a>
+    <a class="cb-topic-link active" data-topic-link="1" href="strings.html">🔤 Strings</a>
+    <a class="cb-topic-link" data-topic-link="1" href="functions.html">🧩 Functions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="pointers.html">👉 Pointers</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structures-unions.html">🏗️ Structures &amp; Unions</a>
+
+    <div class="sidebar-title">Advanced C</div>
+    <a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">⚙️ Preprocessor &amp; Header Files</a>
+    <a class="cb-topic-link" data-topic-link="1" href="file-handling.html">📁 File Handling</a>
+    <a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">🧠 Dynamic Memory Allocation</a>
+    <a class="cb-topic-link" data-topic-link="1" href="command-line.html">💻 Command Line Arguments</a>
+    <a class="cb-topic-link" data-topic-link="1" href="bitwise.html">🔢 Bitwise Programming</a>
+    <a class="cb-topic-link" data-topic-link="1" href="enum-typedef.html">🔤 Enumerations &amp; typedef</a>
+    <a class="cb-topic-link" data-topic-link="1" href="precedence.html">🧮 Operator Precedence &amp; Associativity</a>
+    <a class="cb-topic-link" data-topic-link="1" href="storage-classes.html">💾 Storage Classes</a>
+    <a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">🛠️ Advanced C Preprocessor</a>
+
+    <div class="sidebar-title">Practice</div>
+    <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
+</aside>
+
+<main class="main-content">
+
+<section id="strings" class="content-card">
+
+    <h2>🔤 11. Strings</h2>
+
+    <!-- 11.1 INTRODUCTION -->
+
+    <h3>11.1 What is a String?</h3>
+
+    <p>
+        A string in C is a sequence of characters terminated
+        by a special character called the null character
+        <strong>\0</strong>.
+    </p>
+
+    <div class="example-box">
+
+        <strong>Example:</strong>
+
+        <br><br>
+
+        "HELLO"
+
+        <br><br>
+
+        Internally, C stores it as:
+
+        <br><br>
+
+        H &nbsp; E &nbsp; L &nbsp; L &nbsp; O &nbsp; \0
+
+    </div>
+
+    <div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">Index 0</div>
+            <div class="cb-mini-step-text">H</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">Index 1</div>
+            <div class="cb-mini-step-text">E</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">Index 2</div>
+            <div class="cb-mini-step-text">L</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">Index 3</div>
+            <div class="cb-mini-step-text">L</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-pink">
+            <div class="cb-mini-step-badge">Index 4</div>
+            <div class="cb-mini-step-text">O</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">Index 5</div>
+            <div class="cb-mini-step-text">\\0</div>
+            <div class="cb-mini-step-subtext">Null terminator marks the end of the string.</div>
+        </div>
+
+    </div>
+
+
+    <div class="tip-box">
+
+        💡 Important:
+
+        <br><br>
+
+        C does not have a separate built-in
+        <strong>string</strong> data type.
+
+        <br><br>
+
+        Strings are stored using
+        <strong>character arrays</strong>.
+
+    </div>
+
+
+    <!-- 11.2 CHARACTER VS STRING -->
+
+    <h3>11.2 Character vs String</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Character</th>
+                    <th>String</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>'A'</td>
+                    <td>"A"</td>
+                </tr>
+
+                <tr>
+                    <td>Single character</td>
+                    <td>Sequence of characters</td>
+                </tr>
+
+                <tr>
+                    <td>Uses single quotes</td>
+                    <td>Uses double quotes</td>
+                </tr>
+
+                <tr>
+                    <td>char</td>
+                    <td>char array</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 11.3 CHARACTER ARRAY -->
+
+    <h3>11.3 Character Array</h3>
+
+    <p>
+        A character array can be used to store a string.
+    </p>
+
+    <pre><code>char name[20];</code></pre>
+
+    <p>
+        This creates an array capable of storing characters.
+    </p>
+
+
+    <!-- 11.4 INITIALIZATION -->
+
+    <h3>11.4 String Initialization</h3>
+
+    <pre><code>char name[] = "Venu";</code></pre>
+
+    <p>
+        C automatically adds the null character
+        <strong>\0</strong> at the end.
+    </p>
+
+    <div class="formula-box">
+
+        V &nbsp; e &nbsp; n &nbsp; u &nbsp; \0
+
+    </div>
+
+
+    <!-- 11.5 SIZE -->
+
+    <h3>11.5 String Size</h3>
+
+    <p>
+        The array must have enough space for all characters
+        plus the null character.
+    </p>
+
+    <pre><code>char name[5] = "Venu";</code></pre>
+
+    <div class="formula-box">
+
+        V + e + n + u + \0
+
+        <br><br>
+
+        Total = 5 characters
+
+    </div>
+
+    <div class="tip-box">
+
+        ⚠️ If a string contains N visible characters,
+        it normally requires at least N + 1 array positions
+        to store the terminating <strong>\0</strong>.
+
+    </div>
+
+
+    <!-- 11.6 PRINTING -->
+
+    <h3>11.6 Printing a String</h3>
+
+    <pre><code>char name[] = "Venu";
+
+printf("%s", name);</code></pre>
+
+    <div class="output-box">
+
+        Venu
+
+    </div>
+
+    <p>
+        The <strong>%s</strong> format specifier is used
+        to print a string.
+    </p>
+
+
+    <!-- 11.7 CHARACTER ACCESS -->
+
+    <h3>11.7 Accessing Individual Characters</h3>
+
+    <pre><code>char name[] = "Venu";
+
+printf("%c\n", name[0]);
+printf("%c\n", name[1]);
+printf("%c\n", name[2]);
+printf("%c\n", name[3]);</code></pre>
+
+    <div class="output-box">
+
+        V
+        <br>
+        e
+        <br>
+        n
+        <br>
+        u
+
+    </div>
+
+
+    <!-- 11.8 STRING TRAVERSAL -->
+
+    <h3>11.8 Traversing a String</h3>
+
+    <pre><code>char str[] = "HELLO";
+
+for(int i = 0; str[i] != '\0'; i++)
+{
+    printf("%c ", str[i]);
+}</code></pre>
+
+    <div class="output-box">
+
+        H E L L O
+
+    </div>
+
+
+    <!-- 11.9 SCANF -->
+
+    <h3>11.9 Reading a Single Word using scanf()</h3>
+
+    <pre><code>char name[20];
+
+scanf("%s", name);
+
+printf("%s", name);</code></pre>
+
+    <div class="example-box">
+
+        <strong>Input:</strong>
+
+        <br>
+
+        Venu
+
+        <br><br>
+
+        <strong>Output:</strong>
+
+        <br>
+
+        Venu
+
+    </div>
+
+    <div class="tip-box">
+
+        ⚠️ <strong>scanf("%s", name)</strong> normally reads
+        only until whitespace.
+
+        <br><br>
+
+        Input:
+
+        <br>
+
+        Venu Gopal
+
+        <br><br>
+
+        It reads only:
+
+        <br>
+
+        Venu
+
+    </div>
+
+
+    <!-- 11.10 FGETS -->
+
+    <h3>11.10 Reading a Line using fgets()</h3>
+
+    <p>
+        Use <strong>fgets()</strong> when you want to read
+        a line that may contain spaces.
+    </p>
+
+    <pre><code>char name[50];
+
+fgets(name, sizeof(name), stdin);
+
+printf("%s", name);</code></pre>
+
+    <div class="example-box">
+
+        <strong>Input:</strong>
+
+        <br>
+
+        Venu Gopal
+
+        <br><br>
+
+        <strong>Output:</strong>
+
+        <br>
+
+        Venu Gopal
+
+    </div>
+
+
+    <!-- 11.11 STRING FUNCTIONS -->
+
+    <h3>11.11 String Library Functions</h3>
+
+    <p>
+        C provides several useful string functions through
+        the <strong>&lt;string.h&gt;</strong> header file.
+    </p>
+
+    <pre><code>#include &lt;string.h&gt;</code></pre>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Function</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>strlen()</td>
+                    <td>Find string length</td>
+                </tr>
+
+                <tr>
+                    <td>strcpy()</td>
+                    <td>Copy a string</td>
+                </tr>
+
+                <tr>
+                    <td>strcat()</td>
+                    <td>Concatenate strings</td>
+                </tr>
+
+                <tr>
+                    <td>strcmp()</td>
+                    <td>Compare strings</td>
+                </tr>
+
+                <tr>
+                    <td>strchr()</td>
+                    <td>Find a character</td>
+                </tr>
+
+                <tr>
+                    <td>strstr()</td>
+                    <td>Find a substring</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 11.12 STRLEN -->
+
+    <h3>11.12 strlen()</h3>
+
+    <p>
+        The <strong>strlen()</strong> function returns the
+        number of characters in a string, excluding
+        the terminating <strong>\0</strong>.
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char str[] = "HELLO";
+
+    printf("%zu", strlen(str));
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        5
+
+    </div>
+
+
+    <!-- 11.13 STRCPY -->
+
+    <h3>11.13 strcpy()</h3>
+
+    <p>
+        The <strong>strcpy()</strong> function copies the
+        contents of one string into another character array.
+    </p>
+
+    <pre><code>char source[] = "Hello";
+char destination[20];
+
+strcpy(destination, source);
+
+printf("%s", destination);</code></pre>
+
+    <div class="output-box">
+
+        Hello
+
+    </div>
+
+
+    <!-- 11.14 STRCAT -->
+
+    <h3>11.14 strcat()</h3>
+
+    <p>
+        The <strong>strcat()</strong> function appends one
+        string to another.
+    </p>
+
+    <pre><code>char first[30] = "Hello ";
+char second[] = "World";
+
+strcat(first, second);
+
+printf("%s", first);</code></pre>
+
+    <div class="output-box">
+
+        Hello World
+
+    </div>
+
+
+    <!-- 11.15 STRCMP -->
+
+    <h3>11.15 strcmp()</h3>
+
+    <p>
+        The <strong>strcmp()</strong> function compares
+        two strings lexicographically.
+    </p>
+
+    <pre><code>char a[] = "apple";
+char b[] = "apple";
+
+if(strcmp(a, b) == 0)
+{
+    printf("Equal");
+}
+else
+{
+    printf("Not Equal");
+}</code></pre>
+
+    <div class="output-box">
+
+        Equal
+
+    </div>
+
+    <div class="tip-box">
+
+        💡 For equality, use:
+
+        <br><br>
+
+        <strong>strcmp(a, b) == 0</strong>
+
+        <br><br>
+
+        Do NOT use:
+
+        <br>
+
+        <strong>a == b</strong>
+
+        <br>
+
+        to compare the contents of two strings.
+
+    </div>
+
+
+    <!-- 11.16 STRING LENGTH WITHOUT STRLEN -->
+
+    <h3>11.16 Find String Length Without strlen()</h3>
+
+    <pre><code>char str[100];
+
+scanf("%99s", str);
+
+int length = 0;
+
+while(str[length] != '\0')
+{
+    length++;
+}
+
+printf("Length = %d", length);</code></pre>
+
+
+    <!-- 11.17 COUNT VOWELS -->
+
+    <h3>11.17 Count Vowels</h3>
+
+    <pre><code>char str[100];
+int vowels = 0;
+
+scanf("%99s", str);
+
+for(int i = 0; str[i] != '\0'; i++)
+{
+    char ch = str[i];
+
+    if(ch == 'a' || ch == 'e' ||
+       ch == 'i' || ch == 'o' ||
+       ch == 'u' ||
+       ch == 'A' || ch == 'E' ||
+       ch == 'I' || ch == 'O' ||
+       ch == 'U')
+    {
+        vowels++;
+    }
+}
+
+printf("Vowels = %d", vowels);</code></pre>
+
+
+    <!-- 11.18 CONSONANTS -->
+
+    <h3>11.18 Count Consonants</h3>
+
+    <p>
+        A consonant is an alphabetic character that is
+        not a vowel.
+    </p>
+
+    <pre><code>char str[100];
+int consonants = 0;
+
+scanf("%99s", str);
+
+for(int i = 0; str[i] != '\0'; i++)
+{
+    char ch = str[i];
+
+    if((ch &gt;= 'A' &amp;&amp; ch &lt;= 'Z') ||
+       (ch &gt;= 'a' &amp;&amp; ch &lt;= 'z'))
+    {
+        if(!(ch == 'a' || ch == 'e' ||
+             ch == 'i' || ch == 'o' ||
+             ch == 'u' ||
+             ch == 'A' || ch == 'E' ||
+             ch == 'I' || ch == 'O' ||
+             ch == 'U'))
+        {
+            consonants++;
+        }
+    }
+}
+
+printf("Consonants = %d", consonants);</code></pre>
+
+
+    <!-- 11.19 DIGITS -->
+
+    <h3>11.19 Count Digits in a String</h3>
+
+    <pre><code>char str[100];
+int digits = 0;
+
+scanf("%99s", str);
+
+for(int i = 0; str[i] != '\0'; i++)
+{
+    if(str[i] &gt;= '0' &amp;&amp; str[i] &lt;= '9')
+    {
+        digits++;
+    }
+}
+
+printf("Digits = %d", digits);</code></pre>
+
+
+    <!-- 11.20 SPACES -->
+
+    <h3>11.20 Count Spaces</h3>
+
+    <pre><code>char str[100];
+int spaces = 0;
+
+fgets(str, sizeof(str), stdin);
+
+for(int i = 0; str[i] != '\0'; i++)
+{
+    if(str[i] == ' ')
+    {
+        spaces++;
+    }
+}
+
+printf("Spaces = %d", spaces);</code></pre>
+
+
+    <!-- 11.21 UPPERCASE -->
+
+    <h3>11.21 Convert Lowercase to Uppercase</h3>
+
+    <p>
+        You can convert lowercase English letters
+        using ASCII arithmetic.
+    </p>
+
+    <pre><code>char str[100];
+
+scanf("%99s", str);
+
+for(int i = 0; str[i] != '\0'; i++)
+{
+    if(str[i] &gt;= 'a' &amp;&amp; str[i] &lt;= 'z')
+    {
+        str[i] = str[i] - 'a' + 'A';
+    }
+}
+
+printf("%s", str);</code></pre>
+
+
+    <!-- 11.22 LOWERCASE -->
+
+    <h3>11.22 Convert Uppercase to Lowercase</h3>
+
+    <pre><code>char str[100];
+
+scanf("%99s", str);
+
+for(int i = 0; str[i] != '\0'; i++)
+{
+    if(str[i] &gt;= 'A' &amp;&amp; str[i] &lt;= 'Z')
+    {
+        str[i] = str[i] - 'A' + 'a';
+    }
+}
+
+printf("%s", str);</code></pre>
+
+
+    <!-- 11.23 REVERSE -->
+
+    <h3>11.23 Reverse a String</h3>
+
+    <pre><code>#include &lt;string.h&gt;
+
+char str[100];
+
+scanf("%99s", str);
+
+int length = strlen(str);
+
+for(int i = length - 1; i &gt;= 0; i--)
+{
+    printf("%c", str[i]);
+}</code></pre>
+
+    <div class="example-box">
+
+        <strong>Input:</strong>
+
+        <br>
+
+        HELLO
+
+        <br><br>
+
+        <strong>Output:</strong>
+
+        <br>
+
+        OLLEH
+
+    </div>
+
+
+    <!-- 11.24 PALINDROME -->
+
+    <h3>11.24 Palindrome String</h3>
+
+    <p>
+        A string is a palindrome if it reads the same
+        from both directions.
+    </p>
+
+    <div class="formula-box">
+
+        MADAM → Palindrome
+
+        <br><br>
+
+        HELLO → Not Palindrome
+
+    </div>
+
+    <pre><code>#include &lt;string.h&gt;
+
+char str[100];
+
+scanf("%99s", str);
+
+int left = 0;
+int right = strlen(str) - 1;
+
+int palindrome = 1;
+
+while(left &lt; right)
+{
+    if(str[left] != str[right])
+    {
+        palindrome = 0;
+        break;
+    }
+
+    left++;
+    right--;
+}
+
+if(palindrome)
+{
+    printf("Palindrome");
+}
+else
+{
+    printf("Not Palindrome");
+}</code></pre>
+
+
+    <!-- 11.25 STRING COMPARE WITHOUT STRCMP -->
+
+    <h3>11.25 Compare Two Strings Without strcmp()</h3>
+
+    <pre><code>char a[100];
+char b[100];
+
+scanf("%99s", a);
+scanf("%99s", b);
+
+int equal = 1;
+
+int i = 0;
+
+while(a[i] != '\0' || b[i] != '\0')
+{
+    if(a[i] != b[i])
+    {
+        equal = 0;
+        break;
+    }
+
+    i++;
+}
+
+if(equal)
+{
+    printf("Equal");
+}
+else
+{
+    printf("Not Equal");
+}</code></pre>
+
+
+    <!-- 11.26 COPY WITHOUT STRCPY -->
+
+    <h3>11.26 Copy String Without strcpy()</h3>
+
+    <pre><code>char source[100];
+char destination[100];
+
+scanf("%99s", source);
+
+int i = 0;
+
+while(source[i] != '\0')
+{
+    destination[i] = source[i];
+    i++;
+}
+
+destination[i] = '\0';
+
+printf("%s", destination);</code></pre>
+
+
+    <!-- 11.27 CONCAT WITHOUT STRCAT -->
+
+    <h3>11.27 Concatenate Without strcat()</h3>
+
+    <pre><code>char a[100];
+char b[50];
+
+scanf("%99s", a);
+scanf("%49s", b);
+
+int i = 0;
+int j = 0;
+
+while(a[i] != '\0')
+{
+    i++;
+}
+
+while(b[j] != '\0')
+{
+    a[i] = b[j];
+
+    i++;
+    j++;
+}
+
+a[i] = '\0';
+
+printf("%s", a);</code></pre>
+
+
+    <!-- 11.28 CHARACTER FREQUENCY -->
+
+    <h3>11.28 Frequency of a Character</h3>
+
+    <pre><code>char str[100];
+char key;
+
+scanf("%99s", str);
+scanf(" %c", &amp;key);
+
+int count = 0;
+
+for(int i = 0; str[i] != '\0'; i++)
+{
+    if(str[i] == key)
+    {
+        count++;
+    }
+}
+
+printf("Frequency = %d", count);</code></pre>
+
+
+    <!-- 11.29 REMOVE SPACES -->
+
+    <h3>11.29 Remove Spaces from a String</h3>
+
+    <pre><code>char str[200];
+
+fgets(str, sizeof(str), stdin);
+
+int j = 0;
+
+for(int i = 0; str[i] != '\0'; i++)
+{
+    if(str[i] != ' ')
+    {
+        str[j] = str[i];
+        j++;
+    }
+}
+
+str[j] = '\0';
+
+printf("%s", str);</code></pre>
+
+
+    <!-- 11.30 WORD COUNT -->
+
+    <h3>11.30 Count Words in a Sentence</h3>
+
+    <p>
+        A simple word-counting approach is to count
+        transitions from whitespace to a non-whitespace
+        character.
+    </p>
+
+    <pre><code>char str[200];
+
+fgets(str, sizeof(str), stdin);
+
+int words = 0;
+int inWord = 0;
+
+for(int i = 0; str[i] != '\0'; i++)
+{
+    if(str[i] != ' ' &amp;&amp;
+       str[i] != '\n' &amp;&amp;
+       str[i] != '\t')
+    {
+        if(!inWord)
+        {
+            words++;
+            inWord = 1;
+        }
+    }
+    else
+    {
+        inWord = 0;
+    }
+}
+
+printf("Words = %d", words);</code></pre>
+
+
+    <!-- 11.31 ALPHABET CHECK -->
+
+    <h3>11.31 Check Whether a String Contains Only Alphabets</h3>
+
+    <pre><code>char str[100];
+
+scanf("%99s", str);
+
+int valid = 1;
+
+for(int i = 0; str[i] != '\0'; i++)
+{
+    if(!((str[i] &gt;= 'A' &amp;&amp; str[i] &lt;= 'Z') ||
+         (str[i] &gt;= 'a' &amp;&amp; str[i] &lt;= 'z')))
+    {
+        valid = 0;
+        break;
+    }
+}
+
+if(valid)
+{
+    printf("Only Alphabets");
+}
+else
+{
+    printf("Contains Non-Alphabet Characters");
+}</code></pre>
+
+
+    <!-- 11.32 FIRST NON REPEATING -->
+
+    <h3>11.32 First Non-Repeating Character</h3>
+
+    <p>
+        A nested-loop approach can be used to find the
+        first character that appears only once.
+    </p>
+
+    <pre><code>char str[100];
+
+scanf("%99s", str);
+
+int found = 0;
+
+for(int i = 0; str[i] != '\0'; i++)
+{
+    int count = 0;
+
+    for(int j = 0; str[j] != '\0'; j++)
+    {
+        if(str[i] == str[j])
+        {
+            count++;
+        }
+    }
+
+    if(count == 1)
+    {
+        printf("%c", str[i]);
+        found = 1;
+        break;
+    }
+}
+
+if(!found)
+{
+    printf("No non-repeating character");
+}</code></pre>
+
+
+    <!-- 11.33 STRING ARRAY -->
+
+    <h3>11.33 Array of Strings</h3>
+
+    <p>
+        Multiple strings can be stored using a
+        two-dimensional character array.
+    </p>
+
+    <pre><code>char names[3][20] =
+{
+    "Venu",
+    "Ravi",
+    "Sita"
+};
+
+for(int i = 0; i &lt; 3; i++)
+{
+    printf("%s\n", names[i]);
+}</code></pre>
+
+    <div class="output-box">
+
+        Venu
+        <br>
+        Ravi
+        <br>
+        Sita
+
+    </div>
+
+
+    <!-- 11.34 STRING INPUT WITH SPACES -->
+
+    <h3>11.34 Important: scanf() vs fgets()</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Spaces</th>
+                    <th>Typical Use</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>scanf("%s", str)</td>
+                    <td>Stops at whitespace</td>
+                    <td>Single word</td>
+                </tr>
+
+                <tr>
+                    <td>fgets()</td>
+                    <td>Can read spaces</td>
+                    <td>Full line</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 11.35 NULL CHARACTER -->
+
+    <h3>11.35 Why is \0 Important?</h3>
+
+    <p>
+        String functions and many string operations need
+        to know where the string ends.
+    </p>
+
+    <div class="formula-box">
+
+        "CAT"
+
+        <br><br>
+
+        C → A → T → \0
+
+    </div>
+
+    <p>
+        The <strong>\0</strong> tells C that the string
+        has ended.
+    </p>
+
+    <div class="tip-box">
+
+        ⚠️ <strong>\0</strong> is not the same as the
+        character <strong>'0'</strong>.
+
+        <br><br>
+
+        '\0' → Null character
+
+        <br>
+
+        '0' → Character zero
+
+    </div>
+
+
+    <!-- 11.36 COMMON MISTAKES -->
+
+    <h3>11.36 Common String Mistakes</h3>
+
+    <ul>
+
+        <li>
+            Forgetting space for the null character.
+        </li>
+
+        <li>
+            Using <strong>==</strong> to compare string
+            contents.
+        </li>
+
+        <li>
+            Using <strong>scanf("%s")</strong> when the
+            input contains spaces.
+        </li>
+
+        <li>
+            Reading more characters than the array can hold.
+        </li>
+
+        <li>
+            Forgetting <strong>#include &lt;string.h&gt;</strong>
+            when using standard string functions.
+        </li>
+
+        <li>
+            Forgetting to add <strong>\0</strong> when
+            manually constructing a string.
+        </li>
+
+        <li>
+            Confusing <strong>'A'</strong> with
+            <strong>"A"</strong>.
+        </li>
+
+    </ul>
+
+
+    <!-- 11.37 QUICK REVISION -->
+
+    <h3>11.37 Quick Revision</h3>
+
+    <div class="tip-box">
+
+        📌 C has no built-in string data type.
+
+        <br><br>
+
+        📌 Strings are stored as character arrays.
+
+        <br><br>
+
+        📌 Strings end with <strong>\0</strong>.
+
+        <br><br>
+
+        📌 <strong>%s</strong> is used for string output.
+
+        <br><br>
+
+        📌 <strong>strlen()</strong> → length.
+
+        <br><br>
+
+        📌 <strong>strcpy()</strong> → copy.
+
+        <br><br>
+
+        📌 <strong>strcat()</strong> → concatenate.
+
+        <br><br>
+
+        📌 <strong>strcmp()</strong> → compare.
+
+        <br><br>
+
+        📌 <strong>fgets()</strong> can read spaces.
+
+    </div>
+
+
+    <!-- 11.38 MCQs -->
+
+    
+<section class="content-card cb-added-section cb-compact-learning" id="strings-visualizer-extra">
+
+    <span class="cb-added-label">INTERACTIVE LEARNING</span>
+
+    <h2>🎬 Strings — Character Traversal</h2>
+
+    <p class="cb-added-note">
+        Follow how C traverses a character array until the null terminator <code>\0</code>.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBConceptViz.toggle('strings')"
+    >▶ Open Visualization</button>
+
+    <div class="cb-compact-panel" id="cbVizPanel-strings" hidden>
+
+        <div
+            class="cb-viz-card cb-viz-dsa-standard"
+            data-cb-viz="strings"
+            data-frames="[{&quot;title&quot;:&quot;1. Start at index 0&quot;,&quot;detail&quot;:&quot;The first character is &#x27;C&#x27;. It is processed and the index advances.&quot;},{&quot;title&quot;:&quot;2. Visit index 1&quot;,&quot;detail&quot;:&quot;The next character is &#x27;o&#x27;. The loop continues because it is not the null character.&quot;},{&quot;title&quot;:&quot;3. Visit index 2&quot;,&quot;detail&quot;:&quot;The character &#x27;d&#x27; is processed.&quot;},{&quot;title&quot;:&quot;4. Visit index 3&quot;,&quot;detail&quot;:&quot;The character &#x27;e&#x27; is processed.&quot;},{&quot;title&quot;:&quot;5. Reach the null terminator&quot;,&quot;detail&quot;:&quot;At index 4 the character is &#x27;\\0&#x27;. This marks the end of the C string.&quot;}]"
+        >
+
+            <div class="cb-viz-dsa-topbar">
+                <div class="cb-viz-dsa-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+                <div class="cb-viz-dsa-brand" aria-label="CodeBhavya">
+                    <span class="cb-viz-dsa-brand-mark">
+                        <img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo">
+                    </span>
+                    <span class="cb-viz-dsa-code">Code</span><span class="cb-viz-dsa-bhavya">Bhavya</span>
+                </div>
+            </div>
+
+            <h3 class="cb-viz-dsa-title">🎬 String Traversal Visualizer</h3>
+
+            <p class="cb-viz-dsa-intro">
+                The currently visited character becomes active as the traversal moves toward <code>\0</code>.
+            </p>
+
+            <div class="cb-mini-step-flow">
+
+                <div class="cb-mini-step-card cb-mini-step-card-blue" data-cb-flow-step="0">
+                    <div class="cb-mini-step-badge">Index 0</div>
+                    <div class="cb-mini-step-text">C</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-gold" data-cb-flow-step="1">
+                    <div class="cb-mini-step-badge">Index 1</div>
+                    <div class="cb-mini-step-text">o</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-purple" data-cb-flow-step="2">
+                    <div class="cb-mini-step-badge">Index 2</div>
+                    <div class="cb-mini-step-text">d</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-green" data-cb-flow-step="3">
+                    <div class="cb-mini-step-badge">Index 3</div>
+                    <div class="cb-mini-step-text">e</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-pink" data-cb-flow-step="4">
+                    <div class="cb-mini-step-badge">Index 4</div>
+                    <div class="cb-mini-step-text">\0</div>
+                </div>
+
+            </div>
+
+            <div class="cb-viz-stage">
+                <div class="cb-viz-step" id="cbVizStep-strings">Step 1</div>
+                <h3 id="cbVizTitle-strings"></h3>
+                <p id="cbVizDetail-strings"></p>
+                <div class="cb-viz-dots" id="cbVizDots-strings"></div>
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBConceptViz.prev('strings')">← Previous</button>
+                <button class="cb-control cb-next" id="cbVizNext-strings" onclick="CBConceptViz.next('strings')">Next →</button>
+                <button class="cb-control cb-auto" id="cbVizAuto-strings" onclick="CBConceptViz.auto('strings')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBConceptViz.pause('strings')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBConceptViz.reset('strings')">↺ Reset</button>
+            </div>
+
+            <div class="cb-mini-progress">
+                <div id="cbVizProgress-strings"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="content-card cb-added-section cb-compact-learning" id="strings-tracing-extra">
+
+    <span class="cb-added-label">PROGRAM TRACING</span>
+
+    <h2>🔎 Program Tracing — Strings</h2>
+
+    <p class="cb-added-note">
+        Trace character-by-character traversal while counting vowels in a string.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBProgramTrace.toggle('strings')"
+    >▶ Program Tracing — Strings</button>
+
+    <div class="cb-compact-panel" id="cbTracePanel-strings" hidden>
+
+        <div
+            class="cb-tracer"
+            data-cb-trace="strings"
+            data-config="{&quot;code&quot;:[&quot;int main()&quot;,&quot;{&quot;,&quot;    char text[] = \&quot;Code\&quot;;&quot;,&quot;    int count = 0;&quot;,&quot;    for (int i = 0; text[i] != &#x27;\\0&#x27;; i++)&quot;,&quot;    {&quot;,&quot;        char ch = text[i];&quot;,&quot;        if (ch==&#x27;a&#x27; || ch==&#x27;e&#x27; || ch==&#x27;i&#x27; ||&quot;,&quot;            ch==&#x27;o&#x27; || ch==&#x27;u&#x27; || ch==&#x27;A&#x27; ||&quot;,&quot;            ch==&#x27;E&#x27; || ch==&#x27;I&#x27; || ch==&#x27;O&#x27; || ch==&#x27;U&#x27;)&quot;,&quot;        {&quot;,&quot;            count++;&quot;,&quot;        }&quot;,&quot;    }&quot;,&quot;    printf(\&quot;Vowels = %d\&quot;, count);&quot;,&quot;    return 0;&quot;,&quot;}&quot;],&quot;steps&quot;:[{&quot;line&quot;:0,&quot;state&quot;:{&quot;text&quot;:&quot;—&quot;,&quot;count&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Execution starts at main().&quot;},{&quot;line&quot;:2,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;The character array text is initialized to \&quot;Code\&quot; followed by the null terminator.&quot;},{&quot;line&quot;:3,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;count is initialized to 0.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:0,&quot;i&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i = 0 and text[0] is &#x27;C&#x27;, not &#x27;\\0&#x27;, so the loop begins.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:0,&quot;i&quot;:0,&quot;ch&quot;:&quot;C&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;ch receives text[0], which is &#x27;C&#x27;.&quot;},{&quot;line&quot;:7,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:0,&quot;i&quot;:0,&quot;ch&quot;:&quot;C&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;&#x27;C&#x27; is not a vowel, so count remains 0.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:0,&quot;i&quot;:1,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i becomes 1. text[1] is &#x27;o&#x27;, so traversal continues.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:0,&quot;i&quot;:1,&quot;ch&quot;:&quot;o&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;ch receives &#x27;o&#x27;.&quot;},{&quot;line&quot;:11,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:1,&quot;i&quot;:1,&quot;ch&quot;:&quot;o&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;&#x27;o&#x27; is a vowel, so count becomes 1.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:1,&quot;i&quot;:2,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i becomes 2. text[2] is &#x27;d&#x27;.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:1,&quot;i&quot;:2,&quot;ch&quot;:&quot;d&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;ch receives &#x27;d&#x27;. It is not a vowel, so count stays 1.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:1,&quot;i&quot;:3,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i becomes 3. text[3] is &#x27;e&#x27;.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:1,&quot;i&quot;:3,&quot;ch&quot;:&quot;e&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;ch receives &#x27;e&#x27;.&quot;},{&quot;line&quot;:11,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:2,&quot;i&quot;:3,&quot;ch&quot;:&quot;e&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;&#x27;e&#x27; is a vowel, so count becomes 2.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:2,&quot;i&quot;:4,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i becomes 4. text[4] is &#x27;\\0&#x27;, so the loop terminates.&quot;},{&quot;line&quot;:14,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:2,&quot;output&quot;:&quot;Vowels = 2&quot;},&quot;note&quot;:&quot;printf() displays the final vowel count.&quot;},{&quot;line&quot;:15,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:2,&quot;output&quot;:&quot;Vowels = 2&quot;},&quot;note&quot;:&quot;return 0 ends the program successfully.&quot;}]}"
+        >
+
+            <div class="cb-tracer-grid">
+
+                <div class="cb-tracer-code-wrap">
+                    <div class="cb-tracer-heading">C Program</div>
+                    <pre class="cb-tracer-code" id="cbTraceCode-strings"></pre>
+                </div>
+
+                <div class="cb-tracer-state-wrap">
+                    <div class="cb-tracer-heading">Live Variables</div>
+
+                    <div class="cb-tracer-note" id="cbTraceNote-strings"></div>
+
+                    <div class="cb-live-state" id="cbTraceState-strings"></div>
+
+                    <div class="cb-tracer-output">
+                        <strong>Output</strong>
+                        <pre id="cbTraceOutput-strings">—</pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBProgramTrace.prev('strings')">← Previous</button>
+                <button class="cb-control cb-next" id="cbTraceNext-strings" onclick="CBProgramTrace.next('strings')">Next →</button>
+                <button class="cb-control cb-auto" id="cbTraceAuto-strings" onclick="CBProgramTrace.auto('strings')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBProgramTrace.pause('strings')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBProgramTrace.reset('strings')">↺ Reset</button>
+            </div>
+
+            <div class="cb-tracer-status" id="cbTraceStatus-strings">Step 0</div>
+
+        </div>
+    </div>
+</section>
+
+
+<h3>11.38 Quick MCQs</h3>
+
+    <p class="cb-mcq-guide">
+        Select an answer first, then click <strong>Check Answer</strong>.
+        A correct choice becomes green. If the answer is wrong, your choice becomes red
+        and the correct option becomes green. The explanation appears below.
+    </p>
+
+    <div class="cb-mcq-list">
+        
+    <div class="cb-mcq-card" id="strings-mcq1" data-correct="B">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">1.</span>
+            <strong>Which character terminates a C string?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="strings-mcq1" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">
+</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="strings-mcq1" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text"></span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="strings-mcq1" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">0</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="strings-mcq1" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">	</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('strings-mcq1')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('strings-mcq1')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>A C string ends with the null character &#x27;&#x27;.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="strings-mcq2" data-correct="C">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">2.</span>
+            <strong>Which format specifier is used to print a string?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="strings-mcq2" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">%c</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="strings-mcq2" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">%d</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="strings-mcq2" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">%s</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="strings-mcq2" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">%f</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('strings-mcq2')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('strings-mcq2')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>%s is used with printf() to print a null-terminated string.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="strings-mcq3" data-correct="B">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">3.</span>
+            <strong>Which function finds the length of a string?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="strings-mcq3" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">strcpy()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="strings-mcq3" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">strlen()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="strings-mcq3" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">strcat()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="strings-mcq3" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">strcmp()</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('strings-mcq3')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('strings-mcq3')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>strlen() returns the number of characters before the terminating &#x27;&#x27;.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="strings-mcq4" data-correct="C">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">4.</span>
+            <strong>Which function compares two strings?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="strings-mcq4" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">strcpy()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="strings-mcq4" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">strlen()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="strings-mcq4" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">strcmp()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="strings-mcq4" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">strcat()</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('strings-mcq4')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('strings-mcq4')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>strcmp() compares two strings lexicographically.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="strings-mcq5" data-correct="A">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">5.</span>
+            <strong>Which function concatenates strings?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="strings-mcq5" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">strcat()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="strings-mcq5" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">strlen()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="strings-mcq5" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">strcmp()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="strings-mcq5" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">strchr()</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('strings-mcq5')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('strings-mcq5')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>strcat() appends one null-terminated string to another destination string with sufficient capacity.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="strings-mcq6" data-correct="B">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">6.</span>
+            <strong>Which function can read a line containing spaces?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="strings-mcq6" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">scanf(&quot;%s&quot;)</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="strings-mcq6" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">fgets()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="strings-mcq6" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">strlen()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="strings-mcq6" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">strcpy()</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('strings-mcq6')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('strings-mcq6')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>fgets() can read a line including spaces, up to the supplied buffer limit.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    </div>
+
+
+    <!-- 11.39 PRACTICE PROBLEMS -->
+
+    <div class="cb-c-dsa-practice-section">
+
+        <span class="cb-c-practice-label">PRACTICE</span>
+
+        <h3>11.39 🎯 Practice Problems</h3>
+
+        <p class="cb-c-practice-guide">
+            Strings become easy when you understand character arrays, <code></code>, and traversal.
+            Use <strong>💻 Solve It Yourself</strong> first,
+            open <strong>Hint</strong> only when needed,
+            and use <strong>Show Program</strong> after attempting the problem.
+        </p>
+
+        <div class="cb-practice-overall" data-practice-total="20">
+
+            <div class="cb-practice-overall-title">
+                📈 Strings Practice Progress
+            </div>
+
+            <div class="cb-practice-overall-grid">
+
+                <div class="cb-practice-overall-item">
+                    <strong>Solved</strong>
+                    <span id="cbPracticeOverallSolved">0 / 20</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completed with Solution</strong>
+                    <span id="cbPracticeOverallCompleted">0</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Total Score</strong>
+                    <span id="cbPracticeOverallScore">0 / 2000</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completion</strong>
+                    <span id="cbPracticeOverallPercent">0%</span>
+                </div>
+
+            </div>
+
+            <div class="cb-practice-progress-track">
+                <div id="cbPracticeOverallBar" class="cb-practice-progress-fill"></div>
+            </div>
+
+            <div class="cb-practice-progress-note">
+                A problem counts as <strong>Solved</strong> when all test cases pass
+                without opening the full solution. Problems completed after viewing
+                the official solution are tracked separately.
+            </div>
+
+        </div>
+
+        <div class="cb-c-practice-list">
+            
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>1. Read and Print a String</strong>
+                <span id="practiceBadge-strings-p1" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 1: Read a complete line of text and print it.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the same line.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p1')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p1')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p1')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p1" hidden>
+                💡 <strong>Hint:</strong> Use fgets() so spaces can be read.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p1" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Read and Print a String
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p1"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p1"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p1')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p1"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p1')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p1')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p1"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p1"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p1" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p1">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p1">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p1">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p1" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p1" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char text[200];
+
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, &quot;
+&quot;)] = &#x27;&#x27;;
+
+    printf(&quot;%s&quot;, text);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>2. Length Without strlen()</strong>
+                <span id="practiceBadge-strings-p2" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 2: Find the length of a string without using strlen().</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the number of characters, excluding the newline and null terminator.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p2')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p2')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p2')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p2" hidden>
+                💡 <strong>Hint:</strong> Count characters until &#x27;&#x27;.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p2" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Length Without strlen()
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p2"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p2"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p2')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p2"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p2')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p2')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p2"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p2"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p2" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p2">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p2">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p2">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p2" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p2" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char text[200];
+    int length = 0;
+
+    fgets(text, sizeof(text), stdin);
+
+    while (text[length] != &#x27;&#x27; &amp;&amp; text[length] != &#x27;
+&#x27;)
+        length++;
+
+    printf(&quot;%d&quot;, length);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>3. Count Vowels</strong>
+                <span id="practiceBadge-strings-p3" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 3: Count vowels in a string.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the vowel count.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p3')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p3')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p3')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p3" hidden>
+                💡 <strong>Hint:</strong> Check both uppercase and lowercase vowels.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p3" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Count Vowels
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p3"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p3"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p3')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p3"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p3')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p3')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p3"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p3"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p3" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p3">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p3">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p3">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p3" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p3" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char text[200];
+    int count = 0;
+
+    fgets(text, sizeof(text), stdin);
+
+    for (int i = 0; text[i] != &#x27;&#x27;; i++)
+    {
+        char ch = text[i];
+
+        if (ch==&#x27;a&#x27; || ch==&#x27;e&#x27; || ch==&#x27;i&#x27; || ch==&#x27;o&#x27; || ch==&#x27;u&#x27; ||
+            ch==&#x27;A&#x27; || ch==&#x27;E&#x27; || ch==&#x27;I&#x27; || ch==&#x27;O&#x27; || ch==&#x27;U&#x27;)
+        {
+            count++;
+        }
+    }
+
+    printf(&quot;%d&quot;, count);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>4. Count Consonants</strong>
+                <span id="practiceBadge-strings-p4" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 4: Count consonant letters in a string.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the consonant count.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p4')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p4')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p4')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p4" hidden>
+                💡 <strong>Hint:</strong> First check isalpha(), then exclude vowels.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p4" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Count Consonants
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p4"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p4"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p4')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p4"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p4')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p4')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p4"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p4"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p4" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p4">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p4">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p4">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p4" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p4" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char text[200];
+    int count = 0;
+
+    fgets(text, sizeof(text), stdin);
+
+    for (int i = 0; text[i] != &#x27;&#x27;; i++)
+    {
+        char ch = (char)tolower((unsigned char)text[i]);
+
+        if (isalpha((unsigned char)ch) &amp;&amp;
+            !(ch==&#x27;a&#x27; || ch==&#x27;e&#x27; || ch==&#x27;i&#x27; || ch==&#x27;o&#x27; || ch==&#x27;u&#x27;))
+        {
+            count++;
+        }
+    }
+
+    printf(&quot;%d&quot;, count);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>5. Count Digits in a String</strong>
+                <span id="practiceBadge-strings-p5" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 5: Count digit characters in a string.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the number of digit characters.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p5')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p5')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p5')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p5" hidden>
+                💡 <strong>Hint:</strong> Use isdigit() or test ch &gt;= &#x27;0&#x27; &amp;&amp; ch &lt;= &#x27;9&#x27;.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p5" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Count Digits in a String
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p5"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p5"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p5')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p5"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p5')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p5')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p5"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p5"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p5" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p5">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p5">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p5">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p5" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p5" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char text[200];
+    int count = 0;
+
+    fgets(text, sizeof(text), stdin);
+
+    for (int i = 0; text[i] != &#x27;&#x27;; i++)
+    {
+        if (isdigit((unsigned char)text[i]))
+            count++;
+    }
+
+    printf(&quot;%d&quot;, count);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>6. Count Spaces</strong>
+                <span id="practiceBadge-strings-p6" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 6: Count space characters in a sentence.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the number of spaces.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p6')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p6')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p6')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p6" hidden>
+                💡 <strong>Hint:</strong> Increment the count whenever text[i] == &#x27; &#x27;.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p6" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Count Spaces
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p6"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p6"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p6')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p6"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p6')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p6')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p6"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p6"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p6" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p6">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p6">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p6">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p6" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p6" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char text[200];
+    int count = 0;
+
+    fgets(text, sizeof(text), stdin);
+
+    for (int i = 0; text[i] != &#x27;&#x27;; i++)
+    {
+        if (text[i] == &#x27; &#x27;)
+            count++;
+    }
+
+    printf(&quot;%d&quot;, count);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>7. Lowercase to Uppercase</strong>
+                <span id="practiceBadge-strings-p7" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 7: Convert lowercase letters in a string to uppercase.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the converted string.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p7')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p7')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p7')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p7" hidden>
+                💡 <strong>Hint:</strong> Use toupper() for each character.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p7" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Lowercase to Uppercase
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p7"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p7"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p7')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p7"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p7')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p7')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p7"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p7"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p7" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p7">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p7">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p7">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p7" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p7" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char text[200];
+
+    fgets(text, sizeof(text), stdin);
+
+    for (int i = 0; text[i] != &#x27;&#x27;; i++)
+        text[i] = (char)toupper((unsigned char)text[i]);
+
+    printf(&quot;%s&quot;, text);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>8. Uppercase to Lowercase</strong>
+                <span id="practiceBadge-strings-p8" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 8: Convert uppercase letters in a string to lowercase.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the converted string.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p8')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p8')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p8')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p8" hidden>
+                💡 <strong>Hint:</strong> Use tolower() for each character.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p8" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Uppercase to Lowercase
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p8"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p8"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p8')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p8"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p8')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p8')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p8"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p8"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p8" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p8">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p8">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p8">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p8" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p8" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char text[200];
+
+    fgets(text, sizeof(text), stdin);
+
+    for (int i = 0; text[i] != &#x27;&#x27;; i++)
+        text[i] = (char)tolower((unsigned char)text[i]);
+
+    printf(&quot;%s&quot;, text);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>9. Reverse a String</strong>
+                <span id="practiceBadge-strings-p9" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 9: Reverse a string and print the reversed result.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the characters in reverse order.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p9')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p9')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p9')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p9" hidden>
+                💡 <strong>Hint:</strong> Find the length and print from length - 1 down to 0.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p9" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Reverse a String
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p9"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p9"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p9')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p9"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p9')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p9')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p9"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p9"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p9" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p9">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p9">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p9">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p9" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p9" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char text[200];
+
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, &quot;
+&quot;)] = &#x27;&#x27;;
+
+    int length = (int)strlen(text);
+
+    for (int i = length - 1; i &gt;= 0; i--)
+        putchar(text[i]);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>10. Palindrome String</strong>
+                <span id="practiceBadge-strings-p10" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 10: Check whether a string is a palindrome.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One word or line.</p>
+            <p><strong>Output:</strong> Print &quot;Palindrome&quot; or &quot;Not Palindrome&quot;.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p10')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p10')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p10')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p10" hidden>
+                💡 <strong>Hint:</strong> Compare characters from both ends moving toward the center.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p10" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Palindrome String
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p10"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p10"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p10')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p10"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p10')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p10')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p10"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p10"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p10" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p10">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p10">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p10">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p10" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p10" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char text[200];
+    int palindrome = 1;
+
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, &quot;
+&quot;)] = &#x27;&#x27;;
+
+    int left = 0;
+    int right = (int)strlen(text) - 1;
+
+    while (left &lt; right)
+    {
+        if (text[left] != text[right])
+        {
+            palindrome = 0;
+            break;
+        }
+
+        left++;
+        right--;
+    }
+
+    printf(&quot;%s&quot;, palindrome ? &quot;Palindrome&quot; : &quot;Not Palindrome&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>11. Compare Without strcmp()</strong>
+                <span id="practiceBadge-strings-p11" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 11: Compare two strings without using strcmp().</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two lines of text.</p>
+            <p><strong>Output:</strong> Print &quot;Equal&quot;, &quot;First Smaller&quot;, or &quot;First Greater&quot;.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p11')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p11')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p11')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p11" hidden>
+                💡 <strong>Hint:</strong> Compare corresponding characters until they differ or one string ends.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p11" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Compare Without strcmp()
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p11"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p11"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p11')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p11"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p11')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p11')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p11"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p11"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p11" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p11">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p11">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p11">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p11" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p11" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char a[200], b[200];
+    int i = 0;
+
+    fgets(a, sizeof(a), stdin);
+    fgets(b, sizeof(b), stdin);
+
+    a[strcspn(a, &quot;
+&quot;)] = &#x27;&#x27;;
+    b[strcspn(b, &quot;
+&quot;)] = &#x27;&#x27;;
+
+    while (a[i] != &#x27;&#x27; &amp;&amp; b[i] != &#x27;&#x27; &amp;&amp; a[i] == b[i])
+        i++;
+
+    if (a[i] == b[i])
+        printf(&quot;Equal&quot;);
+    else if ((unsigned char)a[i] &lt; (unsigned char)b[i])
+        printf(&quot;First Smaller&quot;);
+    else
+        printf(&quot;First Greater&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>12. Copy Without strcpy()</strong>
+                <span id="practiceBadge-strings-p12" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 12: Copy one string to another without using strcpy().</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the copied string.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p12')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p12')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p12')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p12" hidden>
+                💡 <strong>Hint:</strong> Copy characters one by one and also copy the terminating &#x27;&#x27;.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p12" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Copy Without strcpy()
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p12"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p12"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p12')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p12"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p12')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p12')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p12"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p12"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p12" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p12">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p12">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p12">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p12" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p12" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char source[200];
+    char destination[200];
+    int i = 0;
+
+    fgets(source, sizeof(source), stdin);
+    source[strcspn(source, &quot;
+&quot;)] = &#x27;&#x27;;
+
+    do
+    {
+        destination[i] = source[i];
+    }
+    while (source[i++] != &#x27;&#x27;);
+
+    printf(&quot;%s&quot;, destination);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>13. Concatenate Without strcat()</strong>
+                <span id="practiceBadge-strings-p13" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 13: Concatenate two strings without using strcat().</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two lines of text.</p>
+            <p><strong>Output:</strong> Print the concatenated string.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p13')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p13')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p13')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p13" hidden>
+                💡 <strong>Hint:</strong> Find the end of the first string, then copy the second string from that position.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p13" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Concatenate Without strcat()
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p13"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p13"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p13')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p13"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p13')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p13')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p13"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p13"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p13" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p13">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p13">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p13">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p13" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p13" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char a[400], b[200];
+    int i = 0;
+    int j = 0;
+
+    fgets(a, sizeof(a), stdin);
+    fgets(b, sizeof(b), stdin);
+
+    a[strcspn(a, &quot;
+&quot;)] = &#x27;&#x27;;
+    b[strcspn(b, &quot;
+&quot;)] = &#x27;&#x27;;
+
+    while (a[i] != &#x27;&#x27;)
+        i++;
+
+    while (b[j] != &#x27;&#x27;)
+        a[i++] = b[j++];
+
+    a[i] = &#x27;&#x27;;
+
+    printf(&quot;%s&quot;, a);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>14. Frequency of a Character</strong>
+                <span id="practiceBadge-strings-p14" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 14: Count how many times a given character appears in a string.</strong>
+            </p>
+
+            <p><strong>Input:</strong> First line: text. Second line: one character.</p>
+            <p><strong>Output:</strong> Print the frequency.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p14')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p14')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p14')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p14" hidden>
+                💡 <strong>Hint:</strong> Compare every text[i] with the target character.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p14" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Frequency of a Character
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p14"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p14"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p14')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p14"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p14')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p14')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p14"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p14"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p14" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p14">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p14">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p14">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p14" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p14" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char text[200];
+    char target;
+    int count = 0;
+
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, &quot;
+&quot;)] = &#x27;&#x27;;
+
+    scanf(&quot;%c&quot;, &amp;target);
+
+    for (int i = 0; text[i] != &#x27;&#x27;; i++)
+    {
+        if (text[i] == target)
+            count++;
+    }
+
+    printf(&quot;%d&quot;, count);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>15. Remove All Spaces</strong>
+                <span id="practiceBadge-strings-p15" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 15: Remove all space characters from a string.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the string without spaces.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p15')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p15')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p15')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p15" hidden>
+                💡 <strong>Hint:</strong> Copy only non-space characters into the next output position.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p15" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Remove All Spaces
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p15"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p15"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p15')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p15"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p15')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p15')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p15"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p15"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p15" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p15">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p15">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p15">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p15" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p15" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char text[200];
+    int write = 0;
+
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, &quot;
+&quot;)] = &#x27;&#x27;;
+
+    for (int read = 0; text[read] != &#x27;&#x27;; read++)
+    {
+        if (text[read] != &#x27; &#x27;)
+            text[write++] = text[read];
+    }
+
+    text[write] = &#x27;&#x27;;
+
+    printf(&quot;%s&quot;, text);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>16. Count Words</strong>
+                <span id="practiceBadge-strings-p16" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 16: Count the number of words in a sentence.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the word count.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p16')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p16')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p16')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p16" hidden>
+                💡 <strong>Hint:</strong> Count transitions from whitespace to a non-whitespace character.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p16" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Count Words
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p16"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p16"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p16')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p16"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p16')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p16')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p16"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p16"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p16" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p16">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p16">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p16">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p16" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p16" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char text[300];
+    int words = 0;
+    int inWord = 0;
+
+    fgets(text, sizeof(text), stdin);
+
+    for (int i = 0; text[i] != &#x27;&#x27;; i++)
+    {
+        if (isspace((unsigned char)text[i]))
+        {
+            inWord = 0;
+        }
+        else if (!inWord)
+        {
+            words++;
+            inWord = 1;
+        }
+    }
+
+    printf(&quot;%d&quot;, words);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>17. Contains Only Alphabets</strong>
+                <span id="practiceBadge-strings-p17" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 17: Check whether a string contains only alphabetic characters.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print &quot;Only Alphabets&quot; or &quot;Not Only Alphabets&quot;.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p17')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p17')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p17')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p17" hidden>
+                💡 <strong>Hint:</strong> Use isalpha() for each character after removing the newline.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p17" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Contains Only Alphabets
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p17"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p17"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p17')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p17"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p17')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p17')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p17"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p17"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p17" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p17">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p17">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p17">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p17" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p17" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char text[200];
+    int only = 1;
+
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, &quot;
+&quot;)] = &#x27;&#x27;;
+
+    if (text[0] == &#x27;&#x27;)
+        only = 0;
+
+    for (int i = 0; text[i] != &#x27;&#x27;; i++)
+    {
+        if (!isalpha((unsigned char)text[i]))
+        {
+            only = 0;
+            break;
+        }
+    }
+
+    printf(&quot;%s&quot;, only ? &quot;Only Alphabets&quot; : &quot;Not Only Alphabets&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>18. First Non-Repeating Character</strong>
+                <span id="practiceBadge-strings-p18" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 18: Find the first character that occurs exactly once.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the first non-repeating character, or None.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p18')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p18')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p18')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p18" hidden>
+                💡 <strong>Hint:</strong> Build a frequency table for unsigned char values, then scan the string again.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p18" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — First Non-Repeating Character
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p18"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p18"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p18')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p18"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p18')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p18')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p18"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p18"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p18" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p18">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p18">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p18">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p18" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p18" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char text[200];
+    int freq[256] = {0};
+
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, &quot;
+&quot;)] = &#x27;&#x27;;
+
+    for (int i = 0; text[i] != &#x27;&#x27;; i++)
+        freq[(unsigned char)text[i]]++;
+
+    for (int i = 0; text[i] != &#x27;&#x27;; i++)
+    {
+        if (freq[(unsigned char)text[i]] == 1)
+        {
+            printf(&quot;%c&quot;, text[i]);
+            return 0;
+        }
+    }
+
+    printf(&quot;None&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>19. First Repeating Character</strong>
+                <span id="practiceBadge-strings-p19" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 19: Find the first character whose total frequency is greater than one.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the first repeating character in original order, or None.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p19')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p19')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p19')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p19" hidden>
+                💡 <strong>Hint:</strong> Build frequencies first, then scan from left to right.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p19" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — First Repeating Character
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p19"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p19"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p19')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p19"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p19')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p19')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p19"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p19"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p19" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p19">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p19">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p19">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p19" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p19" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char text[200];
+    int freq[256] = {0};
+
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, &quot;
+&quot;)] = &#x27;&#x27;;
+
+    for (int i = 0; text[i] != &#x27;&#x27;; i++)
+        freq[(unsigned char)text[i]]++;
+
+    for (int i = 0; text[i] != &#x27;&#x27;; i++)
+    {
+        if (freq[(unsigned char)text[i]] &gt; 1)
+        {
+            printf(&quot;%c&quot;, text[i]);
+            return 0;
+        }
+    }
+
+    printf(&quot;None&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>20. Store and Print 5 Student Names</strong>
+                <span id="practiceBadge-strings-p20" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 20: Store five student names in a two-dimensional character array and print them.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Exactly five lines, one student name per line.</p>
+            <p><strong>Output:</strong> Print the five names, one per line.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('strings-p20')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('strings-p20')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('strings-p20')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-strings-p20" hidden>
+                💡 <strong>Hint:</strong> Use char names[5][100] and fgets() for each row.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-strings-p20" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Store and Print 5 Student Names
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-strings-p20"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-strings-p20"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('strings-p20')">▶ Run Code</button>
+
+                            <button id="practiceCheck-strings-p20"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('strings-p20')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('strings-p20')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-strings-p20"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-strings-p20"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-strings-p20" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-strings-p20">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-strings-p20">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-strings-p20">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-strings-p20" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-strings-p20" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char names[5][100];
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        fgets(names[i], sizeof(names[i]), stdin);
+        names[i][strcspn(names[i], &quot;
+&quot;)] = &#x27;&#x27;;
+    }
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf(&quot;%s&quot;, names[i]);
+
+        if (i &lt; 4)
+            printf(&quot;
+&quot;);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        </div>
+
+    </div>
+
+
+    <!-- 11.40 KEY TAKEAWAY -->
+
+    <h3>11.40 Key Takeaway</h3>
+
+    <div class="tip-box">
+
+        🎯 Remember the basic string pattern:
+
+        <br><br>
+
+        <strong>
+        String → Character Array → Loop → Process
+        </strong>
+
+        <br><br>
+
+        Example: finding vowels follows this process:
+
+    </div>
+
+<div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">Step 1</div>
+            <div class="cb-mini-step-text">Traverse Characters</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">Step 2</div>
+            <div class="cb-mini-step-text">Check Each Character</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">Step 3</div>
+            <div class="cb-mini-step-text">Update the Required Result</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">Step 4</div>
+            <div class="cb-mini-step-text">Print the Result</div>
+        </div>
+
+    </div>
+
+    <div class="tip-box">
+        Mastering strings will make many coding-platform problems much easier.
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="strings-interview-extra">
+
+    <span class="cb-added-label">INTERVIEW PREPARATION</span>
+
+    <h2>🎤 Strings — Interview Questions</h2>
+
+    <div class="cb-original-qa-list cb-interview-qa-list">
+        
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">1.</span>
+                <span>Why is the null character important in a C string?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('stringsInterviewAnswer1', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="stringsInterviewAnswer1"
+                 hidden>
+                It marks the end of the character sequence so string-processing functions know where the string stops.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">2.</span>
+                <span>What is the difference between a character and a string in C?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('stringsInterviewAnswer2', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="stringsInterviewAnswer2"
+                 hidden>
+                A character such as &#x27;A&#x27; is a single char value, while a string such as &quot;A&quot; is a character array containing &#x27;A&#x27; followed by &#x27;\0&#x27;.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">3.</span>
+                <span>What is the difference between scanf(&quot;%s&quot;) and fgets()?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('stringsInterviewAnswer3', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="stringsInterviewAnswer3"
+                 hidden>
+                scanf(&quot;%s&quot;) stops at whitespace, while fgets() can read spaces and accepts a buffer size limit.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">4.</span>
+                <span>Does strlen() count the terminating null character?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('stringsInterviewAnswer4', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="stringsInterviewAnswer4"
+                 hidden>
+                No. strlen() counts the characters before &#x27;\0&#x27;.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">5.</span>
+                <span>Why can strcpy() and strcat() be dangerous when the destination buffer is too small?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('stringsInterviewAnswer5', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="stringsInterviewAnswer5"
+                 hidden>
+                They can write beyond the destination array if sufficient space is not available, causing undefined behavior.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">6.</span>
+                <span>How does strcmp() report the comparison result?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('stringsInterviewAnswer6', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="stringsInterviewAnswer6"
+                 hidden>
+                It returns zero for equal strings, a negative value when the first string compares smaller, and a positive value when it compares greater.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">7.</span>
+                <span>Why are strings often processed with loops?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('stringsInterviewAnswer7', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="stringsInterviewAnswer7"
+                 hidden>
+                A string is a character array, so many tasks require visiting characters one by one until &#x27;\0&#x27;.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">8.</span>
+                <span>What is an array of strings in C?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('stringsInterviewAnswer8', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="stringsInterviewAnswer8"
+                 hidden>
+                A common representation is a two-dimensional char array where each row stores one null-terminated string.
+            </div>
+
+        </div>
+    
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="strings-tips-extra">
+
+    <span class="cb-added-label">PLACEMENT TIPS</span>
+
+    <h2>💡 Strings — Placement Tips</h2>
+
+    <ul class="cb-tip-grid">
+        <li>Always remember that a valid C string requires a terminating <strong>\0</strong>.</li>
+        <li>When reading sentences, prefer <strong>fgets()</strong> over <code>scanf("%s")</code>.</li>
+        <li>For manual string algorithms, trace indices and characters just like array problems.</li>
+        <li>For palindrome and reverse problems, think in terms of <strong>left</strong> and <strong>right</strong> positions.</li>
+        <li>For frequency problems, a small frequency table indexed by <code>unsigned char</code> values is often useful.</li>
+        <li>Before copying or concatenating strings, always ensure the destination buffer has enough capacity.</li>
+    </ul>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="strings-practice-extra">
+
+    <span class="cb-added-label">EXTRA PRACTICE</span>
+
+    <h2>✍️ Strings — Extra Practice Questions</h2>
+
+    <ol class="cb-extra-practice">
+        <li>Find the longest word in a sentence.</li>
+        <li>Remove duplicate characters while preserving the first occurrence.</li>
+        <li>Check whether two strings are anagrams.</li>
+        <li>Count uppercase letters, lowercase letters, digits, spaces, and special characters separately.</li>
+        <li>Replace every occurrence of one character with another.</li>
+        <li>Find the most frequent character in a string.</li>
+    </ol>
+
+</section>
+
+
+
+<section class="cb-topic-navigation" aria-label="C Programming topic navigation">
+
+    <a class="cb-topic-nav-btn cb-topic-nav-prev" href="arrays.html">
+        ← Previous Topic: Arrays
+    </a>
+
+    <a class="cb-topic-nav-btn cb-topic-nav-next" href="functions.html">
+        Next Topic: Functions →
+    </a>
+
+</section>
+
+
+</main>
+
+</div>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../Maths/index.html">
+                Maths
+            </a>
+
+            <a href="index.html">
+                C Programming
+            </a>
+
+        </div>
+
+
+        <!-- LEARNING -->
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+<a href="../Data-Structures/">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/">
+    Advanced Data Structures
+</a>
+
+            <a href="#">
+                Python
+            </a>
+
+            <a href="#">
+                AI & Machine Learning
+            </a>
+
+        </div>
+
+
+        <!-- PRACTICE -->
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="#practice">
+                Practice Problems
+            </a>
+
+            <a href="#practice">
+                Problem Solving
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="c-programming.js"></script>
+<script>
+const codeBhavyaStringsPracticeConfigs =
+[{"key": "strings-p1", "title": "Read and Print a String", "starterCode": "#include <stdio.h>
+
+int main()
+{
+    char text[200];
+
+    /* Read and print a complete line */
+
+    return 0;
+}", "sampleInput": "Hello CodeBhavya", "tests": [{"input": "Hello CodeBhavya", "expected": "Hello CodeBhavya"}, {"input": "C Programming", "expected": "C Programming"}, {"input": "OpenAI", "expected": "OpenAI"}]}, {"key": "strings-p2", "title": "Length Without strlen()", "starterCode": "#include <stdio.h>
+
+int main()
+{
+    char text[200];
+
+    /* Find length without strlen() */
+
+    return 0;
+}", "sampleInput": "Hello", "tests": [{"input": "Hello", "expected": "5"}, {"input": "C Programming", "expected": "13"}, {"input": "
+", "expected": "0"}]}, {"key": "strings-p3", "title": "Count Vowels", "starterCode": "#include <stdio.h>
+
+int main()
+{
+    char text[200];
+
+    /* Count vowels */
+
+    return 0;
+}", "sampleInput": "CodeBhavya", "tests": [{"input": "CodeBhavya", "expected": "4"}, {"input": "AEIOU", "expected": "5"}, {"input": "rhythm", "expected": "0"}]}, {"key": "strings-p4", "title": "Count Consonants", "starterCode": "#include <stdio.h>
+#include <ctype.h>
+
+int main()
+{
+    char text[200];
+
+    /* Count consonants */
+
+    return 0;
+}", "sampleInput": "CodeBhavya", "tests": [{"input": "CodeBhavya", "expected": "6"}, {"input": "AEIOU", "expected": "0"}, {"input": "abc xyz", "expected": "5"}]}, {"key": "strings-p5", "title": "Count Digits in a String", "starterCode": "#include <stdio.h>
+#include <ctype.h>
+
+int main()
+{
+    char text[200];
+
+    /* Count digits */
+
+    return 0;
+}", "sampleInput": "C2026 AI5", "tests": [{"input": "C2026 AI5", "expected": "5"}, {"input": "abc", "expected": "0"}, {"input": "12345", "expected": "5"}]}, {"key": "strings-p6", "title": "Count Spaces", "starterCode": "#include <stdio.h>
+
+int main()
+{
+    char text[200];
+
+    /* Count spaces */
+
+    return 0;
+}", "sampleInput": "C is easy", "tests": [{"input": "C is easy", "expected": "2"}, {"input": "NoSpaces", "expected": "0"}, {"input": "a  b", "expected": "2"}]}, {"key": "strings-p7", "title": "Lowercase to Uppercase", "starterCode": "#include <stdio.h>
+#include <ctype.h>
+
+int main()
+{
+    char text[200];
+
+    /* Convert lowercase to uppercase */
+
+    return 0;
+}", "sampleInput": "Code Bhavya", "tests": [{"input": "Code Bhavya", "expected": "CODE BHAVYA"}, {"input": "abc123", "expected": "ABC123"}, {"input": "HELLO", "expected": "HELLO"}]}, {"key": "strings-p8", "title": "Uppercase to Lowercase", "starterCode": "#include <stdio.h>
+#include <ctype.h>
+
+int main()
+{
+    char text[200];
+
+    /* Convert uppercase to lowercase */
+
+    return 0;
+}", "sampleInput": "CODE BHAVYA", "tests": [{"input": "CODE BHAVYA", "expected": "code bhavya"}, {"input": "ABC123", "expected": "abc123"}, {"input": "hello", "expected": "hello"}]}, {"key": "strings-p9", "title": "Reverse a String", "starterCode": "#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char text[200];
+
+    /* Reverse the string */
+
+    return 0;
+}", "sampleInput": "hello", "tests": [{"input": "hello", "expected": "olleh"}, {"input": "C Code", "expected": "edoC C"}, {"input": "a", "expected": "a"}]}, {"key": "strings-p10", "title": "Palindrome String", "starterCode": "#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char text[200];
+
+    /* Check palindrome */
+
+    return 0;
+}", "sampleInput": "madam", "tests": [{"input": "madam", "expected": "Palindrome"}, {"input": "level", "expected": "Palindrome"}, {"input": "hello", "expected": "Not Palindrome"}]}, {"key": "strings-p11", "title": "Compare Without strcmp()", "starterCode": "#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char a[200], b[200];
+
+    /* Compare without strcmp() */
+
+    return 0;
+}", "sampleInput": "apple
+apple", "tests": [{"input": "apple
+apple", "expected": "Equal"}, {"input": "apple
+banana", "expected": "First Smaller"}, {"input": "cat
+car", "expected": "First Greater"}]}, {"key": "strings-p12", "title": "Copy Without strcpy()", "starterCode": "#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char source[200];
+    char destination[200];
+
+    /* Copy without strcpy() */
+
+    return 0;
+}", "sampleInput": "CodeBhavya", "tests": [{"input": "CodeBhavya", "expected": "CodeBhavya"}, {"input": "C Programming", "expected": "C Programming"}]}, {"key": "strings-p13", "title": "Concatenate Without strcat()", "starterCode": "#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char a[400], b[200];
+
+    /* Concatenate without strcat() */
+
+    return 0;
+}", "sampleInput": "Code
+Bhavya", "tests": [{"input": "Code
+Bhavya", "expected": "CodeBhavya"}, {"input": "Hello 
+World", "expected": "Hello World"}]}, {"key": "strings-p14", "title": "Frequency of a Character", "starterCode": "#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char text[200];
+    char target;
+
+    /* Count character frequency */
+
+    return 0;
+}", "sampleInput": "banana
+a", "tests": [{"input": "banana
+a", "expected": "3"}, {"input": "hello world
+l", "expected": "3"}, {"input": "abc
+z", "expected": "0"}]}, {"key": "strings-p15", "title": "Remove All Spaces", "starterCode": "#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char text[200];
+
+    /* Remove spaces */
+
+    return 0;
+}", "sampleInput": "C Programming Language", "tests": [{"input": "C Programming Language", "expected": "CProgrammingLanguage"}, {"input": "a  b", "expected": "ab"}, {"input": "NoSpaces", "expected": "NoSpaces"}]}, {"key": "strings-p16", "title": "Count Words", "starterCode": "#include <stdio.h>
+#include <ctype.h>
+
+int main()
+{
+    char text[300];
+
+    /* Count words */
+
+    return 0;
+}", "sampleInput": "C programming is easy", "tests": [{"input": "C programming is easy", "expected": "4"}, {"input": "  hello   world  ", "expected": "2"}, {"input": "
+", "expected": "0"}]}, {"key": "strings-p17", "title": "Contains Only Alphabets", "starterCode": "#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int main()
+{
+    char text[200];
+
+    /* Check whether all characters are alphabets */
+
+    return 0;
+}", "sampleInput": "CodeBhavya", "tests": [{"input": "CodeBhavya", "expected": "Only Alphabets"}, {"input": "Code2026", "expected": "Not Only Alphabets"}, {"input": "Hello World", "expected": "Not Only Alphabets"}]}, {"key": "strings-p18", "title": "First Non-Repeating Character", "starterCode": "#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char text[200];
+
+    /* Find first non-repeating character */
+
+    return 0;
+}", "sampleInput": "swiss", "tests": [{"input": "swiss", "expected": "w"}, {"input": "aabbc", "expected": "c"}, {"input": "aabb", "expected": "None"}]}, {"key": "strings-p19", "title": "First Repeating Character", "starterCode": "#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char text[200];
+
+    /* Find first repeating character */
+
+    return 0;
+}", "sampleInput": "swiss", "tests": [{"input": "swiss", "expected": "s"}, {"input": "abcda", "expected": "a"}, {"input": "abcd", "expected": "None"}]}, {"key": "strings-p20", "title": "Store and Print 5 Student Names", "starterCode": "#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char names[5][100];
+
+    /* Read and print 5 student names */
+
+    return 0;
+}", "sampleInput": "Anu
+Bharat
+Charan
+Divya
+Esha", "tests": [{"input": "Anu
+Bharat
+Charan
+Divya
+Esha", "expected": "Anu
+Bharat
+Charan
+Divya
+Esha"}, {"input": "A
+B
+C
+D
+E", "expected": "A
+B
+C
+D
+E"}]}];
+
+CodeBhavyaCPractice.registerAll(
+    codeBhavyaStringsPracticeConfigs
+);
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
