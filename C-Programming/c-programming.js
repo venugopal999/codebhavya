@@ -1892,3 +1892,199 @@ window.CodeBhavyaCPractice = (() => {
     };
 
 })();
+
+/* ============================================================
+   QUICK MCQs — INTERACTIVE ANSWER CHECKING
+   Paste at the VERY BOTTOM of c-programming.js
+   ============================================================ */
+
+window.CBMCQ = {
+
+    check(id) {
+
+        const card =
+            document.getElementById(id);
+
+        if (!card)
+            return;
+
+        const selected =
+            card.querySelector(
+                'input[type="radio"]:checked'
+            );
+
+        const feedback =
+            card.querySelector(
+                ".cb-mcq-feedback"
+            );
+
+        const result =
+            card.querySelector(
+                ".cb-mcq-result"
+            );
+
+        if (!selected) {
+
+            if (feedback)
+                feedback.hidden = false;
+
+            if (result) {
+                result.className =
+                    "cb-mcq-result wrong";
+
+                result.textContent =
+                    "Please select an answer first.";
+            }
+
+            return;
+        }
+
+        const correct =
+            card.dataset.correct;
+
+        const selectedValue =
+            selected.value;
+
+        card
+            .querySelectorAll(
+                ".cb-mcq-option"
+            )
+            .forEach(option => {
+
+                option.classList.remove(
+                    "correct",
+                    "wrong"
+                );
+
+                const value =
+                    option.dataset.option;
+
+                if (value === correct)
+                    option.classList.add(
+                        "correct"
+                    );
+
+                if (
+                    value === selectedValue &&
+                    selectedValue !== correct
+                )
+                    option.classList.add(
+                        "wrong"
+                    );
+            });
+
+        card
+            .querySelectorAll(
+                'input[type="radio"]'
+            )
+            .forEach(input => {
+                input.disabled = true;
+            });
+
+        if (feedback)
+            feedback.hidden = false;
+
+        if (result) {
+
+            if (
+                selectedValue ===
+                correct
+            ) {
+                result.className =
+                    "cb-mcq-result correct";
+
+                result.textContent =
+                    "✓ Correct!";
+            } else {
+                result.className =
+                    "cb-mcq-result wrong";
+
+                result.textContent =
+                    `✗ Incorrect. The correct answer is ${correct}.`;
+            }
+        }
+
+        const checkButton =
+            card.querySelector(
+                ".cb-mcq-check-btn"
+            );
+
+        const resetButton =
+            card.querySelector(
+                ".cb-mcq-reset-btn"
+            );
+
+        if (checkButton)
+            checkButton.disabled = true;
+
+        if (resetButton)
+            resetButton.hidden = false;
+    },
+
+
+    reset(id) {
+
+        const card =
+            document.getElementById(id);
+
+        if (!card)
+            return;
+
+        card
+            .querySelectorAll(
+                'input[type="radio"]'
+            )
+            .forEach(input => {
+                input.checked = false;
+                input.disabled = false;
+            });
+
+        card
+            .querySelectorAll(
+                ".cb-mcq-option"
+            )
+            .forEach(option => {
+                option.classList.remove(
+                    "correct",
+                    "wrong"
+                );
+            });
+
+        const feedback =
+            card.querySelector(
+                ".cb-mcq-feedback"
+            );
+
+        const result =
+            card.querySelector(
+                ".cb-mcq-result"
+            );
+
+        const checkButton =
+            card.querySelector(
+                ".cb-mcq-check-btn"
+            );
+
+        const resetButton =
+            card.querySelector(
+                ".cb-mcq-reset-btn"
+            );
+
+        if (feedback)
+            feedback.hidden = true;
+
+        if (result) {
+            result.className =
+                "cb-mcq-result";
+
+            result.textContent =
+                "";
+        }
+
+        if (checkButton)
+            checkButton.disabled = false;
+
+        if (resetButton)
+            resetButton.hidden = true;
+    }
+};
