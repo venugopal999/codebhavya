@@ -568,6 +568,56 @@ int AGE = 40;</code></pre>
     </div>
 
 
+    <h4>Types of Constants in C</h4>
+
+    <p>
+        Constants can appear directly in a program as fixed values,
+        or they can be given meaningful names using
+        <strong>const</strong> or <strong>#define</strong>.
+    </p>
+
+    <div class="cb-constant-types-grid">
+
+        <div class="cb-constant-type-card">
+            <span class="cb-constant-type-icon" aria-hidden="true">🔢</span>
+            <div>
+                <strong>Integer Constant</strong>
+                <code>10</code>
+            </div>
+        </div>
+
+        <div class="cb-constant-type-card">
+            <span class="cb-constant-type-icon" aria-hidden="true">📐</span>
+            <div>
+                <strong>Floating Constant</strong>
+                <code>3.14</code>
+            </div>
+        </div>
+
+        <div class="cb-constant-type-card">
+            <span class="cb-constant-type-icon" aria-hidden="true">🔤</span>
+            <div>
+                <strong>Character Constant</strong>
+                <code>'A'</code>
+            </div>
+        </div>
+
+        <div class="cb-constant-type-card">
+            <span class="cb-constant-type-icon" aria-hidden="true">💬</span>
+            <div>
+                <strong>String Literal</strong>
+                <code>"Hello"</code>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="tip-box">
+        💡 A literal such as <strong>10</strong> appears directly in the code.
+        A named constant makes the purpose of a fixed value easier to understand.
+    </div>
+
+
     <!-- CONST -->
 
     <h3>3.11 const Keyword</h3>
@@ -601,6 +651,35 @@ int AGE = 40;</code></pre>
     </div>
 
 
+    <h4>Example: Using const in a Program</h4>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    const float TAX_RATE = 0.18f;
+    float price = 1000.0f;
+    float tax;
+
+    tax = price * TAX_RATE;
+
+    printf("Tax = %.2f", tax);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        Tax = 180.00
+    </div>
+
+    <p>
+        Here, <strong>TAX_RATE</strong> has a type
+        (<code>float</code>) and is used like a normal object,
+        but the program should not assign a different value to it
+        through that identifier.
+    </p>
+
+
     <!-- DEFINE -->
 
     <h3>3.12 #define Constants</h3>
@@ -627,6 +706,67 @@ int main()
         of the macro name according to the
         macro definition before compilation.
     </p>
+
+
+    <h4>const vs #define</h4>
+
+    <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>const</th>
+                    <th>#define</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Handled by</td>
+                    <td>C language / compiler</td>
+                    <td>Preprocessor</td>
+                </tr>
+
+                <tr>
+                    <td>Has a C type</td>
+                    <td>Yes</td>
+                    <td>No C object type is created by the macro itself</td>
+                </tr>
+
+                <tr>
+                    <td>Example</td>
+                    <td><code>const int MAX = 100;</code></td>
+                    <td><code>#define MAX 100</code></td>
+                </tr>
+
+                <tr>
+                    <td>Typical use</td>
+                    <td>Named read-only object</td>
+                    <td>Symbolic replacement before compilation</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="cb-constant-summary">
+        <div>
+            <span aria-hidden="true">📦</span>
+            <strong>Variable</strong>
+            <small>Value can change during execution.</small>
+        </div>
+
+        <div>
+            <span aria-hidden="true">🔒</span>
+            <strong>const object</strong>
+            <small>Has a C type and should not be modified through that identifier.</small>
+        </div>
+
+        <div>
+            <span aria-hidden="true">⚙️</span>
+            <strong>#define macro</strong>
+            <small>Textual replacement performed before compilation.</small>
+        </div>
+    </div>
 
 
     <!-- MEMORY -->
@@ -1469,7 +1609,181 @@ int main()
 
 </footer>
 
-<script src="c-programming.js"></script><script>
+<script src="c-programming.js"></script>
+
+<script>
+/* ============================================================
+   VARIABLES & CONSTANTS — QUICK MCQ ENGINE
+   Kept inside this page so Check Answer works without
+   changing the common c-programming.js file.
+   ============================================================ */
+
+window.CBMCQ = {
+
+    check(id) {
+
+        const card = document.getElementById(id);
+
+        if (!card) {
+            return;
+        }
+
+        const selected =
+            card.querySelector('input[type="radio"]:checked');
+
+        const feedback =
+            card.querySelector(".cb-mcq-feedback");
+
+        const result =
+            card.querySelector(".cb-mcq-result");
+
+        /* Student must choose an option first */
+        if (!selected) {
+
+            if (feedback) {
+                feedback.hidden = false;
+            }
+
+            if (result) {
+                result.className = "cb-mcq-result wrong";
+                result.textContent = "Please select an answer first.";
+            }
+
+            return;
+        }
+
+        const correct = card.dataset.correct;
+        const selectedValue = selected.value;
+
+        card
+            .querySelectorAll(".cb-mcq-option")
+            .forEach(option => {
+
+                option.classList.remove(
+                    "correct",
+                    "wrong"
+                );
+
+                const optionValue =
+                    option.dataset.option;
+
+                /* Always show the correct answer in green */
+                if (optionValue === correct) {
+                    option.classList.add("correct");
+                }
+
+                /* If student selected the wrong answer, show it in red */
+                if (
+                    optionValue === selectedValue &&
+                    selectedValue !== correct
+                ) {
+                    option.classList.add("wrong");
+                }
+            });
+
+        /* Lock options after checking */
+        card
+            .querySelectorAll('input[type="radio"]')
+            .forEach(input => {
+                input.disabled = true;
+            });
+
+        if (feedback) {
+            feedback.hidden = false;
+        }
+
+        if (result) {
+
+            if (selectedValue === correct) {
+
+                result.className =
+                    "cb-mcq-result correct";
+
+                result.textContent =
+                    "✓ Correct!";
+
+            } else {
+
+                result.className =
+                    "cb-mcq-result wrong";
+
+                result.textContent =
+                    `✗ Incorrect. The correct answer is ${correct}.`;
+            }
+        }
+
+        const checkButton =
+            card.querySelector(".cb-mcq-check-btn");
+
+        const resetButton =
+            card.querySelector(".cb-mcq-reset-btn");
+
+        if (checkButton) {
+            checkButton.disabled = true;
+        }
+
+        if (resetButton) {
+            resetButton.hidden = false;
+        }
+    },
+
+
+    reset(id) {
+
+        const card = document.getElementById(id);
+
+        if (!card) {
+            return;
+        }
+
+        card
+            .querySelectorAll('input[type="radio"]')
+            .forEach(input => {
+                input.checked = false;
+                input.disabled = false;
+            });
+
+        card
+            .querySelectorAll(".cb-mcq-option")
+            .forEach(option => {
+                option.classList.remove(
+                    "correct",
+                    "wrong"
+                );
+            });
+
+        const feedback =
+            card.querySelector(".cb-mcq-feedback");
+
+        const result =
+            card.querySelector(".cb-mcq-result");
+
+        const checkButton =
+            card.querySelector(".cb-mcq-check-btn");
+
+        const resetButton =
+            card.querySelector(".cb-mcq-reset-btn");
+
+        if (feedback) {
+            feedback.hidden = true;
+        }
+
+        if (result) {
+            result.className = "cb-mcq-result";
+            result.textContent = "";
+        }
+
+        if (checkButton) {
+            checkButton.disabled = false;
+        }
+
+        if (resetButton) {
+            resetButton.hidden = true;
+        }
+    }
+};
+</script>
+<script>
 const codeBhavyaCPracticeConfigs = [{"key": "variables-p1", "title": "Student Details Using Variables", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int age;\n    float marks;\n    char grade;\n\n    /* Read age, marks and grade and print them */\n\n    return 0;\n}", "sampleInput": "20 85.5 A", "tests": [{"input": "20 85.5 A", "expected": "Age = 20\nMarks = 85.50\nGrade = A"}, {"input": "18 92 B", "expected": "Age = 18\nMarks = 92.00\nGrade = B"}, {"input": "21 76.25 C", "expected": "Age = 21\nMarks = 76.25\nGrade = C"}, {"input": "19 100 A", "expected": "Age = 19\nMarks = 100.00\nGrade = A"}, {"input": "22 68.75 D", "expected": "Age = 22\nMarks = 68.75\nGrade = D"}]}, {"key": "variables-p2", "title": "Swap Two Variables", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int a, b, temp;\n\n    /* Read a and b and swap them using temp */\n\n    return 0;\n}", "sampleInput": "10 20", "tests": [{"input": "10 20", "expected": "a = 20, b = 10"}, {"input": "5 9", "expected": "a = 9, b = 5"}, {"input": "-3 7", "expected": "a = 7, b = -3"}, {"input": "0 100", "expected": "a = 100, b = 0"}, {"input": "8 8", "expected": "a = 8, b = 8"}]}, {"key": "variables-p3", "title": "Total and Average of Three Marks", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    float m1, m2, m3;\n\n    /* Read three marks and calculate total and average */\n\n    return 0;\n}", "sampleInput": "70 80 90", "tests": [{"input": "70 80 90", "expected": "Total = 240.00\nAverage = 80.00"}, {"input": "50 60 70", "expected": "Total = 180.00\nAverage = 60.00"}, {"input": "100 100 100", "expected": "Total = 300.00\nAverage = 100.00"}, {"input": "75.5 80.5 84", "expected": "Total = 240.00\nAverage = 80.00"}, {"input": "0 30 60", "expected": "Total = 90.00\nAverage = 30.00"}]}, {"key": "variables-p4", "title": "Area of a Circle Using a Constant", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    const double PI = 3.14159;\n    double radius;\n\n    /* Read radius and calculate area */\n\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "5", "expected": "Area = 78.54"}, {"input": "1", "expected": "Area = 3.14"}, {"input": "2.5", "expected": "Area = 19.63"}, {"input": "0", "expected": "Area = 0.00"}, {"input": "10", "expected": "Area = 314.16"}]}, {"key": "variables-p5", "title": "Total Price of Three Products", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    double p1, p2, p3;\n\n    /* Read three prices and print their total */\n\n    return 0;\n}", "sampleInput": "10.50 20.00 30.25", "tests": [{"input": "10.50 20.00 30.25", "expected": "Total Price = 60.75"}, {"input": "5 5 5", "expected": "Total Price = 15.00"}, {"input": "99.99 0.01 10", "expected": "Total Price = 110.00"}, {"input": "0 0 0", "expected": "Total Price = 0.00"}, {"input": "12.25 7.75 20", "expected": "Total Price = 40.00"}]}];
 CodeBhavyaCPractice.registerAll(codeBhavyaCPracticeConfigs);
 </script>
