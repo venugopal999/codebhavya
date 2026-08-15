@@ -1,0 +1,4694 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C Programming | CodeBhavya</title>
+
+ <link rel="icon" type="image/png" sizes="32x32"
+      href="../images/codebhavya-icon-32.png">
+
+<link rel="icon" type="image/png" sizes="128x128"
+      href="../images/codebhavya-icon-128.png">
+
+<link rel="icon" type="image/png" sizes="512x512"
+      href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="c-programming.css">
+</head>
+
+<body class="cb-c-topic-page cb-loops-page">
+
+<header class="top-header">
+
+<!-- <a href="../index.html" class="logo">
+    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a> -->
+    
+<a href="../index.html" class="logo codebhavya-new-logo">
+
+    <img
+        src="../images/codebhavya-main-logo.png"
+        alt="CodeBhavya Logo"
+        class="main-logo"
+    >
+
+    <span class="brand-name">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </span>
+
+</a>
+
+    <nav class="top-nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="../Maths/">
+            Maths
+        </a>
+
+        <a href="index.html" class="active">
+            C
+        </a>
+
+<a href="../Data-Structures/index.html">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/index.html">
+    Advanced Data Structures
+</a>
+
+        <a href="../Python/">
+            Python
+        </a>
+
+        <a href="../AI-ML/">
+            AI & ML
+        </a>
+
+        <a href="../Placement/">
+            Placement
+        </a>
+
+    </nav>
+
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar cb-c-topic-sidebar">
+    <div class="sidebar-title">💻 C Programming</div>
+
+    <input
+        type="text"
+        id="topicSearch"
+        class="search-box"
+        placeholder="🔍 Search topics..."
+        onkeyup="searchTopics()"
+    >
+
+    <div class="sidebar-title">Fundamentals</div>
+    <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
+    <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
+    <a class="cb-topic-link" data-topic-link="1" href="data-types.html">📦 Data Types</a>
+    <a class="cb-topic-link" data-topic-link="1" href="input-output.html">⌨️ Input &amp; Output</a>
+
+    <div class="sidebar-title">Operators &amp; Control</div>
+    <a class="cb-topic-link" data-topic-link="1" href="operators.html">➕ Operators</a>
+    <a class="cb-topic-link" data-topic-link="1" href="expressions.html">🧮 Expressions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="decision-making.html">🔀 Decision Making</a>
+    <a class="cb-topic-link active" data-topic-link="1" href="loops.html">🔁 Loops</a>
+
+    <div class="sidebar-title">Programming Concepts</div>
+    <a class="cb-topic-link" data-topic-link="1" href="arrays.html">📊 Arrays</a>
+    <a class="cb-topic-link" data-topic-link="1" href="strings.html">🔤 Strings</a>
+    <a class="cb-topic-link" data-topic-link="1" href="functions.html">🧩 Functions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="pointers.html">👉 Pointers</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structures-unions.html">🏗️ Structures &amp; Unions</a>
+
+    <div class="sidebar-title">Advanced C</div>
+    <a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">⚙️ Preprocessor &amp; Header Files</a>
+    <a class="cb-topic-link" data-topic-link="1" href="file-handling.html">📁 File Handling</a>
+    <a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">🧠 Dynamic Memory Allocation</a>
+    <a class="cb-topic-link" data-topic-link="1" href="command-line.html">💻 Command Line Arguments</a>
+    <a class="cb-topic-link" data-topic-link="1" href="bitwise.html">🔢 Bitwise Programming</a>
+    <a class="cb-topic-link" data-topic-link="1" href="enum-typedef.html">🔤 Enumerations &amp; typedef</a>
+    <a class="cb-topic-link" data-topic-link="1" href="precedence.html">🧮 Operator Precedence &amp; Associativity</a>
+    <a class="cb-topic-link" data-topic-link="1" href="storage-classes.html">💾 Storage Classes</a>
+    <a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">🛠️ Advanced C Preprocessor</a>
+
+    <div class="sidebar-title">Practice</div>
+    <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
+</aside>
+
+<main class="main-content">
+
+<section id="loops" class="content-card">
+
+    <h2>🔁 9. Loops</h2>
+
+    <!-- INTRODUCTION -->
+
+    <h3>9.1 What is a Loop?</h3>
+
+    <p>
+        A loop is a control structure that repeatedly
+        executes a block of statements while a specified
+        condition is satisfied.
+    </p>
+
+    <div class="example-box">
+
+        <strong>Real-life example:</strong>
+
+        <br><br>
+
+        Suppose you want to print:
+
+        <br>
+
+        Hello
+
+        <br>
+        Hello
+
+        <br>
+        Hello
+
+        <br>
+        Hello
+
+        <br>
+        Hello
+
+        <br><br>
+
+        Instead of writing <strong>printf()</strong>
+        five times, we can use a loop.
+
+    </div>
+
+
+    <!-- WHY LOOPS -->
+
+    <h3>9.2 Why Do We Need Loops?</h3>
+
+    <p>
+        Loops reduce repetitive code and make programs
+        shorter, easier to maintain and easier to
+        understand.
+    </p>
+
+    <pre><code>printf("Hello\n");
+printf("Hello\n");
+printf("Hello\n");
+printf("Hello\n");
+printf("Hello\n");</code></pre>
+
+    <p>
+        The same task can be performed using:
+    </p>
+
+    <pre><code>for(int i = 1; i &lt;= 5; i++)
+{
+    printf("Hello\n");
+}</code></pre>
+
+
+    <!-- TYPES -->
+
+    <h3>9.3 Types of Loops in C</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Loop</th>
+                    <th>Condition Checked</th>
+                    <th>Typical Use</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>for</td>
+                    <td>Before each iteration</td>
+                    <td>Known/reasonable iteration count</td>
+                </tr>
+
+                <tr>
+                    <td>while</td>
+                    <td>Before each iteration</td>
+                    <td>Condition-controlled repetition</td>
+                </tr>
+
+                <tr>
+                    <td>do-while</td>
+                    <td>After each iteration</td>
+                    <td>Execute body at least once</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- FOR -->
+
+    <h3>9.4 for Loop</h3>
+
+    <p>
+        The for loop is commonly used when the number
+        of iterations is known or can be expressed
+        conveniently.
+    </p>
+
+    <div class="formula-box">
+
+        for(initialization; condition; update)
+        <br>
+        {
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;statements;
+        <br>
+        }
+
+    </div>
+
+
+    <h4>Example</h4>
+
+    <pre><code>for(int i = 1; i &lt;= 5; i++)
+{
+    printf("%d\n", i);
+}</code></pre>
+
+    <div class="output-box">
+
+        1
+        <br>
+        2
+        <br>
+        3
+        <br>
+        4
+        <br>
+        5
+
+    </div>
+
+
+    <!-- FOR WORKING -->
+
+    <h3>9.5 How for Loop Works</h3>
+
+    <div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">Step 1</div>
+            <div class="cb-mini-step-text">Initialization</div>
+            <div class="cb-mini-step-subtext">Set the loop variable once.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow" aria-hidden="true">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">Step 2</div>
+            <div class="cb-mini-step-text">Check Condition</div>
+            <div class="cb-mini-step-subtext">Continue only while the condition is true.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow" aria-hidden="true">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">Step 3</div>
+            <div class="cb-mini-step-text">Execute Body</div>
+            <div class="cb-mini-step-subtext">Run the statements inside the loop.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow" aria-hidden="true">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">Step 4</div>
+            <div class="cb-mini-step-text">Update</div>
+            <div class="cb-mini-step-subtext">Change the loop variable, then check the condition again.</div>
+        </div>
+
+    </div>
+
+
+    <h4>Example: i = 1</h4>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Iteration</th>
+                    <th>i</th>
+                    <th>Condition</th>
+                    <th>Output</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1 &lt;= 5 → True</td>
+                    <td>1</td>
+                </tr>
+
+                <tr>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2 &lt;= 5 → True</td>
+                    <td>2</td>
+                </tr>
+
+                <tr>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>3 &lt;= 5 → True</td>
+                    <td>3</td>
+                </tr>
+
+                <tr>
+                    <td>4</td>
+                    <td>4</td>
+                    <td>4 &lt;= 5 → True</td>
+                    <td>4</td>
+                </tr>
+
+                <tr>
+                    <td>5</td>
+                    <td>5</td>
+                    <td>5 &lt;= 5 → True</td>
+                    <td>5</td>
+                </tr>
+
+                <tr>
+                    <td>6</td>
+                    <td>6</td>
+                    <td>6 &lt;= 5 → False</td>
+                    <td>Stop</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- WHILE -->
+
+    <h3>9.6 while Loop</h3>
+
+    <p>
+        The while loop repeatedly executes a block
+        while its condition remains true.
+    </p>
+
+    <div class="formula-box">
+
+        while(condition)
+        <br>
+        {
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;statements;
+        <br>
+        }
+
+    </div>
+
+
+    <h4>Example</h4>
+
+    <pre><code>int i = 1;
+
+while(i &lt;= 5)
+{
+    printf("%d\n", i);
+    i++;
+}</code></pre>
+
+
+    <div class="output-box">
+
+        1
+        <br>
+        2
+        <br>
+        3
+        <br>
+        4
+        <br>
+        5
+
+    </div>
+
+
+    <!-- WHILE WORKING -->
+
+    <h3>9.7 How while Loop Works</h3>
+
+    <div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">Step 1</div>
+            <div class="cb-mini-step-text">Initialize</div>
+            <div class="cb-mini-step-subtext">Prepare the control variable before entering the loop.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow" aria-hidden="true">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">Step 2</div>
+            <div class="cb-mini-step-text">Check Condition</div>
+            <div class="cb-mini-step-subtext">If false, the loop stops immediately.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow" aria-hidden="true">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">Step 3</div>
+            <div class="cb-mini-step-text">Execute Body</div>
+            <div class="cb-mini-step-subtext">Run the statements for the current iteration.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow" aria-hidden="true">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">Step 4</div>
+            <div class="cb-mini-step-text">Update and Check Again</div>
+            <div class="cb-mini-step-subtext">Change the control value and return to the condition.</div>
+        </div>
+
+    </div>
+
+
+    <!-- DO WHILE -->
+
+    <h3>9.8 do-while Loop</h3>
+
+    <p>
+        The do-while loop executes its body first
+        and checks the condition afterward.
+    </p>
+
+    <div class="formula-box">
+
+        do
+        <br>
+        {
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;statements;
+        <br>
+        }
+        <br>
+        while(condition);
+
+    </div>
+
+
+    <h4>Example</h4>
+
+    <pre><code>int i = 1;
+
+do
+{
+    printf("%d\n", i);
+    i++;
+}
+while(i &lt;= 5);</code></pre>
+
+
+    <div class="output-box">
+
+        1
+        <br>
+        2
+        <br>
+        3
+        <br>
+        4
+        <br>
+        5
+
+    </div>
+
+
+    <!-- DO WHILE DIFFERENCE -->
+
+    <h3>9.9 Important Difference: while vs do-while</h3>
+
+    <p>
+        The key difference is when the condition
+        is checked.
+    </p>
+
+    <pre><code>int i = 10;
+
+while(i &lt; 5)
+{
+    printf("Hello");
+}</code></pre>
+
+    <div class="output-box">
+
+        No output
+
+    </div>
+
+
+    <pre><code>int i = 10;
+
+do
+{
+    printf("Hello");
+}
+while(i &lt; 5);</code></pre>
+
+    <div class="output-box">
+
+        Hello
+
+    </div>
+
+
+    <div class="tip-box">
+
+        💡 Remember:
+
+        <br><br>
+
+        <strong>while</strong> → May execute zero times.
+
+        <br><br>
+
+        <strong>do-while</strong> → Executes at least once.
+
+    </div>
+
+
+    <!-- COUNTING -->
+
+    <h3>9.10 Counting with Loops</h3>
+
+    <p>
+        A common use of loops is counting from one
+        number to another.
+    </p>
+
+    <pre><code>for(int i = 1; i &lt;= 10; i++)
+{
+    printf("%d ", i);
+}</code></pre>
+
+    <div class="output-box">
+
+        1 2 3 4 5 6 7 8 9 10
+
+    </div>
+
+
+    <!-- REVERSE -->
+
+    <h3>9.11 Counting in Reverse</h3>
+
+    <pre><code>for(int i = 10; i &gt;= 1; i--)
+{
+    printf("%d ", i);
+}</code></pre>
+
+    <div class="output-box">
+
+        10 9 8 7 6 5 4 3 2 1
+
+    </div>
+
+
+    <!-- EVEN -->
+
+    <h3>9.12 Print Even Numbers</h3>
+
+    <pre><code>for(int i = 2; i &lt;= 20; i += 2)
+{
+    printf("%d ", i);
+}</code></pre>
+
+    <div class="output-box">
+
+        2 4 6 8 10 12 14 16 18 20
+
+    </div>
+
+
+    <!-- ODD -->
+
+    <h3>9.13 Print Odd Numbers</h3>
+
+    <pre><code>for(int i = 1; i &lt;= 20; i += 2)
+{
+    printf("%d ", i);
+}</code></pre>
+
+    <div class="output-box">
+
+        1 3 5 7 9 11 13 15 17 19
+
+    </div>
+
+
+    <!-- SUM -->
+
+    <h3>9.14 Sum of First N Numbers</h3>
+
+    <p>
+        We can use a loop to calculate the sum
+        from 1 to N.
+    </p>
+
+    <pre><code>int n;
+int sum = 0;
+
+scanf("%d", &amp;n);
+
+for(int i = 1; i &lt;= n; i++)
+{
+    sum = sum + i;
+}
+
+printf("%d", sum);</code></pre>
+
+
+    <div class="example-box">
+
+        <strong>Input:</strong>
+
+        <br>
+
+        5
+
+        <br><br>
+
+        <strong>Calculation:</strong>
+
+        <br>
+
+        1 + 2 + 3 + 4 + 5
+
+        <br><br>
+
+        <strong>Output:</strong>
+
+        <br>
+
+        15
+
+    </div>
+
+
+    <!-- FACTORIAL -->
+
+    <h3>9.15 Factorial</h3>
+
+    <p>
+        The factorial of a non-negative integer n
+        is the product of all positive integers
+        from 1 to n.
+    </p>
+
+    <div class="formula-box">
+
+        5! = 5 × 4 × 3 × 2 × 1
+
+        <br>
+
+        = 120
+
+    </div>
+
+    <pre><code>int n;
+long long fact = 1;
+
+scanf("%d", &amp;n);
+
+for(int i = 1; i &lt;= n; i++)
+{
+    fact = fact * i;
+}
+
+printf("%lld", fact);</code></pre>
+
+
+    <!-- MULTIPLICATION TABLE -->
+
+    <h3>9.16 Multiplication Table</h3>
+
+    <pre><code>int n;
+
+scanf("%d", &amp;n);
+
+for(int i = 1; i &lt;= 10; i++)
+{
+    printf("%d x %d = %d\n",
+           n, i, n * i);
+}</code></pre>
+
+
+    <div class="example-box">
+
+        <strong>Input:</strong>
+
+        <br>
+
+        5
+
+        <br><br>
+
+        <strong>Output:</strong>
+
+        <br>
+
+        5 x 1 = 5
+
+        <br>
+
+        5 x 2 = 10
+
+        <br>
+
+        5 x 3 = 15
+
+        <br>
+
+        ...
+
+        <br>
+
+        5 x 10 = 50
+
+    </div>
+
+
+    <!-- DIGITS -->
+
+    <h3>9.17 Number of Digits</h3>
+
+    <p>
+        We can repeatedly divide an integer by 10
+        to remove its last digit.
+    </p>
+
+    <pre><code>int n;
+int count = 0;
+
+scanf("%d", &amp;n);
+
+if(n == 0)
+{
+    count = 1;
+}
+else
+{
+    if(n &lt; 0)
+        n = -n;
+
+    while(n != 0)
+    {
+        n = n / 10;
+        count++;
+    }
+}
+
+printf("%d", count);</code></pre>
+
+
+    <div class="example-box">
+
+        <strong>Input:</strong> 5832
+
+        <br><br>
+
+        <strong>Output:</strong> 4
+
+    </div>
+
+
+    <!-- REVERSE -->
+
+    <h3>9.18 Reverse a Number</h3>
+
+    <p>
+        To reverse a number, repeatedly extract the
+        last digit using the modulus operator.
+    </p>
+
+    <pre><code>int n;
+int reverse = 0;
+
+scanf("%d", &amp;n);
+
+while(n != 0)
+{
+    int digit = n % 10;
+
+    reverse = reverse * 10 + digit;
+
+    n = n / 10;
+}
+
+printf("%d", reverse);</code></pre>
+
+
+    <div class="example-box">
+
+        <strong>Input:</strong>
+
+        <br>
+
+        1234
+
+        <br><br>
+
+        <strong>Output:</strong>
+
+        <br>
+
+        4321
+
+    </div>
+
+
+    <!-- PALINDROME -->
+
+    <h3>9.19 Palindrome Number</h3>
+
+    <p>
+        A number is a palindrome if it reads the same
+        from left to right and right to left.
+    </p>
+
+    <div class="formula-box">
+
+        121 → Palindrome
+
+        <br>
+
+        123 → Not Palindrome
+
+    </div>
+
+    <pre><code>int n;
+int original;
+int reverse = 0;
+
+scanf("%d", &amp;n);
+
+original = n;
+
+while(n != 0)
+{
+    int digit = n % 10;
+
+    reverse = reverse * 10 + digit;
+
+    n = n / 10;
+}
+
+if(original == reverse)
+{
+    printf("Palindrome");
+}
+else
+{
+    printf("Not Palindrome");
+}</code></pre>
+
+
+    <!-- PRIME -->
+
+    <h3>9.20 Prime Number</h3>
+
+    <p>
+        A prime number is an integer greater than 1
+        that has exactly two positive divisors:
+        1 and itself.
+    </p>
+
+    <div class="formula-box">
+
+        2 → Prime
+
+        <br>
+
+        3 → Prime
+
+        <br>
+
+        4 → Not Prime
+
+        <br>
+
+        5 → Prime
+
+    </div>
+
+
+    <pre><code>int n;
+int isPrime = 1;
+
+scanf("%d", &amp;n);
+
+if(n &lt; 2)
+{
+    isPrime = 0;
+}
+else
+{
+    for(int i = 2; i * i &lt;= n; i++)
+    {
+        if(n % i == 0)
+        {
+            isPrime = 0;
+            break;
+        }
+    }
+}
+
+if(isPrime)
+{
+    printf("Prime");
+}
+else
+{
+    printf("Not Prime");
+}</code></pre>
+
+
+    <!-- BREAK -->
+
+    <h3>9.21 break Statement</h3>
+
+    <p>
+        The break statement immediately terminates
+        the nearest enclosing loop.
+    </p>
+
+    <pre><code>for(int i = 1; i &lt;= 10; i++)
+{
+    if(i == 5)
+    {
+        break;
+    }
+
+    printf("%d ", i);
+}</code></pre>
+
+    <div class="output-box">
+
+        1 2 3 4
+
+    </div>
+
+
+    <!-- CONTINUE -->
+
+    <h3>9.22 continue Statement</h3>
+
+    <p>
+        The continue statement skips the remaining
+        statements in the current iteration and
+        proceeds with the next iteration.
+    </p>
+
+    <pre><code>for(int i = 1; i &lt;= 5; i++)
+{
+    if(i == 3)
+    {
+        continue;
+    }
+
+    printf("%d ", i);
+}</code></pre>
+
+    <div class="output-box">
+
+        1 2 4 5
+
+    </div>
+
+
+    <!-- BREAK VS CONTINUE -->
+
+    <h3>9.23 break vs continue</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>break</th>
+                    <th>continue</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Terminates the loop</td>
+                    <td>Skips current iteration</td>
+                </tr>
+
+                <tr>
+                    <td>Control exits the loop</td>
+                    <td>Control moves to next iteration</td>
+                </tr>
+
+                <tr>
+                    <td>Used when further repetition is unnecessary</td>
+                    <td>Used when one iteration should be skipped</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- NESTED LOOPS -->
+
+    <h3>9.24 Nested Loops</h3>
+
+    <p>
+        A loop inside another loop is called a
+        nested loop.
+    </p>
+
+    <pre><code>for(int i = 1; i &lt;= 3; i++)
+{
+    for(int j = 1; j &lt;= 3; j++)
+    {
+        printf("* ");
+    }
+
+    printf("\n");
+}</code></pre>
+
+    <div class="output-box">
+
+        * * *
+        <br>
+        * * *
+        <br>
+        * * *
+
+    </div>
+
+
+    <!-- PATTERN -->
+
+    <h3>9.25 Pattern Printing</h3>
+
+    <pre><code>for(int i = 1; i &lt;= 5; i++)
+{
+    for(int j = 1; j &lt;= i; j++)
+    {
+        printf("* ");
+    }
+
+    printf("\n");
+}</code></pre>
+
+    <div class="output-box">
+
+        *
+        <br>
+        * *
+        <br>
+        * * *
+        <br>
+        * * * *
+        <br>
+        * * * * *
+
+    </div>
+
+
+    <!-- MULTIPLE VARIABLES -->
+
+    <h3>9.26 Multiple Variables in for Loop</h3>
+
+    <p>
+        A for loop can contain more than one
+        initialization or update expression.
+    </p>
+
+    <pre><code>for(int i = 1, j = 5;
+    i &lt;= 5;
+    i++, j--)
+{
+    printf("%d %d\n", i, j);
+}</code></pre>
+
+
+    <div class="output-box">
+
+        1 5
+        <br>
+        2 4
+        <br>
+        3 3
+        <br>
+        4 2
+        <br>
+        5 1
+
+    </div>
+
+
+    <!-- INFINITE LOOP -->
+
+    <h3>9.27 Infinite Loop</h3>
+
+    <p>
+        A loop that never becomes false is called
+        an infinite loop.
+    </p>
+
+    <pre><code>while(1)
+{
+    printf("Hello\n");
+}</code></pre>
+
+    <div class="tip-box">
+
+        ⚠️ Be careful with infinite loops.
+
+        <br><br>
+
+        Always make sure that the loop condition
+        can eventually become false unless an
+        intentionally infinite loop is required.
+
+    </div>
+
+
+    <!-- COMMON LOOP MISTAKES -->
+
+    <h3>9.28 Common Loop Mistakes</h3>
+
+    <ul>
+
+        <li>
+            Forgetting to initialize the loop variable.
+        </li>
+
+        <li>
+            Forgetting to update the loop variable.
+        </li>
+
+        <li>
+            Using the wrong loop condition.
+        </li>
+
+        <li>
+            Creating an unintended infinite loop.
+        </li>
+
+        <li>
+            Using <strong>i &lt; n</strong> when
+            <strong>i &lt;= n</strong> is required,
+            or vice versa.
+        </li>
+
+        <li>
+            Incorrectly placing break or continue.
+        </li>
+
+        <li>
+            Using the wrong variable inside nested loops.
+        </li>
+
+        <li>
+            Forgetting that integer division removes
+            the fractional part.
+        </li>
+
+    </ul>
+
+
+    <!-- LOOP SELECTION -->
+
+    <h3>9.29 Which Loop Should I Use?</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Situation</th>
+                    <th>Recommended Loop</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Known number of repetitions</td>
+                    <td>for</td>
+                </tr>
+
+                <tr>
+                    <td>Condition-controlled repetition</td>
+                    <td>while</td>
+                </tr>
+
+                <tr>
+                    <td>Body must execute at least once</td>
+                    <td>do-while</td>
+                </tr>
+
+                <tr>
+                    <td>Pattern printing</td>
+                    <td>Nested for</td>
+                </tr>
+
+                <tr>
+                    <td>Searching until found</td>
+                    <td>for / while with break</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- PROBLEM SOLVING -->
+
+    <h3>9.30 Problem-Solving Method for Loops</h3>
+
+    <div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">Step 1</div>
+            <div class="cb-mini-step-text">Understand the repeated task</div>
+        </div>
+
+        <div class="cb-mini-step-arrow" aria-hidden="true">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">Step 2</div>
+            <div class="cb-mini-step-text">Choose the starting value</div>
+        </div>
+
+        <div class="cb-mini-step-arrow" aria-hidden="true">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">Step 3</div>
+            <div class="cb-mini-step-text">Write the stopping condition</div>
+        </div>
+
+        <div class="cb-mini-step-arrow" aria-hidden="true">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">Step 4</div>
+            <div class="cb-mini-step-text">Decide the update</div>
+        </div>
+
+        <div class="cb-mini-step-arrow" aria-hidden="true">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-pink">
+            <div class="cb-mini-step-badge">Step 5</div>
+            <div class="cb-mini-step-text">Choose for, while, or do-while</div>
+        </div>
+
+    </div>
+
+
+    <h4>Example: Sum from 1 to N</h4>
+
+    <div class="formula-box">
+
+        Start → i = 1
+
+        <br>
+
+        Stop → i &lt;= N
+
+        <br>
+
+        Change → i++
+
+        <br>
+
+        Operation → sum = sum + i
+
+    </div>
+
+
+    <!-- QUICK REVISION -->
+
+    <h3>9.31 Quick Revision</h3>
+
+    <div class="tip-box">
+
+        📌 <strong>for</strong> → Commonly used when
+        iteration count is known.
+
+        <br><br>
+
+        📌 <strong>while</strong> → Condition checked
+        before each iteration.
+
+        <br><br>
+
+        📌 <strong>do-while</strong> → Body executes
+        before condition check.
+
+        <br><br>
+
+        📌 <strong>break</strong> → Exit loop.
+
+        <br><br>
+
+        📌 <strong>continue</strong> → Skip current
+        iteration.
+
+        <br><br>
+
+        📌 Nested loops → Loop inside another loop.
+
+        <br><br>
+
+        📌 Always check initialization,
+        condition and update.
+
+    </div>
+
+
+    <!-- MCQs -->
+
+    
+<section class="content-card cb-added-section cb-compact-learning" id="loops-visualizer-extra">
+
+    <span class="cb-added-label">INTERACTIVE LEARNING</span>
+
+    <h2>🎬 Loops — for Loop Execution</h2>
+
+    <p class="cb-added-note">
+        Follow the repeated control flow of a <code>for</code> loop:
+        initialization → condition → body → update → repeat or stop.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBConceptViz.toggle('loops')"
+    >▶ Open Visualization</button>
+
+    <div class="cb-compact-panel" id="cbVizPanel-loops" hidden>
+
+        <div
+            class="cb-viz-card cb-viz-dsa-standard"
+            data-cb-viz="loops"
+            data-frames="[{&quot;title&quot;:&quot;1. Initialize the loop&quot;,&quot;detail&quot;:&quot;For for(int i = 1; i &lt;= 3; i++), initialization sets i to 1 once.&quot;},{&quot;title&quot;:&quot;2. Check the condition&quot;,&quot;detail&quot;:&quot;Check i &lt;= 3. When the condition is true, the loop body executes.&quot;},{&quot;title&quot;:&quot;3. Execute the body&quot;,&quot;detail&quot;:&quot;The current value of i is printed.&quot;},{&quot;title&quot;:&quot;4. Update the loop variable&quot;,&quot;detail&quot;:&quot;i++ increases i by one after the body finishes.&quot;},{&quot;title&quot;:&quot;5. Repeat or stop&quot;,&quot;detail&quot;:&quot;Control returns to the condition. When i becomes 4, 4 &lt;= 3 is false and the loop ends.&quot;}]"
+        >
+
+            <div class="cb-viz-dsa-topbar">
+                <div class="cb-viz-dsa-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+                <div class="cb-viz-dsa-brand" aria-label="CodeBhavya">
+                    <span class="cb-viz-dsa-brand-mark">
+                        <img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo">
+                    </span>
+                    <span class="cb-viz-dsa-code">Code</span><span class="cb-viz-dsa-bhavya">Bhavya</span>
+                </div>
+            </div>
+
+            <h3 class="cb-viz-dsa-title">🎬 for Loop Execution Visualizer</h3>
+
+            <p class="cb-viz-dsa-intro">
+                The currently explained loop stage becomes active as you move through the controls.
+            </p>
+
+            <div class="cb-mini-step-flow">
+
+                <div class="cb-mini-step-card cb-mini-step-card-blue" data-cb-flow-step="0">
+                    <div class="cb-mini-step-badge">Initialization</div>
+                    <div class="cb-mini-step-text">i = 1</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-gold" data-cb-flow-step="1">
+                    <div class="cb-mini-step-badge">Condition</div>
+                    <div class="cb-mini-step-text">i &lt;= 3 ?</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-purple" data-cb-flow-step="2">
+                    <div class="cb-mini-step-badge">Body</div>
+                    <div class="cb-mini-step-text">printf("%d ", i)</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-green" data-cb-flow-step="3">
+                    <div class="cb-mini-step-badge">Update</div>
+                    <div class="cb-mini-step-text">i++</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-pink" data-cb-flow-step="4">
+                    <div class="cb-mini-step-badge">Repeat / Stop</div>
+                    <div class="cb-mini-step-text">Check the condition again</div>
+                </div>
+
+            </div>
+
+            <div class="cb-viz-stage">
+                <div class="cb-viz-step" id="cbVizStep-loops">Step 1</div>
+                <h3 id="cbVizTitle-loops"></h3>
+                <p id="cbVizDetail-loops"></p>
+                <div class="cb-viz-dots" id="cbVizDots-loops"></div>
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBConceptViz.prev('loops')">← Previous</button>
+                <button class="cb-control cb-next" id="cbVizNext-loops" onclick="CBConceptViz.next('loops')">Next →</button>
+                <button class="cb-control cb-auto" id="cbVizAuto-loops" onclick="CBConceptViz.auto('loops')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBConceptViz.pause('loops')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBConceptViz.reset('loops')">↺ Reset</button>
+            </div>
+
+            <div class="cb-mini-progress">
+                <div id="cbVizProgress-loops"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="content-card cb-added-section cb-compact-learning" id="loops-tracing-extra">
+
+    <span class="cb-added-label">PROGRAM TRACING</span>
+
+    <h2>🔎 Program Tracing — Loops</h2>
+
+    <p class="cb-added-note">
+        Trace each iteration of a <code>for</code> loop and watch how
+        <code>i</code> and <code>sum</code> change.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBProgramTrace.toggle('loops')"
+    >▶ Program Tracing — Loops</button>
+
+    <div class="cb-compact-panel" id="cbTracePanel-loops" hidden>
+
+        <div
+            class="cb-tracer"
+            data-cb-trace="loops"
+            data-config="{&quot;code&quot;:[&quot;int main()&quot;,&quot;{&quot;,&quot;    int sum = 0;&quot;,&quot;    for (int i = 1; i &lt;= 3; i++)&quot;,&quot;    {&quot;,&quot;        sum = sum + i;&quot;,&quot;    }&quot;,&quot;    printf(\&quot;Sum = %d\&quot;, sum);&quot;,&quot;    return 0;&quot;,&quot;}&quot;],&quot;steps&quot;:[{&quot;line&quot;:0,&quot;state&quot;:{&quot;sum&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Execution starts at main().&quot;},{&quot;line&quot;:2,&quot;state&quot;:{&quot;sum&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;sum is initialized to 0.&quot;},{&quot;line&quot;:3,&quot;state&quot;:{&quot;sum&quot;:0,&quot;i&quot;:1,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;The for loop initializes i to 1 and checks i &lt;= 3. The condition is true.&quot;},{&quot;line&quot;:5,&quot;state&quot;:{&quot;sum&quot;:1,&quot;i&quot;:1,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;First iteration: sum = 0 + 1, so sum becomes 1.&quot;},{&quot;line&quot;:3,&quot;state&quot;:{&quot;sum&quot;:1,&quot;i&quot;:2,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;The update i++ makes i equal to 2. Check 2 &lt;= 3, which is true.&quot;},{&quot;line&quot;:5,&quot;state&quot;:{&quot;sum&quot;:3,&quot;i&quot;:2,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Second iteration: sum = 1 + 2, so sum becomes 3.&quot;},{&quot;line&quot;:3,&quot;state&quot;:{&quot;sum&quot;:3,&quot;i&quot;:3,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;The update makes i equal to 3. Check 3 &lt;= 3, which is true.&quot;},{&quot;line&quot;:5,&quot;state&quot;:{&quot;sum&quot;:6,&quot;i&quot;:3,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Third iteration: sum = 3 + 3, so sum becomes 6.&quot;},{&quot;line&quot;:3,&quot;state&quot;:{&quot;sum&quot;:6,&quot;i&quot;:4,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;The update makes i equal to 4. Now 4 &lt;= 3 is false, so the loop terminates.&quot;},{&quot;line&quot;:7,&quot;state&quot;:{&quot;sum&quot;:6,&quot;output&quot;:&quot;Sum = 6&quot;},&quot;note&quot;:&quot;The loop is finished. i is out of scope, and printf() displays the final sum.&quot;},{&quot;line&quot;:8,&quot;state&quot;:{&quot;sum&quot;:6,&quot;output&quot;:&quot;Sum = 6&quot;},&quot;note&quot;:&quot;return 0 ends the program successfully.&quot;}]}"
+        >
+
+            <div class="cb-tracer-grid">
+
+                <div class="cb-tracer-code-wrap">
+                    <div class="cb-tracer-heading">C Program</div>
+                    <pre class="cb-tracer-code" id="cbTraceCode-loops"></pre>
+                </div>
+
+                <div class="cb-tracer-state-wrap">
+                    <div class="cb-tracer-heading">Live Variables</div>
+
+                    <div class="cb-tracer-note" id="cbTraceNote-loops"></div>
+
+                    <div class="cb-live-state" id="cbTraceState-loops"></div>
+
+                    <div class="cb-tracer-output">
+                        <strong>Output</strong>
+                        <pre id="cbTraceOutput-loops">—</pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBProgramTrace.prev('loops')">← Previous</button>
+                <button class="cb-control cb-next" id="cbTraceNext-loops" onclick="CBProgramTrace.next('loops')">Next →</button>
+                <button class="cb-control cb-auto" id="cbTraceAuto-loops" onclick="CBProgramTrace.auto('loops')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBProgramTrace.pause('loops')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBProgramTrace.reset('loops')">↺ Reset</button>
+            </div>
+
+            <div class="cb-tracer-status" id="cbTraceStatus-loops">Step 0</div>
+
+        </div>
+    </div>
+</section>
+
+
+<h3>9.32 Quick MCQs</h3>
+
+    <p class="cb-mcq-guide">
+        Select an answer first, then click <strong>Check Answer</strong>.
+        A correct choice becomes green. If the answer is wrong, your choice becomes red
+        and the correct option becomes green. The explanation appears below.
+    </p>
+
+    <div class="cb-mcq-list">
+        
+    <div class="cb-mcq-card" id="loops-mcq1" data-correct="B">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">1.</span>
+            <strong>Which loop is commonly used when the number of iterations is known?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="loops-mcq1" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">if</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="loops-mcq1" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">for</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="loops-mcq1" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">switch</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="loops-mcq1" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">goto</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('loops-mcq1')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('loops-mcq1')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>A for loop is commonly used when the iteration pattern or count can be expressed conveniently with initialization, condition and update.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="loops-mcq2" data-correct="C">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">2.</span>
+            <strong>Which loop executes its body at least once?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="loops-mcq2" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">for</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="loops-mcq2" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">while</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="loops-mcq2" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">do-while</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="loops-mcq2" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">if</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('loops-mcq2')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('loops-mcq2')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>A do-while loop executes the body before checking its condition, so the body runs at least once.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="loops-mcq3" data-correct="B">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">3.</span>
+            <strong>Which keyword terminates the nearest enclosing loop?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="loops-mcq3" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">continue</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="loops-mcq3" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">break</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="loops-mcq3" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">stop</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="loops-mcq3" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">exitloop</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('loops-mcq3')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('loops-mcq3')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>break immediately terminates the nearest enclosing loop or switch statement.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="loops-mcq4" data-correct="C">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">4.</span>
+            <strong>Which keyword skips the remaining statements in the current loop iteration?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="loops-mcq4" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">break</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="loops-mcq4" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">skip</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="loops-mcq4" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">continue</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="loops-mcq4" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">next</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('loops-mcq4')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('loops-mcq4')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>continue skips the remainder of the current iteration and proceeds with the loop&#x27;s next iteration behavior.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="loops-mcq5" data-correct="B">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">5.</span>
+            <strong>What is the output of for(int i = 1; i &lt;= 3; i++) printf(&quot;%d &quot;, i); ?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="loops-mcq5" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">0 1 2</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="loops-mcq5" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">1 2 3</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="loops-mcq5" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">1 2</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="loops-mcq5" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">2 3 4</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('loops-mcq5')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('loops-mcq5')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>i starts at 1, the condition permits values 1, 2 and 3, and i++ advances to the next value after each iteration.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="loops-mcq6" data-correct="B">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">6.</span>
+            <strong>How many times does for(int i = 1; i &lt;= 5; i++) execute its body?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="loops-mcq6" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">4</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="loops-mcq6" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">5</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="loops-mcq6" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">6</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="loops-mcq6" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Infinite</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('loops-mcq6')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('loops-mcq6')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>The loop body executes for i = 1, 2, 3, 4 and 5, which is five iterations.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    </div>
+
+
+    <!-- PRACTICE PROBLEMS -->
+
+    <div class="cb-c-dsa-practice-section">
+
+        <span class="cb-c-practice-label">PRACTICE</span>
+
+        <h3>9.33 🎯 Practice Problems</h3>
+
+        <p class="cb-c-practice-guide">
+            Loops become easy only through repeated practice.
+            Use <strong>💻 Solve It Yourself</strong> first,
+            open <strong>Hint</strong> only when needed,
+            and use <strong>Show Program</strong> after attempting the problem.
+        </p>
+
+        <div class="cb-practice-overall" data-practice-total="16">
+
+            <div class="cb-practice-overall-title">
+                📈 Loops Practice Progress
+            </div>
+
+            <div class="cb-practice-overall-grid">
+
+                <div class="cb-practice-overall-item">
+                    <strong>Solved</strong>
+                    <span id="cbPracticeOverallSolved">0 / 16</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completed with Solution</strong>
+                    <span id="cbPracticeOverallCompleted">0</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Total Score</strong>
+                    <span id="cbPracticeOverallScore">0 / 1600</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completion</strong>
+                    <span id="cbPracticeOverallPercent">0%</span>
+                </div>
+
+            </div>
+
+            <div class="cb-practice-progress-track">
+                <div id="cbPracticeOverallBar" class="cb-practice-progress-fill"></div>
+            </div>
+
+            <div class="cb-practice-progress-note">
+                A problem counts as <strong>Solved</strong> when all test cases pass
+                without opening the full solution. Problems completed after viewing
+                the official solution are tracked separately.
+            </div>
+
+        </div>
+
+        <div class="cb-c-practice-list">
+            
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>1. Print Numbers from 1 to N</strong>
+                <span id="practiceBadge-loops-p1" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 1: Read N and print all integers from 1 to N.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One positive integer N.</p>
+            <p><strong>Output:</strong> Print the numbers from 1 to N separated by spaces.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p1')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p1')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p1')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p1" hidden>
+                💡 <strong>Hint:</strong> Use a for loop starting at 1 and continue while i &lt;= N.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p1" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Print Numbers from 1 to N
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p1"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p1"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p1')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p1"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p1')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p1')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p1"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p1"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p1" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p1">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p1">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p1">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p1" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p1" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    for (int i = 1; i &lt;= n; i++)
+    {
+        if (i &gt; 1)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, i);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>2. Print Numbers from N to 1</strong>
+                <span id="practiceBadge-loops-p2" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 2: Read N and print all integers from N down to 1.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One positive integer N.</p>
+            <p><strong>Output:</strong> Print the numbers from N to 1 separated by spaces.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p2')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p2')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p2')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p2" hidden>
+                💡 <strong>Hint:</strong> Start the loop at N and decrease i using i--.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p2" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Print Numbers from N to 1
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p2"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p2"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p2')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p2"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p2')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p2')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p2"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p2"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p2" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p2">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p2">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p2">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p2" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p2" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    for (int i = n; i &gt;= 1; i--)
+    {
+        if (i &lt; n)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, i);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>3. Print Even Numbers from 1 to N</strong>
+                <span id="practiceBadge-loops-p3" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 3: Read N and print all even numbers from 1 to N.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One positive integer N.</p>
+            <p><strong>Output:</strong> Print all even values not greater than N.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p3')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p3')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p3')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p3" hidden>
+                💡 <strong>Hint:</strong> Start at 2 and increase by 2 each time.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p3" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Print Even Numbers from 1 to N
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p3"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p3"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p3')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p3"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p3')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p3')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p3"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p3"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p3" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p3">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p3">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p3">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p3" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p3" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int first = 1;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    for (int i = 2; i &lt;= n; i += 2)
+    {
+        if (!first)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, i);
+        first = 0;
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>4. Print Odd Numbers from 1 to N</strong>
+                <span id="practiceBadge-loops-p4" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 4: Read N and print all odd numbers from 1 to N.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One positive integer N.</p>
+            <p><strong>Output:</strong> Print all odd values not greater than N.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p4')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p4')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p4')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p4" hidden>
+                💡 <strong>Hint:</strong> Start at 1 and increase by 2 each time.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p4" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Print Odd Numbers from 1 to N
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p4"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p4"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p4')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p4"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p4')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p4')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p4"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p4"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p4" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p4">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p4">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p4">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p4" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p4" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int first = 1;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    for (int i = 1; i &lt;= n; i += 2)
+    {
+        if (!first)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, i);
+        first = 0;
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>5. Sum of First N Natural Numbers</strong>
+                <span id="practiceBadge-loops-p5" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 5: Read N and find the sum of the natural numbers from 1 to N using a loop.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One non-negative integer N.</p>
+            <p><strong>Output:</strong> Print the sum.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p5')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p5')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p5')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p5" hidden>
+                💡 <strong>Hint:</strong> Initialize sum to 0 and add i during each iteration.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p5" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Sum of First N Natural Numbers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p5"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p5"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p5')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p5"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p5')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p5')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p5"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p5"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p5" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p5">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p5">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p5">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p5" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p5" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    long long sum = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    for (int i = 1; i &lt;= n; i++)
+    {
+        sum = sum + i;
+    }
+
+    printf(&quot;%lld&quot;, sum);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>6. Factorial of a Number</strong>
+                <span id="practiceBadge-loops-p6" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 6: Read a non-negative integer N and calculate N! using a loop.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer N in the range 0 to 20.</p>
+            <p><strong>Output:</strong> Print N!.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p6')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p6')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p6')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p6" hidden>
+                💡 <strong>Hint:</strong> Initialize fact to 1. Remember that 0! is 1.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p6" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Factorial of a Number
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p6"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p6"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p6')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p6"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p6')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p6')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p6"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p6"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p6" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p6">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p6">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p6">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p6" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p6" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    unsigned long long fact = 1;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    for (int i = 1; i &lt;= n; i++)
+    {
+        fact = fact * i;
+    }
+
+    printf(&quot;%llu&quot;, fact);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>7. Multiplication Table</strong>
+                <span id="practiceBadge-loops-p7" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 7: Read a number and print its multiplication table from 1 to 10.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer N.</p>
+            <p><strong>Output:</strong> Print ten lines in the form N x i = result.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p7')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p7')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p7')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p7" hidden>
+                💡 <strong>Hint:</strong> Run i from 1 through 10.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p7" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Multiplication Table
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p7"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p7"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p7')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p7"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p7')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p7')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p7"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p7"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p7" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p7">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p7">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p7">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p7" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p7" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    for (int i = 1; i &lt;= 10; i++)
+    {
+        printf(&quot;%d x %d = %d&quot;, n, i, n * i);
+
+        if (i &lt; 10)
+            printf(&quot;
+&quot;);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>8. Count Digits in an Integer</strong>
+                <span id="practiceBadge-loops-p8" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 8: Read an integer and count how many decimal digits it contains.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the number of digits.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p8')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p8')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p8')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p8" hidden>
+                💡 <strong>Hint:</strong> Treat 0 as one digit. Otherwise repeatedly divide the absolute value by 10.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p8" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Count Digits in an Integer
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p8"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p8"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p8')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p8"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p8')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p8')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p8"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p8"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p8" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p8">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p8">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p8">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p8" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p8" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    long long n;
+    int count = 0;
+
+    scanf(&quot;%lld&quot;, &amp;n);
+
+    if (n == 0)
+    {
+        count = 1;
+    }
+    else
+    {
+        if (n &lt; 0)
+            n = -n;
+
+        while (n != 0)
+        {
+            n = n / 10;
+            count++;
+        }
+    }
+
+    printf(&quot;%d&quot;, count);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>9. Reverse a Number</strong>
+                <span id="practiceBadge-loops-p9" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 9: Read an integer and reverse its decimal digits.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the reversed integer.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p9')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p9')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p9')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p9" hidden>
+                💡 <strong>Hint:</strong> Extract the last digit with % 10 and build reverse = reverse * 10 + digit.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p9" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Reverse a Number
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p9"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p9"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p9')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p9"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p9')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p9')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p9"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p9"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p9" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p9">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p9">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p9">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p9" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p9" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    long long n;
+    long long reverse = 0;
+    int sign = 1;
+
+    scanf(&quot;%lld&quot;, &amp;n);
+
+    if (n &lt; 0)
+    {
+        sign = -1;
+        n = -n;
+    }
+
+    while (n != 0)
+    {
+        int digit = n % 10;
+        reverse = reverse * 10 + digit;
+        n = n / 10;
+    }
+
+    printf(&quot;%lld&quot;, reverse * sign);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>10. Palindrome Number</strong>
+                <span id="practiceBadge-loops-p10" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 10: Read a non-negative integer and check whether it is a palindrome.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One non-negative integer.</p>
+            <p><strong>Output:</strong> Print &quot;Palindrome&quot; or &quot;Not Palindrome&quot;.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p10')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p10')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p10')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p10" hidden>
+                💡 <strong>Hint:</strong> Reverse the number using a loop and compare it with the original value.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p10" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Palindrome Number
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p10"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p10"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p10')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p10"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p10')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p10')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p10"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p10"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p10" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p10">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p10">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p10">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p10" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p10" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    long long n;
+    long long original;
+    long long temp;
+    long long reverse = 0;
+
+    scanf(&quot;%lld&quot;, &amp;n);
+
+    original = n;
+    temp = n;
+
+    while (temp != 0)
+    {
+        int digit = temp % 10;
+        reverse = reverse * 10 + digit;
+        temp = temp / 10;
+    }
+
+    if (original == reverse)
+        printf(&quot;Palindrome&quot;);
+    else
+        printf(&quot;Not Palindrome&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>11. Prime Number</strong>
+                <span id="practiceBadge-loops-p11" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 11: Read an integer and check whether it is prime.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer N.</p>
+            <p><strong>Output:</strong> Print &quot;Prime&quot; or &quot;Not Prime&quot;.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p11')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p11')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p11')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p11" hidden>
+                💡 <strong>Hint:</strong> Numbers below 2 are not prime. Test divisors while i * i &lt;= N.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p11" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Prime Number
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p11"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p11"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p11')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p11"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p11')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p11')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p11"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p11"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p11" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p11">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p11">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p11">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p11" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p11" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int isPrime = 1;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    if (n &lt; 2)
+    {
+        isPrime = 0;
+    }
+    else
+    {
+        for (int i = 2; i * i &lt;= n; i++)
+        {
+            if (n % i == 0)
+            {
+                isPrime = 0;
+                break;
+            }
+        }
+    }
+
+    if (isPrime)
+        printf(&quot;Prime&quot;);
+    else
+        printf(&quot;Not Prime&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>12. Print Prime Numbers from 1 to N</strong>
+                <span id="practiceBadge-loops-p12" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 12: Read N and print every prime number from 1 to N.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer N greater than or equal to 2.</p>
+            <p><strong>Output:</strong> Print prime numbers separated by spaces.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p12')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p12')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p12')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p12" hidden>
+                💡 <strong>Hint:</strong> For every candidate from 2 to N, test whether it has a divisor up to its square root.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p12" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Print Prime Numbers from 1 to N
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p12"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p12"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p12')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p12"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p12')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p12')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p12"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p12"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p12" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p12">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p12">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p12">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p12" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p12" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int first = 1;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    for (int value = 2; value &lt;= n; value++)
+    {
+        int isPrime = 1;
+
+        for (int d = 2; d * d &lt;= value; d++)
+        {
+            if (value % d == 0)
+            {
+                isPrime = 0;
+                break;
+            }
+        }
+
+        if (isPrime)
+        {
+            if (!first)
+                printf(&quot; &quot;);
+
+            printf(&quot;%d&quot;, value);
+            first = 0;
+        }
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>13. Sum of Digits</strong>
+                <span id="practiceBadge-loops-p13" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 13: Read an integer and find the sum of its decimal digits.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the sum of its digits.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p13')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p13')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p13')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p13" hidden>
+                💡 <strong>Hint:</strong> Use n % 10 to get the last digit and n / 10 to remove it.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p13" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Sum of Digits
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p13"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p13"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p13')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p13"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p13')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p13')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p13"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p13"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p13" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p13">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p13">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p13">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p13" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p13" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    long long n;
+    int sum = 0;
+
+    scanf(&quot;%lld&quot;, &amp;n);
+
+    if (n &lt; 0)
+        n = -n;
+
+    while (n != 0)
+    {
+        sum = sum + (n % 10);
+        n = n / 10;
+    }
+
+    printf(&quot;%d&quot;, sum);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>14. Largest Digit</strong>
+                <span id="practiceBadge-loops-p14" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 14: Read an integer and find its largest decimal digit.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the largest digit.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p14')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p14')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p14')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p14" hidden>
+                💡 <strong>Hint:</strong> Repeatedly extract digits and keep the maximum found so far.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p14" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Largest Digit
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p14"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p14"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p14')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p14"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p14')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p14')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p14"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p14"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p14" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p14">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p14">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p14">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p14" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p14" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    long long n;
+    int largest = 0;
+
+    scanf(&quot;%lld&quot;, &amp;n);
+
+    if (n &lt; 0)
+        n = -n;
+
+    while (n != 0)
+    {
+        int digit = n % 10;
+
+        if (digit &gt; largest)
+            largest = digit;
+
+        n = n / 10;
+    }
+
+    printf(&quot;%d&quot;, largest);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>15. Count Even and Odd Digits</strong>
+                <span id="practiceBadge-loops-p15" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 15: Read an integer and count how many of its decimal digits are even and how many are odd.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the even-digit count and odd-digit count.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p15')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p15')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p15')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p15" hidden>
+                💡 <strong>Hint:</strong> Extract each digit and test digit % 2. Remember that 0 itself contains one even digit.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p15" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Count Even and Odd Digits
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p15"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p15"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p15')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p15"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p15')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p15')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p15"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p15"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p15" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p15">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p15">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p15">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p15" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p15" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    long long n;
+    int even = 0;
+    int odd = 0;
+
+    scanf(&quot;%lld&quot;, &amp;n);
+
+    if (n &lt; 0)
+        n = -n;
+
+    if (n == 0)
+    {
+        even = 1;
+    }
+    else
+    {
+        while (n != 0)
+        {
+            int digit = n % 10;
+
+            if (digit % 2 == 0)
+                even++;
+            else
+                odd++;
+
+            n = n / 10;
+        }
+    }
+
+    printf(&quot;Even = %d
+&quot;, even);
+    printf(&quot;Odd = %d&quot;, odd);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>16. Print a Five-Row Star Pattern</strong>
+                <span id="practiceBadge-loops-p16" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 16: Use nested loops to print the five-row triangular star pattern shown in the lesson.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print 1 star on the first row, 2 on the second, up to 5 on the fifth row.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('loops-p16')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('loops-p16')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('loops-p16')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-loops-p16" hidden>
+                💡 <strong>Hint:</strong> Use an outer loop for rows and an inner loop for the number of stars in each row.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-loops-p16" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Print a Five-Row Star Pattern
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-loops-p16"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-loops-p16"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('loops-p16')">▶ Run Code</button>
+
+                            <button id="practiceCheck-loops-p16"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('loops-p16')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('loops-p16')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-loops-p16"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-loops-p16"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-loops-p16" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-loops-p16">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-loops-p16">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-loops-p16">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-loops-p16" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-loops-p16" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int row = 1; row &lt;= 5; row++)
+    {
+        for (int col = 1; col &lt;= row; col++)
+        {
+            if (col &gt; 1)
+                printf(&quot; &quot;);
+
+            printf(&quot;*&quot;);
+        }
+
+        if (row &lt; 5)
+            printf(&quot;
+&quot;);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        </div>
+
+    </div>
+
+
+    <!-- KEY TAKEAWAY -->
+
+    <h3>9.34 Key Takeaway</h3>
+
+    <div class="tip-box">
+
+        🎯 Every loop has three important ideas:
+
+        <br><br>
+
+        <strong>1. Initialization</strong>
+
+        <br>
+
+        Where does the loop start?
+
+        <br><br>
+
+        <strong>2. Condition</strong>
+
+        <br>
+
+        When should the loop continue?
+
+        <br><br>
+
+        <strong>3. Update</strong>
+
+        <br>
+
+        How does the loop variable change?
+
+        <br><br>
+
+        Remember:
+
+        <br><br>
+
+        <strong>
+        Start → Check → Execute → Update → Repeat
+        </strong>
+
+        <br><br>
+
+        Mastering loops is essential for solving
+        programming problems involving numbers,
+        digits, patterns, arrays and algorithms.
+
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="loops-interview-extra">
+
+    <span class="cb-added-label">INTERVIEW PREPARATION</span>
+
+    <h2>🎤 Loops — Interview Questions</h2>
+
+    <div class="cb-original-qa-list cb-interview-qa-list">
+        
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">1.</span>
+                <span>What is the main difference between for, while and do-while loops?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('loopsInterviewAnswer1', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="loopsInterviewAnswer1"
+                 hidden>
+                for and while are entry-controlled loops because their conditions are checked before the body. do-while checks the condition after the body, so its body executes at least once.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">2.</span>
+                <span>When is a for loop usually preferred?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('loopsInterviewAnswer2', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="loopsInterviewAnswer2"
+                 hidden>
+                A for loop is convenient when initialization, condition and update can be expressed clearly together, especially when the iteration count or pattern is known.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">3.</span>
+                <span>What is an infinite loop?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('loopsInterviewAnswer3', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="loopsInterviewAnswer3"
+                 hidden>
+                An infinite loop is a loop whose stopping condition never becomes false or whose control flow intentionally repeats forever.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">4.</span>
+                <span>What does break do inside a loop?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('loopsInterviewAnswer4', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="loopsInterviewAnswer4"
+                 hidden>
+                break immediately terminates the nearest enclosing loop and transfers control to the statement after that loop.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">5.</span>
+                <span>What does continue do inside a loop?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('loopsInterviewAnswer5', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="loopsInterviewAnswer5"
+                 hidden>
+                continue skips the remaining statements in the current iteration and proceeds with the loop&#x27;s next iteration behavior.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">6.</span>
+                <span>Why must loop initialization, condition and update be checked carefully?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('loopsInterviewAnswer6', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="loopsInterviewAnswer6"
+                 hidden>
+                An incorrect start value, stopping condition or update can cause missed iterations, extra iterations, incorrect results or an infinite loop.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">7.</span>
+                <span>What is a nested loop?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('loopsInterviewAnswer7', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="loopsInterviewAnswer7"
+                 hidden>
+                A nested loop is a loop inside another loop. For every outer-loop iteration, the inner loop can execute its own sequence of iterations.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">8.</span>
+                <span>Why is i * i &lt;= n often used in a prime-number test?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('loopsInterviewAnswer8', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="loopsInterviewAnswer8"
+                 hidden>
+                If n has a factor greater than its square root, the corresponding paired factor is smaller than the square root. Therefore testing divisors up to the square root is sufficient.
+            </div>
+
+        </div>
+    
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="loops-tips-extra">
+
+    <span class="cb-added-label">PLACEMENT TIPS</span>
+
+    <h2>💡 Loops — Placement Tips</h2>
+
+    <ul class="cb-tip-grid">
+        <li>Before tracing any loop, write down the <strong>initial value, condition, body operation and update</strong>.</li>
+        <li>For output-prediction questions, record the loop variable value at the <strong>start of every iteration</strong>.</li>
+        <li>Watch carefully for <strong>&lt;</strong> versus <strong>&lt;=</strong>; this is a common source of off-by-one errors.</li>
+        <li>For digit problems, remember the standard pair: <code>digit = n % 10</code> and <code>n = n / 10</code>.</li>
+        <li>For prime checking, testing divisors only while <code>i * i &lt;= n</code> is much more efficient than checking all values up to n.</li>
+        <li>In nested loops, estimate the number of inner-loop executions because this often determines the program's time complexity.</li>
+    </ul>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="loops-practice-extra">
+
+    <span class="cb-added-label">EXTRA PRACTICE</span>
+
+    <h2>✍️ Loops — Extra Practice Questions</h2>
+
+    <ol class="cb-extra-practice">
+        <li>Print all multiples of 3 from 1 to N.</li>
+        <li>Find the product of all odd numbers from 1 to N.</li>
+        <li>Count how many times a given digit appears in an integer.</li>
+        <li>Check whether a number is an Armstrong number.</li>
+        <li>Print the first N terms of the Fibonacci sequence.</li>
+        <li>Use nested loops to print a rectangular and an inverted-triangle star pattern.</li>
+    </ol>
+
+</section>
+
+
+
+<section class="cb-topic-navigation" aria-label="C Programming topic navigation">
+
+    <a class="cb-topic-nav-btn cb-topic-nav-prev" href="decision-making.html">
+        ← Previous Topic: Decision Making
+    </a>
+
+    <a class="cb-topic-nav-btn cb-topic-nav-next" href="arrays.html">
+        Next Topic: Arrays →
+    </a>
+
+</section>
+
+
+</main>
+
+</div>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../Maths/index.html">
+                Maths
+            </a>
+
+            <a href="index.html">
+                C Programming
+            </a>
+
+        </div>
+
+
+        <!-- LEARNING -->
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+<a href="../Data-Structures/">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/">
+    Advanced Data Structures
+</a>
+
+            <a href="#">
+                Python
+            </a>
+
+            <a href="#">
+                AI & Machine Learning
+            </a>
+
+        </div>
+
+
+        <!-- PRACTICE -->
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="#practice">
+                Practice Problems
+            </a>
+
+            <a href="#practice">
+                Problem Solving
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="c-programming.js"></script>
+<script>
+const codeBhavyaLoopsPracticeConfigs =
+[{"key": "loops-p1", "title": "Print Numbers from 1 to N", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read n and print 1 to n */\n\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "1", "expected": "1"}, {"input": "5", "expected": "1 2 3 4 5"}, {"input": "3", "expected": "1 2 3"}, {"input": "8", "expected": "1 2 3 4 5 6 7 8"}]}, {"key": "loops-p2", "title": "Print Numbers from N to 1", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read n and print n down to 1 */\n\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "1", "expected": "1"}, {"input": "5", "expected": "5 4 3 2 1"}, {"input": "3", "expected": "3 2 1"}, {"input": "7", "expected": "7 6 5 4 3 2 1"}]}, {"key": "loops-p3", "title": "Print Even Numbers from 1 to N", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read n and print even numbers */\n\n    return 0;\n}", "sampleInput": "10", "tests": [{"input": "10", "expected": "2 4 6 8 10"}, {"input": "7", "expected": "2 4 6"}, {"input": "2", "expected": "2"}, {"input": "1", "expected": ""}]}, {"key": "loops-p4", "title": "Print Odd Numbers from 1 to N", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read n and print odd numbers */\n\n    return 0;\n}", "sampleInput": "10", "tests": [{"input": "10", "expected": "1 3 5 7 9"}, {"input": "7", "expected": "1 3 5 7"}, {"input": "1", "expected": "1"}, {"input": "2", "expected": "1"}]}, {"key": "loops-p5", "title": "Sum of First N Natural Numbers", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n    long long sum = 0;\n\n    /* Read n and calculate the sum */\n\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "0", "expected": "0"}, {"input": "1", "expected": "1"}, {"input": "5", "expected": "15"}, {"input": "10", "expected": "55"}, {"input": "100", "expected": "5050"}]}, {"key": "loops-p6", "title": "Factorial of a Number", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n    unsigned long long fact = 1;\n\n    /* Read n and calculate n! */\n\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "0", "expected": "1"}, {"input": "1", "expected": "1"}, {"input": "5", "expected": "120"}, {"input": "7", "expected": "5040"}, {"input": "10", "expected": "3628800"}]}, {"key": "loops-p7", "title": "Multiplication Table", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read n and print its table */\n\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "2", "expected": "2 x 1 = 2\n2 x 2 = 4\n2 x 3 = 6\n2 x 4 = 8\n2 x 5 = 10\n2 x 6 = 12\n2 x 7 = 14\n2 x 8 = 16\n2 x 9 = 18\n2 x 10 = 20"}, {"input": "5", "expected": "5 x 1 = 5\n5 x 2 = 10\n5 x 3 = 15\n5 x 4 = 20\n5 x 5 = 25\n5 x 6 = 30\n5 x 7 = 35\n5 x 8 = 40\n5 x 9 = 45\n5 x 10 = 50"}]}, {"key": "loops-p8", "title": "Count Digits in an Integer", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    long long n;\n    int count = 0;\n\n    /* Read n and count its digits */\n\n    return 0;\n}", "sampleInput": "5832", "tests": [{"input": "0", "expected": "1"}, {"input": "9", "expected": "1"}, {"input": "5832", "expected": "4"}, {"input": "-12345", "expected": "5"}, {"input": "100000", "expected": "6"}]}, {"key": "loops-p9", "title": "Reverse a Number", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    long long n;\n    long long reverse = 0;\n\n    /* Read n and reverse its digits */\n\n    return 0;\n}", "sampleInput": "1234", "tests": [{"input": "1234", "expected": "4321"}, {"input": "1200", "expected": "21"}, {"input": "7", "expected": "7"}, {"input": "0", "expected": "0"}, {"input": "-321", "expected": "-123"}]}, {"key": "loops-p10", "title": "Palindrome Number", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    long long n;\n\n    /* Read n, reverse it, and compare */\n\n    return 0;\n}", "sampleInput": "121", "tests": [{"input": "121", "expected": "Palindrome"}, {"input": "123", "expected": "Not Palindrome"}, {"input": "0", "expected": "Palindrome"}, {"input": "7", "expected": "Palindrome"}, {"input": "1221", "expected": "Palindrome"}]}, {"key": "loops-p11", "title": "Prime Number", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read n and test whether it is prime */\n\n    return 0;\n}", "sampleInput": "29", "tests": [{"input": "2", "expected": "Prime"}, {"input": "29", "expected": "Prime"}, {"input": "1", "expected": "Not Prime"}, {"input": "49", "expected": "Not Prime"}, {"input": "-7", "expected": "Not Prime"}]}, {"key": "loops-p12", "title": "Print Prime Numbers from 1 to N", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read n and print primes from 1 to n */\n\n    return 0;\n}", "sampleInput": "20", "tests": [{"input": "2", "expected": "2"}, {"input": "10", "expected": "2 3 5 7"}, {"input": "20", "expected": "2 3 5 7 11 13 17 19"}, {"input": "30", "expected": "2 3 5 7 11 13 17 19 23 29"}]}, {"key": "loops-p13", "title": "Sum of Digits", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    long long n;\n    int sum = 0;\n\n    /* Read n and sum its digits */\n\n    return 0;\n}", "sampleInput": "5832", "tests": [{"input": "5832", "expected": "18"}, {"input": "0", "expected": "0"}, {"input": "999", "expected": "27"}, {"input": "-1234", "expected": "10"}, {"input": "10001", "expected": "2"}]}, {"key": "loops-p14", "title": "Largest Digit", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    long long n;\n\n    /* Read n and find its largest digit */\n\n    return 0;\n}", "sampleInput": "5832", "tests": [{"input": "5832", "expected": "8"}, {"input": "0", "expected": "0"}, {"input": "999", "expected": "9"}, {"input": "-1234", "expected": "4"}, {"input": "10001", "expected": "1"}]}, {"key": "loops-p15", "title": "Count Even and Odd Digits", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    long long n;\n    int even = 0;\n    int odd = 0;\n\n    /* Read n and count even/odd digits */\n\n    return 0;\n}", "sampleInput": "58320", "tests": [{"input": "58320", "expected": "Even = 3\nOdd = 2"}, {"input": "0", "expected": "Even = 1\nOdd = 0"}, {"input": "13579", "expected": "Even = 0\nOdd = 5"}, {"input": "2468", "expected": "Even = 4\nOdd = 0"}, {"input": "-10203", "expected": "Even = 3\nOdd = 2"}]}, {"key": "loops-p16", "title": "Print a Five-Row Star Pattern", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    /* Print the five-row triangular pattern using nested loops */\n\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "*\n* *\n* * *\n* * * *\n* * * * *"}]}];
+
+CodeBhavyaCPractice.registerAll(
+    codeBhavyaLoopsPracticeConfigs
+);
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
