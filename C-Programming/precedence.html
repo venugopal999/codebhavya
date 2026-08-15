@@ -1,0 +1,4831 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C Programming | CodeBhavya</title>
+
+ <link rel="icon" type="image/png" sizes="32x32"
+      href="../images/codebhavya-icon-32.png">
+
+<link rel="icon" type="image/png" sizes="128x128"
+      href="../images/codebhavya-icon-128.png">
+
+<link rel="icon" type="image/png" sizes="512x512"
+      href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="c-programming.css">
+</head>
+
+<body class="cb-c-topic-page cb-precedence-page">
+
+<header class="top-header">
+
+<!-- <a href="../index.html" class="logo">
+    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a> -->
+    
+<a href="../index.html" class="logo codebhavya-new-logo">
+
+    <img
+        src="../images/codebhavya-main-logo.png"
+        alt="CodeBhavya Logo"
+        class="main-logo"
+    >
+
+    <span class="brand-name">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </span>
+
+</a>
+
+    <nav class="top-nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="../Maths/">
+            Maths
+        </a>
+
+        <a href="index.html" class="active">
+            C
+        </a>
+
+<a href="../Data-Structures/index.html">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/index.html">
+    Advanced Data Structures
+</a>
+
+        <a href="../Python/">
+            Python
+        </a>
+
+        <a href="../AI-ML/">
+            AI & ML
+        </a>
+
+        <a href="../Placement/">
+            Placement
+        </a>
+
+    </nav>
+
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar cb-c-topic-sidebar">
+    <div class="sidebar-title">💻 C Programming</div>
+
+    <input
+        type="text"
+        id="topicSearch"
+        class="search-box"
+        placeholder="🔍 Search topics..."
+        onkeyup="searchTopics()"
+    >
+
+    <div class="sidebar-title">Fundamentals</div>
+    <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
+    <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
+    <a class="cb-topic-link" data-topic-link="1" href="data-types.html">📦 Data Types</a>
+    <a class="cb-topic-link" data-topic-link="1" href="input-output.html">⌨️ Input &amp; Output</a>
+
+    <div class="sidebar-title">Operators &amp; Control</div>
+    <a class="cb-topic-link" data-topic-link="1" href="operators.html">➕ Operators</a>
+    <a class="cb-topic-link" data-topic-link="1" href="expressions.html">🧮 Expressions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="decision-making.html">🔀 Decision Making</a>
+    <a class="cb-topic-link" data-topic-link="1" href="loops.html">🔁 Loops</a>
+
+    <div class="sidebar-title">Programming Concepts</div>
+    <a class="cb-topic-link" data-topic-link="1" href="arrays.html">📊 Arrays</a>
+    <a class="cb-topic-link" data-topic-link="1" href="strings.html">🔤 Strings</a>
+    <a class="cb-topic-link" data-topic-link="1" href="functions.html">🧩 Functions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="pointers.html">👉 Pointers</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structures-unions.html">🏗️ Structures &amp; Unions</a>
+
+    <div class="sidebar-title">Advanced C</div>
+    <a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">⚙️ Preprocessor &amp; Header Files</a>
+    <a class="cb-topic-link" data-topic-link="1" href="file-handling.html">📁 File Handling</a>
+    <a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">🧠 Dynamic Memory Allocation</a>
+    <a class="cb-topic-link" data-topic-link="1" href="command-line.html">💻 Command Line Arguments</a>
+    <a class="cb-topic-link" data-topic-link="1" href="bitwise.html">🔢 Bitwise Programming</a>
+    <a class="cb-topic-link" data-topic-link="1" href="enum-typedef.html">🔤 Enumerations &amp; typedef</a>
+    <a class="cb-topic-link active" data-topic-link="1" href="precedence.html">🧮 Operator Precedence &amp; Associativity</a>
+    <a class="cb-topic-link" data-topic-link="1" href="storage-classes.html">💾 Storage Classes</a>
+    <a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">🛠️ Advanced C Preprocessor</a>
+
+    <div class="sidebar-title">Practice</div>
+    <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
+</aside>
+
+<main class="main-content">
+
+<section id="precedence" class="content-card">
+
+    <h2>🧮 21. Operator Precedence & Associativity</h2>
+
+    <!-- 21.1 INTRODUCTION -->
+
+    <h3>21.1 What is Operator Precedence?</h3>
+
+    <p>
+        <strong>Operator precedence</strong> determines which
+        operator is evaluated first when an expression contains
+        multiple operators.
+    </p>
+
+    <p>
+        For example:
+    </p>
+
+    <pre><code>int result = 10 + 5 * 2;</code></pre>
+
+    <p>
+        Multiplication has higher precedence than addition.
+        Therefore:
+    </p>
+
+    <div class="formula-box">
+
+        5 × 2 = 10
+        <br>
+        10 + 10 = 20
+
+    </div>
+
+    <div class="output-box">
+        Result = 20
+    </div>
+
+
+    <!-- 21.2 ASSOCIATIVITY -->
+
+    <h3>21.2 What is Associativity?</h3>
+
+    <p>
+        When two operators have the same precedence,
+        <strong>associativity</strong> determines the direction
+        in which they are evaluated.
+    </p>
+
+    <p>
+        Most arithmetic, relational and logical operators have
+        <strong>left-to-right</strong> associativity.
+    </p>
+
+    <p>
+        Unary, conditional and assignment operators contain
+        important right-to-left cases.
+    </p>
+
+    <pre><code>20 / 5 * 2</code></pre>
+
+    <p>
+        Division and multiplication have the same precedence,
+        so they are evaluated from left to right:
+    </p>
+
+    <div class="formula-box">
+
+        20 / 5 = 4
+        <br>
+        4 × 2 = 8
+
+    </div>
+
+
+    <!-- 21.3 PRECEDENCE TABLE -->
+
+    <h3>21.3 C Operator Precedence Table</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Priority</th>
+                    <th>Operators</th>
+                    <th>Associativity</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Highest</td>
+                    <td>() [] -&gt; . postfix ++ postfix --</td>
+                    <td>Left → Right</td>
+                </tr>
+
+                <tr>
+                    <td>2</td>
+                    <td>++ -- + - ! ~ (type) * &amp;</td>
+                    <td>Right → Left</td>
+                </tr>
+
+                <tr>
+                    <td>3</td>
+                    <td>* / %</td>
+                    <td>Left → Right</td>
+                </tr>
+
+                <tr>
+                    <td>4</td>
+                    <td>+ -</td>
+                    <td>Left → Right</td>
+                </tr>
+
+                <tr>
+                    <td>5</td>
+                    <td>&lt;&lt; &gt;&gt;</td>
+                    <td>Left → Right</td>
+                </tr>
+
+                <tr>
+                    <td>6</td>
+                    <td>&lt; &lt;= &gt; &gt;=</td>
+                    <td>Left → Right</td>
+                </tr>
+
+                <tr>
+                    <td>7</td>
+                    <td>== !=</td>
+                    <td>Left → Right</td>
+                </tr>
+
+                <tr>
+                    <td>8</td>
+                    <td>&amp;</td>
+                    <td>Left → Right</td>
+                </tr>
+
+                <tr>
+                    <td>9</td>
+                    <td>^</td>
+                    <td>Left → Right</td>
+                </tr>
+
+                <tr>
+                    <td>10</td>
+                    <td>|</td>
+                    <td>Left → Right</td>
+                </tr>
+
+                <tr>
+                    <td>11</td>
+                    <td>&amp;&amp;</td>
+                    <td>Left → Right</td>
+                </tr>
+
+                <tr>
+                    <td>12</td>
+                    <td>||</td>
+                    <td>Left → Right</td>
+                </tr>
+
+                <tr>
+                    <td>13</td>
+                    <td>?:</td>
+                    <td>Right → Left</td>
+                </tr>
+
+                <tr>
+                    <td>14</td>
+                    <td>= += -= *= /= %= &lt;&lt;= &gt;&gt;= &amp;= ^= |=</td>
+                    <td>Right → Left</td>
+                </tr>
+
+                <tr>
+                    <td>Lowest</td>
+                    <td>,</td>
+                    <td>Left → Right</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="tip-box">
+
+        📌 Higher position in the table means higher precedence.
+
+        <br><br>
+
+        📌 Parentheses can be used to explicitly control
+        evaluation order.
+
+    </div>
+
+
+    <!-- 21.4 PARENTHESES -->
+
+    <div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">1</div>
+            <div class="cb-mini-step-text">Parentheses / Postfix</div>
+            <div class="cb-mini-step-subtext">Explicit grouping, calls, subscripts and postfix operators.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">2</div>
+            <div class="cb-mini-step-text">Unary → Multiplicative → Additive</div>
+            <div class="cb-mini-step-subtext">Examples: !, *, /, %, + and -.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">3</div>
+            <div class="cb-mini-step-text">Shift → Relational → Equality</div>
+            <div class="cb-mini-step-subtext">Examples: &lt;&lt;, &gt;&gt;, &lt;, &gt;, == and !=.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">4</div>
+            <div class="cb-mini-step-text">Bitwise → Logical</div>
+            <div class="cb-mini-step-subtext">&amp;, ^, |, then &amp;&amp; and ||.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-pink">
+            <div class="cb-mini-step-badge">5</div>
+            <div class="cb-mini-step-text">Conditional → Assignment → Comma</div>
+            <div class="cb-mini-step-subtext">Lower-precedence expression operators.</div>
+        </div>
+
+    </div>
+
+<h3>21.4 Parentheses Have Highest Practical Priority</h3>
+
+    <p>
+        Parentheses can change the order of evaluation.
+    </p>
+
+    <pre><code>10 + 5 * 2</code></pre>
+
+    <div class="output-box">
+        20
+    </div>
+
+    <pre><code>(10 + 5) * 2</code></pre>
+
+    <div class="output-box">
+        30
+    </div>
+
+    <p>
+        Therefore, use parentheses when the intended meaning
+        needs to be made explicit.
+    </p>
+
+
+    <!-- 21.5 ARITHMETIC -->
+
+    <h3>21.5 Arithmetic Operator Precedence</h3>
+
+    <p>
+        Multiplication, division and modulus have higher precedence
+        than addition and subtraction.
+    </p>
+
+    <pre><code>int x = 10 + 20 * 3;</code></pre>
+
+    <div class="formula-box">
+
+        20 × 3 = 60
+        <br>
+        10 + 60 = 70
+
+    </div>
+
+    <div class="output-box">
+        70
+    </div>
+
+
+    <!-- 21.6 MODULUS -->
+
+    <h3>21.6 Modulus with Other Operators</h3>
+
+    <pre><code>int x = 20 + 15 % 4;</code></pre>
+
+    <div class="formula-box">
+
+        15 % 4 = 3
+        <br>
+        20 + 3 = 23
+
+    </div>
+
+    <div class="output-box">
+        23
+    </div>
+
+
+    <!-- 21.7 LEFT ASSOCIATIVITY -->
+
+    <h3>21.7 Left-to-Right Associativity</h3>
+
+    <pre><code>100 / 10 * 2</code></pre>
+
+    <p>
+        Both <strong>/</strong> and <strong>*</strong> have the
+        same precedence and associate left-to-right.
+    </p>
+
+    <div class="formula-box">
+
+        100 / 10 = 10
+        <br>
+        10 × 2 = 20
+
+    </div>
+
+    <div class="output-box">
+        20
+    </div>
+
+
+    <!-- 21.8 SUBTRACTION -->
+
+    <h3>21.8 Subtraction Example</h3>
+
+    <pre><code>20 - 5 - 3</code></pre>
+
+    <p>
+        The <strong>-</strong> operator associates from left to right.
+    </p>
+
+    <div class="formula-box">
+
+        20 - 5 = 15
+        <br>
+        15 - 3 = 12
+
+    </div>
+
+    <div class="output-box">
+        12
+    </div>
+
+
+    <!-- 21.9 RELATIONAL -->
+
+    <h3>21.9 Relational Operators</h3>
+
+    <p>
+        Relational operators have lower precedence than arithmetic
+        operators.
+    </p>
+
+    <pre><code>int result = 10 + 5 &gt; 12;</code></pre>
+
+    <div class="formula-box">
+
+        10 + 5 = 15
+        <br>
+        15 &gt; 12
+        <br>
+        true → 1
+
+    </div>
+
+    <div class="output-box">
+        1
+    </div>
+
+
+    <!-- 21.10 EQUALITY -->
+
+    <h3>21.10 Equality vs Relational Operators</h3>
+
+    <p>
+        Relational operators have higher precedence than equality
+        operators.
+    </p>
+
+    <pre><code>int result = 5 &lt; 10 == 1;</code></pre>
+
+    <div class="formula-box">
+
+        5 &lt; 10 → 1
+        <br>
+        1 == 1 → 1
+
+    </div>
+
+    <div class="output-box">
+        1
+    </div>
+
+
+    <!-- 21.11 LOGICAL -->
+
+    <h3>21.11 Logical Operator Precedence</h3>
+
+    <p>
+        The order among the common logical operators is:
+    </p>
+
+    <div class="formula-box">
+
+        ! 
+        <br>
+        ↓
+        <br>
+        &amp;&amp;
+        <br>
+        ↓
+        <br>
+        ||
+
+    </div>
+
+    <pre><code>1 || 0 &amp;&amp; 0</code></pre>
+
+    <p>
+        First evaluate AND:
+    </p>
+
+    <div class="formula-box">
+
+        0 &amp;&amp; 0 = 0
+        <br>
+        1 || 0 = 1
+
+    </div>
+
+    <div class="output-box">
+        1
+    </div>
+
+
+    <!-- 21.12 NOT -->
+
+    <h3>21.12 Logical NOT</h3>
+
+    <p>
+        Logical NOT has higher precedence than logical AND.
+    </p>
+
+    <pre><code>!0 &amp;&amp; 1</code></pre>
+
+    <div class="formula-box">
+
+        !0 = 1
+        <br>
+        1 &amp;&amp; 1 = 1
+
+    </div>
+
+    <div class="output-box">
+        1
+    </div>
+
+
+    <!-- 21.13 BITWISE -->
+
+    <h3>21.13 Bitwise Operator Precedence</h3>
+
+    <p>
+        Among the bitwise operators:
+    </p>
+
+    <div class="formula-box">
+
+        &amp;
+        <br>
+        ↓
+        <br>
+        ^
+        <br>
+        ↓
+        <br>
+        |
+
+    </div>
+
+    <p>
+        Bitwise AND has higher precedence than XOR, which has
+        higher precedence than OR.
+    </p>
+
+    <pre><code>5 | 3 &amp; 1</code></pre>
+
+    <p>
+        First:
+    </p>
+
+    <pre><code>3 &amp; 1 = 1</code></pre>
+
+    <p>
+        Then:
+    </p>
+
+    <pre><code>5 | 1 = 5</code></pre>
+
+    <div class="output-box">
+        5
+    </div>
+
+
+    <!-- 21.14 SHIFT -->
+
+    <h3>21.14 Shift vs Arithmetic Operators</h3>
+
+    <p>
+        Shift operators have lower precedence than addition and
+        subtraction.
+    </p>
+
+    <pre><code>1 &lt;&lt; 2 + 1</code></pre>
+
+    <p>
+        Addition is evaluated first:
+    </p>
+
+    <div class="formula-box">
+
+        2 + 1 = 3
+        <br>
+        1 &lt;&lt; 3 = 8
+
+    </div>
+
+    <div class="output-box">
+        8
+    </div>
+
+
+    <!-- 21.15 ASSIGNMENT -->
+
+    <h3>21.15 Assignment Operator</h3>
+
+    <p>
+        Assignment operators have lower precedence than most
+        operators.
+    </p>
+
+    <pre><code>int x;
+
+x = 10 + 20 * 2;</code></pre>
+
+    <p>
+        First multiplication, then addition, then assignment.
+    </p>
+
+    <div class="formula-box">
+
+        20 × 2 = 40
+        <br>
+        10 + 40 = 50
+        <br>
+        x = 50
+
+    </div>
+
+
+    <!-- 21.16 RIGHT ASSOCIATIVITY -->
+
+    <h3>21.16 Assignment is Right-to-Left</h3>
+
+    <pre><code>int a, b, c;
+
+a = b = c = 10;</code></pre>
+
+    <p>
+        Assignment associates from right to left:
+    </p>
+
+    <div class="formula-box">
+
+        c = 10
+        <br>
+        b = c
+        <br>
+        a = b
+
+    </div>
+
+    <p>
+        Therefore all three variables become 10.
+    </p>
+
+
+    <!-- 21.17 COMPOUND ASSIGNMENT -->
+
+    <h3>21.17 Compound Assignment</h3>
+
+    <pre><code>x += 5;</code></pre>
+
+    <p>
+        is equivalent in value effect to:
+    </p>
+
+    <pre><code>x = x + 5;</code></pre>
+
+    <p>
+        Similar operators include:
+    </p>
+
+    <pre><code>+=
+-=
+*=
+/=
+%=
+&amp;=
+|=
+^=
+&lt;&lt;=
+&gt;&gt;=</code></pre>
+
+
+    <!-- 21.18 INCREMENT -->
+
+    <h3>21.18 Pre-increment vs Post-increment</h3>
+
+    <pre><code>int x = 5;
+
+int a = ++x;</code></pre>
+
+    <p>
+        First x is incremented, then its value is used.
+    </p>
+
+    <div class="formula-box">
+
+        x = 6
+        <br>
+        a = 6
+
+    </div>
+
+    <p>
+        Post-increment:
+    </p>
+
+    <pre><code>int x = 5;
+
+int a = x++;</code></pre>
+
+    <div class="formula-box">
+
+        a = 5
+        <br>
+        x = 6
+
+    </div>
+
+
+    <!-- 21.19 DECREMENT -->
+
+    <h3>21.19 Pre-decrement vs Post-decrement</h3>
+
+    <pre><code>int x = 5;
+
+int a = --x;</code></pre>
+
+    <div class="formula-box">
+
+        x = 4
+        <br>
+        a = 4
+
+    </div>
+
+    <pre><code>int x = 5;
+
+int a = x--;</code></pre>
+
+    <div class="formula-box">
+
+        a = 5
+        <br>
+        x = 4
+
+    </div>
+
+
+    <!-- 21.20 FUNCTION CALL -->
+
+    <h3>21.20 Function Call and Array Subscript</h3>
+
+    <p>
+        Function calls, array subscripting and structure member
+        access bind very tightly.
+    </p>
+
+    <pre><code>arr[i]</code></pre>
+
+    <pre><code>function(x)</code></pre>
+
+    <pre><code>student.name</code></pre>
+
+    <p>
+        These operators appear near the highest level of the
+        precedence hierarchy.
+    </p>
+
+
+    <!-- 21.21 POINTER -->
+
+    <h3>21.21 Pointer Dereference and Increment</h3>
+
+    <p>
+        Be careful with:
+    </p>
+
+    <pre><code>*p++</code></pre>
+
+    <p>
+        This is interpreted as:
+    </p>
+
+    <pre><code>*(p++)</code></pre>
+
+    <p>
+        It does <strong>not</strong> mean:
+    </p>
+
+    <pre><code>(*p)++</code></pre>
+
+    <div class="tip-box">
+
+        📌 Use parentheses when pointer expressions could be
+        confusing.
+
+    </div>
+
+
+    <!-- 21.22 POINTER EXAMPLE -->
+
+    <h3>21.22 Pointer Expression Example</h3>
+
+    <pre><code>int arr[] = {10, 20, 30};
+
+int *p = arr;
+
+printf("%d", *p++);</code></pre>
+
+    <p>
+        Because postfix ++ has higher precedence than unary *,
+        this is equivalent to:
+    </p>
+
+    <pre><code>*(p++)</code></pre>
+
+    <p>
+        The value printed is 10, and then p moves to the next
+        array element.
+    </p>
+
+    <div class="output-box">
+        10
+    </div>
+
+
+    <!-- 21.23 CONDITIONAL -->
+
+    <h3>21.23 Conditional Operator</h3>
+
+    <p>
+        The conditional operator has the form:
+    </p>
+
+    <pre><code>condition ? expression1 : expression2</code></pre>
+
+    <p>
+        Example:
+    </p>
+
+    <pre><code>int max = a &gt; b ? a : b;</code></pre>
+
+    <p>
+        It is useful for simple conditional expressions.
+    </p>
+
+
+    <!-- 21.24 CONDITIONAL ASSOCIATIVITY -->
+
+    <h3>21.24 Conditional Operator Associativity</h3>
+
+    <p>
+        The conditional operator associates from right to left.
+    </p>
+
+    <pre><code>a ? b : c ? d : e</code></pre>
+
+    <p>
+        It is interpreted as:
+    </p>
+
+    <pre><code>a ? b : (c ? d : e)</code></pre>
+
+    <div class="tip-box">
+
+        📌 Even though this is valid, nested conditional expressions
+        should be written clearly with parentheses.
+
+    </div>
+
+
+    <!-- 21.25 COMMA -->
+
+    <h3>21.25 Comma Operator</h3>
+
+    <p>
+        The comma operator has the lowest precedence among the
+        standard C operators.
+    </p>
+
+    <pre><code>int x;
+
+x = (10, 20, 30);</code></pre>
+
+    <p>
+        The expressions are evaluated from left to right and the
+        value of the last expression is the result.
+    </p>
+
+    <div class="output-box">
+        x = 30
+    </div>
+
+
+    <!-- 21.26 TRICKY 1 -->
+
+    <h3>21.26 Tricky Expression 1</h3>
+
+    <pre><code>int x = 10 + 20 * 3;</code></pre>
+
+    <div class="formula-box">
+
+        20 × 3 = 60
+        <br>
+        10 + 60 = 70
+
+    </div>
+
+    <div class="output-box">
+        x = 70
+    </div>
+
+
+    <!-- 21.27 TRICKY 2 -->
+
+    <h3>21.27 Tricky Expression 2</h3>
+
+    <pre><code>int x = 20 / 5 * 2;</code></pre>
+
+    <div class="formula-box">
+
+        20 / 5 = 4
+        <br>
+        4 × 2 = 8
+
+    </div>
+
+    <div class="output-box">
+        x = 8
+    </div>
+
+
+    <!-- 21.28 TRICKY 3 -->
+
+    <h3>21.28 Tricky Expression 3</h3>
+
+    <pre><code>int x = 10 + 5 &gt; 12;</code></pre>
+
+    <div class="formula-box">
+
+        10 + 5 = 15
+        <br>
+        15 &gt; 12 = 1
+
+    </div>
+
+    <div class="output-box">
+        x = 1
+    </div>
+
+
+    <!-- 21.29 TRICKY 4 -->
+
+    <h3>21.29 Tricky Expression 4</h3>
+
+    <pre><code>int x = 5 | 3 &amp; 1;</code></pre>
+
+    <div class="formula-box">
+
+        3 &amp; 1 = 1
+        <br>
+        5 | 1 = 5
+
+    </div>
+
+    <div class="output-box">
+        x = 5
+    </div>
+
+
+    <!-- 21.30 TRICKY 5 -->
+
+    <h3>21.30 Tricky Expression 5</h3>
+
+    <pre><code>int x = 1 &lt;&lt; 2 + 1;</code></pre>
+
+    <div class="formula-box">
+
+        2 + 1 = 3
+        <br>
+        1 &lt;&lt; 3 = 8
+
+    </div>
+
+    <div class="output-box">
+        x = 8
+    </div>
+
+
+    <!-- 21.31 TRICKY 6 -->
+
+    <h3>21.31 Tricky Expression 6</h3>
+
+    <pre><code>int a = 5;
+int b = 10;
+
+int result = a &lt; b &amp;&amp; b &lt; 20;</code></pre>
+
+    <div class="formula-box">
+
+        5 &lt; 10 → 1
+        <br>
+        10 &lt; 20 → 1
+        <br>
+        1 &amp;&amp; 1 → 1
+
+    </div>
+
+    <div class="output-box">
+        result = 1
+    </div>
+
+
+    <!-- 21.32 TRICKY 7 -->
+
+    <h3>21.32 Tricky Expression 7</h3>
+
+    <pre><code>int a = 5;
+int b = 10;
+
+int result = a + b &gt; 10 &amp;&amp; b &gt; 5;</code></pre>
+
+    <div class="formula-box">
+
+        5 + 10 = 15
+        <br>
+        15 &gt; 10 → 1
+        <br>
+        10 &gt; 5 → 1
+        <br>
+        1 &amp;&amp; 1 → 1
+
+    </div>
+
+    <div class="output-box">
+        result = 1
+    </div>
+
+
+    <!-- 21.33 IMPORTANT WARNING -->
+
+    <h3>21.33 Precedence Does NOT Determine Evaluation Order</h3>
+
+    <div class="tip-box">
+
+        ⚠️ This is extremely important.
+
+        <br><br>
+
+        Operator precedence determines how an expression is
+        <strong>grouped</strong>, but it does not generally tell you
+        the order in which independent operands are evaluated.
+
+        <br><br>
+
+        For example, avoid writing expressions where the same
+        scalar object is modified more than once without the
+        required sequencing.
+
+    </div>
+
+
+    <!-- 21.34 UNDEFINED BEHAVIOR -->
+
+    <h3>21.34 Dangerous Expressions</h3>
+
+    <p>
+        Avoid expressions such as:
+    </p>
+
+    <pre><code>i = i++ + ++i;</code></pre>
+
+    <p>
+        The problem is not simply precedence. The expression
+        modifies <strong>i</strong> multiple times without the
+        required sequencing between those modifications.
+    </p>
+
+    <p>
+        Such expressions can result in <strong>undefined behavior</strong>
+        and should not be used.
+    </p>
+
+
+    <!-- 21.35 SAFE VERSION -->
+
+    <h3>21.35 Write Clear Code Instead</h3>
+
+    <p>
+        Instead of writing a complicated expression:
+    </p>
+
+    <pre><code>i = i++ + ++i;</code></pre>
+
+    <p>
+        use separate statements:
+    </p>
+
+    <pre><code>i++;
+
+i++;
+
+result = i;</code></pre>
+
+    <div class="tip-box">
+
+        ⭐ Good C programming prefers clear and well-defined
+        expressions over clever but confusing expressions.
+
+    </div>
+
+
+    <!-- 21.36 PARENTHESES BEST PRACTICE -->
+
+    <h3>21.36 Best Practice: Use Parentheses</h3>
+
+    <pre><code>if((a &amp; mask) == 0)
+{
+    printf("Bit is clear");
+}</code></pre>
+
+    <p>
+        This is much clearer than relying on the reader to remember
+        the exact precedence relationship between <strong>&amp;</strong>
+        and <strong>==</strong>.
+    </p>
+
+
+    <!-- 21.37 COMMON MISTAKES -->
+
+    <h3>21.37 Common Mistakes</h3>
+
+    <ul>
+
+        <li>
+            Assuming expressions are always evaluated strictly
+            from left to right.
+        </li>
+
+        <li>
+            Confusing precedence with evaluation order.
+        </li>
+
+        <li>
+            Forgetting that * / % have higher precedence than + -.
+        </li>
+
+        <li>
+            Confusing bitwise operators with logical operators.
+        </li>
+
+        <li>
+            Forgetting that assignment associates right-to-left.
+        </li>
+
+        <li>
+            Misreading *p++ as (*p)++.
+        </li>
+
+        <li>
+            Writing complicated expressions without parentheses.
+        </li>
+
+        <li>
+            Modifying the same scalar object multiple times without
+            the required sequencing.
+        </li>
+
+    </ul>
+
+
+    <!-- 21.38 QUICK REVISION -->
+
+    <h3>21.38 Quick Revision</h3>
+
+    <div class="tip-box">
+
+        📌 <strong>Precedence</strong> → Determines how operators
+        are grouped.
+
+        <br><br>
+
+        📌 <strong>Associativity</strong> → Resolves operators
+        of the same precedence.
+
+        <br><br>
+
+        📌 <strong>* / %</strong> → Higher than + -
+
+        <br><br>
+
+        📌 <strong>+ -</strong> → Higher than relational operators
+
+        <br><br>
+
+        📌 <strong>&lt; &lt;= &gt; &gt;=</strong> → Higher than
+        == !=
+
+        <br><br>
+
+        📌 <strong>== !=</strong> → Higher than bitwise AND
+
+        <br><br>
+
+        📌 <strong>&amp;</strong> → Higher than ^
+
+        <br><br>
+
+        📌 <strong>^</strong> → Higher than |
+
+        <br><br>
+
+        📌 <strong>|</strong> → Higher than &amp;&amp;
+
+        <br><br>
+
+        📌 <strong>&amp;&amp;</strong> → Higher than ||
+
+        <br><br>
+
+        📌 <strong>Assignment</strong> → Right-to-left
+
+        <br><br>
+
+        📌 <strong>Comma</strong> → Lowest precedence
+
+        <br><br>
+
+        📌 <strong>Parentheses</strong> → Use them to make
+        intended grouping explicit.
+
+    </div>
+
+
+    <!-- 21.39 MCQs -->
+
+    
+<section class="content-card cb-added-section cb-compact-learning" id="precedence-visualizer-extra">
+
+    <span class="cb-added-label">INTERACTIVE LEARNING</span>
+
+    <h2>🎬 Operator Precedence — Expression Grouping</h2>
+
+    <p class="cb-added-note">
+        Follow how C groups <code>10 + 5 * 2 &gt; 15 &amp;&amp; 1</code>
+        according to operator precedence.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBConceptViz.toggle('precedence')"
+    >▶ Open Visualization</button>
+
+    <div class="cb-compact-panel" id="cbVizPanel-precedence" hidden>
+
+        <div
+            class="cb-viz-card cb-viz-dsa-standard"
+            data-cb-viz="precedence"
+            data-frames="[{&quot;title&quot;:&quot;1. Read the complete expression&quot;,&quot;detail&quot;:&quot;Expression: 10 + 5 * 2 &gt; 15 &amp;&amp; 1.&quot;},{&quot;title&quot;:&quot;2. Multiplication has higher precedence than addition&quot;,&quot;detail&quot;:&quot;5 * 2 is grouped first, giving 10 + 10 &gt; 15 &amp;&amp; 1.&quot;},{&quot;title&quot;:&quot;3. Addition is grouped before the relational operator&quot;,&quot;detail&quot;:&quot;10 + 10 becomes 20, so the expression becomes 20 &gt; 15 &amp;&amp; 1.&quot;},{&quot;title&quot;:&quot;4. Relational comparison is grouped before logical AND&quot;,&quot;detail&quot;:&quot;20 &gt; 15 produces 1, so the expression becomes 1 &amp;&amp; 1.&quot;},{&quot;title&quot;:&quot;5. Logical AND gives the final result&quot;,&quot;detail&quot;:&quot;1 &amp;&amp; 1 evaluates to 1.&quot;}]"
+        >
+
+            <div class="cb-viz-dsa-topbar">
+                <div class="cb-viz-dsa-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+                <div class="cb-viz-dsa-brand" aria-label="CodeBhavya">
+                    <span class="cb-viz-dsa-brand-mark">
+                        <img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo">
+                    </span>
+                    <span class="cb-viz-dsa-code">Code</span><span class="cb-viz-dsa-bhavya">Bhavya</span>
+                </div>
+            </div>
+
+            <h3 class="cb-viz-dsa-title">🎬 Expression Grouping Visualizer</h3>
+
+            <div class="cb-mini-step-flow">
+
+                <div class="cb-mini-step-card cb-mini-step-card-blue" data-cb-flow-step="0">
+                    <div class="cb-mini-step-badge">Expression</div>
+                    <div class="cb-mini-step-text">10 + 5 * 2 &gt; 15 &amp;&amp; 1</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-gold" data-cb-flow-step="1">
+                    <div class="cb-mini-step-badge">*</div>
+                    <div class="cb-mini-step-text">5 * 2 = 10</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-purple" data-cb-flow-step="2">
+                    <div class="cb-mini-step-badge">+</div>
+                    <div class="cb-mini-step-text">10 + 10 = 20</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-green" data-cb-flow-step="3">
+                    <div class="cb-mini-step-badge">&gt;</div>
+                    <div class="cb-mini-step-text">20 &gt; 15 = 1</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-pink" data-cb-flow-step="4">
+                    <div class="cb-mini-step-badge">&amp;&amp;</div>
+                    <div class="cb-mini-step-text">1 &amp;&amp; 1 = 1</div>
+                </div>
+
+            </div>
+
+            <div class="cb-viz-stage">
+                <div class="cb-viz-step" id="cbVizStep-precedence">Step 1</div>
+                <h3 id="cbVizTitle-precedence"></h3>
+                <p id="cbVizDetail-precedence"></p>
+                <div class="cb-viz-dots" id="cbVizDots-precedence"></div>
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBConceptViz.prev('precedence')">← Previous</button>
+                <button class="cb-control cb-next" id="cbVizNext-precedence" onclick="CBConceptViz.next('precedence')">Next →</button>
+                <button class="cb-control cb-auto" id="cbVizAuto-precedence" onclick="CBConceptViz.auto('precedence')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBConceptViz.pause('precedence')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBConceptViz.reset('precedence')">↺ Reset</button>
+            </div>
+
+            <div class="cb-mini-progress">
+                <div id="cbVizProgress-precedence"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="content-card cb-added-section cb-compact-learning" id="precedence-tracing-extra">
+
+    <span class="cb-added-label">PROGRAM TRACING</span>
+
+    <h2>🔎 Program Tracing — Operator Precedence &amp; Associativity</h2>
+
+    <p class="cb-added-note">
+        The combined expression is decomposed into clear steps so students can see
+        the precedence relationship without relying on a tricky one-line statement.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBProgramTrace.toggle('precedence')"
+    >▶ Program Tracing — Operator Precedence &amp; Associativity</button>
+
+    <div class="cb-compact-panel" id="cbTracePanel-precedence" hidden>
+
+        <div
+            class="cb-tracer"
+            data-cb-trace="precedence"
+            data-config="{&quot;code&quot;:[&quot;int main()&quot;,&quot;{&quot;,&quot;    int a = 10;&quot;,&quot;    int b = 5;&quot;,&quot;    int c = 2;&quot;,&quot;    int product = b * c;&quot;,&quot;    int sum = a + product;&quot;,&quot;    int comparison = sum &gt; 15;&quot;,&quot;    int result = comparison &amp;&amp; 1;&quot;,&quot;    printf(\&quot;Result = %d\&quot;, result);&quot;,&quot;    return 0;&quot;,&quot;}&quot;],&quot;steps&quot;:[{&quot;line&quot;:0,&quot;state&quot;:{&quot;a&quot;:&quot;—&quot;,&quot;b&quot;:&quot;—&quot;,&quot;c&quot;:&quot;—&quot;,&quot;product&quot;:&quot;—&quot;,&quot;sum&quot;:&quot;—&quot;,&quot;comparison&quot;:&quot;—&quot;,&quot;result&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Execution starts at main().&quot;},{&quot;line&quot;:2,&quot;state&quot;:{&quot;a&quot;:10,&quot;b&quot;:&quot;—&quot;,&quot;c&quot;:&quot;—&quot;,&quot;product&quot;:&quot;—&quot;,&quot;sum&quot;:&quot;—&quot;,&quot;comparison&quot;:&quot;—&quot;,&quot;result&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;a is initialized to 10.&quot;},{&quot;line&quot;:3,&quot;state&quot;:{&quot;a&quot;:10,&quot;b&quot;:5,&quot;c&quot;:&quot;—&quot;,&quot;product&quot;:&quot;—&quot;,&quot;sum&quot;:&quot;—&quot;,&quot;comparison&quot;:&quot;—&quot;,&quot;result&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;b is initialized to 5.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;a&quot;:10,&quot;b&quot;:5,&quot;c&quot;:2,&quot;product&quot;:&quot;—&quot;,&quot;sum&quot;:&quot;—&quot;,&quot;comparison&quot;:&quot;—&quot;,&quot;result&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;c is initialized to 2.&quot;},{&quot;line&quot;:5,&quot;state&quot;:{&quot;a&quot;:10,&quot;b&quot;:5,&quot;c&quot;:2,&quot;product&quot;:10,&quot;sum&quot;:&quot;—&quot;,&quot;comparison&quot;:&quot;—&quot;,&quot;result&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Multiplication is handled before addition in the original combined expression: 5 * 2 = 10.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;a&quot;:10,&quot;b&quot;:5,&quot;c&quot;:2,&quot;product&quot;:10,&quot;sum&quot;:20,&quot;comparison&quot;:&quot;—&quot;,&quot;result&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Addition then gives 10 + 10 = 20.&quot;},{&quot;line&quot;:7,&quot;state&quot;:{&quot;a&quot;:10,&quot;b&quot;:5,&quot;c&quot;:2,&quot;product&quot;:10,&quot;sum&quot;:20,&quot;comparison&quot;:1,&quot;result&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;The relational comparison 20 &gt; 15 produces 1.&quot;},{&quot;line&quot;:8,&quot;state&quot;:{&quot;a&quot;:10,&quot;b&quot;:5,&quot;c&quot;:2,&quot;product&quot;:10,&quot;sum&quot;:20,&quot;comparison&quot;:1,&quot;result&quot;:1,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Logical AND with 1 gives result = 1.&quot;},{&quot;line&quot;:9,&quot;state&quot;:{&quot;a&quot;:10,&quot;b&quot;:5,&quot;c&quot;:2,&quot;product&quot;:10,&quot;sum&quot;:20,&quot;comparison&quot;:1,&quot;result&quot;:1,&quot;output&quot;:&quot;Result = 1&quot;},&quot;note&quot;:&quot;printf() displays the final result.&quot;},{&quot;line&quot;:10,&quot;state&quot;:{&quot;a&quot;:10,&quot;b&quot;:5,&quot;c&quot;:2,&quot;product&quot;:10,&quot;sum&quot;:20,&quot;comparison&quot;:1,&quot;result&quot;:1,&quot;output&quot;:&quot;Result = 1&quot;},&quot;note&quot;:&quot;return 0 ends the program successfully.&quot;}]}"
+        >
+
+            <div class="cb-tracer-grid">
+
+                <div class="cb-tracer-code-wrap">
+                    <div class="cb-tracer-heading">C Program</div>
+                    <pre class="cb-tracer-code" id="cbTraceCode-precedence"></pre>
+                </div>
+
+                <div class="cb-tracer-state-wrap">
+                    <div class="cb-tracer-heading">Live Variables</div>
+                    <div class="cb-tracer-note" id="cbTraceNote-precedence"></div>
+                    <div class="cb-live-state" id="cbTraceState-precedence"></div>
+
+                    <div class="cb-tracer-output">
+                        <strong>Output</strong>
+                        <pre id="cbTraceOutput-precedence">—</pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBProgramTrace.prev('precedence')">← Previous</button>
+                <button class="cb-control cb-next" id="cbTraceNext-precedence" onclick="CBProgramTrace.next('precedence')">Next →</button>
+                <button class="cb-control cb-auto" id="cbTraceAuto-precedence" onclick="CBProgramTrace.auto('precedence')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBProgramTrace.pause('precedence')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBProgramTrace.reset('precedence')">↺ Reset</button>
+            </div>
+
+            <div class="cb-tracer-status" id="cbTraceStatus-precedence">Step 0</div>
+
+        </div>
+    </div>
+</section>
+
+
+<h3>21.39 Quick MCQs</h3>
+
+    <p class="cb-mcq-guide">
+        Select an answer first, then click <strong>Check Answer</strong>.
+        A correct choice becomes green. If the answer is wrong, your choice becomes red
+        and the correct option becomes green. The explanation appears below.
+    </p>
+
+    <div class="cb-mcq-list">
+        
+    <div class="cb-mcq-card" id="precedence-mcq1" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">1.</span>
+            <strong>Which operator has higher precedence?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="precedence-mcq1" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">+</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="precedence-mcq1" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">*</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="precedence-mcq1" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">=</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="precedence-mcq1" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">||</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('precedence-mcq1')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('precedence-mcq1')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>Multiplication has higher precedence than addition, assignment, and logical OR.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="precedence-mcq2" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">2.</span>
+            <strong>What is the associativity of multiplication?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="precedence-mcq2" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">Left-to-right</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="precedence-mcq2" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">Right-to-left</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="precedence-mcq2" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">Top-to-bottom</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="precedence-mcq2" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">None</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('precedence-mcq2')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('precedence-mcq2')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>Multiplicative operators associate left-to-right.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="precedence-mcq3" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">3.</span>
+            <strong>Which has higher precedence?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="precedence-mcq3" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">==</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="precedence-mcq3" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">&lt;</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="precedence-mcq3" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">=</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="precedence-mcq3" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">||</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('precedence-mcq3')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('precedence-mcq3')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>Relational operators such as &lt; have higher precedence than equality operators such as ==.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="precedence-mcq4" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">4.</span>
+            <strong>What is the result of 10 + 5 * 2?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="precedence-mcq4" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">30</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="precedence-mcq4" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">20</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="precedence-mcq4" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">25</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="precedence-mcq4" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">15</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('precedence-mcq4')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('precedence-mcq4')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>5 * 2 is grouped first, then 10 is added.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="precedence-mcq5" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">5.</span>
+            <strong>What is the result of 20 / 5 * 2?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="precedence-mcq5" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">2</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="precedence-mcq5" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">8</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="precedence-mcq5" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">10</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="precedence-mcq5" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">20</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('precedence-mcq5')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('precedence-mcq5')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>/ and * have the same precedence and associate left-to-right: (20 / 5) * 2 = 8.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="precedence-mcq6" data-correct="C">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">6.</span>
+            <strong>Which operator has lower precedence than ==?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="precedence-mcq6" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">+</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="precedence-mcq6" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">*</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="precedence-mcq6" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">&amp;&amp;</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="precedence-mcq6" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">&lt;</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('precedence-mcq6')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('precedence-mcq6')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>Logical AND has lower precedence than equality.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="precedence-mcq7" data-correct="C">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">7.</span>
+            <strong>Which operator associates right-to-left?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="precedence-mcq7" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">+</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="precedence-mcq7" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">*</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="precedence-mcq7" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">=</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="precedence-mcq7" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">%</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('precedence-mcq7')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('precedence-mcq7')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>Assignment operators associate right-to-left.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="precedence-mcq8" data-correct="C">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">8.</span>
+            <strong>What is the result of 1 &lt;&lt; 2 + 1?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="precedence-mcq8" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">5</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="precedence-mcq8" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">6</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="precedence-mcq8" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">8</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="precedence-mcq8" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">9</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('precedence-mcq8')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('precedence-mcq8')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>Addition has higher precedence than shift, so the expression is 1 &lt;&lt; (2 + 1) = 8.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="precedence-mcq9" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">9.</span>
+            <strong>What is *p++ interpreted as?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="precedence-mcq9" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">(*p)++</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="precedence-mcq9" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">*(p++)</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="precedence-mcq9" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">*(++p)</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="precedence-mcq9" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">*p + 1</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('precedence-mcq9')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('precedence-mcq9')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>Postfix ++ has higher precedence than unary *, so *p++ means *(p++).</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="precedence-mcq10" data-correct="D">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">10.</span>
+            <strong>Which operator has the lowest precedence?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="precedence-mcq10" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">+</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="precedence-mcq10" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">&amp;&amp;</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="precedence-mcq10" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">=</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="precedence-mcq10" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">comma</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('precedence-mcq10')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('precedence-mcq10')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: D</strong>
+                <p>The comma operator has the lowest precedence among these operators.</p>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+
+<div class="cb-c-dsa-practice-section">
+
+        <span class="cb-c-practice-label">PRACTICE</span>
+
+        <h3>21.40 🎯 Practice Problems</h3>
+
+        <p class="cb-c-practice-guide">
+            Practice precedence, associativity, increments, pointer expressions,
+            conditional and comma operators, parentheses, and safe expression analysis.
+            Use <strong>💻 Solve It Yourself</strong> first,
+            open <strong>Hint</strong> only when needed,
+            and use <strong>Show Program</strong> after attempting the problem.
+        </p>
+
+        <div class="cb-practice-overall" data-practice-total="20">
+
+            <div class="cb-practice-overall-title">
+                📈 Operator Precedence &amp; Associativity Practice Progress
+            </div>
+
+            <div class="cb-practice-overall-grid">
+
+                <div class="cb-practice-overall-item">
+                    <strong>Solved</strong>
+                    <span id="cbPracticeOverallSolved">0 / 20</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completed with Solution</strong>
+                    <span id="cbPracticeOverallCompleted">0</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Total Score</strong>
+                    <span id="cbPracticeOverallScore">0 / 2000</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completion</strong>
+                    <span id="cbPracticeOverallPercent">0%</span>
+                </div>
+
+            </div>
+
+            <div class="cb-practice-progress-track">
+                <div id="cbPracticeOverallBar" class="cb-practice-progress-fill"></div>
+            </div>
+
+            <div class="cb-practice-progress-note">
+                A problem counts as <strong>Solved</strong> when all test cases pass
+                without opening the full solution. Problems completed after viewing
+                the official solution are tracked separately.
+            </div>
+
+        </div>
+
+        <div class="cb-c-practice-list">
+            
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>1. Evaluate 10 + 5 * 2</strong>
+                <span id="practiceBadge-precedence-p1" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 1: Find the output of the expression 10 + 5 * 2.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print the evaluated result.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p1')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p1')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p1')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p1" hidden>
+                💡 <strong>Hint:</strong> Multiplication has higher precedence than addition.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p1" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Evaluate 10 + 5 * 2
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p1"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p1"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p1')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p1"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p1')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p1')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p1"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p1"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p1" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p1">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p1">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p1">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p1" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p1" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;%d&quot;, 10 + 5 * 2);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>2. Evaluate 20 / 5 * 2</strong>
+                <span id="practiceBadge-precedence-p2" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 2: Find the output of the expression 20 / 5 * 2.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print the evaluated result.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p2')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p2')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p2')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p2" hidden>
+                💡 <strong>Hint:</strong> Division and multiplication have equal precedence and associate left-to-right.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p2" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Evaluate 20 / 5 * 2
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p2"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p2"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p2')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p2"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p2')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p2')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p2"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p2"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p2" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p2">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p2">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p2">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p2" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p2" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;%d&quot;, 20 / 5 * 2);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>3. Evaluate 10 + 5 &gt; 12</strong>
+                <span id="practiceBadge-precedence-p3" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 3: Evaluate the expression 10 + 5 &gt; 12.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print 1 for true or 0 for false.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p3')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p3')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p3')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p3" hidden>
+                💡 <strong>Hint:</strong> Addition is grouped before the relational comparison.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p3" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Evaluate 10 + 5 &gt; 12
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p3"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p3"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p3')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p3"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p3')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p3')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p3"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p3"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p3" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p3">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p3">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p3">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p3" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p3" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;%d&quot;, 10 + 5 &gt; 12);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>4. Evaluate 5 | 3 &amp; 1</strong>
+                <span id="practiceBadge-precedence-p4" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 4: Evaluate the expression 5 | 3 &amp; 1.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print the result.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p4')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p4')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p4')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p4" hidden>
+                💡 <strong>Hint:</strong> Bitwise AND has higher precedence than bitwise OR.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p4" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Evaluate 5 | 3 &amp; 1
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p4"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p4"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p4')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p4"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p4')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p4')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p4"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p4"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p4" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p4">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p4">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p4">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p4" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p4" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;%d&quot;, 5 | 3 &amp; 1);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>5. Evaluate 1 &lt;&lt; 2 + 1</strong>
+                <span id="practiceBadge-precedence-p5" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 5: Evaluate the expression 1 &lt;&lt; 2 + 1.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print the result.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p5')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p5')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p5')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p5" hidden>
+                💡 <strong>Hint:</strong> Addition has higher precedence than shift.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p5" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Evaluate 1 &lt;&lt; 2 + 1
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p5"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p5"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p5')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p5"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p5')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p5')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p5"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p5"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p5" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p5">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p5">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p5">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p5" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p5" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;%d&quot;, 1 &lt;&lt; 2 + 1);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>6. Evaluate 1 || 0 &amp;&amp; 0</strong>
+                <span id="practiceBadge-precedence-p6" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 6: Determine the result of 1 || 0 &amp;&amp; 0.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print 1 or 0.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p6')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p6')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p6')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p6" hidden>
+                💡 <strong>Hint:</strong> Logical AND has higher precedence than logical OR.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p6" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Evaluate 1 || 0 &amp;&amp; 0
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p6"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p6"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p6')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p6"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p6')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p6')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p6"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p6"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p6" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p6">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p6">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p6">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p6" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p6" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;%d&quot;, 1 || 0 &amp;&amp; 0);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>7. Right-to-Left Assignment</strong>
+                <span id="practiceBadge-precedence-p7" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 7: Determine the values of a and b after a = b = 20.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print a and b.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p7')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p7')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p7')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p7" hidden>
+                💡 <strong>Hint:</strong> Assignment associates right-to-left.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p7" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Right-to-Left Assignment
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p7"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p7"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p7')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p7"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p7')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p7')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p7"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p7"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p7" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p7">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p7">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p7">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p7" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p7" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b;
+    a = b = 20;
+    printf(&quot;a=%d b=%d&quot;, a, b);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>8. Pre-Increment Expression</strong>
+                <span id="practiceBadge-precedence-p8" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 8: Find the output of a pre-increment expression using x = 5 and y = ++x.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print x and y.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p8')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p8')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p8')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p8" hidden>
+                💡 <strong>Hint:</strong> Pre-increment changes x before its value is used.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p8" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Pre-Increment Expression
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p8"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p8"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p8')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p8"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p8')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p8')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p8"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p8"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p8" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p8">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p8">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p8">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p8" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p8" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x = 5;
+    int y = ++x;
+    printf(&quot;x=%d y=%d&quot;, x, y);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>9. Post-Increment Expression</strong>
+                <span id="practiceBadge-precedence-p9" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 9: Find the output of a post-increment expression using x = 5 and y = x++.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print x and y.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p9')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p9')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p9')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p9" hidden>
+                💡 <strong>Hint:</strong> Post-increment yields the old value before x is incremented.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p9" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Post-Increment Expression
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p9"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p9"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p9')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p9"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p9')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p9')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p9"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p9"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p9" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p9">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p9">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p9">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p9" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p9" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x = 5;
+    int y = x++;
+    printf(&quot;x=%d y=%d&quot;, x, y);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>10. *p++ vs (*p)++</strong>
+                <span id="practiceBadge-precedence-p10" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 10: Demonstrate the difference between *p++ and (*p)++ using an integer array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Show the value read by *p++, the next pointed value, and the changed first element from (*p)++.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p10')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p10')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p10')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p10" hidden>
+                💡 <strong>Hint:</strong> *p++ means *(p++), while (*p)++ increments the pointed value.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p10" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — *p++ vs (*p)++
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p10"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p10"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p10')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p10"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p10')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p10')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p10"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p10"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p10" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p10">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p10">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p10">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p10" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p10" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a[] = {10, 20};
+    int *p1 = a;
+    int *p2 = a;
+
+    int first = *p1++;
+    int second = (*p2)++;
+
+    printf(&quot;first=%d next=%d second=%d a0=%d&quot;,
+           first, *p1, second, a[0]);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>11. Nested Conditional Operator</strong>
+                <span id="practiceBadge-precedence-p11" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 11: Evaluate a nested conditional expression that assigns A for marks &gt;= 90, B for marks &gt;= 75, otherwise C.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer marks.</p>
+            <p><strong>Output:</strong> Print A, B, or C.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p11')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p11')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p11')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p11" hidden>
+                💡 <strong>Hint:</strong> The conditional operator associates right-to-left.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p11" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Nested Conditional Operator
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p11"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p11"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p11')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p11"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p11')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p11')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p11"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p11"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p11" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p11">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p11">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p11">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p11" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p11" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int marks;
+    scanf(&quot;%d&quot;, &amp;marks);
+
+    char grade = marks &gt;= 90 ? &#x27;A&#x27; : marks &gt;= 75 ? &#x27;B&#x27; : &#x27;C&#x27;;
+    printf(&quot;%c&quot;, grade);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>12. Comma Operator Expression</strong>
+                <span id="practiceBadge-precedence-p12" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 12: Find the result of a comma operator expression where y = (x = 5, x + 3).</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print x and y.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p12')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p12')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p12')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p12" hidden>
+                💡 <strong>Hint:</strong> The comma operator evaluates the left expression, then yields the value of the right expression.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p12" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Comma Operator Expression
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p12"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p12"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p12')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p12"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p12')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p12')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p12"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p12"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p12" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p12">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p12">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p12">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p12" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p12" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x, y;
+    y = (x = 5, x + 3);
+    printf(&quot;x=%d y=%d&quot;, x, y);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>13. a + b * c - d</strong>
+                <span id="practiceBadge-precedence-p13" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 13: Identify the precedence order in a + b * c - d by evaluating it for supplied values.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Four integers a b c d.</p>
+            <p><strong>Output:</strong> Print the result of a + b * c - d.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p13')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p13')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p13')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p13" hidden>
+                💡 <strong>Hint:</strong> Compute b * c before the additions/subtractions.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p13" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — a + b * c - d
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p13"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p13"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p13')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p13"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p13')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p13')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p13"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p13"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p13" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p13">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p13">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p13">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p13" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p13" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b, c, d;
+    scanf(&quot;%d %d %d %d&quot;, &amp;a, &amp;b, &amp;c, &amp;d);
+    printf(&quot;%d&quot;, a + b * c - d);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>14. a &amp;&amp; b || c</strong>
+                <span id="practiceBadge-precedence-p14" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 14: Identify the precedence order in a &amp;&amp; b || c by evaluating it for supplied logical values.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Three integers a b c.</p>
+            <p><strong>Output:</strong> Print 1 or 0.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p14')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p14')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p14')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p14" hidden>
+                💡 <strong>Hint:</strong> Logical AND has higher precedence than logical OR.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p14" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — a &amp;&amp; b || c
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p14"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p14"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p14')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p14"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p14')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p14')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p14"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p14"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p14" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p14">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p14">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p14">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p14" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p14" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b, c;
+    scanf(&quot;%d %d %d&quot;, &amp;a, &amp;b, &amp;c);
+    printf(&quot;%d&quot;, a &amp;&amp; b || c);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>15. Evaluate 10 &gt; 5 == 1</strong>
+                <span id="practiceBadge-precedence-p15" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 15: Evaluate the expression 10 &gt; 5 == 1.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print the result.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p15')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p15')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p15')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p15" hidden>
+                💡 <strong>Hint:</strong> Relational operators have higher precedence than equality operators.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p15" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Evaluate 10 &gt; 5 == 1
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p15"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p15"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p15')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p15"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p15')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p15')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p15"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p15"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p15" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p15">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p15">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p15">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p15" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p15" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;%d&quot;, 10 &gt; 5 == 1);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>16. 5 &amp; 3 == 1</strong>
+                <span id="practiceBadge-precedence-p16" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 16: Evaluate 5 &amp; 3 == 1 and compare it with the clearer parenthesized expression (5 &amp; 3) == 1.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print both results.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p16')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p16')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p16')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p16" hidden>
+                💡 <strong>Hint:</strong> Equality has higher precedence than bitwise AND.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p16" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — 5 &amp; 3 == 1
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p16"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p16"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p16')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p16"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p16')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p16')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p16"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p16"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p16" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p16">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p16">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p16">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p16" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p16" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int direct = 5 &amp; 3 == 1;
+    int clear = (5 &amp; 3) == 1;
+
+    printf(&quot;direct=%d clear=%d&quot;, direct, clear);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>17. Rewrite with Parentheses</strong>
+                <span id="practiceBadge-precedence-p17" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 17: Rewrite a complicated expression using parentheses to make its grouping clear: a + b * c &gt; d &amp;&amp; e.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Five integers a b c d e.</p>
+            <p><strong>Output:</strong> Print the result using explicit parentheses.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p17')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p17')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p17')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p17" hidden>
+                💡 <strong>Hint:</strong> Write (((a + (b * c)) &gt; d) &amp;&amp; e).
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p17" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Rewrite with Parentheses
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p17"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p17"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p17')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p17"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p17')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p17')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p17"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p17"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p17" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p17">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p17">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p17">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p17" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p17" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b, c, d, e;
+    scanf(&quot;%d %d %d %d %d&quot;, &amp;a, &amp;b, &amp;c, &amp;d, &amp;e);
+
+    int result = (((a + (b * c)) &gt; d) &amp;&amp; e);
+    printf(&quot;%d&quot;, result);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>18. Precedence vs Evaluation Order</strong>
+                <span id="practiceBadge-precedence-p18" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 18: Explain why precedence does not determine the complete evaluation order of an expression by printing two concise statements.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print the required explanation on two lines.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p18')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p18')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p18')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p18" hidden>
+                💡 <strong>Hint:</strong> Precedence controls grouping; evaluation order controls when operands are evaluated.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p18" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Precedence vs Evaluation Order
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p18"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p18"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p18')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p18"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p18')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p18')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p18"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p18"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p18" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p18">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p18">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p18">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p18" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p18" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;Precedence determines grouping.\n&quot;);
+    printf(&quot;Evaluation order determines when operands are evaluated.&quot;);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>19. Well-Defined vs Undefined Modification</strong>
+                <span id="practiceBadge-precedence-p19" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 19: Identify whether modifying the same variable multiple times in one unsequenced expression is well-defined. Do not execute undefined code.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Classify i = i++ + 1 as Undefined and two separate increment statements as Well-defined.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p19')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p19')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p19')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p19" hidden>
+                💡 <strong>Hint:</strong> Undefined behavior should be discussed or classified, not deliberately executed.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p19" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Well-Defined vs Undefined Modification
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p19"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p19"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p19')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p19"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p19')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p19')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p19"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p19"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p19" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p19">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p19">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p19">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p19" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p19" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;i = i++ + 1: Undefined\n&quot;);
+    printf(&quot;i++; i += 1;: Well-defined&quot;);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>20. Ten Tricky C Expressions</strong>
+                <span id="practiceBadge-precedence-p20" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 20: Create a program containing ten defined but tricky C expressions, evaluate them, and print each result.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print results E1 through E10, one per line.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('precedence-p20')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('precedence-p20')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('precedence-p20')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-precedence-p20" hidden>
+                💡 <strong>Hint:</strong> Use only well-defined expressions and add parentheses when clarity is important.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-precedence-p20" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Ten Tricky C Expressions
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-precedence-p20"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-precedence-p20"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('precedence-p20')">▶ Run Code</button>
+
+                            <button id="practiceCheck-precedence-p20"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('precedence-p20')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('precedence-p20')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-precedence-p20"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-precedence-p20"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-precedence-p20" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-precedence-p20">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-precedence-p20">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-precedence-p20">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-precedence-p20" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-precedence-p20" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;E1=%d\n&quot;, 10 + 5 * 2);
+    printf(&quot;E2=%d\n&quot;, 20 / 5 * 2);
+    printf(&quot;E3=%d\n&quot;, 10 + 5 &gt; 12);
+    printf(&quot;E4=%d\n&quot;, 5 | 3 &amp; 1);
+    printf(&quot;E5=%d\n&quot;, 1 &lt;&lt; 2 + 1);
+    printf(&quot;E6=%d\n&quot;, 1 || 0 &amp;&amp; 0);
+    printf(&quot;E7=%d\n&quot;, 10 &gt; 5 == 1);
+    printf(&quot;E8=%d\n&quot;, (5 &amp; 3) == 1);
+    printf(&quot;E9=%d\n&quot;, 2 + 3 &lt;&lt; 1);
+    printf(&quot;E10=%d&quot;, 0 ? 10 : 20);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        </div>
+
+    </div>
+
+<h3>21.41 Key Takeaway</h3>
+
+    <div class="tip-box">
+
+        🎯 Remember:
+
+        <br><br>
+
+        <strong>Precedence = grouping priority.</strong>
+
+        <br><br>
+
+        <strong>Associativity = direction for equal-precedence
+        operators.</strong>
+
+        <br><br>
+
+        <strong>*, /, % come before + and -.</strong>
+
+        <br><br>
+
+        <strong>Arithmetic operators come before relational
+        operators.</strong>
+
+        <br><br>
+
+        <strong>Relational operators come before equality operators.</strong>
+
+        <br><br>
+
+        <strong>Bitwise AND comes before XOR, which comes before OR.</strong>
+
+        <br><br>
+
+        <strong>&amp;&amp; comes before ||.</strong>
+
+        <br><br>
+
+        <strong>Assignment associates right-to-left.</strong>
+
+        <br><br>
+
+        <strong>Postfix operators such as p++ bind very tightly.</strong>
+
+        <br><br>
+
+        <strong>Precedence is not the same as evaluation order.</strong>
+
+        <br><br>
+
+        <strong>Use parentheses when an expression may be difficult
+        to understand.</strong>
+
+    </div>
+
+</section>
+
+        <!-- ================================
+             Storage Classes in C
+        ================================= -->
+
+
+<section class="content-card cb-added-section" id="precedence-interview-extra">
+
+    <span class="cb-added-label">INTERVIEW PREPARATION</span>
+
+    <h2>🎤 Operator Precedence &amp; Associativity — Interview Questions</h2>
+
+    <div class="cb-original-qa-list cb-interview-qa-list">
+        
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">1.</span>
+                <span>What is operator precedence?</span>
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('precedenceInterviewAnswer1', this)">Show Answer</button>
+            </div>
+            <div class="cb-original-qa-answer"
+                 id="precedenceInterviewAnswer1"
+                 hidden>Operator precedence determines how operators in an expression are grouped when parentheses do not explicitly specify the grouping.</div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">2.</span>
+                <span>What is associativity?</span>
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('precedenceInterviewAnswer2', this)">Show Answer</button>
+            </div>
+            <div class="cb-original-qa-answer"
+                 id="precedenceInterviewAnswer2"
+                 hidden>Associativity resolves grouping between operators at the same precedence level, such as left-to-right for * and / or right-to-left for assignment.</div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">3.</span>
+                <span>Does precedence determine the runtime evaluation order of operands?</span>
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('precedenceInterviewAnswer3', this)">Show Answer</button>
+            </div>
+            <div class="cb-original-qa-answer"
+                 id="precedenceInterviewAnswer3"
+                 hidden>No. Precedence determines grouping, not the complete order in which operand computations or function calls are evaluated.</div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">4.</span>
+                <span>Why does *p++ mean *(p++)?</span>
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('precedenceInterviewAnswer4', this)">Show Answer</button>
+            </div>
+            <div class="cb-original-qa-answer"
+                 id="precedenceInterviewAnswer4"
+                 hidden>Postfix ++ has higher precedence than unary *, so the pointer increment is grouped before dereferencing the old pointer value.</div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">5.</span>
+                <span>Why is a = b = 20 valid?</span>
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('precedenceInterviewAnswer5', this)">Show Answer</button>
+            </div>
+            <div class="cb-original-qa-answer"
+                 id="precedenceInterviewAnswer5"
+                 hidden>Assignment associates right-to-left, so b = 20 is grouped first and its result is then assigned to a.</div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">6.</span>
+                <span>How is 1 &lt;&lt; 2 + 1 grouped?</span>
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('precedenceInterviewAnswer6', this)">Show Answer</button>
+            </div>
+            <div class="cb-original-qa-answer"
+                 id="precedenceInterviewAnswer6"
+                 hidden>Addition has higher precedence than shift, so it is grouped as 1 &lt;&lt; (2 + 1).</div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">7.</span>
+                <span>Why can 5 &amp; 3 == 1 surprise programmers?</span>
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('precedenceInterviewAnswer7', this)">Show Answer</button>
+            </div>
+            <div class="cb-original-qa-answer"
+                 id="precedenceInterviewAnswer7"
+                 hidden>Equality has higher precedence than bitwise AND, so it is grouped as 5 &amp; (3 == 1), not (5 &amp; 3) == 1.</div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">8.</span>
+                <span>What is the safest way to write complex expressions in production code?</span>
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('precedenceInterviewAnswer8', this)">Show Answer</button>
+            </div>
+            <div class="cb-original-qa-answer"
+                 id="precedenceInterviewAnswer8"
+                 hidden>Use clear intermediate variables or explicit parentheses instead of relying on readers to remember every precedence rule.</div>
+        </div>
+    
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="precedence-tips-extra">
+
+    <span class="cb-added-label">PLACEMENT TIPS</span>
+
+    <h2>💡 Operator Precedence &amp; Associativity — Placement Tips</h2>
+
+    <ul class="cb-tip-grid">
+        <li>Memorize the major operator groups, but use parentheses whenever a reader could reasonably misinterpret an expression.</li>
+        <li>When operators have the same precedence, check associativity: many arithmetic operators are left-to-right, while assignment is right-to-left.</li>
+        <li>Do not confuse <strong>grouping</strong> with <strong>evaluation order</strong>; precedence does not guarantee which operand runs first.</li>
+        <li>Be especially careful when mixing equality with bitwise operators, shifts with arithmetic, and pointer dereference with postfix increment.</li>
+        <li>Avoid expressions that modify the same scalar multiple times without proper sequencing; undefined behavior is not a precedence puzzle.</li>
+        <li>In interviews, show the grouping first with parentheses, then evaluate the grouped expression step by step.</li>
+    </ul>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="precedence-practice-extra">
+
+    <span class="cb-added-label">EXTRA PRACTICE</span>
+
+    <h2>✍️ Operator Precedence &amp; Associativity — Extra Practice Questions</h2>
+
+    <ol class="cb-extra-practice">
+        <li>Parenthesize <code>a + b &lt;&lt; c &amp; d</code> exactly as C groups it.</li>
+        <li>Compare <code>*p++</code>, <code>(*p)++</code>, <code>*++p</code>, and <code>++*p</code> using a small array.</li>
+        <li>Evaluate a mixed expression containing arithmetic, relational, equality, logical AND, and logical OR operators.</li>
+        <li>Write a nested conditional expression, then rewrite it using if/else for readability.</li>
+        <li>Find three expressions where adding parentheses changes the result.</li>
+        <li>Review five expressions and identify which are merely tricky and which contain undefined behavior.</li>
+    </ol>
+
+</section>
+
+
+
+<section class="cb-topic-navigation" aria-label="C Programming topic navigation">
+
+    <a class="cb-topic-nav-btn cb-topic-nav-prev" href="enum-typedef.html">
+        ← Previous Topic: Enumerations &amp; typedef
+    </a>
+
+    <a class="cb-topic-nav-btn cb-topic-nav-next" href="storage-classes.html">
+        Next Topic: Storage Classes →
+    </a>
+
+</section>
+
+
+</main>
+
+</div>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../Maths/index.html">
+                Maths
+            </a>
+
+            <a href="index.html">
+                C Programming
+            </a>
+
+        </div>
+
+
+        <!-- LEARNING -->
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+<a href="../Data-Structures/">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/">
+    Advanced Data Structures
+</a>
+
+            <a href="#">
+                Python
+            </a>
+
+            <a href="#">
+                AI & Machine Learning
+            </a>
+
+        </div>
+
+
+        <!-- PRACTICE -->
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="#practice">
+                Practice Problems
+            </a>
+
+            <a href="#practice">
+                Problem Solving
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="c-programming.js"></script>
+<script>
+const codeBhavyaPrecedencePracticeConfigs =
+[{"key": "precedence-p1", "title": "Evaluate 10 + 5 * 2", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "20"}]}, {"key": "precedence-p2", "title": "Evaluate 20 / 5 * 2", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "8"}]}, {"key": "precedence-p3", "title": "Evaluate 10 + 5 > 12", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "1"}]}, {"key": "precedence-p4", "title": "Evaluate 5 | 3 & 1", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "5"}]}, {"key": "precedence-p5", "title": "Evaluate 1 << 2 + 1", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "8"}]}, {"key": "precedence-p6", "title": "Evaluate 1 || 0 && 0", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "1"}]}, {"key": "precedence-p7", "title": "Right-to-Left Assignment", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int a, b;\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "a=20 b=20"}]}, {"key": "precedence-p8", "title": "Pre-Increment Expression", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int x = 5;\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "x=6 y=6"}]}, {"key": "precedence-p9", "title": "Post-Increment Expression", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int x = 5;\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "x=6 y=5"}]}, {"key": "precedence-p10", "title": "*p++ vs (*p)++", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int a[] = {10, 20};\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "first=10 next=20 second=10 a0=11"}]}, {"key": "precedence-p11", "title": "Nested Conditional Operator", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int marks;\n    return 0;\n}", "sampleInput": "80", "tests": [{"input": "95", "expected": "A"}, {"input": "80", "expected": "B"}, {"input": "60", "expected": "C"}]}, {"key": "precedence-p12", "title": "Comma Operator Expression", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int x, y;\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "x=5 y=8"}]}, {"key": "precedence-p13", "title": "a + b * c - d", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int a, b, c, d;\n    return 0;\n}", "sampleInput": "10 2 3 4", "tests": [{"input": "10 2 3 4", "expected": "12"}, {"input": "5 4 2 1", "expected": "12"}]}, {"key": "precedence-p14", "title": "a && b || c", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int a, b, c;\n    return 0;\n}", "sampleInput": "1 0 1", "tests": [{"input": "1 0 1", "expected": "1"}, {"input": "1 1 0", "expected": "1"}, {"input": "0 1 0", "expected": "0"}]}, {"key": "precedence-p15", "title": "Evaluate 10 > 5 == 1", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "1"}]}, {"key": "precedence-p16", "title": "5 & 3 == 1", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "direct=0 clear=1"}]}, {"key": "precedence-p17", "title": "Rewrite with Parentheses", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int a, b, c, d, e;\n    return 0;\n}", "sampleInput": "10 2 3 12 1", "tests": [{"input": "10 2 3 12 1", "expected": "1"}, {"input": "1 2 3 20 1", "expected": "0"}]}, {"key": "precedence-p18", "title": "Precedence vs Evaluation Order", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "Precedence determines grouping.\nEvaluation order determines when operands are evaluated."}]}, {"key": "precedence-p19", "title": "Well-Defined vs Undefined Modification", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "i = i++ + 1: Undefined\ni++; i += 1;: Well-defined"}]}, {"key": "precedence-p20", "title": "Ten Tricky C Expressions", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "E1=20\nE2=8\nE3=1\nE4=5\nE5=8\nE6=1\nE7=1\nE8=1\nE9=10\nE10=20"}]}];
+
+CodeBhavyaCPractice.registerAll(
+    codeBhavyaPrecedencePracticeConfigs
+);
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
