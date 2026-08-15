@@ -1,0 +1,5071 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C Programming | CodeBhavya</title>
+
+ <link rel="icon" type="image/png" sizes="32x32"
+      href="../images/codebhavya-icon-32.png">
+
+<link rel="icon" type="image/png" sizes="128x128"
+      href="../images/codebhavya-icon-128.png">
+
+<link rel="icon" type="image/png" sizes="512x512"
+      href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="c-programming.css">
+</head>
+
+<body class="cb-c-topic-page cb-pointers-page">
+
+<header class="top-header">
+
+<!-- <a href="../index.html" class="logo">
+    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a> -->
+    
+<a href="../index.html" class="logo codebhavya-new-logo">
+
+    <img
+        src="../images/codebhavya-main-logo.png"
+        alt="CodeBhavya Logo"
+        class="main-logo"
+    >
+
+    <span class="brand-name">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </span>
+
+</a>
+
+    <nav class="top-nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="../Maths/">
+            Maths
+        </a>
+
+        <a href="index.html" class="active">
+            C
+        </a>
+
+<a href="../Data-Structures/index.html">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/index.html">
+    Advanced Data Structures
+</a>
+
+        <a href="../Python/">
+            Python
+        </a>
+
+        <a href="../AI-ML/">
+            AI & ML
+        </a>
+
+        <a href="../Placement/">
+            Placement
+        </a>
+
+    </nav>
+
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar cb-c-topic-sidebar">
+    <div class="sidebar-title">💻 C Programming</div>
+
+    <input
+        type="text"
+        id="topicSearch"
+        class="search-box"
+        placeholder="🔍 Search topics..."
+        onkeyup="searchTopics()"
+    >
+
+    <div class="sidebar-title">Fundamentals</div>
+    <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
+    <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
+    <a class="cb-topic-link" data-topic-link="1" href="data-types.html">📦 Data Types</a>
+    <a class="cb-topic-link" data-topic-link="1" href="input-output.html">⌨️ Input &amp; Output</a>
+
+    <div class="sidebar-title">Operators &amp; Control</div>
+    <a class="cb-topic-link" data-topic-link="1" href="operators.html">➕ Operators</a>
+    <a class="cb-topic-link" data-topic-link="1" href="expressions.html">🧮 Expressions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="decision-making.html">🔀 Decision Making</a>
+    <a class="cb-topic-link" data-topic-link="1" href="loops.html">🔁 Loops</a>
+
+    <div class="sidebar-title">Programming Concepts</div>
+    <a class="cb-topic-link" data-topic-link="1" href="arrays.html">📊 Arrays</a>
+    <a class="cb-topic-link" data-topic-link="1" href="strings.html">🔤 Strings</a>
+    <a class="cb-topic-link" data-topic-link="1" href="functions.html">🧩 Functions</a>
+    <a class="cb-topic-link active" data-topic-link="1" href="pointers.html">👉 Pointers</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structures-unions.html">🏗️ Structures &amp; Unions</a>
+
+    <div class="sidebar-title">Advanced C</div>
+    <a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">⚙️ Preprocessor &amp; Header Files</a>
+    <a class="cb-topic-link" data-topic-link="1" href="file-handling.html">📁 File Handling</a>
+    <a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">🧠 Dynamic Memory Allocation</a>
+    <a class="cb-topic-link" data-topic-link="1" href="command-line.html">💻 Command Line Arguments</a>
+    <a class="cb-topic-link" data-topic-link="1" href="bitwise.html">🔢 Bitwise Programming</a>
+    <a class="cb-topic-link" data-topic-link="1" href="enum-typedef.html">🔤 Enumerations &amp; typedef</a>
+    <a class="cb-topic-link" data-topic-link="1" href="precedence.html">🧮 Operator Precedence &amp; Associativity</a>
+    <a class="cb-topic-link" data-topic-link="1" href="storage-classes.html">💾 Storage Classes</a>
+    <a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">🛠️ Advanced C Preprocessor</a>
+
+    <div class="sidebar-title">Practice</div>
+    <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
+</aside>
+
+<main class="main-content">
+
+<section id="pointers" class="content-card">
+
+    <h2>👉 13. Pointers</h2>
+
+    <!-- 13.1 INTRODUCTION -->
+
+    <h3>13.1 What is a Pointer?</h3>
+
+    <p>
+        A pointer is a variable that stores the
+        <strong>memory address</strong> of another variable.
+    </p>
+
+    <pre><code>int x = 10;
+
+int *p = &amp;x;</code></pre>
+
+    <div class="formula-box">
+
+        x → stores 10
+
+        <br><br>
+
+        &amp;x → address of x
+
+        <br><br>
+
+        p → stores the address of x
+
+        <br><br>
+
+        *p → value stored at that address → 10
+
+    </div>
+
+
+    <!-- 13.2 WHY POINTERS -->
+
+    <h3>13.2 Why Do We Need Pointers?</h3>
+
+    <ul>
+
+        <li>To work directly with memory addresses.</li>
+
+        <li>To modify variables inside functions.</li>
+
+        <li>To efficiently work with arrays and strings.</li>
+
+        <li>To dynamically allocate memory.</li>
+
+        <li>To create data structures such as linked lists and trees.</li>
+
+        <li>To work with structures and system-level programming.</li>
+
+    </ul>
+
+
+    <!-- 13.3 MEMORY -->
+
+    <h3>13.3 Understanding Memory</h3>
+
+    <p>
+        Every variable is stored somewhere in computer memory.
+        That location has an address.
+    </p>
+
+    <div class="formula-box">
+
+        Variable
+
+        <br>
+        ↓
+        <br>
+
+        Memory Address
+
+        <br>
+        ↓
+        <br>
+
+        Stored Value
+
+    </div>
+
+    <pre><code>int x = 10;
+
+printf("Value = %d\n", x);
+printf("Address = %p\n", (void*)&amp;x);</code></pre>
+
+    <div class="tip-box">
+
+        💡 The actual memory address can be different every
+        time the program runs.
+
+    </div>
+
+
+    <!-- 13.4 ADDRESS OPERATOR -->
+
+    <h3>13.4 Address Operator &amp;</h3>
+
+    <p>
+        The <strong>&amp;</strong> operator gives the memory
+        address of a variable.
+    </p>
+
+    <pre><code>int x = 25;
+
+printf("%p", (void*)&amp;x);</code></pre>
+
+    <div class="formula-box">
+
+        x = 25
+
+        <br><br>
+
+        &amp;x = address of x
+
+    </div>
+
+
+    <!-- 13.5 POINTER DECLARATION -->
+
+    <h3>13.5 Pointer Declaration</h3>
+
+    <pre><code>int *p;</code></pre>
+
+    <p>
+        This declares <strong>p</strong> as a pointer to an
+        integer.
+    </p>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Declaration</th>
+                    <th>Pointer Points To</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>int *p;</td>
+                    <td>int</td>
+                </tr>
+
+                <tr>
+                    <td>char *p;</td>
+                    <td>char</td>
+                </tr>
+
+                <tr>
+                    <td>float *p;</td>
+                    <td>float</td>
+                </tr>
+
+                <tr>
+                    <td>double *p;</td>
+                    <td>double</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 13.6 INITIALIZATION -->
+
+    <h3>13.6 Pointer Initialization</h3>
+
+    <pre><code>int x = 10;
+
+int *p = &amp;x;</code></pre>
+
+    <div class="formula-box">
+
+        p
+
+        <br>
+        ↓
+        <br>
+
+        address of x
+
+        <br>
+        ↓
+        <br>
+
+        x = 10
+
+    </div>
+
+
+    <!-- 13.7 DEREFERENCE -->
+
+    <h3>13.7 Dereference Operator *</h3>
+
+    <p>
+        The <strong>*</strong> operator is used to access
+        the value stored at the address held by a pointer.
+    </p>
+
+    <pre><code>int x = 10;
+
+int *p = &amp;x;
+
+printf("%d", *p);</code></pre>
+
+    <div class="output-box">
+
+        10
+
+    </div>
+
+    <div class="formula-box">
+
+        p → address
+
+        <br><br>
+
+        *p → value at address
+
+    </div>
+
+
+    <!-- 13.8 BASIC EXAMPLE -->
+
+    <h3>13.8 Complete Pointer Example</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x = 50;
+
+    int *p = &amp;x;
+
+    printf("Value of x = %d\n", x);
+
+    printf("Address of x = %p\n", (void*)&amp;x);
+
+    printf("Value stored in p = %p\n", (void*)p);
+
+    printf("Value using *p = %d\n", *p);
+
+    return 0;
+}</code></pre>
+
+    <div class="tip-box">
+
+        🎯 Remember:
+
+        <br><br>
+
+        <strong>&amp;x</strong> → address of x
+
+        <br>
+
+        <strong>p</strong> → stores address of x
+
+        <br>
+
+        <strong>*p</strong> → value of x
+
+    </div>
+
+
+    <!-- 13.9 MODIFY VALUE -->
+
+    <h3>13.9 Modifying a Variable Using a Pointer</h3>
+
+    <pre><code>int x = 10;
+
+int *p = &amp;x;
+
+*p = 100;
+
+printf("%d", x);</code></pre>
+
+    <div class="output-box">
+
+        100
+
+    </div>
+
+    <p>
+        Changing <strong>*p</strong> changes the original
+        variable because the pointer points to that variable.
+    </p>
+
+
+    <!-- 13.10 POINTER MEMORY DIAGRAM -->
+
+<h3>13.10 Pointer Memory Diagram</h3>
+
+<div class="pointer-memory-diagram">
+
+    <div class="pointer-memory-box">
+
+        <div class="pm-title">x</div>
+
+        <div class="pm-box">
+            10
+        </div>
+
+        <div class="pm-address">
+            Address: 1000
+        </div>
+
+    </div>
+
+
+    <div class="pm-connection">
+        <div class="pm-line">──────────────►</div>
+        <div class="pm-text">p points to x</div>
+    </div>
+
+
+    <div class="pointer-memory-box">
+
+        <div class="pm-title">p</div>
+
+        <div class="pm-box">
+            1000
+        </div>
+
+        <div class="pm-address">
+            Address: 2000
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="tip-box">
+
+    <strong>Important:</strong>
+
+    <br><br>
+
+    <strong>x</strong> stores the value <strong>10</strong>.
+
+    <br>
+
+    <strong>&amp;x</strong> gives the address of <strong>x</strong>.
+
+    <br>
+
+    <strong>p</strong> stores the address of <strong>x</strong>.
+
+    <br>
+
+    <strong>*p</strong> gives the value stored at that address → <strong>10</strong>.
+
+    <br><br>
+
+    The addresses <strong>1000</strong> and <strong>2000</strong>
+    are only illustrative. Actual memory addresses are different.
+
+</div>
+
+    <!-- 13.11 POINTER TYPES -->
+
+    <h3>13.11 Pointer Types</h3>
+
+    <pre><code>int x = 10;
+char c = 'A';
+float f = 3.14f;
+
+int *p1 = &amp;x;
+char *p2 = &amp;c;
+float *p3 = &amp;f;</code></pre>
+
+    <p>
+        The pointer type should correspond to the type of
+        object it points to.
+    </p>
+
+
+    <!-- 13.12 NULL POINTER -->
+
+    <h3>13.12 NULL Pointer</h3>
+
+    <p>
+        A null pointer is a pointer that intentionally does
+        not point to a valid object.
+    </p>
+
+    <pre><code>int *p = NULL;</code></pre>
+
+    <p>
+        Before dereferencing a pointer, make sure it points
+        to a valid object.
+    </p>
+
+    <pre><code>if(p != NULL)
+{
+    printf("%d", *p);
+}</code></pre>
+
+    <div class="tip-box">
+
+        ⚠️ Never dereference a null pointer.
+
+    </div>
+
+
+    <!-- 13.13 POINTER AND ARRAY -->
+
+    <h3>13.13 Pointer and Array</h3>
+
+    <p>
+        The name of an array can be used in many expressions
+        as a pointer to its first element.
+    </p>
+
+    <pre><code>int arr[] = {10, 20, 30};
+
+printf("%d", *arr);</code></pre>
+
+    <div class="output-box">
+
+        10
+
+    </div>
+
+    <p>
+        <strong>arr</strong> refers to the first element in
+        this expression.
+    </p>
+
+
+    <!-- 13.14 ARRAY ACCESS -->
+
+    <h3>13.14 Accessing Array Using Pointer</h3>
+
+    <pre><code>int arr[] = {10, 20, 30, 40};
+
+int *p = arr;
+
+for(int i = 0; i &lt; 4; i++)
+{
+    printf("%d ", *(p + i));
+}</code></pre>
+
+    <div class="output-box">
+
+        10 20 30 40
+
+    </div>
+
+
+    <!-- 13.15 POINTER ARITHMETIC -->
+
+    <h3>13.15 Pointer Arithmetic</h3>
+
+    <p>
+        Pointers can be incremented and decremented.
+        The movement is based on the size of the pointed-to type.
+    </p>
+
+    <pre><code>int arr[] = {10, 20, 30};
+
+int *p = arr;
+
+printf("%d\n", *p);
+
+p++;
+
+printf("%d\n", *p);</code></pre>
+
+    <div class="output-box">
+
+        10
+        <br>
+        20
+
+    </div>
+
+
+    <!-- 13.16 POINTER ADDITION -->
+
+    <h3>13.16 Pointer Expressions</h3>
+
+    <pre><code>*(p + 0)
+*(p + 1)
+*(p + 2)</code></pre>
+
+    <div class="formula-box">
+
+        *(p + i) → element at index i
+
+    </div>
+
+
+    <!-- 13.17 POINTER DIFFERENCE -->
+
+    <h3>13.17 Pointer Difference</h3>
+
+    <p>
+        Pointers to elements of the same array can be
+        subtracted to determine the number of elements
+        between them.
+    </p>
+
+    <pre><code>int arr[] = {10, 20, 30, 40};
+
+int *p = &amp;arr[0];
+int *q = &amp;arr[3];
+
+printf("%td", q - p);</code></pre>
+
+    <div class="output-box">
+
+        3
+
+    </div>
+
+
+    <!-- 13.18 FUNCTION POINTER ARGUMENT -->
+
+    <h3>13.18 Passing Pointer to a Function</h3>
+
+    <pre><code>void change(int *p)
+{
+    *p = 100;
+}
+
+int main()
+{
+    int x = 10;
+
+    change(&amp;x);
+
+    printf("%d", x);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        100
+
+    </div>
+
+
+    <!-- 13.19 SWAP -->
+
+    <h3>13.19 Swap Two Numbers Using Pointers</h3>
+
+    <pre><code>void swap(int *a, int *b)
+{
+    int temp = *a;
+
+    *a = *b;
+
+    *b = temp;
+}
+
+int main()
+{
+    int x = 10;
+    int y = 20;
+
+    swap(&amp;x, &amp;y);
+
+    printf("%d %d", x, y);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        20 10
+
+    </div>
+
+
+    <!-- 13.20 POINTER AND STRING -->
+
+    <h3>13.20 Pointer and String</h3>
+
+    <pre><code>char str[] = "HELLO";
+
+char *p = str;
+
+while(*p != '\0')
+{
+    printf("%c ", *p);
+
+    p++;
+}</code></pre>
+
+    <div class="output-box">
+
+        H E L L O
+
+    </div>
+
+
+    <!-- 13.21 STRING LITERAL POINTER -->
+
+    <h3>13.21 Pointer to String Literal</h3>
+
+    <pre><code>const char *p = "Hello";
+
+printf("%s", p);</code></pre>
+
+    <p>
+        Using <strong>const char *</strong> communicates that
+        the characters of the string literal should not be modified
+        through the pointer.
+    </p>
+
+
+    <!-- 13.22 POINTER TO POINTER -->
+
+    <h3>13.22 Pointer to Pointer</h3>
+
+    <p>
+        A pointer can itself have an address, so another
+        pointer can store its address.
+    </p>
+
+    <pre><code>int x = 10;
+
+int *p = &amp;x;
+
+int **q = &amp;p;
+
+printf("%d\n", x);
+
+printf("%d\n", *p);
+
+printf("%d\n", **q);</code></pre>
+
+    <div class="output-box">
+
+        10
+        <br>
+        10
+        <br>
+        10
+
+    </div>
+
+    <div class="formula-box">
+
+        q → p → x
+
+        <br><br>
+
+        **q → value of x
+
+    </div>
+
+
+    <!-- 13.23 SIZEOF POINTER -->
+
+    <h3>13.23 sizeof Pointer</h3>
+
+    <pre><code>int *p;
+
+printf("%zu", sizeof(p));</code></pre>
+
+    <p>
+        The size of a pointer depends on the system and
+        implementation. It is not necessarily the same as
+        the size of the object it points to.
+    </p>
+
+
+    <!-- 13.24 DYNAMIC MEMORY -->
+
+    <h3>13.24 Dynamic Memory Allocation</h3>
+
+    <p>
+        Dynamic memory allows a program to request memory
+        during runtime.
+    </p>
+
+    <p>
+        The main functions are:
+    </p>
+
+    <ul>
+
+        <li><strong>malloc()</strong></li>
+
+        <li><strong>calloc()</strong></li>
+
+        <li><strong>realloc()</strong></li>
+
+        <li><strong>free()</strong></li>
+
+    </ul>
+
+    <p>
+        These functions are declared in
+        <strong>&lt;stdlib.h&gt;</strong>.
+    </p>
+
+
+    <!-- 13.25 MALLOC -->
+
+    <h3>13.25 malloc()</h3>
+
+    <p>
+        <strong>malloc()</strong> allocates a requested number
+        of bytes and returns a pointer to the allocated memory
+        if successful.
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int *p = malloc(5 * sizeof(int));
+
+    if(p == NULL)
+    {
+        return 1;
+    }
+
+    for(int i = 0; i &lt; 5; i++)
+    {
+        p[i] = (i + 1) * 10;
+    }
+
+    for(int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", p[i]);
+    }
+
+    free(p);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        10 20 30 40 50
+
+    </div>
+
+
+    <!-- 13.26 CALLOC -->
+
+    <h3>13.26 calloc()</h3>
+
+    <p>
+        <strong>calloc()</strong> allocates space for multiple
+        elements and initializes the allocated bytes to zero.
+    </p>
+
+    <pre><code>int *p = calloc(5, sizeof(int));
+
+if(p == NULL)
+{
+    return 1;
+}
+
+for(int i = 0; i &lt; 5; i++)
+{
+    printf("%d ", p[i]);
+}
+
+free(p);</code></pre>
+
+    <div class="output-box">
+
+        0 0 0 0 0
+
+    </div>
+
+
+    <!-- 13.27 REALLOC -->
+
+    <h3>13.27 realloc()</h3>
+
+    <p>
+        <strong>realloc()</strong> changes the size of a
+        previously allocated memory block.
+    </p>
+
+    <pre><code>int *p = malloc(3 * sizeof(int));
+
+if(p == NULL)
+{
+    return 1;
+}
+
+p[0] = 10;
+p[1] = 20;
+p[2] = 30;
+
+int *temp = realloc(p, 5 * sizeof(int));
+
+if(temp != NULL)
+{
+    p = temp;
+
+    p[3] = 40;
+    p[4] = 50;
+}
+
+free(p);</code></pre>
+
+    <div class="tip-box">
+
+        💡 Using a temporary pointer with realloc() helps
+        avoid losing the original allocation if realloc()
+        fails.
+
+    </div>
+
+
+    <!-- 13.28 FREE -->
+
+    <h3>13.28 free()</h3>
+
+    <p>
+        <strong>free()</strong> releases dynamically allocated
+        memory.
+    </p>
+
+    <pre><code>int *p = malloc(10 * sizeof(int));
+
+if(p != NULL)
+{
+    free(p);
+
+    p = NULL;
+}</code></pre>
+
+    <div class="tip-box">
+
+        ⚠️ Memory allocated dynamically should be released
+        when it is no longer needed.
+
+    </div>
+
+
+    <!-- 13.29 DANGLING -->
+
+    <h3>13.29 Dangling Pointer</h3>
+
+    <p>
+        A dangling pointer is a pointer that refers to an
+        object or memory region that is no longer valid.
+    </p>
+
+    <pre><code>int *p = malloc(sizeof(int));
+
+if(p != NULL)
+{
+    free(p);
+
+    p = NULL;
+}</code></pre>
+
+    <p>
+        Setting the pointer to <strong>NULL</strong> after
+        freeing helps avoid accidentally using the old address.
+    </p>
+
+
+    <!-- 13.30 WILD -->
+
+    <h3>13.30 Wild Pointer</h3>
+
+    <p>
+        A pointer that has not been initialized may contain
+        an indeterminate value and must not be dereferenced.
+    </p>
+
+    <pre><code>int *p;
+
+/* Do not do: *p = 10; */</code></pre>
+
+    <p>
+        Initialize pointers before using them.
+    </p>
+
+    <pre><code>int *p = NULL;</code></pre>
+
+
+    <!-- 13.31 POINTER CONSTANT -->
+
+    <h3>13.31 Pointer and const</h3>
+
+    <p>
+        <strong>const</strong> can be used in different
+        ways with pointers.
+    </p>
+
+    <pre><code>const int *p;</code></pre>
+
+    <p>
+        The pointed-to integer should not be modified
+        through <strong>p</strong>.
+    </p>
+
+    <pre><code>int *const p = &amp;x;</code></pre>
+
+    <p>
+        The pointer itself cannot be redirected to another
+        address after initialization.
+    </p>
+
+
+    <!-- 13.32 POINTER ARRAY -->
+
+    <h3>13.32 Array of Pointers</h3>
+
+    <pre><code>int a = 10;
+int b = 20;
+int c = 30;
+
+int *p[3] = {&amp;a, &amp;b, &amp;c};
+
+for(int i = 0; i &lt; 3; i++)
+{
+    printf("%d ", *p[i]);
+}</code></pre>
+
+    <div class="output-box">
+
+        10 20 30
+
+    </div>
+
+
+    <!-- 13.33 POINTER TO ARRAY -->
+
+    <h3>13.33 Pointer to an Array</h3>
+
+    <pre><code>int arr[3] = {10, 20, 30};
+
+int (*p)[3] = &amp;arr;
+
+printf("%d", (*p)[1]);</code></pre>
+
+    <div class="output-box">
+
+        20
+
+    </div>
+
+
+    <!-- 13.34 POINTER WITH STRUCTURE -->
+
+    <h3>13.34 Pointer with Structure</h3>
+
+    <pre><code>struct Student
+{
+    int age;
+};
+
+int main()
+{
+    struct Student s = {20};
+
+    struct Student *p = &amp;s;
+
+    printf("%d", p-&gt;age);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        20
+
+    </div>
+
+    <p>
+        The <strong>-&gt;</strong> operator is commonly used
+        to access structure members through a pointer.
+    </p>
+
+
+    <!-- 13.35 POINTER AND FUNCTIONS -->
+
+    <h3>13.35 Function Pointer Introduction</h3>
+
+    <p>
+        A function pointer stores the address of a function.
+    </p>
+
+    <pre><code>int add(int a, int b)
+{
+    return a + b;
+}
+
+int main()
+{
+    int (*fp)(int, int) = add;
+
+    printf("%d", fp(10, 20));
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        30
+
+    </div>
+
+
+    <!-- 13.36 POINTER COMPARISON -->
+
+    <h3>13.36 Comparing Pointers</h3>
+
+    <p>
+        Pointers can be compared for equality or inequality.
+        Relational comparisons are meaningful when pointers
+        refer to elements of the same array.
+    </p>
+
+    <pre><code>int arr[3] = {10, 20, 30};
+
+int *p = &amp;arr[0];
+int *q = &amp;arr[0];
+
+if(p == q)
+{
+    printf("Same address");
+}</code></pre>
+
+
+    <!-- 13.37 POINTER AND 2D ARRAY -->
+
+    <h3>13.37 Pointer with 2D Array</h3>
+
+    <pre><code>int arr[2][3] =
+{
+    {10, 20, 30},
+    {40, 50, 60}
+};
+
+for(int i = 0; i &lt; 2; i++)
+{
+    for(int j = 0; j &lt; 3; j++)
+    {
+        printf("%d ", arr[i][j]);
+    }
+
+    printf("\n");
+}</code></pre>
+
+    <div class="output-box">
+
+        10 20 30
+        <br>
+        40 50 60
+
+    </div>
+
+
+    <!-- 13.38 POINTER FORMULA -->
+
+    <h3>13.38 Pointer Formula</h3>
+
+    <div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">Variable</div>
+            <div class="cb-mini-step-text">int x = 10;</div>
+            <div class="cb-mini-step-subtext">x stores the value 10.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">Address</div>
+            <div class="cb-mini-step-text">&amp;x</div>
+            <div class="cb-mini-step-subtext">Gives the address of x.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">Pointer</div>
+            <div class="cb-mini-step-text">int *p = &amp;x;</div>
+            <div class="cb-mini-step-subtext">p stores the address of x.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">Dereference</div>
+            <div class="cb-mini-step-text">*p</div>
+            <div class="cb-mini-step-subtext">Reads the value stored at the address in p.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-pink">
+            <div class="cb-mini-step-badge">Modify</div>
+            <div class="cb-mini-step-text">*p = 50;</div>
+            <div class="cb-mini-step-subtext">Changes x to 50 because p points to x.</div>
+        </div>
+
+    </div>
+
+
+    <!-- 13.39 COMMON MISTAKES -->
+
+    <h3>13.39 Common Pointer Mistakes</h3>
+
+    <ul>
+
+        <li>
+            Dereferencing an uninitialized pointer.
+        </li>
+
+        <li>
+            Dereferencing a NULL pointer.
+        </li>
+
+        <li>
+            Accessing memory after it has been freed.
+        </li>
+
+        <li>
+            Forgetting to free dynamically allocated memory.
+        </li>
+
+        <li>
+            Going outside the bounds of an array using pointers.
+        </li>
+
+        <li>
+            Using the wrong pointer type.
+        </li>
+
+        <li>
+            Confusing <strong>&amp;</strong> with
+            <strong>*</strong>.
+        </li>
+
+        <li>
+            Confusing <strong>p</strong> with
+            <strong>*p</strong>.
+        </li>
+
+    </ul>
+
+
+    <!-- 13.40 QUICK REVISION -->
+
+    <h3>13.40 Quick Revision</h3>
+
+    <div class="tip-box">
+
+        📌 Pointer → stores an address.
+
+        <br><br>
+
+        📌 <strong>&amp;x</strong> → address of x.
+
+        <br><br>
+
+        📌 <strong>*p</strong> → value at address stored in p.
+
+        <br><br>
+
+        📌 Pointer arithmetic is commonly used with arrays.
+
+        <br><br>
+
+        📌 Arrays and pointers are closely related,
+        but they are not identical concepts.
+
+        <br><br>
+
+        📌 Pointers allow functions to modify caller data
+        when addresses are passed.
+
+        <br><br>
+
+        📌 <strong>malloc()</strong> → dynamic allocation.
+
+        <br><br>
+
+        📌 <strong>calloc()</strong> → zero-initialized
+        allocation.
+
+        <br><br>
+
+        📌 <strong>realloc()</strong> → resize allocation.
+
+        <br><br>
+
+        📌 <strong>free()</strong> → release allocation.
+
+        <br><br>
+
+        📌 NULL pointer → intentionally points to no valid object.
+
+    </div>
+
+
+    <!-- 13.41 MCQs -->
+
+    
+<section class="content-card cb-added-section cb-compact-learning" id="pointers-visualizer-extra">
+
+    <span class="cb-added-label">INTERACTIVE LEARNING</span>
+
+    <h2>🎬 Pointers — Address and Dereference Flow</h2>
+
+    <p class="cb-added-note">
+        Follow the relationship between a variable, its address, a pointer,
+        dereferencing, and modifying the original value.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBConceptViz.toggle('pointers')"
+    >▶ Open Visualization</button>
+
+    <div class="cb-compact-panel" id="cbVizPanel-pointers" hidden>
+
+        <div
+            class="cb-viz-card cb-viz-dsa-standard"
+            data-cb-viz="pointers"
+            data-frames="[{&quot;title&quot;:&quot;1. Create the variable x&quot;,&quot;detail&quot;:&quot;x stores the integer value 10 in memory.&quot;},{&quot;title&quot;:&quot;2. Obtain the address of x&quot;,&quot;detail&quot;:&quot;&amp;x represents the memory address where x is stored.&quot;},{&quot;title&quot;:&quot;3. Store the address in p&quot;,&quot;detail&quot;:&quot;int *p = &amp;x makes p point to x.&quot;},{&quot;title&quot;:&quot;4. Dereference p&quot;,&quot;detail&quot;:&quot;*p accesses the value stored at the address contained in p, so it reads 10.&quot;},{&quot;title&quot;:&quot;5. Modify through the pointer&quot;,&quot;detail&quot;:&quot;*p = 25 writes to the same memory location, so x becomes 25.&quot;}]"
+        >
+
+            <div class="cb-viz-dsa-topbar">
+                <div class="cb-viz-dsa-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+                <div class="cb-viz-dsa-brand" aria-label="CodeBhavya">
+                    <span class="cb-viz-dsa-brand-mark">
+                        <img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo">
+                    </span>
+                    <span class="cb-viz-dsa-code">Code</span><span class="cb-viz-dsa-bhavya">Bhavya</span>
+                </div>
+            </div>
+
+            <h3 class="cb-viz-dsa-title">🎬 Pointer Memory Relationship Visualizer</h3>
+
+            <p class="cb-viz-dsa-intro">
+                The active relationship changes as the pointer is created, dereferenced, and used to modify x.
+            </p>
+
+            <div class="cb-mini-step-flow">
+
+                <div class="cb-mini-step-card cb-mini-step-card-blue" data-cb-flow-step="0">
+                    <div class="cb-mini-step-badge">Variable</div>
+                    <div class="cb-mini-step-text">x = 10</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-gold" data-cb-flow-step="1">
+                    <div class="cb-mini-step-badge">Address</div>
+                    <div class="cb-mini-step-text">&amp;x</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-purple" data-cb-flow-step="2">
+                    <div class="cb-mini-step-badge">Pointer</div>
+                    <div class="cb-mini-step-text">p = &amp;x</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-green" data-cb-flow-step="3">
+                    <div class="cb-mini-step-badge">Dereference</div>
+                    <div class="cb-mini-step-text">*p = 10</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-pink" data-cb-flow-step="4">
+                    <div class="cb-mini-step-badge">Modify</div>
+                    <div class="cb-mini-step-text">*p = 25 → x = 25</div>
+                </div>
+
+            </div>
+
+            <div class="cb-viz-stage">
+                <div class="cb-viz-step" id="cbVizStep-pointers">Step 1</div>
+                <h3 id="cbVizTitle-pointers"></h3>
+                <p id="cbVizDetail-pointers"></p>
+                <div class="cb-viz-dots" id="cbVizDots-pointers"></div>
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBConceptViz.prev('pointers')">← Previous</button>
+                <button class="cb-control cb-next" id="cbVizNext-pointers" onclick="CBConceptViz.next('pointers')">Next →</button>
+                <button class="cb-control cb-auto" id="cbVizAuto-pointers" onclick="CBConceptViz.auto('pointers')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBConceptViz.pause('pointers')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBConceptViz.reset('pointers')">↺ Reset</button>
+            </div>
+
+            <div class="cb-mini-progress">
+                <div id="cbVizProgress-pointers"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="content-card cb-added-section cb-compact-learning" id="pointers-tracing-extra">
+
+    <span class="cb-added-label">PROGRAM TRACING</span>
+
+    <h2>🔎 Program Tracing — Pointers</h2>
+
+    <p class="cb-added-note">
+        Trace how a pointer stores an address, modifies the original variable,
+        and reads the updated value through dereferencing.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBProgramTrace.toggle('pointers')"
+    >▶ Program Tracing — Pointers</button>
+
+    <div class="cb-compact-panel" id="cbTracePanel-pointers" hidden>
+
+        <div
+            class="cb-tracer"
+            data-cb-trace="pointers"
+            data-config="{&quot;code&quot;:[&quot;int main()&quot;,&quot;{&quot;,&quot;    int x = 10;&quot;,&quot;    int *p = &amp;x;&quot;,&quot;    int y;&quot;,&quot;    *p = 25;&quot;,&quot;    y = *p + 5;&quot;,&quot;    printf(\&quot;x = %d, y = %d\&quot;, x, y);&quot;,&quot;    return 0;&quot;,&quot;}&quot;],&quot;steps&quot;:[{&quot;line&quot;:0,&quot;state&quot;:{&quot;x&quot;:&quot;—&quot;,&quot;p&quot;:&quot;—&quot;,&quot;y&quot;:&quot;indeterminate&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Execution starts at main().&quot;},{&quot;line&quot;:2,&quot;state&quot;:{&quot;x&quot;:10,&quot;p&quot;:&quot;—&quot;,&quot;y&quot;:&quot;indeterminate&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;x is initialized to 10.&quot;},{&quot;line&quot;:3,&quot;state&quot;:{&quot;x&quot;:10,&quot;p&quot;:&quot;&amp;x&quot;,&quot;y&quot;:&quot;indeterminate&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;p receives the address of x. The symbolic value &amp;x is shown instead of a machine-specific numeric address.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;x&quot;:10,&quot;p&quot;:&quot;&amp;x&quot;,&quot;y&quot;:&quot;indeterminate&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;y is declared but is not initialized yet.&quot;},{&quot;line&quot;:5,&quot;state&quot;:{&quot;x&quot;:25,&quot;p&quot;:&quot;&amp;x&quot;,&quot;y&quot;:&quot;indeterminate&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;*p = 25 writes to the object pointed to by p. Since p points to x, x becomes 25.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;x&quot;:25,&quot;p&quot;:&quot;&amp;x&quot;,&quot;y&quot;:30,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;*p reads the current value of x, which is 25. Therefore y becomes 25 + 5 = 30.&quot;},{&quot;line&quot;:7,&quot;state&quot;:{&quot;x&quot;:25,&quot;p&quot;:&quot;&amp;x&quot;,&quot;y&quot;:30,&quot;output&quot;:&quot;x = 25, y = 30&quot;},&quot;note&quot;:&quot;printf() displays the final values.&quot;},{&quot;line&quot;:8,&quot;state&quot;:{&quot;x&quot;:25,&quot;p&quot;:&quot;&amp;x&quot;,&quot;y&quot;:30,&quot;output&quot;:&quot;x = 25, y = 30&quot;},&quot;note&quot;:&quot;return 0 ends the program successfully.&quot;}]}"
+        >
+
+            <div class="cb-tracer-grid">
+
+                <div class="cb-tracer-code-wrap">
+                    <div class="cb-tracer-heading">C Program</div>
+                    <pre class="cb-tracer-code" id="cbTraceCode-pointers"></pre>
+                </div>
+
+                <div class="cb-tracer-state-wrap">
+                    <div class="cb-tracer-heading">Live Variables</div>
+
+                    <div class="cb-tracer-note" id="cbTraceNote-pointers"></div>
+
+                    <div class="cb-live-state" id="cbTraceState-pointers"></div>
+
+                    <div class="cb-tracer-output">
+                        <strong>Output</strong>
+                        <pre id="cbTraceOutput-pointers">—</pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBProgramTrace.prev('pointers')">← Previous</button>
+                <button class="cb-control cb-next" id="cbTraceNext-pointers" onclick="CBProgramTrace.next('pointers')">Next →</button>
+                <button class="cb-control cb-auto" id="cbTraceAuto-pointers" onclick="CBProgramTrace.auto('pointers')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBProgramTrace.pause('pointers')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBProgramTrace.reset('pointers')">↺ Reset</button>
+            </div>
+
+            <div class="cb-tracer-status" id="cbTraceStatus-pointers">Step 0</div>
+
+        </div>
+    </div>
+</section>
+
+
+<h3>13.41 Quick MCQs</h3>
+
+    <p class="cb-mcq-guide">
+        Select an answer first, then click <strong>Check Answer</strong>.
+        A correct choice becomes green. If the answer is wrong, your choice becomes red
+        and the correct option becomes green. The explanation appears below.
+    </p>
+
+    <div class="cb-mcq-list">
+        
+    <div class="cb-mcq-card" id="pointers-mcq1" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">1.</span>
+            <strong>What does a pointer store?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="pointers-mcq1" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">Only integers</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="pointers-mcq1" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">A memory address</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="pointers-mcq1" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">A function name only</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="pointers-mcq1" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">A keyword</span>
+            </label>
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('pointers-mcq1')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('pointers-mcq1')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>A pointer stores an address value that can refer to an object or function of a compatible type.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="pointers-mcq2" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">2.</span>
+            <strong>Which operator obtains the address of a variable?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="pointers-mcq2" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">*</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="pointers-mcq2" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">&amp;</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="pointers-mcq2" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">%</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="pointers-mcq2" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">#</span>
+            </label>
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('pointers-mcq2')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('pointers-mcq2')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>The address-of operator &amp; produces the address of an object such as &amp;x.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="pointers-mcq3" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">3.</span>
+            <strong>Which operator dereferences a pointer?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="pointers-mcq3" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">*</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="pointers-mcq3" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">&amp;</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="pointers-mcq3" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">#</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="pointers-mcq3" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">%</span>
+            </label>
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('pointers-mcq3')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('pointers-mcq3')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>The unary * operator accesses the object referenced by the pointer.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="pointers-mcq4" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">4.</span>
+            <strong>What does NULL represent for a pointer?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="pointers-mcq4" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">It points to integer zero as an object</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="pointers-mcq4" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">It intentionally points to no valid object</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="pointers-mcq4" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">It always points to address 1</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="pointers-mcq4" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">It is a string</span>
+            </label>
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('pointers-mcq4')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('pointers-mcq4')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>A null pointer is a special pointer value that does not point to a valid object or function.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="pointers-mcq5" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">5.</span>
+            <strong>Which function allocates dynamic memory?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="pointers-mcq5" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">printf()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="pointers-mcq5" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">malloc()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="pointers-mcq5" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">scanf()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="pointers-mcq5" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">strlen()</span>
+            </label>
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('pointers-mcq5')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('pointers-mcq5')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>malloc() allocates a requested number of bytes dynamically and returns a pointer to the allocated storage or NULL on failure.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="pointers-mcq6" data-correct="C">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">6.</span>
+            <strong>Which function releases dynamically allocated memory?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="pointers-mcq6" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">delete()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="pointers-mcq6" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">remove()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="pointers-mcq6" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">free()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="pointers-mcq6" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">clear()</span>
+            </label>
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('pointers-mcq6')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('pointers-mcq6')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>free() releases dynamically allocated storage obtained from allocation functions such as malloc(), calloc(), or realloc().</p>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+
+<div class="cb-c-dsa-practice-section">
+
+        <span class="cb-c-practice-label">PRACTICE</span>
+
+        <h3>13.42 🎯 Practice Problems</h3>
+
+        <p class="cb-c-practice-guide">
+            Pointers become clear through repeated address, dereference, array, string,
+            and dynamic-memory practice. Use <strong>💻 Solve It Yourself</strong> first,
+            open <strong>Hint</strong> only when needed,
+            and use <strong>Show Program</strong> after attempting the problem.
+        </p>
+
+        <div class="cb-practice-overall" data-practice-total="20">
+
+            <div class="cb-practice-overall-title">
+                📈 Pointers Practice Progress
+            </div>
+
+            <div class="cb-practice-overall-grid">
+
+                <div class="cb-practice-overall-item">
+                    <strong>Solved</strong>
+                    <span id="cbPracticeOverallSolved">0 / 20</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completed with Solution</strong>
+                    <span id="cbPracticeOverallCompleted">0</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Total Score</strong>
+                    <span id="cbPracticeOverallScore">0 / 2000</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completion</strong>
+                    <span id="cbPracticeOverallPercent">0%</span>
+                </div>
+
+            </div>
+
+            <div class="cb-practice-progress-track">
+                <div id="cbPracticeOverallBar" class="cb-practice-progress-fill"></div>
+            </div>
+
+            <div class="cb-practice-progress-note">
+                A problem counts as <strong>Solved</strong> when all test cases pass
+                without opening the full solution. Problems completed after viewing
+                the official solution are tracked separately.
+            </div>
+
+        </div>
+
+        <div class="cb-c-practice-list">
+            
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>1. Value and Address Relationship</strong>
+                <span id="practiceBadge-pointers-p1" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 1: Read an integer, print its value, and verify that a pointer stores the address of that variable.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the value and &quot;Address Match = Yes&quot;.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p1')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p1')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p1')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p1" hidden>
+                💡 <strong>Hint:</strong> Create int *p = &amp;x and test whether p == &amp;x.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p1" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Value and Address Relationship
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p1"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p1"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p1')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p1"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p1')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p1')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p1"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p1"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p1" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p1">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p1">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p1">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p1" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p1" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x;
+
+    scanf(&quot;%d&quot;, &amp;x);
+
+    int *p = &amp;x;
+
+    printf(&quot;Value = %d\n&quot;, x);
+    printf(&quot;Address Match = %s&quot;, p == &amp;x ? &quot;Yes&quot; : &quot;No&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>2. Access a Variable Using a Pointer</strong>
+                <span id="practiceBadge-pointers-p2" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 2: Read an integer and print its value by dereferencing a pointer.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the value obtained through *p.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p2')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p2')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p2')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p2" hidden>
+                💡 <strong>Hint:</strong> Create p = &amp;x and print *p.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p2" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Access a Variable Using a Pointer
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p2"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p2"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p2')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p2"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p2')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p2')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p2"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p2"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p2" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p2">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p2">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p2">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p2" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p2" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x;
+
+    scanf(&quot;%d&quot;, &amp;x);
+
+    int *p = &amp;x;
+
+    printf(&quot;%d&quot;, *p);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>3. Modify a Variable Using a Pointer</strong>
+                <span id="practiceBadge-pointers-p3" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 3: Read an integer and a new value. Modify the original variable through a pointer.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two integers: original value and new value.</p>
+            <p><strong>Output:</strong> Print the modified variable.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p3')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p3')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p3')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p3" hidden>
+                💡 <strong>Hint:</strong> Use *p = newValue.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p3" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Modify a Variable Using a Pointer
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p3"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p3"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p3')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p3"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p3')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p3')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p3"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p3"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p3" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p3">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p3">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p3">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p3" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p3" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x, newValue;
+
+    scanf(&quot;%d %d&quot;, &amp;x, &amp;newValue);
+
+    int *p = &amp;x;
+
+    *p = newValue;
+
+    printf(&quot;%d&quot;, x);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>4. Sum of Two Numbers Using Pointers</strong>
+                <span id="practiceBadge-pointers-p4" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 4: Read two integers and calculate their sum by dereferencing pointers.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two integers.</p>
+            <p><strong>Output:</strong> Print the sum.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p4')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p4')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p4')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p4" hidden>
+                💡 <strong>Hint:</strong> Use *p + *q.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p4" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Sum of Two Numbers Using Pointers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p4"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p4"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p4')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p4"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p4')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p4')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p4"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p4"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p4" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p4">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p4">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p4">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p4" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p4" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b;
+
+    scanf(&quot;%d %d&quot;, &amp;a, &amp;b);
+
+    int *p = &amp;a;
+    int *q = &amp;b;
+
+    printf(&quot;%d&quot;, *p + *q);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>5. Swap Two Numbers Using Pointers</strong>
+                <span id="practiceBadge-pointers-p5" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 5: Swap two integers using a function that receives pointers.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two integers.</p>
+            <p><strong>Output:</strong> Print the swapped values.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p5')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p5')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p5')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p5" hidden>
+                💡 <strong>Hint:</strong> Use void swap(int *a, int *b).
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p5" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Swap Two Numbers Using Pointers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p5"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p5"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p5')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p5"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p5')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p5')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p5"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p5"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p5" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p5">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p5">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p5">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p5" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p5" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main()
+{
+    int x, y;
+
+    scanf(&quot;%d %d&quot;, &amp;x, &amp;y);
+
+    swap(&amp;x, &amp;y);
+
+    printf(&quot;%d %d&quot;, x, y);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>6. Maximum of Two Numbers Using Pointers</strong>
+                <span id="practiceBadge-pointers-p6" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 6: Find the larger of two integers using pointers.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two integers.</p>
+            <p><strong>Output:</strong> Print the maximum value.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p6')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p6')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p6')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p6" hidden>
+                💡 <strong>Hint:</strong> Compare *p and *q.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p6" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Maximum of Two Numbers Using Pointers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p6"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p6"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p6')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p6"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p6')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p6')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p6"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p6"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p6" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p6">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p6">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p6">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p6" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p6" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b;
+
+    scanf(&quot;%d %d&quot;, &amp;a, &amp;b);
+
+    int *p = &amp;a;
+    int *q = &amp;b;
+
+    printf(&quot;%d&quot;, *p &gt; *q ? *p : *q);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>7. Print Array Elements Using a Pointer</strong>
+                <span id="practiceBadge-pointers-p7" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 7: Read N integers and print every array element using pointer notation.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print the elements separated by spaces.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p7')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p7')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p7')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p7" hidden>
+                💡 <strong>Hint:</strong> Use *(arr + i).
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p7" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Print Array Elements Using a Pointer
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p7"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p7"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p7')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p7"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p7')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p7')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p7"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p7"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p7" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p7">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p7">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p7">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p7" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p7" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, arr + i);
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, *(arr + i));
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>8. Sum an Array Using Pointer Arithmetic</strong>
+                <span id="practiceBadge-pointers-p8" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 8: Find the sum of an integer array using pointer arithmetic.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print the sum.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p8')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p8')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p8')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p8" hidden>
+                💡 <strong>Hint:</strong> Accumulate *(arr + i).
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p8" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Sum an Array Using Pointer Arithmetic
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p8"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p8"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p8')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p8"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p8')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p8')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p8"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p8"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p8" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p8">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p8">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p8">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p8" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p8" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    long long sum = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, arr + i);
+
+    for (int i = 0; i &lt; n; i++)
+        sum += *(arr + i);
+
+    printf(&quot;%lld&quot;, sum);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>9. Maximum Array Element Using Pointers</strong>
+                <span id="practiceBadge-pointers-p9" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 9: Find the maximum element of an integer array using pointer access.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N greater than 0 followed by N integers.</p>
+            <p><strong>Output:</strong> Print the maximum element.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p9')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p9')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p9')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p9" hidden>
+                💡 <strong>Hint:</strong> Initialize maximum from *arr and compare *(arr + i).
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p9" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Maximum Array Element Using Pointers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p9"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p9"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p9')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p9"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p9')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p9')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p9"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p9"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p9" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p9">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p9">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p9">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p9" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p9" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, arr + i);
+
+    int maximum = *arr;
+
+    for (int i = 1; i &lt; n; i++)
+    {
+        if (*(arr + i) &gt; maximum)
+            maximum = *(arr + i);
+    }
+
+    printf(&quot;%d&quot;, maximum);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>10. Reverse an Array Using Pointers</strong>
+                <span id="practiceBadge-pointers-p10" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 10: Reverse an array in place using pointer-based swapping.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print the reversed array.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p10')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p10')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p10')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p10" hidden>
+                💡 <strong>Hint:</strong> Use left and right pointers and swap *left with *right.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p10" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Reverse an Array Using Pointers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p10"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p10"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p10')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p10"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p10')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p10')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p10"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p10"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p10" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p10">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p10">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p10">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p10" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p10" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    int *left = arr;
+    int *right = arr + n - 1;
+
+    while (left &lt; right)
+    {
+        int temp = *left;
+        *left = *right;
+        *right = temp;
+
+        left++;
+        right--;
+    }
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, arr[i]);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>11. String Length Using a Pointer</strong>
+                <span id="practiceBadge-pointers-p11" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 11: Find the length of a string using pointer traversal.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the string length excluding the newline.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p11')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p11')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p11')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p11" hidden>
+                💡 <strong>Hint:</strong> Advance a pointer until it reaches &#x27;\0&#x27;.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p11" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — String Length Using a Pointer
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p11"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p11"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p11')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p11"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p11')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p11')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p11"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p11"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p11" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p11">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p11">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p11">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p11" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p11" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char text[200];
+
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, &quot;\n&quot;)] = &#x27;\0&#x27;;
+
+    char *p = text;
+
+    while (*p != &#x27;\0&#x27;)
+        p++;
+
+    printf(&quot;%ld&quot;, (long)(p - text));
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>12. Reverse a String Using Pointers</strong>
+                <span id="practiceBadge-pointers-p12" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 12: Reverse a string in place using pointers.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the reversed string.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p12')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p12')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p12')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p12" hidden>
+                💡 <strong>Hint:</strong> Use one pointer at the first character and one at the last character.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p12" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Reverse a String Using Pointers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p12"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p12"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p12')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p12"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p12')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p12')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p12"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p12"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p12" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p12">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p12">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p12">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p12" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p12" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char text[200];
+
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, &quot;\n&quot;)] = &#x27;\0&#x27;;
+
+    int length = (int)strlen(text);
+
+    if (length &gt; 0)
+    {
+        char *left = text;
+        char *right = text + length - 1;
+
+        while (left &lt; right)
+        {
+            char temp = *left;
+            *left = *right;
+            *right = temp;
+
+            left++;
+            right--;
+        }
+    }
+
+    printf(&quot;%s&quot;, text);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>13. Count Vowels Using a Pointer</strong>
+                <span id="practiceBadge-pointers-p13" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 13: Count vowels in a string by traversing it with a pointer.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the vowel count.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p13')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p13')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p13')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p13" hidden>
+                💡 <strong>Hint:</strong> Advance char *p through the string and test *p.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p13" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Count Vowels Using a Pointer
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p13"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p13"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p13')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p13"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p13')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p13')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p13"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p13"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p13" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p13">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p13">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p13">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p13" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p13" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char text[200];
+    int count = 0;
+
+    fgets(text, sizeof(text), stdin);
+
+    for (char *p = text; *p != &#x27;\0&#x27;; p++)
+    {
+        char ch = *p;
+
+        if (ch==&#x27;a&#x27; || ch==&#x27;e&#x27; || ch==&#x27;i&#x27; || ch==&#x27;o&#x27; || ch==&#x27;u&#x27; ||
+            ch==&#x27;A&#x27; || ch==&#x27;E&#x27; || ch==&#x27;I&#x27; || ch==&#x27;O&#x27; || ch==&#x27;U&#x27;)
+        {
+            count++;
+        }
+    }
+
+    printf(&quot;%d&quot;, count);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>14. Palindrome String Using Pointers</strong>
+                <span id="practiceBadge-pointers-p14" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 14: Check whether a string is a palindrome using left and right pointers.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print &quot;Palindrome&quot; or &quot;Not Palindrome&quot;.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p14')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p14')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p14')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p14" hidden>
+                💡 <strong>Hint:</strong> Compare *left and *right while left &lt; right.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p14" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Palindrome String Using Pointers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p14"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p14"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p14')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p14"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p14')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p14')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p14"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p14"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p14" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p14">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p14">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p14">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p14" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p14" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char text[200];
+    int palindrome = 1;
+
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, &quot;\n&quot;)] = &#x27;\0&#x27;;
+
+    int length = (int)strlen(text);
+
+    if (length &gt; 0)
+    {
+        char *left = text;
+        char *right = text + length - 1;
+
+        while (left &lt; right)
+        {
+            if (*left != *right)
+            {
+                palindrome = 0;
+                break;
+            }
+
+            left++;
+            right--;
+        }
+    }
+
+    printf(&quot;%s&quot;, palindrome ? &quot;Palindrome&quot; : &quot;Not Palindrome&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>15. Pointer to Pointer</strong>
+                <span id="practiceBadge-pointers-p15" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 15: Create a pointer to a pointer and print a variable&#x27;s value through double dereferencing.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the value using **pp.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p15')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p15')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p15')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p15" hidden>
+                💡 <strong>Hint:</strong> Use int *p = &amp;x and int **pp = &amp;p.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p15" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Pointer to Pointer
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p15"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p15"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p15')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p15"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p15')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p15')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p15"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p15"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p15" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p15">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p15">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p15">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p15" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p15" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x;
+
+    scanf(&quot;%d&quot;, &amp;x);
+
+    int *p = &amp;x;
+    int **pp = &amp;p;
+
+    printf(&quot;%d&quot;, **pp);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>16. Dynamic Integer Array with malloc()</strong>
+                <span id="practiceBadge-pointers-p16" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 16: Dynamically allocate an integer array using malloc(), read values, and print their sum.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print the sum, or Allocation Failed if memory allocation fails.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p16')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p16')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p16')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p16" hidden>
+                💡 <strong>Hint:</strong> Use malloc(n * sizeof(int)) and remember to free().
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p16" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Dynamic Integer Array with malloc()
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p16"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p16"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p16')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p16"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p16')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p16')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p16"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p16"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p16" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p16">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p16">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p16">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p16" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p16" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n;
+    long long sum = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int *arr = malloc((size_t)n * sizeof(int));
+
+    if (arr == NULL)
+    {
+        printf(&quot;Allocation Failed&quot;);
+        return 0;
+    }
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+        sum += arr[i];
+    }
+
+    printf(&quot;%lld&quot;, sum);
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>17. Initial Values with calloc()</strong>
+                <span id="practiceBadge-pointers-p17" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 17: Allocate an integer array using calloc() and print its initial values before assigning anything.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One positive integer N.</p>
+            <p><strong>Output:</strong> Print N zero values separated by spaces, or Allocation Failed.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p17')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p17')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p17')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p17" hidden>
+                💡 <strong>Hint:</strong> calloc() initializes the allocated bytes to zero.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p17" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Initial Values with calloc()
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p17"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p17"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p17')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p17"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p17')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p17')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p17"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p17"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p17" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p17">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p17">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p17">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p17" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p17" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int *arr = calloc((size_t)n, sizeof(int));
+
+    if (arr == NULL)
+    {
+        printf(&quot;Allocation Failed&quot;);
+        return 0;
+    }
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, arr[i]);
+    }
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>18. Resize an Array with realloc()</strong>
+                <span id="practiceBadge-pointers-p18" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 18: Allocate N integers, resize the array to M integers using realloc(), read the new elements, and print the complete resized array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N, N integers, M where M &gt;= N, followed by M-N new integers.</p>
+            <p><strong>Output:</strong> Print all M elements, or Allocation Failed.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p18')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p18')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p18')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p18" hidden>
+                💡 <strong>Hint:</strong> Use a temporary pointer for realloc() before replacing the original pointer.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p18" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Resize an Array with realloc()
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p18"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p18"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p18')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p18"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p18')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p18')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p18"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p18"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p18" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p18">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p18">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p18">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p18" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p18" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n, m;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int *arr = malloc((size_t)n * sizeof(int));
+
+    if (arr == NULL)
+    {
+        printf(&quot;Allocation Failed&quot;);
+        return 0;
+    }
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    scanf(&quot;%d&quot;, &amp;m);
+
+    int *temp = realloc(arr, (size_t)m * sizeof(int));
+
+    if (temp == NULL)
+    {
+        free(arr);
+        printf(&quot;Allocation Failed&quot;);
+        return 0;
+    }
+
+    arr = temp;
+
+    for (int i = n; i &lt; m; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    for (int i = 0; i &lt; m; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, arr[i]);
+    }
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>19. Structure Pointer</strong>
+                <span id="practiceBadge-pointers-p19" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 19: Create a structure variable and access its members through a structure pointer.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Student roll number and marks.</p>
+            <p><strong>Output:</strong> Print both values using the -&gt; operator.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p19')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p19')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p19')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p19" hidden>
+                💡 <strong>Hint:</strong> Use struct Student *p = &amp;student and p-&gt;member.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p19" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Structure Pointer
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p19"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p19"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p19')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p19"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p19')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p19')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p19"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p19"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p19" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p19">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p19">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p19">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p19" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p19" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    float marks;
+};
+
+int main()
+{
+    struct Student student;
+
+    scanf(&quot;%d %f&quot;, &amp;student.roll, &amp;student.marks);
+
+    struct Student *p = &amp;student;
+
+    printf(&quot;Roll = %d\n&quot;, p-&gt;roll);
+    printf(&quot;Marks = %.1f&quot;, p-&gt;marks);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>20. Function Pointer for Addition</strong>
+                <span id="practiceBadge-pointers-p20" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 20: Create a function pointer for an addition function and use it to calculate the sum of two integers.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two integers.</p>
+            <p><strong>Output:</strong> Print their sum.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('pointers-p20')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('pointers-p20')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('pointers-p20')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-pointers-p20" hidden>
+                💡 <strong>Hint:</strong> Use int (*operation)(int, int) = add;
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-pointers-p20" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Function Pointer for Addition
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-pointers-p20"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-pointers-p20"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('pointers-p20')">▶ Run Code</button>
+
+                            <button id="practiceCheck-pointers-p20"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('pointers-p20')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('pointers-p20')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-pointers-p20"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-pointers-p20"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-pointers-p20" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-pointers-p20">0 / 100</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-pointers-p20">0</span>
+                        </div>
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-pointers-p20">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-pointers-p20" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-pointers-p20" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int main()
+{
+    int a, b;
+
+    scanf(&quot;%d %d&quot;, &amp;a, &amp;b);
+
+    int (*operation)(int, int) = add;
+
+    printf(&quot;%d&quot;, operation(a, b));
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        </div>
+
+    </div>
+
+<h3>13.43 Key Takeaway</h3>
+
+    <div class="tip-box">
+
+        🎯 Remember this three-part rule:
+
+        <br><br>
+
+        <strong>&amp;x → Address of x</strong>
+
+        <br><br>
+
+        <strong>p → Address stored in p</strong>
+
+        <br><br>
+
+        <strong>*p → Value at that address</strong>
+
+        <br><br>
+
+        Once this becomes clear, pointers become
+        much easier to understand.
+
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="pointers-interview-extra">
+
+    <span class="cb-added-label">INTERVIEW PREPARATION</span>
+
+    <h2>🎤 Pointers — Interview Questions</h2>
+
+    <div class="cb-original-qa-list cb-interview-qa-list">
+        
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">1.</span>
+                <span>What is the difference between p, &amp;x, and *p?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('pointersInterviewAnswer1', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="pointersInterviewAnswer1"
+                 hidden>
+                If p points to x, &amp;x is the address of x, p stores that address, and *p accesses the object at that address.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">2.</span>
+                <span>What is a NULL pointer?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('pointersInterviewAnswer2', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="pointersInterviewAnswer2"
+                 hidden>
+                A null pointer is a special pointer value that intentionally does not point to a valid object or function.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">3.</span>
+                <span>What is a wild pointer?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('pointersInterviewAnswer3', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="pointersInterviewAnswer3"
+                 hidden>
+                A wild pointer is an uninitialized pointer whose stored value is indeterminate. Dereferencing it causes undefined behavior.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">4.</span>
+                <span>What is a dangling pointer?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('pointersInterviewAnswer4', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="pointersInterviewAnswer4"
+                 hidden>
+                A dangling pointer still contains an address to storage whose lifetime has ended, such as memory that has already been freed.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">5.</span>
+                <span>How are arrays and pointers related in C?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('pointersInterviewAnswer5', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="pointersInterviewAnswer5"
+                 hidden>
+                In many expressions an array name is converted to a pointer to its first element, allowing pointer arithmetic such as arr + i and dereferencing such as *(arr + i).
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">6.</span>
+                <span>What does pointer arithmetic depend on?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('pointersInterviewAnswer6', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="pointersInterviewAnswer6"
+                 hidden>
+                Adding or subtracting an integer from a pointer moves by elements of the pointed-to type, not by raw bytes.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">7.</span>
+                <span>Why should realloc() commonly use a temporary pointer?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('pointersInterviewAnswer7', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="pointersInterviewAnswer7"
+                 hidden>
+                If realloc() fails, it returns NULL while the original allocation remains valid. A temporary pointer prevents losing the original address.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">8.</span>
+                <span>What is a function pointer?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('pointersInterviewAnswer8', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="pointersInterviewAnswer8"
+                 hidden>
+                A function pointer stores the address of a compatible function and can be used to call that function indirectly.
+            </div>
+
+        </div>
+    
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="pointers-tips-extra">
+
+    <span class="cb-added-label">PLACEMENT TIPS</span>
+
+    <h2>💡 Pointers — Placement Tips</h2>
+
+    <ul class="cb-tip-grid">
+        <li>Always separate the three ideas: <strong>address</strong>, <strong>pointer value</strong>, and <strong>dereferenced object</strong>.</li>
+        <li>Initialize pointers before dereferencing them, and check dynamically allocated pointers against <code>NULL</code>.</li>
+        <li>For array-pointer questions, remember <code>arr[i]</code> and <code>*(arr + i)</code> refer to the same element.</li>
+        <li>Pointer arithmetic is scaled by the pointed-to type; <code>p + 1</code> moves to the next element of that type.</li>
+        <li>After <code>free(p)</code>, do not dereference p. Setting it to <code>NULL</code> can help avoid accidental reuse.</li>
+        <li>For <code>realloc()</code>, use a temporary pointer so the original allocation is not lost if resizing fails.</li>
+    </ul>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="pointers-practice-extra">
+
+    <span class="cb-added-label">EXTRA PRACTICE</span>
+
+    <h2>✍️ Pointers — Extra Practice Questions</h2>
+
+    <ol class="cb-extra-practice">
+        <li>Use pointers to find the second largest element of an array.</li>
+        <li>Use pointer arithmetic to count positive and negative array elements.</li>
+        <li>Copy one string to another using only pointers.</li>
+        <li>Concatenate two strings using pointer traversal without <code>strcat()</code>.</li>
+        <li>Dynamically allocate a matrix using pointers and calculate each row sum.</li>
+        <li>Create an array of function pointers for addition, subtraction, multiplication, and division.</li>
+    </ol>
+
+</section>
+
+
+
+<section class="cb-topic-navigation" aria-label="C Programming topic navigation">
+
+    <a class="cb-topic-nav-btn cb-topic-nav-prev" href="functions.html">
+        ← Previous Topic: Functions
+    </a>
+
+    <a class="cb-topic-nav-btn cb-topic-nav-next" href="structures-unions.html">
+        Next Topic: Structures &amp; Unions →
+    </a>
+
+</section>
+
+
+</main>
+
+</div>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../Maths/index.html">
+                Maths
+            </a>
+
+            <a href="index.html">
+                C Programming
+            </a>
+
+        </div>
+
+
+        <!-- LEARNING -->
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+<a href="../Data-Structures/">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/">
+    Advanced Data Structures
+</a>
+
+            <a href="#">
+                Python
+            </a>
+
+            <a href="#">
+                AI & Machine Learning
+            </a>
+
+        </div>
+
+
+        <!-- PRACTICE -->
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="#practice">
+                Practice Problems
+            </a>
+
+            <a href="#practice">
+                Problem Solving
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="c-programming.js"></script>
+<script>
+const codeBhavyaPointersPracticeConfigs =
+[{"key": "pointers-p1", "title": "Value and Address Relationship", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int x;\n    int *p;\n\n    /* Read x, point p to x, and verify the address */\n\n    return 0;\n}", "sampleInput": "10", "tests": [{"input": "10", "expected": "Value = 10\nAddress Match = Yes"}, {"input": "-7", "expected": "Value = -7\nAddress Match = Yes"}]}, {"key": "pointers-p2", "title": "Access a Variable Using a Pointer", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int x;\n\n    /* Access x through a pointer */\n\n    return 0;\n}", "sampleInput": "25", "tests": [{"input": "25", "expected": "25"}, {"input": "-9", "expected": "-9"}]}, {"key": "pointers-p3", "title": "Modify a Variable Using a Pointer", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int x, newValue;\n\n    /* Modify x through a pointer */\n\n    return 0;\n}", "sampleInput": "10 100", "tests": [{"input": "10 100", "expected": "100"}, {"input": "-3 7", "expected": "7"}]}, {"key": "pointers-p4", "title": "Sum of Two Numbers Using Pointers", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int a, b;\n\n    /* Use pointers to calculate the sum */\n\n    return 0;\n}", "sampleInput": "12 8", "tests": [{"input": "12 8", "expected": "20"}, {"input": "-5 2", "expected": "-3"}]}, {"key": "pointers-p5", "title": "Swap Two Numbers Using Pointers", "starterCode": "#include <stdio.h>\n\nvoid swap(int *a, int *b)\n{\n    /* Complete swap */\n}\n\nint main()\n{\n    int x, y;\n\n    return 0;\n}", "sampleInput": "10 20", "tests": [{"input": "10 20", "expected": "20 10"}, {"input": "-3 7", "expected": "7 -3"}]}, {"key": "pointers-p6", "title": "Maximum of Two Numbers Using Pointers", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int a, b;\n\n    /* Find maximum using pointers */\n\n    return 0;\n}", "sampleInput": "9 14", "tests": [{"input": "9 14", "expected": "14"}, {"input": "-2 -8", "expected": "-2"}, {"input": "5 5", "expected": "5"}]}, {"key": "pointers-p7", "title": "Print Array Elements Using a Pointer", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read and print the array using pointers */\n\n    return 0;\n}", "sampleInput": "5\n10 20 30 40 50", "tests": [{"input": "5\n10 20 30 40 50", "expected": "10 20 30 40 50"}, {"input": "3\n-1 0 7", "expected": "-1 0 7"}]}, {"key": "pointers-p8", "title": "Sum an Array Using Pointer Arithmetic", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Sum array elements through pointer arithmetic */\n\n    return 0;\n}", "sampleInput": "5\n1 2 3 4 5", "tests": [{"input": "5\n1 2 3 4 5", "expected": "15"}, {"input": "4\n10 -2 7 5", "expected": "20"}]}, {"key": "pointers-p9", "title": "Maximum Array Element Using Pointers", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Find maximum using pointer access */\n\n    return 0;\n}", "sampleInput": "5\n4 9 2 7 1", "tests": [{"input": "5\n4 9 2 7 1", "expected": "9"}, {"input": "3\n-5 -2 -9", "expected": "-2"}]}, {"key": "pointers-p10", "title": "Reverse an Array Using Pointers", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Reverse the array using pointers */\n\n    return 0;\n}", "sampleInput": "5\n1 2 3 4 5", "tests": [{"input": "5\n1 2 3 4 5", "expected": "5 4 3 2 1"}, {"input": "4\n9 8 7 6", "expected": "6 7 8 9"}]}, {"key": "pointers-p11", "title": "String Length Using a Pointer", "starterCode": "#include <stdio.h>\n#include <string.h>\n\nint main()\n{\n    char text[200];\n\n    /* Find length using a pointer */\n\n    return 0;\n}", "sampleInput": "CodeBhavya", "tests": [{"input": "CodeBhavya", "expected": "10"}, {"input": "C Programming", "expected": "13"}]}, {"key": "pointers-p12", "title": "Reverse a String Using Pointers", "starterCode": "#include <stdio.h>\n#include <string.h>\n\nint main()\n{\n    char text[200];\n\n    /* Reverse the string using pointers */\n\n    return 0;\n}", "sampleInput": "hello", "tests": [{"input": "hello", "expected": "olleh"}, {"input": "C Code", "expected": "edoC C"}]}, {"key": "pointers-p13", "title": "Count Vowels Using a Pointer", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    char text[200];\n\n    /* Count vowels through a pointer */\n\n    return 0;\n}", "sampleInput": "CodeBhavya", "tests": [{"input": "CodeBhavya", "expected": "4"}, {"input": "rhythm", "expected": "0"}]}, {"key": "pointers-p14", "title": "Palindrome String Using Pointers", "starterCode": "#include <stdio.h>\n#include <string.h>\n\nint main()\n{\n    char text[200];\n\n    /* Check palindrome using pointers */\n\n    return 0;\n}", "sampleInput": "madam", "tests": [{"input": "madam", "expected": "Palindrome"}, {"input": "level", "expected": "Palindrome"}, {"input": "hello", "expected": "Not Palindrome"}]}, {"key": "pointers-p15", "title": "Pointer to Pointer", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int x;\n\n    /* Create p and pp, then print **pp */\n\n    return 0;\n}", "sampleInput": "42", "tests": [{"input": "42", "expected": "42"}, {"input": "-8", "expected": "-8"}]}, {"key": "pointers-p16", "title": "Dynamic Integer Array with malloc()", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int n;\n\n    /* Allocate using malloc(), read, process, free */\n\n    return 0;\n}", "sampleInput": "5\n1 2 3 4 5", "tests": [{"input": "5\n1 2 3 4 5", "expected": "15"}, {"input": "3\n10 -2 7", "expected": "15"}]}, {"key": "pointers-p17", "title": "Initial Values with calloc()", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int n;\n\n    /* Allocate with calloc() and print initial values */\n\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "5", "expected": "0 0 0 0 0"}, {"input": "2", "expected": "0 0"}]}, {"key": "pointers-p18", "title": "Resize an Array with realloc()", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int n, m;\n\n    /* malloc, realloc safely, read new elements, print, free */\n\n    return 0;\n}", "sampleInput": "3\n1 2 3\n5\n4 5", "tests": [{"input": "3\n1 2 3\n5\n4 5", "expected": "1 2 3 4 5"}, {"input": "2\n10 20\n4\n30 40", "expected": "10 20 30 40"}]}, {"key": "pointers-p19", "title": "Structure Pointer", "starterCode": "#include <stdio.h>\n\nstruct Student\n{\n    int roll;\n    float marks;\n};\n\nint main()\n{\n    struct Student student;\n\n    /* Access members using a structure pointer */\n\n    return 0;\n}", "sampleInput": "101 88.5", "tests": [{"input": "101 88.5", "expected": "Roll = 101\nMarks = 88.5"}, {"input": "7 95", "expected": "Roll = 7\nMarks = 95.0"}]}, {"key": "pointers-p20", "title": "Function Pointer for Addition", "starterCode": "#include <stdio.h>\n\nint add(int a, int b)\n{\n    return a + b;\n}\n\nint main()\n{\n    int a, b;\n\n    /* Create and call a function pointer */\n\n    return 0;\n}", "sampleInput": "12 8", "tests": [{"input": "12 8", "expected": "20"}, {"input": "-5 7", "expected": "2"}]}];
+
+CodeBhavyaCPractice.registerAll(
+    codeBhavyaPointersPracticeConfigs
+);
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
