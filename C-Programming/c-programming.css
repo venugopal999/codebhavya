@@ -10398,3 +10398,123 @@ body {
         padding-top: 68px !important;
     }
 }
+
+/* ============================================================
+   CODEBHAVYA — FINAL TWO SMALL FIXES
+   Paste at the VERY BOTTOM of c-programming.css
+
+   Fix 1: remove large gaps between tracer code lines
+   Fix 2: separate logo and CodeBhavya wordmark
+   ============================================================ */
+
+
+/* ============================================================
+   1. PROGRAM TRACER — NORMAL COMPACT LINE SPACING
+
+   The current tracer JS creates formatted HTML inside a <pre>.
+   The indentation/newline text nodes inside that <pre> can create
+   unwanted vertical space.
+
+   Setting the PRE's own font-size/line-height to zero removes only
+   those whitespace text nodes. Actual program lines immediately
+   restore the normal code size.
+   ============================================================ */
+
+.cb-tracer-code {
+    font-size: 0 !important;
+    line-height: 0 !important;
+}
+
+.cb-trace-line {
+    margin: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+
+    min-height: 19px !important;
+
+    font-size: 13px !important;
+    line-height: 19px !important;
+}
+
+.cb-trace-line-code {
+    display: block !important;
+
+    margin: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+
+    font-size: 13px !important;
+    line-height: 19px !important;
+}
+
+
+/* Keep highlighted line compact too */
+
+.cb-trace-line.active,
+.cb-trace-line.cb-trace-line-active {
+    min-height: 19px !important;
+
+    font-size: 13px !important;
+    line-height: 19px !important;
+}
+
+
+/* ============================================================
+   2. BRAND — GIVE THE LOGO AND WORDMARK PROPER SPACE
+
+   Previous logo center was too close to the text.
+   Move the logo farther left and give the wordmark a fixed area.
+   Applies to BOTH:
+   - Program Tracing
+   - Solve It Yourself
+   ============================================================ */
+
+.cb-tracer::before,
+.cb-c-practice-workspace::before {
+    background-position:
+        calc(100% - 185px)
+        center !important;
+
+    background-size:
+        38px
+        38px !important;
+}
+
+.cb-tracer::after,
+.cb-c-practice-workspace::after {
+    right: 18px !important;
+
+    width: 135px !important;
+
+    text-align: left !important;
+
+    white-space: nowrap !important;
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    .cb-tracer::before,
+    .cb-c-practice-workspace::before {
+        background-position:
+            calc(100% - 135px)
+            center !important;
+
+        background-size:
+            30px
+            30px !important;
+    }
+
+    .cb-tracer::after,
+    .cb-c-practice-workspace::after {
+        right: 8px !important;
+
+        width: 100px !important;
+
+        font-size: 16px !important;
+    }
+}
