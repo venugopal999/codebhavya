@@ -1,0 +1,4881 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C Programming | CodeBhavya</title>
+
+ <link rel="icon" type="image/png" sizes="32x32"
+      href="../images/codebhavya-icon-32.png">
+
+<link rel="icon" type="image/png" sizes="128x128"
+      href="../images/codebhavya-icon-128.png">
+
+<link rel="icon" type="image/png" sizes="512x512"
+      href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="c-programming.css">
+</head>
+
+<body class="cb-c-topic-page cb-enum-typedef-page">
+
+<header class="top-header">
+
+<!-- <a href="../index.html" class="logo">
+    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a> -->
+    
+<a href="../index.html" class="logo codebhavya-new-logo">
+
+    <img
+        src="../images/codebhavya-main-logo.png"
+        alt="CodeBhavya Logo"
+        class="main-logo"
+    >
+
+    <span class="brand-name">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </span>
+
+</a>
+
+    <nav class="top-nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="../Maths/">
+            Maths
+        </a>
+
+        <a href="index.html" class="active">
+            C
+        </a>
+
+<a href="../Data-Structures/index.html">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/index.html">
+    Advanced Data Structures
+</a>
+
+        <a href="../Python/">
+            Python
+        </a>
+
+        <a href="../AI-ML/">
+            AI & ML
+        </a>
+
+        <a href="../Placement/">
+            Placement
+        </a>
+
+    </nav>
+
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar cb-c-topic-sidebar">
+    <div class="sidebar-title">💻 C Programming</div>
+
+    <input
+        type="text"
+        id="topicSearch"
+        class="search-box"
+        placeholder="🔍 Search topics..."
+        onkeyup="searchTopics()"
+    >
+
+    <div class="sidebar-title">Fundamentals</div>
+    <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
+    <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
+    <a class="cb-topic-link" data-topic-link="1" href="data-types.html">📦 Data Types</a>
+    <a class="cb-topic-link" data-topic-link="1" href="input-output.html">⌨️ Input &amp; Output</a>
+
+    <div class="sidebar-title">Operators &amp; Control</div>
+    <a class="cb-topic-link" data-topic-link="1" href="operators.html">➕ Operators</a>
+    <a class="cb-topic-link" data-topic-link="1" href="expressions.html">🧮 Expressions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="decision-making.html">🔀 Decision Making</a>
+    <a class="cb-topic-link" data-topic-link="1" href="loops.html">🔁 Loops</a>
+
+    <div class="sidebar-title">Programming Concepts</div>
+    <a class="cb-topic-link" data-topic-link="1" href="arrays.html">📊 Arrays</a>
+    <a class="cb-topic-link" data-topic-link="1" href="strings.html">🔤 Strings</a>
+    <a class="cb-topic-link" data-topic-link="1" href="functions.html">🧩 Functions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="pointers.html">👉 Pointers</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structures-unions.html">🏗️ Structures &amp; Unions</a>
+
+    <div class="sidebar-title">Advanced C</div>
+    <a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">⚙️ Preprocessor &amp; Header Files</a>
+    <a class="cb-topic-link" data-topic-link="1" href="file-handling.html">📁 File Handling</a>
+    <a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">🧠 Dynamic Memory Allocation</a>
+    <a class="cb-topic-link" data-topic-link="1" href="command-line.html">💻 Command Line Arguments</a>
+    <a class="cb-topic-link" data-topic-link="1" href="bitwise.html">🔢 Bitwise Programming</a>
+    <a class="cb-topic-link active" data-topic-link="1" href="enum-typedef.html">🔤 Enumerations &amp; typedef</a>
+    <a class="cb-topic-link" data-topic-link="1" href="precedence.html">🧮 Operator Precedence &amp; Associativity</a>
+    <a class="cb-topic-link" data-topic-link="1" href="storage-classes.html">💾 Storage Classes</a>
+    <a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">🛠️ Advanced C Preprocessor</a>
+
+    <div class="sidebar-title">Practice</div>
+    <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
+</aside>
+
+<main class="main-content">
+
+<section id="enum-typedef" class="content-card">
+
+    <h2>🔤 20. Enumerations (enum) and typedef</h2>
+
+    <!-- 20.1 ENUM INTRODUCTION -->
+
+    <h3>20.1 What is an enum?</h3>
+
+    <p>
+        An <strong>enum</strong> (enumeration) is a user-defined
+        type in C that gives meaningful names to a set of
+        integer constants.
+    </p>
+
+    <p>
+        It improves the readability of programs when a variable
+        can have one value from a fixed set of choices.
+    </p>
+
+    <pre><code>enum Day
+{
+    SUNDAY,
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY
+};</code></pre>
+
+    <p>
+        By default, the first enumerator has value <strong>0</strong>,
+        the next has value <strong>1</strong>, and so on.
+    </p>
+
+
+    <!-- 20.2 ENUM VALUES -->
+
+    <h3>20.2 Default enum Values</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Enumerator</th>
+                    <th>Default Value</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>SUNDAY</td>
+                    <td>0</td>
+                </tr>
+
+                <tr>
+                    <td>MONDAY</td>
+                    <td>1</td>
+                </tr>
+
+                <tr>
+                    <td>TUESDAY</td>
+                    <td>2</td>
+                </tr>
+
+                <tr>
+                    <td>WEDNESDAY</td>
+                    <td>3</td>
+                </tr>
+
+                <tr>
+                    <td>THURSDAY</td>
+                    <td>4</td>
+                </tr>
+
+                <tr>
+                    <td>FRIDAY</td>
+                    <td>5</td>
+                </tr>
+
+                <tr>
+                    <td>SATURDAY</td>
+                    <td>6</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 20.3 DECLARATION -->
+
+    <h3>20.3 Declaring an enum Variable</h3>
+
+    <pre><code>enum Day today;
+
+today = MONDAY;</code></pre>
+
+    <p>
+        A variable declared as <strong>enum Day</strong> can store
+        an enumeration value.
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+enum Day
+{
+    SUNDAY,
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY
+};
+
+int main()
+{
+    enum Day today = MONDAY;
+
+    printf("%d", today);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        1
+    </div>
+
+
+    <!-- 20.4 CUSTOM VALUES -->
+
+    <h3>20.4 Custom enum Values</h3>
+
+    <p>
+        You can explicitly assign values to enumerators.
+    </p>
+
+    <pre><code>enum Status
+{
+    SUCCESS = 1,
+    FAILURE = 0
+};</code></pre>
+
+    <p>
+        Example:
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+enum Status
+{
+    FAILURE = 0,
+    SUCCESS = 1
+};
+
+int main()
+{
+    enum Status result = SUCCESS;
+
+    printf("%d", result);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        1
+    </div>
+
+
+    <!-- 20.5 MIXED VALUES -->
+
+    <h3>20.5 Mixed enum Values</h3>
+
+    <p>
+        When one enumerator is explicitly assigned a value,
+        subsequent enumerators continue from that value.
+    </p>
+
+    <pre><code>enum Numbers
+{
+    A = 10,
+    B,
+    C,
+    D = 20,
+    E
+};</code></pre>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Enumerator</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>A</td>
+                    <td>10</td>
+                </tr>
+
+                <tr>
+                    <td>B</td>
+                    <td>11</td>
+                </tr>
+
+                <tr>
+                    <td>C</td>
+                    <td>12</td>
+                </tr>
+
+                <tr>
+                    <td>D</td>
+                    <td>20</td>
+                </tr>
+
+                <tr>
+                    <td>E</td>
+                    <td>21</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 20.6 ENUM SWITCH -->
+
+    <h3>20.6 enum with switch</h3>
+
+    <p>
+        Enums are especially useful with switch statements.
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+enum Day
+{
+    SUNDAY,
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY
+};
+
+int main()
+{
+    enum Day day = WEDNESDAY;
+
+    switch(day)
+    {
+        case SUNDAY:
+            printf("Sunday");
+            break;
+
+        case MONDAY:
+            printf("Monday");
+            break;
+
+        case TUESDAY:
+            printf("Tuesday");
+            break;
+
+        case WEDNESDAY:
+            printf("Wednesday");
+            break;
+
+        case THURSDAY:
+            printf("Thursday");
+            break;
+
+        case FRIDAY:
+            printf("Friday");
+            break;
+
+        case SATURDAY:
+            printf("Saturday");
+            break;
+    }
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        Wednesday
+    </div>
+
+
+    <!-- 20.7 ENUM BENEFITS -->
+
+    <h3>20.7 Advantages of enum</h3>
+
+    <ul>
+
+        <li>Makes code easier to read.</li>
+
+        <li>Provides meaningful names for integer constants.</li>
+
+        <li>Useful when a variable has a fixed set of logical choices.</li>
+
+        <li>Works naturally with switch statements.</li>
+
+        <li>Reduces the use of unexplained numeric constants.</li>
+
+    </ul>
+
+
+    <!-- 20.8 REAL LIFE ENUM -->
+
+    <h3>20.8 Real-Life Example: Traffic Light</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+enum TrafficLight
+{
+    RED,
+    YELLOW,
+    GREEN
+};
+
+int main()
+{
+    enum TrafficLight light = GREEN;
+
+    if(light == RED)
+    {
+        printf("STOP");
+    }
+    else if(light == YELLOW)
+    {
+        printf("READY");
+    }
+    else
+    {
+        printf("GO");
+    }
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        GO
+    </div>
+
+
+    <!-- 20.9 ENUM SIZE -->
+
+    <h3>20.9 Size of an enum</h3>
+
+    <p>
+        The size of an enum is implementation-defined. It is
+        commonly the size of an integer type, but portable C code
+        should not assume a specific size.
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+enum Color
+{
+    RED,
+    GREEN,
+    BLUE
+};
+
+int main()
+{
+    printf("%zu", sizeof(enum Color));
+
+    return 0;
+}</code></pre>
+
+
+    <!-- 20.10 ENUM IMPORTANT POINT -->
+
+    <h3>20.10 Important Point About enum</h3>
+
+    <div class="tip-box">
+
+        📌 The names declared inside an enum are integer constants.
+
+        <br><br>
+
+        📌 The exact underlying representation of an enum is
+        implementation-defined.
+
+        <br><br>
+
+        📌 Do not assume every enum object must occupy exactly
+        4 bytes.
+
+    </div>
+
+
+    <!-- TYPEDEF -->
+
+    <h3>20.11 What is typedef?</h3>
+
+    <p>
+        <strong>typedef</strong> creates an alternative name
+        (alias) for an existing type.
+    </p>
+
+    <p>
+        It does not create a completely new type.
+    </p>
+
+    <pre><code>typedef int Number;</code></pre>
+
+    <p>
+        Now both of the following declare an integer:
+    </p>
+
+    <pre><code>int a;
+
+Number b;</code></pre>
+
+
+    <!-- 20.12 BASIC TYPEDEF -->
+
+    <h3>20.12 Basic typedef Example</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+typedef int Number;
+
+int main()
+{
+    Number x = 100;
+
+    printf("%d", x);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        100
+    </div>
+
+
+    <!-- 20.13 TYPEDEF MULTIPLE -->
+
+    <h3>20.13 typedef with Multiple Variables</h3>
+
+    <pre><code>typedef unsigned int UINT;
+
+UINT a = 10;
+UINT b = 20;</code></pre>
+
+    <p>
+        This can make declarations shorter and easier to read.
+    </p>
+
+
+    <!-- 20.14 TYPEDEF STRUCTURE -->
+
+    <h3>20.14 typedef with Structure</h3>
+
+    <p>
+        Without typedef:
+    </p>
+
+    <pre><code>struct Student
+{
+    int id;
+    char name[50];
+};
+
+struct Student s1;</code></pre>
+
+    <p>
+        With typedef:
+    </p>
+
+    <pre><code>typedef struct
+{
+    int id;
+    char name[50];
+} Student;
+
+Student s1;</code></pre>
+
+    <p>
+        This is one of the most common uses of typedef in C.
+    </p>
+
+
+    <!-- 20.15 COMPLETE STRUCTURE -->
+
+    <h3>20.15 Complete typedef Structure Example</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+typedef struct
+{
+    int id;
+    char name[50];
+    float marks;
+} Student;
+
+int main()
+{
+    Student s;
+
+    s.id = 101;
+    s.marks = 85.5;
+
+    printf("ID = %d\n", s.id);
+    printf("Marks = %.2f\n", s.marks);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        ID = 101
+        <br>
+        Marks = 85.50
+
+    </div>
+
+
+    <!-- 20.16 TYPEDEF ENUM -->
+
+    <h3>20.16 typedef with enum</h3>
+
+    <p>
+        typedef can also be used with enum.
+    </p>
+
+    <pre><code>typedef enum
+{
+    LOW,
+    MEDIUM,
+    HIGH
+} Level;</code></pre>
+
+    <p>
+        Now you can simply write:
+    </p>
+
+    <pre><code>Level current = HIGH;</code></pre>
+
+
+    <!-- 20.17 TYPEDEF POINTER -->
+
+    <h3>20.17 typedef with Pointer</h3>
+
+    <pre><code>typedef int* IntPtr;
+
+int x = 10;
+
+IntPtr p = &amp;x;</code></pre>
+
+    <p>
+        Here <strong>IntPtr</strong> is an alias for
+        <strong>int *</strong>.
+    </p>
+
+
+    <!-- 20.18 POINTER TYPEDEF CAUTION -->
+
+    <h3>20.18 Important typedef Pointer Example</h3>
+
+    <pre><code>typedef int* IntPtr;
+
+IntPtr p1, p2;</code></pre>
+
+    <p>
+        Both <strong>p1</strong> and <strong>p2</strong> are
+        pointers to int.
+    </p>
+
+    <p>
+        Compare this with:
+    </p>
+
+    <pre><code>int *p1, p2;</code></pre>
+
+    <p>
+        Here only <strong>p1</strong> is a pointer.
+        <strong>p2</strong> is an ordinary int.
+    </p>
+
+    <div class="tip-box">
+
+        ⭐ This is one reason typedef can make pointer declarations
+        easier to read.
+
+    </div>
+
+
+    <!-- 20.19 TYPEDEF ARRAY -->
+
+    <h3>20.19 typedef with Array</h3>
+
+    <pre><code>typedef int Marks[5];
+
+Marks studentMarks;
+
+studentMarks[0] = 90;</code></pre>
+
+    <p>
+        Here <strong>Marks</strong> represents an array of five ints.
+    </p>
+
+
+    <!-- 20.20 TYPEDEF FUNCTION POINTER -->
+
+    <h3>20.20 typedef with Function Pointer</h3>
+
+    <p>
+        Function pointers can be difficult to read.
+        typedef can make them simpler.
+    </p>
+
+    <pre><code>typedef int (*Operation)(int, int);</code></pre>
+
+    <p>
+        Now:
+    </p>
+
+    <pre><code>Operation op;</code></pre>
+
+    <p>
+        can represent a pointer to a function taking two ints
+        and returning an int.
+    </p>
+
+
+    <!-- 20.21 FUNCTION POINTER EXAMPLE -->
+
+    <h3>20.21 Complete Function Pointer Example</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+typedef int (*Operation)(int, int);
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int main()
+{
+    Operation op = add;
+
+    printf("%d", op(10, 20));
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        30
+    </div>
+
+
+    <!-- 20.22 TYPEDEF VS DEFINE -->
+
+    <h3>20.22 typedef vs #define</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+
+                <tr>
+                    <th>typedef</th>
+                    <th>#define</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Creates a type alias</td>
+                    <td>Preprocessor text substitution</td>
+                </tr>
+
+                <tr>
+                    <td>Understood by the compiler</td>
+                    <td>Processed before compilation</td>
+                </tr>
+
+                <tr>
+                    <td>Useful for types</td>
+                    <td>Useful for macros and constants</td>
+                </tr>
+
+                <tr>
+                    <td>Can make complex declarations easier</td>
+                    <td>Performs textual replacement</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 20.23 TYPEDEF VS VARIABLE -->
+
+    <h3>20.23 typedef Does Not Create a Variable</h3>
+
+    <pre><code>typedef int Number;</code></pre>
+
+    <p>
+        This does not create a variable.
+    </p>
+
+    <p>
+        It creates an alias named <strong>Number</strong>.
+    </p>
+
+    <pre><code>Number x = 10;</code></pre>
+
+    <p>
+        This statement creates the actual variable.
+    </p>
+
+
+    <!-- 20.24 ENUM VS TYPEDEF -->
+
+    <h3>20.24 enum vs typedef</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+
+                <tr>
+                    <th>enum</th>
+                    <th>typedef</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Defines named integer constants</td>
+                    <td>Creates an alias for an existing type</td>
+                </tr>
+
+                <tr>
+                    <td>Useful for a fixed set of choices</td>
+                    <td>Useful for simplifying type declarations</td>
+                </tr>
+
+                <tr>
+                    <td>Example: RED, GREEN, BLUE</td>
+                    <td>Example: typedef int Number;</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 20.25 ENUM AND TYPEDEF TOGETHER -->
+
+    <h3>20.25 Using enum and typedef Together</h3>
+
+    <pre><code>typedef enum
+{
+    PENDING,
+    APPROVED,
+    REJECTED
+} Status;
+
+typedef struct
+{
+    int id;
+    Status status;
+} Application;</code></pre>
+
+    <p>
+        Now an application can have a meaningful status.
+    </p>
+
+    <pre><code>Application app;
+
+app.id = 1001;
+app.status = APPROVED;</code></pre>
+
+
+    
+
+<div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">enum</div>
+            <div class="cb-mini-step-text">Create named integer constants</div>
+            <div class="cb-mini-step-subtext">Example: RED, YELLOW, GREEN.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">Variable</div>
+            <div class="cb-mini-step-text">Store one fixed choice</div>
+            <div class="cb-mini-step-subtext">Example: enum TrafficLight light = GREEN;</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">switch</div>
+            <div class="cb-mini-step-text">Handle the selected enum value</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">typedef</div>
+            <div class="cb-mini-step-text">Create a convenient type alias</div>
+            <div class="cb-mini-step-subtext">Useful with structures, enums, pointers and function pointers.</div>
+        </div>
+
+    </div>
+
+<!-- 20.26 REAL LIFE EXAMPLE -->
+
+    <h3>20.26 Real-Life Student Example</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+typedef enum
+{
+    FAIL,
+    PASS
+} Result;
+
+typedef struct
+{
+    int id;
+    char name[50];
+    float marks;
+    Result result;
+} Student;
+
+int main()
+{
+    Student s = {101, "Venu", 78.5, PASS};
+
+    printf("ID = %d\n", s.id);
+    printf("Name = %s\n", s.name);
+    printf("Marks = %.2f\n", s.marks);
+
+    if(s.result == PASS)
+        printf("Result = PASS");
+    else
+        printf("Result = FAIL");
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        ID = 101
+        <br>
+        Name = Venu
+        <br>
+        Marks = 78.50
+        <br>
+        Result = PASS
+
+    </div>
+
+
+    <!-- 20.27 COMMON MISTAKES -->
+
+    <h3>20.27 Common Mistakes</h3>
+
+    <ul>
+
+        <li>
+            Assuming enum always occupies exactly 4 bytes.
+        </li>
+
+        <li>
+            Thinking typedef creates a completely new type.
+        </li>
+
+        <li>
+            Confusing typedef with #define.
+        </li>
+
+        <li>
+            Forgetting the semicolon after an enum or typedef
+            declaration.
+        </li>
+
+        <li>
+            Confusing an enum type with its individual enumerator
+            names.
+        </li>
+
+        <li>
+            Using confusing typedef names that hide pointer
+            or array behavior.
+        </li>
+
+    </ul>
+
+
+    <!-- 20.28 QUICK REVISION -->
+
+    <h3>20.28 Quick Revision</h3>
+
+    <div class="tip-box">
+
+        📌 <strong>enum</strong> → Named integer constants
+
+        <br><br>
+
+        📌 First enum value is normally <strong>0</strong>
+
+        <br><br>
+
+        📌 Enum values can be explicitly assigned
+
+        <br><br>
+
+        📌 <strong>typedef</strong> → Creates a type alias
+
+        <br><br>
+
+        📌 typedef does not create a new variable
+
+        <br><br>
+
+        📌 typedef is commonly used with structures
+
+        <br><br>
+
+        📌 typedef can simplify pointer declarations
+
+        <br><br>
+
+        📌 typedef can be used with enum, arrays and function pointers
+
+        <br><br>
+
+        📌 #define performs preprocessor text substitution
+
+    </div>
+
+
+    <!-- 20.29 MCQs -->
+
+    
+<section class="content-card cb-added-section cb-compact-learning" id="enum-typedef-visualizer-extra">
+
+    <span class="cb-added-label">INTERACTIVE LEARNING</span>
+
+    <h2>🎬 Enumerations &amp; typedef — Type Design Flow</h2>
+
+    <p class="cb-added-note">
+        Follow how readable fixed choices are created with <code>enum</code>
+        and how <code>typedef</code> simplifies type names.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBConceptViz.toggle('enumtypedef')"
+    >▶ Open Visualization</button>
+
+    <div class="cb-compact-panel" id="cbVizPanel-enumtypedef" hidden>
+
+        <div
+            class="cb-viz-card cb-viz-dsa-standard"
+            data-cb-viz="enumtypedef"
+            data-frames="[{&quot;title&quot;:&quot;1. Define related enum names&quot;,&quot;detail&quot;:&quot;An enum gives readable names to a related set of integer constants.&quot;},{&quot;title&quot;:&quot;2. Default enum numbering starts at 0&quot;,&quot;detail&quot;:&quot;Without explicit values, the first enumerator is 0 and each following enumerator increases by 1.&quot;},{&quot;title&quot;:&quot;3. Store one enum value&quot;,&quot;detail&quot;:&quot;A variable of the enum type can represent one of the fixed symbolic choices.&quot;},{&quot;title&quot;:&quot;4. Use switch for fixed choices&quot;,&quot;detail&quot;:&quot;switch works naturally with enums because each enumerator is an integer constant.&quot;},{&quot;title&quot;:&quot;5. Use typedef for cleaner type names&quot;,&quot;detail&quot;:&quot;typedef can provide concise aliases for enums, structures, pointers, arrays, and function-pointer types.&quot;}]"
+        >
+
+            <div class="cb-viz-dsa-topbar">
+                <div class="cb-viz-dsa-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+                <div class="cb-viz-dsa-brand" aria-label="CodeBhavya">
+                    <span class="cb-viz-dsa-brand-mark">
+                        <img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo">
+                    </span>
+                    <span class="cb-viz-dsa-code">Code</span><span class="cb-viz-dsa-bhavya">Bhavya</span>
+                </div>
+            </div>
+
+            <h3 class="cb-viz-dsa-title">🎬 enum + typedef Visualizer</h3>
+
+            <div class="cb-mini-step-flow">
+
+                <div class="cb-mini-step-card cb-mini-step-card-blue" data-cb-flow-step="0">
+                    <div class="cb-mini-step-badge">Define</div>
+                    <div class="cb-mini-step-text">enum Day</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-gold" data-cb-flow-step="1">
+                    <div class="cb-mini-step-badge">Values</div>
+                    <div class="cb-mini-step-text">SUN=0, MON=1...</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-purple" data-cb-flow-step="2">
+                    <div class="cb-mini-step-badge">Variable</div>
+                    <div class="cb-mini-step-text">Day today = WED</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-green" data-cb-flow-step="3">
+                    <div class="cb-mini-step-badge">Control</div>
+                    <div class="cb-mini-step-text">switch(today)</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-pink" data-cb-flow-step="4">
+                    <div class="cb-mini-step-badge">Alias</div>
+                    <div class="cb-mini-step-text">typedef enum ... Day;</div>
+                </div>
+
+            </div>
+
+            <div class="cb-viz-stage">
+                <div class="cb-viz-step" id="cbVizStep-enumtypedef">Step 1</div>
+                <h3 id="cbVizTitle-enumtypedef"></h3>
+                <p id="cbVizDetail-enumtypedef"></p>
+                <div class="cb-viz-dots" id="cbVizDots-enumtypedef"></div>
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBConceptViz.prev('enumtypedef')">← Previous</button>
+                <button class="cb-control cb-next" id="cbVizNext-enumtypedef" onclick="CBConceptViz.next('enumtypedef')">Next →</button>
+                <button class="cb-control cb-auto" id="cbVizAuto-enumtypedef" onclick="CBConceptViz.auto('enumtypedef')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBConceptViz.pause('enumtypedef')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBConceptViz.reset('enumtypedef')">↺ Reset</button>
+            </div>
+
+            <div class="cb-mini-progress">
+                <div id="cbVizProgress-enumtypedef"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="content-card cb-added-section cb-compact-learning" id="enum-typedef-tracing-extra">
+
+    <span class="cb-added-label">PROGRAM TRACING</span>
+
+    <h2>🔎 Program Tracing — Enumerations &amp; typedef</h2>
+
+    <p class="cb-added-note">
+        Trace a <code>typedef enum</code>, an enum variable, its integer value,
+        and selection through <code>switch</code>.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBProgramTrace.toggle('enumtypedef')"
+    >▶ Program Tracing — Enumerations &amp; typedef</button>
+
+    <div class="cb-compact-panel" id="cbTracePanel-enumtypedef" hidden>
+
+        <div
+            class="cb-tracer"
+            data-cb-trace="enumtypedef"
+            data-config="{&quot;code&quot;:[&quot;typedef enum&quot;,&quot;{&quot;,&quot;    FAIL = 0,&quot;,&quot;    PASS = 1,&quot;,&quot;    DISTINCTION = 2&quot;,&quot;} Result;&quot;,&quot;&quot;,&quot;int main()&quot;,&quot;{&quot;,&quot;    Result result = DISTINCTION;&quot;,&quot;    int value = result;&quot;,&quot;    switch (result)&quot;,&quot;    {&quot;,&quot;        case FAIL: printf(\&quot;Fail\&quot;); break;&quot;,&quot;        case PASS: printf(\&quot;Pass\&quot;); break;&quot;,&quot;        case DISTINCTION: printf(\&quot;Distinction\&quot;); break;&quot;,&quot;    }&quot;,&quot;    printf(\&quot; %d\&quot;, value);&quot;,&quot;    return 0;&quot;,&quot;}&quot;],&quot;steps&quot;:[{&quot;line&quot;:7,&quot;state&quot;:{&quot;result&quot;:&quot;—&quot;,&quot;value&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Execution begins at main(). The typedef enum declaration creates a type named Result before runtime.&quot;},{&quot;line&quot;:9,&quot;state&quot;:{&quot;result&quot;:&quot;DISTINCTION (2)&quot;,&quot;value&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;result is initialized with the enumerator DISTINCTION, whose integer value is 2.&quot;},{&quot;line&quot;:10,&quot;state&quot;:{&quot;result&quot;:&quot;DISTINCTION (2)&quot;,&quot;value&quot;:2,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;The enum value is converted to int and stored in value.&quot;},{&quot;line&quot;:11,&quot;state&quot;:{&quot;result&quot;:&quot;DISTINCTION (2)&quot;,&quot;value&quot;:2,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;switch evaluates result and selects the matching case.&quot;},{&quot;line&quot;:15,&quot;state&quot;:{&quot;result&quot;:&quot;DISTINCTION (2)&quot;,&quot;value&quot;:2,&quot;output&quot;:&quot;Distinction&quot;},&quot;note&quot;:&quot;The DISTINCTION case executes and prints Distinction.&quot;},{&quot;line&quot;:17,&quot;state&quot;:{&quot;result&quot;:&quot;DISTINCTION (2)&quot;,&quot;value&quot;:2,&quot;output&quot;:&quot;Distinction 2&quot;},&quot;note&quot;:&quot;The integer value 2 is printed after the text.&quot;},{&quot;line&quot;:18,&quot;state&quot;:{&quot;result&quot;:&quot;DISTINCTION (2)&quot;,&quot;value&quot;:2,&quot;output&quot;:&quot;Distinction 2&quot;},&quot;note&quot;:&quot;return 0 ends the program successfully.&quot;}]}"
+        >
+
+            <div class="cb-tracer-grid">
+
+                <div class="cb-tracer-code-wrap">
+                    <div class="cb-tracer-heading">C Program</div>
+                    <pre class="cb-tracer-code" id="cbTraceCode-enumtypedef"></pre>
+                </div>
+
+                <div class="cb-tracer-state-wrap">
+                    <div class="cb-tracer-heading">Live Variables</div>
+                    <div class="cb-tracer-note" id="cbTraceNote-enumtypedef"></div>
+                    <div class="cb-live-state" id="cbTraceState-enumtypedef"></div>
+
+                    <div class="cb-tracer-output">
+                        <strong>Output</strong>
+                        <pre id="cbTraceOutput-enumtypedef">—</pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBProgramTrace.prev('enumtypedef')">← Previous</button>
+                <button class="cb-control cb-next" id="cbTraceNext-enumtypedef" onclick="CBProgramTrace.next('enumtypedef')">Next →</button>
+                <button class="cb-control cb-auto" id="cbTraceAuto-enumtypedef" onclick="CBProgramTrace.auto('enumtypedef')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBProgramTrace.pause('enumtypedef')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBProgramTrace.reset('enumtypedef')">↺ Reset</button>
+            </div>
+
+            <div class="cb-tracer-status" id="cbTraceStatus-enumtypedef">Step 0</div>
+
+        </div>
+    </div>
+</section>
+
+
+<h3>20.29 Quick MCQs</h3>
+
+    <p class="cb-mcq-guide">
+        Select an answer first, then click <strong>Check Answer</strong>.
+        A correct choice becomes green. If the answer is wrong, your choice becomes red
+        and the correct option becomes green. The explanation appears below.
+    </p>
+
+    <div class="cb-mcq-list">
+        
+    <div class="cb-mcq-card" id="enumtypedef-mcq1" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">1.</span>
+            <strong>What is enum used for?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="enumtypedef-mcq1" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">Named integer constants</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="enumtypedef-mcq1" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">Dynamic memory</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="enumtypedef-mcq1" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">File handling</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="enumtypedef-mcq1" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Pointer arithmetic</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('enumtypedef-mcq1')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('enumtypedef-mcq1')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>enum is used to define a set of named integer constants.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="enumtypedef-mcq2" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">2.</span>
+            <strong>What is the default value of the first enum constant?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="enumtypedef-mcq2" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">0</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="enumtypedef-mcq2" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">1</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="enumtypedef-mcq2" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">-1</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="enumtypedef-mcq2" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Undefined</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('enumtypedef-mcq2')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('enumtypedef-mcq2')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>Unless a value is specified, the first enumerator is 0.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="enumtypedef-mcq3" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">3.</span>
+            <strong>Which keyword creates a type alias?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="enumtypedef-mcq3" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">alias</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="enumtypedef-mcq3" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">typedef</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="enumtypedef-mcq3" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">type</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="enumtypedef-mcq3" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">define</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('enumtypedef-mcq3')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('enumtypedef-mcq3')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>typedef creates an alias for an existing type.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="enumtypedef-mcq4" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">4.</span>
+            <strong>Does typedef create a new variable?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="enumtypedef-mcq4" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">Yes</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="enumtypedef-mcq4" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">No</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="enumtypedef-mcq4" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">Only for pointers</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="enumtypedef-mcq4" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Only for structures</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('enumtypedef-mcq4')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('enumtypedef-mcq4')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>typedef introduces a type name; it does not declare an object by itself.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="enumtypedef-mcq5" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">5.</span>
+            <strong>Which is commonly used with typedef?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="enumtypedef-mcq5" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">Structure</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="enumtypedef-mcq5" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">goto</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="enumtypedef-mcq5" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">switch only</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="enumtypedef-mcq5" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">printf</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('enumtypedef-mcq5')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('enumtypedef-mcq5')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>typedef is commonly combined with struct declarations to create cleaner type names.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="enumtypedef-mcq6" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">6.</span>
+            <strong>Which performs preprocessor text substitution?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="enumtypedef-mcq6" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">typedef</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="enumtypedef-mcq6" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">#define</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="enumtypedef-mcq6" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">enum</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="enumtypedef-mcq6" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">struct</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('enumtypedef-mcq6')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('enumtypedef-mcq6')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>#define is a preprocessing directive for macro substitution.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="enumtypedef-mcq7" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">7.</span>
+            <strong>Which declaration creates an alias for int?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="enumtypedef-mcq7" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">alias int Number;</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="enumtypedef-mcq7" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">typedef int Number;</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="enumtypedef-mcq7" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">define int Number;</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="enumtypedef-mcq7" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">enum int Number;</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('enumtypedef-mcq7')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('enumtypedef-mcq7')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>typedef int Number; makes Number an alias for int.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="enumtypedef-mcq8" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">8.</span>
+            <strong>Which is a valid typedef pointer declaration?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="enumtypedef-mcq8" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">typedef int* IntPtr;</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="enumtypedef-mcq8" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">pointer int IntPtr;</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="enumtypedef-mcq8" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">typedef pointer int;</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="enumtypedef-mcq8" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">int typedef* IntPtr;</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('enumtypedef-mcq8')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('enumtypedef-mcq8')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>typedef int* IntPtr; creates IntPtr as an alias for pointer-to-int.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="enumtypedef-mcq9" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">9.</span>
+            <strong>Can typedef be used with a function pointer?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="enumtypedef-mcq9" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">Yes</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="enumtypedef-mcq9" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">No</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="enumtypedef-mcq9" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">Only in C++</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="enumtypedef-mcq9" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Only with void functions</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('enumtypedef-mcq9')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('enumtypedef-mcq9')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>typedef is especially useful for simplifying function-pointer declarations.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="enumtypedef-mcq10" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">10.</span>
+            <strong>Which is the best reason to use enum?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="enumtypedef-mcq10" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">To make fixed choices readable</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="enumtypedef-mcq10" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">To allocate memory dynamically</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="enumtypedef-mcq10" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">To open files</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="enumtypedef-mcq10" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">To create threads</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('enumtypedef-mcq10')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('enumtypedef-mcq10')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>Enums improve readability for fixed sets of related values.</p>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+
+<div class="cb-c-dsa-practice-section">
+
+        <span class="cb-c-practice-label">PRACTICE</span>
+
+        <h3>20.30 🎯 Practice Problems</h3>
+
+        <p class="cb-c-practice-guide">
+            Practice enum values, switch with enums, typedef aliases,
+            structures, pointers, arrays, function pointers, and combined designs.
+            Use <strong>💻 Solve It Yourself</strong> first,
+            open <strong>Hint</strong> only when needed,
+            and use <strong>Show Program</strong> after attempting the problem.
+        </p>
+
+        <div class="cb-practice-overall" data-practice-total="20">
+
+            <div class="cb-practice-overall-title">
+                📈 Enumerations &amp; typedef Practice Progress
+            </div>
+
+            <div class="cb-practice-overall-grid">
+
+                <div class="cb-practice-overall-item">
+                    <strong>Solved</strong>
+                    <span id="cbPracticeOverallSolved">0 / 20</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completed with Solution</strong>
+                    <span id="cbPracticeOverallCompleted">0</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Total Score</strong>
+                    <span id="cbPracticeOverallScore">0 / 2000</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completion</strong>
+                    <span id="cbPracticeOverallPercent">0%</span>
+                </div>
+
+            </div>
+
+            <div class="cb-practice-progress-track">
+                <div id="cbPracticeOverallBar" class="cb-practice-progress-fill"></div>
+            </div>
+
+            <div class="cb-practice-progress-note">
+                A problem counts as <strong>Solved</strong> when all test cases pass
+                without opening the full solution. Problems completed after viewing
+                the official solution are tracked separately.
+            </div>
+
+        </div>
+
+        <div class="cb-c-practice-list">
+            
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>1. Seven Days enum</strong>
+                <span id="practiceBadge-enumtypedef-p1" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 1: Create an enum representing the seven days of the week and print the value of WEDNESDAY.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print 3 when SUNDAY starts at 0.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p1')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p1')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p1')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p1" hidden>
+                💡 <strong>Hint:</strong> Define enum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, ... };
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p1" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Seven Days enum
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p1"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p1"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p1')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p1"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p1')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p1')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p1"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p1"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p1" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p1">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p1">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p1">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p1" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p1" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+enum Day
+{
+    SUNDAY, MONDAY, TUESDAY, WEDNESDAY,
+    THURSDAY, FRIDAY, SATURDAY
+};
+
+int main()
+{
+    printf(&quot;%d&quot;, WEDNESDAY);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>2. Print Integer Value of Every Day</strong>
+                <span id="practiceBadge-enumtypedef-p2" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 2: Print the integer value of each day in an enum from SUNDAY to SATURDAY.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print seven lines in the form NAME=value.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p2')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p2')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p2')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p2" hidden>
+                💡 <strong>Hint:</strong> Default enum values increase by 1.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p2" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Print Integer Value of Every Day
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p2"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p2"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p2')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p2"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p2')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p2')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p2"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p2"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p2" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p2">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p2">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p2">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p2" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p2" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+enum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY };
+
+int main()
+{
+    printf(&quot;SUNDAY=%d\n&quot;, SUNDAY);
+    printf(&quot;MONDAY=%d\n&quot;, MONDAY);
+    printf(&quot;TUESDAY=%d\n&quot;, TUESDAY);
+    printf(&quot;WEDNESDAY=%d\n&quot;, WEDNESDAY);
+    printf(&quot;THURSDAY=%d\n&quot;, THURSDAY);
+    printf(&quot;FRIDAY=%d\n&quot;, FRIDAY);
+    printf(&quot;SATURDAY=%d&quot;, SATURDAY);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>3. Traffic Light enum</strong>
+                <span id="practiceBadge-enumtypedef-p3" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 3: Create an enum for RED, YELLOW and GREEN traffic lights and print GREEN&#x27;s value.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print 2.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p3')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p3')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p3')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p3" hidden>
+                💡 <strong>Hint:</strong> Use default enum values.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p3" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Traffic Light enum
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p3"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p3"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p3')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p3"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p3')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p3')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p3"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p3"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p3" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p3">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p3">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p3">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p3" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p3" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+enum TrafficLight { RED, YELLOW, GREEN };
+
+int main()
+{
+    printf(&quot;%d&quot;, GREEN);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>4. enum with switch — Day of Week</strong>
+                <span id="practiceBadge-enumtypedef-p4" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 4: Read an integer from 0 to 6, convert it to an enum Day value, and display the corresponding day name using switch.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer from 0 to 6.</p>
+            <p><strong>Output:</strong> Print the corresponding uppercase day name.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p4')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p4')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p4')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p4" hidden>
+                💡 <strong>Hint:</strong> Cast the integer to enum Day and use switch.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p4" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — enum with switch — Day of Week
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p4"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p4"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p4')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p4"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p4')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p4')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p4"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p4"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p4" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p4">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p4">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p4">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p4" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p4" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+enum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY };
+
+int main()
+{
+    int value;
+    scanf(&quot;%d&quot;, &amp;value);
+
+    enum Day day = (enum Day)value;
+
+    switch (day)
+    {
+        case SUNDAY: printf(&quot;SUNDAY&quot;); break;
+        case MONDAY: printf(&quot;MONDAY&quot;); break;
+        case TUESDAY: printf(&quot;TUESDAY&quot;); break;
+        case WEDNESDAY: printf(&quot;WEDNESDAY&quot;); break;
+        case THURSDAY: printf(&quot;THURSDAY&quot;); break;
+        case FRIDAY: printf(&quot;FRIDAY&quot;); break;
+        case SATURDAY: printf(&quot;SATURDAY&quot;); break;
+        default: printf(&quot;INVALID&quot;);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>5. Custom enum Values</strong>
+                <span id="practiceBadge-enumtypedef-p5" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 5: Create an enum with custom values 10, 20 and 30 and print them.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print 10 20 30.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p5')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p5')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p5')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p5" hidden>
+                💡 <strong>Hint:</strong> Assign explicit integer values in the enum declaration.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p5" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Custom enum Values
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p5"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p5"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p5')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p5"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p5')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p5')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p5"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p5"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p5" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p5">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p5">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p5">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p5" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p5" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+enum Code { FIRST = 10, SECOND = 20, THIRD = 30 };
+
+int main()
+{
+    printf(&quot;%d %d %d&quot;, FIRST, SECOND, THIRD);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>6. Student Result enum</strong>
+                <span id="practiceBadge-enumtypedef-p6" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 6: Create an enum for FAIL, PASS and DISTINCTION, read a value 0/1/2, and print the matching label.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer 0, 1 or 2.</p>
+            <p><strong>Output:</strong> Print FAIL, PASS or DISTINCTION.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p6')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p6')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p6')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p6" hidden>
+                💡 <strong>Hint:</strong> Use switch on the enum value.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p6" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Student Result enum
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p6"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p6"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p6')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p6"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p6')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p6')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p6"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p6"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p6" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p6">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p6">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p6">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p6" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p6" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+enum Result { FAIL, PASS, DISTINCTION };
+
+int main()
+{
+    int value;
+    scanf(&quot;%d&quot;, &amp;value);
+
+    switch ((enum Result)value)
+    {
+        case FAIL: printf(&quot;FAIL&quot;); break;
+        case PASS: printf(&quot;PASS&quot;); break;
+        case DISTINCTION: printf(&quot;DISTINCTION&quot;); break;
+        default: printf(&quot;INVALID&quot;);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>7. User Role enum</strong>
+                <span id="practiceBadge-enumtypedef-p7" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 7: Create an enum representing ADMIN, TEACHER and STUDENT and display the role selected by a number.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer 0, 1 or 2.</p>
+            <p><strong>Output:</strong> Print ADMIN, TEACHER or STUDENT.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p7')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p7')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p7')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p7" hidden>
+                💡 <strong>Hint:</strong> Use enum Role and switch.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p7" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — User Role enum
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p7"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p7"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p7')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p7"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p7')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p7')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p7"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p7"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p7" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p7">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p7">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p7">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p7" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p7" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+enum Role { ADMIN, TEACHER, STUDENT };
+
+int main()
+{
+    int value;
+    scanf(&quot;%d&quot;, &amp;value);
+
+    switch ((enum Role)value)
+    {
+        case ADMIN: printf(&quot;ADMIN&quot;); break;
+        case TEACHER: printf(&quot;TEACHER&quot;); break;
+        case STUDENT: printf(&quot;STUDENT&quot;); break;
+        default: printf(&quot;INVALID&quot;);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>8. typedef Alias for int</strong>
+                <span id="practiceBadge-enumtypedef-p8" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 8: Use typedef to create an alias Number for int, read one integer, and print it.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the same integer.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p8')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p8')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p8')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p8" hidden>
+                💡 <strong>Hint:</strong> Use typedef int Number;
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p8" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — typedef Alias for int
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p8"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p8"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p8')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p8"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p8')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p8')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p8"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p8"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p8" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p8">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p8">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p8">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p8" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p8" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef int Number;
+
+int main()
+{
+    Number value;
+    scanf(&quot;%d&quot;, &amp;value);
+    printf(&quot;%d&quot;, value);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>9. typedef Alias for unsigned int</strong>
+                <span id="practiceBadge-enumtypedef-p9" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 9: Use typedef to create UInt as an alias for unsigned int and print a value.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One unsigned integer.</p>
+            <p><strong>Output:</strong> Print the same value.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p9')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p9')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p9')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p9" hidden>
+                💡 <strong>Hint:</strong> Use typedef unsigned int UInt;
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p9" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — typedef Alias for unsigned int
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p9"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p9"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p9')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p9"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p9')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p9')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p9"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p9"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p9" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p9">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p9">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p9">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p9" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p9" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef unsigned int UInt;
+
+int main()
+{
+    UInt value;
+    scanf(&quot;%u&quot;, &amp;value);
+    printf(&quot;%u&quot;, value);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>10. typedef Structure for Student</strong>
+                <span id="practiceBadge-enumtypedef-p10" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 10: Create a typedef structure for Student with roll number and marks, read one student, and print the fields.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Roll number and marks.</p>
+            <p><strong>Output:</strong> Print roll and marks.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p10')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p10')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p10')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p10" hidden>
+                💡 <strong>Hint:</strong> Use typedef struct { ... } Student;
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p10" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — typedef Structure for Student
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p10"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p10"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p10')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p10"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p10')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p10')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p10"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p10"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p10" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p10">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p10">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p10">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p10" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p10" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef struct
+{
+    int roll;
+    float marks;
+} Student;
+
+int main()
+{
+    Student s;
+    scanf(&quot;%d %f&quot;, &amp;s.roll, &amp;s.marks);
+    printf(&quot;%d %.1f&quot;, s.roll, s.marks);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>11. typedef Structure for Employee</strong>
+                <span id="practiceBadge-enumtypedef-p11" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 11: Create a typedef structure for Employee containing id and salary.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Employee id and salary.</p>
+            <p><strong>Output:</strong> Print id and salary to two decimal places.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p11')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p11')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p11')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p11" hidden>
+                💡 <strong>Hint:</strong> Create Employee as a typedef struct alias.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p11" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — typedef Structure for Employee
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p11"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p11"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p11')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p11"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p11')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p11')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p11"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p11"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p11" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p11">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p11">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p11">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p11" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p11" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef struct
+{
+    int id;
+    double salary;
+} Employee;
+
+int main()
+{
+    Employee e;
+    scanf(&quot;%d %lf&quot;, &amp;e.id, &amp;e.salary);
+    printf(&quot;%d %.2f&quot;, e.id, e.salary);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>12. typedef Integer Pointer</strong>
+                <span id="practiceBadge-enumtypedef-p12" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 12: Create a typedef for an integer pointer, point it to a variable, and print the value through the alias.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the integer through the pointer.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p12')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p12')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p12')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p12" hidden>
+                💡 <strong>Hint:</strong> Use typedef int *IntPtr;
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p12" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — typedef Integer Pointer
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p12"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p12"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p12')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p12"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p12')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p12')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p12"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p12"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p12" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p12">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p12">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p12">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p12" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p12" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef int *IntPtr;
+
+int main()
+{
+    int value;
+    scanf(&quot;%d&quot;, &amp;value);
+
+    IntPtr p = &amp;value;
+    printf(&quot;%d&quot;, *p);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>13. typedef Array of 10 Integers</strong>
+                <span id="practiceBadge-enumtypedef-p13" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 13: Create a typedef for an array of 10 integers, read 10 values, and print their sum.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Ten integers.</p>
+            <p><strong>Output:</strong> Print the sum.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p13')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p13')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p13')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p13" hidden>
+                💡 <strong>Hint:</strong> Use typedef int IntArray10[10];
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p13" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — typedef Array of 10 Integers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p13"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p13"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p13')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p13"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p13')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p13')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p13"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p13"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p13" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p13">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p13">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p13">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p13" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p13" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef int IntArray10[10];
+
+int main()
+{
+    IntArray10 a;
+    int sum = 0;
+
+    for (int i = 0; i &lt; 10; i++)
+    {
+        scanf(&quot;%d&quot;, &amp;a[i]);
+        sum += a[i];
+    }
+
+    printf(&quot;%d&quot;, sum);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>14. typedef Function Pointer for Addition</strong>
+                <span id="practiceBadge-enumtypedef-p14" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 14: Create a typedef for a function pointer that adds two integers and call it.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two integers.</p>
+            <p><strong>Output:</strong> Print their sum.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p14')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p14')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p14')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p14" hidden>
+                💡 <strong>Hint:</strong> Use typedef int (*Operation)(int, int);
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p14" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — typedef Function Pointer for Addition
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p14"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p14"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p14')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p14"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p14')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p14')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p14"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p14"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p14" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p14">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p14">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p14">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p14" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p14" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef int (*Operation)(int, int);
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int main()
+{
+    int a, b;
+    scanf(&quot;%d %d&quot;, &amp;a, &amp;b);
+
+    Operation op = add;
+    printf(&quot;%d&quot;, op(a, b));
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>15. Student Structure with enum Result</strong>
+                <span id="practiceBadge-enumtypedef-p15" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 15: Create a Student structure containing an enum Result field and display the stored result.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Roll number and result value 0/1/2.</p>
+            <p><strong>Output:</strong> Print roll and result label.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p15')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p15')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p15')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p15" hidden>
+                💡 <strong>Hint:</strong> Store enum Result as a member of Student.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p15" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Student Structure with enum Result
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p15"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p15"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p15')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p15"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p15')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p15')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p15"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p15"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p15" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p15">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p15">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p15">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p15" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p15" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+enum Result { FAIL, PASS, DISTINCTION };
+
+struct Student
+{
+    int roll;
+    enum Result result;
+};
+
+int main()
+{
+    struct Student s;
+    int value;
+
+    scanf(&quot;%d %d&quot;, &amp;s.roll, &amp;value);
+    s.result = (enum Result)value;
+
+    printf(&quot;%d &quot;, s.roll);
+
+    switch (s.result)
+    {
+        case FAIL: printf(&quot;FAIL&quot;); break;
+        case PASS: printf(&quot;PASS&quot;); break;
+        case DISTINCTION: printf(&quot;DISTINCTION&quot;); break;
+        default: printf(&quot;INVALID&quot;);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>16. typedef enum Account Status</strong>
+                <span id="practiceBadge-enumtypedef-p16" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 16: Create a typedef enum representing ACTIVE, BLOCKED and CLOSED and print the selected label.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer 0, 1 or 2.</p>
+            <p><strong>Output:</strong> Print ACTIVE, BLOCKED or CLOSED.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p16')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p16')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p16')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p16" hidden>
+                💡 <strong>Hint:</strong> Use typedef enum { ACTIVE, BLOCKED, CLOSED } AccountStatus;
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p16" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — typedef enum Account Status
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p16"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p16"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p16')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p16"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p16')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p16')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p16"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p16"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p16" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p16">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p16">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p16">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p16" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p16" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef enum { ACTIVE, BLOCKED, CLOSED } AccountStatus;
+
+int main()
+{
+    int value;
+    scanf(&quot;%d&quot;, &amp;value);
+
+    AccountStatus status = (AccountStatus)value;
+
+    switch (status)
+    {
+        case ACTIVE: printf(&quot;ACTIVE&quot;); break;
+        case BLOCKED: printf(&quot;BLOCKED&quot;); break;
+        case CLOSED: printf(&quot;CLOSED&quot;); break;
+        default: printf(&quot;INVALID&quot;);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>17. Bank Account with enum Status</strong>
+                <span id="practiceBadge-enumtypedef-p17" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 17: Create a typedef structure for a bank account and use an enum for account status.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Account number, balance, status 0/1/2.</p>
+            <p><strong>Output:</strong> Print account number, balance and status.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p17')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p17')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p17')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p17" hidden>
+                💡 <strong>Hint:</strong> Combine typedef struct with AccountStatus.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p17" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Bank Account with enum Status
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p17"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p17"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p17')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p17"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p17')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p17')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p17"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p17"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p17" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p17">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p17">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p17">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p17" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p17" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef enum { ACTIVE, BLOCKED, CLOSED } AccountStatus;
+
+typedef struct
+{
+    int number;
+    double balance;
+    AccountStatus status;
+} BankAccount;
+
+const char *statusName(AccountStatus status)
+{
+    switch (status)
+    {
+        case ACTIVE: return &quot;ACTIVE&quot;;
+        case BLOCKED: return &quot;BLOCKED&quot;;
+        case CLOSED: return &quot;CLOSED&quot;;
+        default: return &quot;INVALID&quot;;
+    }
+}
+
+int main()
+{
+    BankAccount account;
+    int status;
+
+    scanf(&quot;%d %lf %d&quot;, &amp;account.number, &amp;account.balance, &amp;status);
+    account.status = (AccountStatus)status;
+
+    printf(&quot;%d %.2f %s&quot;, account.number, account.balance, statusName(account.status));
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>18. Function Pointer for Multiplication and Division</strong>
+                <span id="practiceBadge-enumtypedef-p18" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 18: Create a typedef function pointer that can call multiplication and integer division operations.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two integers followed by operation 1 for multiply or 2 for divide. Divisor is non-zero for division tests.</p>
+            <p><strong>Output:</strong> Print the selected result.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p18')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p18')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p18')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p18" hidden>
+                💡 <strong>Hint:</strong> Both functions should have the same signature.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p18" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Function Pointer for Multiplication and Division
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p18"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p18"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p18')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p18"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p18')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p18')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p18"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p18"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p18" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p18">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p18">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p18">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p18" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p18" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef int (*Operation)(int, int);
+
+int multiply(int a, int b) { return a * b; }
+int divideInt(int a, int b) { return a / b; }
+
+int main()
+{
+    int a, b, choice;
+    scanf(&quot;%d %d %d&quot;, &amp;a, &amp;b, &amp;choice);
+
+    Operation op = (choice == 1) ? multiply : divideInt;
+    printf(&quot;%d&quot;, op(a, b));
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>19. Student Management with typedef and enum</strong>
+                <span id="practiceBadge-enumtypedef-p19" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 19: Create an array of Student records using typedef and enum, then count how many students passed or achieved distinction.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n followed by n records: roll marks. Result is derived as FAIL &lt;50, PASS 50-74, DISTINCTION &gt;=75.</p>
+            <p><strong>Output:</strong> Print Passed = count.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p19')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p19')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p19')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p19" hidden>
+                💡 <strong>Hint:</strong> Use a typedef enum Result and typedef struct Student.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p19" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Student Management with typedef and enum
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p19"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p19"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p19')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p19"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p19')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p19')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p19"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p19"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p19" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p19">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p19">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p19">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p19" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p19" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef enum { FAIL, PASS, DISTINCTION } Result;
+
+typedef struct
+{
+    int roll;
+    int marks;
+    Result result;
+} Student;
+
+int main()
+{
+    int n;
+    scanf(&quot;%d&quot;, &amp;n);
+
+    Student students[n];
+    int passed = 0;
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        scanf(&quot;%d %d&quot;, &amp;students[i].roll, &amp;students[i].marks);
+
+        if (students[i].marks &gt;= 75)
+            students[i].result = DISTINCTION;
+        else if (students[i].marks &gt;= 50)
+            students[i].result = PASS;
+        else
+            students[i].result = FAIL;
+
+        if (students[i].result != FAIL)
+            passed++;
+    }
+
+    printf(&quot;Passed = %d&quot;, passed);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>20. Employee Management with Department and Status</strong>
+                <span id="practiceBadge-enumtypedef-p20" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 20: Create a complete Employee Management program using typedef struct and enums for department and employment status, then print each employee.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n followed by n records: id department status salary. Department: 0=HR,1=TECH,2=SALES. Status: 0=ACTIVE,1=ON_LEAVE,2=INACTIVE.</p>
+            <p><strong>Output:</strong> Print one employee per line with readable department and status labels.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('enumtypedef-p20')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('enumtypedef-p20')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('enumtypedef-p20')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-enumtypedef-p20" hidden>
+                💡 <strong>Hint:</strong> Use two typedef enums and one typedef struct Employee.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-enumtypedef-p20" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Employee Management with Department and Status
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-enumtypedef-p20"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-enumtypedef-p20"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('enumtypedef-p20')">▶ Run Code</button>
+
+                            <button id="practiceCheck-enumtypedef-p20"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('enumtypedef-p20')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('enumtypedef-p20')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-enumtypedef-p20"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-enumtypedef-p20"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-enumtypedef-p20" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-enumtypedef-p20">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-enumtypedef-p20">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-enumtypedef-p20">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-enumtypedef-p20" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-enumtypedef-p20" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef enum { HR, TECH, SALES } Department;
+typedef enum { ACTIVE, ON_LEAVE, INACTIVE } EmploymentStatus;
+
+typedef struct
+{
+    int id;
+    Department department;
+    EmploymentStatus status;
+    double salary;
+} Employee;
+
+const char *departmentName(Department d)
+{
+    switch (d)
+    {
+        case HR: return &quot;HR&quot;;
+        case TECH: return &quot;TECH&quot;;
+        case SALES: return &quot;SALES&quot;;
+        default: return &quot;INVALID&quot;;
+    }
+}
+
+const char *statusName(EmploymentStatus s)
+{
+    switch (s)
+    {
+        case ACTIVE: return &quot;ACTIVE&quot;;
+        case ON_LEAVE: return &quot;ON_LEAVE&quot;;
+        case INACTIVE: return &quot;INACTIVE&quot;;
+        default: return &quot;INVALID&quot;;
+    }
+}
+
+int main()
+{
+    int n;
+    scanf(&quot;%d&quot;, &amp;n);
+
+    Employee employees[n];
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        int department, status;
+        scanf(&quot;%d %d %d %lf&quot;,
+              &amp;employees[i].id,
+              &amp;department,
+              &amp;status,
+              &amp;employees[i].salary);
+
+        employees[i].department = (Department)department;
+        employees[i].status = (EmploymentStatus)status;
+    }
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot;\n&quot;);
+
+        printf(&quot;%d %s %s %.2f&quot;,
+               employees[i].id,
+               departmentName(employees[i].department),
+               statusName(employees[i].status),
+               employees[i].salary);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        </div>
+
+    </div>
+
+<h3>20.31 Key Takeaway</h3>
+
+    <div class="tip-box">
+
+        🎯 Remember:
+
+        <br><br>
+
+        <strong>enum → Give names to related integer constants.</strong>
+
+        <br><br>
+
+        <strong>typedef → Give an existing type a convenient alias.</strong>
+
+        <br><br>
+
+        <strong>enum + switch → Excellent combination for fixed choices.</strong>
+
+        <br><br>
+
+        <strong>typedef + struct → Cleaner structure declarations.</strong>
+
+        <br><br>
+
+        <strong>typedef + pointer → Can simplify pointer declarations.</strong>
+
+        <br><br>
+
+        <strong>typedef + function pointer → Makes complex declarations easier.</strong>
+
+        <br><br>
+
+        <strong>#define ≠ typedef.</strong>
+
+    </div>
+
+</section>
+
+          <!-- ================================
+             Operator Precedence & Associativity
+        ================================= -->
+
+
+<section class="content-card cb-added-section" id="enum-typedef-interview-extra">
+
+    <span class="cb-added-label">INTERVIEW PREPARATION</span>
+
+    <h2>🎤 Enumerations &amp; typedef — Interview Questions</h2>
+
+    <div class="cb-original-qa-list cb-interview-qa-list">
+        
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">1.</span>
+                <span>What is an enum in C?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('enumTypedefInterviewAnswer1', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="enumTypedefInterviewAnswer1"
+                 hidden>
+                An enum defines a set of named integer constants that represent related fixed choices.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">2.</span>
+                <span>What value does the first enumerator receive by default?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('enumTypedefInterviewAnswer2', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="enumTypedefInterviewAnswer2"
+                 hidden>
+                It receives 0 unless an explicit value is assigned.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">3.</span>
+                <span>Can enum values be assigned explicitly?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('enumTypedefInterviewAnswer3', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="enumTypedefInterviewAnswer3"
+                 hidden>
+                Yes. Any enumerator can be assigned an integer constant expression, and later unspecified values continue from the previous value plus one.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">4.</span>
+                <span>What does typedef do?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('enumTypedefInterviewAnswer4', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="enumTypedefInterviewAnswer4"
+                 hidden>
+                typedef introduces an alias for an existing type; it does not create a new runtime object.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">5.</span>
+                <span>Why is typedef often used with struct?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('enumTypedefInterviewAnswer5', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="enumTypedefInterviewAnswer5"
+                 hidden>
+                It allows code to use a concise type name without repeatedly writing the struct keyword.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">6.</span>
+                <span>Why can typedef with pointers be confusing?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('enumTypedefInterviewAnswer6', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="enumTypedefInterviewAnswer6"
+                 hidden>
+                An alias can hide the pointer nature of a declaration, and qualifiers such as const can then apply differently than beginners expect.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">7.</span>
+                <span>Can typedef simplify function pointers?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('enumTypedefInterviewAnswer7', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="enumTypedefInterviewAnswer7"
+                 hidden>
+                Yes. It is one of the most useful cases because it turns complex function-pointer declarations into readable type names.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">8.</span>
+                <span>What is the difference between typedef and #define?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('enumTypedefInterviewAnswer8', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="enumTypedefInterviewAnswer8"
+                 hidden>
+                typedef is handled by the C type system and creates a type alias; #define is preprocessor substitution and does not understand C types.
+            </div>
+
+        </div>
+    
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="enum-typedef-tips-extra">
+
+    <span class="cb-added-label">PLACEMENT TIPS</span>
+
+    <h2>💡 Enumerations &amp; typedef — Placement Tips</h2>
+
+    <ul class="cb-tip-grid">
+        <li>Use <code>enum</code> when a variable should represent one value from a fixed, meaningful set of choices.</li>
+        <li>Remember that default enum values begin at <code>0</code> and increase by <code>1</code> unless you assign explicit values.</li>
+        <li><code>typedef</code> creates a type alias; it does not allocate memory or create a variable.</li>
+        <li><code>typedef struct {{ ... }} Name;</code> is a common pattern for cleaner structure declarations.</li>
+        <li>Function-pointer typedefs are especially valuable because they make callback and operation declarations easier to read.</li>
+        <li>Do not confuse <code>typedef</code> with <code>#define</code>: one works with C types, while the other performs preprocessing substitution.</li>
+    </ul>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="enum-typedef-practice-extra">
+
+    <span class="cb-added-label">EXTRA PRACTICE</span>
+
+    <h2>✍️ Enumerations &amp; typedef — Extra Practice Questions</h2>
+
+    <ol class="cb-extra-practice">
+        <li>Create an enum for months and print the number of days for a selected month using switch.</li>
+        <li>Create a typedef enum for menu states such as START, SETTINGS, HELP and EXIT.</li>
+        <li>Create a typedef structure for a book with a genre enum.</li>
+        <li>Create a function-pointer typedef for comparison functions and use it to choose ascending or descending comparison.</li>
+        <li>Create a typedef for a pointer to a Student structure and use it to modify student marks.</li>
+        <li>Design a small order-management structure combining enums for order status and payment status.</li>
+    </ol>
+
+</section>
+
+
+
+<section class="cb-topic-navigation" aria-label="C Programming topic navigation">
+
+    <a class="cb-topic-nav-btn cb-topic-nav-prev" href="bitwise.html">
+        ← Previous Topic: Bitwise Programming
+    </a>
+
+    <a class="cb-topic-nav-btn cb-topic-nav-next" href="precedence.html">
+        Next Topic: Operator Precedence &amp; Associativity →
+    </a>
+
+</section>
+
+
+</main>
+
+</div>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../Maths/index.html">
+                Maths
+            </a>
+
+            <a href="index.html">
+                C Programming
+            </a>
+
+        </div>
+
+
+        <!-- LEARNING -->
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+<a href="../Data-Structures/">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/">
+    Advanced Data Structures
+</a>
+
+            <a href="#">
+                Python
+            </a>
+
+            <a href="#">
+                AI & Machine Learning
+            </a>
+
+        </div>
+
+
+        <!-- PRACTICE -->
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="#practice">
+                Practice Problems
+            </a>
+
+            <a href="#practice">
+                Problem Solving
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="c-programming.js"></script>
+<script>
+const codeBhavyaEnumTypedefPracticeConfigs =
+[{"key": "enumtypedef-p1", "title": "Seven Days enum", "starterCode": "#include <stdio.h>\n\n/* Define enum Day */\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "3"}]}, {"key": "enumtypedef-p2", "title": "Print Integer Value of Every Day", "starterCode": "#include <stdio.h>\n\nenum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY };\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "SUNDAY=0\nMONDAY=1\nTUESDAY=2\nWEDNESDAY=3\nTHURSDAY=4\nFRIDAY=5\nSATURDAY=6"}]}, {"key": "enumtypedef-p3", "title": "Traffic Light enum", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "2"}]}, {"key": "enumtypedef-p4", "title": "enum with switch — Day of Week", "starterCode": "#include <stdio.h>\n\nenum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY };\n\nint main()\n{\n    int value;\n    return 0;\n}", "sampleInput": "2", "tests": [{"input": "2", "expected": "TUESDAY"}, {"input": "6", "expected": "SATURDAY"}]}, {"key": "enumtypedef-p5", "title": "Custom enum Values", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "10 20 30"}]}, {"key": "enumtypedef-p6", "title": "Student Result enum", "starterCode": "#include <stdio.h>\n\nenum Result { FAIL, PASS, DISTINCTION };\n\nint main()\n{\n    int value;\n    return 0;\n}", "sampleInput": "2", "tests": [{"input": "2", "expected": "DISTINCTION"}, {"input": "1", "expected": "PASS"}]}, {"key": "enumtypedef-p7", "title": "User Role enum", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int value;\n    return 0;\n}", "sampleInput": "1", "tests": [{"input": "1", "expected": "TEACHER"}, {"input": "0", "expected": "ADMIN"}]}, {"key": "enumtypedef-p8", "title": "typedef Alias for int", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "25", "tests": [{"input": "25", "expected": "25"}, {"input": "-3", "expected": "-3"}]}, {"key": "enumtypedef-p9", "title": "typedef Alias for unsigned int", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "100", "tests": [{"input": "100", "expected": "100"}]}, {"key": "enumtypedef-p10", "title": "typedef Structure for Student", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "101 88.5", "tests": [{"input": "101 88.5", "expected": "101 88.5"}]}, {"key": "enumtypedef-p11", "title": "typedef Structure for Employee", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "7 50000.5", "tests": [{"input": "7 50000.5", "expected": "7 50000.50"}]}, {"key": "enumtypedef-p12", "title": "typedef Integer Pointer", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int value;\n    return 0;\n}", "sampleInput": "42", "tests": [{"input": "42", "expected": "42"}]}, {"key": "enumtypedef-p13", "title": "typedef Array of 10 Integers", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "1 2 3 4 5 6 7 8 9 10", "tests": [{"input": "1 2 3 4 5 6 7 8 9 10", "expected": "55"}]}, {"key": "enumtypedef-p14", "title": "typedef Function Pointer for Addition", "starterCode": "#include <stdio.h>\n\nint add(int a, int b)\n{\n    return a + b;\n}\n\nint main()\n{\n    return 0;\n}", "sampleInput": "8 9", "tests": [{"input": "8 9", "expected": "17"}]}, {"key": "enumtypedef-p15", "title": "Student Structure with enum Result", "starterCode": "#include <stdio.h>\n\nenum Result { FAIL, PASS, DISTINCTION };\n\nint main()\n{\n    return 0;\n}", "sampleInput": "10 2", "tests": [{"input": "10 2", "expected": "10 DISTINCTION"}]}, {"key": "enumtypedef-p16", "title": "typedef enum Account Status", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "1", "tests": [{"input": "1", "expected": "BLOCKED"}, {"input": "2", "expected": "CLOSED"}]}, {"key": "enumtypedef-p17", "title": "Bank Account with enum Status", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "1001 5000 0", "tests": [{"input": "1001 5000 0", "expected": "1001 5000.00 ACTIVE"}]}, {"key": "enumtypedef-p18", "title": "Function Pointer for Multiplication and Division", "starterCode": "#include <stdio.h>\n\nint multiply(int a, int b) { return a * b; }\nint divideInt(int a, int b) { return a / b; }\n\nint main()\n{\n    return 0;\n}", "sampleInput": "12 3 2", "tests": [{"input": "12 3 2", "expected": "4"}, {"input": "6 7 1", "expected": "42"}]}, {"key": "enumtypedef-p19", "title": "Student Management with typedef and enum", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n    return 0;\n}", "sampleInput": "4\n1 40\n2 60\n3 80\n4 75", "tests": [{"input": "4\n1 40\n2 60\n3 80\n4 75", "expected": "Passed = 3"}]}, {"key": "enumtypedef-p20", "title": "Employee Management with Department and Status", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n    return 0;\n}", "sampleInput": "2\n1 1 0 50000\n2 0 1 42000", "tests": [{"input": "2\n1 1 0 50000\n2 0 1 42000", "expected": "1 TECH ACTIVE 50000.00\n2 HR ON_LEAVE 42000.00"}]}];
+
+CodeBhavyaCPractice.registerAll(
+    codeBhavyaEnumTypedefPracticeConfigs
+);
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
