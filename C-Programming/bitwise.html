@@ -1,0 +1,5035 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C Programming | CodeBhavya</title>
+
+ <link rel="icon" type="image/png" sizes="32x32"
+      href="../images/codebhavya-icon-32.png">
+
+<link rel="icon" type="image/png" sizes="128x128"
+      href="../images/codebhavya-icon-128.png">
+
+<link rel="icon" type="image/png" sizes="512x512"
+      href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="c-programming.css">
+</head>
+
+<body class="cb-c-topic-page cb-bitwise-page">
+
+<header class="top-header">
+
+<!-- <a href="../index.html" class="logo">
+    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a> -->
+    
+<a href="../index.html" class="logo codebhavya-new-logo">
+
+    <img
+        src="../images/codebhavya-main-logo.png"
+        alt="CodeBhavya Logo"
+        class="main-logo"
+    >
+
+    <span class="brand-name">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </span>
+
+</a>
+
+    <nav class="top-nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="../Maths/">
+            Maths
+        </a>
+
+        <a href="index.html" class="active">
+            C
+        </a>
+
+<a href="../Data-Structures/index.html">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/index.html">
+    Advanced Data Structures
+</a>
+
+        <a href="../Python/">
+            Python
+        </a>
+
+        <a href="../AI-ML/">
+            AI & ML
+        </a>
+
+        <a href="../Placement/">
+            Placement
+        </a>
+
+    </nav>
+
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar cb-c-topic-sidebar">
+    <div class="sidebar-title">💻 C Programming</div>
+
+    <input
+        type="text"
+        id="topicSearch"
+        class="search-box"
+        placeholder="🔍 Search topics..."
+        onkeyup="searchTopics()"
+    >
+
+    <div class="sidebar-title">Fundamentals</div>
+    <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
+    <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
+    <a class="cb-topic-link" data-topic-link="1" href="data-types.html">📦 Data Types</a>
+    <a class="cb-topic-link" data-topic-link="1" href="input-output.html">⌨️ Input &amp; Output</a>
+
+    <div class="sidebar-title">Operators &amp; Control</div>
+    <a class="cb-topic-link" data-topic-link="1" href="operators.html">➕ Operators</a>
+    <a class="cb-topic-link" data-topic-link="1" href="expressions.html">🧮 Expressions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="decision-making.html">🔀 Decision Making</a>
+    <a class="cb-topic-link" data-topic-link="1" href="loops.html">🔁 Loops</a>
+
+    <div class="sidebar-title">Programming Concepts</div>
+    <a class="cb-topic-link" data-topic-link="1" href="arrays.html">📊 Arrays</a>
+    <a class="cb-topic-link" data-topic-link="1" href="strings.html">🔤 Strings</a>
+    <a class="cb-topic-link" data-topic-link="1" href="functions.html">🧩 Functions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="pointers.html">👉 Pointers</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structures-unions.html">🏗️ Structures &amp; Unions</a>
+
+    <div class="sidebar-title">Advanced C</div>
+    <a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">⚙️ Preprocessor &amp; Header Files</a>
+    <a class="cb-topic-link" data-topic-link="1" href="file-handling.html">📁 File Handling</a>
+    <a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">🧠 Dynamic Memory Allocation</a>
+    <a class="cb-topic-link" data-topic-link="1" href="command-line.html">💻 Command Line Arguments</a>
+    <a class="cb-topic-link active" data-topic-link="1" href="bitwise.html">🔢 Bitwise Programming</a>
+    <a class="cb-topic-link" data-topic-link="1" href="enum-typedef.html">🔤 Enumerations &amp; typedef</a>
+    <a class="cb-topic-link" data-topic-link="1" href="precedence.html">🧮 Operator Precedence &amp; Associativity</a>
+    <a class="cb-topic-link" data-topic-link="1" href="storage-classes.html">💾 Storage Classes</a>
+    <a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">🛠️ Advanced C Preprocessor</a>
+
+    <div class="sidebar-title">Practice</div>
+    <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
+</aside>
+
+<main class="main-content">
+
+<section id="bitwise" class="content-card">
+
+    <h2>🔢 19. Bitwise Programming</h2>
+
+    <!-- 19.1 INTRODUCTION -->
+
+    <h3>19.1 What is Bitwise Programming?</h3>
+
+    <p>
+        Bitwise programming operates directly on the individual
+        bits of an integer.
+    </p>
+
+    <p>
+        A bit can have only two values:
+        <strong>0</strong> or <strong>1</strong>.
+    </p>
+
+    <div class="formula-box">
+
+        Decimal Number
+        <br>
+        ↓
+        <br>
+        Binary Representation
+        <br>
+        ↓
+        <br>
+        Individual Bits
+        <br>
+        ↓
+        <br>
+        Bitwise Operation
+
+    </div>
+
+    <p>
+        Bitwise operations are commonly used in low-level
+        programming, embedded systems, networking, operating
+        systems and programming interviews.
+    </p>
+
+
+    <!-- 19.2 BINARY -->
+
+    <h3>19.2 Binary Representation</h3>
+
+    <p>
+        Computers internally represent integer values using
+        binary digits.
+    </p>
+
+    <div class="bit-row">
+
+        <div class="bit-box">1</div>
+        <div class="bit-box">0</div>
+        <div class="bit-box">1</div>
+        <div class="bit-box">0</div>
+        <div class="bit-box">0</div>
+        <div class="bit-box">1</div>
+        <div class="bit-box">1</div>
+        <div class="bit-box">0</div>
+
+    </div>
+
+    <p class="bit-label">
+        8-bit binary representation
+    </p>
+
+    <p>
+        For example:
+    </p>
+
+    <pre><code>10 = 00001010</code></pre>
+
+
+    <!-- 19.3 OPERATORS -->
+
+    <h3>19.3 Bitwise Operators</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Operator</th>
+                    <th>Name</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>&amp;</td>
+                    <td>Bitwise AND</td>
+                    <td>Sets a bit to 1 only when both bits are 1</td>
+                </tr>
+
+                <tr>
+                    <td>|</td>
+                    <td>Bitwise OR</td>
+                    <td>Sets a bit to 1 when either bit is 1</td>
+                </tr>
+
+                <tr>
+                    <td>^</td>
+                    <td>Bitwise XOR</td>
+                    <td>Sets a bit to 1 when the bits are different</td>
+                </tr>
+
+                <tr>
+                    <td>~</td>
+                    <td>Bitwise NOT</td>
+                    <td>Flips each bit</td>
+                </tr>
+
+                <tr>
+                    <td>&lt;&lt;</td>
+                    <td>Left Shift</td>
+                    <td>Shifts bits to the left</td>
+                </tr>
+
+                <tr>
+                    <td>&gt;&gt;</td>
+                    <td>Right Shift</td>
+                    <td>Shifts bits to the right</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 19.4 AND -->
+
+    <h3>19.4 Bitwise AND (&amp;)</h3>
+
+    <p>
+        The AND operation produces 1 only when both corresponding
+        bits are 1.
+    </p>
+
+    <div class="bit-operation">
+
+        <div class="bit-line">
+            <span>  5</span>
+            <span>00000101</span>
+        </div>
+
+        <div class="bit-line">
+            <span>  3</span>
+            <span>00000011</span>
+        </div>
+
+        <div class="bit-line operator-line">
+            <span>5 &amp; 3</span>
+            <span>00000001</span>
+        </div>
+
+    </div>
+
+    <pre><code>int result = 5 &amp; 3;
+
+printf("%d", result);</code></pre>
+
+    <div class="output-box">
+
+        1
+
+    </div>
+
+
+    <!-- 19.5 AND TRUTH TABLE -->
+
+    <h3>19.5 AND Truth Table</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>A &amp; B</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 19.6 OR -->
+
+    <h3>19.6 Bitwise OR (|)</h3>
+
+    <p>
+        OR produces 1 when at least one corresponding bit is 1.
+    </p>
+
+    <div class="bit-operation">
+
+        <div class="bit-line">
+            <span>  5</span>
+            <span>00000101</span>
+        </div>
+
+        <div class="bit-line">
+            <span>  3</span>
+            <span>00000011</span>
+        </div>
+
+        <div class="bit-line operator-line">
+            <span>5 | 3</span>
+            <span>00000111</span>
+        </div>
+
+    </div>
+
+    <pre><code>int result = 5 | 3;
+
+printf("%d", result);</code></pre>
+
+    <div class="output-box">
+
+        7
+
+    </div>
+
+
+    <!-- 19.7 XOR -->
+
+    <h3>19.7 Bitwise XOR (^)</h3>
+
+    <p>
+        XOR produces 1 when the corresponding bits are different.
+    </p>
+
+    <div class="bit-operation">
+
+        <div class="bit-line">
+            <span>  5</span>
+            <span>00000101</span>
+        </div>
+
+        <div class="bit-line">
+            <span>  3</span>
+            <span>00000011</span>
+        </div>
+
+        <div class="bit-line operator-line">
+            <span>5 ^ 3</span>
+            <span>00000110</span>
+        </div>
+
+    </div>
+
+    <pre><code>int result = 5 ^ 3;
+
+printf("%d", result);</code></pre>
+
+    <div class="output-box">
+
+        6
+
+    </div>
+
+
+    <!-- 19.8 XOR TABLE -->
+
+    <h3>19.8 XOR Truth Table</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>A ^ B</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 19.9 NOT -->
+
+    <h3>19.9 Bitwise NOT (~)</h3>
+
+    <p>
+        The NOT operator flips every bit:
+        <strong>0 becomes 1</strong> and <strong>1 becomes 0</strong>.
+    </p>
+
+    <pre><code>int x = 5;
+
+printf("%d", ~x);</code></pre>
+
+    <p>
+        For signed integers, the exact decimal result of
+        <strong>~x</strong> depends on the integer representation.
+        On modern two's-complement systems, <strong>~5</strong>
+        is commonly <strong>-6</strong>.
+    </p>
+
+    <div class="tip-box">
+
+        📌 Remember:
+        <br><br>
+        ~x is commonly equal to -(x + 1) on two's-complement systems.
+
+    </div>
+
+
+    <!-- 19.10 LEFT SHIFT -->
+
+    <h3>19.10 Left Shift (&lt;&lt;)</h3>
+
+    <p>
+        The left-shift operator moves bits toward the left.
+    </p>
+
+    <pre><code>int x = 5;
+
+printf("%d", x &lt;&lt; 1);</code></pre>
+
+    <div class="bit-operation">
+
+        <div class="bit-line">
+            <span>5</span>
+            <span>00000101</span>
+        </div>
+
+        <div class="bit-line">
+            <span>5 &lt;&lt; 1</span>
+            <span>00001010</span>
+        </div>
+
+    </div>
+
+    <div class="output-box">
+
+        10
+
+    </div>
+
+    <p>
+        For a nonnegative value, shifting left by one position
+        corresponds to multiplying by 2 when the result is
+        representable.
+    </p>
+
+
+    <!-- 19.11 RIGHT SHIFT -->
+
+    <h3>19.11 Right Shift (&gt;&gt;)</h3>
+
+    <p>
+        The right-shift operator moves bits toward the right.
+    </p>
+
+    <pre><code>int x = 20;
+
+printf("%d", x &gt;&gt; 2);</code></pre>
+
+    <div class="bit-operation">
+
+        <div class="bit-line">
+            <span>20</span>
+            <span>00010100</span>
+        </div>
+
+        <div class="bit-line">
+            <span>20 &gt;&gt; 2</span>
+            <span>00000101</span>
+        </div>
+
+    </div>
+
+    <div class="output-box">
+
+        5
+
+    </div>
+
+
+    <!-- 19.12 SHIFT CAUTION -->
+
+    <h3>19.12 Important Shift Rules</h3>
+
+    <ul>
+
+        <li>
+            Shifting by a negative count is undefined behavior.
+        </li>
+
+        <li>
+            Shifting by a count greater than or equal to the width
+            of the promoted left operand is undefined behavior.
+        </li>
+
+        <li>
+            Left-shifting signed values requires care because
+            overflow can result in undefined behavior.
+        </li>
+
+        <li>
+            Right-shifting a negative signed integer is
+            implementation-defined.
+        </li>
+
+        <li>
+            For predictable bit manipulation, unsigned integers
+            are often preferable.
+        </li>
+
+    </ul>
+
+
+    <!-- 19.13 CHECK ODD EVEN -->
+
+    <h3>19.13 Check Odd or Even Using Bitwise AND</h3>
+
+    <p>
+        The least significant bit determines whether a
+        nonnegative integer is odd or even.
+    </p>
+
+    <pre><code>if(n &amp; 1)
+{
+    printf("Odd");
+}
+else
+{
+    printf("Even");
+}</code></pre>
+
+    <p>
+        Example:
+    </p>
+
+    <pre><code>7 = 00000111
+1 = 00000001
+
+7 &amp; 1 = 1</code></pre>
+
+    <div class="output-box">
+
+        Odd
+
+    </div>
+
+
+    <!-- 19.14 CHECK BIT -->
+
+    <h3>19.14 Check Whether a Bit is Set</h3>
+
+    <p>
+        To check bit position <strong>k</strong>, use:
+    </p>
+
+    <pre><code>if(n &amp; (1u &lt;&lt; k))
+{
+    printf("Bit is set");
+}
+else
+{
+    printf("Bit is not set");
+}</code></pre>
+
+    <p>
+        Example: check bit 2 of 5.
+    </p>
+
+    <pre><code>5 = 00000101
+
+1u &lt;&lt; 2 = 00000100
+
+5 &amp; 4 = 4</code></pre>
+
+    <div class="output-box">
+
+        Bit 2 is SET
+
+    </div>
+
+
+    <!-- 19.15 SET BIT -->
+
+    <h3>19.15 Set a Bit</h3>
+
+    <p>
+        Setting a bit means changing it to 1.
+    </p>
+
+    <pre><code>n = n | (1u &lt;&lt; k);</code></pre>
+
+    <p>
+        Short form:
+    </p>
+
+    <pre><code>n |= (1u &lt;&lt; k);</code></pre>
+
+    <p>
+        Example:
+    </p>
+
+    <pre><code>n = 8;       /* 1000 */
+k = 1;
+
+n |= (1u &lt;&lt; k);
+
+/* Result = 1010 = 10 */</code></pre>
+
+
+    <!-- 19.16 CLEAR BIT -->
+
+    <h3>19.16 Clear a Bit</h3>
+
+    <p>
+        Clearing a bit means changing it to 0.
+    </p>
+
+    <pre><code>n = n &amp; ~(1u &lt;&lt; k);</code></pre>
+
+    <p>
+        Short form:
+    </p>
+
+    <pre><code>n &amp;= ~(1u &lt;&lt; k);</code></pre>
+
+
+    <!-- 19.17 TOGGLE BIT -->
+
+    <h3>19.17 Toggle a Bit</h3>
+
+    <p>
+        Toggling changes:
+    </p>
+
+    <div class="formula-box">
+
+        0 → 1
+        <br>
+        1 → 0
+
+    </div>
+
+    <pre><code>n ^= (1u &lt;&lt; k);</code></pre>
+
+
+    <!-- 19.18 BIT MASK -->
+
+    <h3>19.18 Bit Mask</h3>
+
+    <p>
+        A bit mask is a value used to select or modify specific
+        bits.
+    </p>
+
+    <pre><code>1u &lt;&lt; k</code></pre>
+
+    <p>
+        creates a mask with bit <strong>k</strong> set.
+    </p>
+
+    <div class="bit-operation">
+
+        <div class="bit-line">
+            <span>1u &lt;&lt; 3</span>
+            <span>00001000</span>
+        </div>
+
+    </div>
+
+
+    <!-- 19.19 COUNT SET BITS -->
+
+    <h3>19.19 Count Set Bits</h3>
+
+    <p>
+        A simple method is to examine every bit.
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    unsigned int n;
+    int count = 0;
+
+    scanf("%u", &amp;n);
+
+    while(n != 0)
+    {
+        count += n &amp; 1u;
+        n &gt;&gt;= 1;
+    }
+
+    printf("Set bits = %d", count);
+
+    return 0;
+}</code></pre>
+
+    <p>
+        For example:
+    </p>
+
+    <pre><code>13 = 1101</code></pre>
+
+    <div class="output-box">
+
+        Set bits = 3
+
+    </div>
+
+
+    <!-- 19.20 KERNIGHAN -->
+
+    <h3>19.20 Efficient Set Bit Counting</h3>
+
+    <p>
+        Brian Kernighan's method repeatedly removes the lowest
+        set bit.
+    </p>
+
+    <pre><code>while(n != 0)
+{
+    n = n &amp; (n - 1);
+    count++;
+}</code></pre>
+
+    <p>
+        This performs one iteration for each set bit.
+    </p>
+
+
+    <!-- 19.21 POWER OF TWO -->
+
+    <h3>19.21 Check Whether a Number is a Power of 2</h3>
+
+    <p>
+        A positive power of two has exactly one set bit.
+    </p>
+
+    <pre><code>if(n &gt; 0 &amp;&amp; (n &amp; (n - 1)) == 0)
+{
+    printf("Power of 2");
+}
+else
+{
+    printf("Not a power of 2");
+}</code></pre>
+
+    <p>
+        Examples:
+    </p>
+
+    <div class="formula-box">
+
+        1 = 0001
+        <br>
+        2 = 0010
+        <br>
+        4 = 0100
+        <br>
+        8 = 1000
+
+    </div>
+
+
+    <!-- 19.22 CLEAR LOWEST SET BIT -->
+
+    <h3>19.22 Clear the Lowest Set Bit</h3>
+
+    <pre><code>n = n &amp; (n - 1);</code></pre>
+
+    <p>
+        This removes the lowest set bit from n.
+    </p>
+
+    <pre><code>n = 12;
+
+/*
+12 = 1100
+11 = 1011
+*/
+
+n &amp; (n - 1)
+
+/*
+1100
+1011
+----
+1000
+*/
+
+Result = 8</code></pre>
+
+
+    <!-- 19.23 FIND LOWEST SET BIT -->
+
+    <h3>19.23 Isolate the Lowest Set Bit</h3>
+
+    <pre><code>unsigned int lowest = n &amp; (~n + 1);</code></pre>
+
+    <p>
+        An equivalent common expression is:
+    </p>
+
+    <pre><code>unsigned int lowest = n &amp; -n;</code></pre>
+
+    <p>
+        For unsigned arithmetic, a useful portable formulation is
+        to work with unsigned values when doing bit manipulation.
+    </p>
+
+
+    <!-- 19.24 XOR SWAP -->
+
+    <h3>19.24 Swap Two Values Using XOR</h3>
+
+    <p>
+        XOR has the property:
+    </p>
+
+    <div class="formula-box">
+
+        A ^ A = 0
+        <br><br>
+        A ^ 0 = A
+
+    </div>
+
+    <pre><code>a = a ^ b;
+b = a ^ b;
+a = a ^ b;</code></pre>
+
+    <p>
+        However, in normal C programs a temporary variable is
+        usually clearer and safer.
+    </p>
+
+
+    <!-- 19.25 XOR UNIQUE -->
+
+    <h3>19.25 Find the Unique Element Using XOR</h3>
+
+    <p>
+        If every number occurs exactly twice except one number,
+        XOR can find the unique value.
+    </p>
+
+    <pre><code>int arr[] = {4, 1, 2, 1, 2};
+
+int result = 0;
+
+for(int i = 0; i &lt; 5; i++)
+{
+    result ^= arr[i];
+}
+
+printf("%d", result);</code></pre>
+
+    <div class="output-box">
+
+        4
+
+    </div>
+
+    <p>
+        Because:
+    </p>
+
+    <div class="formula-box">
+
+        1 ^ 1 = 0
+        <br>
+        2 ^ 2 = 0
+        <br>
+        0 ^ 4 = 4
+
+    </div>
+
+
+    <!-- 19.26 FLAGS -->
+
+    <h3>19.26 Using Bits as Flags</h3>
+
+    <p>
+        Individual bits can represent multiple yes/no settings
+        inside one integer.
+    </p>
+
+    <pre><code>#define READ_PERMISSION   (1u &lt;&lt; 0)
+#define WRITE_PERMISSION  (1u &lt;&lt; 1)
+#define EXEC_PERMISSION   (1u &lt;&lt; 2)
+
+unsigned int permissions = 0;
+
+permissions |= READ_PERMISSION;
+permissions |= WRITE_PERMISSION;</code></pre>
+
+    <p>
+        Now multiple independent flags are stored in one value.
+    </p>
+
+
+    <!-- 19.27 PRACTICAL PROGRAM -->
+
+    <h3>19.27 Set, Clear and Toggle a Bit</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    unsigned int n;
+    int k;
+
+    scanf("%u %d", &amp;n, &amp;k);
+
+    /* Set */
+    n |= (1u &lt;&lt; k);
+
+    printf("After set: %u\n", n);
+
+    /* Clear */
+    n &amp;= ~(1u &lt;&lt; k);
+
+    printf("After clear: %u\n", n);
+
+    /* Toggle */
+    n ^= (1u &lt;&lt; k);
+
+    printf("After toggle: %u\n", n);
+
+    return 0;
+}</code></pre>
+
+
+    
+
+<div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">Choose Bit</div>
+            <div class="cb-mini-step-text">k</div>
+            <div class="cb-mini-step-subtext">Bits are counted from position 0.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">Create Mask</div>
+            <div class="cb-mini-step-text">1u &lt;&lt; k</div>
+            <div class="cb-mini-step-subtext">Only bit k is set in the mask.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">Check</div>
+            <div class="cb-mini-step-text">n &amp; mask</div>
+            <div class="cb-mini-step-subtext">Non-zero means the bit is set.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">Modify</div>
+            <div class="cb-mini-step-text">Set | Clear | Toggle</div>
+            <div class="cb-mini-step-subtext">Use |, &amp; with ~mask, or ^.</div>
+        </div>
+
+    </div>
+
+<!-- 19.28 BINARY PRINT -->
+
+    <h3>19.28 Print Binary Representation</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+void printBinary(unsigned int n)
+{
+    unsigned int mask = 1u &lt;&lt;
+                         (sizeof(unsigned int) * 8 - 1);
+
+    while(mask != 0)
+    {
+        printf("%d", (n &amp; mask) != 0);
+
+        mask &gt;&gt;= 1;
+    }
+}
+
+int main()
+{
+    unsigned int n;
+
+    scanf("%u", &amp;n);
+
+    printBinary(n);
+
+    return 0;
+}</code></pre>
+
+
+    <!-- 19.29 BITWISE VS LOGICAL -->
+
+    <h3>19.29 Bitwise vs Logical Operators</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+
+                <tr>
+                    <th>Bitwise</th>
+                    <th>Logical</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>&amp;</td>
+                    <td>&amp;&amp;</td>
+                </tr>
+
+                <tr>
+                    <td>|</td>
+                    <td>||</td>
+                </tr>
+
+                <tr>
+                    <td>^</td>
+                    <td>No logical XOR operator in C</td>
+                </tr>
+
+                <tr>
+                    <td>Works on individual bits</td>
+                    <td>Works with truth values</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="tip-box">
+
+        ⚠️ Do not confuse <strong>&amp;</strong> with
+        <strong>&amp;&amp;</strong>, or <strong>|</strong> with
+        <strong>||</strong>.
+
+    </div>
+
+
+    <!-- 19.30 COMMON MISTAKES -->
+
+    <h3>19.30 Common Bitwise Mistakes</h3>
+
+    <ul>
+
+        <li>
+            Confusing <strong>&amp;</strong> with
+            <strong>&amp;&amp;</strong>.
+        </li>
+
+        <li>
+            Confusing <strong>|</strong> with
+            <strong>||</strong>.
+        </li>
+
+        <li>
+            Forgetting operator precedence.
+        </li>
+
+        <li>
+            Using signed integers carelessly for shifts.
+        </li>
+
+        <li>
+            Shifting by an invalid amount.
+        </li>
+
+        <li>
+            Assuming right shift of negative signed values is
+            always the same on every implementation.
+        </li>
+
+        <li>
+            Forgetting to use parentheses in complex expressions.
+        </li>
+
+    </ul>
+
+
+    <!-- 19.31 OPERATOR PRECEDENCE -->
+
+    <h3>19.31 Important Operator Precedence</h3>
+
+    <p>
+        When writing bitwise expressions, parentheses improve
+        readability and reduce mistakes.
+    </p>
+
+    <pre><code>if((n &amp; (1u &lt;&lt; k)) != 0)
+{
+    printf("Set");
+}</code></pre>
+
+    <p>
+        Prefer this explicit form rather than relying on
+        remembering every precedence rule.
+    </p>
+
+
+    <!-- 19.32 QUICK REVISION -->
+
+    <h3>19.32 Quick Revision</h3>
+
+    <div class="tip-box">
+
+        📌 <strong>&amp;</strong> → AND
+
+        <br><br>
+
+        📌 <strong>|</strong> → OR
+
+        <br><br>
+
+        📌 <strong>^</strong> → XOR
+
+        <br><br>
+
+        📌 <strong>~</strong> → NOT
+
+        <br><br>
+
+        📌 <strong>&lt;&lt;</strong> → Left shift
+
+        <br><br>
+
+        📌 <strong>&gt;&gt;</strong> → Right shift
+
+        <br><br>
+
+        📌 <strong>n &amp; 1</strong> → Check least significant bit
+
+        <br><br>
+
+        📌 <strong>n | (1u &lt;&lt; k)</strong> → Set bit
+
+        <br><br>
+
+        📌 <strong>n &amp; ~(1u &lt;&lt; k)</strong> → Clear bit
+
+        <br><br>
+
+        📌 <strong>n ^ (1u &lt;&lt; k)</strong> → Toggle bit
+
+        <br><br>
+
+        📌 <strong>n &amp; (n - 1)</strong> → Remove lowest set bit
+
+        <br><br>
+
+        📌 <strong>n &amp; (n - 1) == 0</strong> → Power-of-two test
+        when n is positive
+
+    </div>
+
+
+    <!-- 19.33 MCQs -->
+
+    
+<section class="content-card cb-added-section cb-compact-learning" id="bitwise-visualizer-extra">
+
+    <span class="cb-added-label">INTERACTIVE LEARNING</span>
+
+    <h2>🎬 Bitwise Programming — Bit Mask Flow</h2>
+
+    <p class="cb-added-note">
+        Follow how a mask is created, used to check a selected bit,
+        and then used to set that bit.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBConceptViz.toggle('bitwise')"
+    >▶ Open Visualization</button>
+
+    <div class="cb-compact-panel" id="cbVizPanel-bitwise" hidden>
+
+        <div
+            class="cb-viz-card cb-viz-dsa-standard"
+            data-cb-viz="bitwise"
+            data-frames="[{&quot;title&quot;:&quot;1. Start with n = 10&quot;,&quot;detail&quot;:&quot;Decimal 10 is binary 1010. Bit positions are counted from the right starting at 0.&quot;},{&quot;title&quot;:&quot;2. Choose k = 0&quot;,&quot;detail&quot;:&quot;We will work with the least-significant bit.&quot;},{&quot;title&quot;:&quot;3. Create the mask&quot;,&quot;detail&quot;:&quot;1u &lt;&lt; 0 produces binary 0001.&quot;},{&quot;title&quot;:&quot;4. Check the bit&quot;,&quot;detail&quot;:&quot;1010 &amp; 0001 gives 0000, so bit 0 is not set.&quot;},{&quot;title&quot;:&quot;5. Set the bit&quot;,&quot;detail&quot;:&quot;1010 | 0001 gives 1011, so the resulting decimal value is 11.&quot;}]"
+        >
+
+            <div class="cb-viz-dsa-topbar">
+                <div class="cb-viz-dsa-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+                <div class="cb-viz-dsa-brand" aria-label="CodeBhavya">
+                    <span class="cb-viz-dsa-brand-mark">
+                        <img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo">
+                    </span>
+                    <span class="cb-viz-dsa-code">Code</span><span class="cb-viz-dsa-bhavya">Bhavya</span>
+                </div>
+            </div>
+
+            <h3 class="cb-viz-dsa-title">🎬 Bit Mask Visualizer</h3>
+
+            <p class="cb-viz-dsa-intro">
+                Example: <code>n = 10</code> → binary <code>1010</code>, with <code>k = 0</code>.
+            </p>
+
+            <div class="cb-mini-step-flow">
+
+                <div class="cb-mini-step-card cb-mini-step-card-blue" data-cb-flow-step="0">
+                    <div class="cb-mini-step-badge">Number</div>
+                    <div class="cb-mini-step-text">10 = 1010</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-gold" data-cb-flow-step="1">
+                    <div class="cb-mini-step-badge">Bit</div>
+                    <div class="cb-mini-step-text">k = 0</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-purple" data-cb-flow-step="2">
+                    <div class="cb-mini-step-badge">Mask</div>
+                    <div class="cb-mini-step-text">0001</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-green" data-cb-flow-step="3">
+                    <div class="cb-mini-step-badge">Check</div>
+                    <div class="cb-mini-step-text">1010 &amp; 0001 = 0000</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-pink" data-cb-flow-step="4">
+                    <div class="cb-mini-step-badge">Set</div>
+                    <div class="cb-mini-step-text">1010 | 0001 = 1011</div>
+                </div>
+
+            </div>
+
+            <div class="cb-viz-stage">
+                <div class="cb-viz-step" id="cbVizStep-bitwise">Step 1</div>
+                <h3 id="cbVizTitle-bitwise"></h3>
+                <p id="cbVizDetail-bitwise"></p>
+                <div class="cb-viz-dots" id="cbVizDots-bitwise"></div>
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBConceptViz.prev('bitwise')">← Previous</button>
+                <button class="cb-control cb-next" id="cbVizNext-bitwise" onclick="CBConceptViz.next('bitwise')">Next →</button>
+                <button class="cb-control cb-auto" id="cbVizAuto-bitwise" onclick="CBConceptViz.auto('bitwise')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBConceptViz.pause('bitwise')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBConceptViz.reset('bitwise')">↺ Reset</button>
+            </div>
+
+            <div class="cb-mini-progress">
+                <div id="cbVizProgress-bitwise"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="content-card cb-added-section cb-compact-learning" id="bitwise-tracing-extra">
+
+    <span class="cb-added-label">PROGRAM TRACING</span>
+
+    <h2>🔎 Program Tracing — Bitwise Programming</h2>
+
+    <p class="cb-added-note">
+        Trace mask creation, checking a bit, and setting the selected bit.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBProgramTrace.toggle('bitwise')"
+    >▶ Program Tracing — Bitwise Programming</button>
+
+    <div class="cb-compact-panel" id="cbTracePanel-bitwise" hidden>
+
+        <div
+            class="cb-tracer"
+            data-cb-trace="bitwise"
+            data-config="{&quot;code&quot;:[&quot;int main()&quot;,&quot;{&quot;,&quot;    unsigned int n = 10;&quot;,&quot;    unsigned int k = 0;&quot;,&quot;    unsigned int mask = 1u &lt;&lt; k;&quot;,&quot;    unsigned int isSet = (n &amp; mask) != 0u;&quot;,&quot;    n = n | mask;&quot;,&quot;    printf(\&quot;isSet = %u, n = %u\&quot;, isSet, n);&quot;,&quot;    return 0;&quot;,&quot;}&quot;],&quot;steps&quot;:[{&quot;line&quot;:0,&quot;state&quot;:{&quot;n&quot;:&quot;—&quot;,&quot;k&quot;:&quot;—&quot;,&quot;mask&quot;:&quot;—&quot;,&quot;isSet&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Execution starts at main().&quot;},{&quot;line&quot;:2,&quot;state&quot;:{&quot;n&quot;:10,&quot;k&quot;:&quot;—&quot;,&quot;mask&quot;:&quot;—&quot;,&quot;isSet&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;n is initialized to 10, whose low four bits are 1010.&quot;},{&quot;line&quot;:3,&quot;state&quot;:{&quot;n&quot;:10,&quot;k&quot;:0,&quot;mask&quot;:&quot;—&quot;,&quot;isSet&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;k selects bit position 0.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;n&quot;:10,&quot;k&quot;:0,&quot;mask&quot;:1,&quot;isSet&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;1u &lt;&lt; 0 creates mask 1, whose low four bits are 0001.&quot;},{&quot;line&quot;:5,&quot;state&quot;:{&quot;n&quot;:10,&quot;k&quot;:0,&quot;mask&quot;:1,&quot;isSet&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;10 &amp; 1 is 0, so bit 0 is not set and isSet becomes 0.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;n&quot;:11,&quot;k&quot;:0,&quot;mask&quot;:1,&quot;isSet&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;10 | 1 produces 11. In binary, 1010 becomes 1011.&quot;},{&quot;line&quot;:7,&quot;state&quot;:{&quot;n&quot;:11,&quot;k&quot;:0,&quot;mask&quot;:1,&quot;isSet&quot;:0,&quot;output&quot;:&quot;isSet = 0, n = 11&quot;},&quot;note&quot;:&quot;printf() displays the original check result and the modified number.&quot;},{&quot;line&quot;:8,&quot;state&quot;:{&quot;n&quot;:11,&quot;k&quot;:0,&quot;mask&quot;:1,&quot;isSet&quot;:0,&quot;output&quot;:&quot;isSet = 0, n = 11&quot;},&quot;note&quot;:&quot;return 0 ends the program successfully.&quot;}]}"
+        >
+
+            <div class="cb-tracer-grid">
+
+                <div class="cb-tracer-code-wrap">
+                    <div class="cb-tracer-heading">C Program</div>
+                    <pre class="cb-tracer-code" id="cbTraceCode-bitwise"></pre>
+                </div>
+
+                <div class="cb-tracer-state-wrap">
+                    <div class="cb-tracer-heading">Live Variables</div>
+                    <div class="cb-tracer-note" id="cbTraceNote-bitwise"></div>
+                    <div class="cb-live-state" id="cbTraceState-bitwise"></div>
+
+                    <div class="cb-tracer-output">
+                        <strong>Output</strong>
+                        <pre id="cbTraceOutput-bitwise">—</pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBProgramTrace.prev('bitwise')">← Previous</button>
+                <button class="cb-control cb-next" id="cbTraceNext-bitwise" onclick="CBProgramTrace.next('bitwise')">Next →</button>
+                <button class="cb-control cb-auto" id="cbTraceAuto-bitwise" onclick="CBProgramTrace.auto('bitwise')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBProgramTrace.pause('bitwise')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBProgramTrace.reset('bitwise')">↺ Reset</button>
+            </div>
+
+            <div class="cb-tracer-status" id="cbTraceStatus-bitwise">Step 0</div>
+
+        </div>
+    </div>
+</section>
+
+
+<h3>19.33 Quick MCQs</h3>
+
+    <p class="cb-mcq-guide">
+        Select an answer first, then click <strong>Check Answer</strong>.
+        A correct choice becomes green. If the answer is wrong, your choice becomes red
+        and the correct option becomes green. The explanation appears below.
+    </p>
+
+    <div class="cb-mcq-list">
+        
+    <div class="cb-mcq-card" id="bitwise-mcq1" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">1.</span>
+            <strong>Which operator performs bitwise AND?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="bitwise-mcq1" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">&amp;</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="bitwise-mcq1" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">&amp;&amp;</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="bitwise-mcq1" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">|</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="bitwise-mcq1" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">||</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('bitwise-mcq1')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('bitwise-mcq1')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>The single ampersand operator &amp; performs bitwise AND on integer operands.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="bitwise-mcq2" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">2.</span>
+            <strong>Which operator performs bitwise XOR?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="bitwise-mcq2" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">&amp;</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="bitwise-mcq2" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">^</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="bitwise-mcq2" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">||</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="bitwise-mcq2" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">~</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('bitwise-mcq2')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('bitwise-mcq2')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>The ^ operator performs bitwise exclusive OR.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="bitwise-mcq3" data-correct="D">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">3.</span>
+            <strong>Which operator flips bits?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="bitwise-mcq3" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">&amp;</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="bitwise-mcq3" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">|</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="bitwise-mcq3" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">^</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="bitwise-mcq3" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">~</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('bitwise-mcq3')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('bitwise-mcq3')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: D</strong>
+                <p>The unary ~ operator produces the bitwise complement.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="bitwise-mcq4" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">4.</span>
+            <strong>What is 5 &amp; 3?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="bitwise-mcq4" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">1</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="bitwise-mcq4" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">2</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="bitwise-mcq4" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">7</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="bitwise-mcq4" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">8</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('bitwise-mcq4')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('bitwise-mcq4')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>5 is 0101 and 3 is 0011. Their bitwise AND is 0001, which is 1.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="bitwise-mcq5" data-correct="C">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">5.</span>
+            <strong>What is 5 | 3?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="bitwise-mcq5" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">1</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="bitwise-mcq5" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">6</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="bitwise-mcq5" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">7</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="bitwise-mcq5" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">8</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('bitwise-mcq5')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('bitwise-mcq5')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>0101 | 0011 gives 0111, which is 7.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="bitwise-mcq6" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">6.</span>
+            <strong>What is 5 ^ 3?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="bitwise-mcq6" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">1</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="bitwise-mcq6" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">6</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="bitwise-mcq6" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">7</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="bitwise-mcq6" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">8</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('bitwise-mcq6')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('bitwise-mcq6')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>0101 ^ 0011 gives 0110, which is 6.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="bitwise-mcq7" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">7.</span>
+            <strong>Which operator performs left shift?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="bitwise-mcq7" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">&lt;&lt;</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="bitwise-mcq7" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">&gt;&gt;</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="bitwise-mcq7" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">&amp;</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="bitwise-mcq7" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">^</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('bitwise-mcq7')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('bitwise-mcq7')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>The &lt;&lt; operator shifts bits toward more-significant positions.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="bitwise-mcq8" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">8.</span>
+            <strong>Which expression checks whether bit k is set?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="bitwise-mcq8" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">n &amp; (1u &lt;&lt; k)</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="bitwise-mcq8" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">n | k</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="bitwise-mcq8" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">n ^ k</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="bitwise-mcq8" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">n + k</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('bitwise-mcq8')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('bitwise-mcq8')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>A mask with only bit k set is ANDed with n. A non-zero result means bit k is set.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="bitwise-mcq9" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">9.</span>
+            <strong>Which expression sets bit k?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="bitwise-mcq9" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">n &amp;= (1u &lt;&lt; k)</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="bitwise-mcq9" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">n |= (1u &lt;&lt; k)</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="bitwise-mcq9" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">n ^= ~(1u &lt;&lt; k)</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="bitwise-mcq9" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">n &gt;&gt;= k</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('bitwise-mcq9')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('bitwise-mcq9')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>OR with a one-bit mask forces bit k to 1 while preserving other bits.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="bitwise-mcq10" data-correct="C">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">10.</span>
+            <strong>Which expression removes the lowest set bit?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="bitwise-mcq10" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">n | (n - 1)</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="bitwise-mcq10" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">n ^ (n - 1)</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="bitwise-mcq10" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">n &amp; (n - 1)</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="bitwise-mcq10" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">n + (n - 1)</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('bitwise-mcq10')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('bitwise-mcq10')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>For non-zero n, n &amp; (n - 1) clears the lowest set bit.</p>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+
+<div class="cb-c-dsa-practice-section">
+
+        <span class="cb-c-practice-label">PRACTICE</span>
+
+        <h3>19.34 🎯 Practice Problems</h3>
+
+        <p class="cb-c-practice-guide">
+            Practice AND, OR, XOR, NOT, shifts, bit masks, set-bit counting,
+            powers of two, flags, and XOR-based array problems.
+            Use <strong>💻 Solve It Yourself</strong> first,
+            open <strong>Hint</strong> only when needed,
+            and use <strong>Show Program</strong> after attempting the problem.
+        </p>
+
+        <div class="cb-practice-overall" data-practice-total="20">
+
+            <div class="cb-practice-overall-title">
+                📈 Bitwise Programming Practice Progress
+            </div>
+
+            <div class="cb-practice-overall-grid">
+
+                <div class="cb-practice-overall-item">
+                    <strong>Solved</strong>
+                    <span id="cbPracticeOverallSolved">0 / 20</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completed with Solution</strong>
+                    <span id="cbPracticeOverallCompleted">0</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Total Score</strong>
+                    <span id="cbPracticeOverallScore">0 / 2000</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completion</strong>
+                    <span id="cbPracticeOverallPercent">0%</span>
+                </div>
+
+            </div>
+
+            <div class="cb-practice-progress-track">
+                <div id="cbPracticeOverallBar" class="cb-practice-progress-fill"></div>
+            </div>
+
+            <div class="cb-practice-progress-note">
+                A problem counts as <strong>Solved</strong> when all test cases pass
+                without opening the full solution. Problems completed after viewing
+                the official solution are tracked separately.
+            </div>
+
+        </div>
+
+        <div class="cb-c-practice-list">
+            
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>1. Bitwise AND of Two Integers</strong>
+                <span id="practiceBadge-bitwise-p1" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 1: Find the result of bitwise AND for two unsigned integers.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two unsigned integers a and b.</p>
+            <p><strong>Output:</strong> Print a &amp; b.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p1')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p1')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p1')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p1" hidden>
+                💡 <strong>Hint:</strong> Use the &amp; operator.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p1" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Bitwise AND of Two Integers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p1"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p1"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p1')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p1"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p1')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p1')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p1"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p1"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p1" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p1">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p1">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p1">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p1" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p1" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    unsigned int a, b;
+
+    scanf(&quot;%u %u&quot;, &amp;a, &amp;b);
+    printf(&quot;%u&quot;, a &amp; b);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>2. Bitwise OR of Two Integers</strong>
+                <span id="practiceBadge-bitwise-p2" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 2: Find the result of bitwise OR for two unsigned integers.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two unsigned integers a and b.</p>
+            <p><strong>Output:</strong> Print a | b.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p2')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p2')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p2')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p2" hidden>
+                💡 <strong>Hint:</strong> Use the | operator.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p2" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Bitwise OR of Two Integers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p2"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p2"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p2')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p2"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p2')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p2')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p2"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p2"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p2" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p2">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p2">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p2">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p2" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p2" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    unsigned int a, b;
+
+    scanf(&quot;%u %u&quot;, &amp;a, &amp;b);
+    printf(&quot;%u&quot;, a | b);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>3. Bitwise XOR of Two Integers</strong>
+                <span id="practiceBadge-bitwise-p3" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 3: Find the result of bitwise XOR for two unsigned integers.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two unsigned integers a and b.</p>
+            <p><strong>Output:</strong> Print a ^ b.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p3')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p3')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p3')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p3" hidden>
+                💡 <strong>Hint:</strong> Use the ^ operator.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p3" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Bitwise XOR of Two Integers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p3"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p3"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p3')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p3"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p3')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p3')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p3"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p3"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p3" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p3">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p3">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p3">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p3" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p3" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    unsigned int a, b;
+
+    scanf(&quot;%u %u&quot;, &amp;a, &amp;b);
+    printf(&quot;%u&quot;, a ^ b);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>4. Bitwise NOT of a 32-bit Integer</strong>
+                <span id="practiceBadge-bitwise-p4" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 4: Find the bitwise NOT of a 32-bit unsigned integer.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One uint32_t value.</p>
+            <p><strong>Output:</strong> Print the 32-bit unsigned complement.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p4')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p4')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p4')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p4" hidden>
+                💡 <strong>Hint:</strong> Use uint32_t and the ~ operator.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p4" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Bitwise NOT of a 32-bit Integer
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p4"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p4"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p4')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p4"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p4')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p4')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p4"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p4"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p4" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p4">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p4">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p4">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p4" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p4" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;inttypes.h&gt;
+
+int main()
+{
+    uint32_t n;
+
+    scanf(&quot;%&quot; SCNu32, &amp;n);
+    printf(&quot;%&quot; PRIu32, (uint32_t)~n);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>5. Left Shift by One Position</strong>
+                <span id="practiceBadge-bitwise-p5" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 5: Perform a left shift by one position on a 32-bit unsigned integer.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One uint32_t value whose result fits in 32 bits.</p>
+            <p><strong>Output:</strong> Print n &lt;&lt; 1.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p5')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p5')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p5')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p5" hidden>
+                💡 <strong>Hint:</strong> Use n &lt;&lt; 1.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p5" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Left Shift by One Position
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p5"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p5"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p5')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p5"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p5')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p5')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p5"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p5"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p5" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p5">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p5">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p5">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p5" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p5" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;inttypes.h&gt;
+
+int main()
+{
+    uint32_t n;
+
+    scanf(&quot;%&quot; SCNu32, &amp;n);
+    printf(&quot;%&quot; PRIu32, (uint32_t)(n &lt;&lt; 1));
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>6. Right Shift by Two Positions</strong>
+                <span id="practiceBadge-bitwise-p6" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 6: Perform a right shift by two positions on an unsigned integer.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One unsigned integer n.</p>
+            <p><strong>Output:</strong> Print n &gt;&gt; 2.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p6')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p6')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p6')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p6" hidden>
+                💡 <strong>Hint:</strong> Use the &gt;&gt; operator.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p6" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Right Shift by Two Positions
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p6"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p6"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p6')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p6"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p6')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p6')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p6"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p6"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p6" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p6">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p6">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p6">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p6" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p6" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    unsigned int n;
+
+    scanf(&quot;%u&quot;, &amp;n);
+    printf(&quot;%u&quot;, n &gt;&gt; 2);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>7. Odd or Even Using Bitwise AND</strong>
+                <span id="practiceBadge-bitwise-p7" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 7: Check whether an integer is odd or even using bitwise AND.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer n.</p>
+            <p><strong>Output:</strong> Print &quot;Odd&quot; or &quot;Even&quot;.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p7')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p7')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p7')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p7" hidden>
+                💡 <strong>Hint:</strong> The least-significant bit is 1 for odd values.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p7" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Odd or Even Using Bitwise AND
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p7"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p7"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p7')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p7"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p7')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p7')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p7"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p7"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p7" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p7">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p7">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p7">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p7" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p7" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+    printf(&quot;%s&quot;, ((unsigned int)n &amp; 1u) ? &quot;Odd&quot; : &quot;Even&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>8. Check Whether the kth Bit is Set</strong>
+                <span id="practiceBadge-bitwise-p8" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 8: Check whether bit k is set in a 32-bit unsigned integer.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n and k, where 0 &lt;= k &lt; 32.</p>
+            <p><strong>Output:</strong> Print &quot;Set&quot; or &quot;Not Set&quot;.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p8')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p8')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p8')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p8" hidden>
+                💡 <strong>Hint:</strong> Create mask = 1u &lt;&lt; k and test n &amp; mask.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p8" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Check Whether the kth Bit is Set
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p8"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p8"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p8')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p8"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p8')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p8')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p8"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p8"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p8" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p8">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p8">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p8">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p8" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p8" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;inttypes.h&gt;
+
+int main()
+{
+    uint32_t n;
+    unsigned int k;
+
+    scanf(&quot;%&quot; SCNu32 &quot; %u&quot;, &amp;n, &amp;k);
+
+    uint32_t mask = UINT32_C(1) &lt;&lt; k;
+    printf(&quot;%s&quot;, (n &amp; mask) ? &quot;Set&quot; : &quot;Not Set&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>9. Set the kth Bit</strong>
+                <span id="practiceBadge-bitwise-p9" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 9: Set bit k of a 32-bit unsigned integer.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n and k, where 0 &lt;= k &lt; 32.</p>
+            <p><strong>Output:</strong> Print the modified value.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p9')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p9')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p9')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p9" hidden>
+                💡 <strong>Hint:</strong> Use n | (1u &lt;&lt; k).
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p9" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Set the kth Bit
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p9"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p9"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p9')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p9"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p9')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p9')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p9"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p9"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p9" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p9">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p9">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p9">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p9" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p9" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;inttypes.h&gt;
+
+int main()
+{
+    uint32_t n;
+    unsigned int k;
+
+    scanf(&quot;%&quot; SCNu32 &quot; %u&quot;, &amp;n, &amp;k);
+    n |= UINT32_C(1) &lt;&lt; k;
+
+    printf(&quot;%&quot; PRIu32, n);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>10. Clear the kth Bit</strong>
+                <span id="practiceBadge-bitwise-p10" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 10: Clear bit k of a 32-bit unsigned integer.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n and k, where 0 &lt;= k &lt; 32.</p>
+            <p><strong>Output:</strong> Print the modified value.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p10')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p10')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p10')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p10" hidden>
+                💡 <strong>Hint:</strong> Use n &amp; ~(1u &lt;&lt; k).
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p10" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Clear the kth Bit
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p10"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p10"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p10')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p10"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p10')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p10')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p10"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p10"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p10" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p10">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p10">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p10">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p10" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p10" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;inttypes.h&gt;
+
+int main()
+{
+    uint32_t n;
+    unsigned int k;
+
+    scanf(&quot;%&quot; SCNu32 &quot; %u&quot;, &amp;n, &amp;k);
+    n &amp;= ~(UINT32_C(1) &lt;&lt; k);
+
+    printf(&quot;%&quot; PRIu32, n);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>11. Toggle the kth Bit</strong>
+                <span id="practiceBadge-bitwise-p11" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 11: Toggle bit k of a 32-bit unsigned integer.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n and k, where 0 &lt;= k &lt; 32.</p>
+            <p><strong>Output:</strong> Print the modified value.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p11')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p11')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p11')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p11" hidden>
+                💡 <strong>Hint:</strong> Use n ^ (1u &lt;&lt; k).
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p11" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Toggle the kth Bit
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p11"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p11"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p11')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p11"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p11')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p11')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p11"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p11"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p11" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p11">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p11">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p11">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p11" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p11" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;inttypes.h&gt;
+
+int main()
+{
+    uint32_t n;
+    unsigned int k;
+
+    scanf(&quot;%&quot; SCNu32 &quot; %u&quot;, &amp;n, &amp;k);
+    n ^= UINT32_C(1) &lt;&lt; k;
+
+    printf(&quot;%&quot; PRIu32, n);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>12. Count Set Bits</strong>
+                <span id="practiceBadge-bitwise-p12" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 12: Count the number of set bits in a 32-bit unsigned integer using repeated bit checks.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One uint32_t value.</p>
+            <p><strong>Output:</strong> Print the number of 1 bits.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p12')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p12')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p12')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p12" hidden>
+                💡 <strong>Hint:</strong> Add n &amp; 1u to the count and shift n right.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p12" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Count Set Bits
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p12"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p12"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p12')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p12"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p12')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p12')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p12"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p12"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p12" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p12">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p12">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p12">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p12" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p12" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;inttypes.h&gt;
+
+int main()
+{
+    uint32_t n;
+    unsigned int count = 0;
+
+    scanf(&quot;%&quot; SCNu32, &amp;n);
+
+    while (n != 0)
+    {
+        count += n &amp; 1u;
+        n &gt;&gt;= 1;
+    }
+
+    printf(&quot;%u&quot;, count);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>13. Brian Kernighan Set-Bit Count</strong>
+                <span id="practiceBadge-bitwise-p13" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 13: Count set bits using Brian Kernighan&#x27;s algorithm.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One uint32_t value.</p>
+            <p><strong>Output:</strong> Print the number of set bits.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p13')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p13')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p13')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p13" hidden>
+                💡 <strong>Hint:</strong> Each n &amp;= n - 1 clears one set bit.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p13" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Brian Kernighan Set-Bit Count
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p13"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p13"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p13')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p13"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p13')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p13')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p13"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p13"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p13" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p13">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p13">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p13">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p13" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p13" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;inttypes.h&gt;
+
+int main()
+{
+    uint32_t n;
+    unsigned int count = 0;
+
+    scanf(&quot;%&quot; SCNu32, &amp;n);
+
+    while (n != 0)
+    {
+        n &amp;= n - 1;
+        count++;
+    }
+
+    printf(&quot;%u&quot;, count);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>14. Check Whether a Number is a Power of 2</strong>
+                <span id="practiceBadge-bitwise-p14" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 14: Check whether a positive unsigned integer is a power of 2.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One unsigned integer n.</p>
+            <p><strong>Output:</strong> Print &quot;Power of 2&quot; or &quot;Not Power of 2&quot;.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p14')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p14')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p14')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p14" hidden>
+                💡 <strong>Hint:</strong> For n &gt; 0, a power of 2 satisfies (n &amp; (n - 1)) == 0.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p14" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Check Whether a Number is a Power of 2
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p14"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p14"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p14')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p14"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p14')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p14')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p14"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p14"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p14" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p14">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p14">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p14">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p14" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p14" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    unsigned int n;
+
+    scanf(&quot;%u&quot;, &amp;n);
+
+    printf(&quot;%s&quot;,
+           (n != 0u &amp;&amp; (n &amp; (n - 1u)) == 0u)
+               ? &quot;Power of 2&quot;
+               : &quot;Not Power of 2&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>15. Find the Unique Element</strong>
+                <span id="practiceBadge-bitwise-p15" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 15: Find the unique element in an integer array where every other element appears exactly twice.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n followed by n integers.</p>
+            <p><strong>Output:</strong> Print the unique element.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p15')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p15')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p15')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p15" hidden>
+                💡 <strong>Hint:</strong> XOR of equal values cancels to zero.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p15" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Find the Unique Element
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p15"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p15"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p15')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p15"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p15')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p15')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p15"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p15"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p15" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p15">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p15">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p15">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p15" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p15" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int result = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        int value;
+        scanf(&quot;%d&quot;, &amp;value);
+        result ^= value;
+    }
+
+    printf(&quot;%d&quot;, result);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>16. Print Binary Representation</strong>
+                <span id="practiceBadge-bitwise-p16" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 16: Print the 32-bit binary representation of an unsigned integer.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One uint32_t value.</p>
+            <p><strong>Output:</strong> Print exactly 32 bits from bit 31 down to bit 0.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p16')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p16')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p16')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p16" hidden>
+                💡 <strong>Hint:</strong> Test n &amp; (1u &lt;&lt; i) from i = 31 down to 0.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p16" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Print Binary Representation
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p16"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p16"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p16')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p16"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p16')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p16')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p16"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p16"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p16" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p16">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p16">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p16">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p16" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p16" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;inttypes.h&gt;
+
+int main()
+{
+    uint32_t n;
+
+    scanf(&quot;%&quot; SCNu32, &amp;n);
+
+    for (int i = 31; i &gt;= 0; i--)
+        putchar((n &amp; (UINT32_C(1) &lt;&lt; i)) ? &#x27;1&#x27; : &#x27;0&#x27;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>17. Swap Two Integers Using XOR</strong>
+                <span id="practiceBadge-bitwise-p17" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 17: Swap two unsigned integers using XOR without a temporary variable.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Two unsigned integers a and b.</p>
+            <p><strong>Output:</strong> Print the swapped values.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p17')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p17')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p17')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p17" hidden>
+                💡 <strong>Hint:</strong> Use a ^= b; b ^= a; a ^= b; for two distinct variables.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p17" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Swap Two Integers Using XOR
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p17"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p17"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p17')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p17"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p17')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p17')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p17"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p17"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p17" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p17">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p17">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p17">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p17" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p17" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    unsigned int a, b;
+
+    scanf(&quot;%u %u&quot;, &amp;a, &amp;b);
+
+    a ^= b;
+    b ^= a;
+    a ^= b;
+
+    printf(&quot;%u %u&quot;, a, b);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>18. Set, Clear and Toggle a Selected Bit</strong>
+                <span id="practiceBadge-bitwise-p18" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 18: Given n and k, print the results of setting, clearing, and toggling bit k.</strong>
+            </p>
+
+            <p><strong>Input:</strong> A uint32_t n and bit position k, where 0 &lt;= k &lt; 32.</p>
+            <p><strong>Output:</strong> Print Set, Clear, and Toggle results on separate lines.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p18')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p18')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p18')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p18" hidden>
+                💡 <strong>Hint:</strong> Create one mask and use |, &amp; with ~mask, and ^.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p18" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Set, Clear and Toggle a Selected Bit
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p18"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p18"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p18')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p18"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p18')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p18')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p18"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p18"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p18" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p18">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p18">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p18">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p18" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p18" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;inttypes.h&gt;
+
+int main()
+{
+    uint32_t n;
+    unsigned int k;
+
+    scanf(&quot;%&quot; SCNu32 &quot; %u&quot;, &amp;n, &amp;k);
+
+    uint32_t mask = UINT32_C(1) &lt;&lt; k;
+
+    printf(&quot;Set = %&quot; PRIu32 &quot;\n&quot;, n | mask);
+    printf(&quot;Clear = %&quot; PRIu32 &quot;\n&quot;, n &amp; ~mask);
+    printf(&quot;Toggle = %&quot; PRIu32, n ^ mask);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>19. Permission System Using Bit Flags</strong>
+                <span id="practiceBadge-bitwise-p19" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 19: Implement READ, WRITE, and EXECUTE permissions using bit flags. Start with no permissions, apply three requested operations, then print the final permissions.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Three integers: readFlag writeFlag executeFlag, each 0 or 1.</p>
+            <p><strong>Output:</strong> Print permissions in the form READ=Yes/No WRITE=Yes/No EXECUTE=Yes/No.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p19')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p19')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p19')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p19" hidden>
+                💡 <strong>Hint:</strong> Use separate bits for READ, WRITE, and EXECUTE and combine them with |.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p19" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Permission System Using Bit Flags
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p19"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p19"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p19')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p19"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p19')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p19')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p19"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p19"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p19" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p19">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p19">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p19">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p19" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p19" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    const unsigned int READ = 1u &lt;&lt; 0;
+    const unsigned int WRITE = 1u &lt;&lt; 1;
+    const unsigned int EXECUTE = 1u &lt;&lt; 2;
+
+    unsigned int permissions = 0u;
+    int readFlag, writeFlag, executeFlag;
+
+    scanf(&quot;%d %d %d&quot;, &amp;readFlag, &amp;writeFlag, &amp;executeFlag);
+
+    if (readFlag) permissions |= READ;
+    if (writeFlag) permissions |= WRITE;
+    if (executeFlag) permissions |= EXECUTE;
+
+    printf(&quot;READ=%s WRITE=%s EXECUTE=%s&quot;,
+           (permissions &amp; READ) ? &quot;Yes&quot; : &quot;No&quot;,
+           (permissions &amp; WRITE) ? &quot;Yes&quot; : &quot;No&quot;,
+           (permissions &amp; EXECUTE) ? &quot;Yes&quot; : &quot;No&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>20. Find Two Unique Numbers</strong>
+                <span id="practiceBadge-bitwise-p20" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 20: Given an array where every number appears twice except two numbers, find those two unique numbers using bitwise operations.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n followed by n integers. Exactly two values occur once; all others occur twice.</p>
+            <p><strong>Output:</strong> Print the two unique values in ascending order.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('bitwise-p20')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('bitwise-p20')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('bitwise-p20')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-bitwise-p20" hidden>
+                💡 <strong>Hint:</strong> XOR all values, isolate one differing set bit, then partition the array into two XOR groups.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-bitwise-p20" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Find Two Unique Numbers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-bitwise-p20"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-bitwise-p20"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('bitwise-p20')">▶ Run Code</button>
+
+                            <button id="practiceCheck-bitwise-p20"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('bitwise-p20')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('bitwise-p20')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-bitwise-p20"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-bitwise-p20"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-bitwise-p20" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-bitwise-p20">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-bitwise-p20">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-bitwise-p20">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-bitwise-p20" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-bitwise-p20" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    unsigned int *a = malloc((size_t)n * sizeof *a);
+
+    if (a == NULL)
+        return 1;
+
+    unsigned int x = 0u;
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        scanf(&quot;%u&quot;, &amp;a[i]);
+        x ^= a[i];
+    }
+
+    unsigned int mask = x &amp; (~x + 1u);
+    unsigned int first = 0u;
+    unsigned int second = 0u;
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (a[i] &amp; mask)
+            first ^= a[i];
+        else
+            second ^= a[i];
+    }
+
+    if (first &gt; second)
+    {
+        unsigned int temp = first;
+        first = second;
+        second = temp;
+    }
+
+    printf(&quot;%u %u&quot;, first, second);
+
+    free(a);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        </div>
+
+    </div>
+
+<h3>19.35 Key Takeaway</h3>
+
+    <div class="tip-box">
+
+        🎯 Remember:
+
+        <br><br>
+
+        <strong>AND (&amp;) → Select bits</strong>
+
+        <br><br>
+
+        <strong>OR (|) → Set bits</strong>
+
+        <br><br>
+
+        <strong>XOR (^) → Toggle / find differences</strong>
+
+        <br><br>
+
+        <strong>NOT (~) → Flip bits</strong>
+
+        <br><br>
+
+        <strong>Left Shift (&lt;&lt;) → Move bits left</strong>
+
+        <br><br>
+
+        <strong>Right Shift (&gt;&gt;) → Move bits right</strong>
+
+        <br><br>
+
+        <strong>n &amp; 1 → Check odd/even</strong>
+
+        <br><br>
+
+        <strong>n &amp; (n - 1) → Remove lowest set bit</strong>
+
+        <br><br>
+
+        <strong>1u &lt;&lt; k → Create a mask for bit k</strong>
+
+    </div>
+
+</section>
+
+        <!-- ================================
+             Enumerations (enum) and typedef
+        ================================= -->
+
+
+<section class="content-card cb-added-section" id="bitwise-interview-extra">
+
+    <span class="cb-added-label">INTERVIEW PREPARATION</span>
+
+    <h2>🎤 Bitwise Programming — Interview Questions</h2>
+
+    <div class="cb-original-qa-list cb-interview-qa-list">
+        
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">1.</span>
+                <span>What is the difference between bitwise &amp; and logical &amp;&amp;?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('bitwiseInterviewAnswer1', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="bitwiseInterviewAnswer1"
+                 hidden>
+                Bitwise &amp; operates on corresponding bits of integer operands. Logical &amp;&amp; evaluates truth values and uses short-circuit evaluation.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">2.</span>
+                <span>Why are unsigned integers often preferred for bit manipulation?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('bitwiseInterviewAnswer2', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="bitwiseInterviewAnswer2"
+                 hidden>
+                Unsigned operations have well-defined modulo arithmetic and right-shift behavior, making bit-level intent clearer and avoiding several signed-integer pitfalls.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">3.</span>
+                <span>How do you check whether bit k is set?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('bitwiseInterviewAnswer3', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="bitwiseInterviewAnswer3"
+                 hidden>
+                Create a one-bit mask such as 1u &lt;&lt; k and test whether n &amp; mask is non-zero.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">4.</span>
+                <span>How do you clear bit k without changing other bits?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('bitwiseInterviewAnswer4', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="bitwiseInterviewAnswer4"
+                 hidden>
+                Use n &amp;= ~(1u &lt;&lt; k). The complemented mask has a zero only at bit k.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">5.</span>
+                <span>Why does n &amp; (n - 1) remove the lowest set bit?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('bitwiseInterviewAnswer5', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="bitwiseInterviewAnswer5"
+                 hidden>
+                Subtracting one changes the lowest set 1 to 0 and turns the lower zero bits into ones; AND therefore removes exactly that lowest set bit.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">6.</span>
+                <span>How can XOR find one unique element when all others appear twice?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('bitwiseInterviewAnswer6', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="bitwiseInterviewAnswer6"
+                 hidden>
+                XOR is associative and commutative, and x ^ x is 0. Equal pairs cancel, leaving the unique value.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">7.</span>
+                <span>How do bit flags represent multiple permissions?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('bitwiseInterviewAnswer7', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="bitwiseInterviewAnswer7"
+                 hidden>
+                Each permission uses a different bit. OR combines permissions, AND tests them, AND with a complemented mask clears them, and XOR toggles them.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">8.</span>
+                <span>What shift mistake should be avoided?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('bitwiseInterviewAnswer8', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="bitwiseInterviewAnswer8"
+                 hidden>
+                Do not shift by a negative count or by a count greater than or equal to the width of the promoted left operand; that is undefined behavior.
+            </div>
+
+        </div>
+    
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="bitwise-tips-extra">
+
+    <span class="cb-added-label">PLACEMENT TIPS</span>
+
+    <h2>💡 Bitwise Programming — Placement Tips</h2>
+
+    <ul class="cb-tip-grid">
+        <li>For bit-position problems, write the mask first: <code>1u &lt;&lt; k</code>. Then decide whether the task needs <code>&amp;</code>, <code>|</code>, <code>^</code>, or <code>~</code>.</li>
+        <li>Prefer unsigned values when a problem is specifically about binary representation and bit manipulation.</li>
+        <li>Remember the three core mask formulas: set with <code>|</code>, clear with <code>&amp; ~mask</code>, and toggle with <code>^</code>.</li>
+        <li>For power-of-two questions, handle zero separately before using <code>n &amp; (n - 1)</code>.</li>
+        <li>XOR is especially useful when duplicate values occur in pairs because equal values cancel.</li>
+        <li>Be careful with operator precedence; add parentheses around bitwise expressions when combining them with comparisons or arithmetic.</li>
+    </ul>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="bitwise-practice-extra">
+
+    <span class="cb-added-label">EXTRA PRACTICE</span>
+
+    <h2>✍️ Bitwise Programming — Extra Practice Questions</h2>
+
+    <ol class="cb-extra-practice">
+        <li>Find the position of the lowest set bit in a positive integer.</li>
+        <li>Reverse all 32 bits of an unsigned integer.</li>
+        <li>Check whether two integers have opposite signs using a bitwise expression.</li>
+        <li>Generate every subset of a small array using bit masks.</li>
+        <li>Find the missing number from 0 to n using XOR.</li>
+        <li>Implement a compact feature-control system using eight independent bit flags.</li>
+    </ol>
+
+</section>
+
+
+
+<section class="cb-topic-navigation" aria-label="C Programming topic navigation">
+
+    <a class="cb-topic-nav-btn cb-topic-nav-prev" href="command-line.html">
+        ← Previous Topic: Command Line Arguments
+    </a>
+
+    <a class="cb-topic-nav-btn cb-topic-nav-next" href="enum-typedef.html">
+        Next Topic: Enumerations &amp; typedef →
+    </a>
+
+</section>
+
+
+</main>
+
+</div>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../Maths/index.html">
+                Maths
+            </a>
+
+            <a href="index.html">
+                C Programming
+            </a>
+
+        </div>
+
+
+        <!-- LEARNING -->
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+<a href="../Data-Structures/">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/">
+    Advanced Data Structures
+</a>
+
+            <a href="#">
+                Python
+            </a>
+
+            <a href="#">
+                AI & Machine Learning
+            </a>
+
+        </div>
+
+
+        <!-- PRACTICE -->
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="#practice">
+                Practice Problems
+            </a>
+
+            <a href="#practice">
+                Problem Solving
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="c-programming.js"></script>
+<script>
+const codeBhavyaBitwisePracticeConfigs =
+[{"key": "bitwise-p1", "title": "Bitwise AND of Two Integers", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    unsigned int a, b;\n\n    return 0;\n}", "sampleInput": "5 3", "tests": [{"input": "5 3", "expected": "1"}, {"input": "12 10", "expected": "8"}]}, {"key": "bitwise-p2", "title": "Bitwise OR of Two Integers", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    unsigned int a, b;\n\n    return 0;\n}", "sampleInput": "5 3", "tests": [{"input": "5 3", "expected": "7"}, {"input": "8 2", "expected": "10"}]}, {"key": "bitwise-p3", "title": "Bitwise XOR of Two Integers", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    unsigned int a, b;\n\n    return 0;\n}", "sampleInput": "5 3", "tests": [{"input": "5 3", "expected": "6"}, {"input": "12 10", "expected": "6"}]}, {"key": "bitwise-p4", "title": "Bitwise NOT of a 32-bit Integer", "starterCode": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n\nint main()\n{\n    uint32_t n;\n\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "5", "expected": "4294967290"}, {"input": "0", "expected": "4294967295"}]}, {"key": "bitwise-p5", "title": "Left Shift by One Position", "starterCode": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n\nint main()\n{\n    uint32_t n;\n\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "5", "expected": "10"}, {"input": "12", "expected": "24"}]}, {"key": "bitwise-p6", "title": "Right Shift by Two Positions", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    unsigned int n;\n\n    return 0;\n}", "sampleInput": "20", "tests": [{"input": "20", "expected": "5"}, {"input": "32", "expected": "8"}]}, {"key": "bitwise-p7", "title": "Odd or Even Using Bitwise AND", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    return 0;\n}", "sampleInput": "13", "tests": [{"input": "13", "expected": "Odd"}, {"input": "24", "expected": "Even"}, {"input": "-3", "expected": "Odd"}]}, {"key": "bitwise-p8", "title": "Check Whether the kth Bit is Set", "starterCode": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n\nint main()\n{\n    uint32_t n;\n    unsigned int k;\n\n    return 0;\n}", "sampleInput": "10 1", "tests": [{"input": "10 1", "expected": "Set"}, {"input": "10 0", "expected": "Not Set"}]}, {"key": "bitwise-p9", "title": "Set the kth Bit", "starterCode": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n\nint main()\n{\n    uint32_t n;\n    unsigned int k;\n\n    return 0;\n}", "sampleInput": "10 0", "tests": [{"input": "10 0", "expected": "11"}, {"input": "8 1", "expected": "10"}]}, {"key": "bitwise-p10", "title": "Clear the kth Bit", "starterCode": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n\nint main()\n{\n    uint32_t n;\n    unsigned int k;\n\n    return 0;\n}", "sampleInput": "10 1", "tests": [{"input": "10 1", "expected": "8"}, {"input": "15 2", "expected": "11"}]}, {"key": "bitwise-p11", "title": "Toggle the kth Bit", "starterCode": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n\nint main()\n{\n    uint32_t n;\n    unsigned int k;\n\n    return 0;\n}", "sampleInput": "10 0", "tests": [{"input": "10 0", "expected": "11"}, {"input": "10 1", "expected": "8"}]}, {"key": "bitwise-p12", "title": "Count Set Bits", "starterCode": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n\nint main()\n{\n    uint32_t n;\n\n    return 0;\n}", "sampleInput": "13", "tests": [{"input": "13", "expected": "3"}, {"input": "0", "expected": "0"}, {"input": "4294967295", "expected": "32"}]}, {"key": "bitwise-p13", "title": "Brian Kernighan Set-Bit Count", "starterCode": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n\nint main()\n{\n    uint32_t n;\n\n    return 0;\n}", "sampleInput": "13", "tests": [{"input": "13", "expected": "3"}, {"input": "16", "expected": "1"}, {"input": "0", "expected": "0"}]}, {"key": "bitwise-p14", "title": "Check Whether a Number is a Power of 2", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    unsigned int n;\n\n    return 0;\n}", "sampleInput": "16", "tests": [{"input": "16", "expected": "Power of 2"}, {"input": "18", "expected": "Not Power of 2"}, {"input": "0", "expected": "Not Power of 2"}]}, {"key": "bitwise-p15", "title": "Find the Unique Element", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    return 0;\n}", "sampleInput": "5\n2 3 2 4 4", "tests": [{"input": "5\n2 3 2 4 4", "expected": "3"}, {"input": "7\n9 5 5 8 8 3 3", "expected": "9"}]}, {"key": "bitwise-p16", "title": "Print Binary Representation", "starterCode": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n\nint main()\n{\n    uint32_t n;\n\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "5", "expected": "00000000000000000000000000000101"}, {"input": "8", "expected": "00000000000000000000000000001000"}]}, {"key": "bitwise-p17", "title": "Swap Two Integers Using XOR", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    unsigned int a, b;\n\n    return 0;\n}", "sampleInput": "10 20", "tests": [{"input": "10 20", "expected": "20 10"}, {"input": "5 5", "expected": "5 5"}]}, {"key": "bitwise-p18", "title": "Set, Clear and Toggle a Selected Bit", "starterCode": "#include <stdio.h>\n#include <stdint.h>\n#include <inttypes.h>\n\nint main()\n{\n    uint32_t n;\n    unsigned int k;\n\n    return 0;\n}", "sampleInput": "10 0", "tests": [{"input": "10 0", "expected": "Set = 11\nClear = 10\nToggle = 11"}, {"input": "10 1", "expected": "Set = 10\nClear = 8\nToggle = 8"}]}, {"key": "bitwise-p19", "title": "Permission System Using Bit Flags", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    unsigned int permissions = 0u;\n    int readFlag, writeFlag, executeFlag;\n\n    return 0;\n}", "sampleInput": "1 1 0", "tests": [{"input": "1 1 0", "expected": "READ=Yes WRITE=Yes EXECUTE=No"}, {"input": "0 1 1", "expected": "READ=No WRITE=Yes EXECUTE=Yes"}]}, {"key": "bitwise-p20", "title": "Find Two Unique Numbers", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    return 0;\n}", "sampleInput": "6\n2 4 7 9 2 4", "tests": [{"input": "6\n2 4 7 9 2 4", "expected": "7 9"}, {"input": "8\n1 2 3 2 1 4 5 5", "expected": "3 4"}]}];
+
+CodeBhavyaCPractice.registerAll(
+    codeBhavyaBitwisePracticeConfigs
+);
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
