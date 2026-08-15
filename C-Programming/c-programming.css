@@ -11347,43 +11347,83 @@ body {
 }
 
 /* ============================================================
-   CODEBHAVYA — MOBILE SOLVE IT YOURSELF LAYOUT FIX
+   CODEBHAVYA — MOBILE SOLVE IT YOURSELF HARD FIX v2
    Paste at the ABSOLUTE BOTTOM of c-programming.css
 
-   Desktop remains unchanged.
-   On mobile/tablet, Code Editor and Input/Output panels stack
-   vertically and can never overlap each other.
+   Why this version is stronger:
+   Earlier common CSS contains a two-column practice grid with
+   !important. These selectors intentionally have HIGHER
+   specificity, so mobile stacking wins even against that rule.
    ============================================================ */
 
-@media (max-width: 820px) {
+@media screen and (max-width: 1000px) {
 
+    /* Workspace must grow naturally with both panels */
+    body.cb-c-topic-page
     .cb-c-practice-workspace {
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
 
         box-sizing: border-box !important;
 
         overflow: hidden !important;
     }
 
+
+    /* IMPORTANT:
+       Do NOT use the desktop two-column grid on mobile.
+       display:block guarantees normal document flow:
+       Code Editor first, Input/Output second.
+    */
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
     .cb-c-practice-grid {
-        display: flex !important;
-        flex-direction: column !important;
-
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-
-        gap: 12px !important;
-    }
-
-    .cb-c-practice-grid > .cb-c-practice-panel {
         display: block !important;
 
+        grid-template-columns: none !important;
+        grid-template-rows: none !important;
+
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow: visible !important;
+    }
+
+
+    /* Each panel gets its own row in normal flow */
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
+    .cb-c-practice-grid
+    > .cb-c-practice-panel {
+        position: static !important;
+
+        display: block !important;
+
+        float: none !important;
+        clear: both !important;
+
+        transform: none !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
 
         margin: 0 !important;
 
@@ -11392,9 +11432,31 @@ body {
         overflow: hidden !important;
     }
 
+
+    /* Visible separation between Code Editor and Input/Output */
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
+    .cb-c-practice-grid
+    > .cb-c-practice-panel
+    + .cb-c-practice-panel {
+        margin-top: 14px !important;
+    }
+
+
+    /* Every editable/output window must remain inside the panel */
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
     .cb-c-code-editor,
+
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
     .cb-c-practice-input,
+
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
     .cb-c-practice-output {
+        position: static !important;
+
         display: block !important;
 
         width: 100% !important;
@@ -11402,18 +11464,30 @@ body {
         min-width: 0 !important;
 
         box-sizing: border-box !important;
+
+        transform: none !important;
     }
 
+
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
     .cb-c-code-editor {
         min-height: 230px !important;
     }
 
+
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
     .cb-c-practice-input {
         min-height: 82px !important;
     }
 
+
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
     .cb-c-practice-output {
         min-height: 84px !important;
+        max-height: 180px !important;
 
         overflow-x: auto !important;
         overflow-y: auto !important;
@@ -11423,7 +11497,13 @@ body {
         word-break: break-word !important;
     }
 
+
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
     .cb-c-test-results,
+
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
     .cb-c-test-row {
         width: 100% !important;
         max-width: 100% !important;
@@ -11432,36 +11512,40 @@ body {
         box-sizing: border-box !important;
     }
 
-    .cb-c-practice-actions {
-        width: 100% !important;
 
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
+    .cb-c-practice-actions {
         display: flex !important;
         flex-wrap: wrap !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
 
         gap: 8px !important;
     }
 }
 
 
-/* Extra-small phones */
-@media (max-width: 520px) {
+/* Small phones */
+@media screen and (max-width: 520px) {
 
+    body.cb-c-topic-page
     .cb-c-practice-workspace {
-        padding: 10px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        padding-bottom: 10px !important;
     }
 
-    .cb-c-practice-workspace > .cb-c-common-brandbar {
-        margin:
-            -10px
-            -10px
-            10px
-            -10px !important;
-    }
-
-    .cb-c-practice-panel {
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
+    .cb-c-practice-grid
+    > .cb-c-practice-panel {
         padding: 9px !important;
     }
 
+    body.cb-c-topic-page
+    .cb-c-practice-workspace
     .cb-c-code-editor {
         min-height: 210px !important;
     }
