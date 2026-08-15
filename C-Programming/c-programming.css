@@ -7555,3 +7555,181 @@ body {
 .cb-variable-memory-visual{display:grid;grid-template-columns:auto minmax(180px,250px) minmax(220px,1fr);align-items:center;gap:12px;margin:10px 0 14px;padding:11px 12px;border:1px solid #dbe3ec;border-radius:9px;background:#f8fafc}.cb-variable-memory-icon{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:9px;background:#eff6ff;font-size:20px}.cb-variable-memory-slot{overflow:hidden;border:1px solid #bfdbfe;border-radius:8px;background:#fff}.cb-variable-memory-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 10px;border-bottom:1px solid #e2e8f0}.cb-variable-memory-row:last-child{border-bottom:0}.cb-variable-memory-row span{color:#64748b;font-size:11px}.cb-variable-memory-row strong{color:#0d1b2a;font-size:12px}.cb-variable-memory-note{color:#475569;font-size:12px;line-height:1.5}.cb-variable-memory-note code{color:#1d4ed8;font-weight:700}
 /* VARIABLES VISUALIZER — VARIABLE LIFE CYCLE */
 .cb-variable-lifecycle{display:flex;align-items:stretch;justify-content:center;gap:7px;padding:10px 12px;overflow-x:auto;border-bottom:1px solid #e2e8f0;background:#fff}.cb-variable-life-step{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:0 0 auto;min-width:118px;padding:8px 9px;border:1px solid #dbe3ec;border-radius:8px;background:#f8fafc;text-align:center;transition:border-color .18s ease,background .18s ease,box-shadow .18s ease,transform .18s ease}.cb-variable-life-step.active{border-color:#2563eb;background:#eff6ff;box-shadow:0 0 0 2px rgba(37,99,235,.10);transform:translateY(-1px)}.cb-variable-life-icon{display:inline-flex;align-items:center;justify-content:center;width:29px;height:29px;margin-bottom:4px;border-radius:7px;background:#fff;font-size:16px}.cb-variable-life-step strong{color:#0d1b2a;font-size:11px}.cb-variable-life-step code{margin-top:3px;color:#475569;font-size:10px}.cb-variable-constant-step.active{border-color:#d4af37;background:#fffbeb;box-shadow:0 0 0 2px rgba(212,175,55,.12)}.cb-variable-life-arrow{display:inline-flex;align-items:center;color:#d4af37;font-size:16px;font-weight:900}.cb-variables-page .cb-original-qa-question,.cb-variables-page .cb-original-qa-number,.cb-variables-page .cb-original-qa-question>span:nth-child(2){font-weight:700!important}@media(max-width:760px){.cb-variable-memory-visual{grid-template-columns:auto 1fr}.cb-variable-memory-note{grid-column:1/-1}.cb-variable-lifecycle{justify-content:flex-start}}@media(max-width:480px){.cb-variable-memory-visual{grid-template-columns:1fr}.cb-variable-memory-icon{justify-self:start}}
+
+/* ============================================================
+   QUICK MCQs — INTERACTIVE ANSWER CHECKING
+   Paste at the VERY BOTTOM of c-programming.css
+   ============================================================ */
+
+.cb-mcq-guide {
+    margin: 6px 0 12px !important;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.cb-mcq-list {
+    display: grid;
+    gap: 12px;
+    margin: 10px 0 16px;
+}
+
+.cb-mcq-card {
+    padding: 14px;
+    border: 1px solid #dbe3ec;
+    border-radius: 9px;
+    background: #f8fafc;
+}
+
+.cb-mcq-question {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 10px;
+    color: #0d1b2a;
+    line-height: 1.5;
+}
+
+.cb-mcq-number,
+.cb-mcq-question strong {
+    font-weight: 700;
+}
+
+.cb-mcq-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+}
+
+.cb-mcq-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 10px;
+    border: 1px solid #dbe3ec;
+    border-radius: 7px;
+    background: #ffffff;
+    cursor: pointer;
+    transition:
+        border-color .15s ease,
+        background .15s ease;
+}
+
+.cb-mcq-option:hover {
+    border-color: #93c5fd;
+    background: #eff6ff;
+}
+
+.cb-mcq-option input {
+    margin: 0;
+}
+
+.cb-mcq-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.cb-mcq-option-text {
+    color: #334155;
+    font-size: 13px;
+}
+
+/* Correct answer */
+.cb-mcq-option.correct {
+    border-color: #22c55e !important;
+    background: #f0fdf4 !important;
+}
+
+.cb-mcq-option.correct .cb-mcq-letter {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+/* Student selected a wrong answer */
+.cb-mcq-option.wrong {
+    border-color: #ef4444 !important;
+    background: #fef2f2 !important;
+}
+
+.cb-mcq-option.wrong .cb-mcq-letter {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.cb-mcq-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 10px;
+}
+
+.cb-mcq-check-btn,
+.cb-mcq-reset-btn {
+    border: 0;
+    border-radius: 7px;
+    padding: 8px 11px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.cb-mcq-check-btn {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.cb-mcq-reset-btn {
+    background: #64748b;
+    color: #ffffff;
+}
+
+.cb-mcq-feedback {
+    margin-top: 10px;
+}
+
+.cb-mcq-result {
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.cb-mcq-result.correct {
+    color: #15803d;
+}
+
+.cb-mcq-result.wrong {
+    color: #b91c1c;
+}
+
+.cb-mcq-explanation {
+    padding: 9px 11px;
+    border-left: 4px solid #7dd3fc;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #475569;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.cb-mcq-explanation strong {
+    color: #0d1b2a;
+}
+
+.cb-mcq-explanation p {
+    margin: 4px 0 0 !important;
+}
+
+@media (max-width: 600px) {
+    .cb-mcq-options {
+        grid-template-columns: 1fr;
+    }
+}
