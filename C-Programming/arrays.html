@@ -1,0 +1,5249 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C Programming | CodeBhavya</title>
+
+ <link rel="icon" type="image/png" sizes="32x32"
+      href="../images/codebhavya-icon-32.png">
+
+<link rel="icon" type="image/png" sizes="128x128"
+      href="../images/codebhavya-icon-128.png">
+
+<link rel="icon" type="image/png" sizes="512x512"
+      href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="c-programming.css">
+</head>
+
+<body class="cb-c-topic-page cb-arrays-page">
+
+<header class="top-header">
+
+<!-- <a href="../index.html" class="logo">
+    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a> -->
+    
+<a href="../index.html" class="logo codebhavya-new-logo">
+
+    <img
+        src="../images/codebhavya-main-logo.png"
+        alt="CodeBhavya Logo"
+        class="main-logo"
+    >
+
+    <span class="brand-name">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </span>
+
+</a>
+
+    <nav class="top-nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="../Maths/">
+            Maths
+        </a>
+
+        <a href="index.html" class="active">
+            C
+        </a>
+
+<a href="../Data-Structures/index.html">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/index.html">
+    Advanced Data Structures
+</a>
+
+        <a href="../Python/">
+            Python
+        </a>
+
+        <a href="../AI-ML/">
+            AI & ML
+        </a>
+
+        <a href="../Placement/">
+            Placement
+        </a>
+
+    </nav>
+
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar cb-c-topic-sidebar">
+    <div class="sidebar-title">💻 C Programming</div>
+
+    <input
+        type="text"
+        id="topicSearch"
+        class="search-box"
+        placeholder="🔍 Search topics..."
+        onkeyup="searchTopics()"
+    >
+
+    <div class="sidebar-title">Fundamentals</div>
+    <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
+    <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
+    <a class="cb-topic-link" data-topic-link="1" href="data-types.html">📦 Data Types</a>
+    <a class="cb-topic-link" data-topic-link="1" href="input-output.html">⌨️ Input &amp; Output</a>
+
+    <div class="sidebar-title">Operators &amp; Control</div>
+    <a class="cb-topic-link" data-topic-link="1" href="operators.html">➕ Operators</a>
+    <a class="cb-topic-link" data-topic-link="1" href="expressions.html">🧮 Expressions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="decision-making.html">🔀 Decision Making</a>
+    <a class="cb-topic-link" data-topic-link="1" href="loops.html">🔁 Loops</a>
+
+    <div class="sidebar-title">Programming Concepts</div>
+    <a class="cb-topic-link active" data-topic-link="1" href="arrays.html">📊 Arrays</a>
+    <a class="cb-topic-link" data-topic-link="1" href="strings.html">🔤 Strings</a>
+    <a class="cb-topic-link" data-topic-link="1" href="functions.html">🧩 Functions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="pointers.html">👉 Pointers</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structures-unions.html">🏗️ Structures &amp; Unions</a>
+
+    <div class="sidebar-title">Advanced C</div>
+    <a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">⚙️ Preprocessor &amp; Header Files</a>
+    <a class="cb-topic-link" data-topic-link="1" href="file-handling.html">📁 File Handling</a>
+    <a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">🧠 Dynamic Memory Allocation</a>
+    <a class="cb-topic-link" data-topic-link="1" href="command-line.html">💻 Command Line Arguments</a>
+    <a class="cb-topic-link" data-topic-link="1" href="bitwise.html">🔢 Bitwise Programming</a>
+    <a class="cb-topic-link" data-topic-link="1" href="enum-typedef.html">🔤 Enumerations &amp; typedef</a>
+    <a class="cb-topic-link" data-topic-link="1" href="precedence.html">🧮 Operator Precedence &amp; Associativity</a>
+    <a class="cb-topic-link" data-topic-link="1" href="storage-classes.html">💾 Storage Classes</a>
+    <a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">🛠️ Advanced C Preprocessor</a>
+
+    <div class="sidebar-title">Practice</div>
+    <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
+</aside>
+
+<main class="main-content">
+
+<section id="arrays" class="content-card">
+
+    <h2>📊 10. Arrays</h2>
+
+    <!-- INTRODUCTION -->
+
+    <h3>10.1 What is an Array?</h3>
+
+    <p>
+        An array is a collection of elements of the
+        same data type stored in contiguous memory
+        locations.
+    </p>
+
+    <div class="example-box">
+
+        Suppose we want to store 5 marks:
+
+        <br><br>
+
+        80, 75, 90, 65, 88
+
+        <br><br>
+
+        Instead of creating five separate variables:
+
+        <br><br>
+
+        <code>mark1, mark2, mark3, mark4, mark5</code>
+
+        <br><br>
+
+        we can use one array:
+
+        <br><br>
+
+        <code>marks[5]</code>
+
+    </div>
+
+
+    <!-- WHY ARRAYS -->
+
+    <h3>10.2 Why Do We Need Arrays?</h3>
+
+    <p>
+        Arrays allow us to store and process multiple
+        values using a single variable name.
+    </p>
+
+    <pre><code>int marks[5];
+
+marks[0] = 80;
+marks[1] = 75;
+marks[2] = 90;
+marks[3] = 65;
+marks[4] = 88;</code></pre>
+
+    <div class="tip-box">
+
+        💡 Arrays are especially useful when we need
+        to process many values using loops.
+
+    </div>
+
+
+    <!-- INDEX -->
+
+    <h3>10.3 Array Index</h3>
+
+    <p>
+        C arrays use <strong>zero-based indexing</strong>.
+        This means the first element has index 0.
+    </p>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>0</td>
+                    <td>80</td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td>75</td>
+                </tr>
+
+                <tr>
+                    <td>2</td>
+                    <td>90</td>
+                </tr>
+
+                <tr>
+                    <td>3</td>
+                    <td>65</td>
+                </tr>
+
+                <tr>
+                    <td>4</td>
+                    <td>88</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">First Element</div>
+            <div class="cb-mini-step-text">arr[0]</div>
+        </div>
+
+        <div class="cb-mini-step-arrow" aria-hidden="true">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">Second Element</div>
+            <div class="cb-mini-step-text">arr[1]</div>
+        </div>
+
+        <div class="cb-mini-step-arrow" aria-hidden="true">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">Last Element</div>
+            <div class="cb-mini-step-text">arr[n - 1]</div>
+        </div>
+
+    </div>
+
+
+    <!-- DECLARATION -->
+
+    <h3>10.4 Array Declaration</h3>
+
+    <div class="formula-box">
+
+        data_type array_name[size];
+
+    </div>
+
+    <h4>Examples</h4>
+
+    <pre><code>int numbers[10];
+
+float marks[5];
+
+char letters[26];
+
+double prices[20];</code></pre>
+
+
+    <!-- INITIALIZATION -->
+
+    <h3>10.5 Array Initialization</h3>
+
+    <pre><code>int numbers[5] = {10, 20, 30, 40, 50};</code></pre>
+
+    <p>
+        The compiler assigns the values to indexes
+        starting from 0.
+    </p>
+
+    <div class="formula-box">
+
+        numbers[0] = 10
+
+        <br>
+
+        numbers[1] = 20
+
+        <br>
+
+        numbers[2] = 30
+
+        <br>
+
+        numbers[3] = 40
+
+        <br>
+
+        numbers[4] = 50
+
+    </div>
+
+
+    <!-- SIZE OMIT -->
+
+    <h3>10.6 Initialization Without Specifying Size</h3>
+
+    <pre><code>int numbers[] = {10, 20, 30, 40, 50};</code></pre>
+
+    <p>
+        The compiler determines the size from the
+        number of initializers.
+    </p>
+
+
+    <!-- PARTIAL -->
+
+    <h3>10.7 Partial Initialization</h3>
+
+    <pre><code>int numbers[5] = {10, 20};</code></pre>
+
+    <p>
+        The remaining elements are initialized to zero
+        for this initialization form.
+    </p>
+
+    <div class="formula-box">
+
+        10  20  0  0  0
+
+    </div>
+
+
+    <!-- ACCESS -->
+
+    <h3>10.8 Accessing Array Elements</h3>
+
+    <pre><code>int numbers[5] = {10, 20, 30, 40, 50};
+
+printf("%d", numbers[2]);</code></pre>
+
+    <div class="output-box">
+
+        30
+
+    </div>
+
+
+    <!-- MODIFY -->
+
+    <h3>10.9 Modifying an Array Element</h3>
+
+    <pre><code>int numbers[5] = {10, 20, 30, 40, 50};
+
+numbers[2] = 100;
+
+printf("%d", numbers[2]);</code></pre>
+
+    <div class="output-box">
+
+        100
+
+    </div>
+
+
+    <!-- INPUT -->
+
+    <h3>10.10 Reading Array Elements</h3>
+
+    <p>
+        A loop is commonly used to read values into
+        an array.
+    </p>
+
+    <pre><code>int n;
+
+scanf("%d", &amp;n);
+
+int arr[n];
+
+for(int i = 0; i &lt; n; i++)
+{
+    scanf("%d", &amp;arr[i]);
+}</code></pre>
+
+
+    <!-- OUTPUT -->
+
+    <h3>10.11 Printing Array Elements</h3>
+
+    <pre><code>for(int i = 0; i &lt; n; i++)
+{
+    printf("%d ", arr[i]);
+}</code></pre>
+
+
+    <div class="formula-box">
+
+        Array + Loop
+
+        <br>
+
+        ↓
+
+        <br>
+
+        Traverse every element
+
+        <br>
+
+        ↓
+
+        <br>
+
+        Process the element
+
+    </div>
+
+
+    <!-- TRAVERSAL -->
+
+    <h3>10.12 Array Traversal</h3>
+
+    <p>
+        Traversing an array means visiting each element
+        one by one.
+    </p>
+
+    <pre><code>int arr[] = {10, 20, 30, 40, 50};
+
+int n = 5;
+
+for(int i = 0; i &lt; n; i++)
+{
+    printf("%d ", arr[i]);
+}</code></pre>
+
+
+    <!-- SUM -->
+
+    <h3>10.13 Sum of Array Elements</h3>
+
+    <pre><code>int n;
+int sum = 0;
+
+scanf("%d", &amp;n);
+
+int arr[n];
+
+for(int i = 0; i &lt; n; i++)
+{
+    scanf("%d", &amp;arr[i]);
+
+    sum += arr[i];
+}
+
+printf("Sum = %d", sum);</code></pre>
+
+    <div class="example-box">
+
+        <strong>Input:</strong>
+
+        <br>
+
+        5
+
+        <br>
+
+        10 20 30 40 50
+
+        <br><br>
+
+        <strong>Output:</strong>
+
+        <br>
+
+        Sum = 150
+
+    </div>
+
+
+    <!-- AVERAGE -->
+
+    <h3>10.14 Average of Array Elements</h3>
+
+    <pre><code>int n;
+int sum = 0;
+
+scanf("%d", &amp;n);
+
+int arr[n];
+
+for(int i = 0; i &lt; n; i++)
+{
+    scanf("%d", &amp;arr[i]);
+
+    sum += arr[i];
+}
+
+double average = (double)sum / n;
+
+printf("Average = %.2f", average);</code></pre>
+
+
+    <!-- MAX -->
+
+    <h3>10.15 Maximum Element</h3>
+
+    <pre><code>int n;
+
+scanf("%d", &amp;n);
+
+int arr[n];
+
+for(int i = 0; i &lt; n; i++)
+{
+    scanf("%d", &amp;arr[i]);
+}
+
+int max = arr[0];
+
+for(int i = 1; i &lt; n; i++)
+{
+    if(arr[i] &gt; max)
+    {
+        max = arr[i];
+    }
+}
+
+printf("Maximum = %d", max);</code></pre>
+
+    <div class="example-box">
+
+        <strong>Input:</strong>
+
+        <br>
+
+        5
+
+        <br>
+
+        10 45 20 80 30
+
+        <br><br>
+
+        <strong>Output:</strong>
+
+        <br>
+
+        Maximum = 80
+
+    </div>
+
+
+    <!-- MIN -->
+
+    <h3>10.16 Minimum Element</h3>
+
+    <pre><code>int min = arr[0];
+
+for(int i = 1; i &lt; n; i++)
+{
+    if(arr[i] &lt; min)
+    {
+        min = arr[i];
+    }
+}
+
+printf("Minimum = %d", min);</code></pre>
+
+
+    <!-- EVEN ODD -->
+
+    <h3>10.17 Count Even and Odd Elements</h3>
+
+    <pre><code>int even = 0;
+int odd = 0;
+
+for(int i = 0; i &lt; n; i++)
+{
+    if(arr[i] % 2 == 0)
+    {
+        even++;
+    }
+    else
+    {
+        odd++;
+    }
+}
+
+printf("Even = %d\n", even);
+printf("Odd = %d", odd);</code></pre>
+
+
+    <!-- SEARCH -->
+
+    <h3>10.18 Searching in an Array</h3>
+
+    <p>
+        Searching means checking whether a particular
+        value exists in the array.
+    </p>
+
+
+    <!-- LINEAR SEARCH -->
+
+    <h3>10.19 Linear Search</h3>
+
+    <p>
+        Linear search checks each element one by one
+        until the target is found or the array ends.
+    </p>
+
+    <pre><code>int key;
+int found = 0;
+
+scanf("%d", &amp;key);
+
+for(int i = 0; i &lt; n; i++)
+{
+    if(arr[i] == key)
+    {
+        found = 1;
+        break;
+    }
+}
+
+if(found)
+{
+    printf("Element Found");
+}
+else
+{
+    printf("Element Not Found");
+}</code></pre>
+
+
+    <div class="example-box">
+
+        <strong>Array:</strong>
+
+        <br>
+
+        10 20 30 40 50
+
+        <br><br>
+
+        <strong>Search:</strong>
+
+        <br>
+
+        30
+
+        <br><br>
+
+        <strong>Output:</strong>
+
+        <br>
+
+        Element Found
+
+    </div>
+
+
+    <!-- SEARCH INDEX -->
+
+    <h3>10.20 Find Position of an Element</h3>
+
+    <pre><code>int key;
+int position = -1;
+
+scanf("%d", &amp;key);
+
+for(int i = 0; i &lt; n; i++)
+{
+    if(arr[i] == key)
+    {
+        position = i;
+        break;
+    }
+}
+
+if(position != -1)
+{
+    printf("Index = %d", position);
+}
+else
+{
+    printf("Not Found");
+}</code></pre>
+
+
+    <!-- REVERSE -->
+
+    <h3>10.21 Reverse an Array</h3>
+
+    <pre><code>for(int i = n - 1; i &gt;= 0; i--)
+{
+    printf("%d ", arr[i]);
+}</code></pre>
+
+    <div class="example-box">
+
+        <strong>Input:</strong>
+
+        <br>
+
+        10 20 30 40 50
+
+        <br><br>
+
+        <strong>Output:</strong>
+
+        <br>
+
+        50 40 30 20 10
+
+    </div>
+
+
+    <!-- COPY -->
+
+    <h3>10.22 Copy One Array to Another</h3>
+
+    <pre><code>int arr2[n];
+
+for(int i = 0; i &lt; n; i++)
+{
+    arr2[i] = arr[i];
+}</code></pre>
+
+
+    <!-- POSITIVE -->
+
+    <h3>10.23 Count Positive, Negative and Zero</h3>
+
+    <pre><code>int positive = 0;
+int negative = 0;
+int zero = 0;
+
+for(int i = 0; i &lt; n; i++)
+{
+    if(arr[i] &gt; 0)
+    {
+        positive++;
+    }
+    else if(arr[i] &lt; 0)
+    {
+        negative++;
+    }
+    else
+    {
+        zero++;
+    }
+}
+
+printf("Positive = %d\n", positive);
+printf("Negative = %d\n", negative);
+printf("Zero = %d", zero);</code></pre>
+
+
+    <!-- SECOND LARGEST -->
+
+    <h3>10.24 Second Largest Element</h3>
+
+    <p>
+        Finding the second largest element is an
+        important problem-solving exercise.
+    </p>
+
+    <pre><code>int largest = arr[0];
+int second = arr[0];
+
+for(int i = 1; i &lt; n; i++)
+{
+    if(arr[i] &gt; largest)
+    {
+        second = largest;
+        largest = arr[i];
+    }
+    else if(arr[i] &gt; second &amp;&amp;
+            arr[i] != largest)
+    {
+        second = arr[i];
+    }
+}
+
+printf("Largest = %d\n", largest);
+printf("Second Largest = %d", second);</code></pre>
+
+    <div class="tip-box">
+
+        ⚠️ For a fully robust implementation,
+        the program should also handle cases where
+        there are fewer than two distinct values.
+
+    </div>
+
+
+    <!-- DUPLICATES -->
+
+    <h3>10.25 Find Duplicate Elements</h3>
+
+    <p>
+        Nested loops can be used to compare every
+        element with the elements after it.
+    </p>
+
+    <pre><code>for(int i = 0; i &lt; n; i++)
+{
+    for(int j = i + 1; j &lt; n; j++)
+    {
+        if(arr[i] == arr[j])
+        {
+            printf("%d ", arr[i]);
+            break;
+        }
+    }
+}</code></pre>
+
+
+    <!-- UNIQUE -->
+
+    <h3>10.26 Find Unique Elements</h3>
+
+    <p>
+        An element is unique if it appears only once
+        in the array.
+    </p>
+
+    <pre><code>for(int i = 0; i &lt; n; i++)
+{
+    int count = 0;
+
+    for(int j = 0; j &lt; n; j++)
+    {
+        if(arr[i] == arr[j])
+        {
+            count++;
+        }
+    }
+
+    if(count == 1)
+    {
+        printf("%d ", arr[i]);
+    }
+}</code></pre>
+
+
+    <!-- FREQUENCY -->
+
+    <h3>10.27 Frequency of an Element</h3>
+
+    <pre><code>int key;
+int count = 0;
+
+scanf("%d", &amp;key);
+
+for(int i = 0; i &lt; n; i++)
+{
+    if(arr[i] == key)
+    {
+        count++;
+    }
+}
+
+printf("Frequency = %d", count);</code></pre>
+
+
+    <!-- LARGEST SMALLEST -->
+
+    <h3>10.28 Largest and Smallest Together</h3>
+
+    <pre><code>int max = arr[0];
+int min = arr[0];
+
+for(int i = 1; i &lt; n; i++)
+{
+    if(arr[i] &gt; max)
+    {
+        max = arr[i];
+    }
+
+    if(arr[i] &lt; min)
+    {
+        min = arr[i];
+    }
+}
+
+printf("Maximum = %d\n", max);
+printf("Minimum = %d", min);</code></pre>
+
+
+    <!-- SWAP -->
+
+    <h3>10.29 Swapping Two Array Elements</h3>
+
+    <pre><code>int temp;
+
+temp = arr[i];
+
+arr[i] = arr[j];
+
+arr[j] = temp;</code></pre>
+
+
+    <!-- REVERSE IN PLACE -->
+
+    <h3>10.30 Reverse Array In-Place</h3>
+
+    <pre><code>int start = 0;
+int end = n - 1;
+
+while(start &lt; end)
+{
+    int temp = arr[start];
+
+    arr[start] = arr[end];
+
+    arr[end] = temp;
+
+    start++;
+    end--;
+}</code></pre>
+
+
+    <!-- SORTING INTRO -->
+
+    <h3>10.31 Introduction to Sorting</h3>
+
+    <p>
+        Sorting means arranging elements in a particular
+        order.
+    </p>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Order</th>
+                    <th>Example</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Ascending</td>
+                    <td>10 20 30 40 50</td>
+                </tr>
+
+                <tr>
+                    <td>Descending</td>
+                    <td>50 40 30 20 10</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- BUBBLE SORT -->
+
+    <h3>10.32 Bubble Sort</h3>
+
+    <p>
+        Bubble sort repeatedly compares adjacent
+        elements and swaps them if they are in
+        the wrong order.
+    </p>
+
+    <pre><code>for(int i = 0; i &lt; n - 1; i++)
+{
+    for(int j = 0; j &lt; n - 1 - i; j++)
+    {
+        if(arr[j] &gt; arr[j + 1])
+        {
+            int temp = arr[j];
+
+            arr[j] = arr[j + 1];
+
+            arr[j + 1] = temp;
+        }
+    }
+}</code></pre>
+
+
+    <!-- 2D ARRAY -->
+
+    <h3>10.33 Two-Dimensional Array</h3>
+
+    <p>
+        A two-dimensional array is commonly used
+        to represent rows and columns, such as a matrix.
+    </p>
+
+    <div class="formula-box">
+
+        data_type array_name[rows][columns];
+
+    </div>
+
+    <pre><code>int matrix[3][3];</code></pre>
+
+
+    <!-- 2D INPUT -->
+
+    <h3>10.34 Reading a Matrix</h3>
+
+    <pre><code>int rows, cols;
+
+scanf("%d %d", &amp;rows, &amp;cols);
+
+int matrix[rows][cols];
+
+for(int i = 0; i &lt; rows; i++)
+{
+    for(int j = 0; j &lt; cols; j++)
+    {
+        scanf("%d", &amp;matrix[i][j]);
+    }
+}</code></pre>
+
+
+    <!-- 2D OUTPUT -->
+
+    <h3>10.35 Printing a Matrix</h3>
+
+    <pre><code>for(int i = 0; i &lt; rows; i++)
+{
+    for(int j = 0; j &lt; cols; j++)
+    {
+        printf("%d ", matrix[i][j]);
+    }
+
+    printf("\n");
+}</code></pre>
+
+
+    <!-- MATRIX ADDITION -->
+
+    <h3>10.36 Matrix Addition</h3>
+
+    <p>
+        Two matrices can be added when they have
+        the same dimensions.
+    </p>
+
+    <pre><code>for(int i = 0; i &lt; rows; i++)
+{
+    for(int j = 0; j &lt; cols; j++)
+    {
+        result[i][j] =
+            matrix1[i][j] + matrix2[i][j];
+    }
+}</code></pre>
+
+
+    <!-- DIAGONAL -->
+
+    <h3>10.37 Main Diagonal Elements</h3>
+
+    <p>
+        In a square matrix, main diagonal elements
+        have equal row and column indexes.
+    </p>
+
+    <pre><code>for(int i = 0; i &lt; n; i++)
+{
+    printf("%d ", matrix[i][i]);
+}</code></pre>
+
+
+    <!-- ROW SUM -->
+
+    <h3>10.38 Row Sum</h3>
+
+    <pre><code>for(int i = 0; i &lt; rows; i++)
+{
+    int sum = 0;
+
+    for(int j = 0; j &lt; cols; j++)
+    {
+        sum += matrix[i][j];
+    }
+
+    printf("Row %d Sum = %d\n",
+           i + 1, sum);
+}</code></pre>
+
+
+    <!-- COLUMN SUM -->
+
+    <h3>10.39 Column Sum</h3>
+
+    <pre><code>for(int j = 0; j &lt; cols; j++)
+{
+    int sum = 0;
+
+    for(int i = 0; i &lt; rows; i++)
+    {
+        sum += matrix[i][j];
+    }
+
+    printf("Column %d Sum = %d\n",
+           j + 1, sum);
+}</code></pre>
+
+
+    <!-- ARRAY PROBLEM SOLVING -->
+
+    <h3>10.40 Array Problem-Solving Pattern</h3>
+
+    <div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">Step 1</div>
+            <div class="cb-mini-step-text">Read N</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">Step 2</div>
+            <div class="cb-mini-step-text">Read N Elements</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">Step 3</div>
+            <div class="cb-mini-step-text">Traverse Using a Loop</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">Step 4</div>
+            <div class="cb-mini-step-text">Apply Condition / Calculation</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-pink">
+            <div class="cb-mini-step-badge">Step 5</div>
+            <div class="cb-mini-step-text">Store Result if Needed</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">Step 6</div>
+            <div class="cb-mini-step-text">Print the Result</div>
+        </div>
+
+    </div>
+
+
+    <h4>Example</h4>
+
+    <p>
+        Find the maximum element.
+    </p>
+
+    <div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">Input</div>
+            <div class="cb-mini-step-text">Read the Array</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">Initialize</div>
+            <div class="cb-mini-step-text">Assume arr[0] is Maximum</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">Compare</div>
+            <div class="cb-mini-step-text">Check Remaining Elements</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">Update</div>
+            <div class="cb-mini-step-text">Replace Maximum When Needed</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-pink">
+            <div class="cb-mini-step-badge">Result</div>
+            <div class="cb-mini-step-text">Print Maximum</div>
+        </div>
+
+    </div>
+
+
+    <!-- COMMON MISTAKES -->
+
+    <h3>10.41 Common Array Mistakes</h3>
+
+    <ul>
+
+        <li>
+            Forgetting that array indexing starts from 0.
+        </li>
+
+        <li>
+            Accessing an index outside the valid range.
+        </li>
+
+        <li>
+            Using <strong>i &lt;= n</strong> instead of
+            <strong>i &lt; n</strong> while traversing.
+        </li>
+
+        <li>
+            Forgetting to initialize variables such as
+            sum, count or maximum.
+        </li>
+
+        <li>
+            Using an incorrect loop limit.
+        </li>
+
+        <li>
+            Confusing array index with array value.
+        </li>
+
+        <li>
+            Forgetting to check special cases such as
+            an empty or too-small input where applicable.
+        </li>
+
+    </ul>
+
+
+    <!-- QUICK REVISION -->
+
+    <h3>10.42 Quick Revision</h3>
+
+    <div class="tip-box">
+
+        📌 Array → Collection of same-type elements.
+
+        <br><br>
+
+        📌 Index starts at <strong>0</strong>.
+
+        <br><br>
+
+        📌 Last index → <strong>n - 1</strong>.
+
+        <br><br>
+
+        📌 Traversal → Visit every element.
+
+        <br><br>
+
+        📌 Searching → Find an element.
+
+        <br><br>
+
+        📌 Sorting → Arrange elements.
+
+        <br><br>
+
+        📌 2D array → Rows and columns.
+
+        <br><br>
+
+        📌 Arrays + Loops are fundamental to
+        problem solving.
+
+    </div>
+
+
+    <!-- MCQs -->
+
+    
+<section class="content-card cb-added-section cb-compact-learning" id="arrays-visualizer-extra">
+
+    <span class="cb-added-label">INTERACTIVE LEARNING</span>
+
+    <h2>🎬 Arrays — Traversal Visualization</h2>
+
+    <p class="cb-added-note">
+        Follow how a loop visits each array element from index 0 to index n - 1.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBConceptViz.toggle('arrays')"
+    >▶ Open Visualization</button>
+
+    <div class="cb-compact-panel" id="cbVizPanel-arrays" hidden>
+
+        <div
+            class="cb-viz-card cb-viz-dsa-standard"
+            data-cb-viz="arrays"
+            data-frames="[{&quot;title&quot;:&quot;1. Start at index 0&quot;,&quot;detail&quot;:&quot;Traversal begins at arr[0]. The first element is 10.&quot;},{&quot;title&quot;:&quot;2. Visit index 1&quot;,&quot;detail&quot;:&quot;Move to arr[1]. The value 20 is processed next.&quot;},{&quot;title&quot;:&quot;3. Visit index 2&quot;,&quot;detail&quot;:&quot;Move to arr[2]. The value 30 is now processed.&quot;},{&quot;title&quot;:&quot;4. Visit index 3&quot;,&quot;detail&quot;:&quot;Move to arr[3]. The value 40 is processed.&quot;},{&quot;title&quot;:&quot;5. Visit index 4&quot;,&quot;detail&quot;:&quot;Move to arr[4]. The value 50 is processed.&quot;},{&quot;title&quot;:&quot;6. Traversal complete&quot;,&quot;detail&quot;:&quot;All five elements have been visited. The loop stops when i becomes 5.&quot;}]"
+        >
+
+            <div class="cb-viz-dsa-topbar">
+                <div class="cb-viz-dsa-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+                <div class="cb-viz-dsa-brand" aria-label="CodeBhavya">
+                    <span class="cb-viz-dsa-brand-mark">
+                        <img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo">
+                    </span>
+                    <span class="cb-viz-dsa-code">Code</span><span class="cb-viz-dsa-bhavya">Bhavya</span>
+                </div>
+            </div>
+
+            <h3 class="cb-viz-dsa-title">🎬 Array Traversal Visualizer</h3>
+
+            <p class="cb-viz-dsa-intro">
+                The current array position becomes active as you move through the traversal.
+            </p>
+
+            <div class="cb-mini-step-flow">
+
+                <div class="cb-mini-step-card cb-mini-step-card-blue" data-cb-flow-step="0">
+                    <div class="cb-mini-step-badge">Index 0</div>
+                    <div class="cb-mini-step-text">10</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-gold" data-cb-flow-step="1">
+                    <div class="cb-mini-step-badge">Index 1</div>
+                    <div class="cb-mini-step-text">20</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-purple" data-cb-flow-step="2">
+                    <div class="cb-mini-step-badge">Index 2</div>
+                    <div class="cb-mini-step-text">30</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-green" data-cb-flow-step="3">
+                    <div class="cb-mini-step-badge">Index 3</div>
+                    <div class="cb-mini-step-text">40</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-pink" data-cb-flow-step="4">
+                    <div class="cb-mini-step-badge">Index 4</div>
+                    <div class="cb-mini-step-text">50</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-blue" data-cb-flow-step="5">
+                    <div class="cb-mini-step-badge">Complete</div>
+                    <div class="cb-mini-step-text">All Elements Visited</div>
+                </div>
+
+            </div>
+
+            <div class="cb-viz-stage">
+                <div class="cb-viz-step" id="cbVizStep-arrays">Step 1</div>
+                <h3 id="cbVizTitle-arrays"></h3>
+                <p id="cbVizDetail-arrays"></p>
+                <div class="cb-viz-dots" id="cbVizDots-arrays"></div>
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBConceptViz.prev('arrays')">← Previous</button>
+                <button class="cb-control cb-next" id="cbVizNext-arrays" onclick="CBConceptViz.next('arrays')">Next →</button>
+                <button class="cb-control cb-auto" id="cbVizAuto-arrays" onclick="CBConceptViz.auto('arrays')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBConceptViz.pause('arrays')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBConceptViz.reset('arrays')">↺ Reset</button>
+            </div>
+
+            <div class="cb-mini-progress">
+                <div id="cbVizProgress-arrays"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="content-card cb-added-section cb-compact-learning" id="arrays-tracing-extra">
+
+    <span class="cb-added-label">PROGRAM TRACING</span>
+
+    <h2>🔎 Program Tracing — Arrays</h2>
+
+    <p class="cb-added-note">
+        Trace how a loop visits each array element and accumulates the running sum.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBProgramTrace.toggle('arrays')"
+    >▶ Program Tracing — Arrays</button>
+
+    <div class="cb-compact-panel" id="cbTracePanel-arrays" hidden>
+
+        <div
+            class="cb-tracer"
+            data-cb-trace="arrays"
+            data-config="{&quot;code&quot;:[&quot;int main()&quot;,&quot;{&quot;,&quot;    int arr[] = {4, 7, 2, 9};&quot;,&quot;    int sum = 0;&quot;,&quot;    for (int i = 0; i &lt; 4; i++)&quot;,&quot;    {&quot;,&quot;        sum = sum + arr[i];&quot;,&quot;    }&quot;,&quot;    printf(\&quot;Sum = %d\&quot;, sum);&quot;,&quot;    return 0;&quot;,&quot;}&quot;],&quot;steps&quot;:[{&quot;line&quot;:0,&quot;state&quot;:{&quot;arr&quot;:&quot;—&quot;,&quot;sum&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Execution starts at main().&quot;},{&quot;line&quot;:2,&quot;state&quot;:{&quot;arr&quot;:[4,7,2,9],&quot;sum&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;The array arr is created with four initialized elements.&quot;},{&quot;line&quot;:3,&quot;state&quot;:{&quot;arr&quot;:[4,7,2,9],&quot;sum&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;sum is initialized to 0.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;arr&quot;:[4,7,2,9],&quot;sum&quot;:0,&quot;i&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;The loop starts with i = 0. Since 0 &lt; 4, the body executes.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;arr&quot;:[4,7,2,9],&quot;sum&quot;:4,&quot;i&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;sum = 0 + arr[0] = 4.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;arr&quot;:[4,7,2,9],&quot;sum&quot;:4,&quot;i&quot;:1,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i becomes 1. Since 1 &lt; 4, the next element is processed.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;arr&quot;:[4,7,2,9],&quot;sum&quot;:11,&quot;i&quot;:1,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;sum = 4 + arr[1] = 11.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;arr&quot;:[4,7,2,9],&quot;sum&quot;:11,&quot;i&quot;:2,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i becomes 2. Since 2 &lt; 4, traversal continues.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;arr&quot;:[4,7,2,9],&quot;sum&quot;:13,&quot;i&quot;:2,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;sum = 11 + arr[2] = 13.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;arr&quot;:[4,7,2,9],&quot;sum&quot;:13,&quot;i&quot;:3,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i becomes 3. Since 3 &lt; 4, the final element is processed.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;arr&quot;:[4,7,2,9],&quot;sum&quot;:22,&quot;i&quot;:3,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;sum = 13 + arr[3] = 22.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;arr&quot;:[4,7,2,9],&quot;sum&quot;:22,&quot;i&quot;:4,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i becomes 4. The condition 4 &lt; 4 is false, so traversal ends.&quot;},{&quot;line&quot;:8,&quot;state&quot;:{&quot;arr&quot;:[4,7,2,9],&quot;sum&quot;:22,&quot;output&quot;:&quot;Sum = 22&quot;},&quot;note&quot;:&quot;printf() displays the final sum.&quot;},{&quot;line&quot;:9,&quot;state&quot;:{&quot;arr&quot;:[4,7,2,9],&quot;sum&quot;:22,&quot;output&quot;:&quot;Sum = 22&quot;},&quot;note&quot;:&quot;return 0 ends the program successfully.&quot;}]}"
+        >
+
+            <div class="cb-tracer-grid">
+
+                <div class="cb-tracer-code-wrap">
+                    <div class="cb-tracer-heading">C Program</div>
+                    <pre class="cb-tracer-code" id="cbTraceCode-arrays"></pre>
+                </div>
+
+                <div class="cb-tracer-state-wrap">
+                    <div class="cb-tracer-heading">Live Variables</div>
+
+                    <div class="cb-tracer-note" id="cbTraceNote-arrays"></div>
+
+                    <div class="cb-live-state" id="cbTraceState-arrays"></div>
+
+                    <div class="cb-tracer-output">
+                        <strong>Output</strong>
+                        <pre id="cbTraceOutput-arrays">—</pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBProgramTrace.prev('arrays')">← Previous</button>
+                <button class="cb-control cb-next" id="cbTraceNext-arrays" onclick="CBProgramTrace.next('arrays')">Next →</button>
+                <button class="cb-control cb-auto" id="cbTraceAuto-arrays" onclick="CBProgramTrace.auto('arrays')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBProgramTrace.pause('arrays')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBProgramTrace.reset('arrays')">↺ Reset</button>
+            </div>
+
+            <div class="cb-tracer-status" id="cbTraceStatus-arrays">Step 0</div>
+
+        </div>
+    </div>
+</section>
+
+
+<h3>10.43 Quick MCQs</h3>
+
+    <p class="cb-mcq-guide">
+        Select an answer first, then click <strong>Check Answer</strong>.
+        A correct choice becomes green. If the answer is wrong, your choice becomes red
+        and the correct option becomes green. The explanation appears below.
+    </p>
+
+    <div class="cb-mcq-list">
+        
+    <div class="cb-mcq-card" id="arrays-mcq1" data-correct="A">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">1.</span>
+            <strong>What is the index of the first element of a C array?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="arrays-mcq1" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">0</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="arrays-mcq1" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">1</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="arrays-mcq1" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">-1</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="arrays-mcq1" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">2</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('arrays-mcq1')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('arrays-mcq1')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>C arrays use zero-based indexing, so the first element is stored at index 0.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="arrays-mcq2" data-correct="C">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">2.</span>
+            <strong>What is the last valid index of an array containing n elements?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="arrays-mcq2" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">n</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="arrays-mcq2" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">n + 1</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="arrays-mcq2" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">n - 1</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="arrays-mcq2" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">0</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('arrays-mcq2')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('arrays-mcq2')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>With n elements, valid indices run from 0 through n - 1.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="arrays-mcq3" data-correct="A">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">3.</span>
+            <strong>Which loop is commonly used to traverse an array?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="arrays-mcq3" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">for</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="arrays-mcq3" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">switch</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="arrays-mcq3" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">if</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="arrays-mcq3" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">goto</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('arrays-mcq3')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('arrays-mcq3')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>A for loop is commonly used because the index can be initialized, checked and updated in one compact structure.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="arrays-mcq4" data-correct="B">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">4.</span>
+            <strong>Which algorithm checks array elements one by one to find a target?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="arrays-mcq4" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">Binary search</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="arrays-mcq4" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">Linear search</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="arrays-mcq4" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">Merge sort</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="arrays-mcq4" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Selection sort</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('arrays-mcq4')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('arrays-mcq4')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>Linear search compares the target with array elements sequentially until it is found or the array ends.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="cb-mcq-card" id="arrays-mcq5" data-correct="B">
+
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">5.</span>
+            <strong>Which array representation is commonly used for rows and columns?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="arrays-mcq5" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">1D array</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="arrays-mcq5" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">2D array</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="arrays-mcq5" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">Pointer</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="arrays-mcq5" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Structure</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('arrays-mcq5')">Check Answer</button>
+
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('arrays-mcq5')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>A two-dimensional array naturally represents tabular data with rows and columns.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    </div>
+
+
+    <!-- PRACTICE -->
+
+    <div class="cb-c-dsa-practice-section">
+
+        <span class="cb-c-practice-label">PRACTICE</span>
+
+        <h3>10.44 🎯 Practice Problems</h3>
+
+        <p class="cb-c-practice-guide">
+            Arrays become easy when you combine indexing with loops.
+            Use <strong>💻 Solve It Yourself</strong> first,
+            open <strong>Hint</strong> only when needed,
+            and use <strong>Show Program</strong> after attempting the problem.
+        </p>
+
+        <div class="cb-practice-overall" data-practice-total="20">
+
+            <div class="cb-practice-overall-title">
+                📈 Arrays Practice Progress
+            </div>
+
+            <div class="cb-practice-overall-grid">
+
+                <div class="cb-practice-overall-item">
+                    <strong>Solved</strong>
+                    <span id="cbPracticeOverallSolved">0 / 20</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completed with Solution</strong>
+                    <span id="cbPracticeOverallCompleted">0</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Total Score</strong>
+                    <span id="cbPracticeOverallScore">0 / 2000</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completion</strong>
+                    <span id="cbPracticeOverallPercent">0%</span>
+                </div>
+
+            </div>
+
+            <div class="cb-practice-progress-track">
+                <div id="cbPracticeOverallBar" class="cb-practice-progress-fill"></div>
+            </div>
+
+            <div class="cb-practice-progress-note">
+                A problem counts as <strong>Solved</strong> when all test cases pass
+                without opening the full solution. Problems completed after viewing
+                the official solution are tracked separately.
+            </div>
+
+        </div>
+
+        <div class="cb-c-practice-list">
+            
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>1. Read and Print N Array Elements</strong>
+                <span id="practiceBadge-arrays-p1" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 1: Read N integers into an array and print them in the same order.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print the array elements separated by spaces.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p1')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p1')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p1')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p1" hidden>
+                💡 <strong>Hint:</strong> Use one loop to read and another loop to print.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p1" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Read and Print N Array Elements
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p1"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p1"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p1')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p1"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p1')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p1')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p1"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p1"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p1" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p1">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p1">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p1">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p1" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p1" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, arr[i]);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>2. Sum of Array Elements</strong>
+                <span id="practiceBadge-arrays-p2" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 2: Read N integers and find their sum.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print the sum.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p2')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p2')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p2')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p2" hidden>
+                💡 <strong>Hint:</strong> Initialize sum to 0 and add arr[i] during traversal.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p2" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Sum of Array Elements
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p2"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p2"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p2')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p2"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p2')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p2')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p2"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p2"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p2" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p2">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p2">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p2">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p2" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p2" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    long long sum = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+        sum += arr[i];
+    }
+
+    printf(&quot;%lld&quot;, sum);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>3. Average of Array Elements</strong>
+                <span id="practiceBadge-arrays-p3" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 3: Read N integers and find their average.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N greater than 0 followed by N integers.</p>
+            <p><strong>Output:</strong> Print the average rounded to two decimal places.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p3')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p3')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p3')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p3" hidden>
+                💡 <strong>Hint:</strong> Calculate the sum and divide by (double)n.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p3" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Average of Array Elements
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p3"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p3"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p3')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p3"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p3')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p3')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p3"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p3"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p3" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p3">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p3">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p3">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p3" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p3" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    long long sum = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+        sum += arr[i];
+    }
+
+    printf(&quot;%.2f&quot;, (double)sum / n);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>4. Maximum Element</strong>
+                <span id="practiceBadge-arrays-p4" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 4: Read N integers and find the maximum element.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N greater than 0 followed by N integers.</p>
+            <p><strong>Output:</strong> Print the maximum element.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p4')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p4')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p4')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p4" hidden>
+                💡 <strong>Hint:</strong> Start with arr[0] as maximum and compare the rest.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p4" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Maximum Element
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p4"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p4"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p4')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p4"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p4')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p4')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p4"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p4"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p4" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p4">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p4">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p4">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p4" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p4" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    int maximum = arr[0];
+
+    for (int i = 1; i &lt; n; i++)
+    {
+        if (arr[i] &gt; maximum)
+            maximum = arr[i];
+    }
+
+    printf(&quot;%d&quot;, maximum);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>5. Minimum Element</strong>
+                <span id="practiceBadge-arrays-p5" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 5: Read N integers and find the minimum element.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N greater than 0 followed by N integers.</p>
+            <p><strong>Output:</strong> Print the minimum element.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p5')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p5')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p5')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p5" hidden>
+                💡 <strong>Hint:</strong> Start with arr[0] as minimum and compare the rest.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p5" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Minimum Element
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p5"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p5"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p5')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p5"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p5')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p5')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p5"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p5"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p5" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p5">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p5">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p5">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p5" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p5" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    int minimum = arr[0];
+
+    for (int i = 1; i &lt; n; i++)
+    {
+        if (arr[i] &lt; minimum)
+            minimum = arr[i];
+    }
+
+    printf(&quot;%d&quot;, minimum);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>6. Count Even and Odd Elements</strong>
+                <span id="practiceBadge-arrays-p6" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 6: Count the even and odd values in an integer array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print the even count and odd count.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p6')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p6')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p6')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p6" hidden>
+                💡 <strong>Hint:</strong> Test arr[i] % 2 for every element.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p6" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Count Even and Odd Elements
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p6"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p6"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p6')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p6"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p6')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p6')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p6"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p6"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p6" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p6">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p6">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p6">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p6" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p6" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int even = 0;
+    int odd = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+        if (arr[i] % 2 == 0)
+            even++;
+        else
+            odd++;
+    }
+
+    printf(&quot;Even = %d
+&quot;, even);
+    printf(&quot;Odd = %d&quot;, odd);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>7. Count Positive, Negative and Zero</strong>
+                <span id="practiceBadge-arrays-p7" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 7: Count positive, negative and zero elements in an integer array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print positive, negative and zero counts.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p7')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p7')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p7')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p7" hidden>
+                💡 <strong>Hint:</strong> Use if / else-if / else while traversing.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p7" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Count Positive, Negative and Zero
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p7"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p7"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p7')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p7"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p7')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p7')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p7"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p7"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p7" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p7">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p7">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p7">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p7" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p7" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int positive = 0;
+    int negative = 0;
+    int zero = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+        if (arr[i] &gt; 0)
+            positive++;
+        else if (arr[i] &lt; 0)
+            negative++;
+        else
+            zero++;
+    }
+
+    printf(&quot;Positive = %d
+&quot;, positive);
+    printf(&quot;Negative = %d
+&quot;, negative);
+    printf(&quot;Zero = %d&quot;, zero);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>8. Linear Search</strong>
+                <span id="practiceBadge-arrays-p8" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 8: Search for a target value using linear search.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N, then N integers, then the target.</p>
+            <p><strong>Output:</strong> Print &quot;Found&quot; if the target exists, otherwise print &quot;Not Found&quot;.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p8')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p8')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p8')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p8" hidden>
+                💡 <strong>Hint:</strong> Compare the target with each array element until a match is found.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p8" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Linear Search
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p8"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p8"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p8')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p8"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p8')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p8')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p8"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p8"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p8" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p8">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p8">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p8">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p8" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p8" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int target;
+    int found = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    scanf(&quot;%d&quot;, &amp;target);
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (arr[i] == target)
+        {
+            found = 1;
+            break;
+        }
+    }
+
+    printf(&quot;%s&quot;, found ? &quot;Found&quot; : &quot;Not Found&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>9. Position of an Element</strong>
+                <span id="practiceBadge-arrays-p9" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 9: Find the first position of a target value in an array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N, then N integers, then the target.</p>
+            <p><strong>Output:</strong> Print the 1-based position, or -1 if the target is absent.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p9')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p9')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p9')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p9" hidden>
+                💡 <strong>Hint:</strong> When arr[i] matches the target, position is i + 1.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p9" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Position of an Element
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p9"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p9"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p9')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p9"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p9')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p9')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p9"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p9"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p9" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p9">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p9">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p9">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p9" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p9" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int target;
+    int position = -1;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    scanf(&quot;%d&quot;, &amp;target);
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (arr[i] == target)
+        {
+            position = i + 1;
+            break;
+        }
+    }
+
+    printf(&quot;%d&quot;, position);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>10. Reverse an Array</strong>
+                <span id="practiceBadge-arrays-p10" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 10: Read an array and print its elements in reverse order.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print the elements from last to first.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p10')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p10')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p10')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p10" hidden>
+                💡 <strong>Hint:</strong> Traverse from index n - 1 down to 0.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p10" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Reverse an Array
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p10"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p10"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p10')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p10"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p10')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p10')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p10"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p10"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p10" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p10">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p10">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p10">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p10" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p10" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    for (int i = n - 1; i &gt;= 0; i--)
+    {
+        if (i &lt; n - 1)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, arr[i]);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>11. Copy One Array into Another</strong>
+                <span id="practiceBadge-arrays-p11" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 11: Copy all elements of one array into another and print the copied array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print the copied elements.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p11')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p11')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p11')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p11" hidden>
+                💡 <strong>Hint:</strong> Assign destination[i] = source[i] for every index.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p11" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Copy One Array into Another
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p11"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p11"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p11')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p11"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p11')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p11')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p11"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p11"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p11" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p11">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p11">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p11">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p11" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p11" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int source[n];
+    int destination[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;source[i]);
+
+    for (int i = 0; i &lt; n; i++)
+        destination[i] = source[i];
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, destination[i]);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>12. Find Duplicate Elements</strong>
+                <span id="practiceBadge-arrays-p12" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 12: Print each value that appears more than once, exactly once.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print duplicate values in first-appearance order, or None if there are no duplicates.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p12')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p12')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p12')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p12" hidden>
+                💡 <strong>Hint:</strong> For each element, count later matches and also check whether the same value was already handled earlier.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p12" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Find Duplicate Elements
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p12"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p12"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p12')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p12"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p12')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p12')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p12"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p12"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p12" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p12">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p12">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p12">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p12" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p12" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int printed = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        int seenEarlier = 0;
+        int count = 1;
+
+        for (int k = 0; k &lt; i; k++)
+        {
+            if (arr[k] == arr[i])
+            {
+                seenEarlier = 1;
+                break;
+            }
+        }
+
+        if (seenEarlier)
+            continue;
+
+        for (int j = i + 1; j &lt; n; j++)
+        {
+            if (arr[j] == arr[i])
+                count++;
+        }
+
+        if (count &gt; 1)
+        {
+            if (printed)
+                printf(&quot; &quot;);
+
+            printf(&quot;%d&quot;, arr[i]);
+            printed = 1;
+        }
+    }
+
+    if (!printed)
+        printf(&quot;None&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>13. Find Unique Elements</strong>
+                <span id="practiceBadge-arrays-p13" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 13: Print all values that occur exactly once in the array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print unique values in original order, or None if no value is unique.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p13')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p13')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p13')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p13" hidden>
+                💡 <strong>Hint:</strong> Count how many times each arr[i] occurs in the whole array.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p13" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Find Unique Elements
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p13"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p13"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p13')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p13"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p13')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p13')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p13"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p13"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p13" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p13">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p13">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p13">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p13" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p13" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int printed = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        int count = 0;
+
+        for (int j = 0; j &lt; n; j++)
+        {
+            if (arr[j] == arr[i])
+                count++;
+        }
+
+        if (count == 1)
+        {
+            if (printed)
+                printf(&quot; &quot;);
+
+            printf(&quot;%d&quot;, arr[i]);
+            printed = 1;
+        }
+    }
+
+    if (!printed)
+        printf(&quot;None&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>14. Frequency of a Given Element</strong>
+                <span id="practiceBadge-arrays-p14" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 14: Count how many times a target value occurs in an array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N, then N integers, then the target.</p>
+            <p><strong>Output:</strong> Print the frequency.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p14')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p14')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p14')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p14" hidden>
+                💡 <strong>Hint:</strong> Increment count whenever arr[i] == target.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p14" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Frequency of a Given Element
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p14"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p14"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p14')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p14"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p14')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p14')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p14"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p14"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p14" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p14">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p14">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p14">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p14" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p14" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int target;
+    int count = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    scanf(&quot;%d&quot;, &amp;target);
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (arr[i] == target)
+            count++;
+    }
+
+    printf(&quot;%d&quot;, count);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>15. Second Largest Distinct Element</strong>
+                <span id="practiceBadge-arrays-p15" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 15: Find the second largest distinct element in an integer array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N greater than 1 followed by N integers.</p>
+            <p><strong>Output:</strong> Print the second largest distinct value, or None if it does not exist.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p15')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p15')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p15')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p15" hidden>
+                💡 <strong>Hint:</strong> Track largest and second largest while skipping duplicate largest values.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p15" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Second Largest Distinct Element
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p15"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p15"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p15')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p15"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p15')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p15')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p15"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p15"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p15" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p15">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p15">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p15">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p15" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p15" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    int largest = INT_MIN;
+    int second = INT_MIN;
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (arr[i] &gt; largest)
+        {
+            second = largest;
+            largest = arr[i];
+        }
+        else if (arr[i] &gt; second &amp;&amp; arr[i] != largest)
+        {
+            second = arr[i];
+        }
+    }
+
+    if (second == INT_MIN)
+        printf(&quot;None&quot;);
+    else
+        printf(&quot;%d&quot;, second);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>16. Sort Array in Ascending Order</strong>
+                <span id="practiceBadge-arrays-p16" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 16: Sort an integer array in ascending order.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print the sorted array.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p16')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p16')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p16')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p16" hidden>
+                💡 <strong>Hint:</strong> Use bubble sort and swap adjacent elements when arr[j] &gt; arr[j + 1].
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p16" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Sort Array in Ascending Order
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p16"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p16"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p16')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p16"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p16')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p16')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p16"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p16"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p16" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p16">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p16">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p16">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p16" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p16" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    for (int i = 0; i &lt; n - 1; i++)
+    {
+        for (int j = 0; j &lt; n - 1 - i; j++)
+        {
+            if (arr[j] &gt; arr[j + 1])
+            {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, arr[i]);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>17. Sort Array in Descending Order</strong>
+                <span id="practiceBadge-arrays-p17" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 17: Sort an integer array in descending order.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N integers.</p>
+            <p><strong>Output:</strong> Print the sorted array.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p17')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p17')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p17')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p17" hidden>
+                💡 <strong>Hint:</strong> Use bubble sort and swap adjacent elements when arr[j] &lt; arr[j + 1].
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p17" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Sort Array in Descending Order
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p17"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p17"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p17')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p17"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p17')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p17')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p17"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p17"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p17" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p17">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p17">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p17">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p17" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p17" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int arr[n];
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    for (int i = 0; i &lt; n - 1; i++)
+    {
+        for (int j = 0; j &lt; n - 1 - i; j++)
+        {
+            if (arr[j] &lt; arr[j + 1])
+            {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, arr[i]);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>18. Sum of Each Matrix Row</strong>
+                <span id="practiceBadge-arrays-p18" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 18: Read a matrix and print the sum of every row.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Rows R and columns C followed by R × C integers.</p>
+            <p><strong>Output:</strong> Print one row sum per line.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p18')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p18')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p18')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p18" hidden>
+                💡 <strong>Hint:</strong> Use nested loops and reset rowSum to 0 for each row.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p18" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Sum of Each Matrix Row
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p18"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p18"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p18')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p18"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p18')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p18')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p18"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p18"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p18" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p18">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p18">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p18">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p18" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p18" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int r, c;
+
+    scanf(&quot;%d %d&quot;, &amp;r, &amp;c);
+
+    int a[r][c];
+
+    for (int i = 0; i &lt; r; i++)
+    {
+        for (int j = 0; j &lt; c; j++)
+            scanf(&quot;%d&quot;, &amp;a[i][j]);
+    }
+
+    for (int i = 0; i &lt; r; i++)
+    {
+        int sum = 0;
+
+        for (int j = 0; j &lt; c; j++)
+            sum += a[i][j];
+
+        printf(&quot;%d&quot;, sum);
+
+        if (i &lt; r - 1)
+            printf(&quot;
+&quot;);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>19. Sum of Each Matrix Column</strong>
+                <span id="practiceBadge-arrays-p19" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 19: Read a matrix and print the sum of every column.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Rows R and columns C followed by R × C integers.</p>
+            <p><strong>Output:</strong> Print the column sums separated by spaces.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p19')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p19')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p19')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p19" hidden>
+                💡 <strong>Hint:</strong> Use the outer loop for columns and the inner loop for rows.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p19" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Sum of Each Matrix Column
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p19"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p19"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p19')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p19"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p19')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p19')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p19"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p19"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p19" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p19">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p19">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p19">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p19" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p19" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int r, c;
+
+    scanf(&quot;%d %d&quot;, &amp;r, &amp;c);
+
+    int a[r][c];
+
+    for (int i = 0; i &lt; r; i++)
+    {
+        for (int j = 0; j &lt; c; j++)
+            scanf(&quot;%d&quot;, &amp;a[i][j]);
+    }
+
+    for (int j = 0; j &lt; c; j++)
+    {
+        int sum = 0;
+
+        for (int i = 0; i &lt; r; i++)
+            sum += a[i][j];
+
+        if (j &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, sum);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>20. Main Diagonal of a Square Matrix</strong>
+                <span id="practiceBadge-arrays-p20" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 20: Read a square matrix and print its main diagonal elements.</strong>
+            </p>
+
+            <p><strong>Input:</strong> N followed by N × N integers.</p>
+            <p><strong>Output:</strong> Print a[0][0], a[1][1], ... separated by spaces.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('arrays-p20')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('arrays-p20')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('arrays-p20')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-arrays-p20" hidden>
+                💡 <strong>Hint:</strong> The main diagonal uses the same row and column index: a[i][i].
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-arrays-p20" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Main Diagonal of a Square Matrix
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-arrays-p20"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-arrays-p20"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('arrays-p20')">▶ Run Code</button>
+
+                            <button id="practiceCheck-arrays-p20"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('arrays-p20')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('arrays-p20')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-arrays-p20"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-arrays-p20"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-arrays-p20" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-arrays-p20">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-arrays-p20">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-arrays-p20">Not Solved</span>
+                        </div>
+
+                    </div>
+
+                    <div id="practiceMessage-arrays-p20" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-arrays-p20" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int a[n][n];
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        for (int j = 0; j &lt; n; j++)
+            scanf(&quot;%d&quot;, &amp;a[i][j]);
+    }
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, a[i][i]);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        </div>
+
+    </div>
+
+
+    <!-- KEY TAKEAWAY -->
+
+    <h3>10.45 Key Takeaway</h3>
+
+    <div class="tip-box">
+
+        🎯 Remember the core array pattern:
+
+        <br><br>
+
+        <strong>
+        Array → Loop → Process → Result
+        </strong>
+
+        <br><br>
+
+        Once you understand this pattern,
+        many array problems become much easier.
+
+        <br><br>
+
+        Arrays are the foundation for:
+
+        <br><br>
+
+        Searching → Sorting → Strings →
+        Matrices → Data Structures → Algorithms
+
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="arrays-interview-extra">
+
+    <span class="cb-added-label">INTERVIEW PREPARATION</span>
+
+    <h2>🎤 Arrays — Interview Questions</h2>
+
+    <div class="cb-original-qa-list cb-interview-qa-list">
+        
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">1.</span>
+                <span>Why do C arrays use zero-based indexing?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('arraysInterviewAnswer1', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="arraysInterviewAnswer1"
+                 hidden>
+                Array indexing is defined relative to the base address, so arr[0] refers to the first element at offset zero.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">2.</span>
+                <span>What happens if you access an array outside its valid index range?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('arraysInterviewAnswer2', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="arraysInterviewAnswer2"
+                 hidden>
+                C does not perform automatic bounds checking. Accessing outside the valid array range causes undefined behavior.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">3.</span>
+                <span>What is array traversal?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('arraysInterviewAnswer3', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="arraysInterviewAnswer3"
+                 hidden>
+                Array traversal means visiting the elements one by one, usually from index 0 to index n - 1.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">4.</span>
+                <span>What is the difference between arr[i] and &amp;arr[i]?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('arraysInterviewAnswer4', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="arraysInterviewAnswer4"
+                 hidden>
+                arr[i] is the value of the element, while &amp;arr[i] is the address of that element.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">5.</span>
+                <span>How is a two-dimensional array typically stored in C?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('arraysInterviewAnswer5', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="arraysInterviewAnswer5"
+                 hidden>
+                A normal C two-dimensional array is stored in row-major order: the elements of each row are contiguous before the next row.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">6.</span>
+                <span>Why is linear search called linear?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('arraysInterviewAnswer6', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="arraysInterviewAnswer6"
+                 hidden>
+                Because in the worst case it examines array elements one after another, so the work grows linearly with the number of elements.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">7.</span>
+                <span>Why should maximum and minimum usually be initialized from arr[0]?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('arraysInterviewAnswer7', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="arraysInterviewAnswer7"
+                 hidden>
+                Using arr[0] works correctly even when all array values are negative, unlike arbitrary initial values such as 0.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">8.</span>
+                <span>What is the difference between reversing an array while printing and reversing it in place?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('arraysInterviewAnswer8', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="arraysInterviewAnswer8"
+                 hidden>
+                Reverse printing leaves the stored array unchanged. In-place reversal swaps elements so the array itself is modified.
+            </div>
+
+        </div>
+    
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="arrays-tips-extra">
+
+    <span class="cb-added-label">PLACEMENT TIPS</span>
+
+    <h2>💡 Arrays — Placement Tips</h2>
+
+    <ul class="cb-tip-grid">
+        <li>Always identify the valid index range first: <strong>0 to n - 1</strong>.</li>
+        <li>For maximum/minimum problems, initialize from an actual array element rather than an arbitrary constant.</li>
+        <li>For search questions, decide whether the array is sorted before choosing between linear search and more advanced techniques.</li>
+        <li>For duplicate/frequency questions, carefully separate <strong>value</strong>, <strong>position</strong>, and <strong>frequency</strong>.</li>
+        <li>For matrix questions, track row index <code>i</code> and column index <code>j</code> separately.</li>
+        <li>When using nested loops, estimate the total number of comparisons because this determines time complexity.</li>
+    </ul>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="arrays-practice-extra">
+
+    <span class="cb-added-label">EXTRA PRACTICE</span>
+
+    <h2>✍️ Arrays — Extra Practice Questions</h2>
+
+    <ol class="cb-extra-practice">
+        <li>Move all zero values to the end of an array while preserving the order of non-zero values.</li>
+        <li>Find the missing number from an array containing values from 1 to N with one value absent.</li>
+        <li>Find the pair of elements whose sum is closest to a given target.</li>
+        <li>Rotate an array left by one position and then by K positions.</li>
+        <li>Find the transpose of a matrix.</li>
+        <li>Check whether a square matrix is symmetric.</li>
+    </ol>
+
+</section>
+
+
+
+<section class="cb-topic-navigation" aria-label="C Programming topic navigation">
+
+    <a class="cb-topic-nav-btn cb-topic-nav-prev" href="loops.html">
+        ← Previous Topic: Loops
+    </a>
+
+    <a class="cb-topic-nav-btn cb-topic-nav-next" href="strings.html">
+        Next Topic: Strings →
+    </a>
+
+</section>
+
+
+</main>
+
+</div>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../Maths/index.html">
+                Maths
+            </a>
+
+            <a href="index.html">
+                C Programming
+            </a>
+
+        </div>
+
+
+        <!-- LEARNING -->
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+<a href="../Data-Structures/">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/">
+    Advanced Data Structures
+</a>
+
+            <a href="#">
+                Python
+            </a>
+
+            <a href="#">
+                AI & Machine Learning
+            </a>
+
+        </div>
+
+
+        <!-- PRACTICE -->
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="#practice">
+                Practice Problems
+            </a>
+
+            <a href="#practice">
+                Problem Solving
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="c-programming.js"></script>
+<script>
+const codeBhavyaArraysPracticeConfigs =
+[{"key": "arrays-p1", "title": "Read and Print N Array Elements", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read n, read array elements, and print them */\n\n    return 0;\n}", "sampleInput": "5\n10 20 30 40 50", "tests": [{"input": "5\n10 20 30 40 50", "expected": "10 20 30 40 50"}, {"input": "3\n7 -2 9", "expected": "7 -2 9"}, {"input": "1\n42", "expected": "42"}]}, {"key": "arrays-p2", "title": "Sum of Array Elements", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read array and calculate sum */\n\n    return 0;\n}", "sampleInput": "5\n1 2 3 4 5", "tests": [{"input": "5\n1 2 3 4 5", "expected": "15"}, {"input": "4\n10 -2 7 5", "expected": "20"}, {"input": "1\n100", "expected": "100"}]}, {"key": "arrays-p3", "title": "Average of Array Elements", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read array and calculate average */\n\n    return 0;\n}", "sampleInput": "4\n10 20 30 40", "tests": [{"input": "4\n10 20 30 40", "expected": "25.00"}, {"input": "3\n1 2 4", "expected": "2.33"}, {"input": "2\n-5 5", "expected": "0.00"}]}, {"key": "arrays-p4", "title": "Maximum Element", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read array and find maximum */\n\n    return 0;\n}", "sampleInput": "5\n4 9 2 7 1", "tests": [{"input": "5\n4 9 2 7 1", "expected": "9"}, {"input": "3\n-5 -2 -9", "expected": "-2"}, {"input": "1\n42", "expected": "42"}]}, {"key": "arrays-p5", "title": "Minimum Element", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read array and find minimum */\n\n    return 0;\n}", "sampleInput": "5\n4 9 2 7 1", "tests": [{"input": "5\n4 9 2 7 1", "expected": "1"}, {"input": "3\n-5 -2 -9", "expected": "-9"}, {"input": "1\n42", "expected": "42"}]}, {"key": "arrays-p6", "title": "Count Even and Odd Elements", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Count even and odd array elements */\n\n    return 0;\n}", "sampleInput": "5\n1 2 3 4 6", "tests": [{"input": "5\n1 2 3 4 6", "expected": "Even = 3\nOdd = 2"}, {"input": "4\n2 4 6 8", "expected": "Even = 4\nOdd = 0"}, {"input": "3\n1 3 5", "expected": "Even = 0\nOdd = 3"}]}, {"key": "arrays-p7", "title": "Count Positive, Negative and Zero", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Count positive, negative and zero elements */\n\n    return 0;\n}", "sampleInput": "6\n-2 0 7 -1 0 5", "tests": [{"input": "6\n-2 0 7 -1 0 5", "expected": "Positive = 2\nNegative = 2\nZero = 2"}, {"input": "3\n1 2 3", "expected": "Positive = 3\nNegative = 0\nZero = 0"}, {"input": "4\n0 0 0 0", "expected": "Positive = 0\nNegative = 0\nZero = 4"}]}, {"key": "arrays-p8", "title": "Linear Search", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read array and target, then perform linear search */\n\n    return 0;\n}", "sampleInput": "5\n4 7 9 2 6\n9", "tests": [{"input": "5\n4 7 9 2 6\n9", "expected": "Found"}, {"input": "4\n1 2 3 4\n8", "expected": "Not Found"}, {"input": "1\n5\n5", "expected": "Found"}]}, {"key": "arrays-p9", "title": "Position of an Element", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Find first 1-based position of target */\n\n    return 0;\n}", "sampleInput": "5\n4 7 9 2 6\n2", "tests": [{"input": "5\n4 7 9 2 6\n2", "expected": "4"}, {"input": "4\n5 5 8 9\n5", "expected": "1"}, {"input": "3\n1 2 3\n9", "expected": "-1"}]}, {"key": "arrays-p10", "title": "Reverse an Array", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read array and print it in reverse */\n\n    return 0;\n}", "sampleInput": "5\n1 2 3 4 5", "tests": [{"input": "5\n1 2 3 4 5", "expected": "5 4 3 2 1"}, {"input": "3\n7 -1 9", "expected": "9 -1 7"}, {"input": "1\n42", "expected": "42"}]}, {"key": "arrays-p11", "title": "Copy One Array into Another", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read source array, copy it, and print destination */\n\n    return 0;\n}", "sampleInput": "4\n10 20 30 40", "tests": [{"input": "4\n10 20 30 40", "expected": "10 20 30 40"}, {"input": "3\n-1 0 7", "expected": "-1 0 7"}]}, {"key": "arrays-p12", "title": "Find Duplicate Elements", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Find duplicate values and print each once */\n\n    return 0;\n}", "sampleInput": "7\n1 2 3 2 4 1 1", "tests": [{"input": "7\n1 2 3 2 4 1 1", "expected": "1 2"}, {"input": "5\n1 2 3 4 5", "expected": "None"}, {"input": "6\n9 9 9 2 2 3", "expected": "9 2"}]}, {"key": "arrays-p13", "title": "Find Unique Elements", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Print values whose frequency is exactly one */\n\n    return 0;\n}", "sampleInput": "6\n1 2 2 3 4 4", "tests": [{"input": "6\n1 2 2 3 4 4", "expected": "1 3"}, {"input": "4\n5 5 5 5", "expected": "None"}, {"input": "3\n7 8 9", "expected": "7 8 9"}]}, {"key": "arrays-p14", "title": "Frequency of a Given Element", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Count target frequency */\n\n    return 0;\n}", "sampleInput": "6\n1 2 2 3 2 4\n2", "tests": [{"input": "6\n1 2 2 3 2 4\n2", "expected": "3"}, {"input": "4\n1 2 3 4\n8", "expected": "0"}, {"input": "5\n7 7 7 7 7\n7", "expected": "5"}]}, {"key": "arrays-p15", "title": "Second Largest Distinct Element", "starterCode": "#include <stdio.h>\n#include <limits.h>\n\nint main()\n{\n    int n;\n\n    /* Find second largest distinct value */\n\n    return 0;\n}", "sampleInput": "6\n10 5 20 20 8 15", "tests": [{"input": "6\n10 5 20 20 8 15", "expected": "15"}, {"input": "5\n5 4 3 2 1", "expected": "4"}, {"input": "4\n7 7 7 7", "expected": "None"}]}, {"key": "arrays-p16", "title": "Sort Array in Ascending Order", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Sort array in ascending order */\n\n    return 0;\n}", "sampleInput": "5\n5 1 4 2 3", "tests": [{"input": "5\n5 1 4 2 3", "expected": "1 2 3 4 5"}, {"input": "4\n-1 7 0 -5", "expected": "-5 -1 0 7"}, {"input": "3\n2 2 1", "expected": "1 2 2"}]}, {"key": "arrays-p17", "title": "Sort Array in Descending Order", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Sort array in descending order */\n\n    return 0;\n}", "sampleInput": "5\n5 1 4 2 3", "tests": [{"input": "5\n5 1 4 2 3", "expected": "5 4 3 2 1"}, {"input": "4\n-1 7 0 -5", "expected": "7 0 -1 -5"}, {"input": "3\n2 2 1", "expected": "2 2 1"}]}, {"key": "arrays-p18", "title": "Sum of Each Matrix Row", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int r, c;\n\n    /* Read matrix and print each row sum */\n\n    return 0;\n}", "sampleInput": "2 3\n1 2 3\n4 5 6", "tests": [{"input": "2 3\n1 2 3\n4 5 6", "expected": "6\n15"}, {"input": "3 2\n1 1\n2 2\n3 3", "expected": "2\n4\n6"}]}, {"key": "arrays-p19", "title": "Sum of Each Matrix Column", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int r, c;\n\n    /* Read matrix and print each column sum */\n\n    return 0;\n}", "sampleInput": "2 3\n1 2 3\n4 5 6", "tests": [{"input": "2 3\n1 2 3\n4 5 6", "expected": "5 7 9"}, {"input": "3 2\n1 1\n2 2\n3 3", "expected": "6 6"}]}, {"key": "arrays-p20", "title": "Main Diagonal of a Square Matrix", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n\n    /* Read square matrix and print main diagonal */\n\n    return 0;\n}", "sampleInput": "3\n1 2 3\n4 5 6\n7 8 9", "tests": [{"input": "3\n1 2 3\n4 5 6\n7 8 9", "expected": "1 5 9"}, {"input": "2\n9 8\n7 6", "expected": "9 6"}, {"input": "1\n42", "expected": "42"}]}];
+
+CodeBhavyaCPractice.registerAll(
+    codeBhavyaArraysPracticeConfigs
+);
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
