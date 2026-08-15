@@ -1,0 +1,4707 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C Programming | CodeBhavya</title>
+
+ <link rel="icon" type="image/png" sizes="32x32"
+      href="../images/codebhavya-icon-32.png">
+
+<link rel="icon" type="image/png" sizes="128x128"
+      href="../images/codebhavya-icon-128.png">
+
+<link rel="icon" type="image/png" sizes="512x512"
+      href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="c-programming.css">
+</head>
+
+<body class="cb-c-topic-page cb-storage-classes-page">
+
+<header class="top-header">
+
+<!-- <a href="../index.html" class="logo">
+    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a> -->
+    
+<a href="../index.html" class="logo codebhavya-new-logo">
+
+    <img
+        src="../images/codebhavya-main-logo.png"
+        alt="CodeBhavya Logo"
+        class="main-logo"
+    >
+
+    <span class="brand-name">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </span>
+
+</a>
+
+    <nav class="top-nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="../Maths/">
+            Maths
+        </a>
+
+        <a href="index.html" class="active">
+            C
+        </a>
+
+<a href="../Data-Structures/index.html">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/index.html">
+    Advanced Data Structures
+</a>
+
+        <a href="../Python/">
+            Python
+        </a>
+
+        <a href="../AI-ML/">
+            AI & ML
+        </a>
+
+        <a href="../Placement/">
+            Placement
+        </a>
+
+    </nav>
+
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar cb-c-topic-sidebar">
+    <div class="sidebar-title">💻 C Programming</div>
+
+    <input
+        type="text"
+        id="topicSearch"
+        class="search-box"
+        placeholder="🔍 Search topics..."
+        onkeyup="searchTopics()"
+    >
+
+    <div class="sidebar-title">Fundamentals</div>
+    <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
+    <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
+    <a class="cb-topic-link" data-topic-link="1" href="data-types.html">📦 Data Types</a>
+    <a class="cb-topic-link" data-topic-link="1" href="input-output.html">⌨️ Input &amp; Output</a>
+
+    <div class="sidebar-title">Operators &amp; Control</div>
+    <a class="cb-topic-link" data-topic-link="1" href="operators.html">➕ Operators</a>
+    <a class="cb-topic-link" data-topic-link="1" href="expressions.html">🧮 Expressions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="decision-making.html">🔀 Decision Making</a>
+    <a class="cb-topic-link" data-topic-link="1" href="loops.html">🔁 Loops</a>
+
+    <div class="sidebar-title">Programming Concepts</div>
+    <a class="cb-topic-link" data-topic-link="1" href="arrays.html">📊 Arrays</a>
+    <a class="cb-topic-link" data-topic-link="1" href="strings.html">🔤 Strings</a>
+    <a class="cb-topic-link" data-topic-link="1" href="functions.html">🧩 Functions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="pointers.html">👉 Pointers</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structures-unions.html">🏗️ Structures &amp; Unions</a>
+
+    <div class="sidebar-title">Advanced C</div>
+    <a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">⚙️ Preprocessor &amp; Header Files</a>
+    <a class="cb-topic-link" data-topic-link="1" href="file-handling.html">📁 File Handling</a>
+    <a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">🧠 Dynamic Memory Allocation</a>
+    <a class="cb-topic-link" data-topic-link="1" href="command-line.html">💻 Command Line Arguments</a>
+    <a class="cb-topic-link" data-topic-link="1" href="bitwise.html">🔢 Bitwise Programming</a>
+    <a class="cb-topic-link" data-topic-link="1" href="enum-typedef.html">🔤 Enumerations &amp; typedef</a>
+    <a class="cb-topic-link" data-topic-link="1" href="precedence.html">🧮 Operator Precedence &amp; Associativity</a>
+    <a class="cb-topic-link active" data-topic-link="1" href="storage-classes.html">💾 Storage Classes</a>
+    <a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">🛠️ Advanced C Preprocessor</a>
+
+    <div class="sidebar-title">Practice</div>
+    <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
+</aside>
+
+<main class="main-content">
+
+<section id="storage-classes" class="content-card">
+
+    <h2>💾 22. Storage Classes in C</h2>
+
+    <h3>22.1 What is a Storage Class?</h3>
+
+    <p>
+        A <strong>storage class</strong> in C specifies important
+        properties of a variable, such as its scope, lifetime,
+        visibility and storage behavior.
+    </p>
+
+    <p>
+        The commonly discussed storage-class specifiers in C are:
+    </p>
+
+    <ul>
+        <li><strong>auto</strong></li>
+        <li><strong>register</strong></li>
+        <li><strong>static</strong></li>
+        <li><strong>extern</strong></li>
+    </ul>
+
+
+    <h3>22.2 Main Properties</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Meaning</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Scope</td>
+                    <td>Where the variable can be accessed</td>
+                </tr>
+
+                <tr>
+                    <td>Lifetime</td>
+                    <td>How long the variable exists</td>
+                </tr>
+
+                <tr>
+                    <td>Linkage</td>
+                    <td>Whether the same name can refer to the same entity across scopes/files</td>
+                </tr>
+
+                <tr>
+                    <td>Storage</td>
+                    <td>How the implementation manages storage for the object</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <h3>22.3 auto Storage Class</h3>
+
+    <p>
+        <strong>auto</strong> is the default storage-class specifier
+        for local variables declared inside a block.
+    </p>
+
+    <pre><code>int main()
+{
+    auto int x = 10;
+
+    printf("%d", x);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        10
+    </div>
+
+    <p>
+        In normal C programming, the <code>auto</code> keyword is
+        rarely written explicitly because local variables are
+        automatic by default.
+    </p>
+
+    <pre><code>int x = 10;</code></pre>
+
+    <p>
+        is normally equivalent in storage-class behavior to:
+    </p>
+
+    <pre><code>auto int x = 10;</code></pre>
+
+
+    <h3>22.4 Scope of auto Variables</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x = 10;
+
+    {
+        int y = 20;
+
+        printf("%d %d\n", x, y);
+    }
+
+    printf("%d", x);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        10 20
+        <br>
+        10
+    </div>
+
+    <p>
+        The variable <code>y</code> exists only within its block.
+    </p>
+
+
+    <h3>22.5 register Storage Class</h3>
+
+    <p>
+        The <strong>register</strong> keyword requests that the
+        implementation consider keeping a variable in a processor
+        register for potentially faster access.
+    </p>
+
+    <pre><code>register int count;</code></pre>
+
+    <p>
+        Modern compilers generally make their own optimization
+        decisions, so explicitly using <code>register</code> is
+        rarely necessary.
+    </p>
+
+
+    <h3>22.6 Example of register</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    register int i;
+
+    for(i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", i);
+    }
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        0 1 2 3 4
+    </div>
+
+
+    <h3>22.7 Important Point About register</h3>
+
+    <div class="tip-box">
+
+        📌 <code>register</code> is a request to the implementation,
+        not a guarantee that the variable will actually be stored
+        in a CPU register.
+
+        <br><br>
+
+        📌 You cannot apply the address-of operator
+        <code>&amp;</code> to a variable declared with
+        <code>register</code>.
+
+    </div>
+
+    <pre><code>register int x = 10;
+
+/* &amp;x is not allowed */</code></pre>
+
+
+    <h3>22.8 static Storage Class</h3>
+
+    <p>
+        The <strong>static</strong> keyword has different effects
+        depending on where it is used.
+    </p>
+
+    <p>
+        For a local variable, static preserves its value between
+        function calls.
+    </p>
+
+    <pre><code>void counter()
+{
+    static int count = 0;
+
+    count++;
+
+    printf("%d\n", count);
+}</code></pre>
+
+
+    <h3>22.9 Static Local Variable</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+void counter()
+{
+    static int count = 0;
+
+    count++;
+
+    printf("%d\n", count);
+}
+
+int main()
+{
+    counter();
+    counter();
+    counter();
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        1
+        <br>
+        2
+        <br>
+        3
+    </div>
+
+    <p>
+        Unlike an ordinary automatic local variable, the static
+        local variable retains its stored value between calls.
+    </p>
+
+
+    <h3>22.10 Static Local Variable: Important Concept</h3>
+
+    <div class="formula-box">
+
+        First call → count = 1
+        <br>
+        Second call → count = 2
+        <br>
+        Third call → count = 3
+
+    </div>
+
+    <p>
+        The variable has <strong>block scope</strong>, but its
+        lifetime extends for the entire execution of the program.
+    </p>
+
+
+    <h3>22.11 Static Local vs Automatic Local</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Automatic Local</th>
+                    <th>Static Local</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Scope</td>
+                    <td>Block</td>
+                    <td>Block</td>
+                </tr>
+
+                <tr>
+                    <td>Lifetime</td>
+                    <td>During execution of the block/function invocation</td>
+                    <td>Entire program execution</td>
+                </tr>
+
+                <tr>
+                    <td>Retains value?</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                </tr>
+
+                <tr>
+                    <td>Default initialization</td>
+                    <td>Indeterminate if not initialized</td>
+                    <td>Zero-initialized</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <h3>22.12 Static Global Variable</h3>
+
+    <p>
+        A file-scope variable declared with <code>static</code>
+        has <strong>internal linkage</strong>.
+    </p>
+
+    <pre><code>static int total = 100;</code></pre>
+
+    <p>
+        Such a variable can be accessed by functions in the same
+        source file, but it is not available for external linkage
+        from another source file through that identifier.
+    </p>
+
+
+    <h3>22.13 Why Use a Static Global Variable?</h3>
+
+    <p>
+        It is useful when a file needs a private global variable
+        that should not be accessible through external linkage from
+        other source files.
+    </p>
+
+    <pre><code>static int fileCounter = 0;</code></pre>
+
+
+    <h3>22.14 extern Storage Class</h3>
+
+    <p>
+        The <strong>extern</strong> keyword declares an object or
+        function that has linkage to a definition elsewhere.
+    </p>
+
+    <p>
+        It is commonly used when sharing a global variable between
+        different source files.
+    </p>
+
+    <pre><code>extern int total;</code></pre>
+
+    <p>
+        This declaration does not itself provide a definition with
+        storage for <code>total</code>.
+    </p>
+
+
+    <h3>22.15 extern Example</h3>
+
+    <p><strong>File 1: main.c</strong></p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+extern int total;
+
+int main()
+{
+    printf("%d", total);
+
+    return 0;
+}</code></pre>
+
+    <p><strong>File 2: data.c</strong></p>
+
+    <pre><code>int total = 100;</code></pre>
+
+    <p>
+        When both files are compiled and linked together, the
+        declaration in <code>main.c</code> refers to the definition
+        in <code>data.c</code>.
+    </p>
+
+
+    <h3>22.16 extern Does Not Create a Second Variable</h3>
+
+    <pre><code>int total = 100;</code></pre>
+
+    <p>
+        This is the definition.
+    </p>
+
+    <pre><code>extern int total;</code></pre>
+
+    <p>
+        This is a declaration referring to an object with compatible
+        linkage and type.
+    </p>
+
+
+    <h3>22.17 Global Variable Without static</h3>
+
+    <pre><code>int total = 100;</code></pre>
+
+    <p>
+        A file-scope variable without <code>static</code> normally
+        has external linkage, unless another declaration changes
+        the linkage rules.
+    </p>
+
+
+    <div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">auto</div>
+            <div class="cb-mini-step-text">Ordinary local variable</div>
+            <div class="cb-mini-step-subtext">Block scope, automatic storage duration.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">register</div>
+            <div class="cb-mini-step-text">Local variable with a register hint</div>
+            <div class="cb-mini-step-subtext">The implementation may ignore the hint.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">static</div>
+            <div class="cb-mini-step-text">Preserve storage / control linkage</div>
+            <div class="cb-mini-step-subtext">Meaning depends on where the declaration appears.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">extern</div>
+            <div class="cb-mini-step-text">Refer to an external-linkage object</div>
+            <div class="cb-mini-step-subtext">Commonly used to share declarations across source files.</div>
+        </div>
+
+    </div>
+
+<h3>22.18 Four Storage-Class Keywords</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Keyword</th>
+                    <th>Typical Use</th>
+                    <th>Important Property</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>auto</td>
+                    <td>Local variables</td>
+                    <td>Automatic storage duration</td>
+                </tr>
+
+                <tr>
+                    <td>register</td>
+                    <td>Local variables</td>
+                    <td>Requests register-based optimization</td>
+                </tr>
+
+                <tr>
+                    <td>static</td>
+                    <td>Local/file-scope variables</td>
+                    <td>Static storage duration; file-scope static has internal linkage</td>
+                </tr>
+
+                <tr>
+                    <td>extern</td>
+                    <td>Referencing external definitions</td>
+                    <td>Declares an entity with linkage defined elsewhere</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <h3>22.19 Scope vs Lifetime</h3>
+
+    <p>
+        These two concepts are different.
+    </p>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Concept</th>
+                    <th>Meaning</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Scope</td>
+                    <td>Where a name can be used in the source code</td>
+                </tr>
+
+                <tr>
+                    <td>Lifetime</td>
+                    <td>How long the object exists during program execution</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <h3>22.20 Example: Scope vs Lifetime</h3>
+
+    <pre><code>void test()
+{
+    static int x = 10;
+
+    printf("%d", x);
+}</code></pre>
+
+    <p>
+        The name <code>x</code> has block scope, but the object
+        exists throughout program execution.
+    </p>
+
+
+    <h3>22.21 Static Variable Initialization</h3>
+
+    <p>
+        Objects with static storage duration are initialized before
+        program startup. If no initializer is provided, they are
+        initialized to zero (or the appropriate null value for
+        pointer types).
+    </p>
+
+    <pre><code>static int x;</code></pre>
+
+    <p>
+        Here <code>x</code> is initialized to:
+    </p>
+
+    <div class="output-box">
+        0
+    </div>
+
+
+    <h3>22.22 Automatic Variable Initialization</h3>
+
+    <p>
+        An automatic local variable that is declared without an
+        initializer has an indeterminate value. Reading such a
+        value before assigning a valid value leads to undefined
+        behavior.
+    </p>
+
+    <pre><code>void test()
+{
+    int x;
+
+    /* Do not read x before assigning a value */
+}</code></pre>
+
+
+    <h3>22.23 Static Counter Example</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+void visit()
+{
+    static int count = 0;
+
+    count++;
+
+    printf("Visited %d times\n", count);
+}
+
+int main()
+{
+    visit();
+    visit();
+    visit();
+    visit();
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        Visited 1 times
+        <br>
+        Visited 2 times
+        <br>
+        Visited 3 times
+        <br>
+        Visited 4 times
+    </div>
+
+
+    <h3>22.24 Static and Recursive Functions</h3>
+
+    <p>
+        A static local variable can be useful in recursive functions
+        when persistent state is intentionally required.
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+void countCalls()
+{
+    static int count = 0;
+
+    count++;
+
+    printf("%d ", count);
+}
+
+int main()
+{
+    countCalls();
+    countCalls();
+    countCalls();
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        1 2 3
+    </div>
+
+
+    <h3>22.25 Static Function</h3>
+
+    <p>
+        The <code>static</code> keyword can also be applied to a
+        function definition at file scope.
+    </p>
+
+    <pre><code>static void display()
+{
+    printf("Hello");
+}</code></pre>
+
+    <p>
+        Such a function has <strong>internal linkage</strong> and
+        cannot be referred to by name from another translation unit.
+    </p>
+
+
+    <h3>22.26 Internal vs External Linkage</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Linkage</th>
+                    <th>Meaning</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Internal linkage</td>
+                    <td>Name is limited to the current translation unit</td>
+                </tr>
+
+                <tr>
+                    <td>External linkage</td>
+                    <td>Name can refer to the same entity across translation units</td>
+                </tr>
+
+                <tr>
+                    <td>No linkage</td>
+                    <td>Name does not refer to an entity outside its scope</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <h3>22.27 Storage Duration</h3>
+
+    <p>
+        C also defines the concept of <strong>storage duration</strong>.
+    </p>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Storage Duration</th>
+                    <th>Typical Example</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Automatic</td>
+                    <td>Ordinary local variables</td>
+                </tr>
+
+                <tr>
+                    <td>Static</td>
+                    <td>Global variables and static local variables</td>
+                </tr>
+
+                <tr>
+                    <td>Allocated</td>
+                    <td>Memory obtained using malloc/calloc/realloc</td>
+                </tr>
+
+                <tr>
+                    <td>Thread</td>
+                    <td>Thread-local objects using _Thread_local</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <h3>22.28 Important Difference: static Local vs static Global</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>static Local</th>
+                    <th>static File-Scope</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Block scope</td>
+                    <td>File scope</td>
+                </tr>
+
+                <tr>
+                    <td>Retains value between function calls</td>
+                    <td>Exists throughout program execution</td>
+                </tr>
+
+                <tr>
+                    <td>Static storage duration</td>
+                    <td>Static storage duration</td>
+                </tr>
+
+                <tr>
+                    <td>Does not have linkage</td>
+                    <td>Internal linkage</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <h3>22.29 When Should You Use static?</h3>
+
+    <ul>
+
+        <li>
+            When a local variable must retain its value between
+            function calls.
+        </li>
+
+        <li>
+            When a file-scope variable should be private to its
+            source file.
+        </li>
+
+        <li>
+            When a helper function should have internal linkage.
+        </li>
+
+    </ul>
+
+
+    <h3>22.30 When Should You Use extern?</h3>
+
+    <ul>
+
+        <li>
+            When referring to a global object defined elsewhere.
+        </li>
+
+        <li>
+            When organizing a large C project into multiple source
+            files.
+        </li>
+
+        <li>
+            When sharing declarations through header files.
+        </li>
+
+    </ul>
+
+
+    <h3>22.31 Example with Header File</h3>
+
+    <p><strong>global.h</strong></p>
+
+    <pre><code>extern int total;</code></pre>
+
+    <p><strong>global.c</strong></p>
+
+    <pre><code>int total = 500;</code></pre>
+
+    <p><strong>main.c</strong></p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+#include "global.h"
+
+int main()
+{
+    printf("%d", total);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        500
+    </div>
+
+
+    <h3>22.32 Common Mistakes</h3>
+
+    <ul>
+
+        <li>
+            Thinking <code>static</code> always means "global".
+        </li>
+
+        <li>
+            Thinking <code>register</code> guarantees CPU-register
+            storage.
+        </li>
+
+        <li>
+            Reading an uninitialized automatic local variable.
+        </li>
+
+        <li>
+            Thinking <code>extern</code> creates a new variable.
+        </li>
+
+        <li>
+            Confusing scope with lifetime.
+        </li>
+
+        <li>
+            Forgetting that file-scope <code>static</code> gives
+            internal linkage.
+        </li>
+
+        <li>
+            Assuming an <code>extern</code> declaration is itself
+            a definition.
+        </li>
+
+    </ul>
+
+
+    <h3>22.33 Quick Revision</h3>
+
+    <div class="tip-box">
+
+        📌 <strong>auto</strong> → Default for ordinary local
+        variables.
+
+        <br><br>
+
+        📌 <strong>register</strong> → Requests register-oriented
+        optimization; compiler may ignore the request.
+
+        <br><br>
+
+        📌 <strong>static local</strong> → Retains value between
+        function calls.
+
+        <br><br>
+
+        📌 <strong>static file-scope</strong> → Internal linkage.
+
+        <br><br>
+
+        📌 <strong>extern</strong> → Declares an object/function
+        defined with appropriate linkage elsewhere.
+
+        <br><br>
+
+        📌 <strong>Scope</strong> → Where the name can be used.
+
+        <br><br>
+
+        📌 <strong>Lifetime</strong> → How long the object exists.
+
+        <br><br>
+
+        📌 <strong>Linkage</strong> → Whether declarations in
+        different scopes/files can refer to the same entity.
+
+    </div>
+
+
+    
+<section class="content-card cb-added-section cb-compact-learning" id="storage-classes-visualizer-extra">
+
+    <span class="cb-added-label">INTERACTIVE LEARNING</span>
+
+    <h2>🎬 Storage Classes — Scope, Lifetime &amp; Linkage</h2>
+
+    <p class="cb-added-note">
+        Compare the key idea behind <code>auto</code>, <code>register</code>,
+        <code>static</code>, and <code>extern</code>.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBConceptViz.toggle('storageclasses')"
+    >▶ Open Visualization</button>
+
+    <div class="cb-compact-panel" id="cbVizPanel-storageclasses" hidden>
+
+        <div
+            class="cb-viz-card cb-viz-dsa-standard"
+            data-cb-viz="storageclasses"
+            data-frames="[{&quot;title&quot;:&quot;1. auto — ordinary local storage&quot;,&quot;detail&quot;:&quot;An ordinary block-scope local variable normally has automatic storage duration: it exists for the execution of its block.&quot;},{&quot;title&quot;:&quot;2. register — an optimization hint&quot;,&quot;detail&quot;:&quot;register requests fast access for a local variable, but modern compilers decide actual register use themselves.&quot;},{&quot;title&quot;:&quot;3. static local — value survives function calls&quot;,&quot;detail&quot;:&quot;A block-scope static object has block scope but static storage duration, so the same object exists for the entire program run.&quot;},{&quot;title&quot;:&quot;4. static at file scope — internal linkage&quot;,&quot;detail&quot;:&quot;A file-scope static object or function name is restricted to the translation unit through internal linkage.&quot;},{&quot;title&quot;:&quot;5. extern — refer to a definition elsewhere&quot;,&quot;detail&quot;:&quot;An extern declaration can declare an object or function whose definition is provided elsewhere, often in another source file.&quot;}]"
+        >
+
+            <div class="cb-viz-dsa-topbar">
+                <div class="cb-viz-dsa-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+                <div class="cb-viz-dsa-brand" aria-label="CodeBhavya">
+                    <span class="cb-viz-dsa-brand-mark">
+                        <img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo">
+                    </span>
+                    <span class="cb-viz-dsa-code">Code</span><span class="cb-viz-dsa-bhavya">Bhavya</span>
+                </div>
+            </div>
+
+            <h3 class="cb-viz-dsa-title">🎬 Storage Class Visualizer</h3>
+
+            <div class="cb-mini-step-flow">
+
+                <div class="cb-mini-step-card cb-mini-step-card-blue" data-cb-flow-step="0">
+                    <div class="cb-mini-step-badge">auto</div>
+                    <div class="cb-mini-step-text">Local + automatic duration</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-gold" data-cb-flow-step="1">
+                    <div class="cb-mini-step-badge">register</div>
+                    <div class="cb-mini-step-text">Local + register hint</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-purple" data-cb-flow-step="2">
+                    <div class="cb-mini-step-badge">static local</div>
+                    <div class="cb-mini-step-text">Block scope + static duration</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-green" data-cb-flow-step="3">
+                    <div class="cb-mini-step-badge">static file</div>
+                    <div class="cb-mini-step-text">Internal linkage</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-pink" data-cb-flow-step="4">
+                    <div class="cb-mini-step-badge">extern</div>
+                    <div class="cb-mini-step-text">External declaration</div>
+                </div>
+
+            </div>
+
+            <div class="cb-viz-stage">
+                <div class="cb-viz-step" id="cbVizStep-storageclasses">Step 1</div>
+                <h3 id="cbVizTitle-storageclasses"></h3>
+                <p id="cbVizDetail-storageclasses"></p>
+                <div class="cb-viz-dots" id="cbVizDots-storageclasses"></div>
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBConceptViz.prev('storageclasses')">← Previous</button>
+                <button class="cb-control cb-next" id="cbVizNext-storageclasses" onclick="CBConceptViz.next('storageclasses')">Next →</button>
+                <button class="cb-control cb-auto" id="cbVizAuto-storageclasses" onclick="CBConceptViz.auto('storageclasses')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBConceptViz.pause('storageclasses')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBConceptViz.reset('storageclasses')">↺ Reset</button>
+            </div>
+
+            <div class="cb-mini-progress">
+                <div id="cbVizProgress-storageclasses"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="content-card cb-added-section cb-compact-learning" id="storage-classes-tracing-extra">
+
+    <span class="cb-added-label">PROGRAM TRACING</span>
+
+    <h2>🔎 Program Tracing — Storage Classes</h2>
+
+    <p class="cb-added-note">
+        Compare an automatic local variable that is created for each call
+        with a static local variable that retains its value between calls.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBProgramTrace.toggle('storageclasses')"
+    >▶ Program Tracing — Storage Classes</button>
+
+    <div class="cb-compact-panel" id="cbTracePanel-storageclasses" hidden>
+
+        <div
+            class="cb-tracer"
+            data-cb-trace="storageclasses"
+            data-config="{&quot;code&quot;:[&quot;void show()&quot;,&quot;{&quot;,&quot;    auto int local = 0;&quot;,&quot;    static int count = 0;&quot;,&quot;    local++;&quot;,&quot;    count++;&quot;,&quot;    printf(\&quot;%d %d\\n\&quot;, local, count);&quot;,&quot;}&quot;,&quot;&quot;,&quot;int main()&quot;,&quot;{&quot;,&quot;    show();&quot;,&quot;    show();&quot;,&quot;    return 0;&quot;,&quot;}&quot;],&quot;steps&quot;:[{&quot;line&quot;:9,&quot;state&quot;:{&quot;local&quot;:&quot;—&quot;,&quot;count&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Execution begins at main(). The static local object count already exists and is zero-initialized before program execution reaches main().&quot;},{&quot;line&quot;:11,&quot;state&quot;:{&quot;local&quot;:&quot;—&quot;,&quot;count&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;The first call to show() begins.&quot;},{&quot;line&quot;:2,&quot;state&quot;:{&quot;local&quot;:0,&quot;count&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;A new automatic local variable local is created for this call and initialized to 0.&quot;},{&quot;line&quot;:3,&quot;state&quot;:{&quot;local&quot;:0,&quot;count&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;count refers to the same static local object used by every call to show().&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;local&quot;:1,&quot;count&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;local becomes 1.&quot;},{&quot;line&quot;:5,&quot;state&quot;:{&quot;local&quot;:1,&quot;count&quot;:1,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;count becomes 1.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;local&quot;:1,&quot;count&quot;:1,&quot;output&quot;:&quot;1 1&quot;},&quot;note&quot;:&quot;The first call prints 1 1.&quot;},{&quot;line&quot;:12,&quot;state&quot;:{&quot;local&quot;:&quot;—&quot;,&quot;count&quot;:1,&quot;output&quot;:&quot;1 1&quot;},&quot;note&quot;:&quot;After the first call returns, that automatic local no longer exists. The static count object still has value 1. The second call begins.&quot;},{&quot;line&quot;:2,&quot;state&quot;:{&quot;local&quot;:0,&quot;count&quot;:1,&quot;output&quot;:&quot;1 1&quot;},&quot;note&quot;:&quot;A new automatic local variable is created for the second call and initialized to 0.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;local&quot;:1,&quot;count&quot;:1,&quot;output&quot;:&quot;1 1&quot;},&quot;note&quot;:&quot;The second call increments its own local variable to 1.&quot;},{&quot;line&quot;:5,&quot;state&quot;:{&quot;local&quot;:1,&quot;count&quot;:2,&quot;output&quot;:&quot;1 1&quot;},&quot;note&quot;:&quot;The same static count object is incremented from 1 to 2.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;local&quot;:1,&quot;count&quot;:2,&quot;output&quot;:&quot;1 1\n1 2&quot;},&quot;note&quot;:&quot;The second call prints 1 2.&quot;},{&quot;line&quot;:13,&quot;state&quot;:{&quot;local&quot;:&quot;—&quot;,&quot;count&quot;:2,&quot;output&quot;:&quot;1 1\n1 2&quot;},&quot;note&quot;:&quot;return 0 ends main().&quot;}]}"
+        >
+
+            <div class="cb-tracer-grid">
+
+                <div class="cb-tracer-code-wrap">
+                    <div class="cb-tracer-heading">C Program</div>
+                    <pre class="cb-tracer-code" id="cbTraceCode-storageclasses"></pre>
+                </div>
+
+                <div class="cb-tracer-state-wrap">
+                    <div class="cb-tracer-heading">Live Variables</div>
+                    <div class="cb-tracer-note" id="cbTraceNote-storageclasses"></div>
+                    <div class="cb-live-state" id="cbTraceState-storageclasses"></div>
+
+                    <div class="cb-tracer-output">
+                        <strong>Output</strong>
+                        <pre id="cbTraceOutput-storageclasses">—</pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBProgramTrace.prev('storageclasses')">← Previous</button>
+                <button class="cb-control cb-next" id="cbTraceNext-storageclasses" onclick="CBProgramTrace.next('storageclasses')">Next →</button>
+                <button class="cb-control cb-auto" id="cbTraceAuto-storageclasses" onclick="CBProgramTrace.auto('storageclasses')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBProgramTrace.pause('storageclasses')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBProgramTrace.reset('storageclasses')">↺ Reset</button>
+            </div>
+
+            <div class="cb-tracer-status" id="cbTraceStatus-storageclasses">Step 0</div>
+
+        </div>
+    </div>
+</section>
+
+
+<h3>22.34 Quick MCQs</h3>
+
+    <p class="cb-mcq-guide">
+        Select an answer first, then click <strong>Check Answer</strong>.
+        A correct choice becomes green. If the answer is wrong, your choice becomes red
+        and the correct option becomes green. The explanation appears below.
+    </p>
+
+    <div class="cb-mcq-list">
+        
+    <div class="cb-mcq-card" id="storage-mcq1" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">1.</span>
+            <strong>Which storage class is the default for ordinary local variables?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="storage-mcq1" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">static</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="storage-mcq1" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">auto</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="storage-mcq1" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">extern</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="storage-mcq1" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">register</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('storage-mcq1')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('storage-mcq1')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>Ordinary block-scope local variables have automatic storage duration by default.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="storage-mcq2" data-correct="C">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">2.</span>
+            <strong>Which keyword allows a local variable to retain its value between function calls?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="storage-mcq2" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">auto</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="storage-mcq2" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">register</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="storage-mcq2" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">static</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="storage-mcq2" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">extern</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('storage-mcq2')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('storage-mcq2')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>A static local object has static storage duration, so the same object persists across calls.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="storage-mcq3" data-correct="D">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">3.</span>
+            <strong>Which keyword declares a reference to an object defined elsewhere?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="storage-mcq3" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">auto</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="storage-mcq3" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">static</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="storage-mcq3" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">register</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="storage-mcq3" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">extern</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('storage-mcq3')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('storage-mcq3')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: D</strong>
+                <p>extern is commonly used to declare an object or function whose definition is provided elsewhere.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="storage-mcq4" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">4.</span>
+            <strong>Which keyword can be used for a file-scope function to give it internal linkage?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="storage-mcq4" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">auto</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="storage-mcq4" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">static</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="storage-mcq4" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">register</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="storage-mcq4" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">extern</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('storage-mcq4')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('storage-mcq4')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>A file-scope function declared static has internal linkage.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="storage-mcq5" data-correct="C">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">5.</span>
+            <strong>An uninitialized static-duration int object is initialized to:</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="storage-mcq5" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">1</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="storage-mcq5" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">-1</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="storage-mcq5" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">0</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="storage-mcq5" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Garbage</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('storage-mcq5')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('storage-mcq5')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>Objects with static storage duration are zero-initialized before program startup if no explicit initializer is provided.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="storage-mcq6" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">6.</span>
+            <strong>Which keyword does not guarantee that a variable will be stored in a CPU register?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="storage-mcq6" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">register</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="storage-mcq6" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">static</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="storage-mcq6" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">extern</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="storage-mcq6" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">auto</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('storage-mcq6')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('storage-mcq6')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>register is only a request/hint; the implementation decides actual register allocation.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="storage-mcq7" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">7.</span>
+            <strong>A static local variable has:</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="storage-mcq7" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">Block scope and static storage duration</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="storage-mcq7" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">File scope only</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="storage-mcq7" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">No scope</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="storage-mcq7" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Automatic storage duration</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('storage-mcq7')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('storage-mcq7')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>A static local is visible only within its block but exists for the whole program execution.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="storage-mcq8" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">8.</span>
+            <strong>Which concept describes how long an object exists?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="storage-mcq8" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">Scope</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="storage-mcq8" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">Lifetime</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="storage-mcq8" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">Syntax</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="storage-mcq8" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Precedence</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('storage-mcq8')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('storage-mcq8')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>Lifetime describes the period during program execution in which an object exists.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="storage-mcq9" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">9.</span>
+            <strong>File-scope static variables generally have:</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="storage-mcq9" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">External linkage</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="storage-mcq9" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">Internal linkage</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="storage-mcq9" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">No storage</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="storage-mcq9" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Dynamic linkage</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('storage-mcq9')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('storage-mcq9')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>At file scope, static gives internal linkage to object and function names.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="storage-mcq10" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">10.</span>
+            <strong>Does an extern declaration necessarily define a new object?</strong>
+        </div>
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="storage-mcq10" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">Yes</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="storage-mcq10" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">No</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="storage-mcq10" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">Only for integers</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="storage-mcq10" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Only inside functions</span>
+            </label></div>
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn" onclick="CBMCQ.check('storage-mcq10')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn" onclick="CBMCQ.reset('storage-mcq10')" hidden>Try Again</button>
+        </div>
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>A declaration such as extern int count; can refer to a definition elsewhere without defining a second object.</p>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+
+<div class="cb-c-dsa-practice-section">
+
+        <span class="cb-c-practice-label">PRACTICE</span>
+
+        <h3>22.35 🎯 Practice Problems</h3>
+
+        <p class="cb-c-practice-guide">
+            Practice <code>auto</code>, <code>register</code>, static locals,
+            file-scope static names, <code>extern</code>, scope, lifetime,
+            linkage, and multi-file design concepts.
+            Use <strong>💻 Solve It Yourself</strong> first,
+            open <strong>Hint</strong> only when needed,
+            and use <strong>Show Program</strong> after attempting the problem.
+        </p>
+
+        <div class="cb-practice-overall" data-practice-total="20">
+
+            <div class="cb-practice-overall-title">
+                📈 Storage Classes Practice Progress
+            </div>
+
+            <div class="cb-practice-overall-grid">
+
+                <div class="cb-practice-overall-item">
+                    <strong>Solved</strong>
+                    <span id="cbPracticeOverallSolved">0 / 20</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completed with Solution</strong>
+                    <span id="cbPracticeOverallCompleted">0</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Total Score</strong>
+                    <span id="cbPracticeOverallScore">0 / 2000</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completion</strong>
+                    <span id="cbPracticeOverallPercent">0%</span>
+                </div>
+
+            </div>
+
+            <div class="cb-practice-progress-track">
+                <div id="cbPracticeOverallBar" class="cb-practice-progress-fill"></div>
+            </div>
+
+            <div class="cb-practice-progress-note">
+                A problem counts as <strong>Solved</strong> when all test cases pass
+                without opening the full solution. Problems completed after viewing
+                the official solution are tracked separately.
+            </div>
+
+        </div>
+
+        <div class="cb-c-practice-list">
+            
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>1. Purpose of auto</strong>
+                <span id="practiceBadge-storage-p1" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 1: Explain the purpose of the auto storage class using a runnable program.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print a concise explanation.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p1')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p1')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p1')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p1" hidden>
+                💡 <strong>Hint:</strong> Mention block scope and automatic storage duration.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p1" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Purpose of auto
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p1"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p1"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p1')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p1"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p1')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p1')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p1"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p1"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p1" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p1">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p1">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p1">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p1" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p1" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;auto: block-scope local object with automatic storage duration&quot;);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>2. Automatic Local Variable</strong>
+                <span id="practiceBadge-storage-p2" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 2: Write a program using an automatic local variable.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the local value after adding 10.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p2')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p2')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p2')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p2" hidden>
+                💡 <strong>Hint:</strong> Use auto int value; inside main().
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p2" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Automatic Local Variable
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p2"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p2"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p2')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p2"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p2')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p2')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p2"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p2"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p2" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p2">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p2">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p2">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p2" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p2" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    auto int value;
+    scanf(&quot;%d&quot;, &amp;value);
+    value += 10;
+    printf(&quot;%d&quot;, value);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>3. Purpose of register</strong>
+                <span id="practiceBadge-storage-p3" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 3: Explain the purpose of register using a runnable program.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print a concise explanation.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p3')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p3')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p3')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p3" hidden>
+                💡 <strong>Hint:</strong> It requests efficient access, but the compiler chooses actual placement.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p3" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Purpose of register
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p3"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p3"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p3')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p3"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p3')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p3')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p3"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p3"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p3" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p3">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p3">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p3">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p3" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p3" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;register: local variable hint; actual register use is implementation-controlled&quot;);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>4. register Loop Counter</strong>
+                <span id="practiceBadge-storage-p4" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 4: Write a program containing a register loop counter and calculate the sum from 1 to n.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One positive integer n.</p>
+            <p><strong>Output:</strong> Print the sum from 1 through n.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p4')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p4')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p4')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p4" hidden>
+                💡 <strong>Hint:</strong> Declare register int i; before the loop.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p4" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — register Loop Counter
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p4"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p4"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p4')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p4"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p4')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p4')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p4"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p4"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p4" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p4">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p4">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p4">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p4" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p4" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int sum = 0;
+    register int i;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    for (i = 1; i &lt;= n; i++)
+        sum += i;
+
+    printf(&quot;%d&quot;, sum);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>5. Why register is Not Guaranteed</strong>
+                <span id="practiceBadge-storage-p5" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 5: Explain why register does not guarantee CPU-register allocation.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print the explanation.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p5')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p5')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p5')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p5" hidden>
+                💡 <strong>Hint:</strong> The implementation decides where objects are actually stored.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p5" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Why register is Not Guaranteed
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p5"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p5"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p5')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p5"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p5')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p5')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p5"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p5"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p5" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p5">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p5">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p5">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p5" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p5" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;register is a language hint; the implementation decides actual storage&quot;);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>6. Static Local Variable</strong>
+                <span id="practiceBadge-storage-p6" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 6: Write a function using a static local variable and call it three times.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print 1 2 3.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p6')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p6')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p6')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p6" hidden>
+                💡 <strong>Hint:</strong> Initialize static int count = 0; inside the function.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p6" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Static Local Variable
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p6"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p6"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p6')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p6"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p6')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p6')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p6"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p6"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p6" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p6">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p6">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p6">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p6" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p6" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+void show(void)
+{
+    static int count = 0;
+    count++;
+    printf(&quot;%d&quot;, count);
+}
+
+int main()
+{
+    show(); printf(&quot; &quot;);
+    show(); printf(&quot; &quot;);
+    show();
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>7. Count Function Calls with static</strong>
+                <span id="practiceBadge-storage-p7" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 7: Count how many times a function is called using a static local variable.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer n indicating the number of calls.</p>
+            <p><strong>Output:</strong> Print the final call count.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p7')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p7')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p7')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p7" hidden>
+                💡 <strong>Hint:</strong> Increment a static counter inside the function and return it.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p7" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Count Function Calls with static
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p7"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p7"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p7')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p7"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p7')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p7')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p7"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p7"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p7" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p7">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p7">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p7">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p7" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p7" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int callCounter(void)
+{
+    static int count = 0;
+    return ++count;
+}
+
+int main()
+{
+    int n;
+    int result = 0;
+    scanf(&quot;%d&quot;, &amp;n);
+
+    for (int i = 0; i &lt; n; i++)
+        result = callCounter();
+
+    printf(&quot;%d&quot;, result);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>8. Automatic Local vs Static Local</strong>
+                <span id="practiceBadge-storage-p8" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 8: Demonstrate the difference between an automatic local variable and a static local variable across two function calls.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print auto and static values for two calls.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p8')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p8')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p8')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p8" hidden>
+                💡 <strong>Hint:</strong> Reinitialize the automatic local on every call; keep the static local in the function.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p8" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Automatic Local vs Static Local
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p8"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p8"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p8')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p8"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p8')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p8')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p8"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p8"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p8" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p8">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p8">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p8">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p8" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p8" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+void show(void)
+{
+    int automatic = 0;
+    static int persistent = 0;
+
+    automatic++;
+    persistent++;
+
+    printf(&quot;%d %d\n&quot;, automatic, persistent);
+}
+
+int main()
+{
+    show();
+    show();
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>9. File-Scope static Variable</strong>
+                <span id="practiceBadge-storage-p9" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 9: Create a file-scope static variable and use it from a function in the same source file.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the static file-scope variable after adding the input.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p9')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p9')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p9')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p9" hidden>
+                💡 <strong>Hint:</strong> Declare static int total = 10; outside all functions.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p9" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — File-Scope static Variable
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p9"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p9"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p9')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p9"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p9')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p9')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p9"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p9"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p9" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p9">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p9">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p9">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p9" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p9" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+static int total = 10;
+
+int main()
+{
+    int x;
+    scanf(&quot;%d&quot;, &amp;x);
+    total += x;
+    printf(&quot;%d&quot;, total);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>10. Internal Linkage</strong>
+                <span id="practiceBadge-storage-p10" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 10: Explain internal linkage with a file-scope static name.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print the explanation.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p10')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p10')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p10')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p10" hidden>
+                💡 <strong>Hint:</strong> Internal linkage makes a file-scope name refer only within its translation unit.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p10" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Internal Linkage
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p10"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p10"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p10')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p10"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p10')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p10')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p10"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p10"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p10" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p10">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p10">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p10">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p10" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p10" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;internal linkage: the file-scope name is confined to its translation unit&quot;);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>11. Purpose of extern</strong>
+                <span id="practiceBadge-storage-p11" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 11: Explain the purpose of extern with a runnable declaration and definition in one translation unit.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print the shared value.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p11')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p11')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p11')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p11" hidden>
+                💡 <strong>Hint:</strong> Declare extern int shared; before its definition.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p11" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Purpose of extern
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p11"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p11"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p11')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p11"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p11')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p11')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p11"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p11"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p11" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p11">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p11">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p11">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p11" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p11" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+extern int shared;
+int shared = 25;
+
+int main()
+{
+    printf(&quot;%d&quot;, shared);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>12. Share a Global Variable with extern</strong>
+                <span id="practiceBadge-storage-p12" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 12: Model two C files that share a global variable using extern. The runnable solution combines the declarations into one translation unit while preserving the declaration/definition relationship.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer to add to the shared value.</p>
+            <p><strong>Output:</strong> Print the updated shared value.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p12')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p12')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p12')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p12" hidden>
+                💡 <strong>Hint:</strong> One place defines the object; another declaration uses extern.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p12" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Share a Global Variable with extern
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p12"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p12"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p12')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p12"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p12')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p12')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p12"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p12"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p12" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p12">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p12">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p12">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p12" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p12" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+/* file1.c concept: definition */
+int shared = 100;
+
+/* file2.c concept: declaration */
+extern int shared;
+
+int main()
+{
+    int x;
+    scanf(&quot;%d&quot;, &amp;x);
+    shared += x;
+    printf(&quot;%d&quot;, shared);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>13. Scope vs Lifetime</strong>
+                <span id="practiceBadge-storage-p13" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 13: Explain the difference between scope and lifetime.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print two concise lines.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p13')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p13')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p13')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p13" hidden>
+                💡 <strong>Hint:</strong> Scope is where a name can be used; lifetime is how long an object exists.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p13" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Scope vs Lifetime
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p13"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p13"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p13')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p13"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p13')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p13')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p13"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p13"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p13" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p13">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p13">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p13">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p13" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p13" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;Scope: where a name can be used.\n&quot;);
+    printf(&quot;Lifetime: how long an object exists.&quot;);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>14. Predict a Static Counter</strong>
+                <span id="practiceBadge-storage-p14" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 14: Predict the output of a program containing a static counter function, then verify it.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print 2 4 6 from three calls that add 2 each time.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p14')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p14')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p14')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p14" hidden>
+                💡 <strong>Hint:</strong> The static counter preserves its previous value.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p14" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Predict a Static Counter
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p14"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p14"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p14')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p14"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p14')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p14')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p14"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p14"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p14" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p14">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p14">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p14">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p14" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p14" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int nextValue(void)
+{
+    static int value = 0;
+    value += 2;
+    return value;
+}
+
+int main()
+{
+    int a = nextValue();
+    int b = nextValue();
+    int c = nextValue();
+
+    printf(&quot;%d %d %d&quot;, a, b, c);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>15. Automatic or Static Storage Duration</strong>
+                <span id="practiceBadge-storage-p15" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 15: Identify whether representative objects have automatic or static storage duration.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print classifications for local, static local and file-scope global objects.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p15')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p15')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p15')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p15" hidden>
+                💡 <strong>Hint:</strong> Ordinary locals are automatic; static locals and file-scope objects have static storage duration.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p15" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Automatic or Static Storage Duration
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p15"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p15"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p15')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p15"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p15')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p15')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p15"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p15"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p15" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p15">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p15">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p15">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p15" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p15" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;ordinary local: automatic\n&quot;);
+    printf(&quot;static local: static\n&quot;);
+    printf(&quot;file-scope object: static&quot;);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>16. Why Uninitialized automatic Values are Unsafe</strong>
+                <span id="practiceBadge-storage-p16" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 16: Explain why reading an uninitialized automatic variable is unsafe. Do not execute an indeterminate read.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print the explanation.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p16')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p16')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p16')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p16" hidden>
+                💡 <strong>Hint:</strong> An uninitialized automatic object can have an indeterminate value; use it only after initialization.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p16" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Why Uninitialized automatic Values are Unsafe
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p16"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p16"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p16')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p16"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p16')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p16')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p16"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p16"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p16" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p16">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p16">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p16">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p16" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p16" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;Do not read an uninitialized automatic object; initialize it before use.&quot;);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>17. static Global vs static Local</strong>
+                <span id="practiceBadge-storage-p17" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 17: Explain the difference between static global and static local declarations.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print scope/linkage/storage-duration differences.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p17')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p17')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p17')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p17" hidden>
+                💡 <strong>Hint:</strong> Both have static storage duration, but their scope and linkage differ.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p17" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — static Global vs static Local
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p17"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p17"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p17')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p17"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p17')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p17')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p17"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p17"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p17" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p17">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p17">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p17">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p17" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p17" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;static local: block scope, static storage duration.\n&quot;);
+    printf(&quot;static file-scope: file scope, static storage duration, internal linkage.&quot;);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>18. Header extern Declaration</strong>
+                <span id="practiceBadge-storage-p18" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 18: Model a header file containing an extern declaration and use it from another C file. The runnable version keeps the pieces together.</strong>
+            </p>
+
+            <p><strong>Input:</strong> No input.</p>
+            <p><strong>Output:</strong> Print the shared configuration value.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p18')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p18')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p18')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p18" hidden>
+                💡 <strong>Hint:</strong> Header concept: extern int config; Source concept: int config = 42;
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p18" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Header extern Declaration
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p18"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p18"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p18')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p18"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p18')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p18')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p18"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p18"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p18" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p18">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p18">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p18">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p18" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p18" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+/* config.h concept */
+extern int config;
+
+/* config.c concept */
+int config = 42;
+
+/* main.c concept */
+int main()
+{
+    printf(&quot;%d&quot;, config);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>19. static Helper Function</strong>
+                <span id="practiceBadge-storage-p19" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 19: Create a static helper function that has internal linkage and use it inside the same source file.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the square of the integer.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p19')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p19')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p19')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p19" hidden>
+                💡 <strong>Hint:</strong> Declare static int square(int x) at file scope.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p19" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — static Helper Function
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p19"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p19"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p19')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p19"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p19')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p19')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p19"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p19"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p19" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p19">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p19">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p19">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p19" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p19" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+static int square(int x)
+{
+    return x * x;
+}
+
+int main()
+{
+    int x;
+    scanf(&quot;%d&quot;, &amp;x);
+    printf(&quot;%d&quot;, square(x));
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>20. Mini Project with auto, register, static and extern</strong>
+                <span id="practiceBadge-storage-p20" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 20: Create a small runnable program demonstrating auto, register, static and extern. A real multi-file project would place the extern declaration and definition in separate files.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One positive integer n.</p>
+            <p><strong>Output:</strong> Print the sum 1..n, the static call count, and the shared extern-backed global value.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('storage-p20')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('storage-p20')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('storage-p20')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-storage-p20" hidden>
+                💡 <strong>Hint:</strong> Use auto for n, register for the loop counter, static inside a function, and extern for a global declaration.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-storage-p20" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Mini Project with auto, register, static and extern
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-storage-p20"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-storage-p20"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('storage-p20')">▶ Run Code</button>
+
+                            <button id="practiceCheck-storage-p20"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('storage-p20')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('storage-p20')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-storage-p20"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-storage-p20"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-storage-p20" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-storage-p20">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-storage-p20">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-storage-p20">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-storage-p20" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-storage-p20" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+/* Shared-object concept */
+extern int shared;
+int shared = 10;
+
+int calls(void)
+{
+    static int count = 0;
+    return ++count;
+}
+
+int main()
+{
+    auto int n;
+    register int i;
+    int sum = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    for (i = 1; i &lt;= n; i++)
+        sum += i;
+
+    int callCount = calls();
+    shared += sum;
+
+    printf(&quot;sum=%d calls=%d shared=%d&quot;, sum, callCount, shared);
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        </div>
+
+    </div>
+
+<h3>22.36 Interview Questions</h3>
+
+    <div class="cb-original-qa-list cb-interview-qa-list">
+        
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">1.</span>
+                <span>What is a storage class?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('storageInterviewAnswer1', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="storageInterviewAnswer1"
+                 hidden>
+                A storage class declaration helps describe properties such as storage duration, linkage, and—in common teaching terminology—how a declared name behaves with respect to scope and visibility.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">2.</span>
+                <span>What is the difference between scope and lifetime?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('storageInterviewAnswer2', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="storageInterviewAnswer2"
+                 hidden>
+                Scope is the region of program text where a name can be used. Lifetime is the period during execution when the corresponding object exists.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">3.</span>
+                <span>Why is static local useful?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('storageInterviewAnswer3', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="storageInterviewAnswer3"
+                 hidden>
+                It keeps block scope while giving the object static storage duration, so its value can persist between function calls.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">4.</span>
+                <span>What is internal linkage?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('storageInterviewAnswer4', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="storageInterviewAnswer4"
+                 hidden>
+                A name with internal linkage refers to the same entity only within its translation unit and cannot be linked to by name from another translation unit.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">5.</span>
+                <span>What is external linkage?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('storageInterviewAnswer5', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="storageInterviewAnswer5"
+                 hidden>
+                A name with external linkage can refer to the same entity across translation units when declarations are compatible.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">6.</span>
+                <span>Does register guarantee register storage?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('storageInterviewAnswer6', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="storageInterviewAnswer6"
+                 hidden>
+                No. It is a language-level storage-class specifier, but actual CPU-register allocation is decided by the implementation.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">7.</span>
+                <span>What is the purpose of extern?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('storageInterviewAnswer7', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="storageInterviewAnswer7"
+                 hidden>
+                extern is commonly used to declare an object or function whose definition is supplied elsewhere, allowing shared declarations across source files.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">8.</span>
+                <span>What is the difference between a declaration and a definition?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('storageInterviewAnswer8', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="storageInterviewAnswer8"
+                 hidden>
+                A declaration introduces a name and type information. A definition also creates the object or provides the function body, subject to C&#x27;s rules.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">9.</span>
+                <span>What happens to a static local variable after a function returns?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('storageInterviewAnswer9', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="storageInterviewAnswer9"
+                 hidden>
+                The object continues to exist with its stored value because it has static storage duration, although its name remains block-scoped.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">10.</span>
+                <span>Why might static be used for a helper function?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('storageInterviewAnswer10', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="storageInterviewAnswer10"
+                 hidden>
+                At file scope, static gives a function internal linkage, keeping that helper private to its translation unit.
+            </div>
+        </div>
+    
+    </div>
+
+<h3>22.37 Key Takeaway</h3>
+
+    <div class="tip-box">
+
+        🎯 Remember:
+
+        <br><br>
+
+        <strong>auto → ordinary local variable.</strong>
+
+        <br><br>
+
+        <strong>register → optimization request.</strong>
+
+        <br><br>
+
+        <strong>static local → remembers its value.</strong>
+
+        <br><br>
+
+        <strong>static file-scope → private to the translation unit.</strong>
+
+        <br><br>
+
+        <strong>extern → refers to an entity with linkage defined
+        elsewhere.</strong>
+
+        <br><br>
+
+        <strong>Scope tells you WHERE a name can be used.</strong>
+
+        <br><br>
+
+        <strong>Lifetime tells you HOW LONG the object exists.</strong>
+
+        <br><br>
+
+        <strong>Linkage tells you whether declarations can refer
+        to the same entity.</strong>
+
+    </div>
+
+</section>   
+
+        
+<!-- ========================================================= -->
+<!-- 23. ADVANCED C PREPROCESSOR -->
+<!-- ========================================================= -->
+
+
+<section class="content-card cb-added-section" id="storage-classes-tips-extra">
+
+    <span class="cb-added-label">PLACEMENT TIPS</span>
+
+    <h2>💡 Storage Classes — Placement Tips</h2>
+
+    <ul class="cb-tip-grid">
+        <li>Separate the ideas of <strong>scope</strong>, <strong>storage duration</strong>, and <strong>linkage</strong>; interview questions often test the difference.</li>
+        <li>A static local variable has block scope but static storage duration, so it preserves state between calls.</li>
+        <li>A file-scope <code>static</code> name has internal linkage and is commonly used to keep implementation details private to one source file.</li>
+        <li>An <code>extern</code> declaration does not automatically create a second object; normally one translation unit contains the definition.</li>
+        <li>Do not depend on <code>register</code> for optimization. Modern compilers decide register allocation themselves.</li>
+        <li>Never read an uninitialized automatic object. Static-duration objects, by contrast, receive zero initialization when no explicit initializer is supplied.</li>
+    </ul>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="storage-classes-practice-extra">
+
+    <span class="cb-added-label">EXTRA PRACTICE</span>
+
+    <h2>✍️ Storage Classes — Extra Practice Questions</h2>
+
+    <ol class="cb-extra-practice">
+        <li>Create two counters: one automatic local and one static local, and compare their values across five calls.</li>
+        <li>Design a module with a file-scope static variable and public getter/setter functions.</li>
+        <li>Create a two-file example where one file defines a global object and another accesses it through <code>extern</code>.</li>
+        <li>Compare a file-scope static helper function with a non-static helper function in terms of linkage.</li>
+        <li>Classify ten declarations by scope, storage duration, and linkage.</li>
+        <li>Create a small configuration module with a header declaration, one global definition, and internal static helper data.</li>
+    </ol>
+
+</section>
+
+
+
+<section class="cb-topic-navigation" aria-label="C Programming topic navigation">
+
+    <a class="cb-topic-nav-btn cb-topic-nav-prev" href="precedence.html">
+        ← Previous Topic: Operator Precedence &amp; Associativity
+    </a>
+
+    <a class="cb-topic-nav-btn cb-topic-nav-next" href="advanced-preprocessor.html">
+        Next Topic: Advanced Preprocessor →
+    </a>
+
+</section>
+
+
+</main>
+
+</div>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../Maths/index.html">
+                Maths
+            </a>
+
+            <a href="index.html">
+                C Programming
+            </a>
+
+        </div>
+
+
+        <!-- LEARNING -->
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+<a href="../Data-Structures/">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/">
+    Advanced Data Structures
+</a>
+
+            <a href="#">
+                Python
+            </a>
+
+            <a href="#">
+                AI & Machine Learning
+            </a>
+
+        </div>
+
+
+        <!-- PRACTICE -->
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="#practice">
+                Practice Problems
+            </a>
+
+            <a href="#practice">
+                Problem Solving
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="c-programming.js"></script>
+<script>
+const codeBhavyaStorageClassesPracticeConfigs =
+[{"key": "storage-p1", "title": "Purpose of auto", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "auto: block-scope local object with automatic storage duration"}]}, {"key": "storage-p2", "title": "Automatic Local Variable", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    auto int value;\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "5", "expected": "15"}, {"input": "-3", "expected": "7"}]}, {"key": "storage-p3", "title": "Purpose of register", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "register: local variable hint; actual register use is implementation-controlled"}]}, {"key": "storage-p4", "title": "register Loop Counter", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int n;\n    register int i;\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "5", "expected": "15"}, {"input": "10", "expected": "55"}]}, {"key": "storage-p5", "title": "Why register is Not Guaranteed", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "register is a language hint; the implementation decides actual storage"}]}, {"key": "storage-p6", "title": "Static Local Variable", "starterCode": "#include <stdio.h>\n\nvoid show(void)\n{\n}\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "1 2 3"}]}, {"key": "storage-p7", "title": "Count Function Calls with static", "starterCode": "#include <stdio.h>\n\nint callCounter(void)\n{\n    return 0;\n}\n\nint main()\n{\n    int n;\n    return 0;\n}", "sampleInput": "4", "tests": [{"input": "4", "expected": "4"}, {"input": "1", "expected": "1"}]}, {"key": "storage-p8", "title": "Automatic Local vs Static Local", "starterCode": "#include <stdio.h>\n\nvoid show(void)\n{\n}\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "1 1\n1 2"}]}, {"key": "storage-p9", "title": "File-Scope static Variable", "starterCode": "#include <stdio.h>\n\nstatic int total = 10;\n\nint main()\n{\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "5", "expected": "15"}, {"input": "0", "expected": "10"}]}, {"key": "storage-p10", "title": "Internal Linkage", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "internal linkage: the file-scope name is confined to its translation unit"}]}, {"key": "storage-p11", "title": "Purpose of extern", "starterCode": "#include <stdio.h>\n\nextern int shared;\nint shared = 25;\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "25"}]}, {"key": "storage-p12", "title": "Share a Global Variable with extern", "starterCode": "#include <stdio.h>\n\nextern int shared;\nint shared = 100;\n\nint main()\n{\n    return 0;\n}", "sampleInput": "20", "tests": [{"input": "20", "expected": "120"}, {"input": "-10", "expected": "90"}]}, {"key": "storage-p13", "title": "Scope vs Lifetime", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "Scope: where a name can be used.\nLifetime: how long an object exists."}]}, {"key": "storage-p14", "title": "Predict a Static Counter", "starterCode": "#include <stdio.h>\n\nint nextValue(void)\n{\n    return 0;\n}\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "2 4 6"}]}, {"key": "storage-p15", "title": "Automatic or Static Storage Duration", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "ordinary local: automatic\nstatic local: static\nfile-scope object: static"}]}, {"key": "storage-p16", "title": "Why Uninitialized automatic Values are Unsafe", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "Do not read an uninitialized automatic object; initialize it before use."}]}, {"key": "storage-p17", "title": "static Global vs static Local", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "static local: block scope, static storage duration.\nstatic file-scope: file scope, static storage duration, internal linkage."}]}, {"key": "storage-p18", "title": "Header extern Declaration", "starterCode": "#include <stdio.h>\n\n/* header concept */\nextern int config;\n\n/* source definition */\nint config = 42;\n\nint main()\n{\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "42"}]}, {"key": "storage-p19", "title": "static Helper Function", "starterCode": "#include <stdio.h>\n\nstatic int square(int x)\n{\n    return 0;\n}\n\nint main()\n{\n    return 0;\n}", "sampleInput": "7", "tests": [{"input": "7", "expected": "49"}, {"input": "-3", "expected": "9"}]}, {"key": "storage-p20", "title": "Mini Project with auto, register, static and extern", "starterCode": "#include <stdio.h>\n\nextern int shared;\nint shared = 10;\n\nint calls(void)\n{\n    return 0;\n}\n\nint main()\n{\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "5", "expected": "sum=15 calls=1 shared=25"}, {"input": "3", "expected": "sum=6 calls=1 shared=16"}]}];
+
+CodeBhavyaCPractice.registerAll(
+    codeBhavyaStorageClassesPracticeConfigs
+);
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
