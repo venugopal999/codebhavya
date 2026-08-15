@@ -1,0 +1,2516 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C Programming | CodeBhavya</title>
+
+ <link rel="icon" type="image/png" sizes="32x32"
+      href="../images/codebhavya-icon-32.png">
+
+<link rel="icon" type="image/png" sizes="128x128"
+      href="../images/codebhavya-icon-128.png">
+
+<link rel="icon" type="image/png" sizes="512x512"
+      href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="c-programming.css">
+</head>
+
+<body class="cb-c-topic-page cb-input-output-page">
+
+<header class="top-header">
+
+<!-- <a href="../index.html" class="logo">
+    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a> -->
+    
+<a href="../index.html" class="logo codebhavya-new-logo">
+
+    <img
+        src="../images/codebhavya-main-logo.png"
+        alt="CodeBhavya Logo"
+        class="main-logo"
+    >
+
+    <span class="brand-name">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </span>
+
+</a>
+
+    <nav class="top-nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="../Maths/">
+            Maths
+        </a>
+
+        <a href="index.html" class="active">
+            C
+        </a>
+
+<a href="../Data-Structures/index.html">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/index.html">
+    Advanced Data Structures
+</a>
+
+        <a href="../Python/">
+            Python
+        </a>
+
+        <a href="../AI-ML/">
+            AI & ML
+        </a>
+
+        <a href="../Placement/">
+            Placement
+        </a>
+
+    </nav>
+
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar cb-c-topic-sidebar">
+    <div class="sidebar-title">💻 C Programming</div>
+
+    <input
+        type="text"
+        id="topicSearch"
+        class="search-box"
+        placeholder="🔍 Search topics..."
+        onkeyup="searchTopics()"
+    >
+
+    <div class="sidebar-title">Fundamentals</div>
+    <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
+    <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
+    <a class="cb-topic-link" data-topic-link="1" href="data-types.html">📦 Data Types</a>
+    <a class="cb-topic-link active" data-topic-link="1" href="input-output.html">⌨️ Input &amp; Output</a>
+
+    <div class="sidebar-title">Operators &amp; Control</div>
+    <a class="cb-topic-link" data-topic-link="1" href="operators.html">➕ Operators</a>
+    <a class="cb-topic-link" data-topic-link="1" href="expressions.html">🧮 Expressions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="decision-making.html">🔀 Decision Making</a>
+    <a class="cb-topic-link" data-topic-link="1" href="loops.html">🔁 Loops</a>
+
+    <div class="sidebar-title">Programming Concepts</div>
+    <a class="cb-topic-link" data-topic-link="1" href="arrays.html">📊 Arrays</a>
+    <a class="cb-topic-link" data-topic-link="1" href="strings.html">🔤 Strings</a>
+    <a class="cb-topic-link" data-topic-link="1" href="functions.html">🧩 Functions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="pointers.html">👉 Pointers</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structures-unions.html">🏗️ Structures &amp; Unions</a>
+
+    <div class="sidebar-title">Advanced C</div>
+    <a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">⚙️ Preprocessor &amp; Header Files</a>
+    <a class="cb-topic-link" data-topic-link="1" href="file-handling.html">📁 File Handling</a>
+    <a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">🧠 Dynamic Memory Allocation</a>
+    <a class="cb-topic-link" data-topic-link="1" href="command-line.html">💻 Command Line Arguments</a>
+    <a class="cb-topic-link" data-topic-link="1" href="bitwise.html">🔢 Bitwise Programming</a>
+    <a class="cb-topic-link" data-topic-link="1" href="enum-typedef.html">🔤 Enumerations &amp; typedef</a>
+    <a class="cb-topic-link" data-topic-link="1" href="precedence.html">🧮 Operator Precedence &amp; Associativity</a>
+    <a class="cb-topic-link" data-topic-link="1" href="storage-classes.html">💾 Storage Classes</a>
+    <a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">🛠️ Advanced C Preprocessor</a>
+
+    <div class="sidebar-title">Practice</div>
+    <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
+</aside>
+
+<main class="main-content">
+
+<section id="input-output" class="content-card">
+
+    <h2>⌨️ 5. Input &amp; Output</h2>
+
+
+    <!-- INTRODUCTION -->
+
+    <h3>5.1 What is Input and Output?</h3>
+
+    <p>
+        A program often needs to receive data from
+        the user, process that data and display the
+        result.
+    </p>
+
+    
+    <div class="cb-io-concept-flow" aria-label="Input processing output flow">
+
+        <div class="cb-io-flow-step cb-io-input-step">
+            <span class="cb-io-flow-icon" aria-hidden="true">⌨️</span>
+            <div>
+                <strong>Input</strong>
+                <small>Data enters the program</small>
+            </div>
+        </div>
+
+        <span class="cb-io-flow-arrow" aria-hidden="true">→</span>
+
+        <div class="cb-io-flow-step cb-io-process-step">
+            <span class="cb-io-flow-icon" aria-hidden="true">⚙️</span>
+            <div>
+                <strong>Processing</strong>
+                <small>Program performs logic or calculation</small>
+            </div>
+        </div>
+
+        <span class="cb-io-flow-arrow" aria-hidden="true">→</span>
+
+        <div class="cb-io-flow-step cb-io-output-step">
+            <span class="cb-io-flow-icon" aria-hidden="true">🖥️</span>
+            <div>
+                <strong>Output</strong>
+                <small>Result is displayed</small>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="example-box">
+
+        <strong>Example:</strong>
+
+        <br><br>
+
+        Input → 10 and 20
+
+        <br>
+
+        Processing → 10 + 20
+
+        <br>
+
+        Output → 30
+
+    </div>
+
+
+    <!-- PRINTF -->
+
+    <h3>5.2 printf() Function</h3>
+
+    <p>
+        The <strong>printf()</strong> function is
+        commonly used to display formatted output
+        on the standard output stream.
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("Hello World");
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+        Hello World
+    </div>
+
+
+    <!-- PRINT TEXT -->
+
+    <h3>5.3 Printing Text</h3>
+
+    <p>
+        Text written inside double quotation marks
+        is printed as a string.
+    </p>
+
+    <pre><code>printf("Welcome to C Programming");</code></pre>
+
+    <div class="output-box">
+        Welcome to C Programming
+    </div>
+
+
+    <!-- PRINT VARIABLES -->
+
+    <h3>5.4 Printing Variables</h3>
+
+    <p>
+        Format specifiers are used to display
+        values stored in variables.
+    </p>
+
+    <pre><code>int age = 25;
+
+printf("%d", age);</code></pre>
+
+    <div class="output-box">
+        25
+    </div>
+
+
+    <!-- FORMAT SPECIFIERS -->
+
+    <h3>5.5 Common Format Specifiers</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Specifier</th>
+                    <th>Common Use</th>
+                    <th>Example</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>%d</td>
+                    <td>int</td>
+                    <td>printf("%d", age);</td>
+                </tr>
+
+                <tr>
+                    <td>%u</td>
+                    <td>unsigned int</td>
+                    <td>printf("%u", count);</td>
+                </tr>
+
+                <tr>
+                    <td>%c</td>
+                    <td>char</td>
+                    <td>printf("%c", grade);</td>
+                </tr>
+
+                <tr>
+                    <td>%f</td>
+                    <td>floating-point output</td>
+                    <td>printf("%f", value);</td>
+                </tr>
+
+                <tr>
+                    <td>%s</td>
+                    <td>string</td>
+                    <td>printf("%s", name);</td>
+                </tr>
+
+                <tr>
+                    <td>%zu</td>
+                    <td>sizeof result</td>
+                    <td>printf("%zu", sizeof(int));</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- INTEGER -->
+
+    <h3>5.6 Printing Integers</h3>
+
+    <pre><code>int a = 100;
+
+printf("%d", a);</code></pre>
+
+    <div class="output-box">
+        100
+    </div>
+
+
+    <!-- CHARACTER -->
+
+    <h3>5.7 Printing Characters</h3>
+
+    <pre><code>char grade = 'A';
+
+printf("%c", grade);</code></pre>
+
+    <div class="output-box">
+        A
+    </div>
+
+    <div class="tip-box">
+
+        💡 Character constants use single quotes:
+
+        <br><br>
+
+        <strong>'A'</strong>
+
+        <br><br>
+
+        Strings use double quotes:
+
+        <br><br>
+
+        <strong>"A"</strong>
+
+    </div>
+
+
+    <!-- FLOAT -->
+
+    <h3>5.8 Printing Floating-Point Values</h3>
+
+    <pre><code>float marks = 85.5f;
+
+printf("%f", marks);</code></pre>
+
+    <div class="output-box">
+        85.500000
+    </div>
+
+
+    <!-- PRECISION -->
+
+    <h3>5.9 Controlling Decimal Places</h3>
+
+    <p>
+        A precision such as <strong>%.2f</strong>
+        can be used to display two digits after
+        the decimal point.
+    </p>
+
+    <pre><code>float marks = 85.5678f;
+
+printf("%.2f", marks);</code></pre>
+
+    <div class="output-box">
+        85.57
+    </div>
+
+    <p>
+        Similarly:
+    </p>
+
+    <pre><code>printf("%.1f", marks);
+
+printf("%.3f", marks);</code></pre>
+
+
+    <!-- NEW LINE -->
+
+    <h3>5.10 Escape Sequences</h3>
+
+    <p>
+        Escape sequences represent special
+        characters inside strings and character
+        constants.
+    </p>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Escape Sequence</th>
+                    <th>Meaning</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>\n</td>
+                    <td>New line</td>
+                </tr>
+
+                <tr>
+                    <td>\t</td>
+                    <td>Horizontal tab</td>
+                </tr>
+
+                <tr>
+                    <td>\\</td>
+                    <td>Backslash</td>
+                </tr>
+
+                <tr>
+                    <td>\"</td>
+                    <td>Double quotation mark</td>
+                </tr>
+
+                <tr>
+                    <td>\'</td>
+                    <td>Single quotation mark</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <h4>Example</h4>
+
+    <pre><code>printf("Hello\nWorld");</code></pre>
+
+    <div class="output-box">
+        Hello
+        <br>
+        World
+    </div>
+
+
+    <!-- SCANF -->
+
+    <h3>5.11 scanf() Function</h3>
+
+    <p>
+        The <strong>scanf()</strong> function is
+        commonly used to read formatted input from
+        the standard input stream.
+    </p>
+
+    <pre><code>int age;
+
+scanf("%d", &amp;age);</code></pre>
+
+
+    <!-- ADDRESS -->
+
+    <h3>5.12 Why Do We Use &amp; in scanf()?</h3>
+
+    <p>
+        For most ordinary scalar variables,
+        scanf() needs the address of the object
+        where the input value should be stored.
+    </p>
+
+    <pre><code>int age;
+
+scanf("%d", &amp;age);</code></pre>
+
+    
+    <div class="cb-scanf-address-visual" aria-label="scanf address relationship">
+
+        <div class="cb-address-card">
+            <span class="cb-address-icon" aria-hidden="true">📦</span>
+            <div>
+                <strong>age</strong>
+                <small>The integer object that will store the input value</small>
+            </div>
+        </div>
+
+        <span class="cb-address-link" aria-hidden="true">← uses address →</span>
+
+        <div class="cb-address-card cb-address-card-highlight">
+            <span class="cb-address-icon" aria-hidden="true">📍</span>
+            <div>
+                <strong>&amp;age</strong>
+                <small>Address of the object passed to scanf()</small>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="tip-box">
+
+        💡 For a normal integer variable:
+
+        <br><br>
+
+        <strong>scanf("%d", &amp;age);</strong>
+
+        <br><br>
+
+        The <strong>&amp;</strong> is important.
+
+    </div>
+
+
+    <!-- MULTIPLE INPUT -->
+
+    <h3>5.13 Reading Multiple Values</h3>
+
+    <pre><code>int a, b;
+
+scanf("%d %d", &amp;a, &amp;b);</code></pre>
+
+    <p>
+        If the input is:
+    </p>
+
+    <div class="output-box">
+        10 20
+    </div>
+
+    <p>
+        then:
+    </p>
+
+    <div class="example-box">
+
+        a = 10
+
+        <br>
+
+        b = 20
+
+    </div>
+
+
+    <!-- DIFFERENT TYPES -->
+
+    <h3>5.14 Reading Different Data Types</h3>
+
+    <pre><code>int age;
+float marks;
+char grade;
+
+scanf("%d", &amp;age);
+
+scanf("%f", &amp;marks);
+
+scanf(" %c", &amp;grade);</code></pre>
+
+    <div class="tip-box">
+
+        Notice the space before
+        <strong>%c</strong>:
+
+        <br><br>
+
+        <strong>scanf(" %c", &amp;grade);</strong>
+
+        <br><br>
+
+        This can help skip leading whitespace
+        such as a leftover newline.
+
+    </div>
+
+
+    <!-- DOUBLE INPUT -->
+
+    <h3>5.15 Reading a double</h3>
+
+    <p>
+        For scanf(), the conversion specifier
+        for a double is <strong>%lf</strong>.
+    </p>
+
+    <pre><code>double price;
+
+scanf("%lf", &amp;price);</code></pre>
+
+    <div class="tip-box">
+
+        📌 Remember:
+
+        <br><br>
+
+        printf() → double → <strong>%f</strong>
+
+        <br>
+
+        scanf() → double → <strong>%lf</strong>
+
+    </div>
+
+
+    <!-- CHAR INPUT -->
+
+    <h3>5.16 Reading a Character</h3>
+
+    <pre><code>char ch;
+
+scanf(" %c", &amp;ch);
+
+printf("%c", ch);</code></pre>
+
+    <p>
+        The leading space in the format string
+        tells scanf() to skip leading whitespace
+        before reading the character.
+    </p>
+
+
+    <!-- STRING -->
+
+    <h3>5.17 Reading a String</h3>
+
+    <p>
+        A character array can be used to store a
+        string. When using scanf() with %s, the
+        array name is passed without &amp;.
+    </p>
+
+    <pre><code>char name[30];
+
+scanf("%29s", name);
+
+printf("%s", name);</code></pre>
+
+    <p>
+        The width limit helps prevent writing more
+        characters than the array can hold.
+    </p>
+
+    <div class="tip-box">
+
+        ⚠️ <strong>%s</strong> with scanf() stops
+        reading at whitespace.
+
+        <br><br>
+
+        For example, entering:
+
+        <br>
+
+        <strong>Ravi Kumar</strong>
+
+        <br><br>
+
+        reads only <strong>Ravi</strong> with
+        a normal %s conversion.
+
+    </div>
+
+
+    <!-- PRINTF VS SCANF -->
+
+    <h3>5.18 printf() vs scanf()</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>printf()</th>
+                    <th>scanf()</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Purpose</td>
+                    <td>Output</td>
+                    <td>Input</td>
+                </tr>
+
+                <tr>
+                    <td>Common int specifier</td>
+                    <td>%d</td>
+                    <td>%d</td>
+                </tr>
+
+                <tr>
+                    <td>Common char specifier</td>
+                    <td>%c</td>
+                    <td>%c</td>
+                </tr>
+
+                <tr>
+                    <td>double</td>
+                    <td>%f</td>
+                    <td>%lf</td>
+                </tr>
+
+                <tr>
+                    <td>Normal int variable</td>
+                    <td>age</td>
+                    <td>&amp;age</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- COMPLETE PROGRAM -->
+
+    <h3>5.19 Complete Example</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int age;
+    float marks;
+
+    printf("Enter your age: ");
+    scanf("%d", &amp;age);
+
+    printf("Enter your marks: ");
+    scanf("%f", &amp;marks);
+
+    printf("\nAge = %d\n", age);
+
+    printf("Marks = %.2f\n", marks);
+
+    return 0;
+}</code></pre>
+
+
+    <h3>Sample Input</h3>
+
+    <div class="output-box">
+        20
+        <br>
+        85.5
+    </div>
+
+
+    <h3>Sample Output</h3>
+
+    <div class="output-box">
+
+        Age = 20
+
+        <br>
+
+        Marks = 85.50
+
+    </div>
+
+
+    <!-- MULTIPLE INPUT PROGRAM -->
+
+    <h3>5.20 Multiple Input Example</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b;
+
+    scanf("%d %d", &amp;a, &amp;b);
+
+    printf("Sum = %d", a + b);
+
+    return 0;
+}</code></pre>
+
+    <h3>Input</h3>
+
+    <div class="output-box">
+        10 20
+    </div>
+
+    <h3>Output</h3>
+
+    <div class="output-box">
+        Sum = 30
+    </div>
+
+
+    <!-- COMMON MISTAKES -->
+
+    <h3>5.21 Common Input/Output Mistakes</h3>
+
+    <ul>
+
+        <li>
+            Forgetting <strong>&amp;</strong> for
+            ordinary scalar variables in scanf().
+        </li>
+
+        <li>
+            Using the wrong format specifier.
+        </li>
+
+        <li>
+            Using <strong>%f</strong> instead of
+            <strong>%lf</strong> for a double
+            argument in scanf().
+        </li>
+
+        <li>
+            Using <strong>%d</strong> for a float
+            or double input.
+        </li>
+
+        <li>
+            Forgetting the newline escape sequence
+            when separate output lines are needed.
+        </li>
+
+        <li>
+            Using %s when the input can contain spaces.
+        </li>
+
+        <li>
+            Forgetting the width limit when reading
+            a string with scanf().
+        </li>
+
+        <li>
+            Forgetting the leading space in a
+            character input format when whitespace
+            needs to be skipped.
+        </li>
+
+    </ul>
+
+
+    <!-- QUICK REVISION -->
+
+    <h3>5.22 Quick Revision</h3>
+
+    <div class="tip-box">
+
+        📌 <strong>printf()</strong> is commonly
+        used for formatted output.
+
+        <br><br>
+
+        📌 <strong>scanf()</strong> is commonly
+        used for formatted input.
+
+        <br><br>
+
+        📌 <strong>%d</strong> → int
+
+        <br>
+
+        📌 <strong>%u</strong> → unsigned int
+
+        <br>
+
+        📌 <strong>%c</strong> → char
+
+        <br>
+
+        📌 <strong>%f</strong> → floating-point
+        output
+
+        <br>
+
+        📌 <strong>%lf</strong> → double input
+        with scanf()
+
+        <br>
+
+        📌 <strong>%s</strong> → string
+
+        <br>
+
+        📌 <strong>\n</strong> → new line
+
+        <br>
+
+        📌 <strong>&amp;variable</strong> gives
+        the address of a variable.
+
+    </div>
+
+
+    <!-- MCQS -->
+
+    <h3>5.23 Quick MCQs</h3>
+
+    <p class="cb-mcq-guide">
+        Select an answer first, then click <strong>Check Answer</strong>.
+        A correct choice becomes green. If the choice is wrong, it becomes red and the correct option is shown in green.
+        The explanation appears below after checking.
+    </p>
+
+    <div class="cb-mcq-list">
+        
+    <div class="cb-mcq-card" id="io-mcq1" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">1.</span>
+            <strong>Which function is commonly used to display formatted output?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="io-mcq1" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">scanf()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="io-mcq1" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">printf()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="io-mcq1" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">input()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="io-mcq1" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">read()</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button"
+                    class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('io-mcq1')">Check Answer</button>
+
+            <button type="button"
+                    class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('io-mcq1')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>printf() is the standard formatted-output function declared in stdio.h.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="io-mcq2" data-correct="C">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">2.</span>
+            <strong>Which function is commonly used to read formatted input?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="io-mcq2" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">printf()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="io-mcq2" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">display()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="io-mcq2" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">scanf()</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="io-mcq2" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">output()</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button"
+                    class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('io-mcq2')">Check Answer</button>
+
+            <button type="button"
+                    class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('io-mcq2')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>scanf() reads formatted input from the standard input stream according to the format string.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="io-mcq3" data-correct="C">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">3.</span>
+            <strong>Which format specifier is commonly used for an int?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="io-mcq3" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">%f</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="io-mcq3" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">%c</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="io-mcq3" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">%d</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="io-mcq3" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">%s</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button"
+                    class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('io-mcq3')">Check Answer</button>
+
+            <button type="button"
+                    class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('io-mcq3')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>%d is commonly used for signed decimal int input and output.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="io-mcq4" data-correct="C">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">4.</span>
+            <strong>Which specifier is used to read a double using scanf()?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="io-mcq4" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">%d</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="io-mcq4" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">%f</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="io-mcq4" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">%lf</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="io-mcq4" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">%c</span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button"
+                    class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('io-mcq4')">Check Answer</button>
+
+            <button type="button"
+                    class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('io-mcq4')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>With scanf(), %lf expects a pointer to double. For printf(), a double value is printed with %f.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="io-mcq5" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">5.</span>
+            <strong>Which escape sequence moves the output position to the next line?</strong>
+        </div>
+
+        <div class="cb-mcq-options">
+            
+            <label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="io-mcq5" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">	</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="io-mcq5" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">
+</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="io-mcq5" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">\</span>
+            </label>
+        
+            <label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="io-mcq5" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text"></span>
+            </label>
+        
+        </div>
+
+        <div class="cb-mcq-actions">
+            <button type="button"
+                    class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('io-mcq5')">Check Answer</button>
+
+            <button type="button"
+                    class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('io-mcq5')"
+                    hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>
+ is the newline escape sequence.</p>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+
+
+    <!-- PROGRAMMING PROBLEMS -->
+
+    <div class="cb-c-dsa-practice-section">
+        <span class="cb-c-practice-label">PRACTICE</span>
+
+        <h3>5.24 🎯 Programming Problems</h3>
+
+        <p class="cb-c-practice-guide">
+            Try each problem yourself first. Use <strong>💻 Solve It Yourself</strong> to write and test your C program.
+            Use <strong>Hint</strong> only when needed, and open <strong>Show Program</strong> after attempting the problem.
+        </p>
+
+        <div class="cb-practice-overall" data-practice-total="6">
+            <div class="cb-practice-overall-title">📈 Input &amp; Output Practice Progress</div>
+
+            <div class="cb-practice-overall-grid">
+                <div class="cb-practice-overall-item">
+                    <strong>Solved</strong>
+                    <span id="cbPracticeOverallSolved">0 / 6</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completed with Solution</strong>
+                    <span id="cbPracticeOverallCompleted">0</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Total Score</strong>
+                    <span id="cbPracticeOverallScore">0 / 600</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completion</strong>
+                    <span id="cbPracticeOverallPercent">0%</span>
+                </div>
+            </div>
+
+            <div class="cb-practice-progress-track">
+                <div id="cbPracticeOverallBar" class="cb-practice-progress-fill"></div>
+            </div>
+
+            <div class="cb-practice-progress-note">
+                A problem counts as <strong>Solved</strong> when all tests pass without opening the full solution.
+                Problems completed after viewing the official solution are tracked separately.
+            </div>
+        </div>
+
+        <div class="cb-c-practice-list">
+            
+        <div class="cb-c-practice-item">
+            <div class="cb-c-practice-problem-head">
+                <strong>1. Read Two Integers and Print Their Sum</strong>
+                <span id="practiceBadge-io-p1" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement"><strong>Problem 1: Read two integers and print their sum.</strong></p>
+            <p><strong>Input:</strong> Two integers a and b.</p>
+            <p><strong>Output:</strong> Print their sum.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('io-p1')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('io-p1')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('io-p1')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-io-p1" hidden>
+                💡 <strong>Hint:</strong> Read both integers using scanf(&quot;%d %d&quot;, &amp;a, &amp;b) and print a + b.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-io-p1" hidden>
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Read Two Integers and Print Their Sum
+                </div>
+
+                <div class="cb-c-practice-grid">
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-io-p1"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-io-p1"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('io-p1')">▶ Run Code</button>
+
+                            <button id="practiceCheck-io-p1"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('io-p1')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('io-p1')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+                        <textarea id="practiceInput-io-p1"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+                        <pre id="practiceOutput-io-p1"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+                        <div id="practiceTests-io-p1" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-io-p1">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-io-p1">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-io-p1">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-io-p1" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-io-p1" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b;
+
+    scanf(&quot;%d %d&quot;, &amp;a, &amp;b);
+
+    printf(&quot;Sum = %d&quot;, a + b);
+
+    return 0;
+}</code></pre>
+            </div>
+        </div>
+    
+        <div class="cb-c-practice-item">
+            <div class="cb-c-practice-problem-head">
+                <strong>2. Average of Three Integers</strong>
+                <span id="practiceBadge-io-p2" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement"><strong>Problem 2: Read three integers and print their average with decimal precision.</strong></p>
+            <p><strong>Input:</strong> Three integers.</p>
+            <p><strong>Output:</strong> Print the average rounded to two decimal places.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('io-p2')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('io-p2')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('io-p2')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-io-p2" hidden>
+                💡 <strong>Hint:</strong> Add the three integers and divide by 3.0 so that floating-point division is used.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-io-p2" hidden>
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Average of Three Integers
+                </div>
+
+                <div class="cb-c-practice-grid">
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-io-p2"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-io-p2"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('io-p2')">▶ Run Code</button>
+
+                            <button id="practiceCheck-io-p2"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('io-p2')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('io-p2')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+                        <textarea id="practiceInput-io-p2"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+                        <pre id="practiceOutput-io-p2"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+                        <div id="practiceTests-io-p2" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-io-p2">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-io-p2">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-io-p2">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-io-p2" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-io-p2" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b, c;
+    double average;
+
+    scanf(&quot;%d %d %d&quot;, &amp;a, &amp;b, &amp;c);
+
+    average = (a + b + c) / 3.0;
+
+    printf(&quot;Average = %.2f&quot;, average);
+
+    return 0;
+}</code></pre>
+            </div>
+        </div>
+    
+        <div class="cb-c-practice-item">
+            <div class="cb-c-practice-problem-head">
+                <strong>3. Display Student Details</strong>
+                <span id="practiceBadge-io-p3" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement"><strong>Problem 3: Read a student&#x27;s name, age and marks and display them.</strong></p>
+            <p><strong>Input:</strong> A single-word name, an integer age and marks.</p>
+            <p><strong>Output:</strong> Print the name, age and marks with clear labels.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('io-p3')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('io-p3')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('io-p3')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-io-p3" hidden>
+                💡 <strong>Hint:</strong> Use a character array for the name, %29s for input, %d for age and %f for marks.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-io-p3" hidden>
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Display Student Details
+                </div>
+
+                <div class="cb-c-practice-grid">
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-io-p3"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-io-p3"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('io-p3')">▶ Run Code</button>
+
+                            <button id="practiceCheck-io-p3"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('io-p3')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('io-p3')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+                        <textarea id="practiceInput-io-p3"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+                        <pre id="practiceOutput-io-p3"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+                        <div id="practiceTests-io-p3" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-io-p3">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-io-p3">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-io-p3">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-io-p3" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-io-p3" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char name[30];
+    int age;
+    float marks;
+
+    scanf(&quot;%29s %d %f&quot;, name, &amp;age, &amp;marks);
+
+    printf(&quot;Name = %s
+&quot;, name);
+    printf(&quot;Age = %d
+&quot;, age);
+    printf(&quot;Marks = %.2f&quot;, marks);
+
+    return 0;
+}</code></pre>
+            </div>
+        </div>
+    
+        <div class="cb-c-practice-item">
+            <div class="cb-c-practice-problem-head">
+                <strong>4. Area of a Circle</strong>
+                <span id="practiceBadge-io-p4" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement"><strong>Problem 4: Read the radius of a circle and print its area up to two decimal places.</strong></p>
+            <p><strong>Input:</strong> Radius of the circle.</p>
+            <p><strong>Output:</strong> Print the area rounded to two decimal places.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('io-p4')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('io-p4')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('io-p4')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-io-p4" hidden>
+                💡 <strong>Hint:</strong> Use area = PI * radius * radius and print with %.2f.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-io-p4" hidden>
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Area of a Circle
+                </div>
+
+                <div class="cb-c-practice-grid">
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-io-p4"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-io-p4"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('io-p4')">▶ Run Code</button>
+
+                            <button id="practiceCheck-io-p4"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('io-p4')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('io-p4')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+                        <textarea id="practiceInput-io-p4"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+                        <pre id="practiceOutput-io-p4"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+                        <div id="practiceTests-io-p4" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-io-p4">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-io-p4">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-io-p4">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-io-p4" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-io-p4" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    const double PI = 3.14159;
+    double radius;
+    double area;
+
+    scanf(&quot;%lf&quot;, &amp;radius);
+
+    area = PI * radius * radius;
+
+    printf(&quot;Area = %.2f&quot;, area);
+
+    return 0;
+}</code></pre>
+            </div>
+        </div>
+    
+        <div class="cb-c-practice-item">
+            <div class="cb-c-practice-problem-head">
+                <strong>5. Arithmetic Results</strong>
+                <span id="practiceBadge-io-p5" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement"><strong>Problem 5: Read two numbers and print their sum, difference, product and quotient.</strong></p>
+            <p><strong>Input:</strong> Two non-zero-compatible floating-point numbers a and b, with b not equal to zero.</p>
+            <p><strong>Output:</strong> Print sum, difference, product and quotient rounded to two decimal places.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('io-p5')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('io-p5')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('io-p5')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-io-p5" hidden>
+                💡 <strong>Hint:</strong> Use double variables and %lf with scanf().
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-io-p5" hidden>
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Arithmetic Results
+                </div>
+
+                <div class="cb-c-practice-grid">
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-io-p5"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-io-p5"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('io-p5')">▶ Run Code</button>
+
+                            <button id="practiceCheck-io-p5"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('io-p5')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('io-p5')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+                        <textarea id="practiceInput-io-p5"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+                        <pre id="practiceOutput-io-p5"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+                        <div id="practiceTests-io-p5" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-io-p5">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-io-p5">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-io-p5">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-io-p5" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-io-p5" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    double a, b;
+
+    scanf(&quot;%lf %lf&quot;, &amp;a, &amp;b);
+
+    printf(&quot;Sum = %.2f
+&quot;, a + b);
+    printf(&quot;Difference = %.2f
+&quot;, a - b);
+    printf(&quot;Product = %.2f
+&quot;, a * b);
+    printf(&quot;Quotient = %.2f&quot;, a / b);
+
+    return 0;
+}</code></pre>
+            </div>
+        </div>
+    
+        <div class="cb-c-practice-item">
+            <div class="cb-c-practice-problem-head">
+                <strong>6. Read and Print a Character</strong>
+                <span id="practiceBadge-io-p6" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement"><strong>Problem 6: Read a character and print the character entered by the user.</strong></p>
+            <p><strong>Input:</strong> One character.</p>
+            <p><strong>Output:</strong> Print the entered character.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('io-p6')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('io-p6')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('io-p6')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-io-p6" hidden>
+                💡 <strong>Hint:</strong> Use scanf(&quot; %c&quot;, &amp;ch) to skip leading whitespace before the character.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-io-p6" hidden>
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Read and Print a Character
+                </div>
+
+                <div class="cb-c-practice-grid">
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-io-p6"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-io-p6"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('io-p6')">▶ Run Code</button>
+
+                            <button id="practiceCheck-io-p6"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('io-p6')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('io-p6')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+                        <textarea id="practiceInput-io-p6"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+                        <pre id="practiceOutput-io-p6"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+                        <div id="practiceTests-io-p6" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cb-c-practice-score">
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-io-p6">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-io-p6">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-io-p6">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-io-p6" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-io-p6" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char ch;
+
+    scanf(&quot; %c&quot;, &amp;ch);
+
+    printf(&quot;Character = %c&quot;, ch);
+
+    return 0;
+}</code></pre>
+            </div>
+        </div>
+    
+        </div>
+    </div>
+
+
+    <!-- KEY TAKEAWAY -->
+
+    <h3>5.25 Key Takeaway</h3>
+
+    <div class="tip-box">
+
+        🎯 For every input/output problem,
+        remember:
+
+        <br><br>
+
+        <strong>
+        1. Identify the input data.
+        </strong>
+
+        <br><br>
+
+        <strong>
+        2. Choose the correct data type.
+        </strong>
+
+        <br><br>
+
+        <strong>
+        3. Use the correct scanf() format.
+        </strong>
+
+        <br><br>
+
+        <strong>
+        4. Process the data.
+        </strong>
+
+        <br><br>
+
+        <strong>
+        5. Use the correct printf() format.
+        </strong>
+
+        <br><br>
+
+        This pattern is the foundation of almost
+        every beginner coding-platform problem.
+
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section cb-compact-learning" id="input-output-tracing-extra">
+    <span class="cb-added-label">PROGRAM TRACING</span>
+    <h2>🔎 Program Tracing — Input &amp; Output</h2>
+
+    <p class="cb-added-note">
+        Trace how <code>scanf()</code> stores input in variables and how <code>printf()</code> reads those values to produce output.
+    </p>
+
+    <button class="cb-compact-toggle"
+            type="button"
+            onclick="CBProgramTrace.toggle('input-output')">▶ Program Tracing — Input &amp; Output</button>
+
+    <div class="cb-compact-panel" id="cbTracePanel-input-output" hidden>
+
+        <div class="cb-tracer"
+             data-cb-trace="input-output"
+             data-config="{&quot;code&quot;: [&quot;int main()&quot;, &quot;{&quot;, &quot;    int age;&quot;, &quot;    float marks;&quot;, &quot;    printf(\&quot;Enter age: \&quot;);&quot;, &quot;    scanf(\&quot;%d\&quot;, &amp;age);&quot;, &quot;    printf(\&quot;Enter marks: \&quot;);&quot;, &quot;    scanf(\&quot;%f\&quot;, &amp;marks);&quot;, &quot;    printf(\&quot;Age = %d\\\\n\&quot;, age);&quot;, &quot;    printf(\&quot;Marks = %.2f\&quot;, marks);&quot;, &quot;    return 0;&quot;, &quot;}&quot;], &quot;steps&quot;: [{&quot;line&quot;: 0, &quot;state&quot;: {&quot;age&quot;: &quot;—&quot;, &quot;marks&quot;: &quot;—&quot;, &quot;output&quot;: &quot;&quot;}, &quot;note&quot;: &quot;Execution starts at main().&quot;}, {&quot;line&quot;: 2, &quot;state&quot;: {&quot;age&quot;: &quot;indeterminate&quot;, &quot;marks&quot;: &quot;—&quot;, &quot;output&quot;: &quot;&quot;}, &quot;note&quot;: &quot;age is declared. As an uninitialized automatic local variable, its value is indeterminate.&quot;}, {&quot;line&quot;: 3, &quot;state&quot;: {&quot;age&quot;: &quot;indeterminate&quot;, &quot;marks&quot;: &quot;indeterminate&quot;, &quot;output&quot;: &quot;&quot;}, &quot;note&quot;: &quot;marks is declared and is also indeterminate until a valid value is stored.&quot;}, {&quot;line&quot;: 4, &quot;state&quot;: {&quot;age&quot;: &quot;indeterminate&quot;, &quot;marks&quot;: &quot;indeterminate&quot;, &quot;output&quot;: &quot;Enter age: &quot;}, &quot;note&quot;: &quot;printf() writes the prompt to standard output.&quot;}, {&quot;line&quot;: 5, &quot;state&quot;: {&quot;age&quot;: 20, &quot;marks&quot;: &quot;indeterminate&quot;, &quot;output&quot;: &quot;Enter age: &quot;}, &quot;note&quot;: &quot;For this trace, the user enters 20. scanf() stores that integer in age through &amp;age.&quot;}, {&quot;line&quot;: 6, &quot;state&quot;: {&quot;age&quot;: 20, &quot;marks&quot;: &quot;indeterminate&quot;, &quot;output&quot;: &quot;Enter age: Enter marks: &quot;}, &quot;note&quot;: &quot;The second prompt is displayed.&quot;}, {&quot;line&quot;: 7, &quot;state&quot;: {&quot;age&quot;: 20, &quot;marks&quot;: 85.5, &quot;output&quot;: &quot;Enter age: Enter marks: &quot;}, &quot;note&quot;: &quot;For this trace, the user enters 85.5. scanf() stores the floating-point value in marks through &amp;marks.&quot;}, {&quot;line&quot;: 8, &quot;state&quot;: {&quot;age&quot;: 20, &quot;marks&quot;: 85.5, &quot;output&quot;: &quot;Enter age: Enter marks: Age = 20\n&quot;}, &quot;note&quot;: &quot;printf() reads age and displays it using %d.&quot;}, {&quot;line&quot;: 9, &quot;state&quot;: {&quot;age&quot;: 20, &quot;marks&quot;: 85.5, &quot;output&quot;: &quot;Enter age: Enter marks: Age = 20\nMarks = 85.50&quot;}, &quot;note&quot;: &quot;printf() reads marks and displays it with two digits after the decimal point.&quot;}, {&quot;line&quot;: 10, &quot;state&quot;: {&quot;age&quot;: 20, &quot;marks&quot;: 85.5, &quot;output&quot;: &quot;Enter age: Enter marks: Age = 20\nMarks = 85.50&quot;}, &quot;note&quot;: &quot;return 0 ends the program successfully.&quot;}]}">
+
+            <div class="cb-tracer-grid">
+
+                <div class="cb-tracer-code-wrap">
+                    <div class="cb-tracer-heading">C Program</div>
+                    <pre class="cb-tracer-code" id="cbTraceCode-input-output"></pre>
+                </div>
+
+                <div class="cb-tracer-state-wrap">
+                    <div class="cb-tracer-heading">Live Variables</div>
+
+                    <div class="cb-tracer-note" id="cbTraceNote-input-output"></div>
+
+                    <div class="cb-live-state" id="cbTraceState-input-output"></div>
+
+                    <div class="cb-tracer-output">
+                        <strong>Output</strong>
+                        <pre id="cbTraceOutput-input-output">—</pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBProgramTrace.prev('input-output')">← Previous</button>
+                <button class="cb-control cb-next" id="cbTraceNext-input-output" onclick="CBProgramTrace.next('input-output')">Next →</button>
+                <button class="cb-control cb-auto" id="cbTraceAuto-input-output" onclick="CBProgramTrace.auto('input-output')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBProgramTrace.pause('input-output')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBProgramTrace.reset('input-output')">↺ Reset</button>
+            </div>
+
+            <div class="cb-tracer-status" id="cbTraceStatus-input-output">Step 0</div>
+
+        </div>
+    </div>
+</section>
+
+
+<section class="content-card cb-added-section" id="input-output-interview-extra">
+    <span class="cb-added-label">INTERVIEW PREPARATION</span>
+    <h2>🎤 Input &amp; Output — Interview Questions</h2>
+
+    <div class="cb-original-qa-list cb-interview-qa-list">
+        
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">1.</span>
+                <span>What is the purpose of printf() in C?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('ioInterviewAnswer1', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="ioInterviewAnswer1"
+                 hidden>
+                printf() writes formatted output to the standard output stream according to its format string and arguments.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">2.</span>
+                <span>What is the purpose of scanf() in C?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('ioInterviewAnswer2', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="ioInterviewAnswer2"
+                 hidden>
+                scanf() reads formatted input from the standard input stream and stores converted values in objects whose addresses are provided.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">3.</span>
+                <span>Why is &amp; used with ordinary scalar variables in scanf()?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('ioInterviewAnswer3', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="ioInterviewAnswer3"
+                 hidden>
+                scanf() needs the address of the destination object so that it can store the converted input value there.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">4.</span>
+                <span>Why is there often a space before %c in scanf(&quot; %c&quot;, &amp;ch)?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('ioInterviewAnswer4', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="ioInterviewAnswer4"
+                 hidden>
+                Whitespace in a scanf format string tells scanf() to skip leading whitespace characters before reading the character.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">5.</span>
+                <span>What is the difference between %f and %lf for scanf()?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('ioInterviewAnswer5', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="ioInterviewAnswer5"
+                 hidden>
+                %f expects a pointer to float, while %lf expects a pointer to double.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">6.</span>
+                <span>Why can scanf(&quot;%s&quot;, name) read only one word?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('ioInterviewAnswer6', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="ioInterviewAnswer6"
+                 hidden>
+                %s skips leading whitespace and then reads a sequence of non-whitespace characters, so it stops at the next whitespace character.
+            </div>
+        </div>
+    
+        <div class="cb-original-qa-item">
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">7.</span>
+                <span>What is the difference between &#x27;
+&#x27; and &#x27;	&#x27;?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('ioInterviewAnswer7', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="ioInterviewAnswer7"
+                 hidden>
+                
+ represents a newline, while 	 represents a horizontal tab.
+            </div>
+        </div>
+    
+    </div>
+</section>
+
+<section class="content-card cb-added-section" id="input-output-tips-extra">
+    <span class="cb-added-label">PLACEMENT TIPS</span>
+    <h2>💡 Input &amp; Output — Extra Tips</h2>
+
+    <ul class="cb-tip-grid">
+        <li>For <strong>scanf()</strong>, always match the conversion specifier with the correct pointer type.</li>
+        <li>Remember the important difference: <strong>scanf() uses %lf for double</strong>, while <strong>printf() uses %f for double output</strong>.</li>
+        <li>When reading a character after numeric input, understand why <code>scanf(" %c", &amp;ch)</code> is often safer than <code>scanf("%c", &amp;ch)</code>.</li>
+        <li>When reading a string with <code>%s</code>, use a field width such as <code>%29s</code> for a 30-character array.</li>
+        <li>In coding tests, check the required output format carefully. Extra spaces, labels, or missing line breaks can cause a correct calculation to be judged wrong.</li>
+    </ul>
+</section>
+
+<section class="content-card cb-added-section" id="input-output-practice-extra">
+    <span class="cb-added-label">EXTRA PRACTICE</span>
+    <h2>✍️ Input &amp; Output — Extra Practice Questions</h2>
+
+    <ol class="cb-extra-practice">
+        <li>Predict the exact output of <code>printf("%d %.2f", 10, 3.14159);</code>.</li>
+        <li>Find the mistake in <code>double x; scanf("%f", &amp;x);</code> and correct it.</li>
+        <li>Explain why <code>scanf("%s", name)</code> does not normally read a full name containing spaces.</li>
+        <li>Write one example that reads an integer, a double, and a character in the same program.</li>
+        <li>Write a program that prints three values in neatly formatted separate lines using escape sequences.</li>
+    </ol>
+</section>
+
+
+
+
+<section class="cb-topic-navigation" aria-label="C Programming topic navigation">
+
+    <a class="cb-topic-nav-btn cb-topic-nav-prev" href="data-types.html">
+        ← Previous Topic: Data Types
+    </a>
+
+    <a class="cb-topic-nav-btn cb-topic-nav-next" href="operators.html">
+        Next Topic: Operators →
+    </a>
+
+</section>
+
+</main>
+
+</div>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../Maths/index.html">
+                Maths
+            </a>
+
+            <a href="index.html">
+                C Programming
+            </a>
+
+        </div>
+
+
+        <!-- LEARNING -->
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+<a href="../Data-Structures/">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/">
+    Advanced Data Structures
+</a>
+
+            <a href="#">
+                Python
+            </a>
+
+            <a href="#">
+                AI & Machine Learning
+            </a>
+
+        </div>
+
+
+        <!-- PRACTICE -->
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="#practice">
+                Practice Problems
+            </a>
+
+            <a href="#practice">
+                Problem Solving
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="c-programming.js"></script>
+<script>
+const codeBhavyaInputOutputPracticeConfigs = [{"key": "io-p1", "title": "Read Two Integers and Print Their Sum", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int a, b;\n\n    /* Read two integers and print their sum */\n\n    return 0;\n}", "sampleInput": "10 20", "tests": [{"input": "10 20", "expected": "Sum = 30"}, {"input": "5 7", "expected": "Sum = 12"}, {"input": "-4 9", "expected": "Sum = 5"}, {"input": "0 0", "expected": "Sum = 0"}, {"input": "100 250", "expected": "Sum = 350"}]}, {"key": "io-p2", "title": "Average of Three Integers", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int a, b, c;\n\n    /* Read three integers and print their average */\n\n    return 0;\n}", "sampleInput": "10 20 30", "tests": [{"input": "10 20 30", "expected": "Average = 20.00"}, {"input": "1 2 3", "expected": "Average = 2.00"}, {"input": "1 2 4", "expected": "Average = 2.33"}, {"input": "-3 0 3", "expected": "Average = 0.00"}, {"input": "100 90 80", "expected": "Average = 90.00"}]}, {"key": "io-p3", "title": "Display Student Details", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    char name[30];\n    int age;\n    float marks;\n\n    /* Read and display student details */\n\n    return 0;\n}", "sampleInput": "Ravi 20 85.5", "tests": [{"input": "Ravi 20 85.5", "expected": "Name = Ravi\nAge = 20\nMarks = 85.50"}, {"input": "Anu 19 92", "expected": "Name = Anu\nAge = 19\nMarks = 92.00"}, {"input": "Venu 35 75.25", "expected": "Name = Venu\nAge = 35\nMarks = 75.25"}, {"input": "Sam 18 60.5", "expected": "Name = Sam\nAge = 18\nMarks = 60.50"}, {"input": "Kiran 21 100", "expected": "Name = Kiran\nAge = 21\nMarks = 100.00"}]}, {"key": "io-p4", "title": "Area of a Circle", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    double radius;\n\n    /* Read radius and print area */\n\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "5", "expected": "Area = 78.54"}, {"input": "1", "expected": "Area = 3.14"}, {"input": "2.5", "expected": "Area = 19.63"}, {"input": "0", "expected": "Area = 0.00"}, {"input": "10", "expected": "Area = 314.16"}]}, {"key": "io-p5", "title": "Arithmetic Results", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    double a, b;\n\n    /* Read two numbers and print four arithmetic results */\n\n    return 0;\n}", "sampleInput": "10 4", "tests": [{"input": "10 4", "expected": "Sum = 14.00\nDifference = 6.00\nProduct = 40.00\nQuotient = 2.50"}, {"input": "8 2", "expected": "Sum = 10.00\nDifference = 6.00\nProduct = 16.00\nQuotient = 4.00"}, {"input": "5 2", "expected": "Sum = 7.00\nDifference = 3.00\nProduct = 10.00\nQuotient = 2.50"}, {"input": "-6 3", "expected": "Sum = -3.00\nDifference = -9.00\nProduct = -18.00\nQuotient = -2.00"}, {"input": "2.5 0.5", "expected": "Sum = 3.00\nDifference = 2.00\nProduct = 1.25\nQuotient = 5.00"}]}, {"key": "io-p6", "title": "Read and Print a Character", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    char ch;\n\n    /* Read and print one character */\n\n    return 0;\n}", "sampleInput": "A", "tests": [{"input": "A", "expected": "Character = A"}, {"input": "z", "expected": "Character = z"}, {"input": "7", "expected": "Character = 7"}, {"input": "#", "expected": "Character = #"}, {"input": "K", "expected": "Character = K"}]}];
+CodeBhavyaCPractice.registerAll(codeBhavyaInputOutputPracticeConfigs);
+</script>
+
+<script>
+/* ============================================================
+   INPUT & OUTPUT — QUICK MCQ ENGINE
+   Kept inside this page so c-programming.js remains unchanged.
+   ============================================================ */
+
+window.CBMCQ = {
+
+    check(id) {
+
+        const card = document.getElementById(id);
+
+        if (!card)
+            return;
+
+        const selected =
+            card.querySelector('input[type="radio"]:checked');
+
+        const feedback =
+            card.querySelector(".cb-mcq-feedback");
+
+        const result =
+            card.querySelector(".cb-mcq-result");
+
+        if (!selected) {
+
+            if (feedback)
+                feedback.hidden = false;
+
+            if (result) {
+                result.className = "cb-mcq-result wrong";
+                result.textContent = "Please select an answer first.";
+            }
+
+            return;
+        }
+
+        const correct = card.dataset.correct;
+        const selectedValue = selected.value;
+
+        card.querySelectorAll(".cb-mcq-option").forEach(option => {
+
+            option.classList.remove("correct", "wrong");
+
+            const value = option.dataset.option;
+
+            if (value === correct)
+                option.classList.add("correct");
+
+            if (value === selectedValue && selectedValue !== correct)
+                option.classList.add("wrong");
+        });
+
+        card.querySelectorAll('input[type="radio"]').forEach(input => {
+            input.disabled = true;
+        });
+
+        if (feedback)
+            feedback.hidden = false;
+
+        if (result) {
+
+            if (selectedValue === correct) {
+                result.className = "cb-mcq-result correct";
+                result.textContent = "✓ Correct!";
+            } else {
+                result.className = "cb-mcq-result wrong";
+                result.textContent = `✗ Incorrect. The correct answer is ${correct}.`;
+            }
+        }
+
+        const checkButton =
+            card.querySelector(".cb-mcq-check-btn");
+
+        const resetButton =
+            card.querySelector(".cb-mcq-reset-btn");
+
+        if (checkButton)
+            checkButton.disabled = true;
+
+        if (resetButton)
+            resetButton.hidden = false;
+    },
+
+    reset(id) {
+
+        const card = document.getElementById(id);
+
+        if (!card)
+            return;
+
+        card.querySelectorAll('input[type="radio"]').forEach(input => {
+            input.checked = false;
+            input.disabled = false;
+        });
+
+        card.querySelectorAll(".cb-mcq-option").forEach(option => {
+            option.classList.remove("correct", "wrong");
+        });
+
+        const feedback =
+            card.querySelector(".cb-mcq-feedback");
+
+        const result =
+            card.querySelector(".cb-mcq-result");
+
+        const checkButton =
+            card.querySelector(".cb-mcq-check-btn");
+
+        const resetButton =
+            card.querySelector(".cb-mcq-reset-btn");
+
+        if (feedback)
+            feedback.hidden = true;
+
+        if (result) {
+            result.className = "cb-mcq-result";
+            result.textContent = "";
+        }
+
+        if (checkButton)
+            checkButton.disabled = false;
+
+        if (resetButton)
+            resetButton.hidden = true;
+    }
+};
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
