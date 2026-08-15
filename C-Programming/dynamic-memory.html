@@ -1,0 +1,5169 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C Programming | CodeBhavya</title>
+
+ <link rel="icon" type="image/png" sizes="32x32"
+      href="../images/codebhavya-icon-32.png">
+
+<link rel="icon" type="image/png" sizes="128x128"
+      href="../images/codebhavya-icon-128.png">
+
+<link rel="icon" type="image/png" sizes="512x512"
+      href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="c-programming.css">
+</head>
+
+<body class="cb-c-topic-page cb-dynamic-memory-page">
+
+<header class="top-header">
+
+<!-- <a href="../index.html" class="logo">
+    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a> -->
+    
+<a href="../index.html" class="logo codebhavya-new-logo">
+
+    <img
+        src="../images/codebhavya-main-logo.png"
+        alt="CodeBhavya Logo"
+        class="main-logo"
+    >
+
+    <span class="brand-name">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </span>
+
+</a>
+
+    <nav class="top-nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="../Maths/">
+            Maths
+        </a>
+
+        <a href="index.html" class="active">
+            C
+        </a>
+
+<a href="../Data-Structures/index.html">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/index.html">
+    Advanced Data Structures
+</a>
+
+        <a href="../Python/">
+            Python
+        </a>
+
+        <a href="../AI-ML/">
+            AI & ML
+        </a>
+
+        <a href="../Placement/">
+            Placement
+        </a>
+
+    </nav>
+
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar cb-c-topic-sidebar">
+    <div class="sidebar-title">💻 C Programming</div>
+
+    <input
+        type="text"
+        id="topicSearch"
+        class="search-box"
+        placeholder="🔍 Search topics..."
+        onkeyup="searchTopics()"
+    >
+
+    <div class="sidebar-title">Fundamentals</div>
+    <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
+    <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
+    <a class="cb-topic-link" data-topic-link="1" href="data-types.html">📦 Data Types</a>
+    <a class="cb-topic-link" data-topic-link="1" href="input-output.html">⌨️ Input &amp; Output</a>
+
+    <div class="sidebar-title">Operators &amp; Control</div>
+    <a class="cb-topic-link" data-topic-link="1" href="operators.html">➕ Operators</a>
+    <a class="cb-topic-link" data-topic-link="1" href="expressions.html">🧮 Expressions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="decision-making.html">🔀 Decision Making</a>
+    <a class="cb-topic-link" data-topic-link="1" href="loops.html">🔁 Loops</a>
+
+    <div class="sidebar-title">Programming Concepts</div>
+    <a class="cb-topic-link" data-topic-link="1" href="arrays.html">📊 Arrays</a>
+    <a class="cb-topic-link" data-topic-link="1" href="strings.html">🔤 Strings</a>
+    <a class="cb-topic-link" data-topic-link="1" href="functions.html">🧩 Functions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="pointers.html">👉 Pointers</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structures-unions.html">🏗️ Structures &amp; Unions</a>
+
+    <div class="sidebar-title">Advanced C</div>
+    <a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">⚙️ Preprocessor &amp; Header Files</a>
+    <a class="cb-topic-link" data-topic-link="1" href="file-handling.html">📁 File Handling</a>
+    <a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">🧠 Dynamic Memory Allocation</a>
+    <a class="cb-topic-link" data-topic-link="1" href="command-line.html">💻 Command Line Arguments</a>
+    <a class="cb-topic-link" data-topic-link="1" href="bitwise.html">🔢 Bitwise Programming</a>
+    <a class="cb-topic-link" data-topic-link="1" href="enum-typedef.html">🔤 Enumerations &amp; typedef</a>
+    <a class="cb-topic-link" data-topic-link="1" href="precedence.html">🧮 Operator Precedence &amp; Associativity</a>
+    <a class="cb-topic-link" data-topic-link="1" href="storage-classes.html">💾 Storage Classes</a>
+    <a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">🛠️ Advanced C Preprocessor</a>
+
+    <div class="sidebar-title">Practice</div>
+    <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
+</aside>
+
+<main class="main-content">
+
+<section id="dynamic-memory" class="content-card">
+
+    <h2>🧠 17. Dynamic Memory Allocation</h2>
+
+    <!-- 17.1 INTRODUCTION -->
+
+    <h3>17.1 What is Dynamic Memory Allocation?</h3>
+
+    <p>
+        Dynamic Memory Allocation allows a C program to request
+        memory during program execution.
+    </p>
+
+    <p>
+        Unlike fixed-size arrays, dynamically allocated memory
+        can be requested according to the actual requirements
+        of the program.
+    </p>
+
+    <div class="formula-box">
+
+        Program
+        <br>
+        ↓
+        <br>
+        Request Memory
+        <br>
+        ↓
+        <br>
+        Heap Memory
+        <br>
+        ↓
+        <br>
+        Use Memory
+        <br>
+        ↓
+        <br>
+        free()
+
+    </div>
+
+
+    <!-- 17.2 STATIC VS DYNAMIC -->
+
+    <h3>17.2 Static vs Dynamic Memory</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Static / Automatic Allocation</th>
+                    <th>Dynamic Allocation</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Size is usually determined before execution of that block</td>
+                    <td>Memory can be requested during execution</td>
+                </tr>
+
+                <tr>
+                    <td>Commonly used with fixed-size arrays and local variables</td>
+                    <td>Useful when the required size is known only at runtime</td>
+                </tr>
+
+                <tr>
+                    <td>Managed automatically for automatic variables</td>
+                    <td>Programmer explicitly manages allocated storage</td>
+                </tr>
+
+                <tr>
+                    <td>Does not use malloc()/calloc()</td>
+                    <td>Uses malloc(), calloc(), realloc() and free()</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 17.3 STACK AND HEAP -->
+
+    <h3>17.3 Stack and Heap Memory</h3>
+
+    <p>
+        Dynamic memory is generally allocated from the
+        <strong>heap</strong>.
+    </p>
+
+    <div class="memory-diagram">
+
+        <div class="memory-section">
+            <strong>Stack</strong>
+            <span>Local variables</span>
+            <span>Function call information</span>
+        </div>
+
+        <div class="memory-section">
+            <strong>Heap</strong>
+            <span>Dynamic memory</span>
+            <span>malloc / calloc / realloc</span>
+        </div>
+
+    </div>
+
+    <p>
+        The exact memory layout is implementation-dependent,
+        but the stack and heap are useful concepts for
+        understanding C memory management.
+    </p>
+
+
+    <!-- 17.4 MALLOC -->
+
+    <h3>17.4 malloc()</h3>
+
+    <p>
+        <strong>malloc()</strong> allocates a block of
+        uninitialized memory of the requested size.
+    </p>
+
+    <pre><code>#include &lt;stdlib.h&gt;
+
+int *ptr;
+
+ptr = malloc(5 * sizeof *ptr);</code></pre>
+
+    <p>
+        Here, memory is requested for five integers.
+    </p>
+
+
+    <!-- 17.5 MALLOC EXAMPLE -->
+
+    <h3>17.5 Example Using malloc()</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int *ptr;
+
+    ptr = malloc(5 * sizeof *ptr);
+
+    if(ptr == NULL)
+    {
+        printf("Memory allocation failed");
+        return 1;
+    }
+
+    for(int i = 0; i &lt; 5; i++)
+    {
+        ptr[i] = (i + 1) * 10;
+    }
+
+    for(int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", ptr[i]);
+    }
+
+    free(ptr);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        10 20 30 40 50
+
+    </div>
+
+
+    <!-- 17.6 MALLOC INITIALIZATION -->
+
+    <h3>17.6 Does malloc() Initialize Memory?</h3>
+
+    <p>
+        No. The bytes returned by <strong>malloc()</strong>
+        have indeterminate values until your program writes
+        appropriate values into them.
+    </p>
+
+    <pre><code>int *ptr = malloc(5 * sizeof *ptr);</code></pre>
+
+    <p>
+        Do not assume the allocated integers are initialized
+        to zero.
+    </p>
+
+
+    <!-- 17.7 CALLOC -->
+
+    <h3>17.7 calloc()</h3>
+
+    <p>
+        <strong>calloc()</strong> allocates memory for multiple
+        elements and initializes the allocated bytes to zero.
+    </p>
+
+    <pre><code>int *ptr;
+
+ptr = calloc(5, sizeof *ptr);</code></pre>
+
+    <p>
+        The first argument specifies the number of elements.
+        The second specifies the size of each element.
+    </p>
+
+
+    <!-- 17.8 CALLOC EXAMPLE -->
+
+    <h3>17.8 Example Using calloc()</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int *ptr;
+
+    ptr = calloc(5, sizeof *ptr);
+
+    if(ptr == NULL)
+    {
+        printf("Memory allocation failed");
+        return 1;
+    }
+
+    for(int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", ptr[i]);
+    }
+
+    free(ptr);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        0 0 0 0 0
+
+    </div>
+
+
+    <!-- 17.9 MALLOC VS CALLOC -->
+
+    <h3>17.9 malloc() vs calloc()</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>malloc()</th>
+                    <th>calloc()</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>One size argument</td>
+                    <td>Number of elements and element size</td>
+                </tr>
+
+                <tr>
+                    <td>Memory is not initialized to zero</td>
+                    <td>Allocated bytes are initialized to zero</td>
+                </tr>
+
+                <tr>
+                    <td>malloc(size)</td>
+                    <td>calloc(count, size)</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 17.10 REALLOC -->
+
+    <h3>17.10 realloc()</h3>
+
+    <p>
+        <strong>realloc()</strong> changes the size of a
+        previously allocated memory block.
+    </p>
+
+    <pre><code>ptr = realloc(ptr, 10 * sizeof *ptr);</code></pre>
+
+    <p>
+        The block may be moved to a different memory location.
+        Therefore, use the pointer returned by realloc().
+    </p>
+
+
+    <!-- 17.11 REALLOC EXAMPLE -->
+
+    <h3>17.11 Example Using realloc()</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int *ptr;
+
+    ptr = malloc(3 * sizeof *ptr);
+
+    if(ptr == NULL)
+        return 1;
+
+    for(int i = 0; i &lt; 3; i++)
+    {
+        ptr[i] = (i + 1) * 10;
+    }
+
+    int *temp = realloc(ptr, 5 * sizeof *ptr);
+
+    if(temp == NULL)
+    {
+        free(ptr);
+        return 1;
+    }
+
+    ptr = temp;
+
+    ptr[3] = 40;
+    ptr[4] = 50;
+
+    for(int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", ptr[i]);
+    }
+
+    free(ptr);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        10 20 30 40 50
+
+    </div>
+
+
+    <!-- 17.12 SAFE REALLOC -->
+
+    <h3>17.12 Safe Use of realloc()</h3>
+
+    <p>
+        Do not directly overwrite your only pointer with
+        <strong>realloc()</strong> if you need to handle
+        allocation failure safely.
+    </p>
+
+    <p>
+        Prefer a temporary pointer:
+    </p>
+
+    <pre><code>int *temp;
+
+temp = realloc(ptr, new_size);
+
+if(temp != NULL)
+{
+    ptr = temp;
+}
+else
+{
+    /* Original ptr is still valid */
+}</code></pre>
+
+
+    <!-- 17.13 FREE -->
+
+    <h3>17.13 free()</h3>
+
+    <p>
+        <strong>free()</strong> releases dynamically allocated
+        memory back to the implementation.
+    </p>
+
+    <pre><code>free(ptr);</code></pre>
+
+    <p>
+        After freeing memory, the pointer value becomes
+        indeterminate. If you keep the pointer variable,
+        assigning <strong>NULL</strong> to it can help prevent
+        accidental reuse.
+    </p>
+
+    <pre><code>free(ptr);
+ptr = NULL;</code></pre>
+
+
+    <!-- 17.14 MEMORY LAYOUT -->
+
+    <h3>17.14 Dynamic Memory Diagram</h3>
+
+    <div class="memory-diagram">
+
+        <div class="memory-section">
+
+            <strong>Pointer Variable</strong>
+
+            <span>ptr</span>
+
+            <span>↓</span>
+
+        </div>
+
+        <div class="memory-section">
+
+            <strong>Heap Memory</strong>
+
+            <span>[10]</span>
+
+            <span>[20]</span>
+
+            <span>[30]</span>
+
+            <span>[40]</span>
+
+            <span>[50]</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- 17.15 NULL CHECK -->
+
+    <h3>17.15 Checking for NULL</h3>
+
+    <p>
+        Dynamic allocation functions return a null pointer if
+        the allocation fails.
+    </p>
+
+    <pre><code>int *ptr = malloc(100 * sizeof *ptr);
+
+if(ptr == NULL)
+{
+    printf("Memory allocation failed");
+    return 1;
+}</code></pre>
+
+    <div class="tip-box">
+
+        📌 Always check the result of malloc(), calloc() and
+        realloc() before using the allocated memory.
+
+    </div>
+
+
+    <!-- 17.16 DYNAMIC ARRAY -->
+
+    <h3>17.16 Dynamic Array</h3>
+
+    <p>
+        Dynamic allocation is useful when the number of elements
+        is known only during program execution.
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &amp;n);
+
+    int *arr = malloc(n * sizeof *arr);
+
+    if(arr == NULL)
+        return 1;
+
+    for(int i = 0; i &lt; n; i++)
+    {
+        scanf("%d", &amp;arr[i]);
+    }
+
+    for(int i = 0; i &lt; n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+
+
+    <!-- 17.17 DYNAMIC ARRAY DIAGRAM -->
+
+    <h3>17.17 Dynamic Array Representation</h3>
+
+    <div class="memory-diagram">
+
+        <div class="memory-section">
+
+            <strong>arr</strong>
+
+            <span>↓</span>
+
+        </div>
+
+        <div class="memory-section">
+
+            <span>[10]</span>
+            <span>[20]</span>
+            <span>[30]</span>
+            <span>[40]</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- 17.18 DYNAMIC STRING -->
+
+    <h3>17.18 Dynamically Allocated String</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    const char *text = "Hello";
+
+    char *str = malloc(strlen(text) + 1);
+
+    if(str == NULL)
+        return 1;
+
+    strcpy(str, text);
+
+    printf("%s", str);
+
+    free(str);
+
+    return 0;
+}</code></pre>
+
+    <div class="output-box">
+
+        Hello
+
+    </div>
+
+
+    <!-- 17.19 DYNAMIC STRUCTURE -->
+
+    <h3>17.19 Dynamic Structure</h3>
+
+    <p>
+        Structures can also be allocated dynamically.
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Student
+{
+    int roll;
+    float marks;
+};
+
+int main()
+{
+    struct Student *s;
+
+    s = malloc(sizeof *s);
+
+    if(s == NULL)
+        return 1;
+
+    s-&gt;roll = 101;
+    s-&gt;marks = 85.5;
+
+    printf("Roll = %d\n", s-&gt;roll);
+    printf("Marks = %.2f\n", s-&gt;marks);
+
+    free(s);
+
+    return 0;
+}</code></pre>
+
+
+    <!-- 17.20 ARROW OPERATOR -->
+
+    <h3>17.20 Accessing Dynamic Structures</h3>
+
+    <p>
+        When a pointer points to a structure, the
+        <strong>-&gt;</strong> operator is used to access its
+        members.
+    </p>
+
+    <pre><code>s-&gt;roll = 101;
+s-&gt;marks = 85.5;</code></pre>
+
+    <p>
+        This is equivalent to:
+    </p>
+
+    <pre><code>(*s).roll = 101;
+(*s).marks = 85.5;</code></pre>
+
+
+    <!-- 17.21 DYNAMIC STRUCTURE ARRAY -->
+
+    <h3>17.21 Dynamic Array of Structures</h3>
+
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Student
+{
+    int roll;
+    float marks;
+};
+
+int main()
+{
+    int n;
+
+    scanf("%d", &amp;n);
+
+    struct Student *students =
+        malloc(n * sizeof *students);
+
+    if(students == NULL)
+        return 1;
+
+    for(int i = 0; i &lt; n; i++)
+    {
+        scanf("%d %f",
+              &amp;students[i].roll,
+              &amp;students[i].marks);
+    }
+
+    for(int i = 0; i &lt; n; i++)
+    {
+        printf("%d %.2f\n",
+               students[i].roll,
+               students[i].marks);
+    }
+
+    free(students);
+
+    return 0;
+}</code></pre>
+
+
+    <!-- 17.22 DYNAMIC 2D ARRAY -->
+
+    <h3>17.22 Dynamic 2D Array</h3>
+
+    <p>
+        A two-dimensional array can also be allocated dynamically.
+        One simple method is to allocate one contiguous block.
+    </p>
+
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int rows = 3;
+    int cols = 4;
+
+    int *matrix =
+        malloc(rows * cols * sizeof *matrix);
+
+    if(matrix == NULL)
+        return 1;
+
+    for(int i = 0; i &lt; rows; i++)
+    {
+        for(int j = 0; j &lt; cols; j++)
+        {
+            matrix[i * cols + j] = i + j;
+        }
+    }
+
+    for(int i = 0; i &lt; rows; i++)
+    {
+        for(int j = 0; j &lt; cols; j++)
+        {
+            printf("%d ", matrix[i * cols + j]);
+        }
+
+        printf("\n");
+    }
+
+    free(matrix);
+
+    return 0;
+}</code></pre>
+
+
+    <!-- 17.23 MEMORY LEAK -->
+
+    <h3>17.23 Memory Leak</h3>
+
+    <p>
+        A <strong>memory leak</strong> occurs when dynamically
+        allocated memory is no longer reachable by the program
+        and has not been released.
+    </p>
+
+    <pre><code>int *ptr = malloc(100 * sizeof *ptr);
+
+/* ptr is lost without calling free() */
+
+ptr = NULL;</code></pre>
+
+    <div class="tip-box">
+
+        ⚠️ If dynamically allocated memory is no longer needed,
+        release it using free().
+
+    </div>
+
+
+    <!-- 17.24 DANGLING POINTER -->
+
+    <h3>17.24 Dangling Pointer</h3>
+
+    <p>
+        A dangling pointer is a pointer that refers to memory
+        whose lifetime has ended or that has already been freed.
+    </p>
+
+    <pre><code>int *ptr = malloc(sizeof *ptr);
+
+*ptr = 10;
+
+free(ptr);
+
+/* ptr should not be dereferenced here */</code></pre>
+
+    <p>
+        A common defensive practice is:
+    </p>
+
+    <pre><code>free(ptr);
+ptr = NULL;</code></pre>
+
+
+    <!-- 17.25 DOUBLE FREE -->
+
+    <h3>17.25 Double Free</h3>
+
+    <p>
+        Calling <strong>free()</strong> more than once on the
+        same allocation is invalid.
+    </p>
+
+    <pre><code>free(ptr);
+
+/* Do not do this again: */
+free(ptr);</code></pre>
+
+    <p>
+        Setting the pointer to <strong>NULL</strong> after
+        freeing can help avoid accidental repeated freeing,
+        because <strong>free(NULL)</strong> has no effect.
+    </p>
+
+
+    <!-- 17.26 USE AFTER FREE -->
+
+    <h3>17.26 Use-After-Free</h3>
+
+    <p>
+        Accessing memory after it has been released is invalid.
+    </p>
+
+    <pre><code>free(ptr);
+
+/* Invalid */
+printf("%d", *ptr);</code></pre>
+
+    <div class="tip-box">
+
+        ⚠️ Never read from or write through a pointer after
+        its allocated object has been freed.
+
+    </div>
+
+
+    <!-- 17.27 SIZEOF -->
+
+    <h3>17.27 Using sizeof() Correctly</h3>
+
+    <p>
+        Prefer using the pointed-to type when allocating memory.
+    </p>
+
+    <pre><code>int *ptr;
+
+ptr = malloc(10 * sizeof *ptr);</code></pre>
+
+    <p>
+        This style is easier to maintain if the pointer type
+        changes later.
+    </p>
+
+
+    <!-- 17.28 MEMORY ALLOCATION WORKFLOW -->
+
+    <h3>17.28 Dynamic Memory Workflow</h3>
+
+    <div class="formula-box">
+
+        Declare Pointer
+        <br>
+        ↓
+        <br>
+        malloc() / calloc()
+        <br>
+        ↓
+        <br>
+        Check NULL
+        <br>
+        ↓
+        <br>
+        Use Memory
+        <br>
+        ↓
+        <br>
+        realloc() if required
+        <br>
+        ↓
+        <br>
+        free()
+
+    </div>
+
+
+    <!-- 17.29 MALLOC CALLOC REALLOC FREE -->
+
+    <h3>17.29 Important Functions</h3>
+
+    <div class="comparison-table-wrapper">
+
+        <table class="comparison-table">
+
+            <thead>
+                <tr>
+                    <th>Function</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>malloc()</td>
+                    <td>Allocates uninitialized memory</td>
+                </tr>
+
+                <tr>
+                    <td>calloc()</td>
+                    <td>Allocates memory and initializes bytes to zero</td>
+                </tr>
+
+                <tr>
+                    <td>realloc()</td>
+                    <td>Changes the size of an allocation</td>
+                </tr>
+
+                <tr>
+                    <td>free()</td>
+                    <td>Releases allocated memory</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 17.30 COMMON MISTAKES -->
+
+    <h3>17.30 Common Dynamic Memory Mistakes</h3>
+
+    <ul>
+
+        <li>
+            Forgetting to check whether allocation returned NULL.
+        </li>
+
+        <li>
+            Forgetting to call free().
+        </li>
+
+        <li>
+            Accessing memory after free().
+        </li>
+
+        <li>
+            Freeing the same allocation twice.
+        </li>
+
+        <li>
+            Writing beyond the allocated block.
+        </li>
+
+        <li>
+            Losing the only pointer to allocated memory.
+        </li>
+
+        <li>
+            Using the wrong size in malloc() or calloc().
+        </li>
+
+        <li>
+            Overwriting the original pointer with realloc()
+            without considering allocation failure.
+        </li>
+
+    </ul>
+
+
+    <!-- 17.31 QUICK REVISION -->
+
+    <h3>17.31 Quick Revision</h3>
+
+    <div class="tip-box">
+
+        📌 <strong>malloc()</strong> → Allocates memory
+
+        <br><br>
+
+        📌 <strong>calloc()</strong> → Allocates and zero-initializes bytes
+
+        <br><br>
+
+        📌 <strong>realloc()</strong> → Resizes an allocation
+
+        <br><br>
+
+        📌 <strong>free()</strong> → Releases memory
+
+        <br><br>
+
+        📌 <strong>NULL</strong> → Indicates a null pointer
+
+        <br><br>
+
+        📌 <strong>Heap</strong> → Commonly used for dynamic storage
+
+        <br><br>
+
+        📌 <strong>Memory leak</strong> → Allocated memory is not released
+
+        <br><br>
+
+        📌 <strong>Dangling pointer</strong> → Pointer refers to
+        an object whose lifetime has ended
+
+        <br><br>
+
+        📌 <strong>Use-after-free</strong> → Accessing freed memory
+
+        <br><br>
+
+        📌 <strong>sizeof *ptr</strong> → Useful for type-safe allocation sizing
+
+    </div>
+
+
+    <!-- 17.32 MCQs -->
+
+    
+<section class="content-card cb-added-section cb-compact-learning" id="dynamic-memory-visualizer-extra">
+
+    <span class="cb-added-label">INTERACTIVE LEARNING</span>
+
+    <h2>🎬 Dynamic Memory — Allocation Lifecycle</h2>
+
+    <p class="cb-added-note">
+        Follow the complete lifecycle from requesting heap memory to releasing it safely.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBConceptViz.toggle('dynamicmemory')"
+    >▶ Open Visualization</button>
+
+    <div class="cb-compact-panel" id="cbVizPanel-dynamicmemory" hidden>
+
+        <div
+            class="cb-viz-card cb-viz-dsa-standard"
+            data-cb-viz="dynamicmemory"
+            data-frames="[{&quot;title&quot;:&quot;1. Request heap memory&quot;,&quot;detail&quot;:&quot;malloc() or calloc() requests a block large enough for the required data.&quot;},{&quot;title&quot;:&quot;2. Check the returned pointer&quot;,&quot;detail&quot;:&quot;A NULL result means the allocation failed and must not be dereferenced.&quot;},{&quot;title&quot;:&quot;3. Store and use values&quot;,&quot;detail&quot;:&quot;After a successful allocation, the program can access the block through the returned pointer.&quot;},{&quot;title&quot;:&quot;4. Resize safely when required&quot;,&quot;detail&quot;:&quot;realloc() can change the allocation size. Using a temporary pointer helps preserve the original block if resizing fails.&quot;},{&quot;title&quot;:&quot;5. Release the allocation&quot;,&quot;detail&quot;:&quot;free() releases dynamically allocated storage when it is no longer needed.&quot;}]"
+        >
+
+            <div class="cb-viz-dsa-topbar">
+                <div class="cb-viz-dsa-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+                <div class="cb-viz-dsa-brand" aria-label="CodeBhavya">
+                    <span class="cb-viz-dsa-brand-mark">
+                        <img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo">
+                    </span>
+                    <span class="cb-viz-dsa-code">Code</span><span class="cb-viz-dsa-bhavya">Bhavya</span>
+                </div>
+            </div>
+
+            <h3 class="cb-viz-dsa-title">🎬 Dynamic Memory Lifecycle Visualizer</h3>
+
+            <p class="cb-viz-dsa-intro">
+                The active card shows the current stage of safe dynamic-memory use.
+            </p>
+
+            <div class="cb-mini-step-flow">
+
+                <div class="cb-mini-step-card cb-mini-step-card-blue" data-cb-flow-step="0">
+                    <div class="cb-mini-step-badge">Allocate</div>
+                    <div class="cb-mini-step-text">malloc() / calloc()</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-gold" data-cb-flow-step="1">
+                    <div class="cb-mini-step-badge">Validate</div>
+                    <div class="cb-mini-step-text">pointer != NULL</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-purple" data-cb-flow-step="2">
+                    <div class="cb-mini-step-badge">Use</div>
+                    <div class="cb-mini-step-text">Read / Write values</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-green" data-cb-flow-step="3">
+                    <div class="cb-mini-step-badge">Resize</div>
+                    <div class="cb-mini-step-text">realloc()</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-pink" data-cb-flow-step="4">
+                    <div class="cb-mini-step-badge">Release</div>
+                    <div class="cb-mini-step-text">free()</div>
+                </div>
+
+            </div>
+
+            <div class="cb-viz-stage">
+                <div class="cb-viz-step" id="cbVizStep-dynamicmemory">Step 1</div>
+                <h3 id="cbVizTitle-dynamicmemory"></h3>
+                <p id="cbVizDetail-dynamicmemory"></p>
+                <div class="cb-viz-dots" id="cbVizDots-dynamicmemory"></div>
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBConceptViz.prev('dynamicmemory')">← Previous</button>
+                <button class="cb-control cb-next" id="cbVizNext-dynamicmemory" onclick="CBConceptViz.next('dynamicmemory')">Next →</button>
+                <button class="cb-control cb-auto" id="cbVizAuto-dynamicmemory" onclick="CBConceptViz.auto('dynamicmemory')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBConceptViz.pause('dynamicmemory')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBConceptViz.reset('dynamicmemory')">↺ Reset</button>
+            </div>
+
+            <div class="cb-mini-progress">
+                <div id="cbVizProgress-dynamicmemory"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="content-card cb-added-section cb-compact-learning" id="dynamic-memory-tracing-extra">
+
+    <span class="cb-added-label">PROGRAM TRACING</span>
+
+    <h2>🔎 Program Tracing — Dynamic Memory Allocation</h2>
+
+    <p class="cb-added-note">
+        Trace allocation, initialization, safe resizing with a temporary pointer, and release.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBProgramTrace.toggle('dynamicmemory')"
+    >▶ Program Tracing — Dynamic Memory Allocation</button>
+
+    <div class="cb-compact-panel" id="cbTracePanel-dynamicmemory" hidden>
+
+        <div
+            class="cb-tracer"
+            data-cb-trace="dynamicmemory"
+            data-config="{&quot;code&quot;:[&quot;int main()&quot;,&quot;{&quot;,&quot;    int n = 3;&quot;,&quot;    int *p = malloc(n * sizeof(int));&quot;,&quot;    if (p == NULL)&quot;,&quot;        return 1;&quot;,&quot;    p[0] = 10;&quot;,&quot;    p[1] = 20;&quot;,&quot;    p[2] = 30;&quot;,&quot;    int *temp = realloc(p, 4 * sizeof(int));&quot;,&quot;    if (temp == NULL)&quot;,&quot;    {&quot;,&quot;        free(p);&quot;,&quot;        return 1;&quot;,&quot;    }&quot;,&quot;    p = temp;&quot;,&quot;    p[3] = 40;&quot;,&quot;    printf(\&quot;%d\&quot;, p[0] + p[1] + p[2] + p[3]);&quot;,&quot;    free(p);&quot;,&quot;    p = NULL;&quot;,&quot;    return 0;&quot;,&quot;}&quot;],&quot;steps&quot;:[{&quot;line&quot;:0,&quot;state&quot;:{&quot;n&quot;:&quot;—&quot;,&quot;p&quot;:&quot;—&quot;,&quot;temp&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Execution starts at main().&quot;},{&quot;line&quot;:2,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;—&quot;,&quot;temp&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;n is initialized to 3.&quot;},{&quot;line&quot;:3,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;allocated block[3]: —, —, —&quot;,&quot;temp&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;malloc() allocates space for three integers. The element values are indeterminate until explicitly assigned.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;allocated block[3]: —, —, —&quot;,&quot;temp&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;This trace assumes allocation succeeded, so the NULL branch is not taken.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;allocated block[3]: 10, —, —&quot;,&quot;temp&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;p[0] becomes 10.&quot;},{&quot;line&quot;:7,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;allocated block[3]: 10, 20, —&quot;,&quot;temp&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;p[1] becomes 20.&quot;},{&quot;line&quot;:8,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;allocated block[3]: 10, 20, 30&quot;,&quot;temp&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;p[2] becomes 30.&quot;},{&quot;line&quot;:9,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;original pointer still valid until assignment&quot;,&quot;temp&quot;:&quot;resized block[4]: 10, 20, 30, —&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;realloc() requests space for four integers. In this trace it succeeds and temp receives the resulting pointer.&quot;},{&quot;line&quot;:10,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;original pointer value&quot;,&quot;temp&quot;:&quot;resized block[4]: 10, 20, 30, —&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;temp is not NULL, so the failure block is skipped.&quot;},{&quot;line&quot;:15,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;resized block[4]: 10, 20, 30, —&quot;,&quot;temp&quot;:&quot;same resized block&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;p is updated only after realloc() succeeds.&quot;},{&quot;line&quot;:16,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;resized block[4]: 10, 20, 30, 40&quot;,&quot;temp&quot;:&quot;same resized block&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;The new fourth element is initialized to 40.&quot;},{&quot;line&quot;:17,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;resized block[4]: 10, 20, 30, 40&quot;,&quot;temp&quot;:&quot;same resized block&quot;,&quot;output&quot;:&quot;100&quot;},&quot;note&quot;:&quot;The four values are added and 100 is printed.&quot;},{&quot;line&quot;:18,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;freed address value&quot;,&quot;temp&quot;:&quot;dangling copy of freed address&quot;,&quot;output&quot;:&quot;100&quot;},&quot;note&quot;:&quot;free(p) releases the allocated block. Pointer values that still contain that old address must not be dereferenced.&quot;},{&quot;line&quot;:19,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;NULL&quot;,&quot;temp&quot;:&quot;dangling copy of freed address&quot;,&quot;output&quot;:&quot;100&quot;},&quot;note&quot;:&quot;p is set to NULL after free(). temp still contains the old address value, so it must not be used.&quot;},{&quot;line&quot;:20,&quot;state&quot;:{&quot;n&quot;:3,&quot;p&quot;:&quot;NULL&quot;,&quot;temp&quot;:&quot;dangling copy of freed address&quot;,&quot;output&quot;:&quot;100&quot;},&quot;note&quot;:&quot;return 0 ends the program successfully.&quot;}]}"
+        >
+
+            <div class="cb-tracer-grid">
+
+                <div class="cb-tracer-code-wrap">
+                    <div class="cb-tracer-heading">C Program</div>
+                    <pre class="cb-tracer-code" id="cbTraceCode-dynamicmemory"></pre>
+                </div>
+
+                <div class="cb-tracer-state-wrap">
+                    <div class="cb-tracer-heading">Live Variables</div>
+                    <div class="cb-tracer-note" id="cbTraceNote-dynamicmemory"></div>
+                    <div class="cb-live-state" id="cbTraceState-dynamicmemory"></div>
+
+                    <div class="cb-tracer-output">
+                        <strong>Output</strong>
+                        <pre id="cbTraceOutput-dynamicmemory">—</pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBProgramTrace.prev('dynamicmemory')">← Previous</button>
+                <button class="cb-control cb-next" id="cbTraceNext-dynamicmemory" onclick="CBProgramTrace.next('dynamicmemory')">Next →</button>
+                <button class="cb-control cb-auto" id="cbTraceAuto-dynamicmemory" onclick="CBProgramTrace.auto('dynamicmemory')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBProgramTrace.pause('dynamicmemory')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBProgramTrace.reset('dynamicmemory')">↺ Reset</button>
+            </div>
+
+            <div class="cb-tracer-status" id="cbTraceStatus-dynamicmemory">Step 0</div>
+
+        </div>
+    </div>
+</section>
+
+
+<h3>17.32 Quick MCQs</h3>
+
+    <p class="cb-mcq-guide">
+        Select an answer first, then click <strong>Check Answer</strong>.
+        A correct choice becomes green. If the answer is wrong, your choice becomes red
+        and the correct option becomes green. The explanation appears below.
+    </p>
+
+    <div class="cb-mcq-list">
+        
+    <div class="cb-mcq-card" id="dynamic-mcq1" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">1.</span>
+            <strong>Which function allocates dynamic memory without initializing it?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="dynamic-mcq1" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">calloc()</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="dynamic-mcq1" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">malloc()</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="dynamic-mcq1" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">realloc()</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="dynamic-mcq1" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">free()</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('dynamic-mcq1')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('dynamic-mcq1')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>malloc() allocates a block of storage whose bytes have indeterminate values until the program initializes them.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="dynamic-mcq2" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">2.</span>
+            <strong>Which function allocates memory for an array and initializes its bytes to zero?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="dynamic-mcq2" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">malloc()</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="dynamic-mcq2" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">calloc()</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="dynamic-mcq2" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">realloc()</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="dynamic-mcq2" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">free()</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('dynamic-mcq2')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('dynamic-mcq2')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>calloc() allocates storage for an array of elements and initializes the allocated bytes to zero.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="dynamic-mcq3" data-correct="C">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">3.</span>
+            <strong>Which function changes the size of an allocated block?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="dynamic-mcq3" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">malloc()</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="dynamic-mcq3" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">calloc()</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="dynamic-mcq3" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">realloc()</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="dynamic-mcq3" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">sizeof()</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('dynamic-mcq3')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('dynamic-mcq3')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>realloc() changes the size of a previously allocated block and may return a different address.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="dynamic-mcq4" data-correct="C">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">4.</span>
+            <strong>Which function releases dynamically allocated memory?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="dynamic-mcq4" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">delete()</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="dynamic-mcq4" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">remove()</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="dynamic-mcq4" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">free()</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="dynamic-mcq4" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">clear()</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('dynamic-mcq4')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('dynamic-mcq4')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: C</strong>
+                <p>free() releases storage obtained from the dynamic allocation functions.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="dynamic-mcq5" data-correct="A">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">5.</span>
+            <strong>What should be checked after malloc() or calloc()?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="dynamic-mcq5" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">Whether the pointer is NULL</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="dynamic-mcq5" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">Whether sizeof is zero</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="dynamic-mcq5" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">Whether main returned</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="dynamic-mcq5" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">Whether printf exists</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('dynamic-mcq5')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('dynamic-mcq5')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: A</strong>
+                <p>A NULL pointer result indicates allocation failure.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="dynamic-mcq6" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">6.</span>
+            <strong>What is a memory leak?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="dynamic-mcq6" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">A pointer set to NULL</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="dynamic-mcq6" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">Allocated memory that becomes unreachable without being freed</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="dynamic-mcq6" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">A stack variable</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="dynamic-mcq6" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">A compiler warning only</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('dynamic-mcq6')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('dynamic-mcq6')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>A memory leak occurs when dynamically allocated storage remains allocated but the program loses the ability to free it.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="dynamic-mcq7" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">7.</span>
+            <strong>What is a dangling pointer?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="dynamic-mcq7" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">A pointer to valid allocated memory</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="dynamic-mcq7" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">A pointer that refers to storage whose lifetime has ended</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="dynamic-mcq7" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">A function pointer</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="dynamic-mcq7" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">A NULL macro</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('dynamic-mcq7')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('dynamic-mcq7')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>A dangling pointer retains an address to an object or allocation that no longer exists.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-mcq-card" id="dynamic-mcq8" data-correct="B">
+        <div class="cb-mcq-question">
+            <span class="cb-mcq-number">8.</span>
+            <strong>Why is a temporary pointer recommended with realloc()?</strong>
+        </div>
+
+        <div class="cb-mcq-options"><label class="cb-mcq-option" data-option="A">
+                <input type="radio" name="dynamic-mcq8" value="A">
+                <span class="cb-mcq-letter">A</span>
+                <span class="cb-mcq-option-text">To make the code longer</span>
+            </label><label class="cb-mcq-option" data-option="B">
+                <input type="radio" name="dynamic-mcq8" value="B">
+                <span class="cb-mcq-letter">B</span>
+                <span class="cb-mcq-option-text">To avoid losing the original allocation if realloc() fails</span>
+            </label><label class="cb-mcq-option" data-option="C">
+                <input type="radio" name="dynamic-mcq8" value="C">
+                <span class="cb-mcq-letter">C</span>
+                <span class="cb-mcq-option-text">To initialize memory to zero</span>
+            </label><label class="cb-mcq-option" data-option="D">
+                <input type="radio" name="dynamic-mcq8" value="D">
+                <span class="cb-mcq-letter">D</span>
+                <span class="cb-mcq-option-text">To call free() twice</span>
+            </label></div>
+
+        <div class="cb-mcq-actions">
+            <button type="button" class="cb-mcq-check-btn"
+                    onclick="CBMCQ.check('dynamic-mcq8')">Check Answer</button>
+            <button type="button" class="cb-mcq-reset-btn"
+                    onclick="CBMCQ.reset('dynamic-mcq8')" hidden>Try Again</button>
+        </div>
+
+        <div class="cb-mcq-feedback" hidden>
+            <div class="cb-mcq-result"></div>
+            <div class="cb-mcq-explanation">
+                <strong>Correct Answer: B</strong>
+                <p>If realloc() fails it returns NULL and the original allocation is still valid. A temporary pointer preserves access to that original block.</p>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+
+<div class="cb-c-dsa-practice-section">
+
+        <span class="cb-c-practice-label">PRACTICE</span>
+
+        <h3>17.33 🎯 Practice Problems</h3>
+
+        <p class="cb-c-practice-guide">
+            Practice allocation, arrays, strings, structures, matrices, realloc(),
+            allocation checks, and memory-leak prevention.
+            Use <strong>💻 Solve It Yourself</strong> first,
+            open <strong>Hint</strong> only when needed,
+            and use <strong>Show Program</strong> after attempting the problem.
+        </p>
+
+        <div class="cb-practice-overall" data-practice-total="20">
+
+            <div class="cb-practice-overall-title">
+                📈 Dynamic Memory Allocation Practice Progress
+            </div>
+
+            <div class="cb-practice-overall-grid">
+
+                <div class="cb-practice-overall-item">
+                    <strong>Solved</strong>
+                    <span id="cbPracticeOverallSolved">0 / 20</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completed with Solution</strong>
+                    <span id="cbPracticeOverallCompleted">0</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Total Score</strong>
+                    <span id="cbPracticeOverallScore">0 / 2000</span>
+                </div>
+
+                <div class="cb-practice-overall-item">
+                    <strong>Completion</strong>
+                    <span id="cbPracticeOverallPercent">0%</span>
+                </div>
+
+            </div>
+
+            <div class="cb-practice-progress-track">
+                <div id="cbPracticeOverallBar" class="cb-practice-progress-fill"></div>
+            </div>
+
+            <div class="cb-practice-progress-note">
+                A problem counts as <strong>Solved</strong> when all test cases pass
+                without opening the full solution. Problems completed after viewing
+                the official solution are tracked separately.
+            </div>
+
+        </div>
+
+        <div class="cb-c-practice-list">
+            
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>1. Allocate One Integer</strong>
+                <span id="practiceBadge-dynamic-p1" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 1: Allocate memory dynamically for one integer and store a value in it.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the stored integer.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p1')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p1')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p1')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p1" hidden>
+                💡 <strong>Hint:</strong> Use int *p = malloc(sizeof *p), check p, assign *p, then free(p).
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p1" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Allocate One Integer
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p1"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p1"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p1')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p1"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p1')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p1')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p1"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p1"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p1" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p1">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p1">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p1">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p1" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p1" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int value;
+
+    scanf(&quot;%d&quot;, &amp;value);
+
+    int *p = malloc(sizeof *p);
+
+    if (p == NULL)
+        return 1;
+
+    *p = value;
+
+    printf(&quot;%d&quot;, *p);
+
+    free(p);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>2. Allocate an Array of N Integers</strong>
+                <span id="practiceBadge-dynamic-p2" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 2: Dynamically allocate an array of n integers and initialize it with 1 to n.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One positive integer n.</p>
+            <p><strong>Output:</strong> Print the n initialized values.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p2')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p2')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p2')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p2" hidden>
+                💡 <strong>Hint:</strong> Use malloc(n * sizeof *arr).
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p2" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Allocate an Array of N Integers
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p2"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p2"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p2')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p2"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p2')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p2')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p2"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p2"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p2" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p2">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p2">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p2">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p2" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p2" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    if (n &lt;= 0)
+        return 0;
+
+    int *arr = malloc((size_t)n * sizeof *arr);
+
+    if (arr == NULL)
+        return 1;
+
+    for (int i = 0; i &lt; n; i++)
+        arr[i] = i + 1;
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, arr[i]);
+    }
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>3. Sum of a Dynamically Allocated Array</strong>
+                <span id="practiceBadge-dynamic-p3" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 3: Read n numbers into a dynamically allocated array and find their sum.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n followed by n integers.</p>
+            <p><strong>Output:</strong> Print the sum.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p3')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p3')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p3')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p3" hidden>
+                💡 <strong>Hint:</strong> Allocate after reading n, then accumulate arr[i].
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p3" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Sum of a Dynamically Allocated Array
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p3"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p3"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p3')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p3"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p3')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p3')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p3"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p3"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p3" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p3">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p3">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p3">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p3" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p3" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n;
+    long long sum = 0;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int *arr = malloc((size_t)n * sizeof *arr);
+
+    if (arr == NULL)
+        return 1;
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+        sum += arr[i];
+    }
+
+    printf(&quot;%lld&quot;, sum);
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>4. Largest Element in a Dynamic Array</strong>
+                <span id="practiceBadge-dynamic-p4" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 4: Find the largest element in a dynamically allocated array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n greater than 0 followed by n integers.</p>
+            <p><strong>Output:</strong> Print the largest value.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p4')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p4')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p4')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p4" hidden>
+                💡 <strong>Hint:</strong> Initialize maximum from arr[0].
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p4" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Largest Element in a Dynamic Array
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p4"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p4"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p4')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p4"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p4')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p4')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p4"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p4"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p4" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p4">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p4">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p4">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p4" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p4" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int *arr = malloc((size_t)n * sizeof *arr);
+
+    if (arr == NULL)
+        return 1;
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    int maximum = arr[0];
+
+    for (int i = 1; i &lt; n; i++)
+    {
+        if (arr[i] &gt; maximum)
+            maximum = arr[i];
+    }
+
+    printf(&quot;%d&quot;, maximum);
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>5. Smallest Element in a Dynamic Array</strong>
+                <span id="practiceBadge-dynamic-p5" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 5: Find the smallest element in a dynamically allocated array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n greater than 0 followed by n integers.</p>
+            <p><strong>Output:</strong> Print the smallest value.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p5')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p5')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p5')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p5" hidden>
+                💡 <strong>Hint:</strong> Initialize minimum from arr[0].
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p5" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Smallest Element in a Dynamic Array
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p5"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p5"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p5')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p5"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p5')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p5')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p5"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p5"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p5" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p5">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p5">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p5">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p5" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p5" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int *arr = malloc((size_t)n * sizeof *arr);
+
+    if (arr == NULL)
+        return 1;
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    int minimum = arr[0];
+
+    for (int i = 1; i &lt; n; i++)
+    {
+        if (arr[i] &lt; minimum)
+            minimum = arr[i];
+    }
+
+    printf(&quot;%d&quot;, minimum);
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>6. Reverse a Dynamic Array</strong>
+                <span id="practiceBadge-dynamic-p6" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 6: Reverse a dynamically allocated array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n followed by n integers.</p>
+            <p><strong>Output:</strong> Print the reversed array.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p6')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p6')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p6')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p6" hidden>
+                💡 <strong>Hint:</strong> Swap arr[left] and arr[right] while left &lt; right.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p6" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Reverse a Dynamic Array
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p6"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p6"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p6')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p6"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p6')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p6')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p6"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p6"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p6" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p6">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p6">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p6">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p6" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p6" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int *arr = malloc((size_t)n * sizeof *arr);
+
+    if (arr == NULL)
+        return 1;
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    for (int left = 0, right = n - 1; left &lt; right; left++, right--)
+    {
+        int temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
+    }
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, arr[i]);
+    }
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>7. calloc() Initial Values</strong>
+                <span id="practiceBadge-dynamic-p7" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 7: Use calloc() to create an array of integers and display its initial values.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One positive integer n.</p>
+            <p><strong>Output:</strong> Print n zero values separated by spaces.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p7')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p7')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p7')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p7" hidden>
+                💡 <strong>Hint:</strong> Use calloc(n, sizeof *arr).
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p7" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — calloc() Initial Values
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p7"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p7"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p7')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p7"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p7')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p7')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p7"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p7"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p7" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p7">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p7">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p7">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p7" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p7" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int *arr = calloc((size_t)n, sizeof *arr);
+
+    if (arr == NULL)
+        return 1;
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, arr[i]);
+    }
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>8. Increase Array Size with realloc()</strong>
+                <span id="practiceBadge-dynamic-p8" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 8: Use realloc() to increase the size of an integer array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Initial size n, n integers, new size m where m &gt;= n, followed by m-n additional integers.</p>
+            <p><strong>Output:</strong> Print all m values.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p8')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p8')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p8')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p8" hidden>
+                💡 <strong>Hint:</strong> Assign realloc() to a temporary pointer first.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p8" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Increase Array Size with realloc()
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p8"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p8"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p8')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p8"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p8')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p8')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p8"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p8"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p8" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p8">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p8">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p8">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p8" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p8" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n, m;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int *arr = malloc((size_t)n * sizeof *arr);
+
+    if (arr == NULL)
+        return 1;
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    scanf(&quot;%d&quot;, &amp;m);
+
+    int *temp = realloc(arr, (size_t)m * sizeof *arr);
+
+    if (temp == NULL)
+    {
+        free(arr);
+        return 1;
+    }
+
+    arr = temp;
+
+    for (int i = n; i &lt; m; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    for (int i = 0; i &lt; m; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, arr[i]);
+    }
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>9. Reduce Array Size with realloc()</strong>
+                <span id="practiceBadge-dynamic-p9" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 9: Use realloc() to reduce the size of an array.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Initial size n, n integers, then new size m where 0 &lt; m &lt;= n.</p>
+            <p><strong>Output:</strong> Print the first m values retained in the resized block.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p9')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p9')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p9')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p9" hidden>
+                💡 <strong>Hint:</strong> Use a temporary pointer and update arr only after success.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p9" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Reduce Array Size with realloc()
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p9"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p9"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p9')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p9"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p9')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p9')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p9"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p9"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p9" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p9">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p9">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p9">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p9" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p9" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n, m;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int *arr = malloc((size_t)n * sizeof *arr);
+
+    if (arr == NULL)
+        return 1;
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    scanf(&quot;%d&quot;, &amp;m);
+
+    int *temp = realloc(arr, (size_t)m * sizeof *arr);
+
+    if (temp == NULL)
+    {
+        free(arr);
+        return 1;
+    }
+
+    arr = temp;
+
+    for (int i = 0; i &lt; m; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, arr[i]);
+    }
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>10. Dynamically Allocate a String</strong>
+                <span id="practiceBadge-dynamic-p10" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 10: Dynamically allocate memory for a string and store a user-provided string.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One line of text.</p>
+            <p><strong>Output:</strong> Print the dynamically stored string.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p10')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p10')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p10')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p10" hidden>
+                💡 <strong>Hint:</strong> Read into a temporary buffer, allocate strlen(buffer)+1 bytes, then copy.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p10" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Dynamically Allocate a String
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p10"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p10"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p10')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p10"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p10')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p10')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p10"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p10"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p10" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p10">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p10">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p10">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p10" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p10" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char buffer[300];
+
+    fgets(buffer, sizeof(buffer), stdin);
+    buffer[strcspn(buffer, &quot;\n&quot;)] = &#x27;\0&#x27;;
+
+    char *text = malloc(strlen(buffer) + 1);
+
+    if (text == NULL)
+        return 1;
+
+    strcpy(text, buffer);
+
+    printf(&quot;%s&quot;, text);
+
+    free(text);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>11. Dynamically Allocate a Structure</strong>
+                <span id="practiceBadge-dynamic-p11" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 11: Dynamically allocate a structure and access its members.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Student roll number and marks.</p>
+            <p><strong>Output:</strong> Print the stored members.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p11')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p11')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p11')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p11" hidden>
+                💡 <strong>Hint:</strong> Use struct Student *s = malloc(sizeof *s) and the -&gt; operator.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p11" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Dynamically Allocate a Structure
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p11"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p11"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p11')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p11"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p11')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p11')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p11"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p11"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p11" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p11">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p11">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p11">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p11" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p11" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Student
+{
+    int roll;
+    float marks;
+};
+
+int main()
+{
+    struct Student *s = malloc(sizeof *s);
+
+    if (s == NULL)
+        return 1;
+
+    scanf(&quot;%d %f&quot;, &amp;s-&gt;roll, &amp;s-&gt;marks);
+
+    printf(&quot;%d %.1f&quot;, s-&gt;roll, s-&gt;marks);
+
+    free(s);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>12. Dynamic Array of Structures</strong>
+                <span id="practiceBadge-dynamic-p12" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 12: Dynamically allocate an array of structures.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n followed by n student records: roll and marks.</p>
+            <p><strong>Output:</strong> Print all student records.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p12')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p12')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p12')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p12" hidden>
+                💡 <strong>Hint:</strong> Use malloc(n * sizeof *students).
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p12" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Dynamic Array of Structures
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p12"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p12"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p12')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p12"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p12')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p12')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p12"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p12"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p12" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p12">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p12">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p12">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p12" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p12" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Student
+{
+    int roll;
+    float marks;
+};
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    struct Student *students = malloc((size_t)n * sizeof *students);
+
+    if (students == NULL)
+        return 1;
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d %f&quot;, &amp;students[i].roll, &amp;students[i].marks);
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot;\n&quot;);
+
+        printf(&quot;%d %.1f&quot;, students[i].roll, students[i].marks);
+    }
+
+    free(students);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>13. Dynamic 2D Matrix</strong>
+                <span id="practiceBadge-dynamic-p13" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 13: Create a dynamically allocated 2D matrix.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Rows r, columns c, followed by r*c integers.</p>
+            <p><strong>Output:</strong> Print the matrix.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p13')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p13')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p13')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p13" hidden>
+                💡 <strong>Hint:</strong> Allocate an array of row pointers, then allocate each row.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p13" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Dynamic 2D Matrix
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p13"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p13"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p13')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p13"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p13')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p13')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p13"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p13"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p13" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p13">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p13">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p13">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p13" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p13" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int r, c;
+
+    scanf(&quot;%d %d&quot;, &amp;r, &amp;c);
+
+    int **matrix = malloc((size_t)r * sizeof *matrix);
+
+    if (matrix == NULL)
+        return 1;
+
+    for (int i = 0; i &lt; r; i++)
+    {
+        matrix[i] = malloc((size_t)c * sizeof *matrix[i]);
+
+        if (matrix[i] == NULL)
+        {
+            for (int j = 0; j &lt; i; j++)
+                free(matrix[j]);
+
+            free(matrix);
+            return 1;
+        }
+    }
+
+    for (int i = 0; i &lt; r; i++)
+        for (int j = 0; j &lt; c; j++)
+            scanf(&quot;%d&quot;, &amp;matrix[i][j]);
+
+    for (int i = 0; i &lt; r; i++)
+    {
+        for (int j = 0; j &lt; c; j++)
+        {
+            if (j &gt; 0)
+                printf(&quot; &quot;);
+
+            printf(&quot;%d&quot;, matrix[i][j]);
+        }
+
+        if (i &lt; r - 1)
+            printf(&quot;\n&quot;);
+    }
+
+    for (int i = 0; i &lt; r; i++)
+        free(matrix[i]);
+
+    free(matrix);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>14. Add Two Dynamic Matrices</strong>
+                <span id="practiceBadge-dynamic-p14" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 14: Add two dynamically allocated matrices.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Rows r, columns c, first matrix values, then second matrix values.</p>
+            <p><strong>Output:</strong> Print the sum matrix.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p14')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p14')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p14')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p14" hidden>
+                💡 <strong>Hint:</strong> Allocate one-dimensional blocks of r*c integers for compact storage.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p14" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Add Two Dynamic Matrices
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p14"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p14"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p14')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p14"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p14')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p14')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p14"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p14"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p14" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p14">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p14">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p14">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p14" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p14" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int r, c;
+
+    scanf(&quot;%d %d&quot;, &amp;r, &amp;c);
+
+    size_t count = (size_t)r * (size_t)c;
+
+    int *a = malloc(count * sizeof *a);
+    int *b = malloc(count * sizeof *b);
+    int *sum = malloc(count * sizeof *sum);
+
+    if (a == NULL || b == NULL || sum == NULL)
+    {
+        free(a);
+        free(b);
+        free(sum);
+        return 1;
+    }
+
+    for (size_t i = 0; i &lt; count; i++)
+        scanf(&quot;%d&quot;, &amp;a[i]);
+
+    for (size_t i = 0; i &lt; count; i++)
+        scanf(&quot;%d&quot;, &amp;b[i]);
+
+    for (size_t i = 0; i &lt; count; i++)
+        sum[i] = a[i] + b[i];
+
+    for (int i = 0; i &lt; r; i++)
+    {
+        for (int j = 0; j &lt; c; j++)
+        {
+            if (j &gt; 0)
+                printf(&quot; &quot;);
+
+            printf(&quot;%d&quot;, sum[(size_t)i * c + j]);
+        }
+
+        if (i &lt; r - 1)
+            printf(&quot;\n&quot;);
+    }
+
+    free(a);
+    free(b);
+    free(sum);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>15. Transpose a Dynamic Matrix</strong>
+                <span id="practiceBadge-dynamic-p15" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 15: Find the transpose of a dynamically allocated matrix.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Rows r, columns c, followed by r*c integers.</p>
+            <p><strong>Output:</strong> Print the transposed matrix with c rows and r columns.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p15')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p15')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p15')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p15" hidden>
+                💡 <strong>Hint:</strong> Store the original in one dynamic block and print a[j*c + i] pattern carefully.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p15" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Transpose a Dynamic Matrix
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p15"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p15"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p15')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p15"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p15')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p15')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p15"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p15"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p15" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p15">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p15">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p15">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p15" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p15" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int r, c;
+
+    scanf(&quot;%d %d&quot;, &amp;r, &amp;c);
+
+    size_t count = (size_t)r * (size_t)c;
+
+    int *matrix = malloc(count * sizeof *matrix);
+
+    if (matrix == NULL)
+        return 1;
+
+    for (size_t i = 0; i &lt; count; i++)
+        scanf(&quot;%d&quot;, &amp;matrix[i]);
+
+    for (int j = 0; j &lt; c; j++)
+    {
+        for (int i = 0; i &lt; r; i++)
+        {
+            if (i &gt; 0)
+                printf(&quot; &quot;);
+
+            printf(&quot;%d&quot;, matrix[(size_t)i * c + j]);
+        }
+
+        if (j &lt; c - 1)
+            printf(&quot;\n&quot;);
+    }
+
+    free(matrix);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>16. malloc() vs calloc()</strong>
+                <span id="practiceBadge-dynamic-p16" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 16: Demonstrate the difference between malloc() and calloc() without reading uninitialized malloc memory.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One positive integer n.</p>
+            <p><strong>Output:</strong> Print &quot;malloc needs initialization&quot; and whether all calloc values begin as zero.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p16')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p16')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p16')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p16" hidden>
+                💡 <strong>Hint:</strong> Do not print values from a fresh malloc block before initializing them.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p16" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — malloc() vs calloc()
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p16"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p16"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p16')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p16"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p16')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p16')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p16"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p16"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p16" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p16">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p16">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p16">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p16" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p16" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int *a = malloc((size_t)n * sizeof *a);
+    int *b = calloc((size_t)n, sizeof *b);
+
+    if (a == NULL || b == NULL)
+    {
+        free(a);
+        free(b);
+        return 1;
+    }
+
+    int allZero = 1;
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        a[i] = i + 1;
+
+        if (b[i] != 0)
+            allZero = 0;
+    }
+
+    printf(&quot;malloc needs initialization\n&quot;);
+    printf(&quot;calloc zero = %s&quot;, allZero ? &quot;Yes&quot; : &quot;No&quot;);
+
+    free(a);
+    free(b);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>17. Safely Handle Allocation Failure</strong>
+                <span id="practiceBadge-dynamic-p17" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 17: Write a program that validates the requested array size and checks malloc() before use.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer n.</p>
+            <p><strong>Output:</strong> Print &quot;Allocated&quot; for an accepted request or &quot;Request Rejected&quot; for an unsafe request.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p17')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p17')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p17')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p17" hidden>
+                💡 <strong>Hint:</strong> Reject non-positive or excessively large counts before attempting allocation, and still check malloc() for NULL.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p17" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Safely Handle Allocation Failure
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p17"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p17"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p17')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p17"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p17')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p17')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p17"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p17"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p17" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p17">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p17">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p17">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p17" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p17" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    long long n;
+
+    scanf(&quot;%lld&quot;, &amp;n);
+
+    if (n &lt;= 0 || n &gt; 1000000)
+    {
+        printf(&quot;Request Rejected&quot;);
+        return 0;
+    }
+
+    int *arr = malloc((size_t)n * sizeof *arr);
+
+    if (arr == NULL)
+    {
+        printf(&quot;Allocation Failed&quot;);
+        return 0;
+    }
+
+    printf(&quot;Allocated&quot;);
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>18. Safe realloc() with a Temporary Pointer</strong>
+                <span id="practiceBadge-dynamic-p18" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 18: Demonstrate realloc() using a temporary pointer so the original allocation is preserved if resizing fails.</strong>
+            </p>
+
+            <p><strong>Input:</strong> Initial size n, n integers, and new size m where m &gt;= n, followed by new values.</p>
+            <p><strong>Output:</strong> Print the resized array.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p18')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p18')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p18')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p18" hidden>
+                💡 <strong>Hint:</strong> Use int *temp = realloc(arr, ...); check temp before arr = temp.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p18" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Safe realloc() with a Temporary Pointer
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p18"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p18"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p18')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p18"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p18')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p18')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p18"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p18"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p18" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p18">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p18">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p18">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p18" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p18" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n, m;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int *arr = malloc((size_t)n * sizeof *arr);
+
+    if (arr == NULL)
+        return 1;
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    scanf(&quot;%d&quot;, &amp;m);
+
+    int *temp = realloc(arr, (size_t)m * sizeof *arr);
+
+    if (temp == NULL)
+    {
+        free(arr);
+        return 1;
+    }
+
+    arr = temp;
+
+    for (int i = n; i &lt; m; i++)
+        scanf(&quot;%d&quot;, &amp;arr[i]);
+
+    for (int i = 0; i &lt; m; i++)
+    {
+        if (i &gt; 0)
+            printf(&quot; &quot;);
+
+        printf(&quot;%d&quot;, arr[i]);
+    }
+
+    free(arr);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>19. Memory Leak and Prevention</strong>
+                <span id="practiceBadge-dynamic-p19" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 19: Demonstrate how a memory leak could occur and show the correct prevention pattern.</strong>
+            </p>
+
+            <p><strong>Input:</strong> One integer.</p>
+            <p><strong>Output:</strong> Print the stored value and &quot;Memory Released&quot;.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p19')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p19')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p19')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p19" hidden>
+                💡 <strong>Hint:</strong> A leak would occur if the last pointer to an allocation were overwritten or lost before free(). Preserve the pointer and call free().
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p19" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Memory Leak and Prevention
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p19"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p19"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p19')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p19"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p19')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p19')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p19"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p19"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p19" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p19">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p19">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p19">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p19" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p19" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int value;
+
+    scanf(&quot;%d&quot;, &amp;value);
+
+    int *p = malloc(sizeof *p);
+
+    if (p == NULL)
+        return 1;
+
+    *p = value;
+
+    printf(&quot;%d\n&quot;, *p);
+
+    /*
+       If p were overwritten here before free(p),
+       the allocation could become unreachable and leak.
+    */
+    free(p);
+    p = NULL;
+
+    printf(&quot;Memory Released&quot;);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        <div class="cb-c-practice-item">
+
+            <div class="cb-c-practice-problem-head">
+                <strong>20. Dynamic Student Record Management</strong>
+                <span id="practiceBadge-dynamic-p20" class="cb-practice-badge"></span>
+            </div>
+
+            <p class="cb-c-practice-statement">
+                <strong>Problem 20: Create a dynamic Student Record Management System using an array of structures.</strong>
+            </p>
+
+            <p><strong>Input:</strong> n student records (roll, one-word name, marks), then a target roll number.</p>
+            <p><strong>Output:</strong> Print all records, then print the matching student&#x27;s name and marks or Not Found.</p>
+
+            <div class="cb-c-practice-buttons">
+                <button class="cb-practice-start-button"
+                        onclick="CodeBhavyaCPractice.toggle('dynamic-p20')">💻 Solve It Yourself</button>
+
+                <button class="cb-practice-hint-button"
+                        onclick="CodeBhavyaCPractice.markHint('dynamic-p20')">Hint</button>
+
+                <button class="cb-practice-program-button"
+                        onclick="CodeBhavyaCPractice.markSolution('dynamic-p20')">Show Program</button>
+            </div>
+
+            <div class="cb-c-practice-hint" id="practiceHint-dynamic-p20" hidden>
+                💡 <strong>Hint:</strong> Allocate n structures, read them, display them, then search by roll.
+            </div>
+
+            <div class="cb-c-practice-workspace" id="practiceWorkspace-dynamic-p20" hidden>
+
+                <div class="cb-c-practice-workspace-title">
+                    💻 Solve It Yourself — Dynamic Student Record Management
+                </div>
+
+                <div class="cb-c-practice-grid">
+
+                    <div class="cb-c-practice-panel">
+                        <h4>C Code Editor</h4>
+
+                        <textarea id="practiceCode-dynamic-p20"
+                                  class="cb-c-code-editor"
+                                  spellcheck="false"></textarea>
+
+                        <div class="cb-c-practice-actions">
+                            <button id="practiceRun-dynamic-p20"
+                                    class="cb-c-run-btn"
+                                    onclick="CodeBhavyaCPractice.runSample('dynamic-p20')">▶ Run Code</button>
+
+                            <button id="practiceCheck-dynamic-p20"
+                                    class="cb-c-check-btn"
+                                    onclick="CodeBhavyaCPractice.checkAnswer('dynamic-p20')">✓ Check Answer</button>
+
+                            <button class="cb-c-reset-btn"
+                                    onclick="CodeBhavyaCPractice.resetEditor('dynamic-p20')">↺ Reset Editor</button>
+                        </div>
+                    </div>
+
+                    <div class="cb-c-practice-panel">
+                        <h4>Sample Input</h4>
+
+                        <textarea id="practiceInput-dynamic-p20"
+                                  class="cb-c-practice-input"
+                                  spellcheck="false"></textarea>
+
+                        <h4 class="cb-c-output-heading">Program Output</h4>
+
+                        <pre id="practiceOutput-dynamic-p20"
+                             class="cb-c-practice-output">Run your program to see the output.</pre>
+
+                        <h4 class="cb-c-tests-heading">Test Cases</h4>
+
+                        <div id="practiceTests-dynamic-p20" class="cb-c-test-results">
+                            <div class="cb-c-test-row">
+                                <span>No tests checked yet.</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cb-c-practice-score">
+
+                    <div class="cb-c-practice-score-grid">
+                        <div class="cb-c-score-item">
+                            <strong>Best Score</strong>
+                            <span id="practiceScore-dynamic-p20">0 / 100</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Attempts</strong>
+                            <span id="practiceAttempts-dynamic-p20">0</span>
+                        </div>
+
+                        <div class="cb-c-score-item">
+                            <strong>Status</strong>
+                            <span id="practiceStatus-dynamic-p20">Not Solved</span>
+                        </div>
+                    </div>
+
+                    <div id="practiceMessage-dynamic-p20" class="cb-c-practice-message">
+                        Write your C program and test it. You can do it! 💪
+                    </div>
+
+                    <div class="cb-c-practice-note">
+                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
+                        If the full solution is opened, the problem can still be completed,
+                        but it is not counted as a competitive score.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cb-c-practice-solution" id="practiceSolution-dynamic-p20" hidden>
+                <div class="cb-c-practice-solution-title">Official C Program</div>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[30];
+    float marks;
+};
+
+int main()
+{
+    int n, target;
+
+    scanf(&quot;%d&quot;, &amp;n);
+
+    struct Student *students = malloc((size_t)n * sizeof *students);
+
+    if (students == NULL)
+        return 1;
+
+    for (int i = 0; i &lt; n; i++)
+        scanf(&quot;%d %29s %f&quot;, &amp;students[i].roll, students[i].name, &amp;students[i].marks);
+
+    for (int i = 0; i &lt; n; i++)
+        printf(&quot;%d %s %.1f\n&quot;, students[i].roll, students[i].name, students[i].marks);
+
+    scanf(&quot;%d&quot;, &amp;target);
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (students[i].roll == target)
+        {
+            printf(&quot;Found: %s %.1f&quot;, students[i].name, students[i].marks);
+            free(students);
+            return 0;
+        }
+    }
+
+    printf(&quot;Not Found&quot;);
+
+    free(students);
+
+    return 0;
+}</code></pre>
+            </div>
+
+        </div>
+    
+        </div>
+
+    </div>
+
+<h3>17.34 Key Takeaway</h3>
+
+    <div class="tip-box">
+
+        🎯 Remember:
+
+        <br><br>
+
+        <strong>malloc() → Allocate memory</strong>
+
+        <br><br>
+
+        <strong>calloc() → Allocate + zero-initialize bytes</strong>
+
+        <br><br>
+
+        <strong>realloc() → Resize allocation</strong>
+
+        <br><br>
+
+        <strong>free() → Release memory</strong>
+
+        <br><br>
+
+        <strong>NULL → Check allocation failure</strong>
+
+        <br><br>
+
+        <strong>Heap → Common area for dynamic storage</strong>
+
+        <br><br>
+
+        <strong>Memory Leak → Allocated memory not released</strong>
+
+        <br><br>
+
+        <strong>Dangling Pointer → Pointer to expired/freed object</strong>
+
+        <br><br>
+
+        <strong>Use-After-Free → Accessing freed memory</strong>
+
+    </div>
+
+</section>    
+
+        <!-- ================================
+             Dynamic Memory Allocation
+        ================================= -->
+
+
+<section class="content-card cb-added-section" id="dynamic-memory-interview-extra">
+
+    <span class="cb-added-label">INTERVIEW PREPARATION</span>
+
+    <h2>🎤 Dynamic Memory Allocation — Interview Questions</h2>
+
+    <div class="cb-original-qa-list cb-interview-qa-list">
+        
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">1.</span>
+                <span>What is the difference between malloc() and calloc()?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('dynamicInterviewAnswer1', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="dynamicInterviewAnswer1"
+                 hidden>
+                malloc() allocates a requested byte count without initializing the block. calloc() allocates an array and initializes the allocated bytes to zero.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">2.</span>
+                <span>Why should allocation results be checked against NULL?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('dynamicInterviewAnswer2', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="dynamicInterviewAnswer2"
+                 hidden>
+                NULL indicates allocation failure, so dereferencing the result would be invalid.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">3.</span>
+                <span>Why is using a temporary pointer with realloc() safer?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('dynamicInterviewAnswer3', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="dynamicInterviewAnswer3"
+                 hidden>
+                If realloc() fails, it returns NULL while the original allocation remains valid. A temporary pointer prevents losing the original address.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">4.</span>
+                <span>What is a memory leak?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('dynamicInterviewAnswer4', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="dynamicInterviewAnswer4"
+                 hidden>
+                It is dynamically allocated storage that remains allocated after the program loses every usable pointer needed to release it.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">5.</span>
+                <span>What is a dangling pointer?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('dynamicInterviewAnswer5', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="dynamicInterviewAnswer5"
+                 hidden>
+                It is a pointer that still contains an address to storage whose lifetime has ended, for example after free().
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">6.</span>
+                <span>What is a double free?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('dynamicInterviewAnswer6', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="dynamicInterviewAnswer6"
+                 hidden>
+                It is attempting to free the same allocation more than once without an intervening new allocation. That causes undefined behavior.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">7.</span>
+                <span>Does free() set the pointer variable to NULL automatically?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('dynamicInterviewAnswer7', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="dynamicInterviewAnswer7"
+                 hidden>
+                No. free() releases the allocation, but the pointer variable still contains its old address value until the program changes it.
+            </div>
+
+        </div>
+    
+        <div class="cb-original-qa-item">
+
+            <div class="cb-original-qa-question">
+                <span class="cb-original-qa-number">8.</span>
+                <span>Why is sizeof *ptr often preferred in allocation expressions?</span>
+
+                <button type="button"
+                        class="cb-show-answer-btn"
+                        onclick="CBShowAnswer.toggle('dynamicInterviewAnswer8', this)">Show Answer</button>
+            </div>
+
+            <div class="cb-original-qa-answer"
+                 id="dynamicInterviewAnswer8"
+                 hidden>
+                It automatically matches the type pointed to by ptr and reduces the chance of a type-size mismatch when declarations change.
+            </div>
+
+        </div>
+    
+    </div>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="dynamic-memory-tips-extra">
+
+    <span class="cb-added-label">PLACEMENT TIPS</span>
+
+    <h2>💡 Dynamic Memory Allocation — Placement Tips</h2>
+
+    <ul class="cb-tip-grid">
+        <li>After every important allocation, check whether the returned pointer is <code>NULL</code> before dereferencing it.</li>
+        <li>Prefer allocation expressions such as <code>malloc(n * sizeof *arr)</code> so the size stays tied to the pointed-to type.</li>
+        <li>With <code>realloc()</code>, use a temporary pointer and update the original pointer only after success.</li>
+        <li>Match every successful dynamic allocation with a clear ownership plan for exactly one eventual <code>free()</code>.</li>
+        <li>After <code>free()</code>, do not read or write through that pointer. Setting an owning pointer to <code>NULL</code> can reduce accidental reuse.</li>
+        <li>In matrix and multi-allocation problems, if a later allocation fails, free every earlier successful allocation before returning.</li>
+    </ul>
+
+</section>
+
+
+<section class="content-card cb-added-section" id="dynamic-memory-practice-extra">
+
+    <span class="cb-added-label">EXTRA PRACTICE</span>
+
+    <h2>✍️ Dynamic Memory Allocation — Extra Practice Questions</h2>
+
+    <ol class="cb-extra-practice">
+        <li>Dynamically allocate an integer array and remove all duplicate values into a new resized array.</li>
+        <li>Create a dynamic string array where each student name receives only the memory it needs.</li>
+        <li>Allocate a jagged 2D array where each row has a different number of columns.</li>
+        <li>Build a dynamic matrix multiplication program with complete allocation-failure cleanup.</li>
+        <li>Implement a growing integer list that doubles its capacity with <code>realloc()</code> when full.</li>
+        <li>Create a dynamic structure containing its own dynamically allocated string member and write a cleanup function for it.</li>
+    </ol>
+
+</section>
+
+
+
+<section class="cb-topic-navigation" aria-label="C Programming topic navigation">
+
+    <a class="cb-topic-nav-btn cb-topic-nav-prev" href="file-handling.html">
+        ← Previous Topic: File Handling
+    </a>
+
+    <a class="cb-topic-nav-btn cb-topic-nav-next" href="command-line.html">
+        Next Topic: Command Line Arguments →
+    </a>
+
+</section>
+
+
+</main>
+
+</div>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../Maths/index.html">
+                Maths
+            </a>
+
+            <a href="index.html">
+                C Programming
+            </a>
+
+        </div>
+
+
+        <!-- LEARNING -->
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+<a href="../Data-Structures/">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/">
+    Advanced Data Structures
+</a>
+
+            <a href="#">
+                Python
+            </a>
+
+            <a href="#">
+                AI & Machine Learning
+            </a>
+
+        </div>
+
+
+        <!-- PRACTICE -->
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="#practice">
+                Practice Problems
+            </a>
+
+            <a href="#practice">
+                Problem Solving
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="c-programming.js"></script>
+<script>
+const codeBhavyaDynamicMemoryPracticeConfigs =
+[{"key": "dynamic-p1", "title": "Allocate One Integer", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int value;\n\n    /* Allocate one integer dynamically */\n\n    return 0;\n}", "sampleInput": "25", "tests": [{"input": "25", "expected": "25"}, {"input": "-8", "expected": "-8"}]}, {"key": "dynamic-p2", "title": "Allocate an Array of N Integers", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int n;\n\n    /* Allocate n integers */\n\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "5", "expected": "1 2 3 4 5"}, {"input": "3", "expected": "1 2 3"}]}, {"key": "dynamic-p3", "title": "Sum of a Dynamically Allocated Array", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int n;\n\n    return 0;\n}", "sampleInput": "5\n1 2 3 4 5", "tests": [{"input": "5\n1 2 3 4 5", "expected": "15"}, {"input": "3\n10 -2 7", "expected": "15"}]}, {"key": "dynamic-p4", "title": "Largest Element in a Dynamic Array", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int n;\n\n    return 0;\n}", "sampleInput": "5\n4 9 2 7 1", "tests": [{"input": "5\n4 9 2 7 1", "expected": "9"}, {"input": "3\n-5 -2 -9", "expected": "-2"}]}, {"key": "dynamic-p5", "title": "Smallest Element in a Dynamic Array", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int n;\n\n    return 0;\n}", "sampleInput": "5\n4 9 2 7 1", "tests": [{"input": "5\n4 9 2 7 1", "expected": "1"}, {"input": "3\n-5 -2 -9", "expected": "-9"}]}, {"key": "dynamic-p6", "title": "Reverse a Dynamic Array", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int n;\n\n    return 0;\n}", "sampleInput": "5\n1 2 3 4 5", "tests": [{"input": "5\n1 2 3 4 5", "expected": "5 4 3 2 1"}, {"input": "4\n9 8 7 6", "expected": "6 7 8 9"}]}, {"key": "dynamic-p7", "title": "calloc() Initial Values", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int n;\n\n    return 0;\n}", "sampleInput": "5", "tests": [{"input": "5", "expected": "0 0 0 0 0"}, {"input": "2", "expected": "0 0"}]}, {"key": "dynamic-p8", "title": "Increase Array Size with realloc()", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int n, m;\n\n    return 0;\n}", "sampleInput": "3\n1 2 3\n5\n4 5", "tests": [{"input": "3\n1 2 3\n5\n4 5", "expected": "1 2 3 4 5"}, {"input": "2\n10 20\n4\n30 40", "expected": "10 20 30 40"}]}, {"key": "dynamic-p9", "title": "Reduce Array Size with realloc()", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int n, m;\n\n    return 0;\n}", "sampleInput": "5\n1 2 3 4 5\n3", "tests": [{"input": "5\n1 2 3 4 5\n3", "expected": "1 2 3"}, {"input": "4\n9 8 7 6\n2", "expected": "9 8"}]}, {"key": "dynamic-p10", "title": "Dynamically Allocate a String", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nint main()\n{\n    char buffer[300];\n\n    return 0;\n}", "sampleInput": "Dynamic memory string", "tests": [{"input": "Dynamic memory string", "expected": "Dynamic memory string"}, {"input": "CodeBhavya", "expected": "CodeBhavya"}]}, {"key": "dynamic-p11", "title": "Dynamically Allocate a Structure", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nstruct Student\n{\n    int roll;\n    float marks;\n};\n\nint main()\n{\n    return 0;\n}", "sampleInput": "101 88.5", "tests": [{"input": "101 88.5", "expected": "101 88.5"}, {"input": "7 95", "expected": "7 95.0"}]}, {"key": "dynamic-p12", "title": "Dynamic Array of Structures", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nstruct Student\n{\n    int roll;\n    float marks;\n};\n\nint main()\n{\n    int n;\n\n    return 0;\n}", "sampleInput": "3\n1 70\n2 80\n3 90", "tests": [{"input": "3\n1 70\n2 80\n3 90", "expected": "1 70.0\n2 80.0\n3 90.0"}]}, {"key": "dynamic-p13", "title": "Dynamic 2D Matrix", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int r, c;\n\n    return 0;\n}", "sampleInput": "2 3\n1 2 3\n4 5 6", "tests": [{"input": "2 3\n1 2 3\n4 5 6", "expected": "1 2 3\n4 5 6"}]}, {"key": "dynamic-p14", "title": "Add Two Dynamic Matrices", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int r, c;\n\n    return 0;\n}", "sampleInput": "2 2\n1 2 3 4\n5 6 7 8", "tests": [{"input": "2 2\n1 2 3 4\n5 6 7 8", "expected": "6 8\n10 12"}, {"input": "1 3\n1 2 3\n4 5 6", "expected": "5 7 9"}]}, {"key": "dynamic-p15", "title": "Transpose a Dynamic Matrix", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int r, c;\n\n    return 0;\n}", "sampleInput": "2 3\n1 2 3\n4 5 6", "tests": [{"input": "2 3\n1 2 3\n4 5 6", "expected": "1 4\n2 5\n3 6"}]}, {"key": "dynamic-p16", "title": "malloc() vs calloc()", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int n;\n\n    return 0;\n}", "sampleInput": "4", "tests": [{"input": "4", "expected": "malloc needs initialization\ncalloc zero = Yes"}]}, {"key": "dynamic-p17", "title": "Safely Handle Allocation Failure", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    long long n;\n\n    return 0;\n}", "sampleInput": "100", "tests": [{"input": "100", "expected": "Allocated"}, {"input": "1000001", "expected": "Request Rejected"}, {"input": "0", "expected": "Request Rejected"}]}, {"key": "dynamic-p18", "title": "Safe realloc() with a Temporary Pointer", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int n, m;\n\n    return 0;\n}", "sampleInput": "2\n10 20\n4\n30 40", "tests": [{"input": "2\n10 20\n4\n30 40", "expected": "10 20 30 40"}]}, {"key": "dynamic-p19", "title": "Memory Leak and Prevention", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nint main()\n{\n    int value;\n\n    /* Allocate, use, and release memory correctly */\n\n    return 0;\n}", "sampleInput": "50", "tests": [{"input": "50", "expected": "50\nMemory Released"}, {"input": "-2", "expected": "-2\nMemory Released"}]}, {"key": "dynamic-p20", "title": "Dynamic Student Record Management", "starterCode": "#include <stdio.h>\n#include <stdlib.h>\n\nstruct Student\n{\n    int roll;\n    char name[30];\n    float marks;\n};\n\nint main()\n{\n    int n, target;\n\n    return 0;\n}", "sampleInput": "3\n1 A 70\n2 B 80\n3 C 90\n2", "tests": [{"input": "3\n1 A 70\n2 B 80\n3 C 90\n2", "expected": "1 A 70.0\n2 B 80.0\n3 C 90.0\nFound: B 80.0"}, {"input": "2\n5 X 88\n6 Y 79\n9", "expected": "5 X 88.0\n6 Y 79.0\nNot Found"}]}];
+
+CodeBhavyaCPractice.registerAll(
+    codeBhavyaDynamicMemoryPracticeConfigs
+);
+</script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
