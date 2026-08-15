@@ -2088,3 +2088,981 @@ window.CBMCQ = {
             resetButton.hidden = true;
     }
 };
+
+/* ============================================================
+   CODEBHAVYA C PROGRAMMING — COMMON INTERACTIVE UI FIX v2
+
+   PASTE THIS AT THE VERY BOTTOM OF c-programming.js
+
+   This patch:
+   1. adds real CodeBhavya logo + brand name to Program Tracing
+   2. adds real CodeBhavya logo + brand name to Solve It Yourself
+   3. fixes/standardizes Program Tracing rendering
+   4. fixes/standardizes visualizer movement/highlighting
+   ============================================================ */
+
+(function () {
+
+    "use strict";
+
+
+    /* ========================================================
+       HELPERS
+       ======================================================== */
+
+    function escapeHTML(value) {
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+    }
+
+
+    function createBrandBar(labelText) {
+
+        const bar =
+            document.createElement("div");
+
+        bar.className =
+            "cb-common-brandbar";
+
+        bar.innerHTML = `
+            <div class="cb-common-brand-label">
+                ${escapeHTML(labelText)}
+            </div>
+
+            <div class="cb-common-brand"
+                 aria-label="CodeBhavya">
+
+                <span class="cb-common-brand-mark">
+                    <img
+                        src="../images/codebhavya-icon-32.png"
+                        alt="CodeBhavya logo"
+                    >
+                </span>
+
+                <span class="cb-common-brand-code">
+                    Code
+                </span>
+
+                <span class="cb-common-brand-bhavya">
+                    Bhavya
+                </span>
+
+            </div>
+        `;
+
+        return bar;
+    }
+
+
+    function installBrandBars() {
+
+        /* Program Tracing */
+
+        document
+            .querySelectorAll(".cb-tracer")
+            .forEach(tracer => {
+
+                if (
+                    tracer.querySelector(
+                        ":scope > .cb-common-brandbar"
+                    )
+                ) {
+                    return;
+                }
+
+                tracer.prepend(
+                    createBrandBar(
+                        "PROGRAM TRACING"
+                    )
+                );
+            });
+
+
+        /* Solve It Yourself */
+
+        document
+            .querySelectorAll(
+                ".cb-c-practice-workspace"
+            )
+            .forEach(workspace => {
+
+                if (
+                    workspace.querySelector(
+                        ":scope > .cb-common-brandbar"
+                    )
+                ) {
+                    return;
+                }
+
+                workspace.prepend(
+                    createBrandBar(
+                        "INTERACTIVE CODING PRACTICE"
+                    )
+                );
+            });
+    }
+
+
+
+    /* ========================================================
+       CONCEPT VISUALIZER
+       ======================================================== */
+
+    const conceptInstances = {};
+
+
+    function conceptRoot(id) {
+
+        return document.querySelector(
+            `[data-cb-viz="${id}"]`
+        );
+    }
+
+
+    function conceptEnsure(id) {
+
+        if (conceptInstances[id]) {
+            return conceptInstances[id];
+        }
+
+        const root =
+            conceptRoot(id);
+
+        if (!root) {
+            return null;
+        }
+
+        let frames = [];
+
+        try {
+
+            frames =
+                JSON.parse(
+                    root.getAttribute(
+                        "data-frames"
+                    ) || "[]"
+                );
+
+        } catch (error) {
+
+            console.error(
+                "CodeBhavya visualizer config error:",
+                id,
+                error
+            );
+
+            return null;
+        }
+
+        conceptInstances[id] = {
+            id,
+            root,
+            frames,
+            index: 0,
+            timer: null
+        };
+
+        return conceptInstances[id];
+    }
+
+
+    function conceptRender(id) {
+
+        const instance =
+            conceptEnsure(id);
+
+        if (!instance) {
+            return;
+        }
+
+        const frames =
+            instance.frames;
+
+        if (!frames.length) {
+            return;
+        }
+
+        const index =
+            Math.max(
+                0,
+                Math.min(
+                    instance.index,
+                    frames.length - 1
+                )
+            );
+
+        instance.index =
+            index;
+
+        const frame =
+            frames[index];
+
+
+        const stepElement =
+            document.getElementById(
+                `cbVizStep-${id}`
+            );
+
+        const titleElement =
+            document.getElementById(
+                `cbVizTitle-${id}`
+            );
+
+        const detailElement =
+            document.getElementById(
+                `cbVizDetail-${id}`
+            );
+
+        const dotsElement =
+            document.getElementById(
+                `cbVizDots-${id}`
+            );
+
+        const progressElement =
+            document.getElementById(
+                `cbVizProgress-${id}`
+            );
+
+
+        if (stepElement) {
+
+            stepElement.textContent =
+                `Step ${index + 1} of ${frames.length}`;
+        }
+
+
+        if (titleElement) {
+
+            titleElement.textContent =
+                frame.title || "";
+        }
+
+
+        if (detailElement) {
+
+            detailElement.textContent =
+                frame.detail || "";
+        }
+
+
+        if (dotsElement) {
+
+            dotsElement.innerHTML =
+                frames
+                    .map(
+                        (_, position) =>
+                            `<span class="${
+                                position === index
+                                    ? "active"
+                                    : ""
+                            }"></span>`
+                    )
+                    .join("");
+        }
+
+
+        if (progressElement) {
+
+            const percent =
+                frames.length <= 1
+                    ? 100
+                    : (
+                        index /
+                        (frames.length - 1)
+                    ) * 100;
+
+            progressElement.style.width =
+                `${percent}%`;
+        }
+
+
+        instance.root
+            .querySelectorAll(
+                "[data-cb-flow-step]"
+            )
+            .forEach(element => {
+
+                const step =
+                    Number(
+                        element.getAttribute(
+                            "data-cb-flow-step"
+                        )
+                    );
+
+                const active =
+                    step === index;
+
+                element.classList.toggle(
+                    "active",
+                    active
+                );
+
+                if (active) {
+
+                    element.setAttribute(
+                        "aria-current",
+                        "step"
+                    );
+
+                } else {
+
+                    element.removeAttribute(
+                        "aria-current"
+                    );
+                }
+            });
+    }
+
+
+    function conceptPause(id) {
+
+        const instance =
+            conceptEnsure(id);
+
+        if (
+            instance &&
+            instance.timer
+        ) {
+
+            clearInterval(
+                instance.timer
+            );
+
+            instance.timer = null;
+        }
+    }
+
+
+    window.CBConceptViz = {
+
+        toggle(id) {
+
+            const panel =
+                document.getElementById(
+                    `cbVizPanel-${id}`
+                );
+
+            if (!panel) {
+                return;
+            }
+
+            panel.hidden =
+                !panel.hidden;
+
+            if (!panel.hidden) {
+
+                conceptRender(id);
+            }
+        },
+
+
+        next(id) {
+
+            const instance =
+                conceptEnsure(id);
+
+            if (!instance) {
+                return;
+            }
+
+            conceptPause(id);
+
+            if (
+                instance.index <
+                instance.frames.length - 1
+            ) {
+
+                instance.index++;
+
+                conceptRender(id);
+            }
+        },
+
+
+        prev(id) {
+
+            const instance =
+                conceptEnsure(id);
+
+            if (!instance) {
+                return;
+            }
+
+            conceptPause(id);
+
+            if (
+                instance.index > 0
+            ) {
+
+                instance.index--;
+
+                conceptRender(id);
+            }
+        },
+
+
+        reset(id) {
+
+            const instance =
+                conceptEnsure(id);
+
+            if (!instance) {
+                return;
+            }
+
+            conceptPause(id);
+
+            instance.index = 0;
+
+            conceptRender(id);
+        },
+
+
+        auto(id) {
+
+            const instance =
+                conceptEnsure(id);
+
+            if (!instance) {
+                return;
+            }
+
+            conceptPause(id);
+
+            instance.timer =
+                setInterval(
+                    function () {
+
+                        if (
+                            instance.index <
+                            instance.frames.length - 1
+                        ) {
+
+                            instance.index++;
+
+                            conceptRender(id);
+
+                        } else {
+
+                            conceptPause(id);
+                        }
+
+                    },
+                    1400
+                );
+        },
+
+
+        pause(id) {
+
+            conceptPause(id);
+        }
+    };
+
+
+
+    /* ========================================================
+       PROGRAM TRACING
+       ======================================================== */
+
+    const traceInstances = {};
+
+
+    function traceRoot(id) {
+
+        return document.querySelector(
+            `[data-cb-trace="${id}"]`
+        );
+    }
+
+
+    function traceEnsure(id) {
+
+        if (traceInstances[id]) {
+            return traceInstances[id];
+        }
+
+        const root =
+            traceRoot(id);
+
+        if (!root) {
+            return null;
+        }
+
+        let config = {};
+
+        try {
+
+            config =
+                JSON.parse(
+                    root.getAttribute(
+                        "data-config"
+                    ) || "{}"
+                );
+
+        } catch (error) {
+
+            console.error(
+                "CodeBhavya tracer config error:",
+                id,
+                error
+            );
+
+            return null;
+        }
+
+        traceInstances[id] = {
+            id,
+            root,
+            config,
+            index: 0,
+            timer: null
+        };
+
+        return traceInstances[id];
+    }
+
+
+    function traceRender(id) {
+
+        const instance =
+            traceEnsure(id);
+
+        if (!instance) {
+            return;
+        }
+
+
+        const code =
+            Array.isArray(
+                instance.config.code
+            )
+                ? instance.config.code
+                : [];
+
+
+        const steps =
+            Array.isArray(
+                instance.config.steps
+            )
+                ? instance.config.steps
+                : [];
+
+
+        if (!steps.length) {
+            return;
+        }
+
+
+        const index =
+            Math.max(
+                0,
+                Math.min(
+                    instance.index,
+                    steps.length - 1
+                )
+            );
+
+
+        instance.index =
+            index;
+
+
+        const step =
+            steps[index];
+
+
+        const codeElement =
+            document.getElementById(
+                `cbTraceCode-${id}`
+            );
+
+        const noteElement =
+            document.getElementById(
+                `cbTraceNote-${id}`
+            );
+
+        const stateElement =
+            document.getElementById(
+                `cbTraceState-${id}`
+            );
+
+        const outputElement =
+            document.getElementById(
+                `cbTraceOutput-${id}`
+            );
+
+        const statusElement =
+            document.getElementById(
+                `cbTraceStatus-${id}`
+            );
+
+
+        if (codeElement) {
+
+            codeElement.innerHTML =
+                code
+                    .map(
+                        (line, lineIndex) => {
+
+                            const active =
+                                lineIndex ===
+                                Number(step.line);
+
+                            return `
+                                <div class="cb-trace-line${
+                                    active
+                                        ? " cb-trace-line-active"
+                                        : ""
+                                }">
+
+                                    <span class="cb-trace-line-no">
+                                        ${lineIndex + 1}
+                                    </span>
+
+                                    <span class="cb-trace-line-code">${escapeHTML(line)}</span>
+
+                                </div>
+                            `;
+                        }
+                    )
+                    .join("");
+
+
+            const activeLine =
+                codeElement.querySelector(
+                    ".cb-trace-line-active"
+                );
+
+
+            if (activeLine) {
+
+                const targetTop =
+                    Math.max(
+                        0,
+                        activeLine.offsetTop -
+                        codeElement.clientHeight / 2 +
+                        activeLine.offsetHeight / 2
+                    );
+
+                codeElement.scrollTo({
+                    top: targetTop,
+                    behavior: "smooth"
+                });
+            }
+        }
+
+
+        if (noteElement) {
+
+            noteElement.textContent =
+                step.note || "";
+        }
+
+
+        if (stateElement) {
+
+            const state =
+                step.state || {};
+
+
+            const variables =
+                Object.entries(state)
+                    .filter(
+                        ([name]) =>
+                            name !== "output"
+                    );
+
+
+            stateElement.innerHTML =
+                variables
+                    .map(
+                        ([name, value]) => `
+                            <div class="cb-live-state-card">
+
+                                <span class="cb-live-state-name">
+                                    ${escapeHTML(name)}
+                                </span>
+
+                                <span class="cb-live-state-value">
+                                    ${escapeHTML(value)}
+                                </span>
+
+                            </div>
+                        `
+                    )
+                    .join("");
+        }
+
+
+        if (outputElement) {
+
+            const output =
+                step.state &&
+                typeof step.state.output !==
+                    "undefined" &&
+                step.state.output !== ""
+                    ? step.state.output
+                    : "—";
+
+            outputElement.textContent =
+                output;
+        }
+
+
+        if (statusElement) {
+
+            statusElement.textContent =
+                `Step ${index} of ${steps.length - 1}`;
+        }
+
+
+        const nextButton =
+            document.getElementById(
+                `cbTraceNext-${id}`
+            );
+
+        const autoButton =
+            document.getElementById(
+                `cbTraceAuto-${id}`
+            );
+
+
+        const completed =
+            index ===
+            steps.length - 1;
+
+
+        if (nextButton) {
+
+            nextButton.disabled =
+                completed;
+
+            nextButton.textContent =
+                completed
+                    ? "✓ Completed"
+                    : "Next →";
+        }
+
+
+        if (autoButton) {
+
+            autoButton.disabled =
+                completed;
+        }
+    }
+
+
+    function tracePause(id) {
+
+        const instance =
+            traceEnsure(id);
+
+        if (
+            instance &&
+            instance.timer
+        ) {
+
+            clearInterval(
+                instance.timer
+            );
+
+            instance.timer = null;
+        }
+    }
+
+
+    window.CBProgramTrace = {
+
+        toggle(id) {
+
+            installBrandBars();
+
+            const panel =
+                document.getElementById(
+                    `cbTracePanel-${id}`
+                );
+
+            if (!panel) {
+                return;
+            }
+
+            panel.hidden =
+                !panel.hidden;
+
+            if (!panel.hidden) {
+
+                traceRender(id);
+            }
+        },
+
+
+        next(id) {
+
+            const instance =
+                traceEnsure(id);
+
+            if (!instance) {
+                return;
+            }
+
+            tracePause(id);
+
+            if (
+                instance.index <
+                instance.config.steps.length - 1
+            ) {
+
+                instance.index++;
+
+                traceRender(id);
+            }
+        },
+
+
+        prev(id) {
+
+            const instance =
+                traceEnsure(id);
+
+            if (!instance) {
+                return;
+            }
+
+            tracePause(id);
+
+            if (
+                instance.index > 0
+            ) {
+
+                instance.index--;
+
+                traceRender(id);
+            }
+        },
+
+
+        reset(id) {
+
+            const instance =
+                traceEnsure(id);
+
+            if (!instance) {
+                return;
+            }
+
+            tracePause(id);
+
+            instance.index = 0;
+
+            traceRender(id);
+        },
+
+
+        auto(id) {
+
+            const instance =
+                traceEnsure(id);
+
+            if (!instance) {
+                return;
+            }
+
+            tracePause(id);
+
+            instance.timer =
+                setInterval(
+                    function () {
+
+                        if (
+                            instance.index <
+                            instance.config.steps.length - 1
+                        ) {
+
+                            instance.index++;
+
+                            traceRender(id);
+
+                        } else {
+
+                            tracePause(id);
+                        }
+
+                    },
+                    1500
+                );
+        },
+
+
+        pause(id) {
+
+            tracePause(id);
+        }
+    };
+
+
+
+    /* ========================================================
+       INITIALIZE COMMON UI
+       ======================================================== */
+
+    function initializeCodeBhavyaCommonUI() {
+
+        installBrandBars();
+
+
+        document
+            .querySelectorAll(
+                "[data-cb-viz]"
+            )
+            .forEach(root => {
+
+                const id =
+                    root.getAttribute(
+                        "data-cb-viz"
+                    );
+
+                if (id) {
+                    conceptRender(id);
+                }
+            });
+
+
+        document
+            .querySelectorAll(
+                "[data-cb-trace]"
+            )
+            .forEach(root => {
+
+                const id =
+                    root.getAttribute(
+                        "data-cb-trace"
+                    );
+
+                if (id) {
+                    traceRender(id);
+                }
+            });
+    }
+
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeCodeBhavyaCommonUI
+        );
+
+    } else {
+
+        initializeCodeBhavyaCommonUI();
+    }
+
+})();
