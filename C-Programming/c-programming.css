@@ -10518,3 +10518,359 @@ body {
         font-size: 16px !important;
     }
 }
+
+/* ============================================================
+   CODEBHAVYA COMMON C UI — FINAL v3
+   Paste this at the VERY BOTTOM of c-programming.css
+
+   Fixes:
+   1. Program tracer code lines become compact again.
+   2. Uses the REAL JS-inserted logo + CodeBhavya wordmark.
+   3. Removes pseudo-element branding that caused logo/text overlap.
+   4. Applies the same clean brand bar to Solve It Yourself.
+   ============================================================ */
+
+
+/* ============================================================
+   A. REMOVE THE OLD PSEUDO BRAND SYSTEM
+   ============================================================ */
+
+.cb-tracer::before,
+.cb-tracer::after,
+.cb-c-practice-workspace::before,
+.cb-c-practice-workspace::after {
+    content: none !important;
+    display: none !important;
+}
+
+
+/* ============================================================
+   B. SHOW THE REAL BRAND BAR CREATED BY c-programming.js
+   ============================================================ */
+
+.cb-common-brandbar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    gap: 18px !important;
+
+    min-height: 62px !important;
+    padding: 10px 18px !important;
+
+    border-bottom: 1px solid #e2e8f0 !important;
+
+    background: #ffffff !important;
+
+    box-sizing: border-box !important;
+}
+
+.cb-common-brand-label {
+    flex: 1 1 auto !important;
+
+    color: #2563eb !important;
+
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.15em !important;
+
+    text-transform: uppercase !important;
+}
+
+.cb-common-brand {
+    display: flex !important;
+    align-items: center !important;
+
+    flex: 0 0 auto !important;
+
+    gap: 9px !important;
+
+    margin-left: auto !important;
+
+    white-space: nowrap !important;
+
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+}
+
+.cb-common-brand-mark {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    flex: 0 0 40px !important;
+
+    width: 40px !important;
+    height: 40px !important;
+
+    margin-right: 1px !important;
+
+    border: 1px solid #dbe3ec !important;
+    border-radius: 10px !important;
+
+    background: #ffffff !important;
+
+    box-shadow: 0 5px 16px rgba(2, 12, 27, 0.08) !important;
+
+    overflow: hidden !important;
+}
+
+.cb-common-brand-mark img {
+    display: block !important;
+
+    width: 28px !important;
+    height: 28px !important;
+
+    max-width: 28px !important;
+
+    object-fit: contain !important;
+}
+
+.cb-common-brand-code {
+    display: inline-block !important;
+
+    color: #2563eb !important;
+}
+
+.cb-common-brand-bhavya {
+    display: inline-block !important;
+
+    margin-left: -7px !important;
+
+    color: #f59e0b !important;
+}
+
+
+/* ============================================================
+   C. PROGRAM TRACING — REMOVE ARTIFICIAL TOP PADDING
+   ============================================================ */
+
+.cb-tracer {
+    position: relative !important;
+
+    padding-top: 0 !important;
+
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+
+    border: 1px solid #dbe3ec !important;
+    border-radius: 12px !important;
+
+    background: #ffffff !important;
+}
+
+
+/* ============================================================
+   D. PROGRAM CODE — COMPACT NORMAL LINE SPACING
+
+   IMPORTANT:
+   The V2 JS writes <div> lines into a <pre>. Because <pre> preserves
+   whitespace, indentation/newline text nodes between those DIVs can
+   create large blank gaps.
+
+   white-space: normal on the parent collapses those extra text nodes.
+   Actual code indentation is restored on each real code line below.
+   ============================================================ */
+
+.cb-tracer-code {
+    display: block !important;
+
+    height: 280px !important;
+    min-height: 280px !important;
+    max-height: 280px !important;
+
+    margin: 0 !important;
+    padding: 8px 0 !important;
+
+    overflow: auto !important;
+
+    border: 0 !important;
+    border-radius: 7px !important;
+
+    background: #0b1220 !important;
+    color: #e5e7eb !important;
+
+    white-space: normal !important;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace !important;
+
+    font-size: 13px !important;
+    line-height: 19px !important;
+}
+
+.cb-trace-line {
+    display: block !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 19px !important;
+
+    margin: 0 !important;
+    padding: 0 11px !important;
+
+    box-sizing: border-box !important;
+
+    font-size: 13px !important;
+    line-height: 19px !important;
+
+    white-space: normal !important;
+}
+
+.cb-trace-line-no {
+    display: none !important;
+}
+
+.cb-trace-line-code {
+    display: block !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    color: #e5e7eb !important;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace !important;
+
+    font-size: 13px !important;
+    line-height: 19px !important;
+
+    white-space: pre !important;
+}
+
+.cb-trace-line.active,
+.cb-trace-line.cb-trace-line-active {
+    min-height: 19px !important;
+
+    padding-left: 7px !important;
+
+    border-left: 4px solid #d4af37 !important;
+
+    background: #1e3a5f !important;
+
+    box-shadow: none !important;
+}
+
+
+/* Keep the original horizontal tracer layout */
+
+.cb-tracer-grid {
+    display: grid !important;
+
+    grid-template-columns:
+        minmax(0, 1.1fr)
+        minmax(300px, .9fr) !important;
+
+    min-width: 850px !important;
+}
+
+.cb-tracer-code-wrap,
+.cb-tracer-state-wrap {
+    min-width: 0 !important;
+    padding: 10px !important;
+}
+
+.cb-tracer-code-wrap {
+    border-right: 1px solid #e2e8f0 !important;
+    border-bottom: 0 !important;
+}
+
+
+/* ============================================================
+   E. SOLVE IT YOURSELF — REAL BRAND BAR WITHOUT OVERLAP
+   Restore the original 12px workspace padding and place the brand
+   bar cleanly at the top.
+   ============================================================ */
+
+.cb-c-practice-workspace {
+    position: relative !important;
+
+    margin-top: 12px !important;
+    padding: 12px !important;
+
+    overflow: hidden !important;
+
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 10px !important;
+
+    background: #0f172a !important;
+}
+
+
+/* Let the white brand bar extend across the full workspace width */
+
+.cb-c-practice-workspace > .cb-common-brandbar {
+    margin:
+        -12px
+        -12px
+        12px
+        -12px !important;
+
+    border-bottom:
+        1px solid #334155 !important;
+}
+
+
+/* Restore the approved dark workspace title */
+
+.cb-c-practice-workspace-title {
+    margin: 0 0 10px 0 !important;
+    padding: 0 !important;
+
+    border: 0 !important;
+
+    background: transparent !important;
+    color: #f8fafc !important;
+
+    font-weight: 800 !important;
+}
+
+
+/* ============================================================
+   F. MOBILE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    .cb-common-brandbar {
+        min-height: 54px !important;
+
+        padding: 8px 10px !important;
+
+        gap: 8px !important;
+    }
+
+    .cb-common-brand-label {
+        font-size: 9px !important;
+        letter-spacing: 0.08em !important;
+    }
+
+    .cb-common-brand {
+        gap: 6px !important;
+
+        font-size: 15px !important;
+    }
+
+    .cb-common-brand-mark {
+        flex-basis: 32px !important;
+
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .cb-common-brand-mark img {
+        width: 23px !important;
+        height: 23px !important;
+
+        max-width: 23px !important;
+    }
+
+    .cb-common-brand-bhavya {
+        margin-left: -5px !important;
+    }
+}
