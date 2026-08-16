@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3332,9 +3333,470 @@
 }
 
 </style>
+<link href="dsa-c-style.css" rel="stylesheet"/>
+<style id="cb-trees-c-page-final">
+/* ============================================================
+   TREES PAGE — C PROGRAMMING STYLE MATCH
+   Existing visualizer branding is intentionally unchanged.
+   These rules target only Program Tracing and Solve It Yourself.
+   ============================================================ */
+
+/* ---------- Missing brand header: tracers and practice only ---------- */
+.cb-dsa-page .tree-tracer,
+.cb-dsa-page .tree-practice-workspace {
+    position: relative !important;
+    overflow-x: auto !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+}
+
+.cb-dsa-page .tree-tracer::before,
+.cb-dsa-page .tree-practice-workspace::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 11px !important;
+    right: 160px !important;
+    left: auto !important;
+    display: block !important;
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    border: 1px solid #dbe3ec !important;
+    border-radius: 10px !important;
+    background: #ffffff url("../images/codebhavya-icon-32.png") center / 28px 28px no-repeat !important;
+    box-shadow: 0 5px 16px rgba(2, 12, 27, .08) !important;
+    z-index: 3 !important;
+}
+
+.cb-dsa-page .tree-tracer::after,
+.cb-dsa-page .tree-practice-workspace::after {
+    content: "CodeBhavya" !important;
+    position: absolute !important;
+    top: 17px !important;
+    right: 18px !important;
+    color: transparent !important;
+    background: linear-gradient(90deg, #2563eb 0%, #2563eb 43%, #f59e0b 43%, #f59e0b 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    line-height: 30px !important;
+    letter-spacing: -.02em !important;
+    white-space: nowrap !important;
+    z-index: 4 !important;
+}
+
+/* ---------- Program Tracing ---------- */
+.cb-dsa-page .tree-tracer {
+    padding: 76px 12px 12px !important;
+    background: linear-gradient(
+        to bottom,
+        #ffffff 0,
+        #ffffff 63px,
+        #e2e8f0 63px,
+        #e2e8f0 64px,
+        #f8fafc 64px,
+        #f8fafc 100%
+    ) !important;
+}
+
+.cb-dsa-page .tree-tracer-title::before {
+    content: "PROGRAM TRACING" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    height: 64px !important;
+    max-width: calc(100% - 225px) !important;
+    padding: 0 22px !important;
+    overflow: hidden !important;
+    color: #2563eb !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    letter-spacing: .15em !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    z-index: 2 !important;
+}
+
+.cb-dsa-page .tree-tracer-title {
+    min-width: 760px !important;
+    margin: 0 0 10px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: #0d1b2a !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+    letter-spacing: .08em !important;
+    line-height: 1.35 !important;
+    text-align: center !important;
+}
+
+.cb-dsa-page .tree-tracer-grid {
+    grid-template-columns: minmax(390px, 1.15fr) minmax(320px, .85fr) !important;
+    gap: 12px !important;
+    padding: 0 !important;
+}
+
+.cb-dsa-page .tree-tracer-panel {
+    padding: 10px !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 9px !important;
+    background: #ffffff !important;
+}
+
+.cb-dsa-page .tree-tracer-panel h4 {
+    margin: 0 0 8px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: #ffffff !important;
+    color: #0d1b2a !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+}
+
+.cb-dsa-page .tree-tracer-code {
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+    background: #0b1220 !important;
+    color: #f8fafc !important;
+}
+
+.cb-dsa-page .tree-tracer-explain {
+    border-left: 4px solid #d4af37 !important;
+    border-radius: 7px !important;
+    background: #f8fafc !important;
+    color: #334155 !important;
+}
+
+.cb-dsa-page .tree-var,
+.cb-dsa-page .tree-trace-memory,
+.cb-dsa-page .tree-trace-stage,
+.cb-dsa-page .tree-operation,
+.cb-dsa-page .tree-output {
+    border-color: #dbe3ec !important;
+    background: #ffffff !important;
+}
+
+.cb-dsa-page .tree-trace-memory {
+    padding: 12px 0 0 !important;
+}
+
+.cb-dsa-page .tree-tracer-controls {
+    justify-content: flex-start !important;
+    gap: 9px !important;
+    margin-top: 12px !important;
+    padding: 0 !important;
+}
+
+.cb-dsa-page .tree-tracer-controls .cb-dsa-control {
+    min-height: 40px !important;
+    padding: 9px 14px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+}
+
+.cb-dsa-page .tree-tracer-controls .cb-dsa-previous,
+.cb-dsa-page .tree-tracer-controls .cb-dsa-reset {
+    background: #52627a !important;
+}
+
+.cb-dsa-page .tree-tracer-controls .cb-dsa-next {
+    background: #2563eb !important;
+}
+
+.cb-dsa-page .tree-tracer-controls .cb-dsa-auto {
+    background: #159447 !important;
+}
+
+.cb-dsa-page .tree-tracer-controls .cb-dsa-pause {
+    background: #e66f00 !important;
+}
+
+.cb-dsa-page .tree-tracer-controls .cb-dsa-control:disabled {
+    background: #94a3b8 !important;
+}
+
+.cb-dsa-page .tree-tracer-status {
+    margin-top: 7px !important;
+    padding: 0 !important;
+    color: #64748b !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+}
+
+/* ---------- Practice card buttons ---------- */
+.cb-dsa-page .tree-solve-btn {
+    background: #d4af37 !important;
+    color: #0d1b2a !important;
+}
+
+.cb-dsa-page .tree-hint-btn {
+    background: #64748b !important;
+    color: #ffffff !important;
+}
+
+.cb-dsa-page .tree-solution-btn {
+    background: #2563eb !important;
+    color: #ffffff !important;
+}
+
+/* ---------- Solve It Yourself ---------- */
+.cb-dsa-page .tree-practice-workspace {
+    padding: 76px 12px 12px !important;
+    background: linear-gradient(
+        to bottom,
+        #ffffff 0,
+        #ffffff 63px,
+        #e2e8f0 63px,
+        #e2e8f0 64px,
+        #0f172a 64px,
+        #0f172a 100%
+    ) !important;
+}
+
+.cb-dsa-page .tree-practice-workspace-title::before {
+    content: "INTERACTIVE CODING PRACTICE" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    height: 64px !important;
+    max-width: calc(100% - 225px) !important;
+    padding: 0 22px !important;
+    overflow: hidden !important;
+    color: #2563eb !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    letter-spacing: .15em !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    z-index: 2 !important;
+}
+
+.cb-dsa-page .tree-practice-workspace-title {
+    margin: 0 0 10px !important;
+    color: #f8fafc !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    line-height: 1.35 !important;
+}
+
+.cb-dsa-page .tree-practice-editor-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr) !important;
+    gap: 10px !important;
+}
+
+.cb-dsa-page .tree-practice-panel {
+    min-width: 0 !important;
+    padding: 10px !important;
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+    background: #111827 !important;
+}
+
+.cb-dsa-page .tree-practice-panel label {
+    color: #f1f5f9 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+}
+
+.cb-dsa-page .tree-practice-code,
+.cb-dsa-page .tree-practice-input {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    border: 1px solid #475569 !important;
+    border-radius: 8px !important;
+    background: #020617 !important;
+    color: #f8fafc !important;
+    caret-color: #ffffff !important;
+    font-family: Consolas, "Courier New", monospace !important;
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    box-shadow: none !important;
+}
+
+.cb-dsa-page .tree-practice-code:focus,
+.cb-dsa-page .tree-practice-input:focus {
+    border-color: #60a5fa !important;
+    outline: 2px solid rgba(37, 99, 235, .18) !important;
+    outline-offset: 1px !important;
+}
+
+.cb-dsa-page .tree-practice-output {
+    border: 1px solid #475569 !important;
+    border-radius: 8px !important;
+    background: #020617 !important;
+    color: #f8fafc !important;
+}
+
+.cb-dsa-page .tree-practice-actions {
+    gap: 10px !important;
+    margin-top: 12px !important;
+}
+
+.cb-dsa-page .tree-practice-actions button {
+    min-height: 38px !important;
+    padding: 8px 13px !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+}
+
+.cb-dsa-page .tree-run-btn {
+    background: #159447 !important;
+}
+
+.cb-dsa-page .tree-check-btn {
+    background: #2563eb !important;
+}
+
+.cb-dsa-page .tree-reset-btn {
+    background: #64748b !important;
+    color: #ffffff !important;
+}
+
+.cb-dsa-page .tree-practice-test {
+    border: 1px solid #334155 !important;
+    background: #0b1220 !important;
+    color: #e2e8f0 !important;
+}
+
+.cb-dsa-page .tree-practice-test.pass {
+    border-color: #22c55e !important;
+    background: rgba(20, 83, 45, .48) !important;
+    color: #dcfce7 !important;
+}
+
+.cb-dsa-page .tree-practice-test.fail {
+    border-color: #ef4444 !important;
+    background: rgba(127, 29, 29, .45) !important;
+    color: #fee2e2 !important;
+}
+
+.cb-dsa-page .tree-practice-score-grid {
+    gap: 8px !important;
+    margin-top: 12px !important;
+    padding-top: 12px !important;
+    border-top: 1px solid #334155 !important;
+}
+
+.cb-dsa-page .tree-practice-score-grid > div {
+    padding: 9px !important;
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+    background: #0b1220 !important;
+    color: #f8fafc !important;
+}
+
+.cb-dsa-page .tree-practice-score-grid strong {
+    color: #93c5fd !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    letter-spacing: .08em !important;
+    text-transform: uppercase !important;
+}
+
+.cb-dsa-page .tree-practice-score-grid span {
+    display: block !important;
+    margin-top: 4px !important;
+    color: #ffffff !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+}
+
+.cb-dsa-page .tree-practice-message {
+    margin-top: 10px !important;
+    padding: 10px !important;
+    border: 1px solid #334e8d !important;
+    border-radius: 8px !important;
+    background: #1e3a8a !important;
+    color: #ffffff !important;
+    text-align: center !important;
+}
+
+@media (max-width: 960px) {
+    .cb-dsa-page .tree-practice-editor-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 620px) {
+    .cb-dsa-page .tree-tracer,
+    .cb-dsa-page .tree-practice-workspace {
+        padding-top: 68px !important;
+    }
+
+    .cb-dsa-page .tree-tracer {
+        background: linear-gradient(
+            to bottom,
+            #ffffff 0,
+            #ffffff 55px,
+            #e2e8f0 55px,
+            #e2e8f0 56px,
+            #f8fafc 56px,
+            #f8fafc 100%
+        ) !important;
+    }
+
+    .cb-dsa-page .tree-practice-workspace {
+        background: linear-gradient(
+            to bottom,
+            #ffffff 0,
+            #ffffff 55px,
+            #e2e8f0 55px,
+            #e2e8f0 56px,
+            #0f172a 56px,
+            #0f172a 100%
+        ) !important;
+    }
+
+    .cb-dsa-page .tree-tracer::before,
+    .cb-dsa-page .tree-practice-workspace::before {
+        top: 10px !important;
+        right: 98px !important;
+        width: 34px !important;
+        height: 34px !important;
+        background-size: 24px 24px !important;
+    }
+
+    .cb-dsa-page .tree-tracer::after,
+    .cb-dsa-page .tree-practice-workspace::after {
+        top: 13px !important;
+        right: 10px !important;
+        font-size: 15px !important;
+        line-height: 28px !important;
+    }
+
+    .cb-dsa-page .tree-tracer-title::before,
+    .cb-dsa-page .tree-practice-workspace-title::before {
+        height: 56px !important;
+        max-width: calc(100% - 158px) !important;
+        padding: 0 12px !important;
+        font-size: 9px !important;
+        letter-spacing: .1em !important;
+    }
+
+    .cb-dsa-page .tree-practice-score-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
 </head>
 
-<body>
+<body class="cb-dsa-page cb-dsa-topic-page">
 
 <header class="top-header">
 <a class="logo" href="../index.html">
