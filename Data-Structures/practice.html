@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DSA Practice Arena | CodeBhavya</title>
+<link rel="stylesheet" href="../style.css"/>
+<link rel="stylesheet" href="c-programming.css"/>
+<link rel="stylesheet" href="dsa-c-style.css"/>
+<style id="cb-dsa-practice-arena-style">
+.cb-dsa-practice-arena-page [hidden]{display:none!important}
+.cb-practice-arena-hero{overflow:hidden;position:relative;border:1px solid #dbeafe;background:radial-gradient(circle at top right,rgba(37,99,235,.10),transparent 34%),radial-gradient(circle at bottom left,rgba(212,175,55,.10),transparent 32%),#fff}
+.cb-practice-arena-kicker{display:inline-flex;padding:7px 12px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:12px;font-weight:800;letter-spacing:.08em}
+.cb-practice-arena-hero h1{margin:16px 0 8px;color:#0d1b2a;font-size:clamp(28px,4vw,42px)}
+.cb-practice-arena-intro{max-width:900px;color:#475569;line-height:1.75}
+.cb-arena-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:20px}
+.cb-arena-stat{padding:15px;border:1px solid #e2e8f0;border-radius:14px;background:#f8fafc}
+.cb-arena-stat strong{display:block;color:#0d1b2a;font-size:22px}
+.cb-arena-stat span{display:block;margin-top:4px;color:#64748b;font-size:12px;font-weight:700}
+.cb-arena-online-progress{margin-top:16px;padding:15px;border:1px solid #dbeafe;border-radius:14px;background:#f8fbff}
+.cb-arena-progress-row{display:flex;justify-content:space-between;gap:12px;margin-bottom:9px;color:#0d1b2a;font-size:13px;font-weight:800}
+.cb-arena-progress-track{height:10px;overflow:hidden;border-radius:999px;background:#e2e8f0}
+#dsaPracticeOverallBar{height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#2563eb,#7dd3fc);transition:width .25s}
+.cb-stage-block{margin-top:25px}
+.cb-stage-heading{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:12px}
+.cb-stage-heading h2{margin:0;color:#153b6f}
+.cb-stage-heading p{margin:0;color:#64748b;font-size:13px}
+.cb-level-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.cb-level-card{display:flex;min-height:205px;flex-direction:column;padding:18px;border:1px solid #dbe4f0;border-radius:16px;background:#fff;box-shadow:0 8px 24px rgba(15,23,42,.05);text-decoration:none;transition:.18s}
+.cb-level-card[href]:hover{transform:translateY(-3px);border-color:#93c5fd;box-shadow:0 12px 28px rgba(37,99,235,.10)}
+.cb-level-card.cb-level-planned{background:#f8fafc;opacity:.8}
+.cb-level-card.cb-level-placement{border-color:#e9d594;background:linear-gradient(180deg,#fffdf5,#fff)}
+.cb-level-card-top{display:flex;align-items:center;justify-content:space-between}
+.cb-level-number{color:#2563eb;font-size:12px;font-weight:900;letter-spacing:.08em}
+.cb-level-icon{font-size:24px}
+.cb-level-card h3{margin:16px 0 8px;color:#0d1b2a;font-size:20px}
+.cb-level-card p{margin:0;color:#64748b;font-size:13px;line-height:1.55}
+.cb-level-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:15px}
+.cb-level-meta span,.cb-challenge-summary-meta span{padding:5px 8px;border-radius:999px;background:#f1f5f9;color:#475569;font-size:10px;font-weight:800}
+.cb-level-start{margin-top:12px;color:#2563eb;font-size:13px;font-weight:900}
+.cb-level-section{scroll-margin-top:92px;margin:18px 0;border:1px solid #dbe4f0;border-radius:18px;background:#fff;overflow:hidden}
+.cb-level-section>summary{list-style:none;cursor:pointer;padding:18px 20px;background:linear-gradient(90deg,#f8fafc,#fff)}
+.cb-level-section>summary::-webkit-details-marker,.cb-challenge-card>summary::-webkit-details-marker{display:none}
+.cb-level-summary-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.cb-level-summary-main{display:flex;align-items:center;gap:12px}
+.cb-level-summary-icon{display:grid;width:44px;height:44px;place-items:center;border-radius:12px;background:#eff6ff;font-size:23px}
+.cb-level-summary-text strong{display:block;color:#0d1b2a;font-size:18px}
+.cb-level-summary-text span{display:block;margin-top:3px;color:#64748b;font-size:12px}
+.cb-level-open-pill{padding:7px 10px;border-radius:999px;background:#eff6ff;color:#2563eb;font-size:11px;font-weight:900}
+.cb-level-content{padding:0 18px 20px;border-top:1px solid #edf2f7}
+.cb-level-content-intro{margin:16px 2px 14px;color:#64748b;font-size:13px;line-height:1.6}
+.cb-challenge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cb-challenge-card{min-width:0;border:1px solid #e2e8f0;border-radius:14px;background:#fff;overflow:hidden}
+.cb-challenge-card[open]{grid-column:1/-1;border-color:#bfdbfe;box-shadow:0 8px 24px rgba(37,99,235,.08)}
+.cb-challenge-card>summary{list-style:none;cursor:pointer;padding:15px}
+.cb-challenge-topline{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cb-challenge-number{color:#64748b;font-size:11px;font-weight:900}
+.cb-difficulty{padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase}
+.cb-diff-starter,.cb-diff-easy{background:#ecfdf5;color:#15803d}
+.cb-diff-medium,.cb-diff-mediumplus{background:#fff7ed;color:#c2410c}
+.cb-diff-advanced,.cb-diff-hard{background:#fef2f2;color:#b91c1c}
+.cb-challenge-card h3{margin:11px 0 6px;color:#0d1b2a;font-size:17px}
+.cb-core-skill{margin:0;color:#64748b;font-size:12px}
+.cb-challenge-summary-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.cb-view-challenge{display:inline-flex;margin-top:11px;color:#2563eb;font-size:12px;font-weight:900}
+.cb-challenge-body{padding:0 16px 17px;border-top:1px solid #eef2f7}
+.cb-challenge-hero{margin-top:16px;padding:16px;border:1px solid #dbeafe;border-radius:13px;background:#f8fbff}
+.cb-challenge-label{display:inline-flex;padding:5px 8px;border-radius:999px;background:#0d1b2a;color:#fff;font-size:10px;font-weight:900;letter-spacing:.08em}
+.cb-challenge-hero h2{margin:10px 0 8px;color:#153b6f;font-size:22px}
+.cb-challenge-hero p{margin:0;color:#475569;line-height:1.7}
+.cb-challenge-spec-grid,.cb-example-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.cb-challenge-spec{padding:14px;border:1px solid #e2e8f0;border-radius:12px}
+.cb-challenge-spec h4{margin:0 0 7px;color:#153b6f;font-size:14px}
+.cb-challenge-spec p{margin:0;color:#475569;font-size:13px;line-height:1.6}
+.cb-example-box{border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;background:#0f172a}
+.cb-example-box strong{display:block;padding:9px 11px;background:#1e293b;color:#e2e8f0;font-size:11px}
+.cb-example-box pre{margin:0;padding:12px;min-height:62px;overflow:auto;color:#f8fafc;white-space:pre-wrap;word-break:break-word}
+.cb-explanation-box{margin-top:14px;padding:13px 14px;border-left:4px solid #d4af37;border-radius:10px;background:#fffdf5;color:#475569;font-size:13px;line-height:1.65}
+.cb-concept-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.cb-concept-row span{padding:5px 8px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:10px;font-weight:900}
+.cb-challenge-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.cb-practice-start-button,.cb-practice-hint-button,.cb-practice-program-button{border:0;border-radius:9px;padding:10px 14px;font-weight:900;cursor:pointer}
+.cb-practice-start-button{background:#d4af37;color:#0d1b2a}
+.cb-practice-hint-button{background:#64748b;color:#fff}
+.cb-practice-program-button{background:#2563eb;color:#fff}
+.cb-c-practice-hint{margin-top:12px;padding:11px 12px;border-left:4px solid #d4af37;border-radius:7px;background:#fff9df;color:#334155}
+.cb-c-practice-solution{margin-top:12px;overflow:hidden;border:1px solid #dbe3ec;border-radius:9px}
+.cb-c-practice-solution-title{padding:10px 12px;background:#0d1b2a;color:#fff;font-weight:900}
+.cb-c-practice-solution pre{margin:0;max-height:430px;overflow:auto;padding:14px;background:#020617;color:#f8fafc}
+.cb-practice-arena-note{margin-top:18px;padding:14px 16px;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#475569;font-size:12px;line-height:1.65}
+.cb-dsa-practice-arena-page .cb-c-practice-workspace{position:relative;overflow-x:auto;margin-top:12px;padding:76px 12px 12px!important;border:1px solid #cbd5e1!important;border-radius:12px!important;background:linear-gradient(to bottom,#fff 0,#fff 63px,#e2e8f0 63px,#e2e8f0 64px,#0f172a 64px,#0f172a 100%)!important}
+.cb-dsa-practice-arena-page .cb-c-practice-workspace::before{content:"";position:absolute;top:11px;right:160px;width:40px;height:40px;border:1px solid #dbe3ec;border-radius:10px;background:#fff url("../images/codebhavya-icon-32.png") center/28px 28px no-repeat;box-shadow:0 5px 16px rgba(2,12,27,.08);z-index:3}
+.cb-dsa-practice-arena-page .cb-c-practice-workspace::after{content:"CodeBhavya";position:absolute;top:17px;right:18px;color:transparent;background:linear-gradient(90deg,#2563eb 0%,#2563eb 43%,#f59e0b 43%,#f59e0b 100%);-webkit-background-clip:text;background-clip:text;font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:900;line-height:30px;letter-spacing:-.02em;white-space:nowrap;z-index:4}
+.cb-dsa-practice-arena-page .cb-c-practice-workspace-title::before{content:"INTERACTIVE CODING PRACTICE";position:absolute;top:0;left:0;display:flex;align-items:center;height:64px;max-width:calc(100% - 225px);padding:0 22px;overflow:hidden;color:#2563eb;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:900;letter-spacing:.15em;white-space:nowrap;z-index:2}
+.cb-dsa-practice-arena-page .cb-c-practice-workspace-title{color:#f8fafc!important}
+.cb-dsa-practice-arena-page .cb-c-practice-panel{border-color:#334155!important;background:#111827!important}
+.cb-dsa-practice-arena-page .cb-c-practice-panel h4{color:#f1f5f9!important}
+.cb-dsa-practice-arena-page .cb-c-code-editor,.cb-dsa-practice-arena-page .cb-c-practice-input,.cb-dsa-practice-arena-page .cb-c-practice-output{border-color:#475569!important;background:#020617!important;color:#f8fafc!important}
+.cb-dsa-practice-arena-page .cb-c-run-btn{background:#159447!important}
+.cb-dsa-practice-arena-page .cb-c-check-btn{background:#2563eb!important}
+.cb-dsa-practice-arena-page .cb-c-reset-btn{background:#64748b!important;color:#fff!important}
+.cb-dsa-practice-arena-page .cb-c-score-item{border-color:#334155!important;background:#0b1220!important;color:#fff!important}
+.cb-dsa-practice-arena-page .cb-c-score-item strong{color:#93c5fd!important}
+.cb-dsa-practice-arena-page .cb-c-score-item span{color:#fff!important}
+.cb-dsa-practice-arena-page .cb-c-practice-message{border-color:#334e8d!important;background:#1e3a8a!important;color:#fff!important}
+.cb-dsa-practice-arena-page .cb-c-test-row{border-color:#334155!important;background:#0b1220!important;color:#e2e8f0!important}
+.cb-dsa-practice-arena-page .cb-c-test-row.pass{border-color:#22c55e!important;background:rgba(20,83,45,.48)!important;color:#dcfce7!important}
+.cb-dsa-practice-arena-page .cb-c-test-row.fail{border-color:#ef4444!important;background:rgba(127,29,29,.45)!important;color:#fee2e2!important}
+@media(max-width:1000px){.cb-level-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cb-arena-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.cb-challenge-grid,.cb-challenge-spec-grid,.cb-example-grid{grid-template-columns:1fr}.cb-challenge-card[open]{grid-column:auto}}
+@media(max-width:640px){.cb-level-card-grid,.cb-arena-stats{grid-template-columns:1fr}.cb-stage-heading{align-items:flex-start;flex-direction:column}.cb-level-open-pill{display:none}.cb-level-content{padding-left:10px;padding-right:10px}.cb-challenge-body{padding-left:12px;padding-right:12px}.cb-dsa-practice-arena-page .cb-c-practice-workspace{padding-top:68px!important}.cb-dsa-practice-arena-page .cb-c-practice-workspace::before{top:10px;right:98px;width:34px;height:34px;background-size:24px 24px}.cb-dsa-practice-arena-page .cb-c-practice-workspace::after{top:13px;right:10px;font-size:15px;line-height:28px}.cb-dsa-practice-arena-page .cb-c-practice-workspace-title::before{height:56px;max-width:calc(100% - 158px);padding:0 12px;font-size:9px;letter-spacing:.1em}}
+</style>
+</head>
+<body class="cb-dsa-page cb-dsa-topic-page cb-dsa-practice-arena-page">
+<header class="top-header">
+<a class="logo codebhavya-new-logo" href="../index.html">
+<img alt="CodeBhavya Logo" class="main-logo" src="../images/codebhavya-main-logo.png"/>
+<span class="brand-name"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></span>
+</a>
+<nav class="top-nav">
+<a href="../index.html">Home</a><a href="../Mathematics/">Maths</a><a href="../C-Programming/">C</a><a class="active" href="index.html">DSA</a><a href="../Python/">Python</a><a href="../AI-ML/">AI &amp; ML</a><a href="../Placement/">Placement</a>
+</nav>
+</header>
+<div class="docs-layout">
+<aside class="sidebar">
+<div class="sidebar-title">Data Structures</div>
+<a href="index.html">📘 DSA Overview</a>
+<a href="arrays.html">📊 Arrays</a>
+<a href="searching.html">🔎 Searching</a>
+<a href="sorting.html">🔄 Sorting</a>
+<a href="linked-list.html">🔗 Linked Lists</a>
+<a href="stack.html">📚 Stacks</a>
+<a href="queue.html">🚶 Queues</a>
+<a href="trees.html">🌳 Trees</a>
+<a href="graphs.html">🕸️ Graphs</a>
+<a class="active" href="practice.html">✍️ DSA Practice</a>
+</aside>
+<main class="content">
+<section class="content-card cb-practice-arena-hero" id="practice">
+<span class="cb-practice-arena-kicker">CODEBHAVYA • DSA PRACTICE ARENA</span>
+<h1>✍️ DSA Practice Arena</h1>
+<p class="cb-practice-arena-intro">Move from array fundamentals to placement-level data-structure problem solving through 12 progressive levels. Every challenge uses an independently written CodeBhavya story while practising standard DSA concepts through C programs.</p>
+<div class="cb-arena-stats">
+<div class="cb-arena-stat"><strong>12</strong><span>Planned Levels</span></div>
+<div class="cb-arena-stat"><strong>20</strong><span>Level 1 Challenges Available</span></div>
+<div class="cb-arena-stat"><strong>100</strong><span>Hidden Test Cases</span></div>
+<div class="cb-arena-stat"><strong id="dsaPracticeMaxPoints">985</strong><span>Available Competitive Points</span></div>
+</div>
+<div class="cb-arena-online-progress">
+<div class="cb-arena-progress-row"><span>Level 1 Progress</span><span id="dsaPracticeOverallPercent">0%</span></div>
+<div class="cb-arena-progress-track"><div id="dsaPracticeOverallBar"></div></div>
+<div class="cb-arena-stats" style="margin-top:12px">
+<div class="cb-arena-stat"><strong id="dsaPracticeOverallSolved">0 / 20</strong><span>Solved</span></div>
+<div class="cb-arena-stat"><strong id="dsaPracticeOverallCompleted">0</strong><span>Completed with Solution</span></div>
+<div class="cb-arena-stat"><strong id="dsaPracticeOverallScore">0 / 985</strong><span>Weighted Score</span></div>
+<div class="cb-arena-stat"><strong id="dsaPracticeBadge">🌱 Starter</strong><span>Current Badge</span></div>
+</div>
+</div>
+</section>
+<section class="content-card">
+<span class="cb-added-label">12-LEVEL ROADMAP</span>
+<h2>🎯 Choose Your DSA Practice Level</h2>
+<p>Level 1 is ready now. The remaining levels will be added and verified one by one.</p>
+<section class="cb-stage-block">
+<div class="cb-stage-heading"><h2>Foundation Practice</h2><p>Build array, searching and sorting confidence.</p></div>
+<div class="cb-level-card-grid">
+<a class="cb-level-card" href="#practice-level-1"><div class="cb-level-card-top"><span class="cb-level-number">LEVEL 01</span><span class="cb-level-icon">📊</span></div><h3>Array Foundations</h3><p>Traversal, aggregation, rotation, prefix sums and array optimization.</p><div class="cb-level-meta"><span>20 Challenges</span><span>Available</span><span>985 Points</span></div><span class="cb-level-start">Open Level →</span></a>
+<article class="cb-level-card cb-level-planned"><div class="cb-level-card-top"><span class="cb-level-number">LEVEL 02</span><span class="cb-level-icon">🔎</span></div><h3>Searching Challenges</h3><p>Linear, binary, rotated, jump and advanced search reasoning.</p><div class="cb-level-meta"><span>20 Planned</span><span>Coming Next</span></div><span class="cb-level-start">Planned</span></article>
+<article class="cb-level-card cb-level-planned"><div class="cb-level-card-top"><span class="cb-level-number">LEVEL 03</span><span class="cb-level-icon">🫧</span></div><h3>Basic Sorting</h3><p>Bubble, selection and insertion sorting challenges.</p><div class="cb-level-meta"><span>20 Planned</span><span>Coming Soon</span></div><span class="cb-level-start">Planned</span></article>
+</div></section>
+<section class="cb-stage-block">
+<div class="cb-stage-heading"><h2>Intermediate Practice</h2><p>Efficient sorting and linear data structures.</p></div>
+<div class="cb-level-card-grid">
+<article class="cb-level-card cb-level-planned"><div class="cb-level-card-top"><span class="cb-level-number">LEVEL 04</span><span class="cb-level-icon">⚡</span></div><h3>Efficient Sorting</h3><p>Merge, quick and heap-sort applications.</p><div class="cb-level-meta"><span>20 Planned</span></div><span class="cb-level-start">Planned</span></article>
+<article class="cb-level-card cb-level-planned"><div class="cb-level-card-top"><span class="cb-level-number">LEVEL 05</span><span class="cb-level-icon">🔗</span></div><h3>Linked List Missions</h3><p>Singly, doubly and circular linked-list operations.</p><div class="cb-level-meta"><span>20 Planned</span></div><span class="cb-level-start">Planned</span></article>
+<article class="cb-level-card cb-level-planned"><div class="cb-level-card-top"><span class="cb-level-number">LEVEL 06</span><span class="cb-level-icon">📚</span></div><h3>Stack Challenges</h3><p>Expressions, monotonic stacks and stack-based systems.</p><div class="cb-level-meta"><span>20 Planned</span></div><span class="cb-level-start">Planned</span></article>
+<article class="cb-level-card cb-level-planned"><div class="cb-level-card-top"><span class="cb-level-number">LEVEL 07</span><span class="cb-level-icon">🚶</span></div><h3>Queue Challenges</h3><p>Queues, circular queues, deques and priority queues.</p><div class="cb-level-meta"><span>20 Planned</span></div><span class="cb-level-start">Planned</span></article>
+</div></section>
+<section class="cb-stage-block">
+<div class="cb-stage-heading"><h2>Advanced Practice</h2><p>Trees, heaps and graph problem solving.</p></div>
+<div class="cb-level-card-grid">
+<article class="cb-level-card cb-level-planned"><div class="cb-level-card-top"><span class="cb-level-number">LEVEL 08</span><span class="cb-level-icon">🌳</span></div><h3>Trees &amp; Traversals</h3><p>Construction, DFS traversals, BFS and recursive properties.</p><div class="cb-level-meta"><span>20 Planned</span></div><span class="cb-level-start">Planned</span></article>
+<article class="cb-level-card cb-level-planned"><div class="cb-level-card-top"><span class="cb-level-number">LEVEL 09</span><span class="cb-level-icon">⛰️</span></div><h3>BST &amp; Binary Heap</h3><p>Ordered trees, deletion and heap operations.</p><div class="cb-level-meta"><span>20 Planned</span></div><span class="cb-level-start">Planned</span></article>
+<article class="cb-level-card cb-level-planned"><div class="cb-level-card-top"><span class="cb-level-number">LEVEL 10</span><span class="cb-level-icon">🕸️</span></div><h3>Graph Challenges</h3><p>Representations, BFS, DFS, cycles and shortest paths.</p><div class="cb-level-meta"><span>20 Planned</span></div><span class="cb-level-start">Planned</span></article>
+</div></section>
+<section class="cb-stage-block">
+<div class="cb-stage-heading"><h2>Placement Practice</h2><p>Combine multiple data structures under interview constraints.</p></div>
+<div class="cb-level-card-grid">
+<article class="cb-level-card cb-level-planned"><div class="cb-level-card-top"><span class="cb-level-number">LEVEL 11</span><span class="cb-level-icon">🧩</span></div><h3>Mixed DSA Systems</h3><p>Choose and combine the right structures for realistic systems.</p><div class="cb-level-meta"><span>20 Planned</span></div><span class="cb-level-start">Planned</span></article>
+<article class="cb-level-card cb-level-planned cb-level-placement"><div class="cb-level-card-top"><span class="cb-level-number">LEVEL 12</span><span class="cb-level-icon">🏆</span></div><h3>Placement DSA Sprint</h3><p>Interview-style optimization, edge cases and timed reasoning.</p><div class="cb-level-meta"><span>20 Planned</span><span>Placement</span></div><span class="cb-level-start">Planned</span></article>
+</div></section>
+</section>
+<section class="content-card">
+<span class="cb-added-label">ORIGINAL STORY-BASED CHALLENGES</span>
+<h2>🧩 Level 1 — Array Foundations</h2>
+<p>Open a challenge to see its independent CodeBhavya story, exact contract, sample, concepts and coding workspace.</p>
+<details class="cb-level-section" id="practice-level-1" open>
+<summary><div class="cb-level-summary-row"><div class="cb-level-summary-main"><span class="cb-level-summary-icon">📊</span><span class="cb-level-summary-text"><strong>Level 1 — Array Foundations</strong><span>20 newly written CodeBhavya challenges • five tests each</span></span></div><span class="cb-level-open-pill">Open 20 Challenges</span></div></summary>
+<div class="cb-level-content"><p class="cb-level-content-intro">These challenges strengthen traversal, aggregation, searching within arrays, rearrangement, prefix sums and optimization. Standard array algorithms are taught through newly written CodeBhavya scenarios.</p><div class="cb-challenge-grid" id="dsaLevel1Challenges"></div></div>
+</details>
+<div class="cb-practice-arena-note"><strong>Originality approach:</strong> challenge titles, scenarios, wording, examples, hints and tests on this page are newly authored for CodeBhavya. Array traversal, rotation, prefix sums, Kadane's algorithm and two-sum reasoning remain standard DSA concepts.</div>
+</section>
+</main>
+</div>
+<footer class="footer">
+<div class="footer-container">
+<div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div>
+<div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="../Mathematics/">Maths</a><a href="../C-Programming/">C Programming</a></div>
+<div class="footer-column"><h3>Learning</h3><a href="index.html">Data Structures &amp; DSA</a><a href="../Python/">Python</a><a href="../AI-ML/">AI &amp; Machine Learning</a></div>
+<div class="footer-column"><h3>Practice</h3><a href="practice.html">DSA Practice Arena</a><a href="#practice-level-1">Array Challenges</a></div>
+</div>
+<div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div>
+</footer>
+<script>
+const DSA_LEVEL_ONE = [
+{
+key:"dsa-l1-p1",number:1,title:"Supply Crate Roll Call",difficulty:"Starter",points:20,
+coreSkill:"Array input and traversal",concepts:["Arrays","Traversal","Input/Output"],
+story:"A campus supply room stores crate codes in the order they arrive. Before the shelves open, the supervisor needs a verification screen that repeats every code without changing its position.",
+task:"Read N crate codes into an array and print them in the same order, separated by spaces.",
+inputSpec:"First line: N. Second line: N integer crate codes.",outputSpec:"Print the N codes in their original order.",constraints:"1 ≤ N ≤ 1000; each code fits in a 32-bit signed integer.",
+sampleInput:"5\n12 7 19 4 8",sampleOutput:"12 7 19 4 8",explanation:"The verification screen preserves the exact arrival order of all five crate codes.",
+hint:"Store each value at a[i], then traverse from index 0 to N - 1.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,a[1000];
+    scanf("%d",&n);
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+    for(int i=0;i<n;i++){
+        if(i) printf(" ");
+        printf("%d",a[i]);
+    }
+    return 0;
+}`,
+tests:[{input:"5\n12 7 19 4 8",expected:"12 7 19 4 8"},{input:"1\n42",expected:"42"},{input:"4\n-3 0 5 -8",expected:"-3 0 5 -8"},{input:"6\n1 1 2 3 5 8",expected:"1 1 2 3 5 8"},{input:"3\n100 -100 0",expected:"100 -100 0"}]
+},
+{
+key:"dsa-l1-p2",number:2,title:"Warehouse Inventory Total",difficulty:"Starter",points:20,
+coreSkill:"Array aggregation",concepts:["Arrays","Sum","Long Long"],
+story:"Several storage rooms report their current item balances to one dashboard. Some balances may be negative because damaged stock has already been deducted. The dashboard must calculate the combined balance safely.",
+task:"Read N inventory balances and print their total.",
+inputSpec:"First line: N. Second line: N integer balances.",outputSpec:"Print one integer representing the total balance.",constraints:"1 ≤ N ≤ 1000; |value| ≤ 1,000,000.",
+sampleInput:"5\n12 7 19 4 8",sampleOutput:"50",explanation:"Adding 12, 7, 19, 4 and 8 gives a combined inventory balance of 50.",
+hint:"Use a long long accumulator and add each array element during traversal.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,x;
+    long long sum=0;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+        scanf("%d",&x);
+        sum+=x;
+    }
+    printf("%lld",sum);
+    return 0;
+}`,
+tests:[{input:"5\n12 7 19 4 8",expected:"50"},{input:"1\n-7",expected:"-7"},{input:"4\n-3 0 5 -8",expected:"-6"},{input:"6\n1 1 2 3 5 8",expected:"20"},{input:"3\n1000000 -1000000 0",expected:"0"}]
+},
+{
+key:"dsa-l1-p3",number:3,title:"Weather Station Peak",difficulty:"Starter",points:25,
+coreSkill:"Maximum element",concepts:["Arrays","Maximum","Traversal"],
+story:"A hill station records one temperature reading every hour. The control room wants the highest recorded value so it can verify whether the cooling alert should have activated.",
+task:"Find and print the maximum value in a non-empty array.",
+inputSpec:"First line: N. Second line: N integer readings.",outputSpec:"Print the largest reading.",constraints:"1 ≤ N ≤ 1000; readings may be negative.",
+sampleInput:"6\n18 42 7 42 11 5",sampleOutput:"42",explanation:"The peak reading is 42; its repeated occurrence does not change the maximum.",
+hint:"Initialize the maximum with the first element, not with zero.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,a[1000];
+    scanf("%d",&n);
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+    int maximum=a[0];
+    for(int i=1;i<n;i++) if(a[i]>maximum) maximum=a[i];
+    printf("%d",maximum);
+    return 0;
+}`,
+tests:[{input:"6\n18 42 7 42 11 5",expected:"42"},{input:"1\n-9",expected:"-9"},{input:"4\n-8 -3 -11 -1",expected:"-1"},{input:"5\n0 4 2 9 1",expected:"9"},{input:"3\n7 7 7",expected:"7"}]
+},
+{
+key:"dsa-l1-p4",number:4,title:"Quietest Machine Reading",difficulty:"Starter",points:25,
+coreSkill:"Minimum element",concepts:["Arrays","Minimum","Traversal"],
+story:"A laboratory compares vibration readings from several machines. The maintenance team needs the smallest reading as the reference for its calibration report.",
+task:"Find and print the minimum value in a non-empty array.",
+inputSpec:"First line: N. Second line: N integer readings.",outputSpec:"Print the smallest reading.",constraints:"1 ≤ N ≤ 1000; readings fit in a signed integer.",
+sampleInput:"6\n18 42 7 42 11 5",sampleOutput:"5",explanation:"Among all six readings, 5 is the smallest.",
+hint:"Begin with a[0] and update the minimum whenever a smaller value appears.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,a[1000];
+    scanf("%d",&n);
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+    int minimum=a[0];
+    for(int i=1;i<n;i++) if(a[i]<minimum) minimum=a[i];
+    printf("%d",minimum);
+    return 0;
+}`,
+tests:[{input:"6\n18 42 7 42 11 5",expected:"5"},{input:"1\n17",expected:"17"},{input:"4\n-8 -3 -11 -1",expected:"-11"},{input:"5\n0 4 2 9 1",expected:"0"},{input:"3\n7 7 7",expected:"7"}]
+},
+{
+key:"dsa-l1-p5",number:5,title:"Classroom Score Average",difficulty:"Easy",points:30,
+coreSkill:"Average of array values",concepts:["Arrays","Average","Floating Point"],
+story:"A mentor records the assessment scores of one classroom. The progress board must display the exact class average with two digits after the decimal point.",
+task:"Compute the arithmetic mean of N integer scores.",
+inputSpec:"First line: N. Second line: N integer scores.",outputSpec:"Print the average rounded to exactly two decimal places.",constraints:"1 ≤ N ≤ 1000; |score| ≤ 1,000,000.",
+sampleInput:"5\n72 85 90 68 95",sampleOutput:"82.00",explanation:"The total is 410 and 410 ÷ 5 produces 82.00.",
+hint:"Divide the accumulated sum by (double)N and use printf with %.2f.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,x;
+    long long sum=0;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+        scanf("%d",&x);
+        sum+=x;
+    }
+    printf("%.2f",(double)sum/n);
+    return 0;
+}`,
+tests:[{input:"5\n72 85 90 68 95",expected:"82.00"},{input:"1\n7",expected:"7.00"},{input:"4\n1 2 3 4",expected:"2.50"},{input:"4\n-4 -2 0 2",expected:"-1.00"},{input:"3\n10 10 11",expected:"10.33"}]
+},
+{
+key:"dsa-l1-p6",number:6,title:"Emergency Route Reversal",difficulty:"Easy",points:30,
+coreSkill:"Reverse traversal",concepts:["Arrays","Reverse","Indexing"],
+story:"A rescue vehicle stores checkpoint numbers from base to destination. For the return journey, the navigation console must display the same checkpoints in the opposite order.",
+task:"Print the array from the last element to the first.",
+inputSpec:"First line: N. Second line: N checkpoint numbers.",outputSpec:"Print the checkpoint numbers in reverse order.",constraints:"1 ≤ N ≤ 1000.",
+sampleInput:"5\n4 9 2 7 6",sampleOutput:"6 7 2 9 4",explanation:"The final checkpoint becomes the first item in the return route.",
+hint:"Start the loop at N - 1 and move down to index 0.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,a[1000];
+    scanf("%d",&n);
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+    for(int i=n-1;i>=0;i--){
+        if(i!=n-1) printf(" ");
+        printf("%d",a[i]);
+    }
+    return 0;
+}`,
+tests:[{input:"5\n4 9 2 7 6",expected:"6 7 2 9 4"},{input:"1\n10",expected:"10"},{input:"4\n-1 0 1 2",expected:"2 1 0 -1"},{input:"6\n1 2 3 4 5 6",expected:"6 5 4 3 2 1"},{input:"3\n8 8 9",expected:"9 8 8"}]
+},
+{
+key:"dsa-l1-p7",number:7,title:"Even-Odd Inspection Desk",difficulty:"Easy",points:35,
+coreSkill:"Conditional counting",concepts:["Arrays","Counting","Parity"],
+story:"A quality desk groups numbered components by parity before packaging. It needs only the number of even components and the number of odd components in the current batch.",
+task:"Count even and odd values in the array.",
+inputSpec:"First line: N. Second line: N integers.",outputSpec:"Line 1: Even X. Line 2: Odd Y.",constraints:"1 ≤ N ≤ 1000; zero is even.",
+sampleInput:"7\n4 9 0 11 6 8 3",sampleOutput:"Even 4\nOdd 3",explanation:"4, 0, 6 and 8 are even; 9, 11 and 3 are odd.",
+hint:"For each value, test value % 2 == 0 and update one of two counters.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,x,even=0,odd=0;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+        scanf("%d",&x);
+        if(x%2==0) even++;
+        else odd++;
+    }
+    printf("Even %d\nOdd %d",even,odd);
+    return 0;
+}`,
+tests:[{input:"7\n4 9 0 11 6 8 3",expected:"Even 4\nOdd 3"},{input:"1\n0",expected:"Even 1\nOdd 0"},{input:"4\n1 3 5 7",expected:"Even 0\nOdd 4"},{input:"5\n2 4 6 8 10",expected:"Even 5\nOdd 0"},{input:"4\n-2 -3 -4 -5",expected:"Even 2\nOdd 2"}]
+},
+{
+key:"dsa-l1-p8",number:8,title:"Badge Frequency Scan",difficulty:"Easy",points:35,
+coreSkill:"Frequency of one value",concepts:["Arrays","Frequency","Linear Scan"],
+story:"At an event entrance, badge category numbers are stored in arrival order. The coordinator selects one category and asks how many attendees carry it.",
+task:"Count how many times a target value occurs in the array.",
+inputSpec:"First line: N. Second line: N integers. Third line: target.",outputSpec:"Print the target's frequency.",constraints:"1 ≤ N ≤ 1000.",
+sampleInput:"8\n3 5 3 2 3 9 5 3\n3",sampleOutput:"4",explanation:"The badge category 3 appears at four positions.",
+hint:"Initialize count to zero and increment it whenever a[i] equals target.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,a[1000],target,count=0;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+    scanf("%d",&target);
+    for(int i=0;i<n;i++) if(a[i]==target) count++;
+    printf("%d",count);
+    return 0;
+}`,
+tests:[{input:"8\n3 5 3 2 3 9 5 3\n3",expected:"4"},{input:"5\n1 2 3 4 5\n9",expected:"0"},{input:"1\n7\n7",expected:"1"},{input:"6\n0 0 0 1 0 2\n0",expected:"4"},{input:"5\n-1 -2 -1 -3 -1\n-1",expected:"3"}]
+},
+{
+key:"dsa-l1-p9",number:9,title:"First and Last Checkpoint",difficulty:"Easy",points:40,
+coreSkill:"Boundary occurrence indices",concepts:["Arrays","Search","Indices"],
+story:"A delivery route may pass the same checkpoint more than once. The audit team needs the first and final positions where a selected checkpoint appears in the stored route.",
+task:"Print the zero-based first and last indices of a target value. Print -1 -1 when absent.",
+inputSpec:"First line: N. Second line: N integers. Third line: target.",outputSpec:"Print first_index last_index.",constraints:"1 ≤ N ≤ 1000; indices are zero-based.",
+sampleInput:"9\n4 7 2 7 5 7 8 1 7\n7",sampleOutput:"1 8",explanation:"The first 7 is at index 1 and the final 7 is at index 8.",
+hint:"Set first only on the first match, but update last on every match.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,a[1000],target,first=-1,last=-1;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+    scanf("%d",&target);
+    for(int i=0;i<n;i++){
+        if(a[i]==target){
+            if(first==-1) first=i;
+            last=i;
+        }
+    }
+    printf("%d %d",first,last);
+    return 0;
+}`,
+tests:[{input:"9\n4 7 2 7 5 7 8 1 7\n7",expected:"1 8"},{input:"5\n1 2 3 4 5\n9",expected:"-1 -1"},{input:"1\n6\n6",expected:"0 0"},{input:"6\n2 2 2 3 2 2\n2",expected:"0 5"},{input:"5\n-1 0 -1 2 -1\n-1",expected:"0 4"}]
+},
+{
+key:"dsa-l1-p10",number:10,title:"Runner-Up Distinct Score",difficulty:"Medium",points:45,
+coreSkill:"Second largest distinct value",concepts:["Arrays","Distinct Values","Selection"],
+story:"A sports board accepts repeated scores but awards the runner-up position to the second distinct score, not to another player tied at the maximum.",
+task:"Print the second largest distinct array value. Print NONE when fewer than two distinct values exist.",
+inputSpec:"First line: N. Second line: N integer scores.",outputSpec:"Print the second largest distinct value or NONE.",constraints:"1 ≤ N ≤ 1000; scores may be negative.",
+sampleInput:"7\n45 90 90 72 60 45 30",sampleOutput:"72",explanation:"90 is the largest distinct score and 72 is the next smaller distinct score.",
+hint:"Track both the largest and second largest values while explicitly ignoring duplicates of the largest.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,x,maximum=0,second=0,hasMaximum=0,hasSecond=0;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+        scanf("%d",&x);
+        if(!hasMaximum || x>maximum){
+            if(hasMaximum){ second=maximum; hasSecond=1; }
+            maximum=x; hasMaximum=1;
+        }else if(x<maximum && (!hasSecond || x>second)){
+            second=x; hasSecond=1;
+        }
+    }
+    if(hasSecond) printf("%d",second);
+    else printf("NONE");
+    return 0;
+}`,
+tests:[{input:"7\n45 90 90 72 60 45 30",expected:"72"},{input:"4\n5 5 5 5",expected:"NONE"},{input:"4\n-5 -2 -2 -9",expected:"-5"},{input:"2\n1 2",expected:"1"},{input:"4\n10 9 8 7",expected:"9"}]
+},
+{
+key:"dsa-l1-p11",number:11,title:"Unique Visitor Queue",difficulty:"Medium",points:50,
+coreSkill:"Stable duplicate removal",concepts:["Arrays","Duplicates","Stable Order"],
+story:"A museum entry log may contain the same visitor code several times after repeated scans. The final report must keep only the first appearance of each code while preserving arrival order.",
+task:"Remove repeated values and print the distinct values in first-appearance order.",
+inputSpec:"First line: N. Second line: N visitor codes.",outputSpec:"Print the stable unique sequence.",constraints:"1 ≤ N ≤ 500.",
+sampleInput:"8\n4 2 4 7 2 9 7 1",sampleOutput:"4 2 7 9 1",explanation:"Later copies of 4, 2 and 7 are skipped; every first appearance remains in place.",
+hint:"For each element, search only the already-built unique output array.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,a[500],unique[500],count=0;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+    for(int i=0;i<n;i++){
+        int seen=0;
+        for(int j=0;j<count;j++) if(unique[j]==a[i]){seen=1;break;}
+        if(!seen) unique[count++]=a[i];
+    }
+    for(int i=0;i<count;i++){
+        if(i) printf(" ");
+        printf("%d",unique[i]);
+    }
+    return 0;
+}`,
+tests:[{input:"8\n4 2 4 7 2 9 7 1",expected:"4 2 7 9 1"},{input:"5\n3 3 3 3 3",expected:"3"},{input:"4\n1 2 3 4",expected:"1 2 3 4"},{input:"6\n-1 0 -1 2 0 -3",expected:"-1 0 2 -3"},{input:"1\n8",expected:"8"}]
+},
+{
+key:"dsa-l1-p12",number:12,title:"Single-Step Belt Shift",difficulty:"Medium",points:50,
+coreSkill:"Left rotation by one",concepts:["Arrays","Rotation","Shifting"],
+story:"A circular inspection belt advances every component one station to the left after a scan. The component at the first station moves to the final station.",
+task:"Left-rotate the array by exactly one position.",
+inputSpec:"First line: N. Second line: N integers.",outputSpec:"Print the array after one left rotation.",constraints:"1 ≤ N ≤ 1000.",
+sampleInput:"5\n10 20 30 40 50",sampleOutput:"20 30 40 50 10",explanation:"Every value shifts left and the original first value 10 wraps to the end.",
+hint:"Save a[0], shift a[1] through a[N-1] left, then place the saved value at a[N-1].",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,a[1000];
+    scanf("%d",&n);
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+    int first=a[0];
+    for(int i=0;i<n-1;i++) a[i]=a[i+1];
+    a[n-1]=first;
+    for(int i=0;i<n;i++){
+        if(i) printf(" ");
+        printf("%d",a[i]);
+    }
+    return 0;
+}`,
+tests:[{input:"5\n10 20 30 40 50",expected:"20 30 40 50 10"},{input:"1\n7",expected:"7"},{input:"4\n-1 0 1 2",expected:"0 1 2 -1"},{input:"2\n8 9",expected:"9 8"},{input:"6\n1 1 2 3 5 8",expected:"1 2 3 5 8 1"}]
+},
+{
+key:"dsa-l1-p13",number:13,title:"Circular Delivery Shift",difficulty:"Medium",points:55,
+coreSkill:"Right rotation by K",concepts:["Arrays","Rotation","Modulo"],
+story:"A dispatch board rotates its delivery assignments to the right at the start of each shift. After K rotations, the last assignments wrap around to the first positions.",
+task:"Right-rotate an array by K positions.",
+inputSpec:"First line: N K. Second line: N integers.",outputSpec:"Print the right-rotated array.",constraints:"1 ≤ N ≤ 1000; 0 ≤ K ≤ 1,000,000.",
+sampleInput:"5 2\n10 20 30 40 50",sampleOutput:"40 50 10 20 30",explanation:"A two-position right rotation brings 40 and 50 to the front.",
+hint:"Reduce K using K % N. Output element i from original index (i + N - K) % N.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,k,a[1000];
+    scanf("%d %d",&n,&k);
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+    k%=n;
+    for(int i=0;i<n;i++){
+        if(i) printf(" ");
+        printf("%d",a[(i+n-k)%n]);
+    }
+    return 0;
+}`,
+tests:[{input:"5 2\n10 20 30 40 50",expected:"40 50 10 20 30"},{input:"5 0\n1 2 3 4 5",expected:"1 2 3 4 5"},{input:"5 7\n1 2 3 4 5",expected:"4 5 1 2 3"},{input:"1 99\n8",expected:"8"},{input:"4 3\n-1 0 1 2",expected:"0 1 2 -1"}]
+},
+{
+key:"dsa-l1-p14",number:14,title:"Merge Two Timelines",difficulty:"Medium",points:60,
+coreSkill:"Merge sorted arrays",concepts:["Arrays","Two Pointers","Merge"],
+story:"Two monitoring systems produce separately sorted event times. The control centre needs one chronological timeline without sorting all events again.",
+task:"Merge two non-decreasing integer arrays into one non-decreasing sequence.",
+inputSpec:"First line: N M. Second line: N sorted integers. Third line: M sorted integers.",outputSpec:"Print the merged sorted sequence.",constraints:"0 ≤ N,M ≤ 500; N + M ≥ 1.",
+sampleInput:"4 5\n1 4 7 12\n2 3 8 10 15",sampleOutput:"1 2 3 4 7 8 10 12 15",explanation:"Two pointers repeatedly choose the smaller current event time from the two timelines.",
+hint:"Compare a[i] and b[j]; append the smaller value, then copy any remaining suffix.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,m,a[500],b[500],c[1000],i=0,j=0,k=0;
+    scanf("%d %d",&n,&m);
+    for(int x=0;x<n;x++) scanf("%d",&a[x]);
+    for(int x=0;x<m;x++) scanf("%d",&b[x]);
+    while(i<n && j<m){
+        if(a[i]<=b[j]) c[k++]=a[i++];
+        else c[k++]=b[j++];
+    }
+    while(i<n) c[k++]=a[i++];
+    while(j<m) c[k++]=b[j++];
+    for(int x=0;x<k;x++){
+        if(x) printf(" ");
+        printf("%d",c[x]);
+    }
+    return 0;
+}`,
+tests:[{input:"4 5\n1 4 7 12\n2 3 8 10 15",expected:"1 2 3 4 7 8 10 12 15"},{input:"0 3\n\n1 2 3",expected:"1 2 3"},{input:"3 0\n-2 0 5\n",expected:"-2 0 5"},{input:"3 3\n1 1 4\n1 2 4",expected:"1 1 1 2 4 4"},{input:"1 1\n9\n-1",expected:"-1 9"}]
+},
+{
+key:"dsa-l1-p15",number:15,title:"Range Energy Report",difficulty:"Medium+",points:60,
+coreSkill:"Prefix sum range query",concepts:["Arrays","Prefix Sum","Range Query"],
+story:"A solar lab stores daily energy values in an array. An auditor requests the total energy from day L through day R, inclusive, without repeatedly adding the same earlier days.",
+task:"Build prefix sums and answer one zero-based inclusive range-sum query.",
+inputSpec:"First line: N. Second line: N integers. Third line: L R.",outputSpec:"Print the sum of a[L] through a[R].",constraints:"1 ≤ N ≤ 1000; 0 ≤ L ≤ R < N.",
+sampleInput:"7\n5 3 8 2 6 4 1\n2 5",sampleOutput:"20",explanation:"Indices 2 through 5 contain 8, 2, 6 and 4; their total is 20.",
+hint:"Use prefix[i+1] = prefix[i] + a[i], then answer with prefix[R+1] - prefix[L].",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,l,r,x;
+    long long prefix[1001]={0};
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+        scanf("%d",&x);
+        prefix[i+1]=prefix[i]+x;
+    }
+    scanf("%d %d",&l,&r);
+    printf("%lld",prefix[r+1]-prefix[l]);
+    return 0;
+}`,
+tests:[{input:"7\n5 3 8 2 6 4 1\n2 5",expected:"20"},{input:"1\n9\n0 0",expected:"9"},{input:"5\n1 2 3 4 5\n0 4",expected:"15"},{input:"5\n-2 4 -1 6 -3\n1 3",expected:"9"},{input:"6\n10 20 30 40 50 60\n3 5",expected:"150"}]
+},
+{
+key:"dsa-l1-p16",number:16,title:"Balanced Bridge Index",difficulty:"Medium+",points:70,
+coreSkill:"Equilibrium index",concepts:["Arrays","Prefix Reasoning","Equilibrium"],
+story:"Sensors are placed along a bridge, each reporting a signed load adjustment. Engineers want the first sensor position where the total adjustment on the left equals the total adjustment on the right.",
+task:"Print the first zero-based equilibrium index, or -1 when none exists.",
+inputSpec:"First line: N. Second line: N integers.",outputSpec:"Print the first equilibrium index or -1.",constraints:"1 ≤ N ≤ 1000.",
+sampleInput:"7\n-7 1 5 2 -4 3 0",sampleOutput:"3",explanation:"At index 3, the left sum and right sum are both -1.",
+hint:"Compute the total sum once. As you scan, subtract the current value to obtain the right sum, compare, then add it to the left sum.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,a[1000];
+    long long total=0,left=0;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){scanf("%d",&a[i]);total+=a[i];}
+    for(int i=0;i<n;i++){
+        total-=a[i];
+        if(left==total){printf("%d",i);return 0;}
+        left+=a[i];
+    }
+    printf("-1");
+    return 0;
+}`,
+tests:[{input:"7\n-7 1 5 2 -4 3 0",expected:"3"},{input:"3\n1 2 3",expected:"-1"},{input:"1\n0",expected:"0"},{input:"3\n2 4 2",expected:"1"},{input:"3\n1 -1 0",expected:"2"}]
+},
+{
+key:"dsa-l1-p17",number:17,title:"Clear the Empty Slots",difficulty:"Medium+",points:70,
+coreSkill:"Stable in-place compaction",concepts:["Arrays","Two Pointers","Stable Rearrangement"],
+story:"A digital shelf uses zero to represent an empty slot. Before dispatch, every filled slot must be compacted to the front without changing the order of the stored package codes; empty slots move to the end.",
+task:"Move all zeros to the end while preserving the relative order of non-zero values.",
+inputSpec:"First line: N. Second line: N integers.",outputSpec:"Print the rearranged array.",constraints:"1 ≤ N ≤ 1000.",
+sampleInput:"8\n0 7 0 3 9 0 2 0",sampleOutput:"7 3 9 2 0 0 0 0",explanation:"The non-zero package codes retain their order, followed by four empty slots.",
+hint:"Write each non-zero value at the next compact position, then fill the remaining positions with zero.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,a[1000],write=0;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+    for(int i=0;i<n;i++) if(a[i]!=0) a[write++]=a[i];
+    while(write<n) a[write++]=0;
+    for(int i=0;i<n;i++){
+        if(i) printf(" ");
+        printf("%d",a[i]);
+    }
+    return 0;
+}`,
+tests:[{input:"8\n0 7 0 3 9 0 2 0",expected:"7 3 9 2 0 0 0 0"},{input:"4\n0 0 0 0",expected:"0 0 0 0"},{input:"5\n1 2 3 4 5",expected:"1 2 3 4 5"},{input:"6\n-1 0 -2 0 0 -3",expected:"-1 -2 -3 0 0 0"},{input:"1\n0",expected:"0"}]
+},
+{
+key:"dsa-l1-p18",number:18,title:"Skyline Leader Panels",difficulty:"Medium+",points:75,
+coreSkill:"Right-to-left maximum scan",concepts:["Arrays","Leaders","Reverse Scan"],
+story:"Display panels form a skyline from left to right. A panel is called visible from the east when it is strictly taller than every panel to its right. The city planner wants all such panels in their original order.",
+task:"Print every array value that is strictly greater than all values to its right.",
+inputSpec:"First line: N. Second line: N integer heights.",outputSpec:"Print leader values in original left-to-right order.",constraints:"1 ≤ N ≤ 1000; the last element is always a leader.",
+sampleInput:"6\n16 17 4 3 5 2",sampleOutput:"17 5 2",explanation:"17 exceeds everything after it; 5 exceeds 2; the last panel 2 is always visible.",
+hint:"Scan from right to left while maintaining the maximum seen so far, then reverse the collected leaders.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,a[1000],leaders[1000],count=0;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+    int maximum=a[n-1];
+    leaders[count++]=maximum;
+    for(int i=n-2;i>=0;i--){
+        if(a[i]>maximum){
+            maximum=a[i];
+            leaders[count++]=a[i];
+        }
+    }
+    for(int i=count-1;i>=0;i--){
+        if(i!=count-1) printf(" ");
+        printf("%d",leaders[i]);
+    }
+    return 0;
+}`,
+tests:[{input:"6\n16 17 4 3 5 2",expected:"17 5 2"},{input:"5\n1 2 3 4 5",expected:"5"},{input:"5\n5 4 3 2 1",expected:"5 4 3 2 1"},{input:"3\n5 5 3",expected:"5 3"},{input:"4\n-1 -3 -2 -5",expected:"-1 -2 -5"}]
+},
+{
+key:"dsa-l1-p19",number:19,title:"Best Sales Streak",difficulty:"Advanced",points:90,
+coreSkill:"Maximum subarray sum",concepts:["Arrays","Kadane's Algorithm","Optimization"],
+story:"A shop records daily profit and loss as signed integers. Management wants the consecutive period with the greatest total result, even when every recorded day is a loss.",
+task:"Print the maximum sum of any non-empty contiguous subarray.",
+inputSpec:"First line: N. Second line: N signed integers.",outputSpec:"Print the maximum contiguous-subarray sum.",constraints:"1 ≤ N ≤ 1000; use a 64-bit sum.",
+sampleInput:"9\n-2 1 -3 4 -1 2 1 -5 4",sampleOutput:"6",explanation:"The best consecutive period is 4, -1, 2, 1 with total 6.",
+hint:"At each position, choose between starting a new subarray at the current value and extending the previous best ending here.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,x;
+    long long current,best;
+    scanf("%d",&n);
+    scanf("%d",&x);
+    current=best=x;
+    for(int i=1;i<n;i++){
+        scanf("%d",&x);
+        if(current+x>x) current=current+x;
+        else current=x;
+        if(current>best) best=current;
+    }
+    printf("%lld",best);
+    return 0;
+}`,
+tests:[{input:"9\n-2 1 -3 4 -1 2 1 -5 4",expected:"6"},{input:"3\n-3 -2 -5",expected:"-2"},{input:"1\n7",expected:"7"},{input:"5\n1 2 3 4 5",expected:"15"},{input:"6\n0 -1 0 -2 0 -3",expected:"0"}]
+},
+{
+key:"dsa-l1-p20",number:20,title:"Target Weight Pair",difficulty:"Hard",points:100,
+coreSkill:"Deterministic pair search",concepts:["Arrays","Pair Sum","Nested Search"],
+story:"A cargo desk must select two different packages whose weights exactly match a requested total. For a reproducible report, it chooses the first valid pair encountered by scanning the first index from left to right and, for each one, scanning the second index to its right.",
+task:"Print the zero-based indices of the first pair whose values sum to the target. Print -1 if no pair exists.",
+inputSpec:"First line: N. Second line: N integers. Third line: target.",outputSpec:"Print i j for the first valid i < j, or -1.",constraints:"1 ≤ N ≤ 1000; use two different indices.",
+sampleInput:"6\n4 7 1 9 3 5\n10",sampleOutput:"1 4",explanation:"No pair beginning at index 0 totals 10. At index 1, values 7 and 3 at index 4 form the first valid pair.",
+hint:"Use nested loops with i from 0 to N - 2 and j from i + 1 to N - 1; stop immediately on the first match.",
+solution:String.raw`#include <stdio.h>
+int main(){
+    int n,a[1000],target;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+    scanf("%d",&target);
+    for(int i=0;i<n-1;i++){
+        for(int j=i+1;j<n;j++){
+            if(a[i]+a[j]==target){
+                printf("%d %d",i,j);
+                return 0;
+            }
+        }
+    }
+    printf("-1");
+    return 0;
+}`,
+tests:[{input:"6\n4 7 1 9 3 5\n10",expected:"1 4"},{input:"5\n2 7 11 15 1\n9",expected:"0 1"},{input:"4\n1 2 3 4\n8",expected:"-1"},{input:"3\n3 3 3\n6",expected:"0 1"},{input:"5\n-2 4 6 -1 3\n2",expected:"0 1"}]
+}
+];
+
+window.CodeBhavyaDSAPractice = (() => {
+    const judge0Base = "https://ce.judge0.com";
+    const cLanguageId = 103;
+    const byId = id => document.getElementById(id);
+    const storageKey = key => `codebhavya.dsapractice.${key}`;
+    const starterCode = `#include <stdio.h>\n\nint main()\n{\n    /* Write your solution here */\n\n    return 0;\n}`;
+
+    function escapeHtml(value) {
+        return String(value ?? "")
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;");
+    }
+
+    function normalize(value) {
+        return String(value ?? "")
+            .replace(/\r/g,"")
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean)
+            .join(" ");
+    }
+
+    function difficultyClass(value) {
+        return String(value).toLowerCase().replace(/[^a-z]/g,"");
+    }
+
+    function defaultProgress() {
+        return {
+            attempts:0,
+            bestScore:0,
+            hintUsed:false,
+            solutionViewed:false,
+            solved:false,
+            completed:false
+        };
+    }
+
+    function readProgress(key) {
+        try {
+            const raw=localStorage.getItem(storageKey(key));
+            return raw ? {...defaultProgress(),...JSON.parse(raw)} : defaultProgress();
+        } catch {
+            return defaultProgress();
+        }
+    }
+
+    function saveProgress(key,progress) {
+        try {
+            localStorage.setItem(storageKey(key),JSON.stringify(progress));
+        } catch {}
+    }
+
+    function getConfig(key) {
+        return DSA_LEVEL_ONE.find(item => item.key===key);
+    }
+
+    function badgeFor(solved,finished) {
+        if(solved===DSA_LEVEL_ONE.length) return "🏆 Array Champion";
+        if(solved>=15) return "🥇 Advanced Solver";
+        if(solved>=10) return "🥈 Strong Explorer";
+        if(finished>=10) return "🥉 Consistent Learner";
+        if(finished>=5) return "🚀 Rising Coder";
+        return "🌱 Starter";
+    }
+
+    function updateOverall() {
+        let solved=0,completed=0,score=0;
+        const maxPoints=DSA_LEVEL_ONE.reduce((sum,c)=>sum+c.points,0);
+
+        DSA_LEVEL_ONE.forEach(c => {
+            const p=readProgress(c.key);
+            if(p.solved) solved++;
+            else if(p.completed) completed++;
+            score+=Number(p.bestScore||0);
+        });
+
+        const finished=solved+completed;
+        const percent=Math.round(finished/DSA_LEVEL_ONE.length*100);
+
+        if(byId("dsaPracticeOverallSolved")) byId("dsaPracticeOverallSolved").textContent=`${solved} / ${DSA_LEVEL_ONE.length}`;
+        if(byId("dsaPracticeOverallCompleted")) byId("dsaPracticeOverallCompleted").textContent=completed;
+        if(byId("dsaPracticeOverallScore")) byId("dsaPracticeOverallScore").textContent=`${score} / ${maxPoints}`;
+        if(byId("dsaPracticeOverallPercent")) byId("dsaPracticeOverallPercent").textContent=`${percent}%`;
+        if(byId("dsaPracticeOverallBar")) byId("dsaPracticeOverallBar").style.width=`${percent}%`;
+        if(byId("dsaPracticeBadge")) byId("dsaPracticeBadge").textContent=badgeFor(solved,finished);
+        if(byId("dsaPracticeMaxPoints")) byId("dsaPracticeMaxPoints").textContent=maxPoints;
+    }
+
+    function updateProblemUI(key) {
+        const c=getConfig(key);
+        const p=readProgress(key);
+        if(!c) return;
+
+        const score=byId(`dsaScore-${key}`);
+        const attempts=byId(`dsaAttempts-${key}`);
+        const status=byId(`dsaStatus-${key}`);
+        const message=byId(`dsaMessage-${key}`);
+        const badge=byId(`dsaCardStatus-${key}`);
+
+        if(score) score.textContent=`${p.bestScore||0} / ${c.points}`;
+        if(attempts) attempts.textContent=p.attempts||0;
+
+        let statusText="Not Solved";
+        if(p.solved) statusText="Solved";
+        else if(p.completed) statusText="Completed";
+        else if(p.attempts>0) statusText="In Progress";
+
+        if(status) status.textContent=statusText;
+        if(badge) badge.textContent=statusText;
+
+        if(message) {
+            if(p.solved) message.textContent="🏆 Solved competitively. Excellent array reasoning!";
+            else if(p.completed) message.textContent="✅ Completed after viewing the official program.";
+            else if(p.solutionViewed) message.textContent="📘 Official program viewed. Pass all tests to complete the challenge.";
+            else if(p.hintUsed) message.textContent=`💡 Hint used. Maximum competitive score is ${Math.floor(c.points*.9)} / ${c.points}.`;
+            else message.textContent="Solve the CodeBhavya challenge and verify all five tests. 💪";
+        }
+    }
+
+    function renderLevel() {
+        const host=byId("dsaLevel1Challenges");
+        if(!host) return;
+
+        host.innerHTML=DSA_LEVEL_ONE.map(c => `
+            <details class="cb-challenge-card" id="${c.key}">
+                <summary>
+                    <div class="cb-challenge-topline">
+                        <span class="cb-challenge-number">CHALLENGE ${String(c.number).padStart(2,"0")}</span>
+                        <span class="cb-difficulty cb-diff-${difficultyClass(c.difficulty)}">${escapeHtml(c.difficulty)}</span>
+                    </div>
+                    <h3>${escapeHtml(c.title)}</h3>
+                    <p class="cb-core-skill">Core Skill: ${escapeHtml(c.coreSkill)}</p>
+                    <div class="cb-challenge-summary-meta">
+                        ${c.concepts.map(x=>`<span>${escapeHtml(x)}</span>`).join("")}
+                        <span>${c.points} Points</span>
+                        <span id="dsaCardStatus-${c.key}">Not Solved</span>
+                    </div>
+                    <span class="cb-view-challenge">View Challenge →</span>
+                </summary>
+                <div class="cb-challenge-body">
+                    <div class="cb-challenge-hero">
+                        <span class="cb-challenge-label">CODEBHAVYA ORIGINAL STORY CHALLENGE</span>
+                        <h2>${escapeHtml(c.title)}</h2>
+                        <p>${escapeHtml(c.story)}</p>
+                    </div>
+                    <div class="cb-challenge-spec-grid">
+                        <div class="cb-challenge-spec"><h4>🎯 Your Task</h4><p>${escapeHtml(c.task)}</p></div>
+                        <div class="cb-challenge-spec"><h4>📥 Input Format</h4><p>${escapeHtml(c.inputSpec)}</p></div>
+                        <div class="cb-challenge-spec"><h4>📤 Output Format</h4><p>${escapeHtml(c.outputSpec)}</p></div>
+                        <div class="cb-challenge-spec"><h4>📏 Constraints</h4><p>${escapeHtml(c.constraints)}</p></div>
+                    </div>
+                    <div class="cb-example-grid">
+                        <div class="cb-example-box"><strong>Example Input</strong><pre>${escapeHtml(c.sampleInput)}</pre></div>
+                        <div class="cb-example-box"><strong>Example Output</strong><pre>${escapeHtml(c.sampleOutput)}</pre></div>
+                    </div>
+                    <div class="cb-explanation-box"><strong>Explanation:</strong> ${escapeHtml(c.explanation)}</div>
+                    <div class="cb-concept-row">${c.concepts.map(x=>`<span>${escapeHtml(x)}</span>`).join("")}<span>${escapeHtml(c.difficulty)}</span><span>${c.points} Points</span></div>
+                    <div class="cb-challenge-actions">
+                        <button class="cb-practice-start-button" onclick="CodeBhavyaDSAPractice.toggleWorkspace('${c.key}')">💻 Solve It Yourself</button>
+                        <button class="cb-practice-hint-button" onclick="CodeBhavyaDSAPractice.toggleHint('${c.key}')">Hint</button>
+                        <button class="cb-practice-program-button" onclick="CodeBhavyaDSAPractice.toggleSolution('${c.key}')">Show Program</button>
+                    </div>
+                    <div class="cb-c-practice-hint" hidden id="dsaHint-${c.key}">💡 <strong>Hint:</strong> ${escapeHtml(c.hint)}</div>
+                    <div class="cb-c-practice-workspace" hidden id="dsaWorkspace-${c.key}">
+                        <div class="cb-c-practice-workspace-title">💻 Solve It Yourself — ${escapeHtml(c.title)}</div>
+                        <div class="cb-c-practice-grid">
+                            <div class="cb-c-practice-panel">
+                                <h4>C Code Editor</h4>
+                                <textarea class="cb-c-code-editor" id="dsaCode-${c.key}" spellcheck="false">${escapeHtml(starterCode)}</textarea>
+                                <div class="cb-c-practice-actions">
+                                    <button class="cb-c-run-btn" id="dsaRun-${c.key}" onclick="CodeBhavyaDSAPractice.runSample('${c.key}')">▶ Run Code</button>
+                                    <button class="cb-c-check-btn" id="dsaCheck-${c.key}" onclick="CodeBhavyaDSAPractice.checkAnswer('${c.key}')">✓ Check Answer</button>
+                                    <button class="cb-c-reset-btn" onclick="CodeBhavyaDSAPractice.resetEditor('${c.key}')">↺ Reset Editor</button>
+                                </div>
+                            </div>
+                            <div class="cb-c-practice-panel">
+                                <h4>Sample Input</h4>
+                                <textarea class="cb-c-practice-input" id="dsaInput-${c.key}" spellcheck="false">${escapeHtml(c.sampleInput)}</textarea>
+                                <h4 class="cb-c-output-heading">Program Output</h4>
+                                <pre class="cb-c-practice-output" id="dsaOutput-${c.key}">Run your program to see the output.</pre>
+                                <h4 class="cb-c-tests-heading">Test Cases</h4>
+                                <div class="cb-c-test-results" id="dsaTests-${c.key}"><div class="cb-c-test-row"><span>No tests checked yet.</span><strong>—</strong></div></div>
+                            </div>
+                        </div>
+                        <div class="cb-c-practice-score">
+                            <div class="cb-c-practice-score-grid">
+                                <div class="cb-c-score-item"><strong>Best Score</strong><span id="dsaScore-${c.key}">0 / ${c.points}</span></div>
+                                <div class="cb-c-score-item"><strong>Attempts</strong><span id="dsaAttempts-${c.key}">0</span></div>
+                                <div class="cb-c-score-item"><strong>Status</strong><span id="dsaStatus-${c.key}">Not Solved</span></div>
+                            </div>
+                            <div class="cb-c-practice-message" id="dsaMessage-${c.key}">Solve the CodeBhavya challenge and verify all five tests. 💪</div>
+                        </div>
+                    </div>
+                    <div class="cb-c-practice-solution" hidden id="dsaSolution-${c.key}">
+                        <div class="cb-c-practice-solution-title">Official C Program</div>
+                        <pre><code>${escapeHtml(c.solution)}</code></pre>
+                    </div>
+                </div>
+            </details>
+        `).join("");
+
+        DSA_LEVEL_ONE.forEach(c=>updateProblemUI(c.key));
+        updateOverall();
+    }
+
+    function toggleWorkspace(key) {
+        const box=byId(`dsaWorkspace-${key}`);
+        if(box) box.hidden=!box.hidden;
+    }
+
+    function toggleHint(key) {
+        const box=byId(`dsaHint-${key}`);
+        if(!box) return;
+        box.hidden=!box.hidden;
+        if(!box.hidden){
+            const p=readProgress(key);
+            if(!p.solved) p.hintUsed=true;
+            saveProgress(key,p);
+            updateProblemUI(key);
+            updateOverall();
+        }
+    }
+
+    function toggleSolution(key) {
+        const box=byId(`dsaSolution-${key}`);
+        if(!box) return;
+        box.hidden=!box.hidden;
+        if(!box.hidden){
+            const p=readProgress(key);
+            if(!p.solved) p.solutionViewed=true;
+            saveProgress(key,p);
+            updateProblemUI(key);
+            updateOverall();
+        }
+    }
+
+    async function judge(code,stdin) {
+        const response=await fetch(`${judge0Base}/submissions?base64_encoded=false&wait=true`,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({source_code:code,language_id:cLanguageId,stdin})
+        });
+        if(!response.ok) throw new Error(`Judge0 request failed (${response.status})`);
+        return await response.json();
+    }
+
+    function executionError(result) {
+        if(result.compile_output) return `Compilation Error:\n${result.compile_output}`;
+        if(result.stderr) return `Runtime Error:\n${result.stderr}`;
+        return result.message || result.status?.description || "Execution failed.";
+    }
+
+    async function runSample(key) {
+        const c=getConfig(key);
+        if(!c) return;
+        const code=byId(`dsaCode-${key}`)?.value||"";
+        const stdin=byId(`dsaInput-${key}`)?.value||"";
+        const output=byId(`dsaOutput-${key}`);
+        const button=byId(`dsaRun-${key}`);
+        if(!code.trim()){
+            if(output) output.textContent="Write your C program first.";
+            return;
+        }
+        if(button) button.disabled=true;
+        if(output) output.textContent="Running...";
+        try{
+            const result=await judge(code,stdin);
+            if(output) output.textContent=result.status?.id===3 ? (result.stdout??"") : executionError(result);
+        }catch(error){
+            if(output) output.textContent=`Could not contact the code execution service.\nPlease check your internet connection and try again.\n\n${error.message}`;
+        }finally{
+            if(button) button.disabled=false;
+        }
+    }
+
+    async function checkAnswer(key) {
+        const c=getConfig(key);
+        if(!c) return;
+        const code=byId(`dsaCode-${key}`)?.value||"";
+        const output=byId(`dsaOutput-${key}`);
+        const testsHost=byId(`dsaTests-${key}`);
+        const button=byId(`dsaCheck-${key}`);
+        if(!code.trim()){
+            if(output) output.textContent="Write your C program first.";
+            return;
+        }
+
+        const p=readProgress(key);
+        p.attempts++;
+        saveProgress(key,p);
+        updateProblemUI(key);
+
+        if(button) button.disabled=true;
+        if(testsHost) testsHost.innerHTML="";
+        if(output) output.textContent="Checking 5 test cases...";
+
+        let passed=0;
+        let serviceFailed=false;
+
+        for(let i=0;i<c.tests.length;i++){
+            const test=c.tests[i];
+            try{
+                const result=await judge(code,test.input);
+                const ok=result.status?.id===3 && normalize(result.stdout)===normalize(test.expected);
+                if(ok) passed++;
+                if(testsHost) testsHost.innerHTML+=`<div class="cb-c-test-row ${ok?"pass":"fail"}"><span>Test ${i+1}: ${ok?"Passed":"Failed"}</span><strong>${ok?"✓":"✕"}</strong></div>`;
+            }catch{
+                serviceFailed=true;
+                if(testsHost) testsHost.innerHTML+=`<div class="cb-c-test-row fail"><span>Test ${i+1}: Judge unavailable</span><strong>✕</strong></div>`;
+                break;
+            }
+        }
+
+        const rawScore=Math.round(c.points*passed/c.tests.length);
+        const competitiveScore=p.hintUsed ? Math.min(rawScore,Math.floor(c.points*.9)) : rawScore;
+
+        if(p.solutionViewed){
+            if(passed===c.tests.length) p.completed=true;
+        }else{
+            p.bestScore=Math.max(p.bestScore,competitiveScore);
+            if(passed===c.tests.length){p.solved=true;p.completed=true;}
+        }
+
+        saveProgress(key,p);
+
+        if(output){
+            if(serviceFailed) output.textContent="The code execution service could not be reached. Please try again.";
+            else output.textContent=`${passed} / ${c.tests.length} tests passed.\n${p.solutionViewed?"Completion mode":`Score this attempt: ${competitiveScore} / ${c.points}`}`;
+        }
+
+        updateProblemUI(key);
+        updateOverall();
+        if(button) button.disabled=false;
+    }
+
+    function resetEditor(key) {
+        const c=getConfig(key);
+        if(!c) return;
+        const code=byId(`dsaCode-${key}`);
+        const input=byId(`dsaInput-${key}`);
+        const output=byId(`dsaOutput-${key}`);
+        const tests=byId(`dsaTests-${key}`);
+        if(code) code.value=starterCode;
+        if(input) input.value=c.sampleInput;
+        if(output) output.textContent="Run your program to see the output.";
+        if(tests) tests.innerHTML='<div class="cb-c-test-row"><span>No tests checked yet.</span><strong>—</strong></div>';
+    }
+
+    document.addEventListener("DOMContentLoaded",renderLevel);
+
+    return {renderLevel,toggleWorkspace,toggleHint,toggleSolution,runSample,checkAnswer,resetEditor,updateOverall};
+})();
+</script>
+<script src="../script.js"></script>
+</body>
+</html>
