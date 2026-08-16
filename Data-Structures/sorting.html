@@ -1284,6 +1284,461 @@
 </style>
 
 <link href="dsa-c-style.css" rel="stylesheet"/>
+<style id="cb-sorting-c-page-final">
+/* ============================================================
+   SORTING PAGE — C PROGRAMMING STYLE MATCH
+   Page-specific presentation rules for Program Tracing and
+   Solve It Yourself. Content, IDs and JavaScript are unchanged.
+   ============================================================ */
+
+/* ---------- Shared CodeBhavya brand treatment ---------- */
+.cb-dsa-page .cb-binary-tracer,
+.cb-dsa-page .cb-practice-workspace {
+    position: relative !important;
+    overflow-x: auto !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+}
+
+.cb-dsa-page .cb-binary-tracer::before,
+.cb-dsa-page .cb-practice-workspace::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 11px !important;
+    right: 140px !important;
+    left: auto !important;
+    display: block !important;
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    border: 1px solid #dbe3ec !important;
+    border-bottom: 1px solid #dbe3ec !important;
+    border-radius: 10px !important;
+    background: #ffffff url("../images/codebhavya-icon-32.png") center / 28px 28px no-repeat !important;
+    color: transparent !important;
+    font-size: 0 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    box-shadow: 0 5px 16px rgba(2, 12, 27, .08) !important;
+    z-index: 3 !important;
+}
+
+.cb-dsa-page .cb-binary-tracer::after,
+.cb-dsa-page .cb-practice-workspace::after {
+    content: "CodeBhavya" !important;
+    position: absolute !important;
+    top: 17px !important;
+    right: 18px !important;
+    color: transparent !important;
+    background: linear-gradient(90deg, #2563eb 0%, #2563eb 43%, #f59e0b 43%, #f59e0b 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    line-height: 30px !important;
+    letter-spacing: -.02em !important;
+    white-space: nowrap !important;
+    z-index: 4 !important;
+}
+
+/* ---------- Program Tracing ---------- */
+.cb-dsa-page .cb-binary-tracer {
+    padding: 76px 12px 12px !important;
+    background: linear-gradient(
+        to bottom,
+        #ffffff 0,
+        #ffffff 63px,
+        #e2e8f0 63px,
+        #e2e8f0 64px,
+        #f8fafc 64px,
+        #f8fafc 100%
+    ) !important;
+}
+
+.cb-dsa-page .cb-binary-title::before {
+    content: "PROGRAM TRACING" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    height: 64px !important;
+    max-width: calc(100% - 210px) !important;
+    padding: 0 22px !important;
+    overflow: hidden !important;
+    color: #2563eb !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    letter-spacing: .15em !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    z-index: 2 !important;
+}
+
+.cb-dsa-page .cb-binary-title {
+    margin: 0 0 10px !important;
+    color: #0d1b2a !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+    letter-spacing: .08em !important;
+    line-height: 1.35 !important;
+    text-align: center !important;
+}
+
+.cb-dsa-page .cb-binary-grid {
+    grid-template-columns: minmax(390px, 1.15fr) minmax(320px, .85fr) !important;
+    gap: 12px !important;
+}
+
+.cb-dsa-page .cb-binary-panel {
+    padding: 10px !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 9px !important;
+    background: #ffffff !important;
+}
+
+.cb-dsa-page .cb-binary-panel h4 {
+    margin: 0 0 8px !important;
+    color: #0d1b2a !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+}
+
+.cb-dsa-page .cb-binary-panel pre {
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+    background: #0b1220 !important;
+    color: #f8fafc !important;
+}
+
+.cb-dsa-page .cb-binary-explain {
+    border-left: 4px solid #d4af37 !important;
+    background: #f8fafc !important;
+    color: #334155 !important;
+}
+
+.cb-dsa-page .cb-binary-var {
+    border: 1px solid #dbe3ec !important;
+    background: #ffffff !important;
+}
+
+.cb-dsa-page .cb-binary-array,
+.cb-dsa-page .cb-binary-operation {
+    border-color: #dbe3ec !important;
+    background: #ffffff !important;
+}
+
+.cb-dsa-page .cb-binary-controls {
+    justify-content: flex-start !important;
+    gap: 9px !important;
+    margin-top: 12px !important;
+}
+
+.cb-dsa-page .cb-binary-controls .cb-dsa-control {
+    min-height: 40px !important;
+    padding: 9px 14px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+}
+
+.cb-dsa-page .cb-binary-controls .cb-dsa-previous,
+.cb-dsa-page .cb-binary-controls .cb-dsa-reset {
+    background: #52627a !important;
+}
+
+.cb-dsa-page .cb-binary-controls .cb-dsa-next {
+    background: #2563eb !important;
+}
+
+.cb-dsa-page .cb-binary-controls .cb-dsa-auto {
+    background: #159447 !important;
+}
+
+.cb-dsa-page .cb-binary-controls .cb-dsa-pause {
+    background: #e66f00 !important;
+}
+
+.cb-dsa-page .cb-binary-controls .cb-dsa-control:disabled {
+    background: #94a3b8 !important;
+    color: #f8fafc !important;
+}
+
+.cb-dsa-page .cb-binary-status {
+    color: #64748b !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+}
+
+/* ---------- Solve It Yourself ---------- */
+.cb-dsa-page .cb-practice-workspace {
+    padding: 76px 12px 12px !important;
+    background: linear-gradient(
+        to bottom,
+        #ffffff 0,
+        #ffffff 63px,
+        #e2e8f0 63px,
+        #e2e8f0 64px,
+        #0f172a 64px,
+        #0f172a 100%
+    ) !important;
+}
+
+.cb-dsa-page .cb-practice-title::before {
+    content: "INTERACTIVE CODING PRACTICE" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    height: 64px !important;
+    max-width: calc(100% - 210px) !important;
+    padding: 0 22px !important;
+    overflow: hidden !important;
+    color: #2563eb !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    letter-spacing: .15em !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    z-index: 2 !important;
+}
+
+.cb-dsa-page .cb-practice-title {
+    margin: 0 0 10px !important;
+    color: #f8fafc !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    line-height: 1.35 !important;
+}
+
+.cb-dsa-page .cb-practice-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr) !important;
+    gap: 10px !important;
+}
+
+.cb-dsa-page .cb-practice-panel {
+    min-width: 0 !important;
+    padding: 10px !important;
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+    background: #111827 !important;
+}
+
+.cb-dsa-page .cb-practice-panel h4 {
+    margin: 0 0 8px !important;
+    color: #f1f5f9 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+}
+
+.cb-dsa-page .cb-practice-panel h4:not(:first-child) {
+    margin-top: 13px !important;
+}
+
+.cb-dsa-page .cb-code-editor,
+.cb-dsa-page .cb-practice-input {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    border: 1px solid #475569 !important;
+    border-radius: 8px !important;
+    background: #020617 !important;
+    color: #f8fafc !important;
+    caret-color: #ffffff !important;
+    font-family: Consolas, "Courier New", monospace !important;
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    box-shadow: none !important;
+}
+
+.cb-dsa-page .cb-code-editor:focus,
+.cb-dsa-page .cb-practice-input:focus {
+    border-color: #60a5fa !important;
+    outline: 2px solid rgba(37, 99, 235, .18) !important;
+    outline-offset: 1px !important;
+}
+
+.cb-dsa-page .cb-practice-output {
+    border: 1px solid #475569 !important;
+    border-radius: 8px !important;
+    background: #020617 !important;
+    color: #f8fafc !important;
+}
+
+.cb-dsa-page .cb-test-row {
+    border: 1px solid #334155 !important;
+    border-radius: 7px !important;
+    background: #0b1220 !important;
+    color: #e2e8f0 !important;
+}
+
+.cb-dsa-page .cb-test-row.pass {
+    border-color: #22c55e !important;
+    background: rgba(20, 83, 45, .48) !important;
+    color: #dcfce7 !important;
+}
+
+.cb-dsa-page .cb-test-row.fail {
+    border-color: #ef4444 !important;
+    background: rgba(127, 29, 29, .45) !important;
+    color: #fee2e2 !important;
+}
+
+.cb-dsa-page .cb-practice-actions {
+    gap: 10px !important;
+    margin-top: 12px !important;
+}
+
+.cb-dsa-page .cb-practice-actions button {
+    min-height: 38px !important;
+    padding: 8px 13px !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+}
+
+.cb-dsa-page .cb-run-btn {
+    background: #159447 !important;
+}
+
+.cb-dsa-page .cb-check-btn {
+    background: #2563eb !important;
+}
+
+.cb-dsa-page .cb-reset-btn {
+    background: #64748b !important;
+}
+
+.cb-dsa-page .cb-practice-score {
+    display: block !important;
+    margin-top: 12px !important;
+    padding: 12px 0 0 !important;
+    border: 0 !important;
+    border-top: 1px solid #334155 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+.cb-dsa-page .cb-practice-score-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+}
+
+.cb-dsa-page .cb-score-item {
+    padding: 9px !important;
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+    background: #0b1220 !important;
+}
+
+.cb-dsa-page .cb-score-item strong {
+    color: #93c5fd !important;
+    font-weight: 500 !important;
+    letter-spacing: .08em !important;
+}
+
+.cb-dsa-page .cb-score-item span {
+    margin-top: 4px !important;
+    color: #ffffff !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+}
+
+.cb-dsa-page .cb-practice-message {
+    margin-top: 10px !important;
+    padding: 10px !important;
+    border: 1px solid #334e8d !important;
+    border-radius: 8px !important;
+    background: #1e3a8a !important;
+    color: #ffffff !important;
+}
+
+.cb-dsa-page .cb-practice-note {
+    color: #cbd5e1 !important;
+}
+
+@media (max-width: 900px) {
+    .cb-dsa-page .cb-practice-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 620px) {
+    .cb-dsa-page .cb-binary-tracer,
+    .cb-dsa-page .cb-practice-workspace {
+        padding-top: 68px !important;
+    }
+
+    .cb-dsa-page .cb-binary-tracer {
+        background: linear-gradient(
+            to bottom,
+            #ffffff 0,
+            #ffffff 55px,
+            #e2e8f0 55px,
+            #e2e8f0 56px,
+            #f8fafc 56px,
+            #f8fafc 100%
+        ) !important;
+    }
+
+    .cb-dsa-page .cb-practice-workspace {
+        background: linear-gradient(
+            to bottom,
+            #ffffff 0,
+            #ffffff 55px,
+            #e2e8f0 55px,
+            #e2e8f0 56px,
+            #0f172a 56px,
+            #0f172a 100%
+        ) !important;
+    }
+
+    .cb-dsa-page .cb-binary-tracer::before,
+    .cb-dsa-page .cb-practice-workspace::before {
+        top: 11px !important;
+        right: 98px !important;
+        width: 34px !important;
+        height: 34px !important;
+        background-size: 24px 24px !important;
+    }
+
+    .cb-dsa-page .cb-binary-tracer::after,
+    .cb-dsa-page .cb-practice-workspace::after {
+        top: 13px !important;
+        right: 12px !important;
+        font-size: 14px !important;
+        line-height: 28px !important;
+    }
+
+    .cb-dsa-page .cb-binary-title::before,
+    .cb-dsa-page .cb-practice-title::before {
+        height: 56px !important;
+        max-width: calc(100% - 145px) !important;
+        padding: 0 12px !important;
+        font-size: 9px !important;
+        letter-spacing: .1em !important;
+    }
+
+    .cb-dsa-page .cb-practice-title {
+        font-size: 16px !important;
+    }
+
+    .cb-dsa-page .cb-practice-score-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
+
 </head>
 <body class="cb-dsa-page cb-dsa-topic-page">
 <header class="top-header">
@@ -3093,7 +3548,7 @@ but the standard algorithm is not stable and is often less cache-friendly than Q
 <p><strong>Output:</strong> the sorted array in ascending order.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-1\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-1')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-1'); toggleHint('sortH1')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-1'); toggleProgram('sortP1')">Show Program</button>
 </div>
@@ -3178,7 +3633,7 @@ int main() {
 <p><strong>Output:</strong> the sorted array in descending order.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-2\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-2')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-2'); toggleHint('sortH2')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-2'); toggleProgram('sortP2')">Show Program</button>
 </div>
@@ -3263,7 +3718,7 @@ int main() {
 <p><strong>Output:</strong> total number of swaps.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-3\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-3')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-3'); toggleHint('sortH3')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-3'); toggleProgram('sortP3')">Show Program</button>
 </div>
@@ -3347,7 +3802,7 @@ int main() {
 <p><strong>Output:</strong> number of executed Bubble Sort passes.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-4\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-4')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-4'); toggleHint('sortH4')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-4'); toggleProgram('sortP4')">Show Program</button>
 </div>
@@ -3439,7 +3894,7 @@ int main() {
 <p><strong>Output:</strong> sorted array.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-5\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-5')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-5'); toggleHint('sortH5')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-5'); toggleProgram('sortP5')">Show Program</button>
 </div>
@@ -3530,7 +3985,7 @@ int main() {
 <p><strong>Output:</strong> sorted array in descending order.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-6\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-6')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-6'); toggleHint('sortH6')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-6'); toggleProgram('sortP6')">Show Program</button>
 </div>
@@ -3621,7 +4076,7 @@ int main() {
 <p><strong>Output:</strong> number of swaps.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-7\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-7')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-7'); toggleHint('sortH7')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-7'); toggleProgram('sortP7')">Show Program</button>
 </div>
@@ -3711,7 +4166,7 @@ int main() {
 <p><strong>Output:</strong> sorted array.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-8\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-8')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-8'); toggleHint('sortH8')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-8'); toggleProgram('sortP8')">Show Program</button>
 </div>
@@ -3800,7 +4255,7 @@ int main() {
 <p><strong>Output:</strong> sorted array in descending order.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-9\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-9')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-9'); toggleHint('sortH9')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-9'); toggleProgram('sortP9')">Show Program</button>
 </div>
@@ -3889,7 +4344,7 @@ int main() {
 <p><strong>Output:</strong> total number of shifts.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-10\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-10')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-10'); toggleHint('sortH10')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-10'); toggleProgram('sortP10')">Show Program</button>
 </div>
@@ -3977,7 +4432,7 @@ int main() {
 <p><strong>Output:</strong> sorted array.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-11\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-11')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-11'); toggleHint('sortH11')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-11'); toggleProgram('sortP11')">Show Program</button>
 </div>
@@ -4079,7 +4534,7 @@ int main() {
 <p><strong>Output:</strong> sorted array in descending order.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-12\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-12')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-12'); toggleHint('sortH12')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-12'); toggleProgram('sortP12')">Show Program</button>
 </div>
@@ -4181,7 +4636,7 @@ int main() {
 <p><strong>Output:</strong> merged sorted sequence.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-13\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-13')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-13'); toggleHint('sortH13')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-13'); toggleProgram('sortP13')">Show Program</button>
 </div>
@@ -4275,7 +4730,7 @@ int main() {
 <p><strong>Output:</strong> inversion count.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-14\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-14')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-14'); toggleHint('sortH14')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-14'); toggleProgram('sortP14')">Show Program</button>
 </div>
@@ -4387,7 +4842,7 @@ int main() {
 <p><strong>Output:</strong> sorted array.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-15\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-15')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-15'); toggleHint('sortH15')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-15'); toggleProgram('sortP15')">Show Program</button>
 </div>
@@ -4493,7 +4948,7 @@ int main() {
 <p><strong>Output:</strong> sorted array in descending order.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-16\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-16')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-16'); toggleHint('sortH16')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-16'); toggleProgram('sortP16')">Show Program</button>
 </div>
@@ -4599,7 +5054,7 @@ int main() {
 <p><strong>Output:</strong> partitioned array on the first line and pivot index on the second line.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-17\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-17')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-17'); toggleHint('sortH17')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-17'); toggleProgram('sortP17')">Show Program</button>
 </div>
@@ -4694,7 +5149,7 @@ int main() {
 <p><strong>Output:</strong> sorted array.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-18\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-18')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-18'); toggleHint('sortH18')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-18'); toggleProgram('sortP18')">Show Program</button>
 </div>
@@ -4799,7 +5254,7 @@ int main() {
 <p><strong>Output:</strong> sorted array in descending order.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-19\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-19')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-19'); toggleHint('sortH19')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-19'); toggleProgram('sortP19')">Show Program</button>
 </div>
@@ -4904,7 +5359,7 @@ int main() {
 <p><strong>Output:</strong> kth largest value.</p>
 
 <div class="practice-buttons">
-<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle(\'sort-practice-20\')">💻 Solve It Yourself</button>
+<button class="practice-start-button" onclick="CodeBhavyaPractice.toggle('sort-practice-20')">💻 Solve It Yourself</button>
 <button class="secondary-small" onclick="CodeBhavyaPractice.markHint('sort-practice-20'); toggleHint('sortH20')">Hint</button>
 <button class="program-toggle" onclick="CodeBhavyaPractice.markSolution('sort-practice-20'); toggleProgram('sortP20')">Show Program</button>
 </div>
