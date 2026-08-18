@@ -163,6 +163,70 @@
     }
 
 
+    function activateReleasedTopics() {
+
+        const isPracticePage =
+            document.body.classList.contains(
+                "math-practice-page"
+            );
+
+        const prefix =
+            isPracticePage ? "../" : "";
+
+        const releasedTopics = [
+            {
+                label: "Sets & Venn Diagrams",
+                href: prefix + "sets-and-venn-diagrams.html"
+            }
+        ];
+
+        const links =
+            document.querySelectorAll(
+                "a.coming-soon-link"
+            );
+
+        links.forEach(function (link) {
+
+            const linkText =
+                link.textContent
+                    .replace(/\s+/g, " ")
+                    .trim();
+
+            const releasedTopic =
+                releasedTopics.find(
+                    function (topic) {
+                        return linkText.includes(
+                            topic.label
+                        );
+                    }
+                );
+
+            if (!releasedTopic) {
+                return;
+            }
+
+            link.setAttribute(
+                "href",
+                releasedTopic.href
+            );
+
+            link.classList.remove(
+                "coming-soon-link"
+            );
+
+            link.removeAttribute(
+                "aria-disabled"
+            );
+
+            link.removeAttribute(
+                "tabindex"
+            );
+
+        });
+
+    }
+
+
     function prepareComingSoonLinks() {
 
         const links =
@@ -789,6 +853,278 @@
 
     }
 
+
+    function prepareSetVisualizer() {
+
+        const setAInput =
+            document.getElementById(
+                "setAInput"
+            );
+
+        const setBInput =
+            document.getElementById(
+                "setBInput"
+            );
+
+        const universalSetInput =
+            document.getElementById(
+                "universalSetInput"
+            );
+
+        const operationSelect =
+            document.getElementById(
+                "setOperation"
+            );
+
+        const visualizeButton =
+            document.getElementById(
+                "visualizeSetButton"
+            );
+
+        const result =
+            document.getElementById(
+                "setsVisualizerResult"
+            );
+
+        const description =
+            document.getElementById(
+                "setsVennDescription"
+            );
+
+        if (
+            !setAInput ||
+            !setBInput ||
+            !universalSetInput ||
+            !operationSelect ||
+            !visualizeButton ||
+            !result
+        ) {
+            return;
+        }
+
+
+        const layers = {
+            union: document.getElementById(
+                "setsUnionLayer"
+            ),
+            intersection: document.getElementById(
+                "setsIntersectionLayer"
+            ),
+            aDifference: document.getElementById(
+                "setsADifferenceLayer"
+            ),
+            bDifference: document.getElementById(
+                "setsBDifferenceLayer"
+            ),
+            symmetric: document.getElementById(
+                "setsSymmetricLayer"
+            ),
+            complementA: document.getElementById(
+                "setsComplementLayer"
+            )
+        };
+
+
+        function parseSet(value) {
+
+            const values =
+                value
+                    .split(",")
+                    .map(function (item) {
+                        return item.trim();
+                    })
+                    .filter(function (item) {
+                        return item.length > 0;
+                    });
+
+            return Array.from(
+                new Set(values)
+            );
+
+        }
+
+
+        function contains(collection, value) {
+            return collection.includes(value);
+        }
+
+
+        function formatSet(values) {
+            return "{" + values.join(", ") + "}";
+        }
+
+
+        function hideLayers() {
+
+            Object.keys(layers)
+                .forEach(function (key) {
+
+                    if (layers[key]) {
+                        layers[key].style.display = "none";
+                    }
+
+                });
+
+        }
+
+
+        function showError(message) {
+
+            hideLayers();
+            result.classList.add("is-error");
+            result.textContent = message;
+
+            if (description) {
+                description.textContent = message;
+            }
+
+        }
+
+
+        function visualize() {
+
+            const setA =
+                parseSet(setAInput.value);
+
+            const setB =
+                parseSet(setBInput.value);
+
+            const universalSet =
+                parseSet(universalSetInput.value);
+
+            if (
+                setA.length > 20 ||
+                setB.length > 20 ||
+                universalSet.length > 30
+            ) {
+                showError(
+                    "Please use at most 20 elements in A and B and 30 elements in U."
+                );
+                return;
+            }
+
+            const outsideUniverse =
+                setA.concat(setB)
+                    .filter(function (value) {
+                        return !contains(
+                            universalSet,
+                            value
+                        );
+                    });
+
+            if (outsideUniverse.length > 0) {
+                showError(
+                    "Every element of A and B must also appear in the universal set U."
+                );
+                return;
+            }
+
+            const operation =
+                operationSelect.value;
+
+            const operations = {
+                union: {
+                    symbol: "A ∪ B",
+                    description: "Both circles are highlighted because the union contains every element in A or B.",
+                    values: Array.from(
+                        new Set(setA.concat(setB))
+                    )
+                },
+                intersection: {
+                    symbol: "A ∩ B",
+                    description: "Only the overlap is highlighted because the intersection contains elements common to A and B.",
+                    values: setA.filter(function (value) {
+                        return contains(setB, value);
+                    })
+                },
+                aDifference: {
+                    symbol: "A − B",
+                    description: "Only the part of A outside B is highlighted.",
+                    values: setA.filter(function (value) {
+                        return !contains(setB, value);
+                    })
+                },
+                bDifference: {
+                    symbol: "B − A",
+                    description: "Only the part of B outside A is highlighted.",
+                    values: setB.filter(function (value) {
+                        return !contains(setA, value);
+                    })
+                },
+                symmetric: {
+                    symbol: "A △ B",
+                    description: "The non-overlapping parts of A and B are highlighted.",
+                    values: setA.filter(function (value) {
+                        return !contains(setB, value);
+                    }).concat(
+                        setB.filter(function (value) {
+                            return !contains(setA, value);
+                        })
+                    )
+                },
+                complementA: {
+                    symbol: "A′",
+                    description: "The region inside U but outside A is highlighted.",
+                    values: universalSet.filter(function (value) {
+                        return !contains(setA, value);
+                    })
+                }
+            };
+
+            const selected =
+                operations[operation] ||
+                operations.union;
+
+            hideLayers();
+
+            if (layers[operation]) {
+                layers[operation].style.display = "block";
+            }
+
+            result.classList.remove("is-error");
+            result.textContent =
+                selected.symbol +
+                " = " +
+                formatSet(selected.values);
+
+            if (description) {
+                description.textContent =
+                    selected.description;
+            }
+
+        }
+
+
+        visualizeButton.addEventListener(
+            "click",
+            visualize
+        );
+
+        operationSelect.addEventListener(
+            "change",
+            visualize
+        );
+
+        [setAInput, setBInput, universalSetInput]
+            .forEach(function (input) {
+
+                input.addEventListener(
+                    "keydown",
+                    function (event) {
+
+                        if (event.key === "Enter") {
+                            visualize();
+                        }
+
+                    }
+                );
+
+            });
+
+        visualize();
+
+    }
+
     function initializeMathematics() {
 
         let visitedTopics =
@@ -807,6 +1143,8 @@
             visitedTopics
         );
 
+        activateReleasedTopics();
+
         prepareComingSoonLinks();
 
         prepareSolutionButtons();
@@ -814,6 +1152,8 @@
         preparePatternExplorer();
 
         prepareTruthTableBuilder();
+
+        prepareSetVisualizer();
 
     }
 
