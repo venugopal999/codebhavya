@@ -278,6 +278,9 @@
                 return;
             }
 
+            solution.hidden = true;
+            button.textContent = "Show Solution";
+
             button.setAttribute(
                 "aria-controls",
                 targetId
@@ -293,25 +296,18 @@
                 function () {
 
                     const willShow =
-                        solution.hasAttribute(
-                            "hidden"
-                        );
+                        solution.hidden;
 
                     if (willShow) {
 
-                        solution.removeAttribute(
-                            "hidden"
-                        );
+                        solution.hidden = false;
 
                         button.textContent =
                             "Hide Solution";
 
                     } else {
 
-                        solution.setAttribute(
-                            "hidden",
-                            ""
-                        );
+                        solution.hidden = true;
 
                         button.textContent =
                             "Show Solution";
@@ -571,6 +567,18 @@
             return;
         }
 
+        result.hidden = true;
+
+
+        function resetResult() {
+
+            result.hidden = true;
+            result.classList.remove(
+                "is-error"
+            );
+
+        }
+
 
         function detect() {
 
@@ -590,6 +598,8 @@
 
             if (!valid) {
 
+                result.hidden = false;
+
                 result.classList.add(
                     "is-error"
                 );
@@ -603,6 +613,8 @@
 
             const pattern =
                 findPattern(values);
+
+            result.hidden = false;
 
             result.classList.remove(
                 "is-error"
@@ -623,14 +635,8 @@
 
 
         input.addEventListener(
-            "keydown",
-            function (event) {
-
-                if (event.key === "Enter") {
-                    detect();
-                }
-
-            }
+            "input",
+            resetResult
         );
 
 
@@ -649,7 +655,8 @@
                         input.value =
                             button.dataset.patternExample;
 
-                        detect();
+                        resetResult();
+                        input.focus();
 
                     }
                 );
@@ -687,12 +694,18 @@
                 "logicExpressionMeaning"
             );
 
+        const output =
+            document.getElementById(
+                "logicTruthTableOutput"
+            );
+
         if (
             !expressionSelect ||
             !buildButton ||
             !tableBody ||
             !resultHeading ||
-            !meaning
+            !meaning ||
+            !output
         ) {
             return;
         }
@@ -836,6 +849,8 @@
                 }
             );
 
+            output.hidden = false;
+
         }
 
 
@@ -846,10 +861,12 @@
 
         expressionSelect.addEventListener(
             "change",
-            buildTable
+            function () {
+                output.hidden = true;
+            }
         );
 
-        buildTable();
+        output.hidden = true;
 
     }
 
@@ -891,13 +908,19 @@
                 "setsVennDescription"
             );
 
+        const output =
+            document.getElementById(
+                "setsVisualizerOutput"
+            );
+
         if (
             !setAInput ||
             !setBInput ||
             !universalSetInput ||
             !operationSelect ||
             !visualizeButton ||
-            !result
+            !result ||
+            !output
         ) {
             return;
         }
@@ -971,6 +994,7 @@
         function showError(message) {
 
             hideLayers();
+            output.hidden = false;
             result.classList.add("is-error");
             result.textContent = message;
 
@@ -1092,6 +1116,16 @@
                     selected.description;
             }
 
+            output.hidden = false;
+
+        }
+
+
+        function resetVisualizer() {
+
+            output.hidden = true;
+            result.classList.remove("is-error");
+
         }
 
 
@@ -1102,26 +1136,20 @@
 
         operationSelect.addEventListener(
             "change",
-            visualize
+            resetVisualizer
         );
 
         [setAInput, setBInput, universalSetInput]
             .forEach(function (input) {
 
                 input.addEventListener(
-                    "keydown",
-                    function (event) {
-
-                        if (event.key === "Enter") {
-                            visualize();
-                        }
-
-                    }
+                    "input",
+                    resetVisualizer
                 );
 
             });
 
-        visualize();
+        output.hidden = true;
 
     }
 
