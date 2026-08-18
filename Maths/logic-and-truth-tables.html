@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Logic and Truth Tables | CodeBhavya</title>
+
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="../images/codebhavya-icon-32.png">
+
+    <link rel="icon" type="image/png" sizes="128x128"
+          href="../images/codebhavya-icon-128.png">
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="mathematics.css">
+
+</head>
+
+
+<body class="math-page math-topic-page logic-topic-page"
+      data-math-topic="truth-tables">
+
+
+<header class="top-header">
+
+    <a href="../index.html" class="logo codebhavya-new-logo">
+
+        <img src="../images/codebhavya-main-logo.png"
+             alt="CodeBhavya Logo"
+             class="main-logo">
+
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+
+    </a>
+
+
+    <nav class="top-nav">
+
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="active">Maths</a>
+        <a href="../C-Programming/index.html">C</a>
+        <a href="../Data-Structures/index.html">Data Structures</a>
+        <a href="../Advanced-Data-Structures/index.html">Advanced Data Structures</a>
+        <a href="../Python/index.html">Python</a>
+        <a href="../AI-ML/index.html">AI &amp; ML</a>
+        <a href="../Placement/index.html">Placement</a>
+
+    </nav>
+
+</header>
+
+
+<div class="docs-layout">
+
+
+    <aside class="sidebar">
+
+        <div class="sidebar-title">Mathematics</div>
+
+        <input
+            type="text"
+            id="topicSearch"
+            class="search-box"
+            placeholder="🔍 Search topics..."
+            onkeyup="searchTopics()"
+        >
+
+        <a href="index.html" class="sidebar-course-home">
+            📐 Mathematics Home
+        </a>
+
+        <div class="sidebar-title">Thinking &amp; Logic</div>
+
+        <a href="mathematical-thinking.html">
+            🧠 Problem Solving &amp; Patterns
+        </a>
+
+        <a href="logic-and-truth-tables.html" class="active">
+            🔀 Logic &amp; Truth Tables
+        </a>
+
+        <a href="#" class="coming-soon-link">⭕ Sets &amp; Venn Diagrams</a>
+        <a href="#" class="coming-soon-link">🔺 Patterns for Coding</a>
+
+        <div class="sidebar-title">Programming Mathematics</div>
+
+        <a href="number-system.html">🔢 Number System Fundamentals</a>
+        <a href="#" class="coming-soon-link">🔄 Base Conversions</a>
+        <a href="#" class="coming-soon-link">📐 Algebra, AP &amp; GP</a>
+        <a href="#" class="coming-soon-link">▦ Matrices</a>
+        <a href="#" class="coming-soon-link">🧮 Permutations &amp; Combinations</a>
+        <a href="#" class="coming-soon-link">🎲 Probability</a>
+
+        <div class="sidebar-title">Quantitative Aptitude</div>
+
+        <a href="percentages.html">📊 Percentages</a>
+        <a href="#" class="coming-soon-link">📈 Averages</a>
+        <a href="#" class="coming-soon-link">⚖️ Ratio &amp; Proportion</a>
+        <a href="#" class="coming-soon-link">💰 Profit, Loss &amp; Discount</a>
+        <a href="#" class="coming-soon-link">⏱️ Time &amp; Work</a>
+        <a href="#" class="coming-soon-link">🚗 Time, Speed &amp; Distance</a>
+
+        <div class="sidebar-title sidebar-practice-title">Practice</div>
+
+        <a href="practice/mathematical-thinking-practice.html">
+            🧠 Thinking Practice
+        </a>
+
+        <a href="practice/logic-and-truth-tables-practice.html">
+            🔀 Logic Practice
+        </a>
+
+        <a href="practice/number-system-practice.html">
+            ✍️ Number System Practice
+        </a>
+
+    </aside>
+
+
+    <main class="main-content">
+
+
+        <section class="math-topic-hero">
+
+            <span class="subject-label">
+                CODEBHAVYA • MATHEMATICAL THINKING
+            </span>
+
+            <h1 class="page-title">
+                🔀 Logic and Truth Tables
+            </h1>
+
+            <p class="page-description">
+                Learn how statements become true or false, combine them using
+                logical operators and evaluate conditions used in mathematics,
+                algorithms and computer programs.
+            </p>
+
+        </section>
+
+
+        <section class="content-card" id="logic-learning-outcomes">
+
+            <span class="section-label">LEARNING OUTCOMES</span>
+
+            <h2>🎯 What You Will Learn</h2>
+
+            <div class="math-outcome-grid">
+
+                <div class="math-outcome-item">
+                    <span>01</span>
+                    <strong>Identify propositions and determine their truth values.</strong>
+                </div>
+
+                <div class="math-outcome-item">
+                    <span>02</span>
+                    <strong>Use NOT, AND, OR, XOR, implication and biconditional.</strong>
+                </div>
+
+                <div class="math-outcome-item">
+                    <span>03</span>
+                    <strong>Construct and interpret complete truth tables.</strong>
+                </div>
+
+                <div class="math-outcome-item">
+                    <span>04</span>
+                    <strong>Translate logical expressions into programming conditions.</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="content-card" id="propositions">
+
+            <h2>💬 1. Statements and Propositions</h2>
+
+            <p>
+                A <strong>proposition</strong> is a declarative statement that
+                has exactly one truth value: either true or false.
+            </p>
+
+            <div class="logic-example-grid">
+
+                <article class="logic-example-card logic-true-card">
+                    <span>TRUE PROPOSITION</span>
+                    <h3>“8 is an even number.”</h3>
+                    <p>This statement is true.</p>
+                </article>
+
+                <article class="logic-example-card logic-false-card">
+                    <span>FALSE PROPOSITION</span>
+                    <h3>“15 is divisible by 4.”</h3>
+                    <p>This statement is false.</p>
+                </article>
+
+                <article class="logic-example-card logic-neutral-card">
+                    <span>NOT A PROPOSITION</span>
+                    <h3>“Close the window.”</h3>
+                    <p>A command does not have a truth value.</p>
+                </article>
+
+                <article class="logic-example-card logic-neutral-card">
+                    <span>NOT A PROPOSITION</span>
+                    <h3>“What is your age?”</h3>
+                    <p>A question is neither true nor false.</p>
+                </article>
+
+            </div>
+
+            <div class="tip-box">
+                <strong>Quick check:</strong>
+                If you can meaningfully label a sentence as true or false,
+                it is usually a proposition.
+            </div>
+
+        </section>
+
+
+        <section class="content-card" id="truth-values-and-negation">
+
+            <h2>🔁 2. Truth Values and Negation</h2>
+
+            <p>
+                We write <strong>T</strong> for true and <strong>F</strong> for
+                false. The NOT operator reverses a truth value.
+            </p>
+
+            <div class="formula-box math-concept-box math-tone-purple">
+                NOT P = ¬P
+            </div>
+
+            <div class="math-table-wrap">
+
+                <table class="comparison-table logic-truth-table">
+                    <thead>
+                        <tr>
+                            <th>P</th>
+                            <th>¬P</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="logic-value is-true">T</span></td>
+                            <td><span class="logic-value is-false">F</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="logic-value is-false">F</span></td>
+                            <td><span class="logic-value is-true">T</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="example-box math-labelled-example math-tone-purple">
+                <strong class="math-box-label">Example</strong>
+                <span class="math-box-value">
+                    P: “A student submitted the form.”<br>
+                    ¬P: “A student did not submit the form.”
+                </span>
+            </div>
+
+        </section>
+
+
+        <section class="content-card" id="logical-operators">
+
+            <h2>🔗 3. AND, OR and XOR Operators</h2>
+
+            <div class="logic-operator-grid">
+
+                <article class="logic-operator-card logic-and-card">
+                    <span>AND • P ∧ Q</span>
+                    <h3>Both must be true</h3>
+                    <p>The result is true only when P and Q are both true.</p>
+                </article>
+
+                <article class="logic-operator-card logic-or-card">
+                    <span>OR • P ∨ Q</span>
+                    <h3>At least one is true</h3>
+                    <p>The result is false only when both statements are false.</p>
+                </article>
+
+                <article class="logic-operator-card logic-xor-card">
+                    <span>XOR • P ⊕ Q</span>
+                    <h3>Exactly one is true</h3>
+                    <p>The result is true when P and Q have different values.</p>
+                </article>
+
+            </div>
+
+            <div class="math-table-wrap">
+
+                <table class="comparison-table logic-truth-table">
+                    <thead>
+                        <tr>
+                            <th>P</th>
+                            <th>Q</th>
+                            <th>P ∧ Q</th>
+                            <th>P ∨ Q</th>
+                            <th>P ⊕ Q</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>T</td><td>T</td><td>T</td><td>T</td><td>F</td>
+                        </tr>
+                        <tr>
+                            <td>T</td><td>F</td><td>F</td><td>T</td><td>T</td>
+                        </tr>
+                        <tr>
+                            <td>F</td><td>T</td><td>F</td><td>T</td><td>T</td>
+                        </tr>
+                        <tr>
+                            <td>F</td><td>F</td><td>F</td><td>F</td><td>F</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="warning-box">
+                In logic, OR normally means <strong>inclusive OR</strong>:
+                one or both statements may be true. XOR is used when exactly
+                one must be true.
+            </div>
+
+        </section>
+
+
+        <section class="content-card" id="implication-and-biconditional">
+
+            <h2>➡️ 4. Implication and Biconditional</h2>
+
+            <div class="logic-operator-grid logic-two-column-grid">
+
+                <article class="logic-operator-card logic-implies-card">
+                    <span>IMPLICATION • P → Q</span>
+                    <h3>If P, then Q</h3>
+                    <p>
+                        It is false only when P is true but Q is false.
+                    </p>
+                </article>
+
+                <article class="logic-operator-card logic-equivalent-card">
+                    <span>BICONDITIONAL • P ↔ Q</span>
+                    <h3>P if and only if Q</h3>
+                    <p>
+                        It is true when P and Q have the same truth value.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="math-table-wrap">
+
+                <table class="comparison-table logic-truth-table">
+                    <thead>
+                        <tr>
+                            <th>P</th>
+                            <th>Q</th>
+                            <th>P → Q</th>
+                            <th>P ↔ Q</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>T</td><td>T</td><td>T</td><td>T</td></tr>
+                        <tr><td>T</td><td>F</td><td>F</td><td>F</td></tr>
+                        <tr><td>F</td><td>T</td><td>T</td><td>F</td></tr>
+                        <tr><td>F</td><td>F</td><td>T</td><td>T</td></tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="tip-box">
+                <strong>Memory rule:</strong>
+                A promise “If P, then Q” is broken only when P happens but Q
+                does not happen.
+            </div>
+
+        </section>
+
+
+        <section class="content-card" id="building-truth-tables">
+
+            <h2>🧱 5. How to Build a Truth Table</h2>
+
+            <p>
+                A truth table checks an expression under every possible
+                combination of truth values.
+            </p>
+
+            <ol class="math-step-list logic-numbered-steps">
+                <li><strong>Count the variables.</strong> For example, P and Q means two variables.</li>
+                <li><strong>Calculate the rows.</strong> Use 2<sup>n</sup>, where n is the number of variables.</li>
+                <li><strong>List all combinations.</strong> For two variables: TT, TF, FT and FF.</li>
+                <li><strong>Create intermediate columns.</strong> Evaluate NOT operations before larger expressions.</li>
+                <li><strong>Evaluate the final column.</strong> Apply operators according to precedence.</li>
+            </ol>
+
+            <div class="logic-row-count-grid">
+                <div><strong>1 variable</strong><span>2¹ = 2 rows</span></div>
+                <div><strong>2 variables</strong><span>2² = 4 rows</span></div>
+                <div><strong>3 variables</strong><span>2³ = 8 rows</span></div>
+                <div><strong>4 variables</strong><span>2⁴ = 16 rows</span></div>
+            </div>
+
+        </section>
+
+
+        <section class="content-card" id="compound-expressions">
+
+            <h2>🧮 6. Compound Expressions and Precedence</h2>
+
+            <p>
+                A compound expression contains more than one operator. Use
+                parentheses whenever they make the intended order clearer.
+            </p>
+
+            <div class="formula-box math-concept-box math-tone-orange">
+                Parentheses → NOT → AND → OR → Implication → Biconditional
+            </div>
+
+            <div class="example-box math-solved-problem">
+
+                <h3>Worked Example</h3>
+
+                <p class="math-problem-statement">
+                    Evaluate (P ∨ Q) ∧ ¬P when P = F and Q = T.
+                </p>
+
+                <div class="math-solution-steps">
+                    <strong class="math-solution-label">Solution</strong>
+                    <p>First, P ∨ Q = F ∨ T = T.</p>
+                    <p>Next, ¬P = ¬F = T.</p>
+                    <p>Finally, T ∧ T = T.</p>
+                </div>
+
+                <p class="answer">Final truth value: T</p>
+
+            </div>
+
+        </section>
+
+
+        <section class="content-card" id="equivalence-and-de-morgan">
+
+            <h2>⚖️ 7. Equivalence and De Morgan’s Laws</h2>
+
+            <p>
+                Two expressions are logically equivalent when their final
+                truth-table columns match for every row.
+            </p>
+
+            <div class="logic-law-grid">
+
+                <article class="logic-law-card math-tone-blue">
+                    <span>IMPLICATION</span>
+                    <strong>P → Q ≡ ¬P ∨ Q</strong>
+                    <p>“If P then Q” can be rewritten using NOT and OR.</p>
+                </article>
+
+                <article class="logic-law-card math-tone-purple">
+                    <span>DE MORGAN 1</span>
+                    <strong>¬(P ∧ Q) ≡ ¬P ∨ ¬Q</strong>
+                    <p>NOT of AND becomes OR of the negated statements.</p>
+                </article>
+
+                <article class="logic-law-card math-tone-green">
+                    <span>DE MORGAN 2</span>
+                    <strong>¬(P ∨ Q) ≡ ¬P ∧ ¬Q</strong>
+                    <p>NOT of OR becomes AND of the negated statements.</p>
+                </article>
+
+            </div>
+
+            <div class="logic-classification-grid">
+
+                <article>
+                    <span>ALWAYS TRUE</span>
+                    <h3>Tautology</h3>
+                    <p>P ∨ ¬P</p>
+                </article>
+
+                <article>
+                    <span>ALWAYS FALSE</span>
+                    <h3>Contradiction</h3>
+                    <p>P ∧ ¬P</p>
+                </article>
+
+                <article>
+                    <span>SOMETIMES TRUE</span>
+                    <h3>Contingency</h3>
+                    <p>P ∧ Q</p>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <section class="content-card logic-truth-lab"
+                 id="truth-table-visualizer">
+
+            <span class="section-label">INTERACTIVE VISUALIZER</span>
+
+            <h2>🧪 Truth Table Builder</h2>
+
+            <p>
+                Select a logical expression. The builder evaluates it for all
+                four combinations of P and Q and explains its meaning.
+            </p>
+
+            <div class="logic-lab-controls">
+
+                <div>
+                    <label for="logicExpression">Logical expression</label>
+                    <select id="logicExpression">
+                        <option value="notP">¬P</option>
+                        <option value="and">P ∧ Q</option>
+                        <option value="or">P ∨ Q</option>
+                        <option value="xor">P ⊕ Q</option>
+                        <option value="implies">P → Q</option>
+                        <option value="biconditional">P ↔ Q</option>
+                        <option value="nand">¬(P ∧ Q)</option>
+                        <option value="deMorganAnd">¬P ∨ ¬Q</option>
+                    </select>
+                </div>
+
+                <button type="button"
+                        class="primary-button"
+                        id="buildTruthTableButton">
+                    Build Truth Table
+                </button>
+
+            </div>
+
+            <div id="logicExpressionMeaning"
+                 class="logic-expression-meaning"
+                 aria-live="polite"></div>
+
+            <div class="math-table-wrap">
+
+                <table class="comparison-table logic-truth-table logic-generated-table">
+                    <thead>
+                        <tr>
+                            <th>P</th>
+                            <th>Q</th>
+                            <th id="logicResultHeading">Result</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logicTruthTableBody"></tbody>
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <section class="content-card" id="logic-in-programming">
+
+            <h2>💻 8. Logic in Programming</h2>
+
+            <p>
+                Programming conditions use the same reasoning as mathematical
+                logic. The symbols may change, but the truth rules remain the same.
+            </p>
+
+            <div class="math-table-wrap">
+
+                <table class="comparison-table logic-code-table">
+                    <thead>
+                        <tr>
+                            <th>Logic</th>
+                            <th>C / Java-style symbol</th>
+                            <th>Example meaning</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>NOT</td>
+                            <td><code>!</code></td>
+                            <td><code>!isEmpty</code>: the collection is not empty</td>
+                        </tr>
+                        <tr>
+                            <td>AND</td>
+                            <td><code>&amp;&amp;</code></td>
+                            <td><code>age &gt;= 18 &amp;&amp; hasId</code>: both requirements hold</td>
+                        </tr>
+                        <tr>
+                            <td>OR</td>
+                            <td><code>||</code></td>
+                            <td><code>isAdmin || isOwner</code>: either permission is enough</td>
+                        </tr>
+                        <tr>
+                            <td>XOR idea</td>
+                            <td><code>!=</code> for Boolean values</td>
+                            <td>Exactly one of two Boolean choices is true</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="example-box math-labelled-example math-tone-green">
+                <strong class="math-box-label">CodeBhavya Example</strong>
+                <span class="math-box-value">
+                    A student may enter the lab when the booking is valid AND
+                    the identity card is active: <code>validBooking &amp;&amp; activeId</code>.
+                </span>
+            </div>
+
+        </section>
+
+
+        <section class="content-card" id="logic-solved-problems">
+
+            <h2>🧩 9. Solved Problems</h2>
+
+            <div class="example-box math-solved-problem">
+
+                <h3>Problem 1</h3>
+
+                <p class="math-problem-statement">
+                    Evaluate P ∧ ¬Q when P = T and Q = F.
+                </p>
+
+                <div class="math-solution-steps">
+                    <strong class="math-solution-label">Solution</strong>
+                    <p>¬Q = ¬F = T.</p>
+                    <p>P ∧ ¬Q = T ∧ T = T.</p>
+                </div>
+
+                <p class="answer">Answer: T</p>
+
+            </div>
+
+            <div class="example-box math-solved-problem">
+
+                <h3>Problem 2</h3>
+
+                <p class="math-problem-statement">
+                    Classify P ∨ ¬P.
+                </p>
+
+                <div class="math-solution-steps">
+                    <strong class="math-solution-label">Solution</strong>
+                    <p>If P is true, P ∨ ¬P is T ∨ F = T.</p>
+                    <p>If P is false, P ∨ ¬P is F ∨ T = T.</p>
+                </div>
+
+                <p class="answer">Answer: It is a tautology.</p>
+
+            </div>
+
+            <div class="example-box math-solved-problem">
+
+                <h3>Problem 3</h3>
+
+                <p class="math-problem-statement">
+                    A portal permits access when a user is an administrator OR
+                    has both a valid account and an active subscription. Write
+                    the logical expression.
+                </p>
+
+                <div class="math-solution-steps">
+                    <strong class="math-solution-label">Solution</strong>
+                    <p>Let A = administrator, V = valid account and S = active subscription.</p>
+                    <p>The two valid paths are A, or V together with S.</p>
+                </div>
+
+                <p class="answer">Answer: A ∨ (V ∧ S)</p>
+
+            </div>
+
+        </section>
+
+
+        <section class="content-card" id="logic-practice-problems">
+
+            <h2>✍️ 10. Practice Problems</h2>
+
+            <p class="math-practice-intro">
+                Decide each answer before opening the solution. Use a small
+                truth table whenever the result is not immediately clear.
+            </p>
+
+            <div class="practice-question">
+                <p><strong>1.</strong> Is “x + 4 = 10” a proposition when x has not been specified?</p>
+                <button type="button" class="solution-button"
+                        data-math-solution="logic-solution-1">Show Solution</button>
+                <div id="logic-solution-1" class="solution" hidden>
+                    No. Its truth value depends on the unknown value of x, so it
+                    is an open sentence rather than a proposition.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>2.</strong> Evaluate P ∨ Q when P = F and Q = T.</p>
+                <button type="button" class="solution-button"
+                        data-math-solution="logic-solution-2">Show Solution</button>
+                <div id="logic-solution-2" class="solution" hidden>
+                    OR is true when at least one statement is true.
+                    Therefore, F ∨ T = <strong>T</strong>.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>3.</strong> When is P → Q false?</p>
+                <button type="button" class="solution-button"
+                        data-math-solution="logic-solution-3">Show Solution</button>
+                <div id="logic-solution-3" class="solution" hidden>
+                    An implication is false only when P is true and Q is false.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>4.</strong> Apply De Morgan’s law to ¬(P ∨ Q).</p>
+                <button type="button" class="solution-button"
+                        data-math-solution="logic-solution-4">Show Solution</button>
+                <div id="logic-solution-4" class="solution" hidden>
+                    Negate both statements and change OR to AND:
+                    <strong>¬P ∧ ¬Q</strong>.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>5.</strong> Evaluate (P ⊕ Q) ∧ R for P = T, Q = F and R = T.</p>
+                <button type="button" class="solution-button"
+                        data-math-solution="logic-solution-5">Show Solution</button>
+                <div id="logic-solution-5" class="solution" hidden>
+                    T ⊕ F = T because exactly one is true. Then T ∧ T =
+                    <strong>T</strong>.
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="content-card" id="logic-quick-revision">
+
+            <h2>📝 Quick Revision</h2>
+
+            <ul class="math-spaced-list">
+                <li>A proposition has exactly one truth value: true or false.</li>
+                <li>NOT reverses a truth value.</li>
+                <li>AND needs both inputs to be true.</li>
+                <li>OR needs at least one input to be true.</li>
+                <li>XOR needs exactly one input to be true.</li>
+                <li>P → Q is false only for P = T and Q = F.</li>
+                <li>P ↔ Q is true when P and Q match.</li>
+                <li>n variables require 2<sup>n</sup> truth-table rows.</li>
+                <li>Equivalent expressions have identical final columns.</li>
+                <li>Programming conditions use the same Boolean truth rules.</li>
+            </ul>
+
+        </section>
+
+
+        <section class="content-card math-practice-spotlight"
+                 id="logic-full-practice">
+
+            <div class="math-practice-copy">
+
+                <span class="section-label">INTERACTIVE PRACTICE</span>
+
+                <h2>🔀 Logic and Truth Tables Practice</h2>
+
+                <p>
+                    You have learned, visualized, solved and revised the topic.
+                    Now complete 20 original questions with instant feedback,
+                    detailed solutions and score tracking.
+                </p>
+
+            </div>
+
+            <a href="practice/logic-and-truth-tables-practice.html"
+               class="primary-button math-practice-button">
+                Start 20-Question Practice →
+            </a>
+
+        </section>
+
+
+        <nav class="math-topic-navigation"
+             aria-label="Mathematics topic navigation">
+
+            <a href="mathematical-thinking.html">
+                ← Mathematical Thinking
+            </a>
+
+            <span class="math-nav-disabled">
+                Next: Sets &amp; Venn Diagrams →
+            </span>
+
+        </nav>
+
+
+    </main>
+
+</div>
+
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with structured learning resources.
+            </p>
+
+        </div>
+
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <a href="../index.html">Home</a>
+            <a href="index.html">Mathematics</a>
+            <a href="mathematical-thinking.html">Mathematical Thinking</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Learning</h3>
+            <a href="logic-and-truth-tables.html">Logic &amp; Truth Tables</a>
+            <a href="number-system.html">Number System</a>
+            <a href="percentages.html">Percentages</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Practice</h3>
+            <a href="practice/mathematical-thinking-practice.html">Thinking Practice</a>
+            <a href="practice/logic-and-truth-tables-practice.html">Logic Practice</a>
+            <a href="practice/number-system-practice.html">Number System Practice</a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 CodeBhavya. All Rights Reserved.</p>
+        <p>From Learning to Limitless Possibilities.</p>
+    </div>
+
+</footer>
+
+
+<script src="../script.js"></script>
+<script src="mathematics.js"></script>
+
+
+</body>
+
+</html>
