@@ -2,11 +2,17 @@
 
     "use strict";
 
-    if (
-        typeof questions === "undefined" ||
-        !Array.isArray(questions) ||
-        questions.length === 0
-    ) {
+    const sourceQuestions =
+        Array.isArray(window.CodeBhavyaMathQuestions)
+            ? window.CodeBhavyaMathQuestions
+            : (
+                typeof questions !== "undefined" &&
+                Array.isArray(questions)
+                    ? questions
+                    : []
+            );
+
+    if (sourceQuestions.length === 0) {
         return;
     }
 
@@ -99,12 +105,12 @@
 
     const balancedPositions =
         createBalancedPositions(
-            questions.length
+            sourceQuestions.length
         );
 
 
     const testQuestions =
-        questions.map(function (question, index) {
+        sourceQuestions.map(function (question, index) {
 
             const correctText =
                 String(
@@ -409,54 +415,103 @@
             )
         );
 
-        const yourAnswer =
+        const optionReview =
             createElement(
-                "p",
-                "math-review-answer"
+                "div",
+                "math-review-options"
             );
 
-        const yourAnswerLabel =
-            createElement(
-                "strong",
-                "",
-                "Your answer: "
-            );
+        question.options.forEach(
+            function (option, optionIndex) {
 
-        yourAnswer.appendChild(
-            yourAnswerLabel
+                const isCorrectOption =
+                    optionIndex === question.correctIndex;
+
+                const isSelectedOption =
+                    optionIndex === selectedIndex;
+
+                let optionClass =
+                    "math-review-option";
+
+                if (isCorrectOption) {
+                    optionClass +=
+                        " is-correct-answer";
+                }
+
+                if (
+                    isSelectedOption &&
+                    !isCorrectOption
+                ) {
+                    optionClass +=
+                        " is-selected-wrong";
+                }
+
+                if (
+                    isSelectedOption &&
+                    isCorrectOption
+                ) {
+                    optionClass +=
+                        " is-selected-correct";
+                }
+
+                const optionRow =
+                    createElement(
+                        "div",
+                        optionClass
+                    );
+
+                optionRow.appendChild(
+                    createElement(
+                        "span",
+                        "math-review-option-letter",
+                        String.fromCharCode(
+                            65 + optionIndex
+                        )
+                    )
+                );
+
+                optionRow.appendChild(
+                    createElement(
+                        "span",
+                        "math-review-option-text",
+                        option
+                    )
+                );
+
+                let statusText = "";
+
+                if (
+                    isSelectedOption &&
+                    isCorrectOption
+                ) {
+                    statusText =
+                        "✓ Your answer • Correct";
+                } else if (isCorrectOption) {
+                    statusText =
+                        "✓ Correct answer";
+                } else if (isSelectedOption) {
+                    statusText =
+                        "✕ Your answer";
+                }
+
+                if (statusText) {
+                    optionRow.appendChild(
+                        createElement(
+                            "span",
+                            "math-review-option-status",
+                            statusText
+                        )
+                    );
+                }
+
+                optionReview.appendChild(
+                    optionRow
+                );
+
+            }
         );
 
-        yourAnswer.appendChild(
-            document.createTextNode(
-                question.options[selectedIndex]
-            )
-        );
-
-        card.appendChild(yourAnswer);
-
-        const correctAnswer =
-            createElement(
-                "p",
-                "math-review-answer"
-            );
-
-        correctAnswer.appendChild(
-            createElement(
-                "strong",
-                "",
-                "Correct answer: "
-            )
-        );
-
-        correctAnswer.appendChild(
-            document.createTextNode(
-                question.options[
-                    question.correctIndex
-                ]
-            )
-        );
-
-        card.appendChild(correctAnswer);
+        card.appendChild(optionReview);
 
         card.appendChild(
             createElement(
