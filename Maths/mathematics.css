@@ -482,6 +482,18 @@ body.math-practice-page {
     background: #EFF6FF;
 }
 
+.math-page .math-topic-navigation a:first-child {
+    border-color: #CBD5E1;
+    background: #E2E8F0;
+    color: #334155;
+}
+
+.math-page .math-topic-navigation a:first-child:hover {
+    border-color: #94A3B8;
+    background: #CBD5E1;
+    color: #1E293B;
+}
+
 @media (max-width: 700px) {
     .math-page .math-outcome-grid,
     .math-page .math-problem-grid,
@@ -1561,7 +1573,6 @@ body.math-practice-page {
 }
 
 .math-topic-page .practice-question .solution {
-    display: none;
     margin-top: 13px;
     padding: 16px;
     border: 1px solid #BBF7D0;
@@ -1570,6 +1581,14 @@ body.math-practice-page {
     background: #F0FDF4;
     color: #166534;
     line-height: 1.7;
+}
+
+.math-topic-page .practice-question .solution[hidden] {
+    display: none !important;
+}
+
+.math-topic-page .practice-question .solution:not([hidden]) {
+    display: block;
 }
 
 .math-topic-page .math-practice-spotlight {
@@ -1795,9 +1814,11 @@ body.math-practice-page {
 }
 
 .logic-topic-page .content-card .logic-numbered-steps li {
-    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
     margin: 12px 0;
-    padding: 15px 16px 15px 58px;
+    padding: 15px 18px;
     border: 1px solid #D8E3EF;
     border-radius: 10px;
     background: #F8FAFC;
@@ -1806,19 +1827,21 @@ body.math-practice-page {
 .logic-topic-page .content-card .logic-numbered-steps li::before {
     counter-increment: logic-step;
     content: counter(logic-step);
-    position: absolute;
-    left: 15px;
-    top: 50%;
     display: flex;
+    flex: 0 0 32px;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: #2563EB;
     color: #FFFFFF;
     font-weight: 800;
-    transform: translateY(-50%);
+}
+
+.logic-topic-page .content-card .logic-numbered-steps li > span {
+    min-width: 0;
+    line-height: 1.55;
 }
 
 .logic-topic-page .logic-row-count-grid {
@@ -2082,7 +2105,8 @@ body.math-practice-page {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
-    margin: 20px 0 16px;
+    max-width: 980px;
+    margin: 18px 0 14px;
 }
 
 .sets-topic-page .sets-lab-inputs label {
@@ -2094,7 +2118,7 @@ body.math-practice-page {
 .sets-topic-page .sets-lab-inputs select {
     display: block;
     width: 100%;
-    min-height: 46px;
+    min-height: 42px;
     margin-top: 7px;
     padding: 10px 13px;
     border: 1px solid #CBD5E1;
@@ -2113,9 +2137,9 @@ body.math-practice-page {
 
 .sets-topic-page .sets-venn-svg {
     display: block;
-    width: min(100%, 720px);
+    width: min(100%, 560px);
     height: auto;
-    margin: 24px auto 16px;
+    margin: 18px auto 14px;
     border-radius: 16px;
     background: #F8FAFC;
 }
@@ -2160,8 +2184,10 @@ body.math-practice-page {
 }
 
 .sets-topic-page .sets-visualizer-result {
-    min-height: 58px;
-    padding: 16px 18px;
+    width: min(100%, 720px);
+    min-height: 50px;
+    margin: 0 auto;
+    padding: 13px 16px;
     border: 1px solid #BBD0F4;
     border-left: 5px solid #2B67E8;
     border-radius: 10px;
@@ -2169,6 +2195,290 @@ body.math-practice-page {
     color: #0B3E82;
     font-size: 1.05rem;
     font-weight: 800;
+}
+
+.math-page [hidden],
+.math-practice-page [hidden] {
+    display: none !important;
+}
+
+
+/* =========================================
+   MATHEMATICS TEST MODE
+========================================= */
+
+.math-practice-page .math-test-shell {
+    padding: 28px;
+}
+
+.math-practice-page .math-test-instructions {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 18px 20px;
+    border: 1px solid #BFDBFE;
+    border-left: 5px solid #2563EB;
+    border-radius: 11px;
+    background: #EFF6FF;
+}
+
+.math-practice-page .math-test-instructions h2 {
+    margin: 0 0 7px;
+    color: #153B6F;
+}
+
+.math-practice-page .math-test-instructions p {
+    margin: 0;
+    color: #475569;
+    line-height: 1.6;
+}
+
+.math-practice-page .math-test-count {
+    flex: 0 0 auto;
+    padding: 9px 13px;
+    border-radius: 999px;
+    background: #FFFFFF;
+    color: #1D4ED8;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.math-practice-page .math-test-question {
+    margin: 18px 0;
+    padding: 22px;
+    border: 1px solid #D8E3EF;
+    border-left: 5px solid #60A5FA;
+    border-radius: 12px;
+    background: #F8FBFF;
+}
+
+.math-practice-page .math-test-question:nth-child(even) {
+    border-left-color: #8B5CF6;
+    background: #FAF8FF;
+}
+
+.math-practice-page .math-test-question.is-unanswered {
+    border-color: #F59E0B;
+    border-left-color: #EA580C;
+    background: #FFF7ED;
+}
+
+.math-practice-page .math-test-question-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.math-practice-page .math-test-question-number {
+    color: #153B6F;
+    font-weight: 900;
+}
+
+.math-practice-page .math-test-difficulty {
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.math-practice-page .math-test-difficulty.easy {
+    background: #DCFCE7;
+    color: #166534;
+}
+
+.math-practice-page .math-test-difficulty.medium {
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.math-practice-page .math-test-difficulty.hard {
+    background: #FFE4E6;
+    color: #BE123C;
+}
+
+.math-practice-page .math-test-question-text {
+    margin: 0 0 16px;
+    color: #0F172A;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.math-practice-page .math-test-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.math-practice-page .math-test-option {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    min-width: 0;
+    padding: 13px 14px;
+    border: 1px solid #CBD5E1;
+    border-radius: 9px;
+    background: #FFFFFF;
+    color: #334155;
+    cursor: pointer;
+    line-height: 1.5;
+}
+
+.math-practice-page .math-test-option:hover {
+    border-color: #60A5FA;
+    background: #EFF6FF;
+}
+
+.math-practice-page .math-test-option.is-selected {
+    border-color: #2563EB;
+    background: #DBEAFE;
+    color: #153B6F;
+    font-weight: 700;
+}
+
+.math-practice-page .math-test-option input {
+    flex: 0 0 auto;
+    margin-top: 4px;
+    accent-color: #2563EB;
+}
+
+.math-practice-page .math-test-submit-panel {
+    position: sticky;
+    bottom: 12px;
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    margin-top: 26px;
+    padding: 17px 20px;
+    border: 1px solid #CBD5E1;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.14);
+    backdrop-filter: blur(8px);
+}
+
+.math-practice-page .math-test-notice {
+    margin: 0;
+    color: #B45309;
+    font-weight: 700;
+}
+
+.math-practice-page .math-test-submit-button {
+    flex: 0 0 auto;
+}
+
+.math-practice-page .math-test-result {
+    display: none;
+    padding: 30px;
+    border: 1px solid #D8E3EF;
+    border-radius: 14px;
+    background: #FFFFFF;
+}
+
+.math-practice-page .math-test-result-summary {
+    padding: 24px;
+    border: 1px solid #BBF7D0;
+    border-left: 6px solid #16A34A;
+    border-radius: 12px;
+    background: #F0FDF4;
+    text-align: center;
+}
+
+.math-practice-page .math-test-result-summary h2 {
+    margin-top: 0;
+    color: #166534;
+}
+
+.math-practice-page .math-test-score {
+    margin: 10px 0;
+    color: #153B6F;
+    font-size: 38px;
+    font-weight: 900;
+}
+
+.math-practice-page .math-answer-review {
+    margin-top: 28px;
+}
+
+.math-practice-page .math-answer-review > h2 {
+    color: #153B6F;
+}
+
+.math-practice-page .math-review-card {
+    margin: 16px 0;
+    padding: 20px;
+    border: 1px solid #D8E3EF;
+    border-left: 5px solid #16A34A;
+    border-radius: 11px;
+    background: #F8FAFC;
+}
+
+.math-practice-page .math-review-card.is-wrong {
+    border-left-color: #DC2626;
+    background: #FFF7F7;
+}
+
+.math-practice-page .math-review-card h3 {
+    margin: 0 0 9px;
+    color: #153B6F;
+}
+
+.math-practice-page .math-review-question {
+    color: #0F172A;
+    font-weight: 700;
+    line-height: 1.55;
+}
+
+.math-practice-page .math-review-answer {
+    margin: 7px 0;
+    color: #475569;
+}
+
+.math-practice-page .math-review-answer strong {
+    color: #0F172A;
+}
+
+.math-practice-page .math-review-explanation {
+    margin-top: 13px;
+    padding: 13px 15px;
+    border-radius: 8px;
+    background: #EFF6FF;
+    color: #1E3A5F;
+    line-height: 1.65;
+}
+
+.math-practice-page .math-test-result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+@media (max-width: 700px) {
+    .math-practice-page .math-test-shell,
+    .math-practice-page .math-test-result {
+        padding: 20px 15px;
+    }
+
+    .math-practice-page .math-test-instructions,
+    .math-practice-page .math-test-submit-panel {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .math-practice-page .math-test-options {
+        grid-template-columns: 1fr;
+    }
+
+    .math-practice-page .math-test-submit-button {
+        width: 100%;
+    }
 }
 
 .sets-topic-page .sets-visualizer-result.is-error {
