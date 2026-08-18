@@ -45,6 +45,10 @@
         topicSettings[currentTopic] ||
         topicSettings["mathematical-thinking"];
 
+    const calculationToolsEnabled =
+        document.body.dataset.calculationTools ===
+        "true";
+
     const quiz =
         document.getElementById("quiz");
 
@@ -217,17 +221,24 @@
         if (answeredCount === testQuestions.length) {
             notice.textContent =
                 "All questions are answered. You can now submit the test.";
+
             notice.classList.add("is-complete");
         } else {
             notice.textContent =
                 "Answers and explanations remain locked until all questions are submitted.";
+
             notice.classList.remove("is-complete");
         }
 
     }
 
 
-    function buildQuestionCard(question, questionIndex, countElement, notice) {
+    function buildQuestionCard(
+        question,
+        questionIndex,
+        countElement,
+        notice
+    ) {
 
         const card =
             createElement(
@@ -295,9 +306,11 @@
                     document.createElement("input");
 
                 input.type = "radio";
+
                 input.name =
                     "math-question-" +
                     questionIndex;
+
                 input.value =
                     String(optionIndex);
 
@@ -324,9 +337,11 @@
                                 ".math-test-option"
                             )
                             .forEach(function (item) {
+
                                 item.classList.remove(
                                     "is-selected"
                                 );
+
                             });
 
                         label.classList.add(
@@ -381,7 +396,640 @@
     }
 
 
-    function appendReview(review, question, questionIndex) {
+    function buildCalculationTools() {
+
+        const panel =
+            createElement(
+                "details",
+                "math-calculation-tools"
+            );
+
+        panel.open =
+            typeof window.matchMedia !== "function" ||
+            !window.matchMedia(
+                "(max-width: 1050px)"
+            ).matches;
+
+        const summary =
+            createElement(
+                "summary",
+                "math-calculation-tools-summary"
+            );
+
+        summary.appendChild(
+            createElement(
+                "span",
+                "math-calculation-tools-title",
+                "🧮 Calculation Workspace"
+            )
+        );
+
+        summary.appendChild(
+            createElement(
+                "span",
+                "math-calculation-tools-toggle",
+                "Open / Close"
+            )
+        );
+
+        panel.appendChild(summary);
+
+        const body =
+            createElement(
+                "div",
+                "math-calculation-tools-body"
+            );
+
+        body.appendChild(
+            createElement(
+                "p",
+                "math-calculation-tools-note",
+                "Use this space for rough calculations. It does not provide hints or answers."
+            )
+        );
+
+        const workspaceLabel =
+            createElement(
+                "label",
+                "math-workspace-label",
+                "✍️ Rough Work"
+            );
+
+        workspaceLabel.htmlFor =
+            "mathRoughWorkspace";
+
+        body.appendChild(workspaceLabel);
+
+        const workspace =
+            createElement(
+                "textarea",
+                "math-rough-workspace"
+            );
+
+        workspace.id =
+            "mathRoughWorkspace";
+
+        workspace.rows = 7;
+
+        workspace.placeholder =
+            "Write your calculation steps here...";
+
+        workspace.spellcheck = false;
+
+        body.appendChild(workspace);
+
+        const clearWorkspace =
+            createElement(
+                "button",
+                "math-workspace-clear",
+                "Clear Rough Work"
+            );
+
+        clearWorkspace.type = "button";
+
+        clearWorkspace.addEventListener(
+            "click",
+            function () {
+
+                workspace.value = "";
+                workspace.focus();
+
+            }
+        );
+
+        body.appendChild(clearWorkspace);
+
+        const calculator =
+            createElement(
+                "section",
+                "math-calculator"
+            );
+
+        calculator.appendChild(
+            createElement(
+                "h3",
+                "",
+                "🔢 Basic Calculator"
+            )
+        );
+
+        const display =
+            createElement(
+                "input",
+                "math-calculator-display"
+            );
+
+        display.type = "text";
+        display.value = "0";
+        display.readOnly = true;
+
+        display.setAttribute(
+            "aria-label",
+            "Calculator display"
+        );
+
+        calculator.appendChild(display);
+
+        const keypad =
+            createElement(
+                "div",
+                "math-calculator-keypad"
+            );
+
+        const buttons = [
+
+            {
+                label: "C",
+                action: "clear",
+                className: "is-action"
+            },
+
+            {
+                label: "⌫",
+                action: "backspace",
+                className: "is-action"
+            },
+
+            {
+                label: "√",
+                action: "sqrt",
+                className: "is-operator"
+            },
+
+            {
+                label: "÷",
+                action: "operator",
+                value: "/",
+                className: "is-operator"
+            },
+
+            {
+                label: "7",
+                action: "digit",
+                value: "7"
+            },
+
+            {
+                label: "8",
+                action: "digit",
+                value: "8"
+            },
+
+            {
+                label: "9",
+                action: "digit",
+                value: "9"
+            },
+
+            {
+                label: "×",
+                action: "operator",
+                value: "*",
+                className: "is-operator"
+            },
+
+            {
+                label: "4",
+                action: "digit",
+                value: "4"
+            },
+
+            {
+                label: "5",
+                action: "digit",
+                value: "5"
+            },
+
+            {
+                label: "6",
+                action: "digit",
+                value: "6"
+            },
+
+            {
+                label: "−",
+                action: "operator",
+                value: "-",
+                className: "is-operator"
+            },
+
+            {
+                label: "1",
+                action: "digit",
+                value: "1"
+            },
+
+            {
+                label: "2",
+                action: "digit",
+                value: "2"
+            },
+
+            {
+                label: "3",
+                action: "digit",
+                value: "3"
+            },
+
+            {
+                label: "+",
+                action: "operator",
+                value: "+",
+                className: "is-operator"
+            },
+
+            {
+                label: "±",
+                action: "sign",
+                className: "is-action"
+            },
+
+            {
+                label: "0",
+                action: "digit",
+                value: "0"
+            },
+
+            {
+                label: ".",
+                action: "decimal"
+            },
+
+            {
+                label: "%",
+                action: "percent",
+                className: "is-operator"
+            },
+
+            {
+                label: "=",
+                action: "equals",
+                className: "is-equals"
+            }
+
+        ];
+
+        let displayValue = "0";
+        let storedValue = null;
+        let pendingOperator = null;
+        let waitingForOperand = false;
+
+
+        function showValue(value) {
+
+            displayValue = value;
+            display.value = value;
+
+        }
+
+
+        function formatNumber(value) {
+
+            if (!Number.isFinite(value)) {
+                return "Error";
+            }
+
+            const rounded =
+                Math.round(
+                    (value + Number.EPSILON) *
+                    10000000000
+                ) / 10000000000;
+
+            return String(rounded);
+
+        }
+
+
+        function calculate(
+            left,
+            right,
+            operator
+        ) {
+
+            if (operator === "+") {
+                return left + right;
+            }
+
+            if (operator === "-") {
+                return left - right;
+            }
+
+            if (operator === "*") {
+                return left * right;
+            }
+
+            if (operator === "/") {
+
+                return right === 0
+                    ? NaN
+                    : left / right;
+
+            }
+
+            return right;
+
+        }
+
+
+        function resetCalculator() {
+
+            storedValue = null;
+            pendingOperator = null;
+            waitingForOperand = false;
+
+            showValue("0");
+
+        }
+
+
+        function inputDigit(digit) {
+
+            if (
+                displayValue === "Error" ||
+                waitingForOperand
+            ) {
+
+                showValue(digit);
+                waitingForOperand = false;
+
+                return;
+
+            }
+
+            showValue(
+                displayValue === "0"
+                    ? digit
+                    : displayValue + digit
+            );
+
+        }
+
+
+        function inputDecimal() {
+
+            if (
+                displayValue === "Error" ||
+                waitingForOperand
+            ) {
+
+                showValue("0.");
+                waitingForOperand = false;
+
+                return;
+
+            }
+
+            if (!displayValue.includes(".")) {
+                showValue(displayValue + ".");
+            }
+
+        }
+
+
+        function chooseOperator(operator) {
+
+            if (displayValue === "Error") {
+
+                resetCalculator();
+                return;
+
+            }
+
+            const inputValue =
+                Number(displayValue);
+
+            if (
+                pendingOperator &&
+                waitingForOperand
+            ) {
+
+                pendingOperator = operator;
+                return;
+
+            }
+
+            if (storedValue === null) {
+
+                storedValue = inputValue;
+
+            } else if (pendingOperator) {
+
+                const result =
+                    calculate(
+                        storedValue,
+                        inputValue,
+                        pendingOperator
+                    );
+
+                const formatted =
+                    formatNumber(result);
+
+                showValue(formatted);
+
+                if (formatted === "Error") {
+
+                    storedValue = null;
+                    pendingOperator = null;
+                    waitingForOperand = true;
+
+                    return;
+
+                }
+
+                storedValue = result;
+
+            }
+
+            pendingOperator = operator;
+            waitingForOperand = true;
+
+        }
+
+
+        function showResult() {
+
+            if (
+                !pendingOperator ||
+                storedValue === null ||
+                displayValue === "Error"
+            ) {
+                return;
+            }
+
+            const result =
+                calculate(
+                    storedValue,
+                    Number(displayValue),
+                    pendingOperator
+                );
+
+            showValue(
+                formatNumber(result)
+            );
+
+            storedValue = null;
+            pendingOperator = null;
+            waitingForOperand = true;
+
+        }
+
+
+        buttons.forEach(function (buttonData) {
+
+            const button =
+                createElement(
+                    "button",
+                    "math-calculator-key " +
+                        (buttonData.className || ""),
+                    buttonData.label
+                );
+
+            button.type = "button";
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    if (
+                        buttonData.action ===
+                        "digit"
+                    ) {
+
+                        inputDigit(
+                            buttonData.value
+                        );
+
+                    } else if (
+                        buttonData.action ===
+                        "decimal"
+                    ) {
+
+                        inputDecimal();
+
+                    } else if (
+                        buttonData.action ===
+                        "operator"
+                    ) {
+
+                        chooseOperator(
+                            buttonData.value
+                        );
+
+                    } else if (
+                        buttonData.action ===
+                        "equals"
+                    ) {
+
+                        showResult();
+
+                    } else if (
+                        buttonData.action ===
+                        "clear"
+                    ) {
+
+                        resetCalculator();
+
+                    } else if (
+                        buttonData.action ===
+                        "backspace"
+                    ) {
+
+                        if (
+                            displayValue !== "Error" &&
+                            !waitingForOperand
+                        ) {
+
+                            showValue(
+                                displayValue.length > 1
+                                    ? displayValue.slice(
+                                        0,
+                                        -1
+                                    )
+                                    : "0"
+                            );
+
+                        }
+
+                    } else if (
+                        buttonData.action ===
+                        "percent"
+                    ) {
+
+                        if (
+                            displayValue !== "Error"
+                        ) {
+
+                            showValue(
+                                formatNumber(
+                                    Number(
+                                        displayValue
+                                    ) / 100
+                                )
+                            );
+
+                        }
+
+                    } else if (
+                        buttonData.action ===
+                        "sqrt"
+                    ) {
+
+                        const value =
+                            Number(displayValue);
+
+                        showValue(
+                            value < 0
+                                ? "Error"
+                                : formatNumber(
+                                    Math.sqrt(value)
+                                )
+                        );
+
+                        waitingForOperand = true;
+
+                    } else if (
+                        buttonData.action ===
+                        "sign"
+                    ) {
+
+                        if (
+                            displayValue !== "0" &&
+                            displayValue !== "Error"
+                        ) {
+
+                            showValue(
+                                formatNumber(
+                                    Number(
+                                        displayValue
+                                    ) * -1
+                                )
+                            );
+
+                        }
+
+                    }
+
+                }
+            );
+
+            keypad.appendChild(button);
+
+        });
+
+        calculator.appendChild(keypad);
+        body.appendChild(calculator);
+        panel.appendChild(body);
+
+        return panel;
+
+    }
+
+
+    function appendReview(
+        review,
+        question,
+        questionIndex
+    ) {
 
         const selectedIndex =
             selectedAnswers[questionIndex];
@@ -394,14 +1042,18 @@
             createElement(
                 "article",
                 "math-review-card" +
-                    (isCorrect ? "" : " is-wrong")
+                    (isCorrect
+                        ? ""
+                        : " is-wrong")
             );
 
         card.appendChild(
             createElement(
                 "h3",
                 "",
-                (isCorrect ? "✅ " : "❌ ") +
+                (isCorrect
+                    ? "✅ "
+                    : "❌ ") +
                     "Question " +
                     (questionIndex + 1)
             )
@@ -425,33 +1077,41 @@
             function (option, optionIndex) {
 
                 const isCorrectOption =
-                    optionIndex === question.correctIndex;
+                    optionIndex ===
+                    question.correctIndex;
 
                 const isSelectedOption =
-                    optionIndex === selectedIndex;
+                    optionIndex ===
+                    selectedIndex;
 
                 let optionClass =
                     "math-review-option";
 
                 if (isCorrectOption) {
+
                     optionClass +=
                         " is-correct-answer";
+
                 }
 
                 if (
                     isSelectedOption &&
                     !isCorrectOption
                 ) {
+
                     optionClass +=
                         " is-selected-wrong";
+
                 }
 
                 if (
                     isSelectedOption &&
                     isCorrectOption
                 ) {
+
                     optionClass +=
                         " is-selected-correct";
+
                 }
 
                 const optionRow =
@@ -484,17 +1144,28 @@
                     isSelectedOption &&
                     isCorrectOption
                 ) {
+
                     statusText =
                         "✓ Your answer • Correct";
-                } else if (isCorrectOption) {
+
+                } else if (
+                    isCorrectOption
+                ) {
+
                     statusText =
                         "✓ Correct answer";
-                } else if (isSelectedOption) {
+
+                } else if (
+                    isSelectedOption
+                ) {
+
                     statusText =
                         "✕ Your answer";
+
                 }
 
                 if (statusText) {
+
                     optionRow.appendChild(
                         createElement(
                             "span",
@@ -502,6 +1173,7 @@
                             statusText
                         )
                     );
+
                 }
 
                 optionReview.appendChild(
@@ -531,12 +1203,20 @@
 
         const score =
             testQuestions.reduce(
-                function (total, question, index) {
+                function (
+                    total,
+                    question,
+                    index
+                ) {
+
                     return total +
-                        (selectedAnswers[index] ===
-                        question.correctIndex
-                            ? 1
-                            : 0);
+                        (
+                            selectedAnswers[index] ===
+                            question.correctIndex
+                                ? 1
+                                : 0
+                        );
+
                 },
                 0
             );
@@ -546,8 +1226,10 @@
 
         result.hidden = false;
         result.style.display = "block";
+
         result.className =
             "result math-test-result";
+
         result.innerHTML = "";
 
         const summary =
@@ -600,11 +1282,13 @@
 
         testQuestions.forEach(
             function (question, index) {
+
                 appendReview(
                     review,
                     question,
                     index
                 );
+
             }
         );
 
@@ -624,10 +1308,13 @@
             );
 
         restartButton.type = "button";
+
         restartButton.addEventListener(
             "click",
             function () {
+
                 window.location.reload();
+
             }
         );
 
@@ -635,7 +1322,8 @@
             createElement(
                 "a",
                 "primary-button",
-                "← Review " + settings.name
+                "← Review " +
+                    settings.name
             );
 
         reviewLink.href =
@@ -643,6 +1331,7 @@
 
         actions.appendChild(restartButton);
         actions.appendChild(reviewLink);
+
         result.appendChild(actions);
 
         if (progressBar) {
@@ -661,6 +1350,7 @@
 
         quiz.className =
             "content-card math-test-shell";
+
         quiz.innerHTML = "";
 
         result.hidden = true;
@@ -707,15 +1397,28 @@
         instructions.appendChild(
             instructionText
         );
+
         instructions.appendChild(
             countElement
         );
+
         quiz.appendChild(instructions);
 
         const questionsContainer =
             createElement(
                 "div",
                 "math-test-questions"
+            );
+
+        const testContent =
+            createElement(
+                "div",
+                "math-test-content" +
+                    (
+                        calculationToolsEnabled
+                            ? " has-calculation-tools"
+                            : ""
+                    )
             );
 
         const submitPanel =
@@ -733,6 +1436,7 @@
 
         testQuestions.forEach(
             function (question, index) {
+
                 questionsContainer.appendChild(
                     buildQuestionCard(
                         question,
@@ -741,12 +1445,23 @@
                         notice
                     )
                 );
+
             }
         );
 
-        quiz.appendChild(
+        testContent.appendChild(
             questionsContainer
         );
+
+        if (calculationToolsEnabled) {
+
+            testContent.appendChild(
+                buildCalculationTools()
+            );
+
+        }
+
+        quiz.appendChild(testContent);
 
         const submitButton =
             createElement(
@@ -764,7 +1479,9 @@
                 const unansweredIndex =
                     selectedAnswers.findIndex(
                         function (answer) {
+
                             return answer === null;
+
                         }
                     );
 
@@ -773,16 +1490,20 @@
                     const remaining =
                         selectedAnswers.filter(
                             function (answer) {
+
                                 return answer === null;
+
                             }
                         ).length;
 
                     notice.textContent =
                         "Please answer the remaining " +
                         remaining +
-                        (remaining === 1
-                            ? " question"
-                            : " questions") +
+                        (
+                            remaining === 1
+                                ? " question"
+                                : " questions"
+                        ) +
                         " before submitting.";
 
                     const firstUnanswered =
@@ -793,13 +1514,16 @@
                         );
 
                     if (firstUnanswered) {
+
                         firstUnanswered.classList.add(
                             "is-unanswered"
                         );
+
                         firstUnanswered.scrollIntoView({
                             behavior: "smooth",
                             block: "center"
                         });
+
                     }
 
                     return;
@@ -813,6 +1537,7 @@
 
         submitPanel.appendChild(notice);
         submitPanel.appendChild(submitButton);
+
         quiz.appendChild(submitPanel);
 
     }
