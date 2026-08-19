@@ -554,64 +554,38 @@
             );
     }
 
-    function initialiseSolutionButtons() {
-        document
-            .querySelectorAll(
-                "[data-solution-target]"
-            )
-            .forEach(
-                function (button) {
-                    const solution =
-                        document.getElementById(
-                            button.dataset
-                                .solutionTarget
-                        );
+    function toggleBaseSolution(id, button) {
+        const solution = document.getElementById(id);
 
-                    if (!solution) {
-                        return;
-                    }
+        if (!solution) {
+            return;
+        }
 
-                    solution.hidden = true;
+        const shouldOpen = solution.hidden;
+        solution.hidden = !shouldOpen;
 
-                    button.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-
-                    button.addEventListener(
-                        "click",
-                        function () {
-                            solution.hidden =
-                                !solution.hidden;
-
-                            button.setAttribute(
-                                "aria-expanded",
-                                String(
-                                    !solution.hidden
-                                )
-                            );
-
-                            button.textContent =
-                                solution.hidden
-                                    ? "Show Solution"
-                                    : "Hide Solution";
-                        }
-                    );
-                }
+        if (button) {
+            button.setAttribute(
+                "aria-expanded",
+                String(shouldOpen)
             );
+
+            button.textContent = shouldOpen
+                ? "Hide Solution"
+                : "Show Solution";
+        }
     }
 
     window.CodeBhavyaBaseConverter = {
         convert
     };
 
+    window.toggleBaseSolution =
+        toggleBaseSolution;
+
     document.addEventListener(
         "DOMContentLoaded",
         initialiseConverter
     );
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        initialiseSolutionButtons
-    );
 }());
