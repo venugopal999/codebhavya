@@ -369,6 +369,16 @@
 
         card.appendChild(options);
 
+        if (calculationToolsEnabled) {
+
+            card.appendChild(
+                buildCalculationTools(
+                    questionIndex
+                )
+            );
+
+        }
+
         return card;
 
     }
@@ -396,7 +406,7 @@
     }
 
 
-    function buildCalculationTools() {
+    function buildCalculationTools(questionIndex) {
 
         const panel =
             createElement(
@@ -404,11 +414,10 @@
                 "math-calculation-tools"
             );
 
-        panel.open =
-            typeof window.matchMedia !== "function" ||
-            !window.matchMedia(
-                "(max-width: 1050px)"
-            ).matches;
+        panel.open = false;
+
+        panel.dataset.questionIndex =
+            String(questionIndex);
 
         const summary =
             createElement(
@@ -428,11 +437,28 @@
             createElement(
                 "span",
                 "math-calculation-tools-toggle",
-                "Open / Close"
+                "Open"
             )
         );
 
         panel.appendChild(summary);
+
+        const toggleText =
+            summary.querySelector(
+                ".math-calculation-tools-toggle"
+            );
+
+        panel.addEventListener(
+            "toggle",
+            function () {
+
+                toggleText.textContent =
+                    panel.open
+                        ? "Close"
+                        : "Open";
+
+            }
+        );
 
         const body =
             createElement(
@@ -448,6 +474,12 @@
             )
         );
 
+        const workspaceSection =
+            createElement(
+                "section",
+                "math-workspace-section"
+            );
+
         const workspaceLabel =
             createElement(
                 "label",
@@ -456,9 +488,12 @@
             );
 
         workspaceLabel.htmlFor =
-            "mathRoughWorkspace";
+            "mathRoughWorkspace-" +
+            questionIndex;
 
-        body.appendChild(workspaceLabel);
+        workspaceSection.appendChild(
+            workspaceLabel
+        );
 
         const workspace =
             createElement(
@@ -467,7 +502,8 @@
             );
 
         workspace.id =
-            "mathRoughWorkspace";
+            "mathRoughWorkspace-" +
+            questionIndex;
 
         workspace.rows = 7;
 
@@ -476,7 +512,9 @@
 
         workspace.spellcheck = false;
 
-        body.appendChild(workspace);
+        workspaceSection.appendChild(
+            workspace
+        );
 
         const clearWorkspace =
             createElement(
@@ -497,7 +535,13 @@
             }
         );
 
-        body.appendChild(clearWorkspace);
+        workspaceSection.appendChild(
+            clearWorkspace
+        );
+
+        body.appendChild(
+            workspaceSection
+        );
 
         const calculator =
             createElement(
@@ -1413,12 +1457,7 @@
         const testContent =
             createElement(
                 "div",
-                "math-test-content" +
-                    (
-                        calculationToolsEnabled
-                            ? " has-calculation-tools"
-                            : ""
-                    )
+                "math-test-content"
             );
 
         const submitPanel =
@@ -1452,14 +1491,6 @@
         testContent.appendChild(
             questionsContainer
         );
-
-        if (calculationToolsEnabled) {
-
-            testContent.appendChild(
-                buildCalculationTools()
-            );
-
-        }
 
         quiz.appendChild(testContent);
 
