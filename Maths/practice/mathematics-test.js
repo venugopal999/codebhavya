@@ -30,9 +30,13 @@
             name: "Sets and Venn Diagrams",
             reviewHref: "../sets-and-venn-diagrams.html"
         },
-        "number-system": {
+              "number-system": {
             name: "Number System",
             reviewHref: "../number-system.html"
+        },
+        "base-conversions": {
+            name: "Base Conversions",
+            reviewHref: "../base-conversions.html"
         }
     };
 
