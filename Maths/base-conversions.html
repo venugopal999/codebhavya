@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base Conversions | CodeBhavya</title>
+    <link rel="icon" type="image/png" href="../images/codebhavya-icon-32.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="mathematics.css">
+</head>
+
+<body class="math-page math-topic-page base-conversions-topic-page"
+      data-math-topic="base-conversions">
+
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo">
+        <img src="../images/codebhavya-main-logo.png"
+             alt="CodeBhavya Logo"
+             class="main-logo">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </a>
+
+    <nav class="top-nav">
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="active">Maths</a>
+        <a href="../C-Programming/index.html">C</a>
+        <a href="../Data-Structures/index.html">Data Structures</a>
+        <a href="../Advanced-Data-Structures/index.html">Advanced Data Structures</a>
+        <a href="../Python/index.html">Python</a>
+        <a href="../AI-ML/index.html">AI &amp; ML</a>
+        <a href="../Placement/index.html">Placement</a>
+    </nav>
+</header>
+
+<div class="docs-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-title">Mathematics</div>
+
+        <input type="text"
+               id="topicSearch"
+               class="search-box"
+               placeholder="🔍 Search topics..."
+               onkeyup="searchTopics()">
+
+        <a href="index.html" class="sidebar-course-home">📐 Mathematics Home</a>
+
+        <div class="sidebar-title">Thinking &amp; Logic</div>
+        <a href="mathematical-thinking.html">🧠 Problem Solving &amp; Patterns</a>
+        <a href="logic-and-truth-tables.html">🔀 Logic &amp; Truth Tables</a>
+        <a href="sets-and-venn-diagrams.html">⭕ Sets &amp; Venn Diagrams</a>
+        <a href="#" class="coming-soon-link">🔺 Patterns for Coding</a>
+
+        <div class="sidebar-title">Programming Mathematics</div>
+        <a href="number-system.html">🔢 Number System Fundamentals</a>
+        <a href="base-conversions.html" class="active">🔄 Base Conversions</a>
+        <a href="#" class="coming-soon-link">📐 Algebra, AP &amp; GP</a>
+        <a href="#" class="coming-soon-link">▦ Matrices</a>
+        <a href="#" class="coming-soon-link">🧮 Permutations &amp; Combinations</a>
+        <a href="#" class="coming-soon-link">🎲 Probability</a>
+
+        <div class="sidebar-title">Quantitative Aptitude</div>
+        <a href="percentages.html">📊 Percentages</a>
+        <a href="#" class="coming-soon-link">📈 Averages</a>
+        <a href="#" class="coming-soon-link">⚖️ Ratio &amp; Proportion</a>
+        <a href="#" class="coming-soon-link">💰 Profit, Loss &amp; Discount</a>
+        <a href="#" class="coming-soon-link">⏱️ Time &amp; Work</a>
+        <a href="#" class="coming-soon-link">🚗 Time, Speed &amp; Distance</a>
+
+        <div class="sidebar-title sidebar-practice-title">Practice</div>
+        <a href="practice/mathematical-thinking-practice.html">🧠 Thinking Practice</a>
+        <a href="practice/logic-and-truth-tables-practice.html">🔀 Logic Practice</a>
+        <a href="practice/sets-and-venn-diagrams-practice.html">⭕ Sets Practice</a>
+        <a href="practice/number-system-practice.html">✍️ Number System Practice</a>
+    </aside>
+
+    <main class="main-content">
+
+        <section class="math-topic-hero">
+            <span class="subject-label">CODEBHAVYA • MATHEMATICS FOR PROGRAMMING</span>
+            <h1 class="page-title">🔄 Base Conversions</h1>
+            <p class="page-description">
+                Understand binary, octal, decimal and hexadecimal number systems,
+                then convert values between them using reliable step-by-step methods.
+            </p>
+        </section>
+
+        <section class="content-card" id="learning-objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <p>After completing this topic, you should be able to:</p>
+            <ul class="math-spaced-list">
+                <li>Identify the base and valid digits of a positional number system.</li>
+                <li>Convert decimal integers and fractions to another base.</li>
+                <li>Convert binary, octal and hexadecimal values to decimal.</li>
+                <li>Use bit grouping for fast binary–octal and binary–hexadecimal conversions.</li>
+                <li>Verify conversions and avoid common digit and grouping mistakes.</li>
+                <li>Connect number bases with data representation in programs and computers.</li>
+            </ul>
+        </section>
+
+        <section class="content-card" id="positional-number-systems">
+            <h2>📖 1. Positional Number Systems</h2>
+
+            <p>
+                A positional number system gives each digit a value based on both the
+                digit itself and its position. The base tells us how many distinct digits
+                are available and what power is assigned to each position.
+            </p>
+
+            <div class="formula-box math-concept-box math-tone-blue">
+                Value = d<sub>n</sub>b<sup>n</sup> + d<sub>n-1</sub>b<sup>n-1</sup>
+                + ... + d<sub>1</sub>b<sup>1</sup> + d<sub>0</sub>b<sup>0</sup>
+            </div>
+
+            <div class="example-box math-labelled-example math-tone-purple">
+                <strong class="math-box-label">Example: (352)<sub>10</sub></strong>
+                <span class="math-box-value">
+                    3 × 10<sup>2</sup> + 5 × 10<sup>1</sup> + 2 × 10<sup>0</sup>
+                    = 300 + 50 + 2
+                </span>
+            </div>
+
+            <div class="tip-box">
+                <strong>Important:</strong> The rightmost integer digit always has position 0.
+                Positions increase towards the left and become negative after the radix point.
+            </div>
+        </section>
+
+        <section class="content-card" id="common-bases">
+            <h2>🧩 2. Common Bases Used in Programming</h2>
+
+            <div class="math-table-wrap">
+                <table class="base-conversion-table">
+                    <thead>
+                        <tr>
+                            <th>System</th>
+                            <th>Base</th>
+                            <th>Valid Digits</th>
+                            <th>Example</th>
+                            <th>Programming Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Binary</td>
+                            <td>2</td>
+                            <td>0, 1</td>
+                            <td>(101101)<sub>2</sub></td>
+                            <td>Bits, logic and machine data</td>
+                        </tr>
+                        <tr>
+                            <td>Octal</td>
+                            <td>8</td>
+                            <td>0–7</td>
+                            <td>(735)<sub>8</sub></td>
+                            <td>Compact groups of three bits</td>
+                        </tr>
+                        <tr>
+                            <td>Decimal</td>
+                            <td>10</td>
+                            <td>0–9</td>
+                            <td>(245)<sub>10</sub></td>
+                            <td>Everyday calculations</td>
+                        </tr>
+                        <tr>
+                            <td>Hexadecimal</td>
+                            <td>16</td>
+                            <td>0–9, A–F</td>
+                            <td>(9AF)<sub>16</sub></td>
+                            <td>Memory, colours and bit patterns</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="formula-box math-rule-card math-tone-orange">
+                <strong class="math-rule-title">Hexadecimal digit values</strong>
+                A = 10, B = 11, C = 12, D = 13, E = 14 and F = 15.
+            </div>
+        </section>
+
+        <section class="content-card" id="decimal-to-another-base">
+            <h2>➗ 3. Decimal Integer to Another Base</h2>
+
+            <p>
+                Repeatedly divide the decimal number by the required base. Record each
+                remainder and read the remainders from bottom to top.
+            </p>
+
+            <ol class="math-step-list">
+                <li>Divide the number by the target base.</li>
+                <li>Write the remainder.</li>
+                <li>Use the quotient as the next number.</li>
+                <li>Repeat until the quotient becomes 0.</li>
+                <li>Read the remainders in reverse order.</li>
+            </ol>
+
+            <div class="example-box math-solved-problem">
+                <h3>Convert (45)<sub>10</sub> to binary</h3>
+                <p class="math-problem-statement">Target base = 2</p>
+                <div class="math-solution-steps">
+                    <strong class="math-solution-label">Repeated division</strong>
+                    <p>45 ÷ 2 = 22, remainder 1</p>
+                    <p>22 ÷ 2 = 11, remainder 0</p>
+                    <p>11 ÷ 2 = 5, remainder 1</p>
+                    <p>5 ÷ 2 = 2, remainder 1</p>
+                    <p>2 ÷ 2 = 1, remainder 0</p>
+                    <p>1 ÷ 2 = 0, remainder 1</p>
+                </div>
+                <p class="answer">Reading upwards: (45)<sub>10</sub> = (101101)<sub>2</sub></p>
+            </div>
+        </section>
+
+        <section class="content-card" id="another-base-to-decimal">
+            <h2>🧮 4. Another Base to Decimal</h2>
+
+            <p>
+                Multiply every digit by the corresponding power of the source base,
+                beginning with power 0 at the rightmost digit, and add the results.
+            </p>
+
+            <div class="example-box math-solved-problem">
+                <h3>Convert (101101)<sub>2</sub> to decimal</h3>
+                <p class="math-problem-statement">Expand using powers of 2.</p>
+                <div class="math-solution-steps">
+                    <strong class="math-solution-label">Positional expansion</strong>
+                    <p>
+                        1×2<sup>5</sup> + 0×2<sup>4</sup> + 1×2<sup>3</sup>
+                        + 1×2<sup>2</sup> + 0×2<sup>1</sup> + 1×2<sup>0</sup>
+                    </p>
+                    <p>32 + 0 + 8 + 4 + 0 + 1 = 45</p>
+                </div>
+                <p class="answer">(101101)<sub>2</sub> = (45)<sub>10</sub></p>
+            </div>
+        </section>
+
+        <section class="content-card" id="binary-octal-conversion">
+            <h2>3️⃣ 5. Binary and Octal Conversion</h2>
+
+            <p>
+                One octal digit represents exactly three binary bits because 8 = 2<sup>3</sup>.
+                Group binary digits in sets of three from the radix point outwards.
+            </p>
+
+            <div class="base-grouping-grid">
+                <article>
+                    <strong>Binary → Octal</strong>
+                    <p>(110 101 011)<sub>2</sub></p>
+                    <p>110 = 6, 101 = 5, 011 = 3</p>
+                    <span>(653)<sub>8</sub></span>
+                </article>
+                <article>
+                    <strong>Octal → Binary</strong>
+                    <p>(572)<sub>8</sub></p>
+                    <p>5 = 101, 7 = 111, 2 = 010</p>
+                    <span>(101111010)<sub>2</sub></span>
+                </article>
+            </div>
+
+            <div class="tip-box">
+                Add leading or trailing zeroes only when necessary to complete a group of three.
+                These zeroes do not change the value.
+            </div>
+        </section>
+
+        <section class="content-card" id="binary-hexadecimal-conversion">
+            <h2>4️⃣ 6. Binary and Hexadecimal Conversion</h2>
+
+            <p>
+                One hexadecimal digit represents four binary bits because 16 = 2<sup>4</sup>.
+                Group binary digits in sets of four.
+            </p>
+
+            <div class="base-grouping-grid">
+                <article>
+                    <strong>Binary → Hexadecimal</strong>
+                    <p>(1011 1100 0110)<sub>2</sub></p>
+                    <p>1011 = B, 1100 = C, 0110 = 6</p>
+                    <span>(BC6)<sub>16</sub></span>
+                </article>
+                <article>
+                    <strong>Hexadecimal → Binary</strong>
+                    <p>(3AF)<sub>16</sub></p>
+                    <p>3 = 0011, A = 1010, F = 1111</p>
+                    <span>(001110101111)<sub>2</sub></span>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-card" id="octal-hexadecimal-conversion">
+            <h2>🔁 7. Octal and Hexadecimal Conversion</h2>
+
+            <p>
+                There is no direct digit grouping between octal and hexadecimal.
+                Use binary as the bridge.
+            </p>
+
+            <div class="formula-box math-concept-box math-tone-purple">
+                Octal → 3-bit binary groups → regroup into 4 bits → Hexadecimal
+            </div>
+
+            <div class="example-box math-solved-problem">
+                <h3>Convert (725)<sub>8</sub> to hexadecimal</h3>
+                <div class="math-solution-steps">
+                    <strong class="math-solution-label">Step 1: Octal to binary</strong>
+                    <p>7 = 111, 2 = 010, 5 = 101</p>
+                    <p>(725)<sub>8</sub> = (111010101)<sub>2</sub></p>
+                    <strong class="math-solution-label">Step 2: Regroup into four bits</strong>
+                    <p>0001 1101 0101 = 1 D 5</p>
+                </div>
+                <p class="answer">(725)<sub>8</sub> = (1D5)<sub>16</sub></p>
+            </div>
+        </section>
+
+        <section class="content-card" id="fractional-conversions">
+            <h2>🔹 8. Converting Fractional Parts</h2>
+
+            <p>
+                For a decimal fraction, repeatedly multiply the fractional part by the
+                target base. Record the integer part produced at each step and read the
+                recorded digits from top to bottom.
+            </p>
+
+            <div class="example-box math-solved-problem">
+                <h3>Convert (0.625)<sub>10</sub> to binary</h3>
+                <div class="math-solution-steps">
+                    <strong class="math-solution-label">Repeated multiplication</strong>
+                    <p>0.625 × 2 = 1.250 → digit 1</p>
+                    <p>0.250 × 2 = 0.500 → digit 0</p>
+                    <p>0.500 × 2 = 1.000 → digit 1</p>
+                </div>
+                <p class="answer">(0.625)<sub>10</sub> = (0.101)<sub>2</sub></p>
+            </div>
+
+            <div class="tip-box">
+                Some fractions repeat forever in another base. In such cases, stop at the
+                required precision and mark the result as approximate.
+            </div>
+        </section>
+
+        <section class="content-card math-pattern-lab base-conversion-lab"
+                 id="interactive-base-converter">
+            <span class="section-label">INTERACTIVE CONVERTER</span>
+            <h2>🧪 9. Base Conversion Explorer</h2>
+            <p>
+                Enter a valid integer or fractional value, choose the source and target
+                bases, and view both the result and the conversion method.
+            </p>
+
+            <div class="base-converter-grid">
+                <label>
+                    Number
+                    <input id="baseNumberInput"
+                           type="text"
+                           value="101101"
+                           autocomplete="off"
+                           spellcheck="false">
+                </label>
+
+                <label>
+                    From base
+                    <select id="fromBaseSelect">
+                        <option value="2" selected>Binary (2)</option>
+                        <option value="8">Octal (8)</option>
+                        <option value="10">Decimal (10)</option>
+                        <option value="16">Hexadecimal (16)</option>
+                    </select>
+                </label>
+
+                <label>
+                    To base
+                    <select id="toBaseSelect">
+                        <option value="2">Binary (2)</option>
+                        <option value="8">Octal (8)</option>
+                        <option value="10" selected>Decimal (10)</option>
+                        <option value="16">Hexadecimal (16)</option>
+                    </select>
+                </label>
+
+                <button id="baseConvertButton" class="primary-button" type="button">
+                    Convert Number
+                </button>
+            </div>
+
+            <div class="math-example-chips" aria-label="Base conversion examples">
+                <button type="button" data-value="45" data-from="10" data-to="2">45₁₀ → Binary</button>
+                <button type="button" data-value="735" data-from="8" data-to="10">735₈ → Decimal</button>
+                <button type="button" data-value="3AF" data-from="16" data-to="2">3AF₁₆ → Binary</button>
+                <button type="button" data-value="0.625" data-from="10" data-to="2">0.625₁₀ → Binary</button>
+            </div>
+
+            <div id="baseConverterResult"
+                 class="math-lab-result base-converter-result"
+                 role="status"
+                 aria-live="polite">
+                Select an example or enter a number, then click Convert Number.
+            </div>
+        </section>
+
+        <section class="content-card" id="solved-problems">
+            <h2>🧮 10. Solved Problems</h2>
+
+            <div class="example-box math-solved-problem">
+                <h3>Problem 1</h3>
+                <p class="math-problem-statement">Convert (156)<sub>10</sub> to hexadecimal.</p>
+                <div class="math-solution-steps">
+                    <strong class="math-solution-label">Solution</strong>
+                    <p>156 ÷ 16 = 9, remainder 12 = C</p>
+                    <p>9 ÷ 16 = 0, remainder 9</p>
+                </div>
+                <p class="answer">(156)<sub>10</sub> = (9C)<sub>16</sub></p>
+            </div>
+
+            <div class="example-box math-solved-problem">
+                <h3>Problem 2</h3>
+                <p class="math-problem-statement">Convert (347)<sub>8</sub> to decimal.</p>
+                <div class="math-solution-steps">
+                    <strong class="math-solution-label">Solution</strong>
+                    <p>3×8<sup>2</sup> + 4×8<sup>1</sup> + 7×8<sup>0</sup></p>
+                    <p>192 + 32 + 7 = 231</p>
+                </div>
+                <p class="answer">(347)<sub>8</sub> = (231)<sub>10</sub></p>
+            </div>
+
+            <div class="example-box math-solved-problem">
+                <h3>Problem 3</h3>
+                <p class="math-problem-statement">Convert (2D7)<sub>16</sub> to decimal.</p>
+                <div class="math-solution-steps">
+                    <strong class="math-solution-label">Solution</strong>
+                    <p>2×16<sup>2</sup> + 13×16<sup>1</sup> + 7×16<sup>0</sup></p>
+                    <p>512 + 208 + 7 = 727</p>
+                </div>
+                <p class="answer">(2D7)<sub>16</sub> = (727)<sub>10</sub></p>
+            </div>
+        </section>
+
+        <section class="content-card" id="common-mistakes">
+            <h2>⚠️ 11. Common Mistakes and Quick Checks</h2>
+
+            <div class="base-mistake-grid">
+                <article>
+                    <strong>Using an invalid digit</strong>
+                    <p>Binary cannot contain 2; octal cannot contain 8 or 9.</p>
+                </article>
+                <article>
+                    <strong>Reading remainders downwards</strong>
+                    <p>For repeated division, read remainders from bottom to top.</p>
+                </article>
+                <article>
+                    <strong>Grouping from the wrong side</strong>
+                    <p>Group integer bits from right to left and fractional bits from left to right.</p>
+                </article>
+                <article>
+                    <strong>Forgetting hexadecimal values</strong>
+                    <p>Remember that A–F represent decimal values 10–15.</p>
+                </article>
+            </div>
+
+            <div class="tip-box">
+                <strong>Verification method:</strong> Convert your final answer back to decimal.
+                Both representations must produce the same decimal value.
+            </div>
+        </section>
+
+        <section class="content-card" id="practice-problems">
+            <h2>✍️ 12. Practice Problems</h2>
+            <p class="math-practice-intro">
+                Solve each conversion yourself before opening the solution.
+            </p>
+
+            <div class="practice-question">
+                <strong>1. Convert (93)<sub>10</sub> to binary.</strong><br>
+                <button class="solution-button" onclick="toggleSolution('bc1')">Show Solution</button>
+                <div id="bc1" class="solution" hidden>
+                    93 ÷ 2 gives remainders 1, 0, 1, 1, 1, 0, 1.<br>
+                    Read upwards: <strong>(1011101)<sub>2</sub></strong>.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <strong>2. Convert (11010110)<sub>2</sub> to hexadecimal.</strong><br>
+                <button class="solution-button" onclick="toggleSolution('bc2')">Show Solution</button>
+                <div id="bc2" class="solution" hidden>
+                    Group as 1101 0110. Therefore 1101 = D and 0110 = 6.<br>
+                    <strong>Answer: (D6)<sub>16</sub></strong>.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <strong>3. Convert (642)<sub>8</sub> to binary.</strong><br>
+                <button class="solution-button" onclick="toggleSolution('bc3')">Show Solution</button>
+                <div id="bc3" class="solution" hidden>
+                    6 = 110, 4 = 100 and 2 = 010.<br>
+                    <strong>Answer: (110100010)<sub>2</sub></strong>.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <strong>4. Convert (B4)<sub>16</sub> to decimal.</strong><br>
+                <button class="solution-button" onclick="toggleSolution('bc4')">Show Solution</button>
+                <div id="bc4" class="solution" hidden>
+                    B×16<sup>1</sup> + 4×16<sup>0</sup> = 11×16 + 4 = 180.<br>
+                    <strong>Answer: (180)<sub>10</sub></strong>.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <strong>5. Convert (0.375)<sub>10</sub> to binary.</strong><br>
+                <button class="solution-button" onclick="toggleSolution('bc5')">Show Solution</button>
+                <div id="bc5" class="solution" hidden>
+                    0.375×2 = 0.75 → 0; 0.75×2 = 1.5 → 1; 0.5×2 = 1.0 → 1.<br>
+                    <strong>Answer: (0.011)<sub>2</sub></strong>.
+                </div>
+            </div>
+        </section>
+
+        <section class="content-card" id="quick-revision">
+            <h2>📝 Quick Revision</h2>
+            <ul class="math-spaced-list">
+                <li>A base-b system uses digits from 0 to b−1.</li>
+                <li>Decimal to another base uses repeated division for integers.</li>
+                <li>Another base to decimal uses positional expansion.</li>
+                <li>Three binary bits correspond to one octal digit.</li>
+                <li>Four binary bits correspond to one hexadecimal digit.</li>
+                <li>Use binary as the bridge between octal and hexadecimal.</li>
+                <li>Repeated multiplication converts decimal fractional parts.</li>
+                <li>Convert back to decimal to verify the result.</li>
+            </ul>
+        </section>
+
+        <nav class="math-topic-navigation" aria-label="Mathematics topic navigation">
+            <a href="number-system.html">← Previous: Number System</a>
+            <span class="math-nav-disabled">Next: Algebra for Programmers →</span>
+        </nav>
+
+    </main>
+
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-brand-section">
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+            <p class="footer-tagline">From Learning to Limitless Possibilities.</p>
+            <p class="footer-description">
+                Learn, practice, build and grow with structured learning resources.
+            </p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <a href="../index.html">Home</a>
+            <a href="index.html">Mathematics</a>
+            <a href="number-system.html">Number System</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Learning</h3>
+            <a href="mathematical-thinking.html">Mathematical Thinking</a>
+            <a href="logic-and-truth-tables.html">Logic &amp; Truth Tables</a>
+            <a href="sets-and-venn-diagrams.html">Sets &amp; Venn Diagrams</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Practice</h3>
+            <a href="practice/mathematical-thinking-practice.html">Thinking Practice</a>
+            <a href="practice/number-system-practice.html">Number System Practice</a>
+            <a href="percentages.html">Percentages</a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 CodeBhavya. All Rights Reserved.</p>
+        <p>From Learning to Limitless Possibilities.</p>
+    </div>
+</footer>
+
+<script src="../script.js"></script>
+<script src="mathematics.js"></script>
+<script src="base-conversions.js"></script>
+
+</body>
+</html>
