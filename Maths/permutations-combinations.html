@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permutations &amp; Combinations | CodeBhavya</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="mathematics.css?v=20260820-4">
+
+    <style>
+        .counting-page .count-grid,
+        .counting-page .decision-grid,
+        .counting-page .coding-grid,
+        .counting-page .solved-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .counting-page .count-card,
+        .counting-page .decision-card,
+        .counting-page .coding-card,
+        .counting-page .solved-card {
+            padding: 20px;
+            border: 1px solid #d7e2f0;
+            border-left: 5px solid #60a5fa;
+            border-radius: 12px;
+            background: #f8fbff;
+        }
+
+        .counting-page .count-card:nth-child(even),
+        .counting-page .decision-card:nth-child(even),
+        .counting-page .coding-card:nth-child(even) {
+            border-left-color: #8b5cf6;
+            background: #faf7ff;
+        }
+
+        .counting-page .count-card h3,
+        .counting-page .decision-card h3,
+        .counting-page .coding-card h3,
+        .counting-page .solved-card h3 {
+            margin: 0 0 10px;
+            color: #153b6f;
+        }
+
+        .counting-page .formula-box {
+            margin-top: 12px;
+            padding: 14px 16px;
+            border: 1px solid #bfdbfe;
+            border-radius: 10px;
+            background: #eef6ff;
+            color: #164e87;
+            font-size: 18px;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .counting-page .formula-box.purple { border-color:#ddd6fe; background:#f5f3ff; color:#6d28d9; }
+        .counting-page .formula-box.gold { border-color:#fde68a; background:#fffbeb; color:#92400e; }
+
+        .counting-page .math-note-box,
+        .counting-page .math-warning-box {
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 10px;
+            line-height: 1.65;
+        }
+
+        .counting-page .math-note-box { border:1px solid #bfdbfe; border-left:5px solid #2563eb; background:#eff6ff; color:#164e87; }
+        .counting-page .math-warning-box { border:1px solid #fde68a; border-left:5px solid #eab308; background:#fffbeb; color:#854d0e; }
+
+        .counting-page .counting-steps {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .counting-page .counting-step {
+            padding: 15px 12px;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .counting-page .counting-step:nth-child(1) { background:#2563eb; }
+        .counting-page .counting-step:nth-child(2) { background:#7c3aed; }
+        .counting-page .counting-step:nth-child(3) { background:#ea580c; }
+        .counting-page .counting-step:nth-child(4) { background:#059669; }
+
+        .counting-page .decision-card.permutation { border-left-color:#2563eb; background:#eff6ff; }
+        .counting-page .decision-card.combination { border-left-color:#8b5cf6; background:#f5f3ff; }
+
+        .counting-page .count-table-wrap { overflow-x:auto; }
+        .counting-page .count-table { width:100%; border-collapse:collapse; }
+        .counting-page .count-table th,
+        .counting-page .count-table td { padding:12px 14px; border:1px solid #d7e2f0; text-align:left; vertical-align:top; }
+        .counting-page .count-table th { background:#153b6f; color:#fff; }
+        .counting-page .count-table tbody tr:nth-child(even) { background:#f1f7ff; }
+
+        .counting-page .counting-explorer { border-left:5px solid #2563eb; }
+        .counting-page .explorer-control-grid {
+            display:grid;
+            grid-template-columns:2fr repeat(2,minmax(130px,1fr));
+            gap:14px;
+            margin:18px 0 14px;
+        }
+
+        .counting-page .explorer-control label { display:block; margin-bottom:7px; color:#243b5a; font-weight:800; }
+        .counting-page .explorer-control input,
+        .counting-page .explorer-control select { width:100%; box-sizing:border-box; padding:11px 12px; border:1px solid #cbd5e1; border-radius:9px; background:#fff; color:#0f172a; font:inherit; }
+
+        .counting-page .explorer-example-row { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+        .counting-page .explorer-example-button { padding:8px 12px; border:1px solid #bfdbfe; border-radius:999px; background:#f8fbff; color:#153b6f; cursor:pointer; font-weight:800; }
+
+        .counting-page .explorer-message,
+        .counting-page .explorer-result { margin-top:16px; padding:18px; border:1px solid #bfdbfe; border-left:5px solid #2563eb; border-radius:10px; background:#eff6ff; color:#153b6f; }
+        .counting-page .explorer-result[hidden],
+        .counting-page .explorer-message[hidden],
+        .counting-page .count-answer[hidden] { display:none!important; }
+        .counting-page .count-result-number { margin:14px 0; padding:16px; border-radius:10px; background:#153b6f; color:#fff; font-size:25px; font-weight:900; text-align:center; overflow-wrap:anywhere; }
+
+        .counting-page .problem-label { color:#b45309; font-weight:900; }
+        .counting-page .solution-label { color:#047857; font-weight:900; }
+        .counting-page .solved-card { border-left-color:#f59e0b; background:#fffbeb; }
+        .counting-page .solution-block,
+        .counting-page .count-answer { margin-top:13px; padding:13px 15px; border:1px solid #a7f3d0; border-left:5px solid #10b981; border-radius:8px; background:#ecfdf5; color:#065f46; line-height:1.65; }
+        .counting-page .count-question { margin:14px 0; padding:18px 20px; border:1px solid #d7e2f0; border-left:5px solid #60a5fa; border-radius:11px; background:#f8fbff; }
+        .counting-page .count-question:nth-child(even) { border-left-color:#8b5cf6; background:#faf7ff; }
+        .counting-page .solution-toggle { margin-top:10px; padding:10px 15px; border:0; border-radius:8px; background:#2563eb; color:#fff; cursor:pointer; font-weight:800; }
+        .counting-page .math-topic-nav-disabled { padding:12px 16px; border:1px solid #d7e2f0; border-radius:9px; background:#f8fafc; color:#94a3b8; font-weight:800; }
+
+        @media(max-width:850px){
+            .counting-page .counting-steps { grid-template-columns:repeat(2,minmax(0,1fr)); }
+            .counting-page .explorer-control-grid { grid-template-columns:1fr; }
+        }
+        @media(max-width:700px){
+            .counting-page .count-grid,
+            .counting-page .decision-grid,
+            .counting-page .coding-grid,
+            .counting-page .solved-grid,
+            .counting-page .counting-steps { grid-template-columns:1fr; }
+        }
+    </style>
+</head>
+
+<body class="math-page math-topic-page counting-page" data-math-topic-page="permutations-combinations">
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo"><img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a>
+    <nav class="top-nav"><a href="../index.html">Home</a><a href="index.html" class="active">Maths</a><a href="../C-Programming/index.html">C</a><a href="../Data-Structures/index.html">Data Structures</a><a href="../Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="../Python/index.html">Python</a><a href="../AI-ML/index.html">AI &amp; ML</a><a href="../Placement/index.html">Placement</a></nav>
+</header>
+
+<div class="docs-layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">Mathematics</div>
+        <input type="text" id="topicSearch" class="search-box" placeholder="🔍 Search topics..." onkeyup="searchTopics()">
+        <a href="index.html" class="sidebar-course-home">📐 Mathematics Home</a>
+        <div class="sidebar-title">Thinking &amp; Logic</div>
+        <a href="mathematical-thinking.html">🧠 Problem Solving &amp; Patterns</a><a href="logic-and-truth-tables.html">🔀 Logic &amp; Truth Tables</a><a href="sets-and-venn-diagrams.html">⭕ Sets &amp; Venn Diagrams</a><a href="mathematical-patterns-for-coding.html">🔺 Patterns for Coding</a>
+        <div class="sidebar-title">Programming Mathematics</div>
+        <a href="number-system.html">🔢 Number System Fundamentals</a><a href="base-conversions.html">🔄 Base Conversions</a><a href="algebra-ap-gp.html">📐 Algebra, AP &amp; GP</a><a href="matrices.html">▦ Matrices</a>
+        <a href="permutations-combinations.html" class="active">🧮 Permutations &amp; Combinations</a>
+        <a href="#" class="coming-soon-link" aria-disabled="true" tabindex="-1">🎲 Probability</a>
+        <div class="sidebar-title">Quantitative Aptitude</div>
+        <a href="percentages.html">📊 Percentages</a><a href="#" class="coming-soon-link" aria-disabled="true" tabindex="-1">📈 Averages</a><a href="#" class="coming-soon-link" aria-disabled="true" tabindex="-1">⚖️ Ratio &amp; Proportion</a><a href="#" class="coming-soon-link" aria-disabled="true" tabindex="-1">💰 Profit, Loss &amp; Discount</a><a href="#" class="coming-soon-link" aria-disabled="true" tabindex="-1">⏱️ Time &amp; Work</a><a href="#" class="coming-soon-link" aria-disabled="true" tabindex="-1">🚗 Time, Speed &amp; Distance</a>
+        <div class="sidebar-title sidebar-practice-title">Practice</div>
+        <a href="practice/mathematical-thinking-practice.html">🧠 Thinking Practice</a><a href="practice/logic-and-truth-tables-practice.html">🔀 Logic Practice</a><a href="practice/sets-and-venn-diagrams-practice.html">⭕ Sets Practice</a><a href="practice/mathematical-patterns-for-coding-practice.html">🔺 Patterns Practice</a><a href="practice/number-system-practice.html">✍️ Number System Practice</a><a href="practice/base-conversions-practice.html">🔄 Base Conversions Practice</a><a href="practice/algebra-ap-gp-practice.html">📐 Algebra Practice</a><a href="practice/matrices-practice.html">▦ Matrices Practice</a><a href="practice/permutations-combinations-practice.html">🧮 P&amp;C Practice</a>
+    </aside>
+
+    <main class="main-content">
+        <section class="math-topic-hero">
+            <span class="subject-label">CODEBHAVYA • MATHEMATICS FOR PROGRAMMING</span>
+            <h1 class="page-title">🧮 Permutations &amp; Combinations</h1>
+            <p class="page-description">Count arrangements and selections without listing them one by one, then apply those ideas to search spaces, passwords, subsets, test cases and algorithms.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>🎯 1. Learning Objectives</h2>
+            <p>After completing this topic, you should be able to:</p>
+            <ul class="math-objectives-list">
+                <li>Apply the addition and multiplication principles of counting.</li>
+                <li>Evaluate factorials and simplify factorial expressions.</li>
+                <li>Recognize whether order matters in a counting problem.</li>
+                <li>Calculate permutations and combinations.</li>
+                <li>Handle repeated objects, repetition, restrictions and circular arrangements.</li>
+                <li>Estimate program search spaces, subsets and possible test inputs.</li>
+            </ul>
+        </section>
+
+        <section class="content-card">
+            <h2>🧠 2. Fundamental Counting Principles</h2>
+            <div class="count-grid">
+                <article class="count-card"><h3>Multiplication Principle</h3><p>If one task has m choices and the next independent task has n choices, the combined task has m × n possibilities.</p><div class="formula-box">3 shirts × 2 trousers = 6 outfits</div></article>
+                <article class="count-card"><h3>Addition Principle</h3><p>If exactly one of two non-overlapping alternatives is chosen, add their counts.</p><div class="formula-box purple">4 bus routes + 3 train routes = 7 choices</div></article>
+            </div>
+            <div class="math-warning-box"><strong>First question:</strong> Are the choices performed together or are they alternatives? This decides whether to multiply or add.</div>
+        </section>
+
+        <section class="content-card">
+            <h2>❗ 3. Factorial</h2>
+            <p>Factorial counts the arrangements of all n distinct objects.</p>
+            <div class="counting-steps"><div class="counting-step">5 choices</div><div class="counting-step">4 choices</div><div class="counting-step">3 choices</div><div class="counting-step">2 × 1</div></div>
+            <div class="formula-box">n! = n(n−1)(n−2)...2×1 &nbsp; and &nbsp; 0! = 1</div>
+            <div class="math-note-box"><strong>Example:</strong> 5! = 5×4×3×2×1 = 120 arrangements.</div>
+        </section>
+
+        <section class="content-card">
+            <h2>🏁 4. Permutations: Order Matters</h2>
+            <p>A permutation selects and arranges r objects from n distinct objects.</p>
+            <div class="formula-box">ⁿPᵣ = n! / (n−r)!</div>
+            <div class="count-grid">
+                <article class="count-card"><h3>Example</h3><p>A gold, silver and bronze order is chosen from 8 runners.</p><div class="formula-box gold">⁸P₃ = 8×7×6 = 336</div></article>
+                <article class="count-card"><h3>Why Order Matters</h3><p>A–B–C and B–A–C contain the same people but assign different ranks, so they are different outcomes.</p></article>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>👥 5. Combinations: Order Does Not Matter</h2>
+            <p>A combination selects r objects from n distinct objects without arranging them.</p>
+            <div class="formula-box purple">ⁿCᵣ = n! / [r!(n−r)!]</div>
+            <div class="count-grid">
+                <article class="count-card"><h3>Example</h3><p>Select a 3-member team from 8 students.</p><div class="formula-box">⁸C₃ = 56 teams</div></article>
+                <article class="count-card"><h3>Useful Identities</h3><p>ⁿC₀ = ⁿCₙ = 1 and ⁿCᵣ = ⁿCₙ₋ᵣ.</p><div class="formula-box gold">⁸C₃ = ⁸C₅</div></article>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>🔍 6. Permutation or Combination?</h2>
+            <div class="decision-grid">
+                <article class="decision-card permutation"><h3>Use Permutation</h3><ul class="math-objectives-list"><li>Rank or position is assigned.</li><li>Objects are arranged in a line.</li><li>Changing order creates a new result.</li><li>Examples: passwords, schedules, race results.</li></ul></article>
+                <article class="decision-card combination"><h3>Use Combination</h3><ul class="math-objectives-list"><li>Only a group is selected.</li><li>Positions are not assigned.</li><li>Changing order does not create a new result.</li><li>Examples: teams, committees, subsets.</li></ul></article>
+            </div>
+            <div class="count-table-wrap">
+                <table class="count-table">
+                    <thead><tr><th>Question</th><th>Order?</th><th>Method</th></tr></thead>
+                    <tbody><tr><td>Choose a captain and vice-captain</td><td>Yes</td><td>Permutation</td></tr><tr><td>Choose two representatives</td><td>No</td><td>Combination</td></tr><tr><td>Create a four-character code</td><td>Yes</td><td>Multiplication/permutation</td></tr><tr><td>Select test cases from a test pool</td><td>No</td><td>Combination</td></tr></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>🔁 7. Arrangements with Repeated Objects</h2>
+            <p>When some objects are identical, divide by the factorial of each repeated count.</p>
+            <div class="formula-box">Arrangements = n! / (p!q!r!...)</div>
+            <div class="math-note-box"><strong>BANANA:</strong> 6 letters with A repeated 3 times and N repeated 2 times. Count = 6!/(3!2!) = <strong>60</strong>.</div>
+        </section>
+
+        <section class="content-card">
+            <h2>⭕ 8. Circular Permutations</h2>
+            <p>Rotations of the same circular arrangement are treated as identical.</p>
+            <div class="formula-box gold">n distinct objects around a circle = (n−1)!</div>
+            <div class="math-note-box">Five people around a round table can be seated in (5−1)! = <strong>24</strong> ways.</div>
+        </section>
+
+        <section class="content-card">
+            <h2>🔐 9. Repetition and Restrictions</h2>
+            <div class="count-grid">
+                <article class="count-card"><h3>Repetition Allowed</h3><p>With n symbols and r positions, each position has n choices.</p><div class="formula-box">nʳ strings</div><p>Four decimal digits: 10⁴ = 10,000 codes.</p></article>
+                <article class="count-card"><h3>Objects Together</h3><p>Treat required adjacent objects as one block, then arrange the block internally.</p><div class="formula-box purple">2 particular people together among 6: 5! × 2!</div></article>
+            </div>
+            <div class="math-warning-box"><strong>Complement method:</strong> “At least one” is often easier as total outcomes minus outcomes with none.</div>
+        </section>
+
+        <section class="content-card counting-explorer">
+            <span class="section-label">INTERACTIVE EXPLORER</span>
+            <h2>🧪 10. Counting Explorer</h2>
+            <p>Choose a counting model, enter n and r where required, then click <strong>Calculate Count</strong>. Inputs alone never reveal the result.</p>
+            <div class="explorer-control-grid">
+                <div class="explorer-control"><label for="countingMode">Counting model</label><select id="countingMode"><option value="factorial">Arrange all n distinct objects: n!</option><option value="permutation">Permutation: nPr</option><option value="combination">Combination: nCr</option><option value="repetition">Length-r strings from n symbols: nʳ</option><option value="circular">Circular arrangements: (n−1)!</option></select></div>
+                <div class="explorer-control"><label id="countingNLabel" for="countingN">Number of objects n</label><input id="countingN" type="number" min="0" max="100" value="5" step="1"></div>
+                <div class="explorer-control"><label id="countingRLabel" for="countingR">Selected positions r</label><input id="countingR" type="number" min="0" max="100" value="3" step="1"></div>
+            </div>
+            <button id="calculateCountButton" type="button" class="primary-button">Calculate Count</button>
+            <div class="explorer-example-row" aria-label="Counting examples"><button type="button" class="explorer-example-button" data-mode="permutation" data-n="8" data-r="3">Race medals: 8P3</button><button type="button" class="explorer-example-button" data-mode="combination" data-n="8" data-r="3">Team: 8C3</button><button type="button" class="explorer-example-button" data-mode="repetition" data-n="10" data-r="4">Four-digit code</button><button type="button" class="explorer-example-button" data-mode="circular" data-n="5" data-r="0">Round table</button></div>
+            <div id="countExplorerMessage" class="explorer-message">Select a model or example, then click Calculate Count.</div>
+            <div id="countExplorerResult" class="explorer-result" hidden><h3 id="countResultTitle">Result</h3><div id="countResultNumber" class="count-result-number"></div><p id="countResultFormula"></p><p id="countResultExplanation"></p></div>
+        </section>
+
+        <section class="content-card">
+            <h2>💻 11. Applications in Programming</h2>
+            <div class="coding-grid">
+                <article class="coding-card"><h3>Brute-Force Search</h3><p>Trying every ordering of n items may require n! cases. Factorial growth explains why brute force quickly becomes impractical.</p></article>
+                <article class="coding-card"><h3>Subsets and Bitmasks</h3><p>A set with n elements has 2ⁿ subsets. Bitmasks encode whether each element is selected.</p></article>
+                <article class="coding-card"><h3>Password Search Space</h3><p>A password of length r from n allowed symbols has nʳ possibilities when repetition is allowed.</p></article>
+                <article class="coding-card"><h3>Test-Case Selection</h3><p>Selecting r cases from n without caring about execution order uses nCr.</p></article>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>🧾 12. Solved Problems</h2>
+            <div class="solved-grid">
+                <article class="solved-card"><h3>Problem 1: Ranked Selection</h3><p><span class="problem-label">Problem:</span> Choose president, secretary and treasurer from 7 students.</p><div class="solution-block"><span class="solution-label">Solution:</span> Roles differ, so order matters. ⁷P₃ = 7×6×5 = <strong>210</strong>.</div></article>
+                <article class="solved-card"><h3>Problem 2: Team Selection</h3><p><span class="problem-label">Problem:</span> Select 4 programmers from 10.</p><div class="solution-block"><span class="solution-label">Solution:</span> Order does not matter. ¹⁰C₄ = <strong>210</strong>.</div></article>
+                <article class="solved-card"><h3>Problem 3: Repeated Letters</h3><p><span class="problem-label">Problem:</span> Arrange the letters of LEVEL.</p><div class="solution-block"><span class="solution-label">Solution:</span> L and E each repeat twice. Count = 5!/(2!2!) = <strong>30</strong>.</div></article>
+                <article class="solved-card"><h3>Problem 4: Search Space</h3><p><span class="problem-label">Problem:</span> Form a three-character string from 26 letters with repetition.</p><div class="solution-block"><span class="solution-label">Solution:</span> Each position has 26 choices: 26³ = <strong>17,576</strong>.</div></article>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>✍️ 13. Practice Problems</h2>
+            <div class="math-note-box">Solve each problem first, then use <strong>Show Solution</strong> to verify your method.</div>
+            <article class="count-question"><p><strong>1.</strong> In how many ways can 6 distinct books be arranged on a shelf?</p><button type="button" class="solution-toggle" data-target="countAnswer1" aria-expanded="false">Show Solution</button><div id="countAnswer1" class="count-answer" hidden>Arrange all 6 books: 6! = <strong>720</strong>.</div></article>
+            <article class="count-question"><p><strong>2.</strong> How many 3-member teams can be selected from 9 students?</p><button type="button" class="solution-toggle" data-target="countAnswer2" aria-expanded="false">Show Solution</button><div id="countAnswer2" class="count-answer" hidden>Order does not matter: ⁹C₃ = 9×8×7/(3×2×1) = <strong>84</strong>.</div></article>
+            <article class="count-question"><p><strong>3.</strong> How many 4-character strings can be formed from 6 different symbols without repetition?</p><button type="button" class="solution-toggle" data-target="countAnswer3" aria-expanded="false">Show Solution</button><div id="countAnswer3" class="count-answer" hidden>Order matters and repetition is forbidden: ⁶P₄ = 6×5×4×3 = <strong>360</strong>.</div></article>
+            <article class="count-question"><p><strong>4.</strong> How many distinct arrangements does the word BOOK have?</p><button type="button" class="solution-toggle" data-target="countAnswer4" aria-expanded="false">Show Solution</button><div id="countAnswer4" class="count-answer" hidden>There are 4 letters with O repeated twice: 4!/2! = <strong>12</strong>.</div></article>
+            <article class="count-question"><p><strong>5.</strong> How many non-empty subsets does a 6-element set have?</p><button type="button" class="solution-toggle" data-target="countAnswer5" aria-expanded="false">Show Solution</button><div id="countAnswer5" class="count-answer" hidden>A 6-element set has 2⁶ subsets. Remove the empty set: 64−1 = <strong>63</strong>.</div></article>
+        </section>
+
+        <section class="content-card">
+            <h2>📝 14. Quick Revision</h2>
+            <ul class="math-objectives-list"><li>Use multiplication for successive independent choices and addition for alternatives.</li><li>n! arranges all n distinct objects; 0! = 1.</li><li>Permutation: order matters; ⁿPᵣ = n!/(n−r)!.</li><li>Combination: order does not matter; ⁿCᵣ = n!/[r!(n−r)!].</li><li>Divide by repeated factorials when identical objects occur.</li><li>Distinct circular arrangements = (n−1)!.</li><li>With repetition, r positions from n symbols produce nʳ strings.</li><li>A set of n elements has 2ⁿ subsets and 2ⁿ−1 non-empty subsets.</li></ul>
+        </section>
+
+        <section class="content-card math-practice-spotlight" id="permutations-combinations-test">
+            <div class="math-practice-copy"><span class="section-label">INTERACTIVE PRACTICE</span><h2>🧮 Permutations &amp; Combinations Practice</h2><p>Complete 20 questions from easy to hard. Your score, every option, correct answers and explanations appear after final submission.</p></div>
+            <a href="practice/permutations-combinations-practice.html" class="primary-button math-practice-button">Start 20-Question Test →</a>
+        </section>
+
+        <nav class="math-topic-navigation" aria-label="Mathematics topic navigation"><a href="matrices.html">← Previous: Matrices</a><span class="math-topic-nav-disabled" aria-disabled="true">Next: Probability →</span></nav>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div><div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="index.html">Mathematics</a><a href="permutations-combinations.html">P&amp;C</a></div><div class="footer-column"><h3>Learning</h3><a href="algebra-ap-gp.html">Algebra, AP &amp; GP</a><a href="matrices.html">Matrices</a><a href="permutations-combinations.html">Permutations &amp; Combinations</a></div><div class="footer-column"><h3>Practice</h3><a href="practice/permutations-combinations-practice.html">P&amp;C Practice</a><a href="practice/matrices-practice.html">Matrices Practice</a><a href="practice/algebra-ap-gp-practice.html">Algebra Practice</a></div></div>
+    <div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div>
+</footer>
+
+<script src="../script.js"></script><script src="mathematics.js"></script><script src="permutations-combinations.js"></script>
+</body>
+</html>
