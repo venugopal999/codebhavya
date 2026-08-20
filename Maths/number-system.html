@@ -12,7 +12,7 @@
     <link rel="icon" type="image/png" href="../images/codebhavya-icon-32.png">
 
     <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="mathematics.css">
+    <link rel="stylesheet" href="mathematics.css?v=20260820-1">
 
 </head>
 
@@ -936,7 +936,9 @@
 
                 <button
                     class="solution-button"
-                    onclick="toggleSolution('ns1')">
+                    type="button"
+                    aria-expanded="false"
+                    onclick="toggleNumberSystemSolution('ns1', this)">
 
                     Show Solution
 
@@ -944,7 +946,9 @@
 
 
                 <div id="ns1"
-                     class="solution">
+                     class="solution"
+                     hidden
+                     style="display: none;">
 
                     Last digit = 6.
 
@@ -976,7 +980,9 @@
 
                 <button
                     class="solution-button"
-                    onclick="toggleSolution('ns2')">
+                    type="button"
+                    aria-expanded="false"
+                    onclick="toggleNumberSystemSolution('ns2', this)">
 
                     Show Solution
 
@@ -984,7 +990,9 @@
 
 
                 <div id="ns2"
-                     class="solution">
+                     class="solution"
+                     hidden
+                     style="display: none;">
 
                     Last digit = 5.
 
@@ -1016,7 +1024,9 @@
 
                 <button
                     class="solution-button"
-                    onclick="toggleSolution('ns3')">
+                    type="button"
+                    aria-expanded="false"
+                    onclick="toggleNumberSystemSolution('ns3', this)">
 
                     Show Solution
 
@@ -1024,7 +1034,9 @@
 
 
                 <div id="ns3"
-                     class="solution">
+                     class="solution"
+                     hidden
+                     style="display: none;">
 
                     Factors of 18:
 
@@ -1060,7 +1072,9 @@
 
                 <button
                     class="solution-button"
-                    onclick="toggleSolution('ns4')">
+                    type="button"
+                    aria-expanded="false"
+                    onclick="toggleNumberSystemSolution('ns4', this)">
 
                     Show Solution
 
@@ -1068,7 +1082,9 @@
 
 
                 <div id="ns4"
-                     class="solution">
+                     class="solution"
+                     hidden
+                     style="display: none;">
 
                     Multiples of 8:
 
@@ -1104,7 +1120,9 @@
 
                 <button
                     class="solution-button"
-                    onclick="toggleSolution('ns5')">
+                    type="button"
+                    aria-expanded="false"
+                    onclick="toggleNumberSystemSolution('ns5', this)">
 
                     Show Solution
 
@@ -1112,7 +1130,9 @@
 
 
                 <div id="ns5"
-                     class="solution">
+                     class="solution"
+                     hidden
+                     style="display: none;">
 
                     Sum of digits:
 
@@ -1325,6 +1345,23 @@
     </div>
 
 </footer>
+
+
+<script>
+function toggleNumberSystemSolution(id, button) {
+    const solution = document.getElementById(id);
+
+    if (!solution) {
+        return;
+    }
+
+    const shouldOpen = solution.hidden;
+    solution.hidden = !shouldOpen;
+    solution.style.display = shouldOpen ? "block" : "none";
+    button.setAttribute("aria-expanded", String(shouldOpen));
+    button.textContent = shouldOpen ? "Hide Solution" : "Show Solution";
+}
+</script>
 
 
 
