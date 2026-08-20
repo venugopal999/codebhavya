@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrices for Programming | CodeBhavya</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="mathematics.css?v=20260820-4">
+
+    <style>
+        .matrices-page .matrix-grid,
+        .matrices-page .matrix-type-grid,
+        .matrices-page .matrix-use-grid,
+        .matrices-page .matrix-solved-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .matrices-page .matrix-card,
+        .matrices-page .matrix-type-card,
+        .matrices-page .matrix-use-card,
+        .matrices-page .matrix-solved-card {
+            padding: 20px;
+            border: 1px solid #d7e2f0;
+            border-left: 5px solid #60a5fa;
+            border-radius: 12px;
+            background: #f8fbff;
+        }
+
+        .matrices-page .matrix-card:nth-child(even),
+        .matrices-page .matrix-type-card:nth-child(even),
+        .matrices-page .matrix-use-card:nth-child(even) {
+            border-left-color: #8b5cf6;
+            background: #faf7ff;
+        }
+
+        .matrices-page .matrix-card h3,
+        .matrices-page .matrix-type-card h3,
+        .matrices-page .matrix-use-card h3,
+        .matrices-page .matrix-solved-card h3 {
+            margin: 0 0 10px;
+            color: #153b6f;
+        }
+
+        .matrices-page .matrix-display {
+            display: inline-grid;
+            grid-template-columns: repeat(2, minmax(46px, auto));
+            gap: 8px 14px;
+            position: relative;
+            margin: 12px 16px;
+            padding: 9px 16px;
+            color: #153b6f;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .matrices-page .matrix-display::before,
+        .matrices-page .matrix-display::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            border-top: 2px solid #2563eb;
+            border-bottom: 2px solid #2563eb;
+        }
+
+        .matrices-page .matrix-display::before {
+            left: 0;
+            border-left: 2px solid #2563eb;
+        }
+
+        .matrices-page .matrix-display::after {
+            right: 0;
+            border-right: 2px solid #2563eb;
+        }
+
+        .matrices-page .matrix-display.matrix-3-column {
+            grid-template-columns: repeat(3, minmax(38px, auto));
+        }
+
+        .matrices-page .matrix-equation {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 14px;
+            padding: 15px;
+            border: 1px solid #bfdbfe;
+            border-radius: 10px;
+            background: #eef6ff;
+        }
+
+        .matrices-page .matrix-operator {
+            color: #7c3aed;
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .matrices-page .rule-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .matrices-page .math-note-box,
+        .matrices-page .math-warning-box {
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 10px;
+            line-height: 1.65;
+        }
+
+        .matrices-page .math-note-box {
+            border: 1px solid #bfdbfe;
+            border-left: 5px solid #2563eb;
+            background: #eff6ff;
+            color: #164e87;
+        }
+
+        .matrices-page .math-warning-box {
+            border: 1px solid #fde68a;
+            border-left: 5px solid #eab308;
+            background: #fffbeb;
+            color: #854d0e;
+        }
+
+        .matrices-page .rule-item {
+            padding: 14px 16px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .matrices-page .rule-item:nth-child(1) { background: #eff6ff; color: #1d4ed8; border-left: 5px solid #3b82f6; }
+        .matrices-page .rule-item:nth-child(2) { background: #f5f3ff; color: #6d28d9; border-left: 5px solid #8b5cf6; }
+        .matrices-page .rule-item:nth-child(3) { background: #fffbeb; color: #92400e; border-left: 5px solid #f59e0b; }
+        .matrices-page .rule-item:nth-child(4) { background: #ecfdf5; color: #047857; border-left: 5px solid #10b981; }
+
+        .matrices-page .matrix-table-wrap {
+            overflow-x: auto;
+        }
+
+        .matrices-page .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .matrices-page .matrix-table th,
+        .matrices-page .matrix-table td {
+            padding: 12px 14px;
+            border: 1px solid #d7e2f0;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .matrices-page .matrix-table th {
+            background: #153b6f;
+            color: #fff;
+        }
+
+        .matrices-page .matrix-table tbody tr:nth-child(even) {
+            background: #f1f7ff;
+        }
+
+        .matrices-page .matrix-explorer {
+            border-left: 5px solid #2563eb;
+        }
+
+        .matrices-page .matrix-explorer-controls {
+            display: grid;
+            grid-template-columns: 240px minmax(0, 1fr);
+            gap: 16px;
+            align-items: end;
+            margin: 18px 0;
+        }
+
+        .matrices-page .matrix-control label {
+            display: block;
+            margin-bottom: 7px;
+            color: #243b5a;
+            font-weight: 800;
+        }
+
+        .matrices-page .matrix-control select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            background: #fff;
+            color: #0f172a;
+            font: inherit;
+        }
+
+        .matrices-page .matrix-input-area {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin: 16px 0;
+        }
+
+        .matrices-page .matrix-input-card {
+            padding: 16px;
+            border: 1px solid #d7e2f0;
+            border-radius: 11px;
+            background: #f8fbff;
+        }
+
+        .matrices-page .matrix-input-card h3 {
+            margin: 0 0 12px;
+            color: #153b6f;
+        }
+
+        .matrices-page .matrix-input-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .matrices-page .matrix-input-grid input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            background: #fff;
+            color: #0f172a;
+            font: inherit;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .matrices-page .matrix-example-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .matrices-page .matrix-example-button {
+            padding: 8px 12px;
+            border: 1px solid #bfdbfe;
+            border-radius: 999px;
+            background: #f8fbff;
+            color: #153b6f;
+            cursor: pointer;
+            font-weight: 800;
+        }
+
+        .matrices-page .matrix-explorer-message,
+        .matrices-page .matrix-explorer-result {
+            margin-top: 16px;
+            padding: 18px;
+            border: 1px solid #bfdbfe;
+            border-left: 5px solid #2563eb;
+            border-radius: 10px;
+            background: #eff6ff;
+            color: #153b6f;
+        }
+
+        .matrices-page .matrix-explorer-result[hidden],
+        .matrices-page .matrix-explorer-message[hidden],
+        .matrices-page .matrix-answer[hidden] {
+            display: none !important;
+        }
+
+        .matrices-page .matrix-result-display {
+            display: inline-grid;
+            position: relative;
+            gap: 9px 18px;
+            margin: 12px 18px;
+            padding: 10px 18px;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .matrices-page .matrix-result-display::before,
+        .matrices-page .matrix-result-display::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            border-top: 3px solid #2563eb;
+            border-bottom: 3px solid #2563eb;
+        }
+
+        .matrices-page .matrix-result-display::before { left: 0; border-left: 3px solid #2563eb; }
+        .matrices-page .matrix-result-display::after { right: 0; border-right: 3px solid #2563eb; }
+
+        .matrices-page .problem-label { color: #b45309; font-weight: 900; }
+        .matrices-page .solution-label { color: #047857; font-weight: 900; }
+
+        .matrices-page .matrix-solved-card {
+            border-left-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .matrices-page .solution-block,
+        .matrices-page .matrix-answer {
+            margin-top: 13px;
+            padding: 13px 15px;
+            border: 1px solid #a7f3d0;
+            border-left: 5px solid #10b981;
+            border-radius: 8px;
+            background: #ecfdf5;
+            color: #065f46;
+            line-height: 1.65;
+        }
+
+        .matrices-page .matrix-question {
+            margin: 14px 0;
+            padding: 18px 20px;
+            border: 1px solid #d7e2f0;
+            border-left: 5px solid #60a5fa;
+            border-radius: 11px;
+            background: #f8fbff;
+        }
+
+        .matrices-page .matrix-question:nth-child(even) {
+            border-left-color: #8b5cf6;
+            background: #faf7ff;
+        }
+
+        .matrices-page .matrix-solution-toggle {
+            margin-top: 10px;
+            padding: 10px 15px;
+            border: 0;
+            border-radius: 8px;
+            background: #2563eb;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 800;
+        }
+
+        .matrices-page .math-topic-nav-disabled {
+            padding: 12px 16px;
+            border: 1px solid #d7e2f0;
+            border-radius: 9px;
+            background: #f8fafc;
+            color: #94a3b8;
+            font-weight: 800;
+        }
+
+        @media (max-width: 800px) {
+            .matrices-page .matrix-grid,
+            .matrices-page .matrix-type-grid,
+            .matrices-page .matrix-use-grid,
+            .matrices-page .matrix-solved-grid,
+            .matrices-page .matrix-input-area,
+            .matrices-page .matrix-explorer-controls {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body class="math-page math-topic-page matrices-page" data-math-topic-page="matrices">
+
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo">
+        <img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </a>
+    <nav class="top-nav">
+        <a href="../index.html">Home</a><a href="index.html" class="active">Maths</a>
+        <a href="../C-Programming/index.html">C</a>
+        <a href="../Data-Structures/index.html">Data Structures</a>
+        <a href="../Advanced-Data-Structures/index.html">Advanced Data Structures</a>
+        <a href="../Python/index.html">Python</a><a href="../AI-ML/index.html">AI &amp; ML</a>
+        <a href="../Placement/index.html">Placement</a>
+    </nav>
+</header>
+
+<div class="docs-layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">Mathematics</div>
+        <input type="text" id="topicSearch" class="search-box" placeholder="🔍 Search topics..." onkeyup="searchTopics()">
+        <a href="index.html" class="sidebar-course-home">📐 Mathematics Home</a>
+
+        <div class="sidebar-title">Thinking &amp; Logic</div>
+        <a href="mathematical-thinking.html">🧠 Problem Solving &amp; Patterns</a>
+        <a href="logic-and-truth-tables.html">🔀 Logic &amp; Truth Tables</a>
+        <a href="sets-and-venn-diagrams.html">⭕ Sets &amp; Venn Diagrams</a>
+        <a href="mathematical-patterns-for-coding.html">🔺 Patterns for Coding</a>
+
+        <div class="sidebar-title">Programming Mathematics</div>
+        <a href="number-system.html">🔢 Number System Fundamentals</a>
+        <a href="base-conversions.html">🔄 Base Conversions</a>
+        <a href="algebra-ap-gp.html">📐 Algebra, AP &amp; GP</a>
+        <a href="matrices.html" class="active">▦ Matrices</a>
+        <a href="#" class="coming-soon-link" aria-disabled="true" tabindex="-1">🧮 Permutations &amp; Combinations</a>
+        <a href="#" class="coming-soon-link" aria-disabled="true" tabindex="-1">🎲 Probability</a>
+
+        <div class="sidebar-title">Quantitative Aptitude</div>
+        <a href="percentages.html">📊 Percentages</a>
+        <a href="#" class="coming-soon-link" aria-disabled="true" tabindex="-1">📈 Averages</a>
+        <a href="#" class="coming-soon-link" aria-disabled="true" tabindex="-1">⚖️ Ratio &amp; Proportion</a>
+        <a href="#" class="coming-soon-link" aria-disabled="true" tabindex="-1">💰 Profit, Loss &amp; Discount</a>
+        <a href="#" class="coming-soon-link" aria-disabled="true" tabindex="-1">⏱️ Time &amp; Work</a>
+        <a href="#" class="coming-soon-link" aria-disabled="true" tabindex="-1">🚗 Time, Speed &amp; Distance</a>
+
+        <div class="sidebar-title sidebar-practice-title">Practice</div>
+        <a href="practice/mathematical-thinking-practice.html">🧠 Thinking Practice</a>
+        <a href="practice/logic-and-truth-tables-practice.html">🔀 Logic Practice</a>
+        <a href="practice/sets-and-venn-diagrams-practice.html">⭕ Sets Practice</a>
+        <a href="practice/mathematical-patterns-for-coding-practice.html">🔺 Patterns Practice</a>
+        <a href="practice/number-system-practice.html">✍️ Number System Practice</a>
+        <a href="practice/base-conversions-practice.html">🔄 Base Conversions Practice</a>
+        <a href="practice/algebra-ap-gp-practice.html">📐 Algebra Practice</a>
+        <a href="practice/matrices-practice.html">▦ Matrices Practice</a>
+    </aside>
+
+    <main class="main-content">
+        <section class="math-topic-hero">
+            <span class="subject-label">CODEBHAVYA • MATHEMATICS FOR PROGRAMMING</span>
+            <h1 class="page-title">▦ Matrices for Programming</h1>
+            <p class="page-description">
+                Learn how rectangular arrays represent data, perform matrix operations step by step,
+                and connect matrices with images, graphs, transformations and machine learning.
+            </p>
+        </section>
+
+        <section class="content-card">
+            <h2>🎯 1. Learning Objectives</h2>
+            <p>After completing this topic, you should be able to:</p>
+            <ul class="math-objectives-list">
+                <li>Identify the order, rows, columns and elements of a matrix.</li>
+                <li>Recognize common matrix types and their properties.</li>
+                <li>Perform addition, subtraction, scalar multiplication and matrix multiplication.</li>
+                <li>Find a transpose and the determinant of a 2 × 2 matrix.</li>
+                <li>Check whether two matrices are compatible for an operation.</li>
+                <li>Connect matrices with arrays, images, graphs and AI models.</li>
+            </ul>
+        </section>
+
+        <section class="content-card">
+            <h2>🧩 2. Matrix Fundamentals</h2>
+            <div class="matrix-grid">
+                <article class="matrix-card">
+                    <h3>What Is a Matrix?</h3>
+                    <p>A matrix is a rectangular arrangement of values in rows and columns.</p>
+                    <div class="matrix-equation">
+                        <div class="matrix-display matrix-3-column"><span>2</span><span>5</span><span>8</span><span>1</span><span>4</span><span>7</span></div>
+                    </div>
+                </article>
+                <article class="matrix-card">
+                    <h3>Order and Element Position</h3>
+                    <p>The example has 2 rows and 3 columns, so its order is <strong>2 × 3</strong>.</p>
+                    <p>A<sub>ij</sub> means the element in row <em>i</em>, column <em>j</em>. Here A<sub>23</sub> = 7.</p>
+                </article>
+            </div>
+            <div class="math-note-box"><strong>Programming connection:</strong> A matrix maps naturally to a two-dimensional array such as <code>matrix[row][column]</code>.</div>
+        </section>
+
+        <section class="content-card">
+            <h2>🗂️ 3. Common Types of Matrices</h2>
+            <div class="matrix-type-grid">
+                <article class="matrix-type-card"><h3>Row and Column</h3><p>A row matrix has one row; a column matrix has one column.</p></article>
+                <article class="matrix-type-card"><h3>Rectangular and Square</h3><p>A square matrix has equal rows and columns; otherwise it is rectangular.</p></article>
+                <article class="matrix-type-card"><h3>Zero Matrix</h3><p>Every element is 0. It acts like zero in matrix addition.</p><div class="matrix-equation"><div class="matrix-display"><span>0</span><span>0</span><span>0</span><span>0</span></div></div></article>
+                <article class="matrix-type-card"><h3>Identity Matrix</h3><p>Diagonal entries are 1 and all others are 0. AI = IA = A.</p><div class="matrix-equation"><div class="matrix-display"><span>1</span><span>0</span><span>0</span><span>1</span></div></div></article>
+                <article class="matrix-type-card"><h3>Diagonal Matrix</h3><p>All non-diagonal entries are 0.</p><div class="matrix-equation"><div class="matrix-display"><span>4</span><span>0</span><span>0</span><span>7</span></div></div></article>
+                <article class="matrix-type-card"><h3>Symmetric Matrix</h3><p>A square matrix is symmetric when A<sup>T</sup> = A.</p><div class="matrix-equation"><div class="matrix-display"><span>2</span><span>5</span><span>5</span><span>8</span></div></div></article>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>✅ 4. Equality, Addition and Subtraction</h2>
+            <div class="rule-list">
+                <div class="rule-item">Equal matrices must have the same order and equal corresponding elements.</div>
+                <div class="rule-item">Addition and subtraction require matrices of the same order.</div>
+                <div class="rule-item">Operate on corresponding positions: C<sub>ij</sub> = A<sub>ij</sub> ± B<sub>ij</sub>.</div>
+                <div class="rule-item">Matrix addition is commutative: A + B = B + A.</div>
+            </div>
+            <div class="matrix-equation">
+                <div class="matrix-display"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+                <span class="matrix-operator">+</span>
+                <div class="matrix-display"><span>5</span><span>6</span><span>7</span><span>8</span></div>
+                <span class="matrix-operator">=</span>
+                <div class="matrix-display"><span>6</span><span>8</span><span>10</span><span>12</span></div>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>🔢 5. Scalar Multiplication</h2>
+            <p>Multiply every element by the scalar value.</p>
+            <div class="matrix-equation">
+                <span class="matrix-operator">3 ×</span>
+                <div class="matrix-display"><span>1</span><span>−2</span><span>4</span><span>0</span></div>
+                <span class="matrix-operator">=</span>
+                <div class="matrix-display"><span>3</span><span>−6</span><span>12</span><span>0</span></div>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>✖️ 6. Matrix Multiplication</h2>
+            <p>Multiply each row of the first matrix by each column of the second matrix.</p>
+            <div class="math-warning-box"><strong>Compatibility rule:</strong> If A is m × n and B is n × p, then AB exists and has order m × p. The inner dimensions must match.</div>
+            <div class="matrix-equation">
+                <div class="matrix-display"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+                <span class="matrix-operator">×</span>
+                <div class="matrix-display"><span>5</span><span>6</span><span>7</span><span>8</span></div>
+                <span class="matrix-operator">=</span>
+                <div class="matrix-display"><span>19</span><span>22</span><span>43</span><span>50</span></div>
+            </div>
+            <div class="rule-list">
+                <div class="rule-item">C<sub>11</sub> = 1×5 + 2×7 = 19</div>
+                <div class="rule-item">C<sub>12</sub> = 1×6 + 2×8 = 22</div>
+                <div class="rule-item">C<sub>21</sub> = 3×5 + 4×7 = 43</div>
+                <div class="rule-item">C<sub>22</sub> = 3×6 + 4×8 = 50</div>
+            </div>
+            <div class="math-note-box"><strong>Important:</strong> Matrix multiplication is generally not commutative. Usually AB ≠ BA.</div>
+        </section>
+
+        <section class="content-card">
+            <h2>🔄 7. Transpose</h2>
+            <p>The transpose exchanges rows and columns. If A is m × n, then A<sup>T</sup> is n × m.</p>
+            <div class="matrix-equation">
+                <div class="matrix-display matrix-3-column"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+                <span class="matrix-operator">→ A<sup>T</sup> =</span>
+                <div class="matrix-display"><span>1</span><span>4</span><span>2</span><span>5</span><span>3</span><span>6</span></div>
+            </div>
+            <div class="math-note-box"><strong>Useful rules:</strong> (A<sup>T</sup>)<sup>T</sup> = A and (AB)<sup>T</sup> = B<sup>T</sup>A<sup>T</sup>.</div>
+        </section>
+
+        <section class="content-card">
+            <h2>📏 8. Determinant of a 2 × 2 Matrix</h2>
+            <div class="matrix-grid">
+                <article class="matrix-card">
+                    <h3>Formula</h3>
+                    <div class="matrix-equation"><div class="matrix-display"><span>a</span><span>b</span><span>c</span><span>d</span></div></div>
+                    <p style="text-align:center;font-weight:900;color:#164e87;">det(A) = ad − bc</p>
+                </article>
+                <article class="matrix-card">
+                    <h3>Example</h3>
+                    <div class="matrix-equation"><div class="matrix-display"><span>4</span><span>3</span><span>2</span><span>5</span></div></div>
+                    <p>det(A) = 4×5 − 3×2 = <strong>14</strong>.</p>
+                </article>
+            </div>
+            <div class="math-warning-box"><strong>Singular matrix:</strong> If det(A) = 0, the square matrix has no inverse.</div>
+        </section>
+
+        <section class="content-card">
+            <h2>🔐 9. Inverse of a 2 × 2 Matrix</h2>
+            <p>An inverse exists only when ad − bc ≠ 0.</p>
+            <div class="matrix-equation">
+                <span class="matrix-operator">A<sup>−1</sup> = 1/(ad − bc)</span>
+                <div class="matrix-display"><span>d</span><span>−b</span><span>−c</span><span>a</span></div>
+            </div>
+            <div class="math-note-box">The inverse reverses a matrix transformation: AA<sup>−1</sup> = A<sup>−1</sup>A = I.</div>
+        </section>
+
+        <section class="content-card matrix-explorer">
+            <span class="section-label">INTERACTIVE VISUALIZER</span>
+            <h2>🧪 10. Matrix Operation Explorer</h2>
+            <p>Enter two 2 × 2 matrices, choose an operation and click <strong>Calculate Matrix</strong>. Results remain hidden until the button is clicked.</p>
+
+            <div class="matrix-explorer-controls">
+                <div class="matrix-control">
+                    <label for="matrixOperation">Operation</label>
+                    <select id="matrixOperation">
+                        <option value="add">A + B</option>
+                        <option value="subtract">A − B</option>
+                        <option value="multiply">A × B</option>
+                        <option value="transposeA">Transpose A</option>
+                        <option value="determinantA">Determinant of A</option>
+                    </select>
+                </div>
+                <button id="calculateMatrixButton" type="button" class="primary-button">Calculate Matrix</button>
+            </div>
+
+            <div class="matrix-input-area">
+                <div class="matrix-input-card">
+                    <h3>Matrix A</h3>
+                    <div class="matrix-input-grid">
+                        <input id="matrixA11" type="number" value="1" step="any" aria-label="Matrix A row 1 column 1">
+                        <input id="matrixA12" type="number" value="2" step="any" aria-label="Matrix A row 1 column 2">
+                        <input id="matrixA21" type="number" value="3" step="any" aria-label="Matrix A row 2 column 1">
+                        <input id="matrixA22" type="number" value="4" step="any" aria-label="Matrix A row 2 column 2">
+                    </div>
+                </div>
+                <div class="matrix-input-card" id="matrixBInputCard">
+                    <h3>Matrix B</h3>
+                    <div class="matrix-input-grid">
+                        <input id="matrixB11" type="number" value="5" step="any" aria-label="Matrix B row 1 column 1">
+                        <input id="matrixB12" type="number" value="6" step="any" aria-label="Matrix B row 1 column 2">
+                        <input id="matrixB21" type="number" value="7" step="any" aria-label="Matrix B row 2 column 1">
+                        <input id="matrixB22" type="number" value="8" step="any" aria-label="Matrix B row 2 column 2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-example-row" aria-label="Matrix examples">
+                <button type="button" class="matrix-example-button" data-operation="add" data-a="1,2,3,4" data-b="5,6,7,8">Addition Example</button>
+                <button type="button" class="matrix-example-button" data-operation="multiply" data-a="1,2,3,4" data-b="5,6,7,8">Multiplication Example</button>
+                <button type="button" class="matrix-example-button" data-operation="determinantA" data-a="4,3,2,5" data-b="1,0,0,1">Determinant Example</button>
+            </div>
+
+            <div id="matrixExplorerMessage" class="matrix-explorer-message">Select an operation or example, then click Calculate Matrix.</div>
+            <div id="matrixExplorerResult" class="matrix-explorer-result" hidden>
+                <h3 id="matrixResultTitle">Result</h3>
+                <div id="matrixResultValue"></div>
+                <p id="matrixResultExplanation"></p>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>💻 11. Matrices in Programming</h2>
+            <div class="matrix-use-grid">
+                <article class="matrix-use-card"><h3>Images</h3><p>A grayscale image is a matrix of pixel intensities. Colour images use matrices for red, green and blue channels.</p></article>
+                <article class="matrix-use-card"><h3>Graphs</h3><p>An adjacency matrix records whether vertices are connected. Undirected graphs produce symmetric adjacency matrices.</p></article>
+                <article class="matrix-use-card"><h3>Transformations</h3><p>Rotation, scaling and reflection in computer graphics are expressed using matrix multiplication.</p></article>
+                <article class="matrix-use-card"><h3>AI and Machine Learning</h3><p>Datasets, weights and feature transformations are stored and processed as matrices.</p></article>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>🧾 12. Solved Problems</h2>
+            <div class="matrix-solved-grid">
+                <article class="matrix-solved-card"><h3>Problem 1: Order and Element</h3><p><span class="problem-label">Problem:</span> A has 3 rows and 4 columns. State its order and number of elements.</p><div class="solution-block"><span class="solution-label">Solution:</span> Order = <strong>3 × 4</strong>; elements = 3×4 = <strong>12</strong>.</div></article>
+                <article class="matrix-solved-card"><h3>Problem 2: Addition</h3><p><span class="problem-label">Problem:</span> Add A=[[2,1],[4,3]] and B=[[5,2],[1,6]].</p><div class="solution-block"><span class="solution-label">Solution:</span> Add corresponding entries: <strong>[[7,3],[5,9]]</strong>.</div></article>
+                <article class="matrix-solved-card"><h3>Problem 3: Multiplication</h3><p><span class="problem-label">Problem:</span> Multiply [[1,2],[0,3]] by [[4,1],[2,5]].</p><div class="solution-block"><span class="solution-label">Solution:</span> Row-by-column products give <strong>[[8,11],[6,15]]</strong>.</div></article>
+                <article class="matrix-solved-card"><h3>Problem 4: Determinant</h3><p><span class="problem-label">Problem:</span> Find det([[6,2],[3,4]]).</p><div class="solution-block"><span class="solution-label">Solution:</span> 6×4 − 2×3 = 24 − 6 = <strong>18</strong>.</div></article>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>✍️ 13. Practice Problems</h2>
+            <div class="math-note-box">Solve each problem first, then use <strong>Show Solution</strong> to verify your method.</div>
+
+            <article class="matrix-question"><p><strong>1.</strong> Find the order and number of elements in a matrix with 5 rows and 2 columns.</p><button type="button" class="matrix-solution-toggle" data-target="matrixAnswer1" aria-expanded="false">Show Solution</button><div id="matrixAnswer1" class="matrix-answer" hidden>The order is <strong>5 × 2</strong>, and it contains 5×2 = <strong>10 elements</strong>.</div></article>
+            <article class="matrix-question"><p><strong>2.</strong> Add [[3,−1],[2,5]] and [[4,6],[−2,1]].</p><button type="button" class="matrix-solution-toggle" data-target="matrixAnswer2" aria-expanded="false">Show Solution</button><div id="matrixAnswer2" class="matrix-answer" hidden>Add corresponding elements to obtain <strong>[[7,5],[0,6]]</strong>.</div></article>
+            <article class="matrix-question"><p><strong>3.</strong> Can a 2 × 3 matrix multiply a 2 × 2 matrix in that order?</p><button type="button" class="matrix-solution-toggle" data-target="matrixAnswer3" aria-expanded="false">Show Solution</button><div id="matrixAnswer3" class="matrix-answer" hidden><strong>No.</strong> The inner dimensions are 3 and 2, so they do not match.</div></article>
+            <article class="matrix-question"><p><strong>4.</strong> Find the transpose of [[1,4,7],[2,5,8]].</p><button type="button" class="matrix-solution-toggle" data-target="matrixAnswer4" aria-expanded="false">Show Solution</button><div id="matrixAnswer4" class="matrix-answer" hidden>Rows become columns, so A<sup>T</sup> = <strong>[[1,2],[4,5],[7,8]]</strong>.</div></article>
+            <article class="matrix-question"><p><strong>5.</strong> Find the determinant of [[7,3],[2,5]] and state whether it has an inverse.</p><button type="button" class="matrix-solution-toggle" data-target="matrixAnswer5" aria-expanded="false">Show Solution</button><div id="matrixAnswer5" class="matrix-answer" hidden>det(A) = 7×5 − 3×2 = <strong>29</strong>. Because 29 ≠ 0, the matrix <strong>has an inverse</strong>.</div></article>
+        </section>
+
+        <section class="content-card">
+            <h2>📝 14. Quick Revision</h2>
+            <ul class="math-objectives-list">
+                <li>Order = number of rows × number of columns.</li>
+                <li>Add or subtract only matrices having the same order.</li>
+                <li>For AB, columns of A must equal rows of B.</li>
+                <li>If A is m × n and B is n × p, then AB is m × p.</li>
+                <li>Transpose exchanges rows and columns.</li>
+                <li>For [[a,b],[c,d]], determinant = ad − bc.</li>
+                <li>A 2 × 2 matrix has an inverse only when its determinant is non-zero.</li>
+                <li>Images, graph connections and ML data can all be represented by matrices.</li>
+            </ul>
+        </section>
+
+        <section class="content-card math-practice-spotlight" id="matrices-test">
+            <div class="math-practice-copy">
+                <span class="section-label">INTERACTIVE PRACTICE</span>
+                <h2>▦ Matrices Practice</h2>
+                <p>Complete 20 questions from easy to hard. Your score, every option, correct answers and explanations appear after final submission.</p>
+            </div>
+            <a href="practice/matrices-practice.html" class="primary-button math-practice-button">Start 20-Question Test →</a>
+        </section>
+
+        <nav class="math-topic-navigation" aria-label="Mathematics topic navigation">
+            <a href="algebra-ap-gp.html">← Previous: Algebra, AP &amp; GP</a>
+            <span class="math-topic-nav-disabled" aria-disabled="true">Next: Permutations &amp; Combinations →</span>
+        </nav>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div>
+        <div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="index.html">Mathematics</a><a href="matrices.html">Matrices</a></div>
+        <div class="footer-column"><h3>Learning</h3><a href="number-system.html">Number System</a><a href="base-conversions.html">Base Conversions</a><a href="algebra-ap-gp.html">Algebra, AP &amp; GP</a></div>
+        <div class="footer-column"><h3>Practice</h3><a href="practice/matrices-practice.html">Matrices Practice</a><a href="practice/algebra-ap-gp-practice.html">Algebra Practice</a><a href="practice/base-conversions-practice.html">Base Conversions Practice</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div>
+</footer>
+
+<script src="../script.js"></script>
+<script src="mathematics.js"></script>
+<script src="matrices.js"></script>
+
+</body>
+</html>
