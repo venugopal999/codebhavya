@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disjoint Sets and Union-Find | Advanced Data Structures | CodeBhavya</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="ads.css">
+</head>
+<body class="ads-page ads-topic-page disjoint-sets-page">
+
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo">
+        <img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </a>
+    <nav class="top-nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a>
+        <a href="../C-Programming/index.html">C</a>
+        <a href="../Data-Structures/index.html">Data Structures</a>
+        <a href="index.html" class="active">Advanced Data Structures</a>
+        <a href="../Python/index.html">Python</a><a href="../AI-ML/index.html">AI &amp; ML</a>
+        <a href="../Placement/index.html">Placement</a>
+    </nav>
+</header>
+
+<div class="docs-layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">Advanced Data Structures</div>
+        <input type="text" id="topicSearch" class="search-box"
+               placeholder="🔍 Search ADS topics..." aria-label="Search ADS topics">
+        <a href="index.html" class="sidebar-course-home">🧠 ADS Home</a>
+
+        <div class="sidebar-title">Part 1 — Foundations &amp; Algorithms</div>
+        <a class="ads-topic-link is-available" href="level-08-performance-analysis.html">📊 Level 8 — Performance Analysis</a>
+        <a class="ads-topic-link is-available active" href="level-09-disjoint-sets.html">🔗 Level 9 — Disjoint Sets</a>
+        <a class="ads-topic-link" href="level-10-sparse-matrices.html">🧮 Level 10 — Sparse Matrices</a>
+        <a class="ads-topic-link" href="level-11-string-pattern-matching.html">🔤 Level 11 — String Pattern Matching</a>
+        <a class="ads-topic-link" href="level-12-advanced-sorting.html">⚡ Level 12 — Advanced Sorting</a>
+        <a class="ads-topic-link" href="level-13-advanced-searching.html">🎯 Level 13 — Advanced Searching</a>
+
+        <div class="sidebar-title">Part 2 — Advanced Trees &amp; Hashing</div>
+        <a class="ads-topic-link" href="level-14-balanced-bst.html">🌲 Level 14 — Balanced BST</a>
+        <a class="ads-topic-link" href="level-15-digital-search-trees.html">🔠 Level 15 — Digital Search Trees</a>
+        <a class="ads-topic-link" href="level-16-multiway-search-trees.html">🌳 Level 16 — Multiway Search Trees</a>
+        <a class="ads-topic-link" href="level-17-heaps.html">⛰️ Level 17 — Heaps</a>
+        <a class="ads-topic-link" href="level-18-hashing.html">#️⃣ Level 18 — Hashing</a>
+
+        <div class="sidebar-title">Part 3 — Storage, Graphs &amp; Placement</div>
+        <a class="ads-topic-link" href="level-19-files.html">📁 Level 19 — Files &amp; File Organization</a>
+        <a class="ads-topic-link" href="level-20-advanced-graphs.html">🕸️ Level 20 — Advanced Graph Algorithms</a>
+        <a class="ads-topic-link" href="level-21-placement-problems.html">💼 Level 21 — Placement Problems</a>
+    </aside>
+
+    <main class="main-content">
+        <section class="ads-topic-hero">
+            <span class="subject-label">CODEBHAVYA • ADS LEVEL 9</span>
+            <h1 class="page-title">🔗 Disjoint Sets / Union-Find</h1>
+            <p class="page-description">Maintain non-overlapping groups, find representatives efficiently and merge components using path compression and union by rank or size.</p>
+        </section>
+
+        <nav class="ads-page-jump-nav" aria-label="Page sections">
+            <a href="#objectives">Objectives</a><a href="#operations">Operations</a>
+            <a href="#optimizations">Optimizations</a><a href="#complexity">Complexity</a>
+            <a href="#visualizer">Visualizer</a><a href="#c-program">C Program</a>
+            <a href="#practice">Practice</a><a href="#revision">Revision</a>
+        </nav>
+
+        <section class="content-card ads-lesson-section" id="objectives">
+            <div class="ads-section-heading"><span class="section-label">LEARNING GOALS</span><h2>🎯 Learning Objectives</h2></div>
+            <p>After completing this level, you should be able to:</p>
+            <ul class="ads-spaced-list">
+                <li>Explain a partition and the representative of a disjoint set.</li>
+                <li>Perform Make-Set, Find and Union operations.</li>
+                <li>Represent a collection of sets as a forest of rooted trees.</li>
+                <li>Apply path compression during Find.</li>
+                <li>Apply union by rank and union by size.</li>
+                <li>Use Union-Find to solve connectivity, cycle-detection and Kruskal problems.</li>
+                <li>Justify the nearly constant amortized complexity of optimized operations.</li>
+            </ul>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="introduction">
+            <div class="ads-section-heading"><span class="section-label">FOUNDATION</span><h2>🧭 1. What Is a Disjoint-Set Structure?</h2></div>
+            <p>A <strong>disjoint-set data structure</strong>, also called <strong>Union-Find</strong> or <strong>DSU</strong>, maintains a collection of sets that do not share elements.</p>
+            <div class="ads-definition-box"><strong>Disjoint means:</strong> for any two different sets A and B, A ∩ B = ∅. Every element belongs to exactly one current set.</div>
+            <div class="ads-set-example">
+                <span>{0, 1, 3}</span><span>{2, 5}</span><span>{4}</span><span>{6, 7}</span>
+            </div>
+            <p>One element in each set is chosen as its <strong>representative</strong>. Two elements belong to the same set exactly when their representatives are equal.</p>
+            <div class="ads-comparison-grid">
+                <article class="ads-info-panel blue-panel"><h3>Primary Question</h3><p>Are elements x and y currently in the same group?</p><strong>Check Find(x) == Find(y)</strong></article>
+                <article class="ads-info-panel purple-panel"><h3>Primary Update</h3><p>Combine the groups containing x and y.</p><strong>Perform Union(x, y)</strong></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="applications">
+            <div class="ads-section-heading"><span class="section-label">WHY IT MATTERS</span><h2>🌍 2. Applications of Union-Find</h2></div>
+            <div class="ads-application-grid">
+                <article><span>🕸️</span><h3>Dynamic Connectivity</h3><p>Track whether two network nodes are connected while links are added.</p></article>
+                <article><span>🔄</span><h3>Cycle Detection</h3><p>An edge (u, v) creates a cycle if u and v already have the same representative.</p></article>
+                <article><span>🌉</span><h3>Kruskal’s MST</h3><p>Add a light edge only when its endpoints belong to different components.</p></article>
+                <article><span>🧩</span><h3>Connected Components</h3><p>Merge related items and count the remaining representatives.</p></article>
+                <article><span>🖼️</span><h3>Image Segmentation</h3><p>Combine neighbouring pixels or regions with similar properties.</p></article>
+                <article><span>👥</span><h3>Grouping Problems</h3><p>Maintain friend circles, account groups or equivalence classes.</p></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="operations">
+            <div class="ads-section-heading"><span class="section-label">CORE OPERATIONS</span><h2>⚙️ 3. Make-Set, Find and Union</h2></div>
+            <div class="ads-operation-grid">
+                <article class="make-operation"><span>1</span><h3>Make-Set(x)</h3><p>Create a new set containing only x.</p><code>parent[x] = x</code></article>
+                <article class="find-operation"><span>2</span><h3>Find(x)</h3><p>Follow parent links until the root representative is reached.</p><code>parent[root] = root</code></article>
+                <article class="union-operation"><span>3</span><h3>Union(x, y)</h3><p>Find both roots and attach one root below the other.</p><code>rootX ≠ rootY</code></article>
+            </div>
+            <div class="ads-warning-box"><strong>Important:</strong> Union must combine the roots, not arbitrary internal nodes. Always call Find before linking two sets.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="representation">
+            <div class="ads-section-heading"><span class="section-label">INTERNAL STRUCTURE</span><h2>🌲 4. Forest Representation</h2></div>
+            <p>Each set is stored as a rooted tree. All the trees together form a <strong>forest</strong>. An array named <code>parent</code> stores the immediate parent of every element.</p>
+            <div class="ads-table-wrap"><table class="ads-data-table">
+                <thead><tr><th>Element i</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+                <tbody><tr><th>parent[i]</th><td>0</td><td>0</td><td>0</td><td>2</td><td>4</td><td>4</td></tr></tbody>
+            </table></div>
+            <div class="ads-forest-demo" aria-label="Example Union-Find forest">
+                <div class="ads-demo-tree"><div class="dsu-node root-node">0</div><div class="tree-branch"><div class="dsu-node">1</div><div class="dsu-node">2</div></div><div class="tree-branch child-branch"><div class="dsu-node">3</div></div><strong>Set {0, 1, 2, 3}</strong></div>
+                <div class="ads-demo-tree"><div class="dsu-node root-node">4</div><div class="tree-branch"><div class="dsu-node">5</div></div><strong>Set {4, 5}</strong></div>
+            </div>
+            <ul class="ads-spaced-list">
+                <li>A root satisfies <code>parent[root] == root</code>.</li>
+                <li>The root is used as the representative of the entire set.</li>
+                <li>The logical set is independent of which particular element becomes its representative.</li>
+            </ul>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="find-operation">
+            <div class="ads-section-heading"><span class="section-label">REPRESENTATIVE SEARCH</span><h2>🔎 5. Find Operation</h2></div>
+            <p>The basic Find operation moves upward until it reaches a self-parent root.</p>
+            <div class="ads-example-box"><h3>Recursive Find Without Compression</h3><pre><code>int findSet(int x) {&#10;    if (parent[x] == x)&#10;        return x;&#10;    return findSet(parent[x]);&#10;}</code></pre><p><strong class="ads-label-accent">Reason:</strong> every recursive call moves one level closer to the root.</p></div>
+            <div class="ads-example-box alt-example"><h3>Iterative Find</h3><pre><code>int findSet(int x) {&#10;    while (parent[x] != x)&#10;        x = parent[x];&#10;    return x;&#10;}</code></pre><p>The cost depends on the tree height. A chain-shaped tree may require O(n) time.</p></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="basic-union">
+            <div class="ads-section-heading"><span class="section-label">MERGING COMPONENTS</span><h2>🔗 6. Basic Union Operation</h2></div>
+            <pre><code>void unionSets(int a, int b) {&#10;    int rootA = findSet(a);&#10;    int rootB = findSet(b);&#10;&#10;    if (rootA != rootB)&#10;        parent[rootB] = rootA;&#10;}</code></pre>
+            <div class="ads-step-flow">
+                <article><span>01</span><p>Find representative of a.</p></article><article><span>02</span><p>Find representative of b.</p></article><article><span>03</span><p>If roots differ, link one root to the other.</p></article><article><span>04</span><p>If roots match, no structural change is required.</p></article>
+            </div>
+            <div class="ads-warning-box"><strong>Problem with arbitrary linking:</strong> repeatedly attaching a large tree below a small tree can create a long chain and slow down future Find operations.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="optimizations">
+            <div class="ads-section-heading"><span class="section-label">ESSENTIAL OPTIMIZATIONS</span><h2>🚀 7. Union by Rank, Union by Size and Path Compression</h2></div>
+            <div class="ads-optimization-grid">
+                <article class="rank-card"><h3>Union by Rank</h3><p>Attach the root with smaller estimated height below the root with larger rank.</p><pre><code>if (rank[rootA] &lt; rank[rootB])&#10;    parent[rootA] = rootB;</code></pre><p>If ranks are equal, choose one root and increase only its rank.</p></article>
+                <article class="size-card"><h3>Union by Size</h3><p>Attach the smaller tree below the root of the larger tree.</p><pre><code>if (size[rootA] &lt; size[rootB])&#10;    swap(rootA, rootB);&#10;parent[rootB] = rootA;&#10;size[rootA] += size[rootB];</code></pre></article>
+                <article class="compression-card"><h3>Path Compression</h3><p>During Find, make every visited node point directly to the root.</p><pre><code>int findSet(int x) {&#10;    if (parent[x] != x)&#10;        parent[x] = findSet(parent[x]);&#10;    return parent[x];&#10;}</code></pre></article>
+            </div>
+            <div class="ads-definition-box"><strong>Use one union heuristic:</strong> rank and size are two alternatives. Either can be combined with path compression. Do not update rank as though it were exact height after compression.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="worked-example">
+            <div class="ads-section-heading"><span class="section-label">STEP-BY-STEP</span><h2>🧩 8. Worked Example</h2></div>
+            <p>Start with elements 0 to 6. Every element is initially its own representative.</p>
+            <div class="ads-table-wrap"><table class="ads-data-table">
+                <thead><tr><th>Operation</th><th>Resulting Components</th><th>Reason</th></tr></thead>
+                <tbody>
+                    <tr><td>Union(0, 1)</td><td>{0, 1}, {2}, {3}, {4}, {5}, {6}</td><td>Merge two singleton sets.</td></tr>
+                    <tr><td>Union(2, 3)</td><td>{0, 1}, {2, 3}, {4}, {5}, {6}</td><td>2 and 3 had different roots.</td></tr>
+                    <tr><td>Union(1, 3)</td><td>{0, 1, 2, 3}, {4}, {5}, {6}</td><td>Find(1) and Find(3) identify the two roots.</td></tr>
+                    <tr><td>Union(4, 5)</td><td>{0, 1, 2, 3}, {4, 5}, {6}</td><td>A third component is formed.</td></tr>
+                    <tr><td>Find(3)</td><td>Representative is 0</td><td>Path compression may connect 3 directly to 0.</td></tr>
+                </tbody>
+            </table></div>
+            <div class="ads-note-box"><strong>Representative choice:</strong> depending on tie-breaking, a different valid root may be produced. Connectivity and set membership remain the same.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="complexity">
+            <div class="ads-section-heading"><span class="section-label">PERFORMANCE</span><h2>📈 9. Complexity Analysis</h2></div>
+            <div class="ads-table-wrap"><table class="ads-data-table">
+                <thead><tr><th>Implementation</th><th>Make-Set</th><th>Find</th><th>Union</th><th>Reason</th></tr></thead>
+                <tbody>
+                    <tr><td>Unoptimized forest</td><td>O(1)</td><td>O(n) worst case</td><td>O(n) worst case</td><td>A tree can become a chain of height n−1.</td></tr>
+                    <tr><td>Union by rank/size only</td><td>O(1)</td><td>O(log n)</td><td>O(log n)</td><td>Smaller-height tree is attached below the larger one.</td></tr>
+                    <tr><td>Path compression + rank/size</td><td>O(1)</td><td>O(α(n)) amortized</td><td>O(α(n)) amortized</td><td>Repeated operations flatten paths while balanced merging limits height.</td></tr>
+                </tbody>
+            </table></div>
+            <div class="ads-formula-box"><strong>α(n)</strong> is the inverse Ackermann function. It grows so slowly that α(n) is less than 5 for every practical input size.</div>
+            <div class="ads-complexity-grid"><article><h3>Space Complexity</h3><p><strong>O(n)</strong> for parent and rank/size arrays.</p></article><article><h3>Sequence of m Operations</h3><p><strong>O(m α(n))</strong> after O(n) initialization.</p></article></div>
+        </section>
+
+        <section class="content-card ads-lesson-section ads-interactive-section" id="visualizer">
+            <div class="ads-section-heading"><span class="section-label">INTERACTIVE VISUALIZER</span><h2>🧪 10. Union-Find Explorer</h2></div>
+            <p>Choose the number of elements and click <strong>Initialize Sets</strong>. Then perform Union, Find and connectivity queries. The structure will not run automatically when a value changes.</p>
+            <div class="dsu-init-controls">
+                <label>Number of elements<input id="dsuElementCount" type="number" min="4" max="10" value="8"></label>
+                <button id="initializeDsuButton" type="button" class="primary-button">Initialize Sets</button>
+            </div>
+            <div id="dsuExplorerPrompt" class="ads-explorer-prompt">Click <strong>Initialize Sets</strong> to create singleton sets.</div>
+            <div id="dsuExplorerWorkspace" class="dsu-explorer-workspace" hidden>
+                <div class="dsu-action-controls">
+                    <label>Element A<select id="dsuElementA"></select></label>
+                    <label>Element B<select id="dsuElementB"></select></label>
+                    <button id="unionDsuButton" type="button" class="primary-button">Union A and B</button>
+                    <button id="findDsuButton" type="button" class="secondary-button">Find A</button>
+                    <button id="connectedDsuButton" type="button" class="secondary-button">Are A and B Connected?</button>
+                    <button id="resetDsuButton" type="button" class="reset-button">↻ Reset</button>
+                </div>
+                <div id="dsuActionMessage" class="dsu-action-message" role="status">Choose an operation.</div>
+                <div class="dsu-state-grid">
+                    <div><h3>Current Sets</h3><div id="dsuSetGroups" class="dsu-set-groups"></div></div>
+                    <div><h3>Parent and Rank</h3><div id="dsuArrayView" class="dsu-array-view"></div></div>
+                </div>
+                <div class="dsu-forest-panel"><h3>Forest View</h3><div id="dsuForestView" class="dsu-forest-view"></div></div>
+                <div class="dsu-history-panel"><h3>Operation History</h3><ol id="dsuHistory"></ol></div>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="c-program">
+            <div class="ads-section-heading"><span class="section-label">C IMPLEMENTATION</span><h2>💻 11. Complete Union-Find Program</h2></div>
+            <p>The program supports Union, Find and Connected queries using path compression and union by rank.</p>
+            <pre><code>#include &lt;stdio.h&gt;&#10;&#10;#define MAX 1000&#10;&#10;int parent[MAX];&#10;int rankValue[MAX];&#10;&#10;void makeSet(int n) {&#10;    for (int i = 0; i &lt; n; i++) {&#10;        parent[i] = i;&#10;        rankValue[i] = 0;&#10;    }&#10;}&#10;&#10;int findSet(int x) {&#10;    if (parent[x] != x)&#10;        parent[x] = findSet(parent[x]);&#10;    return parent[x];&#10;}&#10;&#10;void unionSets(int a, int b) {&#10;    int rootA = findSet(a);&#10;    int rootB = findSet(b);&#10;&#10;    if (rootA == rootB)&#10;        return;&#10;&#10;    if (rankValue[rootA] &lt; rankValue[rootB]) {&#10;        parent[rootA] = rootB;&#10;    } else if (rankValue[rootA] &gt; rankValue[rootB]) {&#10;        parent[rootB] = rootA;&#10;    } else {&#10;        parent[rootB] = rootA;&#10;        rankValue[rootA]++;&#10;    }&#10;}&#10;&#10;int main(void) {&#10;    int n, q;&#10;    scanf("%d %d", &amp;n, &amp;q);&#10;&#10;    if (n &lt; 1 || n &gt; MAX)&#10;        return 0;&#10;&#10;    makeSet(n);&#10;&#10;    while (q--) {&#10;        int type, a, b;&#10;        scanf("%d", &amp;type);&#10;&#10;        if (type == 1) {&#10;            scanf("%d %d", &amp;a, &amp;b);&#10;            unionSets(a, b);&#10;        } else if (type == 2) {&#10;            scanf("%d", &amp;a);&#10;            printf("Representative of %d: %d\n", a, findSet(a));&#10;        } else if (type == 3) {&#10;            scanf("%d %d", &amp;a, &amp;b);&#10;            if (findSet(a) == findSet(b))&#10;                printf("Connected\n");&#10;            else&#10;                printf("Not Connected\n");&#10;        }&#10;    }&#10;&#10;    return 0;&#10;}</code></pre>
+            <div class="ads-io-grid">
+                <div><h3>Sample Input</h3><pre><code>8 9&#10;1 0 1&#10;1 2 3&#10;1 1 3&#10;3 0 3&#10;2 3&#10;1 4 5&#10;1 5 6&#10;3 4 6&#10;3 0 7</code></pre></div>
+                <div><h3>Sample Output</h3><pre><code>Connected&#10;Representative of 3: 0&#10;Connected&#10;Not Connected</code></pre></div>
+            </div>
+            <div class="ads-complexity-grid">
+                <article><h3>Time Complexity</h3><p>Initialization: <strong>O(n)</strong><br>Each optimized Find/Union: <strong>O(α(n)) amortized</strong></p></article>
+                <article><h3>Space Complexity</h3><p><strong>O(n)</strong> for the parent and rank arrays, plus a very small recursive Find stack in practice.</p></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="cycle-detection">
+            <div class="ads-section-heading"><span class="section-label">CLASSIC APPLICATION</span><h2>🔄 12. Cycle Detection in an Undirected Graph</h2></div>
+            <p>Process edges one by one. For an edge (u, v):</p>
+            <div class="ads-rule-list">
+                <article><span>1</span><div><h3>Find both representatives</h3><p>Compute rootU = Find(u) and rootV = Find(v).</p></div></article>
+                <article><span>2</span><div><h3>Same representative means a cycle</h3><p>A path already connects u and v, so the new edge closes a cycle.</p></div></article>
+                <article><span>3</span><div><h3>Different representatives are safe</h3><p>Union the two components and continue processing.</p></div></article>
+            </div>
+            <div class="ads-note-box"><strong>Scope:</strong> this simple DSU method detects cycles in an <em>undirected</em> graph. Directed-cycle detection requires other techniques.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="interview">
+            <div class="ads-section-heading"><span class="section-label">INTERVIEW PREPARATION</span><h2>💡 13. Important Points and Common Mistakes</h2></div>
+            <div class="ads-mistake-grid">
+                <article><h3>❌ Unioning original nodes</h3><p>Link roots returned by Find, not a and b directly.</p></article>
+                <article><h3>❌ Missing same-root check</h3><p>If both elements already share a root, Union should make no change.</p></article>
+                <article><h3>❌ Increasing rank every time</h3><p>Rank increases only when two equal-rank roots are merged.</p></article>
+                <article><h3>❌ Mixing rank and size rules</h3><p>Choose one union heuristic and maintain its metadata consistently.</p></article>
+                <article><h3>❌ Forgetting path assignment</h3><p><code>return findSet(parent[x])</code> finds the root but does not compress; assign the result to parent[x].</p></article>
+                <article><h3>❌ Expecting exact tree shape</h3><p>Tie-breaking may create a different but equally correct forest.</p></article>
+            </div>
+            <ul class="ads-interview-list">
+                <li>Union-Find answers connectivity under edge additions efficiently, but basic DSU does not support deletion easily.</li>
+                <li>Path compression changes parent links without changing set membership.</li>
+                <li>Rank is an upper-bound style balancing measure, not necessarily the current exact height.</li>
+                <li>Counting roots after all operations gives the number of connected components.</li>
+                <li>Kruskal’s algorithm uses DSU to reject edges that would create cycles.</li>
+            </ul>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="practice">
+            <div class="ads-section-heading"><span class="section-label">CHECK YOUR UNDERSTANDING</span><h2>✍️ 14. Practice Problems</h2></div>
+            <div class="ads-practice-note">Solve each problem first. Use Hint only when needed and Show Answer to verify your reasoning.</div>
+            <div class="ads-practice-list">
+                <article class="ads-practice-problem"><h3>1. What does Make-Set(5) store initially?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-1">Hint</button><button data-toggle-target="solution-1">Show Answer</button></div><div id="hint-1" class="ads-hint-box" hidden>A singleton is its own representative.</div><div id="solution-1" class="ads-solution-box" hidden><strong>parent[5] = 5</strong>, with rank 0 or size 1 depending on the heuristic.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>2. What condition identifies a root?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-2">Hint</button><button data-toggle-target="solution-2">Show Answer</button></div><div id="hint-2" class="ads-hint-box" hidden>A representative points to itself.</div><div id="solution-2" class="ads-solution-box" hidden><strong>parent[x] == x.</strong></div></article>
+                <article class="ads-practice-problem"><h3>3. How do we test whether a and b belong to the same set?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-3">Hint</button><button data-toggle-target="solution-3">Show Answer</button></div><div id="hint-3" class="ads-hint-box" hidden>Compare representatives.</div><div id="solution-3" class="ads-solution-box" hidden>They are in the same set when <strong>Find(a) == Find(b)</strong>.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>4. Why must Union call Find first?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-4">Hint</button><button data-toggle-target="solution-4">Show Answer</button></div><div id="hint-4" class="ads-hint-box" hidden>Entire trees must be merged.</div><div id="solution-4" class="ads-solution-box" hidden>Find locates each set’s root. Linking the roots merges the complete sets and preserves a valid forest.</div></article>
+                <article class="ads-practice-problem"><h3>5. What is the worst-case Find time in an unoptimized chain of n nodes?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-5">Hint</button><button data-toggle-target="solution-5">Show Answer</button></div><div id="hint-5" class="ads-hint-box" hidden>Count parent edges from the deepest node.</div><div id="solution-5" class="ads-solution-box" hidden><strong>O(n).</strong> The path may contain n−1 parent links.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>6. What does path compression change?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-6">Hint</button><button data-toggle-target="solution-6">Show Answer</button></div><div id="hint-6" class="ads-hint-box" hidden>Think about nodes visited during Find.</div><div id="solution-6" class="ads-solution-box" hidden>It changes their parent links to point closer to, usually directly to, the root. It does not change set membership.</div></article>
+                <article class="ads-practice-problem"><h3>7. In union by rank, when is a root’s rank increased?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-7">Hint</button><button data-toggle-target="solution-7">Show Answer</button></div><div id="hint-7" class="ads-hint-box" hidden>Consider equal and unequal ranks.</div><div id="solution-7" class="ads-solution-box" hidden>Only when two roots with <strong>equal rank</strong> are merged; the chosen new root’s rank increases by one.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>8. In union by size, which root becomes the child?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-8">Hint</button><button data-toggle-target="solution-8">Show Answer</button></div><div id="hint-8" class="ads-hint-box" hidden>Keep the resulting height small.</div><div id="solution-8" class="ads-solution-box" hidden>The root of the <strong>smaller set</strong> becomes a child of the larger set’s root.</div></article>
+                <article class="ads-practice-problem"><h3>9. Can union by rank and path compression be used together?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-9">Hint</button><button data-toggle-target="solution-9">Show Answer</button></div><div id="hint-9" class="ads-hint-box" hidden>They improve different operations.</div><div id="solution-9" class="ads-solution-box" hidden><strong>Yes.</strong> Rank balances merging, while path compression flattens paths during Find.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>10. What is α(n) in optimized DSU complexity?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-10">Hint</button><button data-toggle-target="solution-10">Show Answer</button></div><div id="hint-10" class="ads-hint-box" hidden>It grows even more slowly than logarithm.</div><div id="solution-10" class="ads-solution-box" hidden>It is the <strong>inverse Ackermann function</strong>, which is below 5 for practical input sizes.</div></article>
+                <article class="ads-practice-problem"><h3>11. After Union(0,1), Union(1,2), are 0 and 2 connected?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-11">Hint</button><button data-toggle-target="solution-11">Show Answer</button></div><div id="hint-11" class="ads-hint-box" hidden>Connectivity is transitive.</div><div id="solution-11" class="ads-solution-box" hidden><strong>Yes.</strong> Both operations place 0, 1 and 2 in one component.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>12. If Find(u) == Find(v), what happens when edge (u,v) is added to an undirected forest?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-12">Hint</button><button data-toggle-target="solution-12">Show Answer</button></div><div id="hint-12" class="ads-hint-box" hidden>A path already exists between them.</div><div id="solution-12" class="ads-solution-box" hidden>The edge creates a <strong>cycle</strong>.</div></article>
+                <article class="ads-practice-problem"><h3>13. How many sets remain after n Make-Set operations and k successful Unions?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-13">Hint</button><button data-toggle-target="solution-13">Show Answer</button></div><div id="hint-13" class="ads-hint-box" hidden>Every successful merge reduces the component count by one.</div><div id="solution-13" class="ads-solution-box" hidden><strong>n − k sets</strong>, provided every counted Union merged two previously different sets.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>14. Why does Union on two already connected elements not reduce the set count?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-14">Hint</button><button data-toggle-target="solution-14">Show Answer</button></div><div id="hint-14" class="ads-hint-box" hidden>Compare their roots.</div><div id="solution-14" class="ads-solution-box" hidden>Both Find operations return the same root, so no two distinct components are merged.</div></article>
+                <article class="ads-practice-problem"><h3>15. What extra arrays are commonly used in optimized DSU?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-15">Hint</button><button data-toggle-target="solution-15">Show Answer</button></div><div id="hint-15" class="ads-hint-box" hidden>One stores links and another stores balancing metadata.</div><div id="solution-15" class="ads-solution-box" hidden>A <strong>parent array</strong> and either a <strong>rank array</strong> or a <strong>size array</strong>.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>16. What is the DSU space complexity for n elements?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-16">Hint</button><button data-toggle-target="solution-16">Show Answer</button></div><div id="hint-16" class="ads-hint-box" hidden>Count parent and metadata entries.</div><div id="solution-16" class="ads-solution-box" hidden><strong>O(n).</strong></div></article>
+                <article class="ads-practice-problem"><h3>17. Why is rank not necessarily the exact height after compression?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-17">Hint</button><button data-toggle-target="solution-17">Show Answer</button></div><div id="hint-17" class="ads-hint-box" hidden>Compression shortens paths without decreasing stored rank.</div><div id="solution-17" class="ads-solution-box" hidden>Path compression can reduce actual height, while rank is retained as balancing metadata and is not recomputed.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>18. Which graph algorithm commonly uses DSU?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-18">Hint</button><button data-toggle-target="solution-18">Show Answer</button></div><div id="hint-18" class="ads-hint-box" hidden>Think about minimum spanning trees and cycle rejection.</div><div id="solution-18" class="ads-solution-box" hidden><strong>Kruskal’s minimum spanning tree algorithm.</strong></div></article>
+                <article class="ads-practice-problem"><h3>19. Can basic Union-Find efficiently separate a component after an edge deletion?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-19">Hint</button><button data-toggle-target="solution-19">Show Answer</button></div><div id="hint-19" class="ads-hint-box" hidden>Its main update only merges sets.</div><div id="solution-19" class="ads-solution-box" hidden><strong>No.</strong> Standard DSU supports merging efficiently but does not directly support splitting after deletions.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>20. Give the amortized time for m optimized DSU operations after initialization.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-20">Hint</button><button data-toggle-target="solution-20">Show Answer</button></div><div id="hint-20" class="ads-hint-box" hidden>Each operation costs α(n) amortized.</div><div id="solution-20" class="ads-solution-box" hidden><strong>O(m α(n))</strong>, plus O(n) to initialize n singleton sets.</div></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="revision">
+            <div class="ads-section-heading"><span class="section-label">QUICK RECALL</span><h2>📝 15. Quick Revision</h2></div>
+            <ul class="ads-revision-list">
+                <li>Disjoint Set Union maintains a partition of elements into non-overlapping groups.</li>
+                <li>Make-Set creates a singleton; Find returns a representative; Union merges two sets.</li>
+                <li>A parent array represents each set as a rooted tree.</li>
+                <li>Union by rank or size avoids unnecessarily tall trees.</li>
+                <li>Path compression connects visited nodes closer to the root.</li>
+                <li>With both optimizations, operations take O(α(n)) amortized time.</li>
+                <li>DSU is central to connectivity, undirected-cycle detection and Kruskal’s algorithm.</li>
+            </ul>
+        </section>
+
+        <nav class="ads-topic-navigation" aria-label="ADS topic navigation">
+            <a href="level-08-performance-analysis.html" class="previous-topic">← Previous: Performance Analysis</a>
+            <span class="next-topic disabled-topic" aria-disabled="true">Next: Sparse Matrices →</span>
+        </nav>
+    </main>
+</div>
+
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div>
+        <div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C Programming</a></div>
+        <div class="footer-column"><h3>Learning</h3><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html">Advanced Data Structures</a><a href="../Python/index.html">Python</a></div>
+        <div class="footer-column"><h3>Practice</h3><span class="footer-note">20 Disjoint Sets problems are included on this page.</span></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div>
+</footer>
+
+<script src="../script.js"></script>
+<script src="ads.js"></script>
+<script src="level-09-disjoint-sets.js"></script>
+</body>
+</html>
