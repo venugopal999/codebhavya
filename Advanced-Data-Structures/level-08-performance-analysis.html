@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Analysis | Advanced Data Structures | CodeBhavya</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="ads.css">
+</head>
+<body class="ads-page ads-topic-page performance-analysis-page">
+
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo">
+        <img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </a>
+    <nav class="top-nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a>
+        <a href="../C-Programming/index.html">C</a>
+        <a href="../Data-Structures/index.html">Data Structures</a>
+        <a href="index.html" class="active">Advanced Data Structures</a>
+        <a href="../Python/index.html">Python</a><a href="../AI-ML/index.html">AI &amp; ML</a>
+        <a href="../Placement/index.html">Placement</a>
+    </nav>
+</header>
+
+<div class="docs-layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">Advanced Data Structures</div>
+        <input type="text" id="topicSearch" class="search-box"
+               placeholder="🔍 Search ADS topics..." aria-label="Search ADS topics">
+        <a href="index.html" class="sidebar-course-home">🧠 ADS Home</a>
+
+        <div class="sidebar-title">Part 1 — Foundations &amp; Algorithms</div>
+        <a class="ads-topic-link is-available active" href="level-08-performance-analysis.html">📊 Level 8 — Performance Analysis</a>
+        <a class="ads-topic-link" href="level-09-disjoint-sets.html">🔗 Level 9 — Disjoint Sets</a>
+        <a class="ads-topic-link" href="level-10-sparse-matrices.html">🧮 Level 10 — Sparse Matrices</a>
+        <a class="ads-topic-link" href="level-11-string-pattern-matching.html">🔤 Level 11 — String Pattern Matching</a>
+        <a class="ads-topic-link" href="level-12-advanced-sorting.html">⚡ Level 12 — Advanced Sorting</a>
+        <a class="ads-topic-link" href="level-13-advanced-searching.html">🎯 Level 13 — Advanced Searching</a>
+
+        <div class="sidebar-title">Part 2 — Advanced Trees &amp; Hashing</div>
+        <a class="ads-topic-link" href="level-14-balanced-bst.html">🌲 Level 14 — Balanced BST</a>
+        <a class="ads-topic-link" href="level-15-digital-search-trees.html">🔠 Level 15 — Digital Search Trees</a>
+        <a class="ads-topic-link" href="level-16-multiway-search-trees.html">🌳 Level 16 — Multiway Search Trees</a>
+        <a class="ads-topic-link" href="level-17-heaps.html">⛰️ Level 17 — Heaps</a>
+        <a class="ads-topic-link" href="level-18-hashing.html">#️⃣ Level 18 — Hashing</a>
+
+        <div class="sidebar-title">Part 3 — Storage, Graphs &amp; Placement</div>
+        <a class="ads-topic-link" href="level-19-files.html">📁 Level 19 — Files &amp; File Organization</a>
+        <a class="ads-topic-link" href="level-20-advanced-graphs.html">🕸️ Level 20 — Advanced Graph Algorithms</a>
+        <a class="ads-topic-link" href="level-21-placement-problems.html">💼 Level 21 — Placement Problems</a>
+    </aside>
+
+    <main class="main-content">
+        <section class="ads-topic-hero">
+            <span class="subject-label">CODEBHAVYA • ADS LEVEL 8</span>
+            <h1 class="page-title">📊 Performance Analysis</h1>
+            <p class="page-description">Learn to predict time and memory requirements, compare alternative solutions and justify complexity using operation counts.</p>
+        </section>
+
+        <nav class="ads-page-jump-nav" aria-label="Page sections">
+            <a href="#objectives">Objectives</a><a href="#time-complexity">Time</a>
+            <a href="#asymptotic">Notation</a><a href="#space-complexity">Space</a>
+            <a href="#explorer">Explorer</a><a href="#c-program">C Program</a>
+            <a href="#practice">Practice</a><a href="#revision">Revision</a>
+        </nav>
+
+        <section class="content-card ads-lesson-section" id="objectives">
+            <div class="ads-section-heading"><span class="section-label">LEARNING GOALS</span><h2>🎯 Learning Objectives</h2></div>
+            <p>After completing this level, you should be able to:</p>
+            <ul class="ads-spaced-list">
+                <li>Identify input size and the basic operation of an algorithm.</li>
+                <li>Count operations and express time complexity as a function of input size.</li>
+                <li>Distinguish best, average and worst-case performance.</li>
+                <li>Use Big-O, Big-Omega and Big-Theta notation correctly.</li>
+                <li>Calculate auxiliary space and recursion-stack space.</li>
+                <li>Explain the complexity of common loop and recursive patterns.</li>
+            </ul>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="introduction">
+            <div class="ads-section-heading"><span class="section-label">FOUNDATION</span><h2>🧭 1. What Is Performance Analysis?</h2></div>
+            <p><strong>Performance analysis</strong> studies how the resources required by an algorithm grow when the input becomes larger. The main resources are <strong>execution time</strong> and <strong>memory space</strong>.</p>
+            <div class="ads-definition-box"><strong>Core idea:</strong> Instead of asking only “How many seconds did this program take?”, we ask “How does the work grow when the input changes from n to 2n or 10n?”</div>
+            <div class="ads-comparison-grid">
+                <article class="ads-info-panel blue-panel"><h3>⏱️ Empirical Measurement</h3><p>Run the program and record actual time or memory.</p><ul><li>Machine and compiler dependent</li><li>Requires test data</li><li>Useful after implementation</li></ul></article>
+                <article class="ads-info-panel purple-panel"><h3>📐 Theoretical Analysis</h3><p>Count operations as a function of input size.</p><ul><li>Machine independent</li><li>Works before implementation</li><li>Explains scalability</li></ul></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="analysis-model">
+            <div class="ads-section-heading"><span class="section-label">ANALYSIS MODEL</span><h2>🔬 2. Input Size and Basic Operation</h2></div>
+            <p>First decide what <strong>n</strong> represents. Then identify the operation that dominates the running time.</p>
+            <div class="ads-table-wrap"><table class="ads-data-table">
+                <thead><tr><th>Problem</th><th>Input Size</th><th>Basic Operation</th></tr></thead>
+                <tbody>
+                    <tr><td>Search an array</td><td>Number of elements n</td><td>Key comparison</td></tr>
+                    <tr><td>Sort records</td><td>Number of records n</td><td>Comparison/movement</td></tr>
+                    <tr><td>Multiply matrices</td><td>Dimension n</td><td>Multiplication/addition</td></tr>
+                    <tr><td>Traverse a graph</td><td>Vertices V, edges E</td><td>Visit vertex/edge</td></tr>
+                    <tr><td>Match a string</td><td>Text n, pattern m</td><td>Character comparison</td></tr>
+                </tbody>
+            </table></div>
+            <div class="ads-note-box"><strong>RAM model:</strong> Assignment, arithmetic, comparison and array access are treated as constant-time operations. This abstraction supports machine-independent comparison.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="time-complexity">
+            <div class="ads-section-heading"><span class="section-label">TIME ANALYSIS</span><h2>⏱️ 3. Time Complexity</h2></div>
+            <p>Time complexity is a function <strong>T(n)</strong> describing how the number of basic operations grows with input size n.</p>
+            <div class="ads-example-box"><h3>Constant Work</h3><pre><code>int first = a[0];&#10;printf("%d", first);</code></pre><p><strong class="ads-label-accent">Reason:</strong> Both statements execute once, independent of n.</p><p class="ads-complexity-result">Time Complexity: O(1)</p></div>
+            <div class="ads-example-box alt-example"><h3>Single Loop</h3><pre><code>for (int i = 0; i &lt; n; i++) {&#10;    sum += a[i];&#10;}</code></pre><p><strong class="ads-label-accent">Reason:</strong> The loop body executes n times.</p><p class="ads-complexity-result">T(n) = an + b ⇒ O(n)</p></div>
+            <div class="ads-example-box"><h3>Nested Loops</h3><pre><code>for (int i = 0; i &lt; n; i++) {&#10;    for (int j = 0; j &lt; n; j++) {&#10;        count++;&#10;    }&#10;}</code></pre><p><strong class="ads-label-accent">Reason:</strong> n outer iterations × n inner iterations = n².</p><p class="ads-complexity-result">Time Complexity: O(n²)</p></div>
+            <div class="ads-example-box alt-example"><h3>Repeated Halving</h3><pre><code>for (int value = n; value &gt; 1; value /= 2) {&#10;    count++;&#10;}</code></pre><p><strong class="ads-label-accent">Reason:</strong> After k iterations, n/2ᵏ ≤ 1, so k ≈ log₂n.</p><p class="ads-complexity-result">Time Complexity: O(log n)</p></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="cases">
+            <div class="ads-section-heading"><span class="section-label">INPUT BEHAVIOUR</span><h2>🎭 4. Best, Average and Worst Cases</h2></div>
+            <div class="ads-rule-grid">
+                <article class="ads-rule-card green-rule"><h3>Best Case</h3><p>Minimum work for an input of size n.</p><strong>Linear search: first position → Θ(1)</strong></article>
+                <article class="ads-rule-card gold-rule"><h3>Average Case</h3><p>Expected work under an input distribution.</p><strong>Linear search: about n/2 → Θ(n)</strong></article>
+                <article class="ads-rule-card red-rule"><h3>Worst Case</h3><p>Maximum work for an input of size n.</p><strong>Linear search: absent/last → Θ(n)</strong></article>
+            </div>
+            <div class="ads-warning-box"><strong>Important:</strong> Big-O does not automatically mean “worst case.” Big-O is an upper-bound notation; the case and notation describe different ideas.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="asymptotic">
+            <div class="ads-section-heading"><span class="section-label">GROWTH BOUNDS</span><h2>📈 5. Asymptotic Notations</h2></div>
+            <p>Asymptotic analysis focuses on the dominant term as n becomes large. Constants and lower-order terms do not change the growth class.</p>
+            <div class="ads-notation-grid">
+                <article class="ads-notation-card big-o"><span>O(g(n))</span><h3>Upper Bound</h3><p>The algorithm grows no faster than a constant multiple of g(n), for sufficiently large n.</p></article>
+                <article class="ads-notation-card omega"><span>Ω(g(n))</span><h3>Lower Bound</h3><p>The algorithm grows at least as fast as a constant multiple of g(n).</p></article>
+                <article class="ads-notation-card theta"><span>Θ(g(n))</span><h3>Tight Bound</h3><p>The function is bounded above and below by constant multiples of g(n).</p></article>
+            </div>
+            <div class="ads-formula-box"><strong>Example:</strong> T(n) = 3n² + 5n + 7. The dominant term is n², so the tight bound is Θ(n²).</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="growth-rates">
+            <div class="ads-section-heading"><span class="section-label">COMPARISON</span><h2>🚀 6. Common Growth Rates</h2></div>
+            <div class="ads-table-wrap"><table class="ads-data-table growth-table">
+                <thead><tr><th>Complexity</th><th>Name</th><th>Example</th><th>Scalability</th></tr></thead>
+                <tbody>
+                    <tr><td>O(1)</td><td>Constant</td><td>Array index access</td><td><span class="ads-badge excellent">Excellent</span></td></tr>
+                    <tr><td>O(log n)</td><td>Logarithmic</td><td>Binary search</td><td><span class="ads-badge excellent">Excellent</span></td></tr>
+                    <tr><td>O(n)</td><td>Linear</td><td>Array traversal</td><td><span class="ads-badge good">Good</span></td></tr>
+                    <tr><td>O(n log n)</td><td>Linearithmic</td><td>Merge Sort</td><td><span class="ads-badge good">Good</span></td></tr>
+                    <tr><td>O(n²)</td><td>Quadratic</td><td>Two full nested loops</td><td><span class="ads-badge caution">Limited</span></td></tr>
+                    <tr><td>O(n³)</td><td>Cubic</td><td>Basic matrix multiplication</td><td><span class="ads-badge caution">Limited</span></td></tr>
+                    <tr><td>O(2ⁿ)</td><td>Exponential</td><td>Naive subset search</td><td><span class="ads-badge poor">Poor</span></td></tr>
+                    <tr><td>O(n!)</td><td>Factorial</td><td>All permutations</td><td><span class="ads-badge poor">Very Poor</span></td></tr>
+                </tbody>
+            </table></div>
+            <div class="ads-order-box">O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(n³) &lt; O(2ⁿ) &lt; O(n!)</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="rules">
+            <div class="ads-section-heading"><span class="section-label">COUNTING SHORTCUTS</span><h2>🧩 7. Rules for Deriving Complexity</h2></div>
+            <div class="ads-rule-list">
+                <article><span>1</span><div><h3>Sequential blocks: add costs</h3><p>O(n) + O(n²) = O(n²).</p></div></article>
+                <article><span>2</span><div><h3>Nested loops: multiply iterations</h3><p>n iterations containing m iterations produce O(nm).</p></div></article>
+                <article><span>3</span><div><h3>Conditional branches</h3><p>For worst-case analysis, use the more expensive possible branch.</p></div></article>
+                <article><span>4</span><div><h3>Drop constants</h3><p>O(5n) becomes O(n).</p></div></article>
+                <article><span>5</span><div><h3>Drop lower-order terms</h3><p>O(n² + n + 1) becomes O(n²).</p></div></article>
+                <article><span>6</span><div><h3>Track loop updates</h3><p>i++ is often linear; i *= 2 or i /= 2 is often logarithmic.</p></div></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="space-complexity">
+            <div class="ads-section-heading"><span class="section-label">MEMORY ANALYSIS</span><h2>💾 8. Space Complexity</h2></div>
+            <p>Space complexity measures memory used as a function of input size. <strong>Auxiliary space</strong> is additional memory apart from the input.</p>
+            <div class="ads-comparison-grid">
+                <article class="ads-info-panel blue-panel"><h3>Fixed Space</h3><p>Counters and a fixed number of variables.</p><strong>Iterative maximum → O(1)</strong></article>
+                <article class="ads-info-panel purple-panel"><h3>Variable Space</h3><p>Arrays, dynamic nodes, recursion frames or tables.</p><strong>Copied array → O(n)</strong></article>
+            </div>
+            <div class="ads-example-box"><h3>Recursion Stack</h3><pre><code>long long factorial(int n) {&#10;    if (n &lt;= 1) return 1;&#10;    return n * factorial(n - 1);&#10;}</code></pre><p><strong class="ads-label-accent">Time:</strong> O(n), because there are n calls.</p><p><strong class="ads-label-accent">Auxiliary Space:</strong> O(n), because n call frames may remain active.</p></div>
+            <div class="ads-definition-box"><strong>Amortized analysis:</strong> A dynamic-array resize may cost O(n), but across n appends the total copying is O(n). Therefore, append has amortized O(1) time.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section ads-interactive-section" id="explorer">
+            <div class="ads-section-heading"><span class="section-label">INTERACTIVE ANALYZER</span><h2>🧪 9. Complexity Growth Explorer</h2></div>
+            <p>Choose an input size and loop pattern. Results appear only after you click <strong>Analyze Growth</strong>.</p>
+            <div class="ads-explorer-controls">
+                <label>Input size n<input id="growthInput" type="number" min="1" max="1000" value="16"></label>
+                <label>Algorithm pattern<select id="growthPattern"><option value="constant">Constant statement</option><option value="logarithmic">Repeated halving</option><option value="linear" selected>Single full loop</option><option value="linearithmic">Divide-and-conquer levels</option><option value="quadratic">Two full nested loops</option><option value="cubic">Three full nested loops</option><option value="exponential">Two recursive choices per level</option></select></label>
+                <button id="analyzeGrowthButton" type="button" class="primary-button">Analyze Growth</button>
+            </div>
+            <div class="ads-example-chips"><button type="button" data-growth-example="8,linear">n = 8, one loop</button><button type="button" data-growth-example="32,logarithmic">n = 32, halving</button><button type="button" data-growth-example="20,quadratic">n = 20, nested</button><button type="button" data-growth-example="10,exponential">n = 10, recursion</button></div>
+            <div id="growthExplorerPrompt" class="ads-explorer-prompt">Select values and click <strong>Analyze Growth</strong>.</div>
+            <div id="growthExplorerResult" class="ads-explorer-result" hidden>
+                <div class="ads-explorer-summary"><div><span>Selected Complexity</span><strong id="selectedComplexity">—</strong></div><div><span>Estimated Operations</span><strong id="selectedOperations">—</strong></div><div><span>When n Doubles</span><strong id="doublingEffect">—</strong></div></div>
+                <p id="growthExplanation" class="ads-explorer-explanation"></p>
+                <div id="growthBars" class="ads-growth-bars"></div>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="c-program">
+            <div class="ads-section-heading"><span class="section-label">C IMPLEMENTATION</span><h2>💻 10. Compare Linear and Binary Search</h2></div>
+            <p>This program counts comparisons for the same key. Binary search requires a sorted array.</p>
+            <pre><code>#include &lt;stdio.h&gt;&#10;&#10;int linearSearch(int a[], int n, int key, int *count) {&#10;    for (int i = 0; i &lt; n; i++) {&#10;        (*count)++;&#10;        if (a[i] == key) return i;&#10;    }&#10;    return -1;&#10;}&#10;&#10;int binarySearch(int a[], int n, int key, int *count) {&#10;    int low = 0, high = n - 1;&#10;    while (low &lt;= high) {&#10;        int mid = low + (high - low) / 2;&#10;        (*count)++;&#10;        if (a[mid] == key) return mid;&#10;        if (a[mid] &lt; key) low = mid + 1;&#10;        else high = mid - 1;&#10;    }&#10;    return -1;&#10;}&#10;&#10;int main(void) {&#10;    int n, key;&#10;    scanf("%d", &amp;n);&#10;    int a[n];&#10;    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);&#10;    scanf("%d", &amp;key);&#10;&#10;    int linearCount = 0, binaryCount = 0;&#10;    int linearIndex = linearSearch(a, n, key, &amp;linearCount);&#10;    int binaryIndex = binarySearch(a, n, key, &amp;binaryCount);&#10;&#10;    printf("Linear Search: index = %d, comparisons = %d\n", linearIndex, linearCount);&#10;    printf("Binary Search: index = %d, comparisons = %d\n", binaryIndex, binaryCount);&#10;    return 0;&#10;}</code></pre>
+            <div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>8&#10;4 9 13 18 25 31 42 57&#10;42</code></pre></div><div><h3>Sample Output</h3><pre><code>Linear Search: index = 6, comparisons = 7&#10;Binary Search: index = 6, comparisons = 3</code></pre></div></div>
+            <div class="ads-complexity-grid"><article><span>Linear Search</span><strong>Best O(1), Worst O(n)</strong><p>It may inspect every item.</p></article><article><span>Binary Search</span><strong>Best O(1), Worst O(log n)</strong><p>It halves the interval.</p></article><article><span>Auxiliary Space</span><strong>O(1) for both</strong><p>Both versions are iterative.</p></article></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="interview">
+            <div class="ads-section-heading"><span class="section-label">PLACEMENT PREPARATION</span><h2>💼 11. Interview Points</h2></div>
+            <ul class="ads-interview-list">
+                <li><strong>Explain the reason:</strong> state how many times the dominant operation executes.</li>
+                <li><strong>Mention assumptions:</strong> sorted input, balanced trees and uniform hashing can change complexity.</li>
+                <li><strong>Separate time and space:</strong> an in-place algorithm may use little memory but still run slowly.</li>
+                <li><strong>Discuss trade-offs:</strong> extra memory or preprocessing may reduce repeated-query time.</li>
+                <li><strong>Use tight bounds:</strong> state Θ when upper and lower growth match.</li>
+            </ul>
+            <div class="ads-interview-question-grid"><article><span>01</span><p>Worst-case versus amortized complexity?</p></article><article><span>02</span><p>Why does recursive binary search use O(log n) space?</p></article><article><span>03</span><p>Can O(n²) also be O(n³)? Which is tighter?</p></article><article><span>04</span><p>When is extra space worth using?</p></article></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="practice">
+            <div class="ads-section-heading"><span class="section-label">PRACTICE WITH HINTS</span><h2>✍️ 12. Practice Problems</h2></div>
+            <div class="ads-practice-note">Solve each problem first. Use Hint only when needed and Show Answer to verify your reasoning.</div>
+            <div class="ads-practice-list">
+                <article class="ads-practice-problem"><h3>1. Complexity of accessing <code>a[k]</code>?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-1">Hint</button><button data-toggle-target="solution-1">Show Answer</button></div><div id="hint-1" class="ads-hint-box" hidden>Array elements have direct indexed addresses.</div><div id="solution-1" class="ads-solution-box" hidden><strong>Θ(1).</strong> Address calculation and access do not depend on array length.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>2. Complexity of one loop from 0 to n−1?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-2">Hint</button><button data-toggle-target="solution-2">Show Answer</button></div><div id="hint-2" class="ads-hint-box" hidden>Count the values taken by i.</div><div id="solution-2" class="ads-solution-box" hidden><strong>Θ(n).</strong> The body executes n times.</div></article>
+                <article class="ads-practice-problem"><h3>3. Complexity of two full nested loops?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-3">Hint</button><button data-toggle-target="solution-3">Show Answer</button></div><div id="hint-3" class="ads-hint-box" hidden>Multiply nested iteration counts.</div><div id="solution-3" class="ads-solution-box" hidden><strong>Θ(n²).</strong> n × n executions.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>4. Complexity when i doubles from 1 until n?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-4">Hint</button><button data-toggle-target="solution-4">Show Answer</button></div><div id="hint-4" class="ads-hint-box" hidden>After k steps, i = 2ᵏ.</div><div id="solution-4" class="ads-solution-box" hidden><strong>Θ(log n).</strong> Solve 2ᵏ ≥ n.</div></article>
+                <article class="ads-practice-problem"><h3>5. Complexity of a triangular loop with j from i to n−1?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-5">Hint</button><button data-toggle-target="solution-5">Show Answer</button></div><div id="hint-5" class="ads-hint-box" hidden>Add n + (n−1) + ... + 1.</div><div id="solution-5" class="ads-solution-box" hidden><strong>Θ(n²).</strong> n(n+1)/2 has dominant term n².</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>6. Combine sequential Θ(n) and Θ(n²) blocks.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-6">Hint</button><button data-toggle-target="solution-6">Show Answer</button></div><div id="hint-6" class="ads-hint-box" hidden>Add, then retain the dominant term.</div><div id="solution-6" class="ads-solution-box" hidden><strong>Θ(n²).</strong> Θ(n+n²) simplifies to Θ(n²).</div></article>
+                <article class="ads-practice-problem"><h3>7. Best and worst time of iterative binary search?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-7">Hint</button><button data-toggle-target="solution-7">Show Answer</button></div><div id="hint-7" class="ads-hint-box" hidden>First midpoint versus repeated halving.</div><div id="solution-7" class="ads-solution-box" hidden><strong>Best Θ(1), worst Θ(log n)</strong>, assuming sorted input.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>8. Best and worst time of insertion sort?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-8">Hint</button><button data-toggle-target="solution-8">Show Answer</button></div><div id="hint-8" class="ads-hint-box" hidden>Consider sorted and reverse-sorted input.</div><div id="solution-8" class="ads-solution-box" hidden><strong>Best Θ(n), worst Θ(n²).</strong></div></article>
+                <article class="ads-practice-problem"><h3>9. Auxiliary space of recursive factorial?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-9">Hint</button><button data-toggle-target="solution-9">Show Answer</button></div><div id="hint-9" class="ads-hint-box" hidden>Count active call frames.</div><div id="solution-9" class="ads-solution-box" hidden><strong>Θ(n).</strong> Recursion depth is n.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>10. Auxiliary space of iterative factorial?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-10">Hint</button><button data-toggle-target="solution-10">Show Answer</button></div><div id="hint-10" class="ads-hint-box" hidden>Only fixed variables are used.</div><div id="solution-10" class="ads-solution-box" hidden><strong>Θ(1).</strong></div></article>
+                <article class="ads-practice-problem"><h3>11. Tight bound for 3n² + 5n + 7?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-11">Hint</button><button data-toggle-target="solution-11">Show Answer</button></div><div id="hint-11" class="ads-hint-box" hidden>Keep the highest-order term.</div><div id="solution-11" class="ads-solution-box" hidden><strong>Θ(n²).</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>12. Order log n, n, n log n, n² and 2ⁿ.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-12">Hint</button><button data-toggle-target="solution-12">Show Answer</button></div><div id="hint-12" class="ads-hint-box" hidden>Logarithmic is smallest; exponential is largest.</div><div id="solution-12" class="ads-solution-box" hidden><strong>O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(2ⁿ).</strong></div></article>
+                <article class="ads-practice-problem"><h3>13. Maximum binary-search comparisons for n = 1024?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-13">Hint</button><button data-toggle-target="solution-13">Show Answer</button></div><div id="hint-13" class="ads-hint-box" hidden>Use ⌊log₂n⌋ + 1.</div><div id="solution-13" class="ads-solution-box" hidden><strong>At most 11 comparisons.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>14. Estimate n log₂n for n = 8.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-14">Hint</button><button data-toggle-target="solution-14">Show Answer</button></div><div id="hint-14" class="ads-hint-box" hidden>log₂8 = 3.</div><div id="solution-14" class="ads-solution-box" hidden><strong>24.</strong> 8 × 3 = 24.</div></article>
+                <article class="ads-practice-problem"><h3>15. At n = 10, compare n² and 2ⁿ.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-15">Hint</button><button data-toggle-target="solution-15">Show Answer</button></div><div id="hint-15" class="ads-hint-box" hidden>Calculate 10² and 2¹⁰.</div><div id="solution-15" class="ads-solution-box" hidden><strong>100 versus 1024.</strong> Exponential growth is over ten times larger.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>16. Why is dynamic-array append amortized O(1)?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-16">Hint</button><button data-toggle-target="solution-16">Show Answer</button></div><div id="hint-16" class="ads-hint-box" hidden>Resizing does not occur on every append.</div><div id="solution-16" class="ads-solution-box" hidden>Total copying across n geometric-growth appends is O(n), giving O(1) amortized per append.</div></article>
+                <article class="ads-practice-problem"><h3>17. Space for an additional n × n matrix?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-17">Hint</button><button data-toggle-target="solution-17">Show Answer</button></div><div id="hint-17" class="ads-hint-box" hidden>Count stored elements.</div><div id="solution-17" class="ads-solution-box" hidden><strong>Θ(n²).</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>18. Solve T(n) = T(n/2) + O(1).</h3><div class="ads-practice-actions"><button data-toggle-target="hint-18">Hint</button><button data-toggle-target="solution-18">Show Answer</button></div><div id="hint-18" class="ads-hint-box" hidden>Count halvings until 1.</div><div id="solution-18" class="ads-solution-box" hidden><strong>Θ(log n).</strong></div></article>
+                <article class="ads-practice-problem"><h3>19. Solve T(n) = 2T(n/2) + O(n).</h3><div class="ads-practice-actions"><button data-toggle-target="hint-19">Hint</button><button data-toggle-target="solution-19">Show Answer</button></div><div id="hint-19" class="ads-hint-box" hidden>There are log n levels with combined work n per level.</div><div id="solution-19" class="ads-solution-box" hidden><strong>Θ(n log n).</strong> This is Merge Sort’s recurrence.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>20. Why preserve both sizes in O(n + m)?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-20">Hint</button><button data-toggle-target="solution-20">Show Answer</button></div><div id="hint-20" class="ads-hint-box" hidden>n and m may grow independently.</div><div id="solution-20" class="ads-solution-box" hidden><strong>O(n + m)</strong> preserves both independent dimensions instead of incorrectly assuming m is proportional to n.</div></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="revision">
+            <div class="ads-section-heading"><span class="section-label">QUICK RECALL</span><h2>📝 13. Quick Revision</h2></div>
+            <ul class="ads-revision-list">
+                <li>Performance analysis studies resource growth as input size increases.</li>
+                <li>Time counts dominant operations; space counts growing memory.</li>
+                <li>Big-O is an upper bound, Ω is a lower bound and Θ is a tight bound.</li>
+                <li>Sequential costs add; nested iteration counts multiply.</li>
+                <li>Repeated doubling or halving usually gives logarithmic complexity.</li>
+                <li>Recursive algorithms may consume call-stack space.</li>
+                <li>Amortized analysis distributes occasional expensive operations across a sequence.</li>
+            </ul>
+        </section>
+
+        <nav class="ads-topic-navigation" aria-label="ADS topic navigation">
+            <a href="../Data-Structures/index.html" class="previous-topic">← Previous: DSA Fundamentals</a>
+            <span class="next-topic disabled-topic" aria-disabled="true">Next: Disjoint Sets →</span>
+        </nav>
+    </main>
+</div>
+
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div>
+        <div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C Programming</a></div>
+        <div class="footer-column"><h3>Learning</h3><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html">Advanced Data Structures</a><a href="../Python/index.html">Python</a></div>
+        <div class="footer-column"><h3>Practice</h3><span class="footer-note">20 Performance Analysis problems are included on this page.</span></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div>
+</footer>
+
+<script src="../script.js"></script>
+<script src="ads.js"></script>
+<script src="level-08-performance-analysis.js"></script>
+</body>
+</html>
