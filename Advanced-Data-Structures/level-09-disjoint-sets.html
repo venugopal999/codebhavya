@@ -65,8 +65,9 @@
         <nav class="ads-page-jump-nav" aria-label="Page sections">
             <a href="#objectives">Objectives</a><a href="#operations">Operations</a>
             <a href="#optimizations">Optimizations</a><a href="#complexity">Complexity</a>
-            <a href="#visualizer">Visualizer</a><a href="#c-program">C Program</a>
-            <a href="#practice">Practice</a><a href="#revision">Revision</a>
+            <a href="#visualizer">Premium Visualizer</a><a href="#c-program">C Program</a>
+            <a href="#tracing">Program Tracing</a><a href="#practice">Practice</a>
+            <a href="#revision">Revision</a>
         </nav>
 
         <section class="content-card ads-lesson-section" id="objectives">
@@ -193,8 +194,12 @@
             <div class="ads-complexity-grid"><article><h3>Space Complexity</h3><p><strong>O(n)</strong> for parent and rank/size arrays.</p></article><article><h3>Sequence of m Operations</h3><p><strong>O(m α(n))</strong> after O(n) initialization.</p></article></div>
         </section>
 
-        <section class="content-card ads-lesson-section ads-interactive-section" id="visualizer">
-            <div class="ads-section-heading"><span class="section-label">INTERACTIVE VISUALIZER</span><h2>🧪 10. Union-Find Explorer</h2></div>
+        <section class="ads-premium-viz" id="visualizer">
+            <div class="ads-premium-header">
+                <div><span class="ads-premium-label">INTERACTIVE ALGORITHM VISUALIZATION</span><h2>🎬 10. Premium Union-Find Visualizer</h2></div>
+                <a class="ads-premium-brand" href="../index.html" aria-label="CodeBhavya Home"><img src="../images/codebhavya-main-logo.png" alt=""><span class="brand-code">Code</span><span class="brand-bhavya">Bhavya</span></a>
+            </div>
+            <div class="ads-premium-body">
             <p>Choose the number of elements and click <strong>Initialize Sets</strong>. Then perform Union, Find and connectivity queries. The structure will not run automatically when a value changes.</p>
             <div class="dsu-init-controls">
                 <label>Number of elements<input id="dsuElementCount" type="number" min="4" max="10" value="8"></label>
@@ -218,6 +223,7 @@
                 <div class="dsu-forest-panel"><h3>Forest View</h3><div id="dsuForestView" class="dsu-forest-view"></div></div>
                 <div class="dsu-history-panel"><h3>Operation History</h3><ol id="dsuHistory"></ol></div>
             </div>
+            </div>
         </section>
 
         <section class="content-card ads-lesson-section" id="c-program">
@@ -234,8 +240,57 @@
             </div>
         </section>
 
+        <section class="content-card ads-lesson-section" id="tracing">
+            <div class="ads-section-heading"><span class="section-label">C PROGRAM + TRACING</span><h2>🔍 12. Program Tracing — Union-Find Operations</h2></div>
+            <p>Follow the sample input one operation at a time and observe how the parent and rank arrays change.</p>
+            <button class="ads-tracer-toggle" id="dsuTraceToggle" type="button" aria-expanded="false" aria-controls="dsuTracePanel">▶ Program Tracing — Union-Find Operations</button>
+            <div class="ads-tracer" id="dsuTracePanel" hidden>
+                <div class="ads-tracer-title">PROGRAM TRACING — UNION-FIND</div>
+                <div class="ads-tracer-grid">
+                    <section class="ads-tracer-panel">
+                        <h3>💻 C Program</h3>
+                        <pre class="ads-tracer-code" aria-label="Traceable C program"><code><span data-dsu-trace-line="1">makeSet(n);</span>
+<span data-dsu-trace-line="2">int rootA = findSet(a);</span>
+<span data-dsu-trace-line="3">int rootB = findSet(b);</span>
+<span data-dsu-trace-line="4">if (rootA == rootB) return;</span>
+<span data-dsu-trace-line="5">if (rankValue[rootA] &lt; rankValue[rootB])</span>
+<span data-dsu-trace-line="6">    parent[rootA] = rootB;</span>
+<span data-dsu-trace-line="7">else if (rankValue[rootA] &gt; rankValue[rootB])</span>
+<span data-dsu-trace-line="8">    parent[rootB] = rootA;</span>
+<span data-dsu-trace-line="9">else { parent[rootB] = rootA;</span>
+<span data-dsu-trace-line="10">       rankValue[rootA]++; }</span>
+<span data-dsu-trace-line="11">parent[x] = findSet(parent[x]);</span>
+<span data-dsu-trace-line="12">printf(...);</span></code></pre>
+                    </section>
+                    <section class="ads-tracer-panel ads-tracer-live-panel">
+                        <h3>🧠 What is happening?</h3>
+                        <div class="ads-tracer-explain" id="dsuTraceMessage">Press Next to initialize eight singleton sets.</div>
+                        <h3>📊 Live Variables</h3>
+                        <div class="ads-trace-vars">
+                            <div><span>Operation</span><strong id="dsuTraceOperation">—</strong></div>
+                            <div><span>Root A</span><strong id="dsuTraceRootA">—</strong></div>
+                            <div><span>Root B</span><strong id="dsuTraceRootB">—</strong></div>
+                            <div><span>Components</span><strong id="dsuTraceComponents">8</strong></div>
+                        </div>
+                        <div class="ads-trace-array"><span>parent</span><code id="dsuTraceParent">[0, 1, 2, 3, 4, 5, 6, 7]</code></div>
+                        <div class="ads-trace-array"><span>rank</span><code id="dsuTraceRank">[0, 0, 0, 0, 0, 0, 0, 0]</code></div>
+                        <h3>Output</h3>
+                        <pre class="ads-trace-output" id="dsuTraceOutput">—</pre>
+                    </section>
+                </div>
+                <div class="ads-tracer-controls">
+                    <button type="button" class="trace-previous" id="dsuTracePrevious">← Previous</button>
+                    <button type="button" class="trace-next" id="dsuTraceNext">Next →</button>
+                    <button type="button" class="trace-auto" id="dsuTraceAuto">▶ Auto Run</button>
+                    <button type="button" class="trace-pause" id="dsuTracePause">⏸ Pause</button>
+                    <button type="button" class="trace-reset" id="dsuTraceReset">↻ Reset</button>
+                </div>
+                <p class="ads-tracer-status" id="dsuTraceStatus">Step 0 of 10</p>
+            </div>
+        </section>
+
         <section class="content-card ads-lesson-section" id="cycle-detection">
-            <div class="ads-section-heading"><span class="section-label">CLASSIC APPLICATION</span><h2>🔄 12. Cycle Detection in an Undirected Graph</h2></div>
+            <div class="ads-section-heading"><span class="section-label">CLASSIC APPLICATION</span><h2>🔄 13. Cycle Detection in an Undirected Graph</h2></div>
             <p>Process edges one by one. For an edge (u, v):</p>
             <div class="ads-rule-list">
                 <article><span>1</span><div><h3>Find both representatives</h3><p>Compute rootU = Find(u) and rootV = Find(v).</p></div></article>
@@ -246,7 +301,7 @@
         </section>
 
         <section class="content-card ads-lesson-section" id="interview">
-            <div class="ads-section-heading"><span class="section-label">INTERVIEW PREPARATION</span><h2>💡 13. Important Points and Common Mistakes</h2></div>
+            <div class="ads-section-heading"><span class="section-label">INTERVIEW PREPARATION</span><h2>💡 14. Important Points and Common Mistakes</h2></div>
             <div class="ads-mistake-grid">
                 <article><h3>❌ Unioning original nodes</h3><p>Link roots returned by Find, not a and b directly.</p></article>
                 <article><h3>❌ Missing same-root check</h3><p>If both elements already share a root, Union should make no change.</p></article>
@@ -265,7 +320,7 @@
         </section>
 
         <section class="content-card ads-lesson-section" id="practice">
-            <div class="ads-section-heading"><span class="section-label">CHECK YOUR UNDERSTANDING</span><h2>✍️ 14. Practice Problems</h2></div>
+            <div class="ads-section-heading"><span class="section-label">CHECK YOUR UNDERSTANDING</span><h2>✍️ 15. Practice Problems</h2></div>
             <div class="ads-practice-note">Solve each problem first. Use Hint only when needed and Show Answer to verify your reasoning.</div>
             <div class="ads-practice-list">
                 <article class="ads-practice-problem"><h3>1. What does Make-Set(5) store initially?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-1">Hint</button><button data-toggle-target="solution-1">Show Answer</button></div><div id="hint-1" class="ads-hint-box" hidden>A singleton is its own representative.</div><div id="solution-1" class="ads-solution-box" hidden><strong>parent[5] = 5</strong>, with rank 0 or size 1 depending on the heuristic.</div></article>
@@ -292,7 +347,7 @@
         </section>
 
         <section class="content-card ads-lesson-section" id="revision">
-            <div class="ads-section-heading"><span class="section-label">QUICK RECALL</span><h2>📝 15. Quick Revision</h2></div>
+            <div class="ads-section-heading"><span class="section-label">QUICK RECALL</span><h2>📝 16. Quick Revision</h2></div>
             <ul class="ads-revision-list">
                 <li>Disjoint Set Union maintains a partition of elements into non-overlapping groups.</li>
                 <li>Make-Set creates a singleton; Find returns a representative; Union merges two sets.</li>
@@ -647,6 +702,118 @@
                 prompt.innerHTML = "Element count changed. Click <strong>Initialize Sets</strong> to rebuild the structure.";
             }
         });
+    }
+
+    const dsuTraceSteps = [
+        { line: 1, operation: "Make-Set(0..7)", rootA: "—", rootB: "—", components: "8", parent: "[0, 1, 2, 3, 4, 5, 6, 7]", rank: "[0, 0, 0, 0, 0, 0, 0, 0]", message: "Initialize eight singleton sets. Every element is its own representative.", output: "—" },
+        { line: 10, operation: "Union(0, 1)", rootA: "0", rootB: "1", components: "7", parent: "[0, 0, 2, 3, 4, 5, 6, 7]", rank: "[1, 0, 0, 0, 0, 0, 0, 0]", message: "Roots 0 and 1 have equal rank. Attach 1 below 0 and increase rank[0].", output: "—" },
+        { line: 10, operation: "Union(2, 3)", rootA: "2", rootB: "3", components: "6", parent: "[0, 0, 2, 2, 4, 5, 6, 7]", rank: "[1, 0, 1, 0, 0, 0, 0, 0]", message: "Roots 2 and 3 have equal rank. Attach 3 below 2 and increase rank[2].", output: "—" },
+        { line: 10, operation: "Union(1, 3)", rootA: "0", rootB: "2", components: "5", parent: "[0, 0, 0, 2, 4, 5, 6, 7]", rank: "[2, 0, 1, 0, 0, 0, 0, 0]", message: "Find returns roots 0 and 2. Equal-rank trees merge, so 2 becomes a child of 0 and rank[0] becomes 2.", output: "—" },
+        { line: 11, operation: "Connected(0, 3)", rootA: "0", rootB: "0", components: "5", parent: "[0, 0, 0, 0, 4, 5, 6, 7]", rank: "[2, 0, 1, 0, 0, 0, 0, 0]", message: "Find(3) follows 3 → 2 → 0 and compresses the path. Both roots are 0, so the elements are connected.", output: "Connected" },
+        { line: 12, operation: "Find(3)", rootA: "0", rootB: "—", components: "5", parent: "[0, 0, 0, 0, 4, 5, 6, 7]", rank: "[2, 0, 1, 0, 0, 0, 0, 0]", message: "Because of path compression, Find(3) now reaches representative 0 directly.", output: "Connected\nRepresentative of 3: 0" },
+        { line: 10, operation: "Union(4, 5)", rootA: "4", rootB: "5", components: "4", parent: "[0, 0, 0, 0, 4, 4, 6, 7]", rank: "[2, 0, 1, 0, 1, 0, 0, 0]", message: "Merge singleton roots 4 and 5. Element 5 becomes a child of 4.", output: "Connected\nRepresentative of 3: 0" },
+        { line: 8, operation: "Union(5, 6)", rootA: "4", rootB: "6", components: "3", parent: "[0, 0, 0, 0, 4, 4, 4, 7]", rank: "[2, 0, 1, 0, 1, 0, 0, 0]", message: "Find(5) returns root 4. Its rank is greater than root 6, so 6 is attached below 4.", output: "Connected\nRepresentative of 3: 0" },
+        { line: 12, operation: "Connected(4, 6)", rootA: "4", rootB: "4", components: "3", parent: "[0, 0, 0, 0, 4, 4, 4, 7]", rank: "[2, 0, 1, 0, 1, 0, 0, 0]", message: "Both Find operations return representative 4, so 4 and 6 are connected.", output: "Connected\nRepresentative of 3: 0\nConnected" },
+        { line: 12, operation: "Connected(0, 7)", rootA: "0", rootB: "7", components: "3", parent: "[0, 0, 0, 0, 4, 4, 4, 7]", rank: "[2, 0, 1, 0, 1, 0, 0, 0]", message: "Representatives 0 and 7 are different, so these elements belong to different components.", output: "Connected\nRepresentative of 3: 0\nConnected\nNot Connected" },
+        { line: 12, operation: "Complete", rootA: "—", rootB: "—", components: "3", parent: "[0, 0, 0, 0, 4, 4, 4, 7]", rank: "[2, 0, 1, 0, 1, 0, 0, 0]", message: "All nine queries are complete. The final structure contains three components: {0,1,2,3}, {4,5,6} and {7}.", output: "Connected\nRepresentative of 3: 0\nConnected\nNot Connected" }
+    ];
+
+    const dsuTrace = {
+        toggle: document.getElementById("dsuTraceToggle"),
+        panel: document.getElementById("dsuTracePanel"),
+        message: document.getElementById("dsuTraceMessage"),
+        operation: document.getElementById("dsuTraceOperation"),
+        rootA: document.getElementById("dsuTraceRootA"),
+        rootB: document.getElementById("dsuTraceRootB"),
+        components: document.getElementById("dsuTraceComponents"),
+        parent: document.getElementById("dsuTraceParent"),
+        rank: document.getElementById("dsuTraceRank"),
+        output: document.getElementById("dsuTraceOutput"),
+        status: document.getElementById("dsuTraceStatus"),
+        previous: document.getElementById("dsuTracePrevious"),
+        next: document.getElementById("dsuTraceNext"),
+        auto: document.getElementById("dsuTraceAuto"),
+        pause: document.getElementById("dsuTracePause"),
+        reset: document.getElementById("dsuTraceReset")
+    };
+
+    let dsuTraceIndex = 0;
+    let dsuTraceTimer = null;
+
+    function pauseDsuTrace() {
+        if (dsuTraceTimer !== null) {
+            window.clearInterval(dsuTraceTimer);
+            dsuTraceTimer = null;
+        }
+    }
+
+    function renderDsuTrace() {
+        if (!dsuTrace.panel) {
+            return;
+        }
+
+        const step = dsuTraceSteps[dsuTraceIndex];
+        document.querySelectorAll("[data-dsu-trace-line]").forEach(function (line) {
+            line.classList.toggle("is-active-line", Number(line.dataset.dsuTraceLine) === step.line);
+        });
+        dsuTrace.message.textContent = step.message;
+        dsuTrace.operation.textContent = step.operation;
+        dsuTrace.rootA.textContent = step.rootA;
+        dsuTrace.rootB.textContent = step.rootB;
+        dsuTrace.components.textContent = step.components;
+        dsuTrace.parent.textContent = step.parent;
+        dsuTrace.rank.textContent = step.rank;
+        dsuTrace.output.textContent = step.output;
+        dsuTrace.status.textContent = "Step " + dsuTraceIndex + " of " + (dsuTraceSteps.length - 1);
+        dsuTrace.previous.disabled = dsuTraceIndex === 0;
+        dsuTrace.next.disabled = dsuTraceIndex === dsuTraceSteps.length - 1;
+    }
+
+    if (dsuTrace.toggle && dsuTrace.panel) {
+        dsuTrace.panel.hidden = true;
+        dsuTrace.toggle.addEventListener("click", function () {
+            const willOpen = dsuTrace.panel.hidden;
+            dsuTrace.panel.hidden = !willOpen;
+            dsuTrace.toggle.setAttribute("aria-expanded", String(willOpen));
+            dsuTrace.toggle.textContent = willOpen
+                ? "▼ Hide Program Tracing — Union-Find Operations"
+                : "▶ Program Tracing — Union-Find Operations";
+            if (!willOpen) {
+                pauseDsuTrace();
+            }
+        });
+        dsuTrace.previous.addEventListener("click", function () {
+            pauseDsuTrace();
+            dsuTraceIndex = Math.max(0, dsuTraceIndex - 1);
+            renderDsuTrace();
+        });
+        dsuTrace.next.addEventListener("click", function () {
+            pauseDsuTrace();
+            dsuTraceIndex = Math.min(dsuTraceSteps.length - 1, dsuTraceIndex + 1);
+            renderDsuTrace();
+        });
+        dsuTrace.auto.addEventListener("click", function () {
+            pauseDsuTrace();
+            if (dsuTraceIndex === dsuTraceSteps.length - 1) {
+                dsuTraceIndex = 0;
+                renderDsuTrace();
+            }
+            dsuTraceTimer = window.setInterval(function () {
+                if (dsuTraceIndex >= dsuTraceSteps.length - 1) {
+                    pauseDsuTrace();
+                    return;
+                }
+                dsuTraceIndex += 1;
+                renderDsuTrace();
+            }, 1050);
+        });
+        dsuTrace.pause.addEventListener("click", pauseDsuTrace);
+        dsuTrace.reset.addEventListener("click", function () {
+            pauseDsuTrace();
+            dsuTraceIndex = 0;
+            renderDsuTrace();
+        });
+        renderDsuTrace();
     }
 
     document.querySelectorAll("[data-toggle-target]").forEach(function (button) {
