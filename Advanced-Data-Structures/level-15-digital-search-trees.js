@@ -2,6 +2,27 @@
     "use strict";
 
     const SVG_NS = "http://www.w3.org/2000/svg";
+
+    document.querySelectorAll("[data-toggle-target]").forEach(function (button) {
+        const target = document.getElementById(button.dataset.toggleTarget);
+        if (!target) { return; }
+        target.hidden = true;
+        button.dataset.originalLabel = button.textContent.trim();
+        button.setAttribute("aria-expanded", "false");
+        button.setAttribute("aria-controls", target.id);
+    });
+
+    document.addEventListener("click", function (event) {
+        const button = event.target.closest ? event.target.closest("[data-toggle-target]") : null;
+        if (!button) { return; }
+        const target = document.getElementById(button.dataset.toggleTarget);
+        if (!target) { return; }
+        const open = target.hidden;
+        target.hidden = !open;
+        button.setAttribute("aria-expanded", String(open));
+        button.textContent = open ? (target.classList.contains("ads-hint-box") ? "Hide Hint" : "Hide Answer") : button.dataset.originalLabel;
+    });
+
     let nodeCounter = 0;
 
     function createNode(label) {
@@ -16,9 +37,7 @@
     }
 
     function cloneTree(node) {
-        if (!node) {
-            return null;
-        }
+        if (!node) { return null; }
 
         const copy = {
             id: node.id,
@@ -35,14 +54,7 @@
         return copy;
     }
 
-    function makeStep(
-        root,
-        active,
-        phase,
-        message,
-        needle,
-        details
-    ) {
+    function makeStep(root, active, phase, message, needle, details) {
         const data = details || {};
 
         return {
@@ -53,14 +65,15 @@
             needle: needle,
             current: data.current || "—",
             symbol: data.symbol || "—",
-            depth:
-                typeof data.depth === "number"
-                    ? data.depth
-                    : 0,
+            depth: typeof data.depth === "number" ? data.depth : 0,
             created: data.created || 0,
             result: data.result || "—",
             complete: Boolean(data.complete)
         };
+    }
+
+    function childCount(node) {
+        return Object.keys(node.children).length;
     }
 
     function buildTrieSteps(words, query) {
@@ -87,196 +100,137 @@
             let node = root;
             let path = "";
 
-            steps.push(
-                makeStep(
-                    root,
-                    [node.id],
-                    "Insert Word",
-                    "Insert “" + word +
-                        "” one character at a time.",
-                    "/* trie insert call */",
-                    {
-                        current: "root",
-                        created: created
-                    }
-                )
-            );
-
-            Array.from(word).forEach(
-                function (letter, index) {
-                    steps.push(
-                        makeStep(
-                            root,
-                            [node.id],
-                            "Read Character",
-                            "Read character “" +
-                                letter +
-                                "” at depth " +
-                                index +
-                                ".",
-                            "/* trie insert loop */",
-                            {
-                                current:
-                                    path || "root",
-                                symbol: letter,
-                                depth: index,
-                                created: created
-                            }
-                        )
-                    );
-
-                    if (!node.children[letter]) {
-                        node.children[letter] =
-                            createNode(letter);
-
-                        created += 1;
-
-                        steps.push(
-                            makeStep(
-                                root,
-                                [
-                                    node.id,
-                                    node.children[
-                                        letter
-                                    ].id
-                                ],
-                                "Create Child",
-                                "No “" +
-                                    letter +
-                                    "” edge exists, so create it.",
-                                "/* trie create child */",
-                                {
-                                    current:
-                                        (path ||
-                                            "root") +
-                                        " → " +
-                                        letter,
-                                    symbol: letter,
-                                    depth:
-                                        index + 1,
-                                    created:
-                                        created
-                                }
-                            )
-                        );
-                    }
-
-                    node =
-                        node.children[letter];
-
-                    path += letter;
-
-                    steps.push(
-                        makeStep(
-                            root,
-                            [node.id],
-                            "Move Down",
-                            "Follow the “" +
-                                letter +
-                                "” edge. Current prefix is “" +
-                                path +
-                                "”.",
-                            "/* trie move child */",
-                            {
-                                current: path,
-                                symbol: letter,
-                                depth:
-                                    index + 1,
-                                created: created
-                            }
-                        )
-                    );
-                }
-            );
-
-            node.terminal = true;
-            node.value = word;
-
-            steps.push(
-                makeStep(
-                    root,
-                    [node.id],
-                    "Mark Word",
-                    "Mark “" +
-                        word +
-                        "” as a complete stored word.",
-                    "/* trie mark terminal */",
-                    {
-                        current: word,
-                        depth: word.length,
-                        created: created
-                    }
-                )
-            );
-        });
-
-        let node = root;
-        let path = "";
-        let missing = false;
-
-        steps.push(
-            makeStep(
+            steps.push(makeStep(
                 root,
-                [root.id],
-                "Search",
-                "Search for “" +
-                    query +
-                    "” from the root.",
-                "/* trie search call */",
+                [node.id],
+                "Insert Word",
+                "Insert “" + word + "” one character at a time.",
+                "/* trie insert call */",
                 {
                     current: "root",
                     created: created
                 }
-            )
-        );
+            ));
 
-        for (
-            let index = 0;
-            index < query.length;
-            index += 1
-        ) {
-            const letter = query[index];
-
-            steps.push(
-                makeStep(
+            Array.from(word).forEach(function (letter, index) {
+                steps.push(makeStep(
                     root,
                     [node.id],
-                    "Check Edge",
-                    "Check whether an edge labelled “" +
-                        letter +
-                        "” exists.",
-                    "/* trie search step */",
+                    "Read Character",
+                    "Read character “" + letter + "” at depth " + index + ".",
+                    "/* trie insert loop */",
                     {
                         current: path || "root",
                         symbol: letter,
                         depth: index,
                         created: created
                     }
-                )
-            );
+                ));
+
+                if (!node.children[letter]) {
+                    node.children[letter] = createNode(letter);
+                    created += 1;
+
+                    steps.push(makeStep(
+                        root,
+                        [node.id, node.children[letter].id],
+                        "Create Child",
+                        "No “" + letter + "” edge exists, so create it.",
+                        "/* trie create child */",
+                        {
+                            current: (path || "root") + " → " + letter,
+                            symbol: letter,
+                            depth: index + 1,
+                            created: created
+                        }
+                    ));
+                }
+
+                node = node.children[letter];
+                path += letter;
+
+                steps.push(makeStep(
+                    root,
+                    [node.id],
+                    "Move Down",
+                    "Follow the “" + letter + "” edge. Current prefix is “" + path + "”.",
+                    "/* trie move child */",
+                    {
+                        current: path,
+                        symbol: letter,
+                        depth: index + 1,
+                        created: created
+                    }
+                ));
+            });
+
+            node.terminal = true;
+            node.value = word;
+
+            steps.push(makeStep(
+                root,
+                [node.id],
+                "Mark Word",
+                "Mark “" + word + "” as a complete stored word.",
+                "/* trie mark terminal */",
+                {
+                    current: word,
+                    depth: word.length,
+                    created: created
+                }
+            ));
+        });
+
+        let node = root;
+        let path = "";
+        let missing = false;
+
+        steps.push(makeStep(
+            root,
+            [root.id],
+            "Search",
+            "Search for “" + query + "” from the root.",
+            "/* trie search call */",
+            {
+                current: "root",
+                created: created
+            }
+        ));
+
+        for (let index = 0; index < query.length; index += 1) {
+            const letter = query[index];
+
+            steps.push(makeStep(
+                root,
+                [node.id],
+                "Loop Condition",
+                "The search loop checks character “" + letter + "” at position " + index + ".",
+                "/* trie search loop */",
+                {
+                    current: path || "root",
+                    symbol: letter,
+                    depth: index,
+                    created: created
+                }
+            ));
 
             if (!node.children[letter]) {
                 missing = true;
 
-                steps.push(
-                    makeStep(
-                        root,
-                        [node.id],
-                        "Not Found",
-                        "The required edge is absent, so “" +
-                            query +
-                            "” is not stored.",
-                        "/* trie search miss */",
-                        {
-                            current:
-                                path || "root",
-                            symbol: letter,
-                            depth: index,
-                            created: created,
-                            result: "Not found"
-                        }
-                    )
-                );
+                steps.push(makeStep(
+                    root,
+                    [node.id],
+                    "Not Found",
+                    "The required edge is absent, so “" + query + "” is not stored.",
+                    "/* trie search miss */",
+                    {
+                        current: path || "root",
+                        symbol: letter,
+                        depth: index,
+                        created: created,
+                        result: "Not found"
+                    }
+                ));
 
                 break;
             }
@@ -288,55 +242,42 @@
         if (!missing) {
             const found = node.terminal;
 
-            steps.push(
-                makeStep(
-                    root,
-                    [node.id],
-                    found
-                        ? "Found"
-                        : "Prefix Only",
-                    found
-                        ? "The final node is terminal, so the word is found."
-                        : "The path exists, but it is only a prefix.",
-                    "/* trie search found */",
-                    {
-                        current: path,
-                        depth: query.length,
-                        created: created,
-                        result: found
-                            ? "Found"
-                            : "Not found"
-                    }
-                )
-            );
+            steps.push(makeStep(
+                root,
+                [node.id],
+                found ? "Found" : "Prefix Only",
+                found
+                    ? "The final node is terminal, so the word is found."
+                    : "The path exists, but it is only a prefix.",
+                "/* trie search found */",
+                {
+                    current: path,
+                    depth: query.length,
+                    created: created,
+                    result: found ? "Found" : "Not found"
+                }
+            ));
         }
 
-        steps.push(
-            makeStep(
-                root,
-                [root.id],
-                "Complete",
-                "Standard Trie construction and search are complete.",
-                "/* trie complete */",
-                {
-                    current: "root",
-                    created: created,
-                    result:
-                        steps[
-                            steps.length - 1
-                        ].result,
-                    complete: true
-                }
-            )
-        );
+        steps.push(makeStep(
+            root,
+            [root.id],
+            "Complete",
+            "Standard Trie construction and search are complete.",
+            "printf(\"%s\\n\", found ? \"Found\" : \"Not Found\");",
+            {
+                current: "root",
+                created: created,
+                result: steps[steps.length - 1].result,
+                complete: true
+            }
+        ));
 
         return steps;
     }
 
     function toBits(value) {
-        return value
-            .toString(2)
-            .padStart(8, "0");
+        return value.toString(2).padStart(8, "0");
     }
 
     function buildBinarySteps(values, query) {
@@ -364,267 +305,176 @@
             let node = root;
             let path = "";
 
-            steps.push(
-                makeStep(
+            steps.push(makeStep(
+                root,
+                [root.id],
+                "Insert Number",
+                "Insert " + value + " as " + bits + ".",
+                "/* binary insert call */",
+                {
+                    current: "root",
+                    created: created
+                }
+            ));
+
+            Array.from(bits).forEach(function (bit, index) {
+                steps.push(makeStep(
                     root,
-                    [root.id],
-                    "Insert Number",
-                    "Insert " +
-                        value +
-                        " as " +
-                        bits +
-                        ".",
-                    "/* binary insert call */",
+                    [node.id],
+                    "Read Bit",
+                    "Read bit " + bit + " at position " + (7 - index) + ".",
+                    "/* binary insert loop */",
                     {
-                        current: "root",
+                        current: path || "root",
+                        symbol: bit,
+                        depth: index,
                         created: created
                     }
-                )
-            );
+                ));
 
-            Array.from(bits).forEach(
-                function (bit, index) {
-                    steps.push(
-                        makeStep(
-                            root,
-                            [node.id],
-                            "Read Bit",
-                            "Read bit " +
-                                bit +
-                                " at position " +
-                                (7 - index) +
-                                ".",
-                            "/* binary insert loop */",
-                            {
-                                current:
-                                    path ||
-                                    "root",
-                                symbol: bit,
-                                depth: index,
-                                created: created
-                            }
-                        )
-                    );
+                if (!node.children[bit]) {
+                    node.children[bit] = createNode(bit);
+                    created += 1;
 
-                    if (!node.children[bit]) {
-                        node.children[bit] =
-                            createNode(bit);
-
-                        created += 1;
-
-                        steps.push(
-                            makeStep(
-                                root,
-                                [
-                                    node.id,
-                                    node.children[
-                                        bit
-                                    ].id
-                                ],
-                                "Create Bit Edge",
-                                "Create the missing “" +
-                                    bit +
-                                    "” branch.",
-                                "/* binary create child */",
-                                {
-                                    current:
-                                        path +
-                                        bit,
-                                    symbol: bit,
-                                    depth:
-                                        index + 1,
-                                    created:
-                                        created
-                                }
-                            )
-                        );
-                    }
-
-                    node =
-                        node.children[bit];
-
-                    path += bit;
-
-                    steps.push(
-                        makeStep(
-                            root,
-                            [node.id],
-                            "Move Down",
-                            "Follow the “" +
-                                bit +
-                                "” branch.",
-                            "/* binary move child */",
-                            {
-                                current: path,
-                                symbol: bit,
-                                depth:
-                                    index + 1,
-                                created: created
-                            }
-                        )
-                    );
+                    steps.push(makeStep(
+                        root,
+                        [node.id, node.children[bit].id],
+                        "Create Bit Edge",
+                        "Create the missing “" + bit + "” branch.",
+                        "/* binary create child */",
+                        {
+                            current: path + bit,
+                            symbol: bit,
+                            depth: index + 1,
+                            created: created
+                        }
+                    ));
                 }
-            );
+
+                node = node.children[bit];
+                path += bit;
+
+                steps.push(makeStep(
+                    root,
+                    [node.id],
+                    "Move Down",
+                    "Follow the “" + bit + "” branch.",
+                    "/* binary move child */",
+                    {
+                        current: path,
+                        symbol: bit,
+                        depth: index + 1,
+                        created: created
+                    }
+                ));
+            });
 
             node.terminal = true;
             node.value = value;
 
-            steps.push(
-                makeStep(
-                    root,
-                    [node.id],
-                    "Store Value",
-                    "Store decimal value " +
-                        value +
-                        " at this leaf.",
-                    "/* binary store value */",
-                    {
-                        current: bits,
-                        depth: 8,
-                        created: created
-                    }
-                )
-            );
+            steps.push(makeStep(
+                root,
+                [node.id],
+                "Store Value",
+                "Store decimal value " + value + " at this leaf.",
+                "/* binary store value */",
+                {
+                    current: bits,
+                    depth: 8,
+                    created: created
+                }
+            ));
         });
 
         const queryBits = toBits(query);
         let node = root;
         let chosenBits = "";
 
-        steps.push(
-            makeStep(
+        steps.push(makeStep(
+            root,
+            [root.id],
+            "Maximum XOR",
+            "Find the stored number that maximizes XOR with " + query + " (" + queryBits + ").",
+            "/* binary xor call */",
+            {
+                current: "root",
+                created: created
+            }
+        ));
+
+        Array.from(queryBits).forEach(function (bit, index) {
+            const preferred = bit === "0" ? "1" : "0";
+            const chosen = node.children[preferred] ? preferred : bit;
+
+            steps.push(makeStep(
                 root,
-                [root.id],
-                "Maximum XOR",
-                "Find the stored number that maximizes XOR with " +
-                    query +
-                    " (" +
-                    queryBits +
-                    ").",
-                "/* binary xor call */",
+                [node.id],
+                "Loop Condition",
+                "The maximum-XOR loop revisits bit position " +
+                    (7 - index) + "; query bit is " + bit +
+                    " and preferred branch is " + preferred + ".",
+                "/* binary xor loop */",
                 {
-                    current: "root",
+                    current: chosenBits || "root",
+                    symbol: preferred,
+                    depth: index,
                     created: created
                 }
-            )
-        );
+            ));
 
-        Array.from(queryBits).forEach(
-            function (bit, index) {
-                const preferred =
-                    bit === "0" ? "1" : "0";
+            node = node.children[chosen];
+            chosenBits += chosen;
 
-                const chosen =
-                    node.children[preferred]
-                        ? preferred
-                        : bit;
-
-                steps.push(
-                    makeStep(
-                        root,
-                        [node.id],
-                        "Choose Branch",
-                        "Query bit is " +
-                            bit +
-                            "; prefer " +
-                            preferred +
-                            " to produce XOR bit 1.",
-                        "/* binary prefer opposite */",
-                        {
-                            current:
-                                chosenBits ||
-                                "root",
-                            symbol: preferred,
-                            depth: index,
-                            created: created
-                        }
-                    )
-                );
-
-                node =
-                    node.children[chosen];
-
-                chosenBits += chosen;
-
-                steps.push(
-                    makeStep(
-                        root,
-                        [node.id],
-                        "Move Down",
-                        "Take branch “" +
-                            chosen +
-                            "”. Candidate prefix is " +
-                            chosenBits +
-                            ".",
-                        "/* binary xor move */",
-                        {
-                            current:
-                                chosenBits,
-                            symbol: chosen,
-                            depth:
-                                index + 1,
-                            created: created
-                        }
-                    )
-                );
-            }
-        );
+            steps.push(makeStep(
+                root,
+                [node.id],
+                "Move Down",
+                "Take branch “" + chosen + "”. Candidate prefix is " + chosenBits + ".",
+                "/* binary xor move */",
+                {
+                    current: chosenBits,
+                    symbol: chosen,
+                    depth: index + 1,
+                    created: created
+                }
+            ));
+        });
 
         const best = node.value;
 
-        steps.push(
-            makeStep(
-                root,
-                [node.id],
-                "Maximum Found",
-                "Best partner is " +
-                    best +
-                    "; " +
-                    query +
-                    " XOR " +
-                    best +
-                    " = " +
-                    (query ^ best) +
-                    ".",
-                "/* binary xor result */",
-                {
-                    current: chosenBits,
-                    depth: 8,
-                    created: created,
-                    result:
-                        "Maximum XOR = " +
-                        (query ^ best) +
-                        " using " +
-                        best
-                }
-            )
-        );
+        steps.push(makeStep(
+            root,
+            [node.id],
+            "Maximum Found",
+            "Best partner is " + best + "; " + query + " XOR " +
+                best + " = " + (query ^ best) + ".",
+            "/* binary xor result */",
+            {
+                current: chosenBits,
+                depth: 8,
+                created: created,
+                result: "Maximum XOR = " + (query ^ best) + " using " + best
+            }
+        ));
 
-        steps.push(
-            makeStep(
-                root,
-                [root.id],
-                "Complete",
-                "Binary Trie insertion and maximum-XOR search are complete.",
-                "/* binary complete */",
-                {
-                    current: "root",
-                    created: created,
-                    result:
-                        "Maximum XOR = " +
-                        (query ^ best),
-                    complete: true
-                }
-            )
-        );
+        steps.push(makeStep(
+            root,
+            [root.id],
+            "Complete",
+            "Binary Trie insertion and maximum-XOR search are complete.",
+            "printf(\"Partner = %d\\nMaximum XOR = %d\\n\", partner, query ^ partner);",
+            {
+                current: "root",
+                created: created,
+                result: "Maximum XOR = " + (query ^ best),
+                complete: true
+            }
+        ));
 
         return steps;
     }
 
-    function commonPrefixLength(
-        first,
-        second
-    ) {
+    function commonPrefixLength(first, second) {
         let index = 0;
 
         while (
@@ -638,10 +488,7 @@
         return index;
     }
 
-    function buildPatriciaSteps(
-        words,
-        query
-    ) {
+    function buildPatriciaSteps(words, query) {
         nodeCounter = 0;
 
         const root = createNode("");
@@ -666,195 +513,135 @@
             let remaining = word;
             let depth = 0;
 
-            steps.push(
-                makeStep(
-                    root,
-                    [root.id],
-                    "Insert Word",
-                    "Insert “" +
-                        word +
-                        "” using compressed edge labels.",
-                    "/* patricia insert call */",
-                    {
-                        current: "root",
-                        created: created
-                    }
-                )
-            );
+            steps.push(makeStep(
+                root,
+                [root.id],
+                "Insert Word",
+                "Insert “" + word + "” using compressed edge labels.",
+                "/* patricia insert call */",
+                {
+                    current: "root",
+                    created: created
+                }
+            ));
 
             while (remaining.length) {
+                steps.push(makeStep(
+                    root,
+                    [node.id],
+                    "Loop Condition",
+                    "The insertion loop checks the remaining text “" + remaining + "”.",
+                    "/* patricia insert loop */",
+                    {
+                        current: word.slice(0, depth) || "root",
+                        symbol: remaining[0],
+                        depth: depth,
+                        created: created
+                    }
+                ));
+
                 const key = remaining[0];
-                const child =
-                    node.children[key];
+                const child = node.children[key];
 
                 if (!child) {
-                    const leaf =
-                        createNode(remaining);
-
+                    const leaf = createNode(remaining);
                     leaf.terminal = true;
                     leaf.value = word;
                     node.children[key] = leaf;
                     created += 1;
 
-                    steps.push(
-                        makeStep(
-                            root,
-                            [
-                                node.id,
-                                leaf.id
-                            ],
-                            "Create Compressed Edge",
-                            "Create one edge labelled “" +
-                                remaining +
-                                "”.",
-                            "/* patricia new edge */",
-                            {
-                                current: word,
-                                symbol:
-                                    remaining,
-                                depth:
-                                    depth +
-                                    remaining.length,
-                                created:
-                                    created
-                            }
-                        )
-                    );
+                    steps.push(makeStep(
+                        root,
+                        [node.id, leaf.id],
+                        "Create Compressed Edge",
+                        "Create one edge labelled “" + remaining + "”.",
+                        "/* patricia new edge */",
+                        {
+                            current: word,
+                            symbol: remaining,
+                            depth: depth + remaining.length,
+                            created: created
+                        }
+                    ));
 
                     remaining = "";
                     node = leaf;
                     break;
                 }
 
-                const common =
-                    commonPrefixLength(
-                        remaining,
-                        child.label
-                    );
+                const common = commonPrefixLength(remaining, child.label);
 
-                steps.push(
-                    makeStep(
+                steps.push(makeStep(
+                    root,
+                    [node.id, child.id],
+                    "Compare Edge",
+                    "Compare remaining text “" + remaining +
+                        "” with edge “" + child.label +
+                        "”; common prefix length is " + common + ".",
+                    "/* patricia compare prefix */",
+                    {
+                        current: word.slice(0, depth),
+                        symbol: child.label,
+                        depth: depth,
+                        created: created
+                    }
+                ));
+
+                if (common === child.label.length) {
+                    node = child;
+                    remaining = remaining.slice(common);
+                    depth += common;
+
+                    steps.push(makeStep(
                         root,
-                        [
-                            node.id,
-                            child.id
-                        ],
-                        "Compare Edge",
-                        "Compare remaining text “" +
-                            remaining +
-                            "” with edge “" +
-                            child.label +
-                            "”; common prefix length is " +
-                            common +
-                            ".",
-                        "/* patricia compare prefix */",
+                        [node.id],
+                        "Follow Edge",
+                        "The whole edge matches; continue after “" + child.label + "”.",
+                        "/* patricia descend */",
                         {
-                            current:
-                                word.slice(
-                                    0,
-                                    depth
-                                ),
-                            symbol:
-                                child.label,
+                            current: word.slice(0, depth),
+                            symbol: child.label,
                             depth: depth,
                             created: created
                         }
-                    )
-                );
-
-                if (
-                    common ===
-                    child.label.length
-                ) {
-                    node = child;
-                    remaining =
-                        remaining.slice(common);
-                    depth += common;
-
-                    steps.push(
-                        makeStep(
-                            root,
-                            [node.id],
-                            "Follow Edge",
-                            "The whole edge matches; continue after “" +
-                                child.label +
-                                "”.",
-                            "/* patricia descend */",
-                            {
-                                current:
-                                    word.slice(
-                                        0,
-                                        depth
-                                    ),
-                                symbol:
-                                    child.label,
-                                depth: depth,
-                                created:
-                                    created
-                            }
-                        )
-                    );
+                    ));
 
                     if (!remaining.length) {
                         node.terminal = true;
                         node.value = word;
 
-                        steps.push(
-                            makeStep(
-                                root,
-                                [node.id],
-                                "Mark Word",
-                                "Mark the matched node as a complete word.",
-                                "/* patricia mark terminal */",
-                                {
-                                    current:
-                                        word,
-                                    depth:
-                                        depth,
-                                    created:
-                                        created
-                                }
-                            )
-                        );
+                        steps.push(makeStep(
+                            root,
+                            [node.id],
+                            "Mark Word",
+                            "Mark the matched node as a complete word.",
+                            "/* patricia mark terminal */",
+                            {
+                                current: word,
+                                depth: depth,
+                                created: created
+                            }
+                        ));
                     }
 
                     continue;
                 }
 
-                const split =
-                    createNode(
-                        child.label.slice(
-                            0,
-                            common
-                        )
-                    );
-
-                const oldSuffix =
-                    child.label.slice(common);
-
-                const newSuffix =
-                    remaining.slice(common);
+                const split = createNode(child.label.slice(0, common));
+                const oldSuffix = child.label.slice(common);
+                const newSuffix = remaining.slice(common);
 
                 child.label = oldSuffix;
-
-                split.children[
-                    oldSuffix[0]
-                ] = child;
-
+                split.children[oldSuffix[0]] = child;
                 node.children[key] = split;
                 created += 1;
 
                 if (newSuffix.length) {
-                    const leaf =
-                        createNode(newSuffix);
+                    const leaf = createNode(newSuffix);
 
                     leaf.terminal = true;
                     leaf.value = word;
-
-                    split.children[
-                        newSuffix[0]
-                    ] = leaf;
-
+                    split.children[newSuffix[0]] = leaf;
                     node = leaf;
                     created += 1;
                 } else {
@@ -863,37 +650,23 @@
                     node = split;
                 }
 
-                depth +=
-                    common +
-                    newSuffix.length;
+                depth += common + newSuffix.length;
 
-                steps.push(
-                    makeStep(
-                        root,
-                        [
-                            split.id,
-                            child.id,
-                            node.id
-                        ],
-                        "Split Edge",
-                        "Split at “" +
-                            split.label +
-                            "”; preserve “" +
-                            oldSuffix +
-                            "” and add “" +
-                            (newSuffix ||
-                                "word end") +
-                            "”.",
-                        "/* patricia split edge */",
-                        {
-                            current: word,
-                            symbol:
-                                split.label,
-                            depth: depth,
-                            created: created
-                        }
-                    )
-                );
+                steps.push(makeStep(
+                    root,
+                    [split.id, child.id, node.id],
+                    "Split Edge",
+                    "Split at “" + split.label + "”; preserve “" +
+                        oldSuffix + "” and add “" +
+                        (newSuffix || "word end") + "”.",
+                    "current->child[index] = split;",
+                    {
+                        current: word,
+                        symbol: split.label,
+                        depth: depth,
+                        created: created
+                    }
+                ));
 
                 remaining = "";
             }
@@ -904,129 +677,95 @@
         let consumed = 0;
         let found = true;
 
-        steps.push(
-            makeStep(
-                root,
-                [root.id],
-                "Search",
-                "Search compressed edges for “" +
-                    query +
-                    "”.",
-                "/* patricia search call */",
-                {
-                    current: "root",
-                    created: created
-                }
-            )
-        );
+        steps.push(makeStep(
+            root,
+            [root.id],
+            "Search",
+            "Search compressed edges for “" + query + "”.",
+            "/* patricia search call */",
+            {
+                current: "root",
+                created: created
+            }
+        ));
 
         while (remaining.length) {
-            const child =
-                node.children[
-                    remaining[0]
-                ];
+            steps.push(makeStep(
+                root,
+                [node.id],
+                "Loop Condition",
+                "The compressed-search loop checks the remaining text “" + remaining + "”.",
+                "/* patricia search loop */",
+                {
+                    current: query.slice(0, consumed) || "root",
+                    symbol: remaining[0],
+                    depth: consumed,
+                    created: created
+                }
+            ));
 
-            steps.push(
-                makeStep(
-                    root,
-                    child
-                        ? [
-                              node.id,
-                              child.id
-                          ]
-                        : [node.id],
-                    "Check Edge",
-                    child
-                        ? "Compare with compressed edge “" +
-                              child.label +
-                              "”."
-                        : "No edge begins with “" +
-                              remaining[0] +
-                              "”.",
-                    "/* patricia search edge */",
-                    {
-                        current:
-                            query.slice(
-                                0,
-                                consumed
-                            ) || "root",
-                        symbol:
-                            remaining[0],
-                        depth: consumed,
-                        created: created
-                    }
-                )
-            );
+            const child = node.children[remaining[0]];
+
+            steps.push(makeStep(
+                root,
+                child ? [node.id, child.id] : [node.id],
+                "Check Edge",
+                child
+                    ? "Compare with compressed edge “" + child.label + "”."
+                    : "No edge begins with “" + remaining[0] + "”.",
+                "/* patricia search edge */",
+                {
+                    current: query.slice(0, consumed) || "root",
+                    symbol: remaining[0],
+                    depth: consumed,
+                    created: created
+                }
+            ));
 
             if (
                 !child ||
-                remaining.slice(
-                    0,
-                    child.label.length
-                ) !== child.label
+                remaining.slice(0, child.label.length) !== child.label
             ) {
                 found = false;
                 break;
             }
 
             node = child;
-
-            remaining =
-                remaining.slice(
-                    child.label.length
-                );
-
+            remaining = remaining.slice(child.label.length);
             consumed += child.label.length;
         }
 
-        found =
-            found &&
-            !remaining.length &&
-            node.terminal;
+        found = found && !remaining.length && node.terminal;
 
-        steps.push(
-            makeStep(
-                root,
-                [node.id],
-                found
-                    ? "Found"
-                    : "Not Found",
-                found
-                    ? "The compressed path ends at a terminal node."
-                    : "The compressed path is absent or ends at a non-terminal node.",
-                "/* patricia search result */",
-                {
-                    current:
-                        query.slice(
-                            0,
-                            consumed
-                        ) || "root",
-                    depth: consumed,
-                    created: created,
-                    result: found
-                        ? "Found"
-                        : "Not found"
-                }
-            )
-        );
+        steps.push(makeStep(
+            root,
+            [node.id],
+            found ? "Found" : "Not Found",
+            found
+                ? "The compressed path ends at a terminal node."
+                : "The compressed path is absent or ends at a non-terminal node.",
+            "/* patricia search result */",
+            {
+                current: query.slice(0, consumed) || "root",
+                depth: consumed,
+                created: created,
+                result: found ? "Found" : "Not found"
+            }
+        ));
 
-        steps.push(
-            makeStep(
-                root,
-                [root.id],
-                "Complete",
-                "Patricia/Radix Trie construction and search are complete.",
-                "/* patricia complete */",
-                {
-                    current: "root",
-                    created: created,
-                    result: found
-                        ? "Found"
-                        : "Not found",
-                    complete: true
-                }
-            )
-        );
+        steps.push(makeStep(
+            root,
+            [root.id],
+            "Complete",
+            "Patricia/Radix Trie construction and search are complete.",
+            "printf(\"%s\\n\", found ? \"Found\" : \"Not Found\");",
+            {
+                current: "root",
+                created: created,
+                result: found ? "Found" : "Not found",
+                complete: true
+            }
+        ));
 
         return steps;
     }
@@ -1040,9 +779,7 @@
                 root,
                 [root.id],
                 "Create Root",
-                "Create an empty Suffix Trie for “" +
-                    text +
-                    "”.",
+                "Create an empty Suffix Trie for “" + text + "”.",
                 "/* suffix create root */",
                 {
                     current: "root",
@@ -1053,255 +790,176 @@
 
         let created = 1;
 
-        for (
-            let start = 0;
-            start < text.length;
-            start += 1
-        ) {
+        for (let start = 0; start < text.length; start += 1) {
             let node = root;
             const suffix = text.slice(start);
             let path = "";
 
-            steps.push(
-                makeStep(
-                    root,
-                    [root.id],
-                    "Insert Suffix",
-                    "Insert suffix “" +
-                        suffix +
-                        "” starting at index " +
-                        start +
-                        ".",
-                    "/* suffix insert call */",
-                    {
-                        current: "root",
-                        created: created
-                    }
-                )
-            );
+            steps.push(makeStep(
+                root,
+                [root.id],
+                "Insert Suffix",
+                "Insert suffix “" + suffix + "” starting at index " + start + ".",
+                "/* suffix insert call */",
+                {
+                    current: "root",
+                    created: created
+                }
+            ));
 
-            for (
-                let index = start;
-                index < text.length;
-                index += 1
-            ) {
+            for (let index = start; index < text.length; index += 1) {
                 const letter = text[index];
 
-                steps.push(
-                    makeStep(
-                        root,
-                        [node.id],
-                        "Read Character",
-                        "Read “" +
-                            letter +
-                            "” from text index " +
-                            index +
-                            ".",
-                        "/* suffix insert loop */",
-                        {
-                            current:
-                                path || "root",
-                            symbol: letter,
-                            depth:
-                                index - start,
-                            created: created
-                        }
-                    )
-                );
+                steps.push(makeStep(
+                    root,
+                    [node.id],
+                    "Read Character",
+                    "Read “" + letter + "” from text index " + index + ".",
+                    "/* suffix insert loop */",
+                    {
+                        current: path || "root",
+                        symbol: letter,
+                        depth: index - start,
+                        created: created
+                    }
+                ));
 
                 if (!node.children[letter]) {
-                    node.children[letter] =
-                        createNode(letter);
-
+                    node.children[letter] = createNode(letter);
                     created += 1;
 
-                    steps.push(
-                        makeStep(
-                            root,
-                            [
-                                node.id,
-                                node.children[
-                                    letter
-                                ].id
-                            ],
-                            "Create Child",
-                            "Create the missing “" +
-                                letter +
-                                "” branch.",
-                            "/* suffix create child */",
-                            {
-                                current:
-                                    path +
-                                    letter,
-                                symbol: letter,
-                                depth:
-                                    index -
-                                    start +
-                                    1,
-                                created:
-                                    created
-                            }
-                        )
-                    );
-                }
-
-                node =
-                    node.children[letter];
-
-                path += letter;
-
-                steps.push(
-                    makeStep(
+                    steps.push(makeStep(
                         root,
-                        [node.id],
-                        "Move Down",
-                        "Current suffix prefix is “" +
-                            path +
-                            "”.",
-                        "/* suffix move child */",
+                        [node.id, node.children[letter].id],
+                        "Create Child",
+                        "Create the missing “" + letter + "” branch.",
+                        "/* suffix create child */",
                         {
-                            current: path,
+                            current: path + letter,
                             symbol: letter,
-                            depth:
-                                index -
-                                start +
-                                1,
+                            depth: index - start + 1,
                             created: created
                         }
-                    )
-                );
+                    ));
+                }
+
+                node = node.children[letter];
+                path += letter;
+
+                steps.push(makeStep(
+                    root,
+                    [node.id],
+                    "Move Down",
+                    "Current suffix prefix is “" + path + "”.",
+                    "/* suffix move child */",
+                    {
+                        current: path,
+                        symbol: letter,
+                        depth: index - start + 1,
+                        created: created
+                    }
+                ));
             }
 
             node.terminal = true;
             node.value = start;
 
-            steps.push(
-                makeStep(
-                    root,
-                    [node.id],
-                    "Mark Suffix",
-                    "Mark the end of suffix “" +
-                        suffix +
-                        "”.",
-                    "/* suffix mark terminal */",
-                    {
-                        current: suffix,
-                        depth:
-                            suffix.length,
-                        created: created
-                    }
-                )
-            );
+            steps.push(makeStep(
+                root,
+                [node.id],
+                "Mark Suffix",
+                "Mark the end of suffix “" + suffix + "”.",
+                "/* suffix mark terminal */",
+                {
+                    current: suffix,
+                    depth: suffix.length,
+                    created: created
+                }
+            ));
         }
 
         let node = root;
         let path = "";
         let found = true;
 
-        steps.push(
-            makeStep(
-                root,
-                [root.id],
-                "Substring Search",
-                "Search for pattern “" +
-                    query +
-                    "”. Any root path proves substring occurrence.",
-                "/* suffix search call */",
-                {
-                    current: "root",
-                    created: created
-                }
-            )
-        );
+        steps.push(makeStep(
+            root,
+            [root.id],
+            "Substring Search",
+            "Search for pattern “" + query +
+                "”. Any root path proves substring occurrence.",
+            "/* suffix search call */",
+            {
+                current: "root",
+                created: created
+            }
+        ));
 
-        for (
-            let index = 0;
-            index < query.length;
-            index += 1
-        ) {
+        for (let index = 0; index < query.length; index += 1) {
             const letter = query[index];
 
-            steps.push(
-                makeStep(
-                    root,
-                    [node.id],
-                    "Check Edge",
-                    "Check edge “" +
-                        letter +
-                        "” at pattern position " +
-                        index +
-                        ".",
-                    "/* suffix search step */",
-                    {
-                        current:
-                            path || "root",
-                        symbol: letter,
-                        depth: index,
-                        created: created
-                    }
-                )
-            );
+            steps.push(makeStep(
+                root,
+                [node.id],
+                "Loop Condition",
+                "The substring-search loop checks edge “" +
+                    letter + "” at pattern position " + index + ".",
+                "/* suffix search loop */",
+                {
+                    current: path || "root",
+                    symbol: letter,
+                    depth: index,
+                    created: created
+                }
+            ));
 
             if (!node.children[letter]) {
                 found = false;
                 break;
             }
 
-            node =
-                node.children[letter];
-
+            node = node.children[letter];
             path += letter;
         }
 
-        steps.push(
-            makeStep(
-                root,
-                [node.id],
-                found
-                    ? "Found"
-                    : "Not Found",
-                found
-                    ? "The complete pattern path exists, so it is a substring."
-                    : "The pattern path breaks, so it is absent.",
-                "/* suffix search result */",
-                {
-                    current:
-                        path || "root",
-                    depth: path.length,
-                    created: created,
-                    result: found
-                        ? "Substring found"
-                        : "Substring not found"
-                }
-            )
-        );
+        steps.push(makeStep(
+            root,
+            [node.id],
+            found ? "Found" : "Not Found",
+            found
+                ? "The complete pattern path exists, so it is a substring."
+                : "The pattern path breaks, so it is absent.",
+            "/* suffix search result */",
+            {
+                current: path || "root",
+                depth: path.length,
+                created: created,
+                result: found
+                    ? "Substring found"
+                    : "Substring not found"
+            }
+        ));
 
-        steps.push(
-            makeStep(
-                root,
-                [root.id],
-                "Complete",
-                "Suffix Trie construction and substring search are complete.",
-                "/* suffix complete */",
-                {
-                    current: "root",
-                    created: created,
-                    result: found
-                        ? "Substring found"
-                        : "Substring not found",
-                    complete: true
-                }
-            )
-        );
+        steps.push(makeStep(
+            root,
+            [root.id],
+            "Complete",
+            "Suffix Trie construction and substring search are complete.",
+            "printf(\"%s\\n\", found ? \"Substring Found\" : \"Substring Not Found\");",
+            {
+                current: "root",
+                created: created,
+                result: found
+                    ? "Substring found"
+                    : "Substring not found",
+                complete: true
+            }
+        ));
 
         return steps;
     }
 
-    function parseInputs(
-        structure,
-        dataInput,
-        queryInput
-    ) {
+    function parseInputs(structure, dataInput, queryInput) {
         if (structure === "binary") {
             const values = dataInput.value
                 .trim()
@@ -1309,18 +967,14 @@
                 .filter(Boolean)
                 .map(Number);
 
-            const query = Number(
-                queryInput.value.trim()
-            );
+            const query = Number(queryInput.value.trim());
 
             if (
                 values.length < 2 ||
                 values.length > 10 ||
                 values.some(function (value) {
                     return (
-                        !Number.isInteger(
-                            value
-                        ) ||
+                        !Number.isInteger(value) ||
                         value < 0 ||
                         value > 255
                     );
@@ -1331,10 +985,7 @@
                 );
             }
 
-            if (
-                new Set(values).size !==
-                values.length
-            ) {
+            if (new Set(values).size !== values.length) {
                 throw new Error(
                     "Use distinct integers in the Binary Trie."
                 );
@@ -1350,11 +1001,8 @@
                 );
             }
 
-            dataInput.value =
-                values.join(", ");
-
-            queryInput.value =
-                String(query);
+            dataInput.value = values.join(", ");
+            queryInput.value = String(query);
 
             return {
                 data: values,
@@ -1409,9 +1057,7 @@
             words.length < 2 ||
             words.length > 8 ||
             words.some(function (word) {
-                return !/^[a-z]{1,10}$/.test(
-                    word
-                );
+                return !/^[a-z]{1,10}$/.test(word);
             })
         ) {
             throw new Error(
@@ -1419,18 +1065,11 @@
             );
         }
 
-        if (
-            new Set(words).size !==
-            words.length
-        ) {
-            throw new Error(
-                "Use distinct words."
-            );
+        if (new Set(words).size !== words.length) {
+            throw new Error("Use distinct words.");
         }
 
-        if (
-            !/^[a-z]{1,10}$/.test(query)
-        ) {
+        if (!/^[a-z]{1,10}$/.test(query)) {
             throw new Error(
                 "Enter one lowercase query word."
             );
@@ -1445,101 +1084,62 @@
         };
     }
 
-    function buildSteps(
-        structure,
-        data,
-        query
-    ) {
+    function buildSteps(structure, data, query) {
         if (structure === "trie") {
-            return buildTrieSteps(
-                data,
-                query
-            );
+            return buildTrieSteps(data, query);
         }
 
         if (structure === "binary") {
-            return buildBinarySteps(
-                data,
-                query
-            );
+            return buildBinarySteps(data, query);
         }
 
         if (structure === "patricia") {
-            return buildPatriciaSteps(
-                data,
-                query
-            );
+            return buildPatriciaSteps(data, query);
         }
 
-        return buildSuffixSteps(
-            data,
-            query
-        );
+        return buildSuffixSteps(data, query);
     }
 
-    function svgElement(
-        name,
-        attributes
-    ) {
-        const element =
-            document.createElementNS(
-                SVG_NS,
-                name
-            );
+    function svgElement(name, attributes) {
+        const element = document.createElementNS(
+            SVG_NS,
+            name
+        );
 
-        Object.keys(
-            attributes || {}
-        ).forEach(function (key) {
-            element.setAttribute(
-                key,
-                attributes[key]
-            );
+        Object.keys(attributes || {}).forEach(function (key) {
+            element.setAttribute(key, attributes[key]);
         });
 
         return element;
     }
 
-    function renderDigitalTree(
-        svg,
-        root,
-        active,
-        structure
-    ) {
+    function renderDigitalTree(svg, root, active, structure) {
         svg.innerHTML = "";
 
-        if (!root) {
-            return;
-        }
+        if (!root) { return; }
 
         const items = [];
         const edges = [];
         let leafSlot = 0;
 
         function layout(node, depth) {
-            const keys = Object.keys(
-                node.children
-            ).sort();
+            const keys = Object.keys(node.children).sort();
 
-            const childItems = keys.map(
-                function (key) {
-                    const childItem =
-                        layout(
-                            node.children[key],
-                            depth + 1
-                        );
+            const childItems = keys.map(function (key) {
+                const childItem = layout(
+                    node.children[key],
+                    depth + 1
+                );
 
-                    edges.push({
-                        from: null,
-                        to: childItem,
-                        label:
-                            node.children[key]
-                                .label || key,
-                        parentNode: node
-                    });
+                edges.push({
+                    from: null,
+                    to: childItem,
+                    label: node.children[key].label || key,
+                    parentNode: node
+                });
 
-                    return childItem;
-                }
-            );
+                return childItem;
+            });
 
             let x;
 
@@ -1547,20 +1147,9 @@
                 x = leafSlot;
                 leafSlot += 1;
             } else {
-                x =
-                    childItems.reduce(
-                        function (
-                            sum,
-                            item
-                        ) {
-                            return (
-                                sum +
-                                item.slot
-                            );
-                        },
-                        0
-                    ) /
-                    childItems.length;
+                x = childItems.reduce(function (sum, item) {
+                    return sum + item.slot;
+                }, 0) / childItems.length;
             }
 
             const item = {
@@ -1572,29 +1161,19 @@
 
             items.push(item);
 
-            childItems.forEach(
-                function (childItem) {
-                    const edge =
-                        edges.find(
-                            function (
-                                candidate
-                            ) {
-                                return (
-                                    candidate.to ===
-                                        childItem &&
-                                    candidate.from ===
-                                        null &&
-                                    candidate.parentNode ===
-                                        node
-                                );
-                            }
-                        );
+            childItems.forEach(function (childItem) {
+                const edge = edges.find(function (candidate) {
+                    return (
+                        candidate.to === childItem &&
+                        candidate.from === null &&
+                        candidate.parentNode === node
+                    );
+                });
 
-                    if (edge) {
-                        edge.from = item;
-                    }
+                if (edge) {
+                    edge.from = item;
                 }
-            );
+            });
 
             return item;
         }
@@ -1606,15 +1185,9 @@
             Math.max(1, leafSlot) * 105
         );
 
-        const maxDepth = items.reduce(
-            function (maximum, item) {
-                return Math.max(
-                    maximum,
-                    item.depth
-                );
-            },
-            0
-        );
+        const maxDepth = items.reduce(function (maximum, item) {
+            return Math.max(maximum, item.depth);
+        }, 0);
 
         const height = Math.max(
             210,
@@ -1622,61 +1195,32 @@
         );
 
         items.forEach(function (item) {
-            item.x =
-                leafSlot <= 1
-                    ? width / 2
-                    : 55 +
-                      item.slot *
-                          (
-                              (width - 110) /
-                              (leafSlot - 1)
-                          );
+            item.x = leafSlot <= 1
+                ? width / 2
+                : 55 + item.slot *
+                    ((width - 110) / (leafSlot - 1));
 
-            item.y =
-                45 + item.depth * 92;
+            item.y = 45 + item.depth * 92;
         });
 
         edges.forEach(function (edge) {
-            if (!edge.from) {
-                return;
-            }
+            if (!edge.from) { return; }
 
-            svg.appendChild(
-                svgElement("line", {
-                    x1: edge.from.x,
-                    y1:
-                        edge.from.y + 22,
-                    x2: edge.to.x,
-                    y2:
-                        edge.to.y - 22,
-                    class:
-                        "digital-tree-edge"
-                })
-            );
+            svg.appendChild(svgElement("line", {
+                x1: edge.from.x,
+                y1: edge.from.y + 22,
+                x2: edge.to.x,
+                y2: edge.to.y - 22,
+                class: "digital-tree-edge"
+            }));
 
-            const label = svgElement(
-                "text",
-                {
-                    x:
-                        (
-                            edge.from.x +
-                            edge.to.x
-                        ) / 2,
-                    y:
-                        (
-                            edge.from.y +
-                            edge.to.y
-                        ) /
-                            2 -
-                        5,
-                    class:
-                        "digital-edge-label"
-                }
-            );
+            const label = svgElement("text", {
+                x: (edge.from.x + edge.to.x) / 2,
+                y: (edge.from.y + edge.to.y) / 2 - 5,
+                class: "digital-edge-label"
+            });
 
-            label.textContent =
-                edge.label;
-
+            label.textContent = edge.label;
             svg.appendChild(label);
         });
 
@@ -1684,69 +1228,44 @@
             const className =
                 "digital-tree-node is-" +
                 structure +
+                (item.node.terminal ? " is-terminal" : "") +
                 (
-                    item.node.terminal
-                        ? " is-terminal"
-                        : ""
-                ) +
-                (
-                    active.indexOf(
-                        item.node.id
-                    ) !== -1
+                    active.indexOf(item.node.id) !== -1
                         ? " is-active"
                         : ""
                 );
 
-            const group = svgElement(
-                "g",
-                {
-                    class: className
-                }
-            );
+            const group = svgElement("g", {
+                class: className
+            });
 
-            group.appendChild(
-                svgElement("circle", {
-                    cx: item.x,
-                    cy: item.y,
-                    r: "23"
-                })
-            );
+            group.appendChild(svgElement("circle", {
+                cx: item.x,
+                cy: item.y,
+                r: "23"
+            }));
 
             if (item.node.terminal) {
-                group.appendChild(
-                    svgElement(
-                        "circle",
-                        {
-                            cx: item.x,
-                            cy: item.y,
-                            r: "18",
-                            class:
-                                "digital-terminal-ring"
-                        }
-                    )
-                );
+                group.appendChild(svgElement("circle", {
+                    cx: item.x,
+                    cy: item.y,
+                    r: "18",
+                    class: "digital-terminal-ring"
+                }));
             }
 
-            const text = svgElement(
-                "text",
-                {
-                    x: item.x,
-                    y: item.y + 5,
-                    class:
-                        "digital-node-key"
-                }
-            );
+            const text = svgElement("text", {
+                x: item.x,
+                y: item.y + 5,
+                class: "digital-node-key"
+            });
 
             text.textContent =
                 item.depth === 0
                     ? "R"
-                    : item.node.value !==
-                              null &&
-                          structure ===
-                              "binary"
-                        ? String(
-                              item.node.value
-                          )
+                    : item.node.value !== null &&
+                        structure === "binary"
+                        ? String(item.node.value)
                         : item.node.terminal
                             ? "✓"
                             : "•";
@@ -1757,10 +1276,7 @@
 
         svg.setAttribute(
             "viewBox",
-            "0 0 " +
-                width +
-                " " +
-                height
+            "0 0 " + width + " " + height
         );
 
         svg.style.height =
@@ -1773,48 +1289,37 @@
             codeKey: "standard-trie",
             dataLabel: "Words",
             queryLabel: "Search Word",
-            exampleData:
-                "app, apple, bat, ball, bag",
+            exampleData: "app, apple, bat, ball, bag",
             exampleQuery: "apple"
         },
         binary: {
             label: "Binary Trie",
             codeKey: "binary-trie",
-            dataLabel:
-                "Integers (0–255)",
+            dataLabel: "Integers (0–255)",
             queryLabel: "XOR Query",
-            exampleData:
-                "5, 25, 10, 2, 8",
+            exampleData: "5, 25, 10, 2, 8",
             exampleQuery: "5"
         },
         patricia: {
-            label:
-                "Patricia / Radix Trie",
+            label: "Patricia / Radix Trie",
             codeKey: "patricia-trie",
             dataLabel: "Words",
             queryLabel: "Search Word",
-            exampleData:
-                "bear, bell, bid, bull, buy",
+            exampleData: "bear, bell, bid, bull, buy",
             exampleQuery: "bell"
         },
         suffix: {
             label: "Suffix Trie",
             codeKey: "suffix-trie",
-            dataLabel:
-                "Text (3–8 letters)",
+            dataLabel: "Text (3–8 letters)",
             queryLabel: "Substring",
             exampleData: "banana",
             exampleQuery: "ana"
         }
     };
 
-    function setLabels(
-        structure,
-        dataLabel,
-        queryLabel
-    ) {
-        const definition =
-            definitions[structure];
+    function setLabels(structure, dataLabel, queryLabel) {
+        const definition = definitions[structure];
 
         dataLabel.firstChild.textContent =
             definition.dataLabel;
@@ -1824,75 +1329,27 @@
     }
 
     const visualizer = {
-        structure:
-            document.getElementById(
-                "digitalStructure"
-            ),
-        data: document.getElementById(
-            "digitalDataInput"
-        ),
-        query: document.getElementById(
-            "digitalQueryInput"
-        ),
-        dataLabel:
-            document.getElementById(
-                "digitalDataLabel"
-            ),
-        queryLabel:
-            document.getElementById(
-                "digitalQueryLabel"
-            ),
-        load: document.getElementById(
-            "loadDigitalVisualizer"
-        ),
-        prompt: document.getElementById(
-            "digitalPrompt"
-        ),
-        result: document.getElementById(
-            "digitalResult"
-        ),
-        svg: document.getElementById(
-            "digitalTreeSvg"
-        ),
-        message: document.getElementById(
-            "digitalMessage"
-        ),
-        phase: document.getElementById(
-            "digitalPhase"
-        ),
-        nodes: document.getElementById(
-            "digitalNodes"
-        ),
-        depth: document.getElementById(
-            "digitalDepth"
-        ),
-        resultValue:
-            document.getElementById(
-                "digitalResultValue"
-            ),
-        progress:
-            document.getElementById(
-                "digitalProgress"
-            ),
-        status: document.getElementById(
-            "digitalStatus"
-        ),
-        previous:
-            document.getElementById(
-                "digitalPrevious"
-            ),
-        next: document.getElementById(
-            "digitalNext"
-        ),
-        auto: document.getElementById(
-            "digitalAuto"
-        ),
-        pause: document.getElementById(
-            "digitalPause"
-        ),
-        reset: document.getElementById(
-            "digitalReset"
-        )
+        structure: document.getElementById("digitalStructure"),
+        data: document.getElementById("digitalDataInput"),
+        query: document.getElementById("digitalQueryInput"),
+        dataLabel: document.getElementById("digitalDataLabel"),
+        queryLabel: document.getElementById("digitalQueryLabel"),
+        load: document.getElementById("loadDigitalVisualizer"),
+        prompt: document.getElementById("digitalPrompt"),
+        result: document.getElementById("digitalResult"),
+        svg: document.getElementById("digitalTreeSvg"),
+        message: document.getElementById("digitalMessage"),
+        phase: document.getElementById("digitalPhase"),
+        nodes: document.getElementById("digitalNodes"),
+        depth: document.getElementById("digitalDepth"),
+        resultValue: document.getElementById("digitalResultValue"),
+        progress: document.getElementById("digitalProgress"),
+        status: document.getElementById("digitalStatus"),
+        previous: document.getElementById("digitalPrevious"),
+        next: document.getElementById("digitalNext"),
+        auto: document.getElementById("digitalAuto"),
+        pause: document.getElementById("digitalPause"),
+        reset: document.getElementById("digitalReset")
     };
 
     let visualSteps = [];
@@ -1901,10 +1358,7 @@
 
     function stopVisual() {
         if (visualTimer !== null) {
-            window.clearInterval(
-                visualTimer
-            );
-
+            window.clearInterval(visualTimer);
             visualTimer = null;
         }
     }
@@ -1920,12 +1374,9 @@
     }
 
     function renderVisual() {
-        if (!visualSteps.length) {
-            return;
-        }
+        if (!visualSteps.length) { return; }
 
-        const step =
-            visualSteps[visualIndex];
+        const step = visualSteps[visualIndex];
 
         renderDigitalTree(
             visualizer.svg,
@@ -1934,43 +1385,28 @@
             visualizer.structure.value
         );
 
-        visualizer.message.textContent =
-            step.message;
-
-        visualizer.phase.textContent =
-            step.phase;
-
-        visualizer.nodes.textContent =
-            String(step.created);
-
-        visualizer.depth.textContent =
-            String(step.depth);
-
-        visualizer.resultValue.textContent =
-            step.result;
+        visualizer.message.textContent = step.message;
+        visualizer.phase.textContent = step.phase;
+        visualizer.nodes.textContent = String(step.created);
+        visualizer.depth.textContent = String(step.depth);
+        visualizer.resultValue.textContent = step.result;
 
         visualizer.progress.style.width =
             (
                 visualIndex /
-                Math.max(
-                    1,
-                    visualSteps.length - 1
-                ) *
+                Math.max(1, visualSteps.length - 1) *
                 100
             ) + "%";
 
         visualizer.status.textContent =
-            "Step " +
-            visualIndex +
-            " of " +
-            (visualSteps.length - 1);
+            "Step " + visualIndex +
+            " of " + (visualSteps.length - 1);
 
         visualizer.previous.disabled =
             visualIndex === 0;
 
         visualizer.next.disabled =
-            visualIndex ===
-            visualSteps.length - 1;
+            visualIndex === visualSteps.length - 1;
     }
 
     function loadVisual() {
@@ -1997,14 +1433,13 @@
         visualIndex = 0;
         visualizer.prompt.hidden = true;
         visualizer.result.hidden = false;
+
         renderVisual();
     }
 
     function changeVisualStructure() {
         const definition =
-            definitions[
-                visualizer.structure.value
-            ];
+            definitions[visualizer.structure.value];
 
         visualizer.data.value =
             definition.exampleData;
@@ -2032,27 +1467,23 @@
             changeVisualStructure
         );
 
-        [
-            visualizer.data,
-            visualizer.query
-        ].forEach(function (input) {
-            input.addEventListener(
-                "input",
-                invalidateVisual
-            );
-        });
+        [visualizer.data, visualizer.query].forEach(
+            function (input) {
+                input.addEventListener(
+                    "input",
+                    invalidateVisual
+                );
+            }
+        );
 
         document
-            .querySelectorAll(
-                "[data-digital-example]"
-            )
+            .querySelectorAll("[data-digital-example]")
             .forEach(function (button) {
                 button.addEventListener(
                     "click",
                     function () {
                         visualizer.structure.value =
-                            button.dataset
-                                .digitalExample;
+                            button.dataset.digitalExample;
 
                         changeVisualStructure();
                     }
@@ -2100,23 +1531,21 @@
                     renderVisual();
                 }
 
-                visualTimer =
-                    window.setInterval(
-                        function () {
-                            if (
-                                visualIndex >=
-                                visualSteps.length -
-                                    1
-                            ) {
-                                stopVisual();
-                                return;
-                            }
+                visualTimer = window.setInterval(
+                    function () {
+                        if (
+                            visualIndex >=
+                            visualSteps.length - 1
+                        ) {
+                            stopVisual();
+                            return;
+                        }
 
-                            visualIndex += 1;
-                            renderVisual();
-                        },
-                        820
-                    );
+                        visualIndex += 1;
+                        renderVisual();
+                    },
+                    820
+                );
             }
         );
 
@@ -2136,92 +1565,39 @@
     }
 
     const tracer = {
-        structure:
-            document.getElementById(
-                "digitalTraceStructure"
-            ),
-        data: document.getElementById(
-            "digitalTraceData"
-        ),
-        query: document.getElementById(
-            "digitalTraceQuery"
-        ),
-        dataLabel:
-            document.getElementById(
-                "digitalTraceDataLabel"
-            ),
-        queryLabel:
-            document.getElementById(
-                "digitalTraceQueryLabel"
-            ),
-        load: document.getElementById(
-            "loadDigitalTracer"
-        ),
-        prompt: document.getElementById(
-            "digitalTracePrompt"
-        ),
-        result: document.getElementById(
-            "digitalTraceResult"
-        ),
-        title: document.getElementById(
-            "digitalTraceTitle"
-        ),
-        codeWindow:
-            document.getElementById(
-                "digitalTraceCodeWindow"
-            ),
-        code: document.getElementById(
-            "digitalTraceCode"
-        ),
-        message:
-            document.getElementById(
-                "digitalTraceMessage"
-            ),
-        variables:
-            document.getElementById(
-                "digitalTraceVariables"
-            ),
-        svg: document.getElementById(
-            "digitalTraceSvg"
-        ),
-        output:
-            document.getElementById(
-                "digitalTraceOutput"
-            ),
-        status:
-            document.getElementById(
-                "digitalTraceStatus"
-            ),
-        previous:
-            document.getElementById(
-                "digitalTracePrevious"
-            ),
-        next: document.getElementById(
-            "digitalTraceNext"
-        ),
-        auto: document.getElementById(
-            "digitalTraceAuto"
-        ),
-        pause: document.getElementById(
-            "digitalTracePause"
-        ),
-        reset: document.getElementById(
-            "digitalTraceReset"
-        )
+        structure: document.getElementById("digitalTraceStructure"),
+        data: document.getElementById("digitalTraceData"),
+        query: document.getElementById("digitalTraceQuery"),
+        dataLabel: document.getElementById("digitalTraceDataLabel"),
+        queryLabel: document.getElementById("digitalTraceQueryLabel"),
+        load: document.getElementById("loadDigitalTracer"),
+        prompt: document.getElementById("digitalTracePrompt"),
+        result: document.getElementById("digitalTraceResult"),
+        title: document.getElementById("digitalTraceTitle"),
+        codeWindow: document.getElementById("digitalTraceCodeWindow"),
+        code: document.getElementById("digitalTraceCode"),
+        message: document.getElementById("digitalTraceMessage"),
+        variables: document.getElementById("digitalTraceVariables"),
+        svg: document.getElementById("digitalTraceSvg"),
+        output: document.getElementById("digitalTraceOutput"),
+        status: document.getElementById("digitalTraceStatus"),
+        previous: document.getElementById("digitalTracePrevious"),
+        next: document.getElementById("digitalTraceNext"),
+        auto: document.getElementById("digitalTraceAuto"),
+        pause: document.getElementById("digitalTracePause"),
+        reset: document.getElementById("digitalTraceReset")
     };
 
     let traceSteps = [];
     let traceIndex = 0;
     let traceTimer = null;
     let traceLines = [];
+    let traceLookupLines = [];
     let activeDefinition = null;
 
     function stopTrace() {
         if (traceTimer !== null) {
-            window.clearInterval(
-                traceTimer
-            );
-
+            window.clearInterval(traceTimer);
             traceTimer = null;
         }
     }
@@ -2237,12 +1613,9 @@
     }
 
     function loadCode(definition) {
-        const source =
-            document.querySelector(
-                '[data-c-program="' +
-                    definition.codeKey +
-                    '"]'
-            );
+        const source = document.querySelector(
+            '[data-c-program="' + definition.codeKey + '"]'
+        );
 
         if (!source) {
             throw new Error(
@@ -2254,29 +1627,32 @@
             .replace(/\r/g, "")
             .replace(/^\n+|\n+$/g, "");
 
-        traceLines = text.split("\n");
+        traceLookupLines = text.split("\n");
+
+        traceLines = traceLookupLines.map(function (line) {
+            return line
+                .replace(
+                    /\s*\/\*\s*(?:trie|binary|patricia|suffix)[^*]*\*\//g,
+                    ""
+                )
+                .replace(/\s+$/g, "");
+        });
+
         tracer.code.innerHTML = "";
 
-        traceLines.forEach(
-            function (line, index) {
-                const row =
-                    document.createElement(
-                        "span"
-                    );
+        traceLines.forEach(function (line, index) {
+            const row = document.createElement("span");
 
-                row.dataset.digitalTraceLine =
-                    String(index + 1);
+            row.dataset.digitalTraceLine =
+                String(index + 1);
 
-                row.textContent =
-                    String(
-                        index + 1
-                    ).padStart(3, "0") +
-                    " │ " +
-                    (line || " ");
+            row.textContent =
+                String(index + 1).padStart(3, "0") +
+                " │ " +
+                (line || " ");
 
-                tracer.code.appendChild(row);
-            }
-        );
+            tracer.code.appendChild(row);
+        });
 
         tracer.codeWindow.scrollTop = 0;
     }
@@ -2284,13 +1660,11 @@
     function findLine(needle) {
         for (
             let index = 0;
-            index < traceLines.length;
+            index < traceLookupLines.length;
             index += 1
         ) {
             if (
-                traceLines[index].indexOf(
-                    needle
-                ) !== -1
+                traceLookupLines[index].indexOf(needle) !== -1
             ) {
                 return index + 1;
             }
@@ -2302,71 +1676,44 @@
     function decorate(steps) {
         let previous = 1;
 
-        return steps.map(
-            function (step) {
-                const line =
-                    findLine(step.needle);
+        return steps.map(function (step) {
+            const line = findLine(step.needle);
 
-                if (line > 0) {
-                    previous = line;
-                }
-
-                return Object.assign(
-                    {},
-                    step,
-                    {
-                        line:
-                            line > 0
-                                ? line
-                                : previous
-                    }
-                );
+            if (line > 0) {
+                previous = line;
             }
-        );
+
+            return Object.assign({}, step, {
+                line: line > 0 ? line : previous
+            });
+        });
     }
 
-    function appendVariable(
-        label,
-        value
-    ) {
-        const card =
-            document.createElement("div");
-
-        const name =
-            document.createElement("span");
-
-        const data =
-            document.createElement("strong");
+    function appendVariable(label, value) {
+        const card = document.createElement("div");
+        const name = document.createElement("span");
+        const data = document.createElement("strong");
 
         name.textContent = label;
         data.textContent = String(value);
 
         card.appendChild(name);
         card.appendChild(data);
-
         tracer.variables.appendChild(card);
     }
 
     function renderTrace() {
-        if (!traceSteps.length) {
-            return;
-        }
+        if (!traceSteps.length) { return; }
 
-        const step =
-            traceSteps[traceIndex];
-
+        const step = traceSteps[traceIndex];
         let activeLine = null;
 
         tracer.code
-            .querySelectorAll(
-                "[data-digital-trace-line]"
-            )
+            .querySelectorAll("[data-digital-trace-line]")
             .forEach(function (line) {
                 const active =
-                    Number(
-                        line.dataset
-                            .digitalTraceLine
-                    ) === step.line;
+                    Number(line.dataset.digitalTraceLine) ===
+                    step.line;
 
                 line.classList.toggle(
                     "is-active-line",
@@ -2378,9 +1725,7 @@
                 }
             });
 
-        tracer.message.textContent =
-            step.message;
-
+        tracer.message.textContent = step.message;
         tracer.variables.innerHTML = "";
 
         appendVariable(
@@ -2388,30 +1733,11 @@
             activeDefinition.label
         );
 
-        appendVariable(
-            "Phase",
-            step.phase
-        );
-
-        appendVariable(
-            "Current Path",
-            step.current
-        );
-
-        appendVariable(
-            "Symbol / Edge",
-            step.symbol
-        );
-
-        appendVariable(
-            "Depth",
-            step.depth
-        );
-
-        appendVariable(
-            "Nodes Created",
-            step.created
-        );
+        appendVariable("Phase", step.phase);
+        appendVariable("Current Path", step.current);
+        appendVariable("Symbol / Edge", step.symbol);
+        appendVariable("Depth", step.depth);
+        appendVariable("Nodes Created", step.created);
 
         renderDigitalTree(
             tracer.svg,
@@ -2421,31 +1747,23 @@
         );
 
         tracer.output.textContent =
-            step.complete
-                ? step.result
-                : "—";
+            step.complete ? step.result : "—";
 
         tracer.status.textContent =
-            "Step " +
-            traceIndex +
-            " of " +
-            (traceSteps.length - 1);
+            "Step " + traceIndex +
+            " of " + (traceSteps.length - 1);
 
         tracer.previous.disabled =
             traceIndex === 0;
 
         tracer.next.disabled =
-            traceIndex ===
-            traceSteps.length - 1;
+            traceIndex === traceSteps.length - 1;
 
         if (activeLine) {
             const top =
                 activeLine.offsetTop -
-                tracer.codeWindow
-                    .clientHeight /
-                    2 +
-                activeLine.offsetHeight /
-                    2;
+                tracer.codeWindow.clientHeight / 2 +
+                activeLine.offsetHeight / 2;
 
             tracer.codeWindow.scrollTo({
                 top: Math.max(0, top),
@@ -2456,9 +1774,7 @@
 
     function loadTrace() {
         const definition =
-            definitions[
-                tracer.structure.value
-            ];
+            definitions[tracer.structure.value];
 
         let parsed;
 
@@ -2484,6 +1800,7 @@
         }
 
         stopTrace();
+
         activeDefinition = definition;
         traceIndex = 0;
 
@@ -2499,9 +1816,7 @@
 
     function changeTraceStructure() {
         const definition =
-            definitions[
-                tracer.structure.value
-            ];
+            definitions[tracer.structure.value];
 
         tracer.data.value =
             definition.exampleData;
@@ -2529,15 +1844,14 @@
             changeTraceStructure
         );
 
-        [
-            tracer.data,
-            tracer.query
-        ].forEach(function (input) {
-            input.addEventListener(
-                "input",
-                invalidateTrace
-            );
-        });
+        [tracer.data, tracer.query].forEach(
+            function (input) {
+                input.addEventListener(
+                    "input",
+                    invalidateTrace
+                );
+            }
+        );
 
         tracer.previous.addEventListener(
             "click",
@@ -2580,23 +1894,21 @@
                     renderTrace();
                 }
 
-                traceTimer =
-                    window.setInterval(
-                        function () {
-                            if (
-                                traceIndex >=
-                                traceSteps.length -
-                                    1
-                            ) {
-                                stopTrace();
-                                return;
-                            }
+                traceTimer = window.setInterval(
+                    function () {
+                        if (
+                            traceIndex >=
+                            traceSteps.length - 1
+                        ) {
+                            stopTrace();
+                            return;
+                        }
 
-                            traceIndex += 1;
-                            renderTrace();
-                        },
-                        850
-                    );
+                        traceIndex += 1;
+                        renderTrace();
+                    },
+                    850
+                );
             }
         );
 
@@ -2614,60 +1926,4 @@
             }
         );
     }
-
-    document
-        .querySelectorAll(
-            "[data-toggle-target]"
-        )
-        .forEach(function (button) {
-            const target =
-                document.getElementById(
-                    button.dataset
-                        .toggleTarget
-                );
-
-            if (!target) {
-                return;
-            }
-
-            target.hidden = true;
-
-            button.dataset.originalLabel =
-                button.textContent.trim();
-
-            button.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-            button.setAttribute(
-                "aria-controls",
-                target.id
-            );
-
-            button.addEventListener(
-                "click",
-                function () {
-                    const open =
-                        target.hidden;
-
-                    target.hidden = !open;
-
-                    button.setAttribute(
-                        "aria-expanded",
-                        String(open)
-                    );
-
-                    button.textContent =
-                        open
-                            ? target.classList.contains(
-                                  "ads-hint-box"
-                              )
-                                ? "Hide Hint"
-                                : "Hide Answer"
-                            : button.dataset
-                                  .originalLabel;
-                }
-            );
-        });
 }());
