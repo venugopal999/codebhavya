@@ -412,25 +412,21 @@ int main(void) {
         </section>
 
         <section class="content-card ads-lesson-section" id="tracing">
-            <div class="ads-section-heading"><span class="section-label">C PROGRAM + TRACING</span><h2>🔍 11. Program Tracing — Quick Sort</h2></div>
-            <p>Trace <code>[8, 3, 1, 7, 0, 10, 2]</code>. The highlighted statement moves before every pointer, comparison, swap, pivot placement and recursive-range update.</p>
-            <button class="ads-tracer-toggle" id="quickTraceToggle" type="button" aria-expanded="false" aria-controls="quickTracePanel">▶ Program Tracing — Quick Sort</button>
-            <div class="ads-tracer" id="quickTracePanel" hidden><div class="ads-tracer-title">PROGRAM TRACING — QUICK SORT</div><div class="ads-tracer-grid">
-                <section class="ads-tracer-panel"><h3>💻 C Program</h3><pre class="ads-tracer-code" aria-label="Traceable Quick Sort program"><code><span data-quick-trace-line="1">quickSort(a, low, high);</span>
-<span data-quick-trace-line="2">if (low &lt; high) {</span>
-<span data-quick-trace-line="3">    p = partition(a, low, high);</span>
-<span data-quick-trace-line="4">    quickSort(a, low, p - 1);</span>
-<span data-quick-trace-line="5">    quickSort(a, p + 1, high);</span>
-<span data-quick-trace-line="6">pivot = a[high];</span>
-<span data-quick-trace-line="7">i = low - 1;</span>
-<span data-quick-trace-line="8">for (j = low; j &lt; high; j++)</span>
-<span data-quick-trace-line="9">    if (a[j] &lt;= pivot)</span>
-<span data-quick-trace-line="10">        i++;</span>
-<span data-quick-trace-line="11">        swap(&amp;a[i], &amp;a[j]);</span>
-<span data-quick-trace-line="12">swap(&amp;a[i + 1], &amp;a[high]);</span>
-<span data-quick-trace-line="13">return i + 1;</span></code></pre></section>
-                <section class="ads-tracer-panel ads-tracer-live-panel"><h3>🧠 What is happening?</h3><div class="ads-tracer-explain" id="quickTraceMessage">Press Next to begin the Quick Sort trace.</div><h3>📊 Live Variables</h3><div class="ads-trace-vars"><div><span>Low</span><strong id="quickTraceLow">0</strong></div><div><span>High</span><strong id="quickTraceHigh">6</strong></div><div><span>i</span><strong id="quickTraceI">—</strong></div><div><span>j</span><strong id="quickTraceJ">—</strong></div><div><span>Pivot</span><strong id="quickTracePivot">—</strong></div><div><span>Comparisons</span><strong id="quickTraceComparisons">0</strong></div></div><div class="ads-trace-array"><span>Array</span><code id="quickTraceArray">[8, 3, 1, 7, 0, 10, 2]</code></div><h3>Output</h3><pre class="ads-trace-output" id="quickTraceOutput">—</pre></section>
-            </div><div class="ads-tracer-controls"><button type="button" class="trace-previous" id="quickTracePrevious">← Previous</button><button type="button" class="trace-next" id="quickTraceNext">Next →</button><button type="button" class="trace-auto" id="quickTraceAuto">▶ Auto Run</button><button type="button" class="trace-pause" id="quickTracePause">⏸ Pause</button><button type="button" class="trace-reset" id="quickTraceReset">↻ Reset</button></div><p class="ads-tracer-status" id="quickTraceStatus">Step 0</p></div>
+            <div class="ads-section-heading"><span class="section-label">COMBINED C PROGRAM TRACER</span><h2>🔍 11. Program Tracing — All Advanced Sorting Algorithms</h2></div>
+            <p>Select an algorithm and enter its values, then click <strong>Load Program Tracer</strong>. The selected complete C program is loaded into one compact tracer, and its highlighted statement moves as the array and live variables update.</p>
+            <div class="program-tracer-loader">
+                <label>Input Values<input id="programTraceInput" type="text" value="8, 3, 1, 7, 0, 10, 2" aria-describedby="programTraceInputHelp"></label>
+                <label>Algorithm<select id="programTraceAlgorithm"><option value="quick">Quick Sort</option><option value="merge">Merge Sort</option><option value="shell">Shell Sort</option><option value="counting">Counting Sort</option><option value="radix">Radix Sort</option><option value="bucket">Bucket Sort</option></select></label>
+                <button id="loadProgramTracer" type="button" class="primary-button">Load Program Tracer</button>
+            </div>
+            <p class="program-tracer-help" id="programTraceInputHelp">Use 2–10 comma-separated integers. Bucket Sort uses decimal values from 0 up to, but not including, 1.</p>
+            <div id="programTracePrompt" class="ads-explorer-prompt">Choose the algorithm and values, then click <strong>Load Program Tracer</strong>. Selection alone does not run the program.</div>
+            <div id="programTraceResult" hidden>
+                <div class="ads-tracer" id="programTracePanel"><div class="ads-tracer-title" id="programTraceTitle">PROGRAM TRACING</div><div class="ads-tracer-grid">
+                    <section class="ads-tracer-panel"><h3>💻 C Program</h3><pre class="ads-tracer-code program-tracer-code" id="programTraceCodeWindow" aria-label="Selected sorting C program"><code id="programTraceCode"></code></pre></section>
+                    <section class="ads-tracer-panel ads-tracer-live-panel"><h3>🧠 What is happening?</h3><div class="ads-tracer-explain" id="programTraceMessage">Press Next to begin.</div><h3>📊 Live Variables</h3><div class="ads-trace-vars program-trace-vars" id="programTraceVariables"></div><h3>Array State</h3><div class="program-trace-array" id="programTraceArray"></div><h3>Output</h3><pre class="ads-trace-output" id="programTraceOutput">—</pre></section>
+                </div><div class="ads-tracer-controls"><button type="button" class="trace-previous" id="programTracePrevious">← Previous</button><button type="button" class="trace-next" id="programTraceNext">Next →</button><button type="button" class="trace-auto" id="programTraceAuto">▶ Auto Run</button><button type="button" class="trace-pause" id="programTracePause">⏸ Pause</button><button type="button" class="trace-reset" id="programTraceReset">↻ Reset</button></div><p class="ads-tracer-status" id="programTraceStatus">Step 0 of 0</p></div>
+            </div>
         </section>
 
         <section class="content-card ads-lesson-section" id="complexity"><div class="ads-section-heading"><span class="section-label">PERFORMANCE SUMMARY</span><h2>📈 12. Complexity and Recursion</h2></div><div class="ads-table-wrap"><table class="ads-data-table"><thead><tr><th>Situation</th><th>Quick Sort Recurrence</th><th>Time</th><th>Stack</th></tr></thead><tbody><tr><td>Balanced partitions</td><td>T(n)=2T(n/2)+Θ(n)</td><td>Θ(n log n)</td><td>Θ(log n)</td></tr><tr><td>Highly unbalanced</td><td>T(n)=T(n−1)+Θ(n)</td><td>Θ(n²)</td><td>Θ(n)</td></tr><tr><td>Randomized expected</td><td>Expected balanced progress</td><td>O(n log n)</td><td>O(log n) expected</td></tr></tbody></table></div><div class="ads-warning-box"><strong>Stack optimization:</strong> recursively process the smaller partition and loop over the larger one to keep worst-case auxiliary stack usage closer to O(log n).</div></section>
@@ -803,77 +799,249 @@ int main(void) {
         visualizer.reset.addEventListener("click", function () { stopVisualizer(); visualIndex = 0; renderVisualizer(); });
     }
 
-    function buildQuickTraceSteps() {
-        const array = [8, 3, 1, 7, 0, 10, 2];
-        const steps = [];
-        let comparisons = 0;
-        function add(line, low, high, smaller, scan, pivot, message, output) {
-            steps.push({ line: line, array: array.slice(), low: low, high: high, smaller: smaller, scan: scan, pivot: pivot, comparisons: comparisons, message: message, output: output || "—" });
-        }
-        function swap(first, second) { const temp = array[first]; array[first] = array[second]; array[second] = temp; }
-        function partition(low, high) {
-            add(3, low, high, "—", "—", "—", "Call partition for range [" + low + ", " + high + "].");
-            const pivot = array[high];
-            add(6, low, high, "—", "—", pivot, "Choose a[" + high + "] = " + pivot + " as the pivot.");
-            let smaller = low - 1;
-            add(7, low, high, smaller, "—", pivot, "Initialize i to low − 1 = " + smaller + ".");
-            for (let scan = low; scan < high; scan += 1) {
-                add(8, low, high, smaller, scan, pivot, "The for loop selects j = " + scan + ".");
-                comparisons += 1;
-                add(9, low, high, smaller, scan, pivot, "Compare a[" + scan + "] = " + array[scan] + " with pivot " + pivot + ".");
-                if (array[scan] <= pivot) {
-                    smaller += 1;
-                    add(10, low, high, smaller, scan, pivot, "Increment i to " + smaller + ".");
-                    swap(smaller, scan);
-                    add(11, low, high, smaller, scan, pivot, "Swap a[i] and a[j]; the ≤ pivot region grows.");
-                }
-            }
-            swap(smaller + 1, high);
-            add(12, low, high, smaller, high, pivot, "Swap the pivot into final position " + (smaller + 1) + ".");
-            add(13, low, high, smaller, high, pivot, "Return partition index " + (smaller + 1) + ".", "Pivot " + pivot + " fixed at index " + (smaller + 1));
-            return smaller + 1;
-        }
-        function quickSort(low, high) {
-            add(1, low, high, "—", "—", "—", "Enter quickSort for range [" + low + ", " + high + "].");
-            add(2, low, high, "—", "—", "—", low < high ? "The range contains at least two elements." : "Base case: this range needs no sorting.");
-            if (low < high) {
-                const pivotIndex = partition(low, high);
-                add(4, low, high, "—", "—", array[pivotIndex], "Recursively sort the left range [" + low + ", " + (pivotIndex - 1) + "].");
-                quickSort(low, pivotIndex - 1);
-                add(5, low, high, "—", "—", array[pivotIndex], "Recursively sort the right range [" + (pivotIndex + 1) + ", " + high + "].");
-                quickSort(pivotIndex + 1, high);
-            }
-        }
-        quickSort(0, array.length - 1);
-        add(1, 0, array.length - 1, "—", "—", "—", "Quick Sort is complete.", "Sorted: [" + array.join(", ") + "]");
-        return steps;
+    const programTraceDefinitions = {
+        quick: { label: "Quick Sort", codeKey: "quick-sort", example: "8, 3, 1, 7, 0, 10, 2", kind: "integer" },
+        merge: { label: "Merge Sort", codeKey: "merge-sort", example: "38, 27, 43, 3, 9, 82", kind: "integer" },
+        shell: { label: "Shell Sort", codeKey: "shell-sort", example: "12, 34, 54, 2, 3", kind: "integer" },
+        counting: { label: "Counting Sort", codeKey: "counting-sort", example: "4, -2, 2, 8, 3, 3, 1", kind: "integer" },
+        radix: { label: "Radix Sort", codeKey: "radix-sort", example: "170, 45, 75, 90, 802, 24, 2, 66", kind: "nonnegative" },
+        bucket: { label: "Bucket Sort", codeKey: "bucket-sort", example: "0.42, 0.32, 0.23, 0.52, 0.25, 0.47, 0.51", kind: "fraction" }
+    };
+
+    const programTracer = {
+        input: document.getElementById("programTraceInput"), algorithm: document.getElementById("programTraceAlgorithm"), load: document.getElementById("loadProgramTracer"),
+        help: document.getElementById("programTraceInputHelp"), prompt: document.getElementById("programTracePrompt"), result: document.getElementById("programTraceResult"),
+        title: document.getElementById("programTraceTitle"), codeWindow: document.getElementById("programTraceCodeWindow"), code: document.getElementById("programTraceCode"),
+        message: document.getElementById("programTraceMessage"), variables: document.getElementById("programTraceVariables"), array: document.getElementById("programTraceArray"),
+        output: document.getElementById("programTraceOutput"), status: document.getElementById("programTraceStatus"), previous: document.getElementById("programTracePrevious"),
+        next: document.getElementById("programTraceNext"), auto: document.getElementById("programTraceAuto"), pause: document.getElementById("programTracePause"), reset: document.getElementById("programTraceReset")
+    };
+
+    let programTraceSteps = [];
+    let programTraceIndex = 0;
+    let programTraceTimer = null;
+    let programTraceLines = [];
+    let programTraceValues = [];
+    let activeProgramTraceDefinition = null;
+
+    function stopProgramTrace() {
+        if (programTraceTimer !== null) { window.clearInterval(programTraceTimer); programTraceTimer = null; }
     }
 
-    const tracer = {
-        toggle: document.getElementById("quickTraceToggle"), panel: document.getElementById("quickTracePanel"), message: document.getElementById("quickTraceMessage"), array: document.getElementById("quickTraceArray"),
-        low: document.getElementById("quickTraceLow"), high: document.getElementById("quickTraceHigh"), smaller: document.getElementById("quickTraceI"), scan: document.getElementById("quickTraceJ"), pivot: document.getElementById("quickTracePivot"),
-        comparisons: document.getElementById("quickTraceComparisons"), output: document.getElementById("quickTraceOutput"), status: document.getElementById("quickTraceStatus"),
-        previous: document.getElementById("quickTracePrevious"), next: document.getElementById("quickTraceNext"), auto: document.getElementById("quickTraceAuto"), pause: document.getElementById("quickTracePause"), reset: document.getElementById("quickTraceReset")
-    };
-    const traceSteps = buildQuickTraceSteps();
-    let traceIndex = 0;
-    let traceTimer = null;
-    function stopTrace() { if (traceTimer !== null) { window.clearInterval(traceTimer); traceTimer = null; } }
-    function renderTrace() {
-        const step = traceSteps[traceIndex]; let activeLine = null;
-        document.querySelectorAll("[data-quick-trace-line]").forEach(function (line) { const active = Number(line.dataset.quickTraceLine) === step.line; line.classList.toggle("is-active-line", active); if (active) { activeLine = line; } });
-        tracer.message.textContent = step.message; tracer.array.textContent = "[" + step.array.join(", ") + "]"; tracer.low.textContent = String(step.low); tracer.high.textContent = String(step.high);
-        tracer.smaller.textContent = String(step.smaller); tracer.scan.textContent = String(step.scan); tracer.pivot.textContent = String(step.pivot); tracer.comparisons.textContent = String(step.comparisons); tracer.output.textContent = step.output;
-        tracer.status.textContent = "Step " + traceIndex + " of " + (traceSteps.length - 1); tracer.previous.disabled = traceIndex === 0; tracer.next.disabled = traceIndex === traceSteps.length - 1;
-        if (activeLine) { const codeWindow = activeLine.closest(".ads-tracer-code"); const top = activeLine.offsetTop; const bottom = top + activeLine.offsetHeight; if (codeWindow && (top < codeWindow.scrollTop + 12 || bottom > codeWindow.scrollTop + codeWindow.clientHeight - 12)) { codeWindow.scrollTo({ top: Math.max(0, top - codeWindow.clientHeight / 2), behavior: "smooth" }); } }
+    function invalidateProgramTrace() {
+        stopProgramTrace();
+        programTraceSteps = [];
+        programTraceIndex = 0;
+        programTracer.result.hidden = true;
+        programTracer.prompt.hidden = false;
     }
-    if (tracer.toggle && tracer.panel) {
-        tracer.panel.hidden = true;
-        tracer.toggle.addEventListener("click", function () { const open = tracer.panel.hidden; tracer.panel.hidden = !open; tracer.toggle.setAttribute("aria-expanded", String(open)); tracer.toggle.textContent = open ? "▼ Hide Program Tracing — Quick Sort" : "▶ Program Tracing — Quick Sort"; if (!open) { stopTrace(); } });
-        tracer.previous.addEventListener("click", function () { stopTrace(); traceIndex = Math.max(0, traceIndex - 1); renderTrace(); });
-        tracer.next.addEventListener("click", function () { stopTrace(); traceIndex = Math.min(traceSteps.length - 1, traceIndex + 1); renderTrace(); });
-        tracer.auto.addEventListener("click", function () { stopTrace(); if (traceIndex === traceSteps.length - 1) { traceIndex = 0; renderTrace(); } traceTimer = window.setInterval(function () { if (traceIndex >= traceSteps.length - 1) { stopTrace(); return; } traceIndex += 1; renderTrace(); }, 820); });
-        tracer.pause.addEventListener("click", stopTrace); tracer.reset.addEventListener("click", function () { stopTrace(); traceIndex = 0; renderTrace(); }); renderTrace();
+
+    function parseProgramTraceValues(definition) {
+        const tokens = programTracer.input.value.trim().split(/[\s,]+/).filter(Boolean);
+        const values = tokens.map(Number);
+        if (values.length < 2 || values.length > 10 || values.some(function (value) { return !Number.isFinite(value); })) {
+            throw new Error("Enter 2 to 10 valid values separated by commas or spaces.");
+        }
+        if (definition.kind !== "fraction" && values.some(function (value) { return !Number.isInteger(value); })) {
+            throw new Error("This program requires integer values.");
+        }
+        if (definition.kind === "nonnegative" && values.some(function (value) { return value < 0; })) {
+            throw new Error("This Radix Sort program accepts non-negative integers only.");
+        }
+        if (definition.kind === "fraction" && values.some(function (value) { return value < 0 || value >= 1; })) {
+            throw new Error("Bucket Sort values must satisfy 0 ≤ value < 1.");
+        }
+        if (definition.codeKey === "counting-sort" && Math.max.apply(null, values) - Math.min.apply(null, values) > 80) {
+            throw new Error("For a readable Counting Sort trace, keep maximum − minimum at or below 80.");
+        }
+        programTracer.input.value = values.join(", ");
+        return values;
+    }
+
+    function getProgramTraceNeedle(algorithm, phase) {
+        const complete = phase === "Complete";
+        if (algorithm === "merge") {
+            if (complete) { return 'printf("%d ", a[i])'; }
+            if (phase === "Ready") { return "mergeSort(a, temp, 0, n - 1)"; }
+            if (phase === "Divide") { return "int mid = low +"; }
+            if (phase === "Compare") { return "if (a[i] <= a[j])"; }
+            return "temp[k++] =";
+        }
+        if (algorithm === "quick") {
+            if (complete) { return 'printf("%d ", a[i])'; }
+            if (phase === "Ready") { return "quickSort(a, 0, n - 1)"; }
+            if (phase === "Choose Pivot") { return "int pivot = a[high]"; }
+            if (phase === "Compare") { return "if (a[j] <= pivot)"; }
+            if (phase === "Move Left") { return "swap(&a[i], &a[j])"; }
+            if (phase === "Place Pivot") { return "swap(&a[i + 1], &a[high])"; }
+            return "int p = partition";
+        }
+        if (algorithm === "shell") {
+            if (complete) { return 'printf("%d ", a[i])'; }
+            if (phase === "Ready") { return "shellSort(a, n)"; }
+            if (phase.indexOf("Gap ") === 0) { return "for (int gap = n / 2"; }
+            if (phase === "Compare") { return "while (j >= gap"; }
+            if (phase === "Shift") { return "a[j] = a[j - gap]"; }
+            return "a[j] = value";
+        }
+        if (algorithm === "counting") {
+            if (complete) { return 'printf("%d ", a[i])'; }
+            if (phase === "Ready") { return "countingSort(a, n)"; }
+            if (phase === "Count") { return "count[a[i] - minimum]++"; }
+            return "output[--count[key]] = a[i]";
+        }
+        if (algorithm === "radix") {
+            if (complete) { return 'printf("%d ", a[i])'; }
+            if (phase === "Ready") { return "radixSort(a, n)"; }
+            if (phase.indexOf("Digit ") === 0) { return "count[(a[i] / exponent) % 10]++"; }
+            return "a[i] = output[i]";
+        }
+        if (complete) { return 'printf("%.2f ", a[i])'; }
+        if (phase === "Ready") { return "bucketSort(a, n)"; }
+        if (phase === "Distribute") { return "buckets[index][sizes[index]++] = a[i]"; }
+        if (phase === "Sort Bucket") { return "insertionSort(buckets[i], sizes[i])"; }
+        return "a[output++] = buckets[i][j]";
+    }
+
+    function findProgramTraceLine(lines, needle) {
+        for (let index = 0; index < lines.length; index += 1) {
+            if (lines[index].indexOf(needle) !== -1) { return index + 1; }
+        }
+        return 1;
+    }
+
+    function loadProgramTraceCode(definition) {
+        const source = document.querySelector('[data-c-program="' + definition.codeKey + '"]');
+        if (!source) { throw new Error("The selected C program could not be found."); }
+        const text = source.textContent.replace(/\r/g, "").replace(/^\n+|\n+$/g, "");
+        programTraceLines = text.split("\n");
+        programTracer.code.innerHTML = "";
+        programTraceLines.forEach(function (line, index) {
+            const row = document.createElement("span");
+            row.dataset.programTraceLine = String(index + 1);
+            row.textContent = String(index + 1).padStart(2, "0") + " │ " + (line || " ");
+            programTracer.code.appendChild(row);
+        });
+        programTracer.codeWindow.scrollTop = 0;
+    }
+
+    function decorateProgramTraceSteps(algorithm, steps) {
+        return steps.map(function (step) {
+            return Object.assign({}, step, { line: findProgramTraceLine(programTraceLines, getProgramTraceNeedle(algorithm, step.phase)) });
+        });
+    }
+
+    function appendProgramTraceVariable(label, value) {
+        const card = document.createElement("div");
+        const name = document.createElement("span");
+        const data = document.createElement("strong");
+        name.textContent = label;
+        data.textContent = String(value);
+        card.appendChild(name);
+        card.appendChild(data);
+        programTracer.variables.appendChild(card);
+    }
+
+    function renderProgramTraceVariables(step) {
+        programTracer.variables.innerHTML = "";
+        appendProgramTraceVariable("Algorithm", activeProgramTraceDefinition.label);
+        appendProgramTraceVariable("Phase", step.phase);
+        appendProgramTraceVariable("Active Indices", step.active.length ? step.active.join(", ") : "—");
+        appendProgramTraceVariable("Comparisons", step.comparisons);
+        appendProgramTraceVariable("Array Writes", step.writes);
+        appendProgramTraceVariable("Iteration", programTraceIndex + " / " + (programTraceSteps.length - 1));
+        if (activeProgramTraceDefinition.codeKey === "quick-sort") {
+            appendProgramTraceVariable("Pivot", step.pivot < 0 ? "—" : step.array[step.pivot]);
+        } else if (activeProgramTraceDefinition.codeKey === "counting-sort") {
+            appendProgramTraceVariable("Key Range", Math.min.apply(null, programTraceValues) + "…" + Math.max.apply(null, programTraceValues));
+        } else if (activeProgramTraceDefinition.codeKey === "radix-sort") {
+            appendProgramTraceVariable("Digit Place", step.phase.indexOf("Digit ") === 0 ? step.phase.slice(6) : "—");
+        } else if (activeProgramTraceDefinition.codeKey === "shell-sort") {
+            appendProgramTraceVariable("Gap", step.phase.indexOf("Gap ") === 0 ? step.phase.slice(4) : "—");
+        } else if (activeProgramTraceDefinition.codeKey === "bucket-sort") {
+            appendProgramTraceVariable("Buckets", Math.min(6, programTraceValues.length));
+        }
+    }
+
+    function renderProgramTraceArray(step) {
+        programTracer.array.innerHTML = "";
+        step.array.forEach(function (value, index) {
+            const cell = document.createElement("span");
+            cell.textContent = String(value);
+            if (step.active.indexOf(index) !== -1) { cell.classList.add("is-active-value"); }
+            if (index === step.pivot) { cell.classList.add("is-pivot-value"); }
+            programTracer.array.appendChild(cell);
+        });
+    }
+
+    function renderProgramTrace() {
+        if (!programTraceSteps.length) { return; }
+        const step = programTraceSteps[programTraceIndex];
+        let activeLine = null;
+        programTracer.code.querySelectorAll("[data-program-trace-line]").forEach(function (line) {
+            const active = Number(line.dataset.programTraceLine) === step.line;
+            line.classList.toggle("is-active-line", active);
+            if (active) { activeLine = line; }
+        });
+        programTracer.message.textContent = step.message;
+        renderProgramTraceVariables(step);
+        renderProgramTraceArray(step);
+        programTracer.output.textContent = step.complete ? "Sorted: [" + step.array.join(", ") + "]" : "—";
+        programTracer.status.textContent = "Step " + programTraceIndex + " of " + (programTraceSteps.length - 1);
+        programTracer.previous.disabled = programTraceIndex === 0;
+        programTracer.next.disabled = programTraceIndex === programTraceSteps.length - 1;
+        if (activeLine) {
+            const top = activeLine.offsetTop;
+            const bottom = top + activeLine.offsetHeight;
+            if (top < programTracer.codeWindow.scrollTop + 12 || bottom > programTracer.codeWindow.scrollTop + programTracer.codeWindow.clientHeight - 12) {
+                programTracer.codeWindow.scrollTo({ top: Math.max(0, top - programTracer.codeWindow.clientHeight / 2), behavior: "smooth" });
+            }
+        }
+    }
+
+    function loadProgramTracer() {
+        const definition = programTraceDefinitions[programTracer.algorithm.value];
+        let values;
+        try {
+            values = parseProgramTraceValues(definition);
+            loadProgramTraceCode(definition);
+            programTraceSteps = decorateProgramTraceSteps(programTracer.algorithm.value, buildVisualSteps(values, programTracer.algorithm.value));
+        } catch (error) {
+            window.alert(error.message);
+            return;
+        }
+        stopProgramTrace();
+        activeProgramTraceDefinition = definition;
+        programTraceValues = values.slice();
+        programTraceIndex = 0;
+        programTracer.title.textContent = "PROGRAM TRACING — " + definition.label.toUpperCase();
+        programTracer.prompt.hidden = true;
+        programTracer.result.hidden = false;
+        renderProgramTrace();
+    }
+
+    if (programTracer.load) {
+        programTracer.load.addEventListener("click", loadProgramTracer);
+        programTracer.input.addEventListener("input", invalidateProgramTrace);
+        programTracer.algorithm.addEventListener("change", function () {
+            const definition = programTraceDefinitions[programTracer.algorithm.value];
+            programTracer.input.value = definition.example;
+            programTracer.help.textContent = definition.kind === "fraction" ? "Bucket Sort: enter 2–10 decimal values where 0 ≤ value < 1." : (definition.kind === "nonnegative" ? "Radix Sort: enter 2–10 non-negative integers." : "Enter 2–10 comma-separated integers.");
+            invalidateProgramTrace();
+        });
+        programTracer.previous.addEventListener("click", function () { stopProgramTrace(); programTraceIndex = Math.max(0, programTraceIndex - 1); renderProgramTrace(); });
+        programTracer.next.addEventListener("click", function () { stopProgramTrace(); programTraceIndex = Math.min(programTraceSteps.length - 1, programTraceIndex + 1); renderProgramTrace(); });
+        programTracer.auto.addEventListener("click", function () {
+            stopProgramTrace();
+            if (programTraceIndex === programTraceSteps.length - 1) { programTraceIndex = 0; renderProgramTrace(); }
+            programTraceTimer = window.setInterval(function () {
+                if (programTraceIndex >= programTraceSteps.length - 1) { stopProgramTrace(); return; }
+                programTraceIndex += 1;
+                renderProgramTrace();
+            }, 820);
+        });
+        programTracer.pause.addEventListener("click", stopProgramTrace);
+        programTracer.reset.addEventListener("click", function () { stopProgramTrace(); programTraceIndex = 0; renderProgramTrace(); });
     }
 
     document.querySelectorAll("[data-toggle-target]").forEach(function (button) {
