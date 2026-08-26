@@ -348,7 +348,7 @@ int main(void) {
                     <button type="button" class="trace-pause" id="sparseTracePause">⏸ Pause</button>
                     <button type="button" class="trace-reset" id="sparseTraceReset">↻ Reset</button>
                 </div>
-                <p class="ads-tracer-status" id="sparseTraceStatus">Step 0 of 12</p>
+                <p class="ads-tracer-status" id="sparseTraceStatus">Step 0 of 23</p>
             </div>
         </section>
 
@@ -672,21 +672,146 @@ int main(void) {
         });
     });
 
-    const sparseTraceSteps = [
-        { line: 1, index: "—", column: "—", position: "—", counts: "[0, 0, 0, 0, 0]", starts: "[—, —, —, —, —]", message: "Read the 4 × 5 triplet matrix containing five non-zero terms. The transpose will have dimensions 5 × 4.", output: "row col value" },
-        { line: 2, index: "1", column: "2", position: "—", counts: "[0, 0, 1, 0, 0]", starts: "[—, —, —, —, —]", message: "Term (0, 2, 5) belongs to column 2, so count[2] becomes 1.", output: "row col value" },
-        { line: 2, index: "2", column: "0", position: "—", counts: "[1, 0, 1, 0, 0]", starts: "[—, —, —, —, —]", message: "Term (1, 0, 8) increases the number of terms in column 0.", output: "row col value" },
-        { line: 2, index: "3", column: "3", position: "—", counts: "[1, 0, 1, 1, 0]", starts: "[—, —, —, —, —]", message: "Term (1, 3, 7) increases count[3].", output: "row col value" },
-        { line: 2, index: "4", column: "1", position: "—", counts: "[1, 1, 1, 1, 0]", starts: "[—, —, —, —, —]", message: "Term (2, 1, 6) increases count[1].", output: "row col value" },
-        { line: 2, index: "5", column: "4", position: "—", counts: "[1, 1, 1, 1, 1]", starts: "[—, —, —, —, —]", message: "Term (3, 4, 9) completes the column-frequency array.", output: "row col value" },
-        { line: 4, index: "—", column: "—", position: "—", counts: "[1, 1, 1, 1, 1]", starts: "[1, 2, 3, 4, 5]", message: "Prefix sums calculate the first output position for every original column.", output: "row col value" },
-        { line: 6, index: "1", column: "2", position: "3", counts: "[1, 1, 1, 1, 1]", starts: "[1, 2, 4, 4, 5]", message: "Original term (0, 2, 5) becomes transpose term (2, 0, 5) at position 3.", output: "row col value\n2   0   5" },
-        { line: 6, index: "2", column: "0", position: "1", counts: "[1, 1, 1, 1, 1]", starts: "[2, 2, 4, 4, 5]", message: "Original term (1, 0, 8) becomes (0, 1, 8) at position 1.", output: "row col value\n0   1   8\n2   0   5" },
-        { line: 6, index: "3", column: "3", position: "4", counts: "[1, 1, 1, 1, 1]", starts: "[2, 2, 4, 5, 5]", message: "Original term (1, 3, 7) becomes (3, 1, 7) at position 4.", output: "row col value\n0   1   8\n2   0   5\n3   1   7" },
-        { line: 6, index: "4", column: "1", position: "2", counts: "[1, 1, 1, 1, 1]", starts: "[2, 3, 4, 5, 5]", message: "Original term (2, 1, 6) becomes (1, 2, 6) at position 2.", output: "row col value\n0   1   8\n1   2   6\n2   0   5\n3   1   7" },
-        { line: 6, index: "5", column: "4", position: "5", counts: "[1, 1, 1, 1, 1]", starts: "[2, 3, 4, 5, 6]", message: "Original term (3, 4, 9) becomes (4, 3, 9) at position 5.", output: "row col value\n0   1   8\n1   2   6\n2   0   5\n3   1   7\n4   3   9" },
-        { line: 7, index: "5", column: "4", position: "5", counts: "[1, 1, 1, 1, 1]", starts: "[2, 3, 4, 5, 6]", message: "Fast transpose is complete. Terms are already ordered by row in the transposed matrix.", output: "5 4 5\n0 1 8\n1 2 6\n2 0 5\n3 1 7\n4 3 9" }
+    const sparseTraceTerms = [
+        { row: 0, column: 2, value: 5 },
+        { row: 1, column: 0, value: 8 },
+        { row: 1, column: 3, value: 7 },
+        { row: 2, column: 1, value: 6 },
+        { row: 3, column: 4, value: 9 }
     ];
+
+    function sparseTraceArray(values) {
+        return "[" + values.join(", ") + "]";
+    }
+
+    function sparseTraceOutput(placedTerms, includeHeader) {
+        const rows = [];
+        if (includeHeader) {
+            rows.push("5 4 5");
+        } else {
+            rows.push("row col value");
+        }
+        placedTerms.forEach(function (term) {
+            if (term) {
+                rows.push(term.column + "   " + term.row + "   " + term.value);
+            }
+        });
+        return rows.join("\n");
+    }
+
+    function buildSparseTraceSteps() {
+        const steps = [];
+        const counts = [0, 0, 0, 0, 0];
+        const unknownStarts = "[—, —, —, —, —]";
+        const placedTerms = new Array(sparseTraceTerms.length);
+
+        steps.push({
+            line: 1,
+            index: "—",
+            column: "—",
+            position: "—",
+            counts: sparseTraceArray(counts),
+            starts: unknownStarts,
+            message: "Store the transposed dimensions in b[0]: 5 rows, 4 columns and 5 non-zero terms.",
+            output: "row col value"
+        });
+
+        sparseTraceTerms.forEach(function (term, termOffset) {
+            const index = termOffset + 1;
+            steps.push({
+                line: 2,
+                index: String(index),
+                column: String(term.column),
+                position: "—",
+                counts: sparseTraceArray(counts),
+                starts: unknownStarts,
+                message: "The counting loop selects term " + index + ": (" + term.row + ", " + term.column + ", " + term.value + ").",
+                output: "row col value"
+            });
+
+            counts[term.column] += 1;
+            steps.push({
+                line: 3,
+                index: String(index),
+                column: String(term.column),
+                position: "—",
+                counts: sparseTraceArray(counts),
+                starts: unknownStarts,
+                message: "Execute count[a[i].col]++: count[" + term.column + "] becomes " + counts[term.column] + ".",
+                output: "row col value"
+            });
+        });
+
+        const starts = [1, "—", "—", "—", "—"];
+        steps.push({
+            line: 4,
+            index: "—",
+            column: "—",
+            position: "—",
+            counts: sparseTraceArray(counts),
+            starts: sparseTraceArray(starts),
+            message: "Set the first output position to 1 because b[0] stores matrix metadata.",
+            output: "row col value"
+        });
+
+        for (let column = 1; column < starts.length; column += 1) {
+            starts[column] = Number(starts[column - 1]) + counts[column - 1];
+        }
+        steps.push({
+            line: 5,
+            index: "—",
+            column: "—",
+            position: "—",
+            counts: sparseTraceArray(counts),
+            starts: sparseTraceArray(starts),
+            message: "Use prefix sums to calculate the first output position for every original column.",
+            output: "row col value"
+        });
+
+        sparseTraceTerms.forEach(function (term, termOffset) {
+            const index = termOffset + 1;
+            const position = Number(starts[term.column]);
+            starts[term.column] = position + 1;
+
+            steps.push({
+                line: 6,
+                index: String(index),
+                column: String(term.column),
+                position: String(position),
+                counts: sparseTraceArray(counts),
+                starts: sparseTraceArray(starts),
+                message: "Calculate output position " + position + " from start[" + term.column + "] and advance that start position.",
+                output: sparseTraceOutput(placedTerms, false)
+            });
+
+            placedTerms[position - 1] = term;
+            steps.push({
+                line: 7,
+                index: String(index),
+                column: String(term.column),
+                position: String(position),
+                counts: sparseTraceArray(counts),
+                starts: sparseTraceArray(starts),
+                message: "Copy (" + term.row + ", " + term.column + ", " + term.value + ") as (" + term.column + ", " + term.row + ", " + term.value + ") into b[" + position + "].",
+                output: sparseTraceOutput(placedTerms, false)
+            });
+        });
+
+        steps.push({
+            line: 7,
+            index: "5",
+            column: "4",
+            position: "5",
+            counts: sparseTraceArray(counts),
+            starts: sparseTraceArray(starts),
+            message: "Fast transpose is complete. The transposed terms are already ordered by row.",
+            output: sparseTraceOutput(placedTerms, true)
+        });
+
+        return steps;
+    }
+
+    const sparseTraceSteps = buildSparseTraceSteps();
 
     const sparseTrace = {
         toggle: document.getElementById("sparseTraceToggle"),
@@ -825,7 +950,6 @@ int main(void) {
 
     resetVisualizer();
 }());
-
 </script>
 </body>
 </html>
