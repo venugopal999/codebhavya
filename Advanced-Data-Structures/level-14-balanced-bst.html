@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balanced Binary Search Trees | Advanced Data Structures | CodeBhavya</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="ads.css?v=17">
+</head>
+<body class="ads-page ads-topic-page balanced-bst-page">
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo"><img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a>
+    <nav class="top-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C</a><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html" class="active">Advanced Data Structures</a><a href="../Python/index.html">Python</a><a href="../AI-ML/index.html">AI &amp; ML</a><a href="../Placement/index.html">Placement</a></nav>
+</header>
+
+<div class="docs-layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">Advanced Data Structures</div>
+        <input type="text" id="topicSearch" class="search-box" placeholder="🔍 Search ADS topics..." aria-label="Search ADS topics">
+        <a href="index.html" class="sidebar-course-home">🧠 ADS Home</a>
+        <div class="sidebar-title">Part 1 — Foundations &amp; Algorithms</div>
+        <a class="ads-topic-link is-available" href="level-08-performance-analysis.html">📊 Level 8 — Performance Analysis</a>
+        <a class="ads-topic-link is-available" href="level-09-disjoint-sets.html">🔗 Level 9 — Disjoint Sets</a>
+        <a class="ads-topic-link is-available" href="level-10-sparse-matrices.html">🧮 Level 10 — Sparse Matrices</a>
+        <a class="ads-topic-link is-available" href="level-11-string-pattern-matching.html">🔤 Level 11 — String Pattern Matching</a>
+        <a class="ads-topic-link is-available" href="level-12-advanced-sorting.html">⚡ Level 12 — Advanced Sorting</a>
+        <a class="ads-topic-link is-available" href="level-13-advanced-searching.html">🎯 Level 13 — Advanced Searching</a>
+        <div class="sidebar-title">Part 2 — Advanced Trees &amp; Hashing</div>
+        <a class="ads-topic-link is-available active" href="level-14-balanced-bst.html">🌲 Level 14 — Balanced BST</a>
+        <a class="ads-topic-link" href="level-15-digital-search-trees.html">🔠 Level 15 — Digital Search Trees</a>
+        <a class="ads-topic-link" href="level-16-multiway-search-trees.html">🌳 Level 16 — Multiway Search Trees</a>
+        <a class="ads-topic-link" href="level-17-heaps.html">⛰️ Level 17 — Heaps</a>
+        <a class="ads-topic-link" href="level-18-hashing.html">#️⃣ Level 18 — Hashing</a>
+        <div class="sidebar-title">Part 3 — Storage, Graphs &amp; Placement</div>
+        <a class="ads-topic-link" href="level-19-files.html">📁 Level 19 — Files &amp; File Organization</a>
+        <a class="ads-topic-link" href="level-20-advanced-graphs.html">🕸️ Level 20 — Advanced Graph Algorithms</a>
+        <a class="ads-topic-link" href="level-21-placement-problems.html">💼 Level 21 — Placement Problems</a>
+    </aside>
+
+    <main class="main-content">
+        <section class="ads-topic-hero"><span class="subject-label">CODEBHAVYA • ADS LEVEL 14</span><h1 class="page-title">🌲 Balanced Binary Search Trees</h1><p class="page-description">Preserve efficient search and update operations by controlling height with AVL rotations, Red–Black recolouring and Splay Tree restructuring.</p></section>
+        <nav class="ads-page-jump-nav" aria-label="Page sections"><a href="#objectives">Objectives</a><a href="#need">Why Balance?</a><a href="#rotations">Rotations</a><a href="#avl">AVL</a><a href="#red-black">Red–Black</a><a href="#splay">Splay</a><a href="#comparison">Comparison</a><a href="#visualizer">Premium Visualizer</a><a href="#tracing">Program Tracing</a><a href="#practice">Practice</a><a href="#revision">Revision</a></nav>
+
+        <section class="content-card ads-lesson-section" id="objectives">
+            <div class="ads-section-heading"><span class="section-label">LEARNING GOALS</span><h2>🎯 Learning Objectives</h2></div>
+            <p>After completing this level, you should be able to:</p>
+            <ul class="ads-spaced-list"><li>Explain how an ordinary BST can degrade to a linear chain.</li><li>Calculate height and balance factor.</li><li>Recognize LL, RR, LR and RL rotation cases.</li><li>Insert keys into AVL, Red–Black and Splay Trees.</li><li>Trace rotations and Red–Black recolouring.</li><li>Explain zig, zig–zig and zig–zag splaying.</li><li>Compare strict, relaxed and amortized balancing.</li><li>Select a balanced tree for a real application.</li></ul>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="need">
+            <div class="ads-section-heading"><span class="section-label">THE HEIGHT PROBLEM</span><h2>📏 1. Why Must a BST Be Balanced?</h2></div>
+            <p>BST operations take O(h), where h is tree height. Inserting sorted keys into an ordinary BST can produce height n−1 and O(n) search. A balanced BST keeps height proportional to log n.</p>
+            <div class="ads-rule-grid"><article><strong>Balanced Shape</strong><p>Height remains O(log n), so search and updates stay efficient.</p></article><article><strong>Degenerate Shape</strong><p>A one-sided chain behaves like a linked list and needs O(n) comparisons.</p></article><article><strong>Local Repair</strong><p>Rotations change shape without changing inorder key order.</p></article><article><strong>Different Guarantees</strong><p>AVL is strict, Red–Black is relaxed, and Splay provides amortized efficiency.</p></article></div>
+            <div class="ads-formula-box"><strong>BST operation cost:</strong> Search, insertion and deletion are O(h). Balancing aims to keep h = O(log n).</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="rotations">
+            <div class="ads-section-heading"><span class="section-label">ORDER-PRESERVING RESTRUCTURE</span><h2>🔄 2. Tree Rotations</h2></div>
+            <p>A rotation changes a few parent-child links while preserving the BST inorder sequence.</p>
+            <div class="ads-step-flow"><article><span>LL</span><h3>Right Rotation</h3><p>The new key entered the left subtree of the left child.</p></article><article><span>RR</span><h3>Left Rotation</h3><p>The new key entered the right subtree of the right child.</p></article><article><span>LR</span><h3>Left + Right</h3><p>First rotate the left child left, then the node right.</p></article><article><span>RL</span><h3>Right + Left</h3><p>First rotate the right child right, then the node left.</p></article></div>
+            <div class="ads-warning-box"><strong>Important:</strong> rotation names describe the heavy/insertion direction. LL is repaired by a right rotation; RR is repaired by a left rotation.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="avl">
+            <div class="ads-section-heading"><span class="section-label">STRICT HEIGHT BALANCE</span><h2>🌿 3. AVL Trees</h2></div>
+            <p>An AVL Tree stores a height at every node. Its balance factor must remain −1, 0 or 1.</p>
+            <div class="ads-formula-box"><strong>Balance Factor BF(v) = height(left(v)) − height(right(v)).</strong> Rebalance whenever |BF| &gt; 1.</div>
+            <div class="ads-operation-grid"><article><h3>Search</h3><p>Guaranteed O(log n) because the height is tightly controlled.</p></article><article><h3>Insertion</h3><p>Insert as BST, update heights upward and repair the first imbalance.</p></article><article><h3>Deletion</h3><p>Delete as BST and possibly rebalance several ancestors.</p></article><article><h3>Best Fit</h3><p>Read-heavy systems where predictable fast searches matter.</p></article></div>
+            <details class="ads-program-details" id="avl-program"><summary><span>💻 Complete C Program — AVL Tree Insertion</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="avl-tree">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct Node {
+    int key;
+    int height;
+    struct Node *left;
+    struct Node *right;
+} Node;
+
+int maxInt(int first, int second) {
+    return first &gt; second ? first : second;
+}
+
+int nodeHeight(Node *node) {
+    return node == NULL ? 0 : node-&gt;height;
+}
+
+Node *createNode(int key) {
+    Node *node = malloc(sizeof(Node));
+    node-&gt;key = key;
+    node-&gt;height = 1;
+    node-&gt;left = node-&gt;right = NULL;
+    return node;
+}
+
+void updateHeight(Node *root) {
+    root-&gt;height = 1 + maxInt(nodeHeight(root-&gt;left),
+                              nodeHeight(root-&gt;right));
+}
+
+int balanceFactor(Node *root) {
+    return nodeHeight(root-&gt;left) - nodeHeight(root-&gt;right);
+}
+
+Node *rotateRight(Node *oldRoot) {
+    Node *newRoot = oldRoot-&gt;left;
+    Node *middle = newRoot-&gt;right;
+    newRoot-&gt;right = oldRoot;
+    oldRoot-&gt;left = middle;
+    updateHeight(oldRoot);
+    updateHeight(newRoot);
+    return newRoot;
+}
+
+Node *rotateLeft(Node *oldRoot) {
+    Node *newRoot = oldRoot-&gt;right;
+    Node *middle = newRoot-&gt;left;
+    newRoot-&gt;left = oldRoot;
+    oldRoot-&gt;right = middle;
+    updateHeight(oldRoot);
+    updateHeight(newRoot);
+    return newRoot;
+}
+
+Node *insertAVL(Node *root, int key) {
+    if (root == NULL) return createNode(key); /* avl create */
+
+    if (key &lt; root-&gt;key) { /* avl go left */
+        root-&gt;left = insertAVL(root-&gt;left, key);
+    } else if (key &gt; root-&gt;key) { /* avl go right */
+        root-&gt;right = insertAVL(root-&gt;right, key);
+    } else {
+        return root;
+    }
+
+    updateHeight(root); /* avl update height */
+    int balance = balanceFactor(root); /* avl balance */
+
+    if (balance &gt; 1 &amp;&amp; key &lt; root-&gt;left-&gt;key)
+        return rotateRight(root); /* avl LL */
+
+    if (balance &lt; -1 &amp;&amp; key &gt; root-&gt;right-&gt;key)
+        return rotateLeft(root); /* avl RR */
+
+    if (balance &gt; 1 &amp;&amp; key &gt; root-&gt;left-&gt;key) {
+        root-&gt;left = rotateLeft(root-&gt;left);
+        return rotateRight(root); /* avl LR */
+    }
+
+    if (balance &lt; -1 &amp;&amp; key &lt; root-&gt;right-&gt;key) {
+        root-&gt;right = rotateRight(root-&gt;right);
+        return rotateLeft(root); /* avl RL */
+    }
+
+    return root;
+}
+
+void preorder(Node *root) {
+    if (root == NULL) return;
+    printf("%d ", root-&gt;key);
+    preorder(root-&gt;left);
+    preorder(root-&gt;right);
+}
+
+int main(void) {
+    int n, key;
+    Node *root = NULL;
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;key);
+        root = insertAVL(root, key); /* avl insert call */
+        /* avl insertion complete */
+    }
+    /* avl complete */
+    preorder(root);
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>7
+30 20 10 25 28 40 50</code></pre></div><div><h3>Sample Output (Preorder)</h3><pre><code>28 20 10 25 40 30 50</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="red-black">
+            <div class="ads-section-heading"><span class="section-label">RELAXED BALANCE WITH COLOURS</span><h2>🔴 4. Red–Black Trees</h2></div>
+            <p>A Red–Black Tree stores one colour bit per node. It permits more height variation than AVL while keeping height O(log n).</p>
+            <div class="ads-rule-grid"><article><strong>Rule 1</strong><p>Every node is red or black.</p></article><article><strong>Rule 2</strong><p>The root is black.</p></article><article><strong>Rule 3</strong><p>Every null leaf is treated as black.</p></article><article><strong>Rule 4</strong><p>A red node cannot have a red child.</p></article><article><strong>Rule 5</strong><p>Every path from a node to a null leaf has equal black-height.</p></article><article><strong>Height Bound</strong><p>Height is at most 2 log₂(n+1).</p></article></div>
+            <div class="ads-tip-box"><strong>Why popular?</strong> Relaxed balance usually means fewer rotations during frequent insertions and deletions. Many ordered maps and sets use a Red–Black Tree.</div>
+            <details class="ads-program-details" id="red-black-program"><summary><span>💻 Complete C Program — Red–Black Tree Insertion</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="red-black-tree">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef enum { RED, BLACK } Color;
+
+typedef struct Node {
+    int key;
+    Color color;
+    struct Node *left;
+    struct Node *right;
+    struct Node *parent;
+} Node;
+
+Node *createNode(int key) {
+    Node *node = malloc(sizeof(Node));
+    node-&gt;key = key;
+    node-&gt;color = RED;
+    node-&gt;left = node-&gt;right = node-&gt;parent = NULL;
+    return node;
+}
+
+void rotateLeft(Node **root, Node *pivot) {
+    Node *child = pivot-&gt;right;
+    pivot-&gt;right = child-&gt;left;
+    if (child-&gt;left != NULL) child-&gt;left-&gt;parent = pivot;
+    child-&gt;parent = pivot-&gt;parent;
+    if (pivot-&gt;parent == NULL) *root = child;
+    else if (pivot == pivot-&gt;parent-&gt;left) pivot-&gt;parent-&gt;left = child;
+    else pivot-&gt;parent-&gt;right = child;
+    child-&gt;left = pivot;
+    pivot-&gt;parent = child;
+}
+
+void rotateRight(Node **root, Node *pivot) {
+    Node *child = pivot-&gt;left;
+    pivot-&gt;left = child-&gt;right;
+    if (child-&gt;right != NULL) child-&gt;right-&gt;parent = pivot;
+    child-&gt;parent = pivot-&gt;parent;
+    if (pivot-&gt;parent == NULL) *root = child;
+    else if (pivot == pivot-&gt;parent-&gt;left) pivot-&gt;parent-&gt;left = child;
+    else pivot-&gt;parent-&gt;right = child;
+    child-&gt;right = pivot;
+    pivot-&gt;parent = child;
+}
+
+Node *insertRedBlack(Node *root, int key) {
+    Node *parent = NULL;
+    Node *current = root;
+    while (current != NULL) { /* rb compare */
+        parent = current;
+        current = key &lt; current-&gt;key ? current-&gt;left : current-&gt;right;
+    }
+
+    Node *node = createNode(key); /* rb new red */
+    node-&gt;parent = parent;
+    if (parent == NULL) root = node;
+    else if (key &lt; parent-&gt;key) parent-&gt;left = node;
+    else parent-&gt;right = node;
+
+    while (node != root &amp;&amp; node-&gt;parent-&gt;color == RED) { /* rb fix loop */
+        Node *parentNode = node-&gt;parent;
+        Node *grand = parentNode-&gt;parent;
+        if (parentNode == grand-&gt;left) {
+            Node *uncle = grand-&gt;right;
+            if (uncle != NULL &amp;&amp; uncle-&gt;color == RED) {
+                parentNode-&gt;color = BLACK;
+                uncle-&gt;color = BLACK;
+                grand-&gt;color = RED;
+                node = grand; /* rb recolor left */
+            } else {
+                if (node == parentNode-&gt;right) {
+                    node = parentNode;
+                    rotateLeft(&amp;root, node); /* rb inner left */
+                }
+                parentNode = node-&gt;parent;
+                grand = parentNode-&gt;parent;
+                parentNode-&gt;color = BLACK;
+                grand-&gt;color = RED;
+                rotateRight(&amp;root, grand); /* rb outer left */
+            }
+        } else {
+            Node *uncle = grand-&gt;left;
+            if (uncle != NULL &amp;&amp; uncle-&gt;color == RED) {
+                parentNode-&gt;color = BLACK;
+                uncle-&gt;color = BLACK;
+                grand-&gt;color = RED;
+                node = grand; /* rb recolor right */
+            } else {
+                if (node == parentNode-&gt;left) {
+                    node = parentNode;
+                    rotateRight(&amp;root, node); /* rb inner right */
+                }
+                parentNode = node-&gt;parent;
+                grand = parentNode-&gt;parent;
+                parentNode-&gt;color = BLACK;
+                grand-&gt;color = RED;
+                rotateLeft(&amp;root, grand); /* rb outer right */
+            }
+        }
+    }
+
+    root-&gt;color = BLACK; /* rb root black */
+    return root;
+}
+
+void preorder(Node *root) {
+    if (root == NULL) return;
+    printf("%d%c ", root-&gt;key, root-&gt;color == RED ? 'R' : 'B');
+    preorder(root-&gt;left);
+    preorder(root-&gt;right);
+}
+
+int main(void) {
+    int n, key;
+    Node *root = NULL;
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;key);
+        root = insertRedBlack(root, key); /* rb insert call */
+    }
+    /* rb complete */
+    preorder(root);
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>8
+30 15 45 10 20 40 50 5</code></pre></div><div><h3>Sample Output (Preorder)</h3><pre><code>30B 15R 10B 5R 20B 45B 40R 50R</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="splay">
+            <div class="ads-section-heading"><span class="section-label">SELF-ADJUSTING ACCESS</span><h2>🟣 5. Splay Trees</h2></div>
+            <p>A Splay Tree stores no height or colour. Every successful insertion or access moves the relevant key to the root.</p>
+            <div class="ads-step-flow"><article><span>1</span><h3>Zig</h3><p>One rotation when the node's parent is the root.</p></article><article><span>2</span><h3>Zig–Zig</h3><p>Two rotations in the same direction for LL or RR.</p></article><article><span>3</span><h3>Zig–Zag</h3><p>Two opposite rotations for LR or RL.</p></article><article><span>4</span><h3>Locality</h3><p>Frequently accessed keys remain near the top.</p></article></div>
+            <div class="ads-formula-box"><strong>Amortized cost:</strong> O(log n) per operation over a sequence, although one individual operation can take O(n).</div>
+            <details class="ads-program-details" id="splay-program"><summary><span>💻 Complete C Program — Splay Tree Insertion</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="splay-tree">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct Node {
+    int key;
+    struct Node *left;
+    struct Node *right;
+    struct Node *parent;
+} Node;
+
+Node *createNode(int key) {
+    Node *node = malloc(sizeof(Node));
+    node-&gt;key = key;
+    node-&gt;left = node-&gt;right = node-&gt;parent = NULL;
+    return node;
+}
+
+void rotateLeft(Node **root, Node *pivot) {
+    Node *child = pivot-&gt;right;
+    pivot-&gt;right = child-&gt;left;
+    if (child-&gt;left != NULL) child-&gt;left-&gt;parent = pivot;
+    child-&gt;parent = pivot-&gt;parent;
+    if (pivot-&gt;parent == NULL) *root = child;
+    else if (pivot == pivot-&gt;parent-&gt;left) pivot-&gt;parent-&gt;left = child;
+    else pivot-&gt;parent-&gt;right = child;
+    child-&gt;left = pivot;
+    pivot-&gt;parent = child;
+}
+
+void rotateRight(Node **root, Node *pivot) {
+    Node *child = pivot-&gt;left;
+    pivot-&gt;left = child-&gt;right;
+    if (child-&gt;right != NULL) child-&gt;right-&gt;parent = pivot;
+    child-&gt;parent = pivot-&gt;parent;
+    if (pivot-&gt;parent == NULL) *root = child;
+    else if (pivot == pivot-&gt;parent-&gt;left) pivot-&gt;parent-&gt;left = child;
+    else pivot-&gt;parent-&gt;right = child;
+    child-&gt;right = pivot;
+    pivot-&gt;parent = child;
+}
+
+void splay(Node **root, Node *node) {
+    while (node-&gt;parent != NULL) { /* splay loop */
+        Node *parent = node-&gt;parent;
+        Node *grand = parent-&gt;parent;
+        if (grand == NULL) {
+            if (node == parent-&gt;left)
+                rotateRight(root, parent); /* splay zig right */
+            else
+                rotateLeft(root, parent); /* splay zig left */
+        } else if (node == parent-&gt;left &amp;&amp; parent == grand-&gt;left) {
+            rotateRight(root, grand);
+            rotateRight(root, parent); /* splay zig-zig right */
+        } else if (node == parent-&gt;right &amp;&amp; parent == grand-&gt;right) {
+            rotateLeft(root, grand);
+            rotateLeft(root, parent); /* splay zig-zig left */
+        } else if (node == parent-&gt;right &amp;&amp; parent == grand-&gt;left) {
+            rotateLeft(root, parent);
+            rotateRight(root, grand); /* splay zig-zag LR */
+        } else {
+            rotateRight(root, parent);
+            rotateLeft(root, grand); /* splay zig-zag RL */
+        }
+    }
+}
+
+Node *insertSplay(Node *root, int key) {
+    Node *parent = NULL;
+    Node *current = root;
+    while (current != NULL) { /* splay compare */
+        parent = current;
+        current = key &lt; current-&gt;key ? current-&gt;left : current-&gt;right;
+    }
+    Node *node = createNode(key);
+    node-&gt;parent = parent;
+    if (parent == NULL) root = node;
+    else if (key &lt; parent-&gt;key) parent-&gt;left = node;
+    else parent-&gt;right = node; /* splay attach */
+    splay(&amp;root, node);
+    return root;
+}
+
+void preorder(Node *root) {
+    if (root == NULL) return;
+    printf("%d ", root-&gt;key);
+    preorder(root-&gt;left);
+    preorder(root-&gt;right);
+}
+
+int main(void) {
+    int n, key;
+    Node *root = NULL;
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;key);
+        root = insertSplay(root, key); /* splay insert call */
+        /* splay insertion complete */
+    }
+    /* splay complete */
+    preorder(root);
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>6
+40 20 60 10 30 50</code></pre></div><div><h3>Sample Output (Preorder)</h3><pre><code>50 30 10 20 40 60</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="comparison">
+            <div class="ads-section-heading"><span class="section-label">TREE SELECTION</span><h2>⚖️ 6. Complete Comparison</h2></div>
+            <div class="ads-table-wrap"><table class="ads-data-table"><thead><tr><th>Tree</th><th>Balancing Rule</th><th>Search</th><th>Insert/Delete</th><th>Stored Metadata</th><th>Best Use</th></tr></thead><tbody><tr><td>AVL</td><td>|BF| ≤ 1</td><td>Worst O(log n)</td><td>Worst O(log n)</td><td>Height/balance</td><td>Search-heavy workloads</td></tr><tr><td>Red–Black</td><td>Colour and black-height rules</td><td>Worst O(log n)</td><td>Worst O(log n)</td><td>One colour bit</td><td>General ordered maps/sets</td></tr><tr><td>Splay</td><td>Move accessed node to root</td><td>Amortized O(log n)</td><td>Amortized O(log n)</td><td>No balance metadata</td><td>Locality and repeated access</td></tr><tr><td>Ordinary BST</td><td>None</td><td>Average O(log n), worst O(n)</td><td>Average O(log n), worst O(n)</td><td>None</td><td>Simple/random small data</td></tr></tbody></table></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="visualizer">
+            <div class="ads-interactive-header"><div><span class="section-label">INTERACTIVE ALGORITHM VISUALIZATION</span><h2>🎬 7. Premium Balanced BST Visualizer</h2><p>Load AVL, Red–Black or Splay insertion into one shared visualizer and watch every comparison, rotation and recolouring step.</p></div><div class="ads-visualizer-brand"><img src="../images/codebhavya-main-logo.png" alt="CodeBhavya"><span><b>Code</b><strong>Bhavya</strong></span></div></div>
+            <div class="balanced-controls"><label>Insertion Sequence<input id="balancedInput" type="text" value="30, 20, 10, 25, 28, 40, 50"></label><label>Tree<select id="balancedAlgorithm"><option value="avl">AVL Tree</option><option value="redblack">Red–Black Tree</option><option value="splay">Splay Tree</option></select></label><button id="loadBalancedVisualizer" type="button" class="primary-button">Load Visualizer</button></div>
+            <div class="ads-example-chips"><button type="button" data-balanced-example="ll">AVL LL case</button><button type="button" data-balanced-example="mixed">Red–Black example</button><button type="button" data-balanced-example="splay">Splay example</button></div>
+            <div id="balancedPrompt" class="ads-explorer-prompt">Choose a sequence and tree, then click <strong>Load Visualizer</strong>.</div>
+            <div id="balancedResult" class="sorting-visualizer-result" hidden><div class="sorting-viz-layout"><section class="balanced-tree-panel"><h3>🌳 Live Tree State</h3><svg id="balancedTreeSvg" class="balanced-tree-svg" role="img" aria-label="Balanced tree visualization"></svg><div id="balancedMessage" class="ads-explorer-message">—</div><div class="ads-progress-track"><span id="balancedProgress"></span></div></section><aside class="sorting-stat-panel"><h3>📈 Live Statistics</h3><div class="sorting-stat-grid"><div><span>Phase</span><strong id="balancedPhase">Ready</strong></div><div><span>Rotations</span><strong id="balancedRotations">0</strong></div><div><span>Root</span><strong id="balancedRoot">—</strong></div><div><span>Height</span><strong id="balancedHeight">0</strong></div></div></aside></div><div class="ads-tracer-controls sorting-visual-controls"><button type="button" class="trace-previous" id="balancedPrevious">← Previous</button><button type="button" class="trace-next" id="balancedNext">Next →</button><button type="button" class="trace-auto" id="balancedAuto">▶ Auto Run</button><button type="button" class="trace-pause" id="balancedPause">⏸ Pause</button><button type="button" class="trace-reset" id="balancedReset">↻ Reset</button></div><p class="ads-tracer-status" id="balancedStatus">Step 0 of 0</p></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="tracing">
+            <div class="ads-section-heading"><span class="section-label">COMBINED C PROGRAM TRACER</span><h2>🔍 8. Program Tracing — AVL, Red–Black and Splay Trees</h2></div>
+            <p>Select a complete C program and click <strong>Load Program Tracer</strong>. The highlighted line follows the exact operation while the tree and live variables update.</p>
+            <div class="balanced-tracer-loader"><label>Insertion Sequence<input id="balancedTraceInput" type="text" value="30, 20, 10, 25, 28, 40, 50"></label><label>Program<select id="balancedTraceAlgorithm"><option value="avl">AVL Tree Insertion</option><option value="redblack">Red–Black Tree Insertion</option><option value="splay">Splay Tree Insertion</option></select></label><button id="loadBalancedTracer" type="button" class="primary-button">Load Program Tracer</button></div>
+            <div id="balancedTracePrompt" class="ads-explorer-prompt">Selection alone does not execute the program. Click <strong>Load Program Tracer</strong>.</div>
+            <div id="balancedTraceResult" hidden><div class="ads-tracer"><div class="ads-tracer-title" id="balancedTraceTitle">PROGRAM TRACING</div><div class="ads-tracer-grid"><section class="ads-tracer-panel"><h3>💻 C Program</h3><pre class="ads-tracer-code program-tracer-code" id="balancedTraceCodeWindow"><code id="balancedTraceCode"></code></pre></section><section class="ads-tracer-panel ads-tracer-live-panel"><h3>🧠 What is happening?</h3><div class="ads-tracer-explain" id="balancedTraceMessage">Press Next to begin.</div><h3>📊 Live Variables</h3><div class="ads-trace-vars program-trace-vars" id="balancedTraceVariables"></div><h3>Tree State</h3><svg id="balancedTraceSvg" class="balanced-tree-svg balanced-trace-svg" role="img" aria-label="Program tracing tree state"></svg><h3>Output</h3><pre class="ads-trace-output" id="balancedTraceOutput">—</pre></section></div><div class="ads-tracer-controls"><button type="button" class="trace-previous" id="balancedTracePrevious">← Previous</button><button type="button" class="trace-next" id="balancedTraceNext">Next →</button><button type="button" class="trace-auto" id="balancedTraceAuto">▶ Auto Run</button><button type="button" class="trace-pause" id="balancedTracePause">⏸ Pause</button><button type="button" class="trace-reset" id="balancedTraceReset">↻ Reset</button></div><p class="ads-tracer-status" id="balancedTraceStatus">Step 0 of 0</p></div></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="selection">
+            <div class="ads-section-heading"><span class="section-label">PRACTICAL DECISIONS</span><h2>💡 9. Which Balanced Tree Should You Choose?</h2></div>
+            <div class="ads-interview-grid"><article><h3>Read-heavy index</h3><p>Choose AVL for tighter height and consistently fast lookup.</p></article><article><h3>Frequent mixed updates</h3><p>Choose Red–Black for robust logarithmic operations with fewer rotations.</p></article><article><h3>Strong access locality</h3><p>Choose Splay when recently accessed keys are likely to be accessed again.</p></article><article><h3>Language library map/set</h3><p>Red–Black Trees are a common general-purpose implementation.</p></article><article><h3>Small simple dataset</h3><p>An ordinary BST may be sufficient if worst-case degeneration is controlled.</p></article><article><h3>Need strict worst-case lookup</h3><p>Use AVL or Red–Black, not a Splay Tree's per-operation worst case.</p></article></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="mistakes">
+            <div class="ads-section-heading"><span class="section-label">AVOID THESE ERRORS</span><h2>⚠️ 10. Common Mistakes</h2></div>
+            <div class="ads-mistake-grid"><article><h3>❌ Wrong balance sign</h3><p>State whether BF is left−right or right−left and use it consistently.</p></article><article><h3>❌ Rotation loses subtree</h3><p>Save and reconnect the middle subtree during every rotation.</p></article><article><h3>❌ Stale AVL heights</h3><p>Update the lower node before the new subtree root.</p></article><article><h3>❌ Red root remains</h3><p>Force the Red–Black root to black after fix-up.</p></article><article><h3>❌ Red–Red violation</h3><p>Check both parent and uncle before choosing recolouring or rotation.</p></article><article><h3>❌ Treating amortized as worst case</h3><p>One Splay operation may be O(n), although a sequence averages O(log n).</p></article></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="practice">
+            <div class="ads-section-heading"><span class="section-label">CONCEPT CHECK</span><h2>✍️ 11. Practice Problems</h2></div>
+            <div class="ads-note-box">Solve each problem before opening the hint or answer. Answers are hidden initially.</div>
+            <div class="ads-practice-list">
+                <article class="ads-practice-problem"><h3>1. What is the worst-case height of an ordinary BST with n keys?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-1">Hint</button><button data-toggle-target="b-answer-1">Show Answer</button></div><div id="b-hint-1" class="ads-hint-box" hidden>Consider sorted insertion.</div><div id="b-answer-1" class="ads-solution-box" hidden><strong>n−1 edges, or Θ(n).</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>2. Compute BF when left height is 4 and right height is 2.</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-2">Hint</button><button data-toggle-target="b-answer-2">Show Answer</button></div><div id="b-hint-2" class="ads-hint-box" hidden>Use left height minus right height.</div><div id="b-answer-2" class="ads-solution-box" hidden><strong>BF = 4−2 = +2.</strong> The node is left-heavy.</div></article>
+                <article class="ads-practice-problem"><h3>3. Which rotation repairs insertion 30, 20, 10?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-3">Hint</button><button data-toggle-target="b-answer-3">Show Answer</button></div><div id="b-hint-3" class="ads-hint-box" hidden>The path is left-left.</div><div id="b-answer-3" class="ads-solution-box" hidden><strong>One right rotation at 30.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>4. Which rotation repairs insertion 10, 20, 30?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-4">Hint</button><button data-toggle-target="b-answer-4">Show Answer</button></div><div id="b-hint-4" class="ads-hint-box" hidden>The path is right-right.</div><div id="b-answer-4" class="ads-solution-box" hidden><strong>One left rotation at 10.</strong></div></article>
+                <article class="ads-practice-problem"><h3>5. Which rotations repair insertion 30, 10, 20?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-5">Hint</button><button data-toggle-target="b-answer-5">Show Answer</button></div><div id="b-hint-5" class="ads-hint-box" hidden>The path is left-right.</div><div id="b-answer-5" class="ads-solution-box" hidden><strong>Left rotation at 10, then right rotation at 30.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>6. Which rotations repair insertion 10, 30, 20?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-6">Hint</button><button data-toggle-target="b-answer-6">Show Answer</button></div><div id="b-hint-6" class="ads-hint-box" hidden>The path is right-left.</div><div id="b-answer-6" class="ads-solution-box" hidden><strong>Right rotation at 30, then left rotation at 10.</strong></div></article>
+                <article class="ads-practice-problem"><h3>7. What balance factors are permitted in an AVL Tree?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-7">Hint</button><button data-toggle-target="b-answer-7">Show Answer</button></div><div id="b-hint-7" class="ads-hint-box" hidden>The magnitude cannot exceed one.</div><div id="b-answer-7" class="ads-solution-box" hidden><strong>−1, 0 and +1.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>8. Why must AVL heights be updated after insertion?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-8">Hint</button><button data-toggle-target="b-answer-8">Show Answer</button></div><div id="b-hint-8" class="ads-hint-box" hidden>Rotations depend on BF.</div><div id="b-answer-8" class="ads-solution-box" hidden>Correct heights are required to calculate balance factors and detect imbalance.</div></article>
+                <article class="ads-practice-problem"><h3>9. Can a Red–Black root be red?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-9">Hint</button><button data-toggle-target="b-answer-9">Show Answer</button></div><div id="b-hint-9" class="ads-hint-box" hidden>Recall property 2.</div><div id="b-answer-9" class="ads-solution-box" hidden><strong>No. The root must be black.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>10. May a red node have a red child?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-10">Hint</button><button data-toggle-target="b-answer-10">Show Answer</button></div><div id="b-hint-10" class="ads-hint-box" hidden>This is the red–red violation.</div><div id="b-answer-10" class="ads-solution-box" hidden><strong>No.</strong> A red node's children must be black.</div></article>
+                <article class="ads-practice-problem"><h3>11. What happens when parent and uncle are both red?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-11">Hint</button><button data-toggle-target="b-answer-11">Show Answer</button></div><div id="b-hint-11" class="ads-hint-box" hidden>Think recolouring first.</div><div id="b-answer-11" class="ads-solution-box" hidden>Colour parent and uncle black, grandparent red, then continue from the grandparent.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>12. What is Red–Black Tree worst-case search time?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-12">Hint</button><button data-toggle-target="b-answer-12">Show Answer</button></div><div id="b-hint-12" class="ads-hint-box" hidden>Its height is logarithmic.</div><div id="b-answer-12" class="ads-solution-box" hidden><strong>O(log n).</strong></div></article>
+                <article class="ads-practice-problem"><h3>13. What does a Splay Tree do after a successful access?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-13">Hint</button><button data-toggle-target="b-answer-13">Show Answer</button></div><div id="b-hint-13" class="ads-hint-box" hidden>Move the accessed node upward.</div><div id="b-answer-13" class="ads-solution-box" hidden>It splays the accessed node to the root.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>14. When is a single zig rotation used?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-14">Hint</button><button data-toggle-target="b-answer-14">Show Answer</button></div><div id="b-hint-14" class="ads-hint-box" hidden>Check whether a grandparent exists.</div><div id="b-answer-14" class="ads-solution-box" hidden>When the node's parent is already the root.</div></article>
+                <article class="ads-practice-problem"><h3>15. Distinguish zig–zig and zig–zag.</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-15">Hint</button><button data-toggle-target="b-answer-15">Show Answer</button></div><div id="b-hint-15" class="ads-hint-box" hidden>Compare the two edge directions.</div><div id="b-answer-15" class="ads-solution-box" hidden>Zig–zig uses two rotations in the same direction; zig–zag uses opposite directions.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>16. What is one Splay operation's worst-case time?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-16">Hint</button><button data-toggle-target="b-answer-16">Show Answer</button></div><div id="b-hint-16" class="ads-hint-box" hidden>The tree can temporarily be a chain.</div><div id="b-answer-16" class="ads-solution-box" hidden><strong>O(n).</strong></div></article>
+                <article class="ads-practice-problem"><h3>17. What is Splay Tree amortized operation time?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-17">Hint</button><button data-toggle-target="b-answer-17">Show Answer</button></div><div id="b-hint-17" class="ads-hint-box" hidden>Average over a sequence.</div><div id="b-answer-17" class="ads-solution-box" hidden><strong>O(log n) amortized.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>18. Which tree normally performs fewer update rotations: AVL or Red–Black?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-18">Hint</button><button data-toggle-target="b-answer-18">Show Answer</button></div><div id="b-hint-18" class="ads-hint-box" hidden>One uses relaxed balance.</div><div id="b-answer-18" class="ads-solution-box" hidden><strong>Red–Black Tree</strong> generally needs fewer rotations.</div></article>
+                <article class="ads-practice-problem"><h3>19. Which tree gives the tighter height bound?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-19">Hint</button><button data-toggle-target="b-answer-19">Show Answer</button></div><div id="b-hint-19" class="ads-hint-box" hidden>Compare strict and relaxed balance.</div><div id="b-answer-19" class="ads-solution-box" hidden><strong>AVL Tree.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>20. Does a rotation change the inorder sequence?</h3><div class="ads-practice-actions"><button data-toggle-target="b-hint-20">Hint</button><button data-toggle-target="b-answer-20">Show Answer</button></div><div id="b-hint-20" class="ads-hint-box" hidden>Rotations must preserve BST order.</div><div id="b-answer-20" class="ads-solution-box" hidden><strong>No.</strong> It changes shape while preserving inorder key order.</div></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="revision"><div class="ads-section-heading"><span class="section-label">QUICK RECALL</span><h2>📝 12. Quick Revision</h2></div><ul class="ads-revision-list"><li>BST operation cost depends on height.</li><li>Rotations preserve inorder key order.</li><li>AVL maintains balance factor −1, 0 or 1.</li><li>LL/RR need one rotation; LR/RL need two.</li><li>Red–Black Trees use colour and black-height rules for O(log n) height.</li><li>A red node cannot have a red child.</li><li>Splay Trees move an inserted or accessed key to the root.</li><li>Splay operations are O(log n) amortized, not per-operation worst-case.</li><li>AVL suits lookup-heavy work; Red–Black suits mixed updates; Splay suits locality.</li></ul></section>
+
+        <nav class="ads-topic-navigation" aria-label="ADS topic navigation"><a href="level-13-advanced-searching.html" class="previous-topic">← Previous: Advanced Searching</a><span class="next-topic disabled-topic" aria-disabled="true">Next: Digital Search Trees →</span></nav>
+    </main>
+</div>
+
+<footer class="footer"><div class="footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div><div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C Programming</a></div><div class="footer-column"><h3>Learning</h3><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html">Advanced Data Structures</a><a href="../Python/index.html">Python</a></div><div class="footer-column"><h3>Practice</h3><a href="level-12-advanced-sorting.html#practice">Advanced Sorting Practice</a><a href="level-13-advanced-searching.html#practice">Advanced Searching Practice</a><a href="#practice">Balanced BST Practice</a></div></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer>
+<script src="../script.js"></script>
+<script src="ads.js"></script>
+<script src="level-14-balanced-bst.js"></script>
+</body>
+</html>
