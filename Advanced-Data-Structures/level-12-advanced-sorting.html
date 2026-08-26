@@ -36,12 +36,12 @@
 
     <main class="main-content">
         <section class="ads-topic-hero"><span class="subject-label">CODEBHAVYA • ADS LEVEL 12</span><h1 class="page-title">⚡ Advanced Sorting</h1><p class="page-description">Master divide-and-conquer, gap-based and non-comparison sorting methods, then select an algorithm using time, memory, stability, key range and input distribution.</p></section>
-        <nav class="ads-page-jump-nav" aria-label="Page sections"><a href="#objectives">Objectives</a><a href="#merge-sort">Merge</a><a href="#quick-sort">Quick</a><a href="#shell-sort">Shell</a><a href="#counting-sort">Counting</a><a href="#radix-sort">Radix</a><a href="#bucket-sort">Bucket</a><a href="#visualizer">Premium Visualizer</a><a href="#c-program">C Program</a><a href="#tracing">Program Tracing</a><a href="#practice">Practice</a><a href="#revision">Revision</a></nav>
+        <nav class="ads-page-jump-nav" aria-label="Page sections"><a href="#objectives">Objectives</a><a href="#merge-sort">Merge</a><a href="#quick-sort">Quick</a><a href="#shell-sort">Shell</a><a href="#counting-sort">Counting</a><a href="#radix-sort">Radix</a><a href="#bucket-sort">Bucket</a><a href="#merge-program">C Programs</a><a href="#visualizer">Premium Visualizer</a><a href="#tracing">Program Tracing</a><a href="#practice">Practice</a><a href="#revision">Revision</a></nav>
 
         <section class="content-card ads-lesson-section" id="objectives">
             <div class="ads-section-heading"><span class="section-label">LEARNING GOALS</span><h2>🎯 Learning Objectives</h2></div>
             <p>After completing this level, you should be able to:</p>
-            <ul class="ads-spaced-list"><li>Distinguish comparison and non-comparison sorting.</li><li>Explain stability, in-place behavior, adaptiveness and external sorting.</li><li>Trace Merge, Quick and Shell Sort.</li><li>Apply Counting, Radix and Bucket Sort under suitable key constraints.</li><li>Implement Quick Sort with a correct partition procedure.</li><li>Compare best, average and worst-case performance.</li><li>Select an algorithm for practical and interview scenarios.</li></ul>
+            <ul class="ads-spaced-list"><li>Distinguish comparison and non-comparison sorting.</li><li>Explain stability, in-place behavior, adaptiveness and external sorting.</li><li>Trace Merge, Quick and Shell Sort.</li><li>Apply Counting, Radix and Bucket Sort under suitable key constraints.</li><li>Implement all six methods in C and explain their important operations.</li><li>Compare best, average and worst-case performance.</li><li>Select an algorithm for practical and interview scenarios.</li></ul>
         </section>
 
         <section class="content-card ads-lesson-section" id="foundation">
@@ -60,45 +60,294 @@
             <div class="ads-section-heading"><span class="section-label">DIVIDE AND CONQUER</span><h2>🧩 2. Merge Sort</h2></div>
             <p>Merge Sort divides the array into halves until single-element ranges remain, then combines sorted halves.</p>
             <div class="ads-step-flow"><article><span>1</span><h3>Divide</h3><p>Split at the middle index.</p></article><article><span>2</span><h3>Recurse Left</h3><p>Sort the left half.</p></article><article><span>3</span><h3>Recurse Right</h3><p>Sort the right half.</p></article><article><span>4</span><h3>Merge</h3><p>Repeatedly copy the smaller front value.</p></article></div>
+            <div class="ads-worked-example"><strong>Worked example</strong><p><code>[38, 27, 43, 3, 9, 82]</code> → divide into smaller ranges → merge <code>[27, 38, 43]</code> and <code>[3, 9, 82]</code> → <code>[3, 9, 27, 38, 43, 82]</code>.</p></div>
+            <div class="ads-algorithm-block">
+                <h3>🔹 Step-by-Step Algorithm</h3>
+                <ol class="ads-algorithm-list"><li>If the current range has zero or one element, return.</li><li>Compute the middle index using <code>low + (high - low) / 2</code>.</li><li>Recursively sort the left range <code>low…mid</code>.</li><li>Recursively sort the right range <code>mid + 1…high</code>.</li><li>Compare the first unmerged values of both halves.</li><li>Copy the smaller value into temporary storage, then copy any leftovers.</li><li>Copy the merged values back into the original array.</li></ol>
+            </div>
             <div class="ads-comparison-grid"><article class="ads-info-panel blue-panel"><h3>Guarantee</h3><p>Its running time is independent of initial order.</p><strong>Best/Average/Worst: O(n log n)</strong></article><article class="ads-info-panel purple-panel"><h3>Trade-off</h3><p>Array merging normally requires auxiliary storage.</p><strong>Extra space: O(n)</strong></article></div>
             <p>Merge Sort is stable and works especially well for linked lists and external files, where sequential access is preferred.</p>
+            <details class="ads-program-details" id="merge-program">
+                <summary><span>💻 Complete C Program — Merge Sort</span><small>View program</small></summary>
+                <div class="ads-program-body"><p>This implementation reuses one temporary array throughout the recursion.</p><pre><code data-c-program="merge-sort">#include &lt;stdio.h&gt;
+
+#define MAX 100
+
+void merge(int a[], int temp[], int low, int mid, int high) {
+    int i = low, j = mid + 1, k = low;
+
+    while (i &lt;= mid &amp;&amp; j &lt;= high) {
+        if (a[i] &lt;= a[j])
+            temp[k++] = a[i++];
+        else
+            temp[k++] = a[j++];
+    }
+
+    while (i &lt;= mid) temp[k++] = a[i++];
+    while (j &lt;= high) temp[k++] = a[j++];
+
+    for (i = low; i &lt;= high; i++)
+        a[i] = temp[i];
+}
+
+void mergeSort(int a[], int temp[], int low, int high) {
+    if (low &gt;= high) return;
+
+    int mid = low + (high - low) / 2;
+    mergeSort(a, temp, low, mid);
+    mergeSort(a, temp, mid + 1, high);
+    merge(a, temp, low, mid, high);
+}
+
+int main(void) {
+    int n, a[MAX], temp[MAX];
+    scanf("%d", &amp;n);
+
+    if (n &lt; 1 || n &gt; MAX) return 1;
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+
+    mergeSort(a, temp, 0, n - 1);
+
+    for (int i = 0; i &lt; n; i++) printf("%d ", a[i]);
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>6
+38 27 43 3 9 82</code></pre></div><div><h3>Sample Output</h3><pre><code>3 9 27 38 43 82</code></pre></div></div></div>
+            </details>
         </section>
 
         <section class="content-card ads-lesson-section" id="quick-sort">
             <div class="ads-section-heading"><span class="section-label">PARTITIONING</span><h2>⚡ 3. Quick Sort</h2></div>
             <p>Quick Sort chooses a pivot, partitions the array, then recursively sorts values on both sides of the pivot.</p>
             <div class="ads-definition-box"><strong>Lomuto invariant:</strong> before processing index j, values in <code>low…i</code> are ≤ pivot, values in <code>i+1…j−1</code> are &gt; pivot and <code>j…high−1</code> are unclassified.</div>
+            <div class="ads-worked-example"><strong>Worked example</strong><p>For <code>[8, 3, 1, 7, 0, 10, 2]</code>, choose pivot <code>2</code>. Partitioning places <code>0, 1</code> before it and larger values after it, so the pivot reaches its final index before the two sides are sorted recursively.</p></div>
+            <div class="ads-algorithm-block"><h3>🔹 Step-by-Step Algorithm</h3><ol class="ads-algorithm-list"><li>If <code>low &gt;= high</code>, the range is already sorted.</li><li>Choose a pivot; the Lomuto method uses the last element.</li><li>Maintain <code>i</code> as the end of the “≤ pivot” region.</li><li>Scan <code>j</code> from <code>low</code> to <code>high - 1</code>.</li><li>When <code>a[j] &lt;= pivot</code>, increase <code>i</code> and swap.</li><li>Place the pivot at <code>i + 1</code>.</li><li>Recursively sort the ranges on the left and right of the pivot.</li></ol></div>
             <div class="ads-rule-grid"><article><strong>Good Pivot</strong><p>Creates two reasonably balanced subarrays.</p></article><article><strong>Bad Pivot</strong><p>Creates a 0 and n−1 split repeatedly.</p></article><article><strong>Randomized Pivot</strong><p>Reduces the chance of consistently poor input-dependent splits.</p></article><article><strong>Three-Way Partition</strong><p>Handles many duplicate keys efficiently.</p></article></div>
             <div class="ads-formula-box"><strong>Time:</strong> average O(n log n), worst O(n²). <strong>Space:</strong> O(log n) average recursion; Quick Sort is generally in-place but not stable.</div>
+            <div class="ads-program-link-panel"><div><strong>💻 Complete C implementation available below</strong><p>The full Lomuto program is paired with a statement-by-statement tracer.</p></div><a href="#c-program">View Quick Sort Program ↓</a></div>
         </section>
 
         <section class="content-card ads-lesson-section" id="shell-sort">
             <div class="ads-section-heading"><span class="section-label">GAP-BASED INSERTION</span><h2>🪜 4. Shell Sort</h2></div>
             <p>Shell Sort performs insertion sorting on elements separated by a gap. The gap decreases until the final pass uses gap 1.</p>
             <div class="ads-definition-box"><strong>Common simple sequence:</strong> n/2, n/4, …, 1. Better gap sequences often improve performance, so Shell Sort complexity depends strongly on this choice.</div>
+            <div class="ads-worked-example"><strong>Worked example</strong><p>For <code>[12, 34, 54, 2, 3]</code>, gap 2 compares values two places apart and moves <code>3</code> and <code>2</code> closer to the front. The final gap-1 pass finishes with <code>[2, 3, 12, 34, 54]</code>.</p></div>
+            <div class="ads-algorithm-block"><h3>🔹 Step-by-Step Algorithm</h3><ol class="ads-algorithm-list"><li>Start with a gap such as <code>n / 2</code>.</li><li>For every index from <code>gap</code> to <code>n - 1</code>, save the current value.</li><li>Compare it with values one gap behind.</li><li>Shift larger gap-separated values to the right.</li><li>Insert the saved value into its correct gap-sorted position.</li><li>Reduce the gap and repeat until the gap becomes 1.</li></ol></div>
             <div class="ads-comparison-grid"><article class="ads-info-panel blue-panel"><h3>Why It Helps</h3><p>Large gaps move far-away values closer to their final positions early.</p><strong>In-place: O(1) auxiliary space</strong></article><article class="ads-info-panel purple-panel"><h3>Limitation</h3><p>It is not stable and has no single complexity for every gap sequence.</p><strong>Simple halving worst case: O(n²)</strong></article></div>
+            <details class="ads-program-details" id="shell-program"><summary><span>💻 Complete C Program — Shell Sort</span><small>View program</small></summary><div class="ads-program-body"><p>This version uses the simple halving gap sequence.</p><pre><code data-c-program="shell-sort">#include &lt;stdio.h&gt;
+
+#define MAX 100
+
+void shellSort(int a[], int n) {
+    for (int gap = n / 2; gap &gt; 0; gap /= 2) {
+        for (int i = gap; i &lt; n; i++) {
+            int value = a[i];
+            int j = i;
+
+            while (j &gt;= gap &amp;&amp; a[j - gap] &gt; value) {
+                a[j] = a[j - gap];
+                j -= gap;
+            }
+            a[j] = value;
+        }
+    }
+}
+
+int main(void) {
+    int n, a[MAX];
+    scanf("%d", &amp;n);
+
+    if (n &lt; 1 || n &gt; MAX) return 1;
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+
+    shellSort(a, n);
+
+    for (int i = 0; i &lt; n; i++) printf("%d ", a[i]);
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>5
+12 34 54 2 3</code></pre></div><div><h3>Sample Output</h3><pre><code>2 3 12 34 54</code></pre></div></div></div></details>
         </section>
 
         <section class="content-card ads-lesson-section" id="counting-sort">
             <div class="ads-section-heading"><span class="section-label">KEY FREQUENCIES</span><h2>🔢 5. Counting Sort</h2></div>
             <p>Counting Sort counts how many times each integer key occurs. Cumulative counts can place records into a stable output array.</p>
             <div class="ads-step-flow"><article><span>1</span><h3>Find Range</h3><p>Identify minimum and maximum keys.</p></article><article><span>2</span><h3>Count</h3><p>Build the frequency array.</p></article><article><span>3</span><h3>Accumulate</h3><p>Convert counts into ending positions.</p></article><article><span>4</span><h3>Place</h3><p>Scan input right to left for stability.</p></article></div>
+            <div class="ads-worked-example"><strong>Worked example</strong><p>For <code>[4, 2, 2, 8, 3, 3, 1]</code>, the frequencies for 1, 2, 3, 4 and 8 are 1, 2, 2, 1 and 1. Expanding them in key order produces <code>[1, 2, 2, 3, 3, 4, 8]</code>.</p></div>
+            <div class="ads-algorithm-block"><h3>🔹 Step-by-Step Algorithm</h3><ol class="ads-algorithm-list"><li>Find the minimum and maximum keys.</li><li>Create a count array for the range <code>minimum…maximum</code>.</li><li>Count each input using the offset <code>value - minimum</code>.</li><li>Convert frequencies to cumulative positions.</li><li>Scan the input from right to left and place each value in the output.</li><li>Copy the stable output back into the input array.</li></ol></div>
             <div class="ads-formula-box"><strong>Complexity:</strong> O(n + k) time and O(n + k) space, where k is the key range. It is attractive only when k is not excessively larger than n.</div>
             <div class="ads-warning-box"><strong>Negative keys:</strong> use an offset such as <code>count[value − minimum]</code>; never use a negative value directly as an array index.</div>
+            <details class="ads-program-details" id="counting-program"><summary><span>💻 Complete C Program — Stable Counting Sort</span><small>View program</small></summary><div class="ads-program-body"><p>The minimum-value offset lets this program handle negative integers as well as positive integers.</p><pre><code data-c-program="counting-sort">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define MAX 100
+
+int countingSort(int a[], int n) {
+    int minimum = a[0], maximum = a[0];
+    int output[MAX];
+
+    for (int i = 1; i &lt; n; i++) {
+        if (a[i] &lt; minimum) minimum = a[i];
+        if (a[i] &gt; maximum) maximum = a[i];
+    }
+
+    int range = maximum - minimum + 1;
+    int *count = calloc((size_t)range, sizeof(int));
+    if (count == NULL) return 0;
+
+    for (int i = 0; i &lt; n; i++)
+        count[a[i] - minimum]++;
+
+    for (int i = 1; i &lt; range; i++)
+        count[i] += count[i - 1];
+
+    for (int i = n - 1; i &gt;= 0; i--) {
+        int key = a[i] - minimum;
+        output[--count[key]] = a[i];
+    }
+
+    for (int i = 0; i &lt; n; i++) a[i] = output[i];
+    free(count);
+    return 1;
+}
+
+int main(void) {
+    int n, a[MAX];
+    scanf("%d", &amp;n);
+
+    if (n &lt; 1 || n &gt; MAX) return 1;
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+
+    if (!countingSort(a, n)) return 1;
+
+    for (int i = 0; i &lt; n; i++) printf("%d ", a[i]);
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>7
+4 -2 2 8 3 3 1</code></pre></div><div><h3>Sample Output</h3><pre><code>-2 1 2 3 3 4 8</code></pre></div></div></div></details>
         </section>
 
         <section class="content-card ads-lesson-section" id="radix-sort">
             <div class="ads-section-heading"><span class="section-label">DIGIT-BY-DIGIT ORDERING</span><h2>🧮 6. Radix Sort</h2></div>
             <p>LSD Radix Sort processes digits from least significant to most significant. Each digit pass must use a <strong>stable</strong> sub-sort.</p>
             <div class="ads-definition-box"><strong>Example passes:</strong> ones → tens → hundreds. After every stable pass, all processed lower-order digits remain correctly ordered.</div>
+            <div class="ads-worked-example"><strong>Worked example</strong><p>For <code>[170, 45, 75, 90, 802, 24, 2, 66]</code>, stable passes on the ones, tens and hundreds digits finally produce <code>[2, 24, 45, 66, 75, 90, 170, 802]</code>.</p></div>
+            <div class="ads-algorithm-block"><h3>🔹 Step-by-Step Algorithm</h3><ol class="ads-algorithm-list"><li>Find the largest key to determine the number of digit passes.</li><li>Start with exponent 1 for the ones digit.</li><li>Use stable Counting Sort on digit <code>(value / exponent) % 10</code>.</li><li>Copy the digit-sorted output back to the array.</li><li>Multiply the exponent by 10.</li><li>Repeat until the largest value has no unprocessed digits.</li></ol></div>
             <div class="ads-comparison-grid"><article class="ads-info-panel blue-panel"><h3>Time</h3><p>d passes over n keys using base b.</p><strong>O(d(n + b))</strong></article><article class="ads-info-panel purple-panel"><h3>Requirements</h3><p>Keys must be separable into digits or fixed-position symbols.</p><strong>Stable digit sort required</strong></article></div>
+            <div class="ads-warning-box"><strong>Program scope:</strong> the following introductory LSD implementation accepts non-negative decimal integers. Signed values need a defined sign-handling strategy.</div>
+            <details class="ads-program-details" id="radix-program"><summary><span>💻 Complete C Program — LSD Radix Sort</span><small>View program</small></summary><div class="ads-program-body"><p>Stable Counting Sort is used for each decimal digit.</p><pre><code data-c-program="radix-sort">#include &lt;stdio.h&gt;
+
+#define MAX 100
+
+int getMaximum(const int a[], int n) {
+    int maximum = a[0];
+    for (int i = 1; i &lt; n; i++)
+        if (a[i] &gt; maximum) maximum = a[i];
+    return maximum;
+}
+
+void countingSortByDigit(int a[], int n, int exponent) {
+    int output[MAX] = {0};
+    int count[10] = {0};
+
+    for (int i = 0; i &lt; n; i++)
+        count[(a[i] / exponent) % 10]++;
+
+    for (int i = 1; i &lt; 10; i++)
+        count[i] += count[i - 1];
+
+    for (int i = n - 1; i &gt;= 0; i--) {
+        int digit = (a[i] / exponent) % 10;
+        output[--count[digit]] = a[i];
+    }
+
+    for (int i = 0; i &lt; n; i++) a[i] = output[i];
+}
+
+void radixSort(int a[], int n) {
+    int maximum = getMaximum(a, n);
+    for (int exponent = 1; maximum / exponent &gt; 0; ) {
+        countingSortByDigit(a, n, exponent);
+        if (exponent &gt; maximum / 10) break;
+        exponent *= 10;
+    }
+}
+
+int main(void) {
+    int n, a[MAX];
+    scanf("%d", &amp;n);
+
+    if (n &lt; 1 || n &gt; MAX) return 1;
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;a[i]);
+        if (a[i] &lt; 0) return 1;
+    }
+
+    radixSort(a, n);
+
+    for (int i = 0; i &lt; n; i++) printf("%d ", a[i]);
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>8
+170 45 75 90 802 24 2 66</code></pre></div><div><h3>Sample Output</h3><pre><code>2 24 45 66 75 90 170 802</code></pre></div></div></div></details>
         </section>
 
         <section class="content-card ads-lesson-section" id="bucket-sort">
             <div class="ads-section-heading"><span class="section-label">DISTRIBUTION BY RANGE</span><h2>🪣 7. Bucket Sort</h2></div>
             <p>Bucket Sort distributes values into range-based containers, sorts each bucket and concatenates the buckets.</p>
+            <div class="ads-worked-example"><strong>Worked example</strong><p>For <code>[0.42, 0.32, 0.23, 0.52, 0.25, 0.47, 0.51]</code>, values are placed into interval buckets, each bucket is sorted, and the buckets are joined as <code>[0.23, 0.25, 0.32, 0.42, 0.47, 0.51, 0.52]</code>.</p></div>
+            <div class="ads-algorithm-block"><h3>🔹 Step-by-Step Algorithm</h3><ol class="ads-algorithm-list"><li>Create a suitable number of empty buckets.</li><li>Map every value to a bucket using its range or distribution.</li><li>Sort the values inside each non-empty bucket.</li><li>Visit the buckets in order.</li><li>Copy their values back into the original array.</li><li>Check that the mapping keeps every value inside a valid bucket.</li></ol></div>
             <div class="ads-comparison-grid"><article class="ads-info-panel blue-panel"><h3>Expected Strength</h3><p>With near-uniform data and balanced buckets, distribution and collection are efficient.</p><strong>Expected: O(n + k)</strong></article><article class="ads-info-panel purple-panel"><h3>Worst Case</h3><p>If most values enter one bucket, sorting that bucket can dominate.</p><strong>Worst: O(n²) with insertion-sorted buckets</strong></article></div>
             <p>Bucket Sort is often taught for uniformly distributed real values, but range mapping can also be designed for integers.</p>
+            <details class="ads-program-details" id="bucket-program"><summary><span>💻 Complete C Program — Bucket Sort</span><small>View program</small></summary><div class="ads-program-body"><p>This standard classroom version sorts floating-point values in the interval <code>0 ≤ value &lt; 1</code>.</p><pre><code data-c-program="bucket-sort">#include &lt;stdio.h&gt;
+
+#define MAX 100
+
+void insertionSort(float bucket[], int size) {
+    for (int i = 1; i &lt; size; i++) {
+        float value = bucket[i];
+        int j = i - 1;
+
+        while (j &gt;= 0 &amp;&amp; bucket[j] &gt; value) {
+            bucket[j + 1] = bucket[j];
+            j--;
+        }
+        bucket[j + 1] = value;
+    }
+}
+
+void bucketSort(float a[], int n) {
+    float buckets[MAX][MAX];
+    int sizes[MAX] = {0};
+
+    for (int i = 0; i &lt; n; i++) {
+        int index = (int)(a[i] * n);
+        if (index == n) index = n - 1;
+        buckets[index][sizes[index]++] = a[i];
+    }
+
+    for (int i = 0; i &lt; n; i++)
+        insertionSort(buckets[i], sizes[i]);
+
+    int output = 0;
+    for (int i = 0; i &lt; n; i++)
+        for (int j = 0; j &lt; sizes[i]; j++)
+            a[output++] = buckets[i][j];
+}
+
+int main(void) {
+    int n;
+    float a[MAX];
+    scanf("%d", &amp;n);
+
+    if (n &lt; 1 || n &gt; MAX) return 1;
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%f", &amp;a[i]);
+        if (a[i] &lt; 0.0f || a[i] &gt;= 1.0f) return 1;
+    }
+
+    bucketSort(a, n);
+
+    for (int i = 0; i &lt; n; i++) printf("%.2f ", a[i]);
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>7
+0.42 0.32 0.23 0.52 0.25 0.47 0.51</code></pre></div><div><h3>Sample Output</h3><pre><code>0.23 0.25 0.32 0.42 0.47 0.51 0.52</code></pre></div></div></div></details>
         </section>
 
         <section class="content-card ads-lesson-section" id="comparison">
@@ -123,7 +372,7 @@
 
         <section class="content-card ads-lesson-section" id="c-program">
             <div class="ads-section-heading"><span class="section-label">C IMPLEMENTATION</span><h2>💻 10. Quick Sort Using Lomuto Partition</h2></div>
-            <pre><code>#include &lt;stdio.h&gt;
+            <pre><code data-c-program="quick-sort">#include &lt;stdio.h&gt;
 
 void swap(int *a, int *b) {
     int temp = *a; *a = *b; *b = temp;
