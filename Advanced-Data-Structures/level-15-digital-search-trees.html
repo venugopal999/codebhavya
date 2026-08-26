@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
     <link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
     <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="ads.css?v=18">
+    <link rel="stylesheet" href="ads.css?v=19">
 </head>
 <body class="ads-page ads-topic-page digital-search-page">
 <header class="top-header">
@@ -92,7 +92,7 @@ void insertWord(TrieNode *root, const char *word) {
 
 int searchWord(TrieNode *root, const char *word) {
     TrieNode *current = root;
-    for (int i = 0; word[i] != '\0'; i++) {
+    for (int i = 0; word[i] != '\0'; i++) { /* trie search loop */
         int index = word[i] - 'a'; /* trie search step */
         if (current-&gt;child[index] == NULL)
             return 0; /* trie search miss */
@@ -159,7 +159,7 @@ void insertNumber(BinaryNode *root, int value) {
 
 int bestXorPartner(BinaryNode *root, int query) {
     BinaryNode *current = root;
-    for (int bit = BITS - 1; bit &gt;= 0; bit--) {
+    for (int bit = BITS - 1; bit &gt;= 0; bit--) { /* binary xor loop */
         int digit = (query &gt;&gt; bit) &amp; 1;
         int preferred = 1 - digit; /* binary prefer opposite */
         if (current-&gt;child[preferred] != NULL)
@@ -227,7 +227,7 @@ void insertRadix(RadixNode *root, const char *word) {
     RadixNode *current = root;
     const char *remaining = word;
 
-    while (*remaining) {
+    while (*remaining) { /* patricia insert loop */
         int index = remaining[0] - 'a';
         RadixNode *next = current-&gt;child[index];
         if (next == NULL) {
@@ -271,7 +271,7 @@ void insertRadix(RadixNode *root, const char *word) {
 int searchRadix(RadixNode *root, const char *word) {
     RadixNode *current = root;
     const char *remaining = word;
-    while (*remaining) {
+    while (*remaining) { /* patricia search loop */
         RadixNode *next = current-&gt;child[remaining[0] - 'a']; /* patricia search edge */
         if (next == NULL) return 0;
         int length = (int)strlen(next-&gt;label);
@@ -339,7 +339,7 @@ void insertSuffix(SuffixNode *root, const char *text, int start) {
 
 int containsSubstring(SuffixNode *root, const char *pattern) {
     SuffixNode *current = root;
-    for (int i = 0; pattern[i] != '\0'; i++) {
+    for (int i = 0; pattern[i] != '\0'; i++) { /* suffix search loop */
         int index = pattern[i] - 'a'; /* suffix search step */
         if (current-&gt;child[index] == NULL) return 0;
         current = current-&gt;child[index];
@@ -418,6 +418,6 @@ ana</code></pre></div><div><h3>Sample Output</h3><pre><code>Substring Found</cod
 <footer class="footer"><div class="footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div><div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C Programming</a></div><div class="footer-column"><h3>Learning</h3><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html">Advanced Data Structures</a><a href="../Python/index.html">Python</a></div><div class="footer-column"><h3>Practice</h3><a href="level-13-advanced-searching.html#practice">Advanced Searching Practice</a><a href="level-14-balanced-bst.html#practice">Balanced BST Practice</a><a href="#practice">Digital Search Tree Practice</a></div></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer>
 <script src="../script.js"></script>
 <script src="ads.js"></script>
-<script src="level-15-digital-search-trees.js"></script>
+<script src="level-15-digital-search-trees.js?v=2"></script>
 </body>
 </html>
