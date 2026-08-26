@@ -1776,7 +1776,8 @@
    LEVEL 12 — ADVANCED SORTING
    ========================================= */
 
-.sorting-controls {
+.sorting-controls,
+.program-tracer-loader {
     display: grid;
     grid-template-columns: minmax(280px, 1.6fr) minmax(190px, 0.8fr) auto;
     gap: 12px;
@@ -1784,7 +1785,8 @@
     margin: 18px 0 12px;
 }
 
-.sorting-controls label {
+.sorting-controls label,
+.program-tracer-loader label {
     display: grid;
     gap: 7px;
     color: #334155;
@@ -1794,7 +1796,9 @@
 }
 
 .sorting-controls input,
-.sorting-controls select {
+.sorting-controls select,
+.program-tracer-loader input,
+.program-tracer-loader select {
     min-width: 0;
     height: 46px;
     padding: 0 12px;
@@ -1806,8 +1810,55 @@
     text-transform: none;
 }
 
-.sorting-controls .primary-button { min-height: 46px; white-space: nowrap; }
+.sorting-controls .primary-button,
+.program-tracer-loader .primary-button { min-height: 46px; white-space: nowrap; }
 .sorting-visualizer-result { margin-top: 17px; }
+
+.program-tracer-help {
+    margin: -2px 0 12px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+#programTraceResult { margin-top: 17px; }
+.program-tracer-code span { position: relative; padding-left: 12px; }
+
+.program-trace-array {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    min-height: 53px;
+    padding: 10px;
+    border: 1px solid #334155;
+    border-radius: 9px;
+    background: #111c2f;
+}
+
+.program-trace-array span {
+    display: grid;
+    min-width: 42px;
+    min-height: 38px;
+    place-items: center;
+    padding: 7px 9px;
+    border: 2px solid #475569;
+    border-radius: 8px;
+    background: #0f172a;
+    color: #f8fafc;
+    font: 900 13px/1 Consolas, Monaco, "Courier New", monospace;
+    transition: 0.18s ease;
+}
+
+.program-trace-array span.is-active-value {
+    border-color: #f6d76b;
+    background: #25466f;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.program-trace-array span.is-pivot-value {
+    border-color: #c4b5fd;
+    background: #5b21b6;
+}
 
 .sorting-viz-layout {
     display: grid;
@@ -1893,17 +1944,21 @@
 .sorting-visualizer-result .ads-tracer-status { padding-top: 11px; border: 1px solid #d9e4f0; border-top: 0; border-radius: 0 0 11px 11px; background: #f8fafc; }
 
 @media (max-width: 950px) {
-    .sorting-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .sorting-controls .primary-button { width: 100%; }
+    .sorting-controls,
+    .program-tracer-loader { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sorting-controls .primary-button,
+    .program-tracer-loader .primary-button { width: 100%; }
     .sorting-viz-layout { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px) {
-    .sorting-controls { grid-template-columns: 1fr; }
+    .sorting-controls,
+    .program-tracer-loader { grid-template-columns: 1fr; }
     .sorting-bars { justify-content: flex-start; min-height: 210px; }
     .sorting-bar-wrap { flex-basis: 42px; }
     .sorting-bar { width: 32px; }
     .sorting-stat-grid { grid-template-columns: 1fr; }
+    .program-trace-array span { min-width: 38px; min-height: 36px; }
 }
 
 /* =========================================
