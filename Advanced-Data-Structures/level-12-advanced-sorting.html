@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Sorting | Advanced Data Structures | CodeBhavya</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="ads.css">
+</head>
+<body class="ads-page ads-topic-page advanced-sorting-page">
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo"><img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a>
+    <nav class="top-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C</a><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html" class="active">Advanced Data Structures</a><a href="../Python/index.html">Python</a><a href="../AI-ML/index.html">AI &amp; ML</a><a href="../Placement/index.html">Placement</a></nav>
+</header>
+
+<div class="docs-layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">Advanced Data Structures</div>
+        <input type="text" id="topicSearch" class="search-box" placeholder="🔍 Search ADS topics..." aria-label="Search ADS topics">
+        <a href="index.html" class="sidebar-course-home">🧠 ADS Home</a>
+        <div class="sidebar-title">Part 1 — Foundations &amp; Algorithms</div>
+        <a class="ads-topic-link is-available" href="level-08-performance-analysis.html">📊 Level 8 — Performance Analysis</a>
+        <a class="ads-topic-link is-available" href="level-09-disjoint-sets.html">🔗 Level 9 — Disjoint Sets</a>
+        <a class="ads-topic-link is-available" href="level-10-sparse-matrices.html">🧮 Level 10 — Sparse Matrices</a>
+        <a class="ads-topic-link is-available" href="level-11-string-pattern-matching.html">🔤 Level 11 — String Pattern Matching</a>
+        <a class="ads-topic-link is-available active" href="level-12-advanced-sorting.html">⚡ Level 12 — Advanced Sorting</a>
+        <a class="ads-topic-link" href="level-13-advanced-searching.html">🎯 Level 13 — Advanced Searching</a>
+        <div class="sidebar-title">Part 2 — Advanced Trees &amp; Hashing</div>
+        <a class="ads-topic-link" href="level-14-balanced-bst.html">🌲 Level 14 — Balanced BST</a><a class="ads-topic-link" href="level-15-digital-search-trees.html">🔠 Level 15 — Digital Search Trees</a><a class="ads-topic-link" href="level-16-multiway-search-trees.html">🌳 Level 16 — Multiway Search Trees</a><a class="ads-topic-link" href="level-17-heaps.html">⛰️ Level 17 — Heaps</a><a class="ads-topic-link" href="level-18-hashing.html">#️⃣ Level 18 — Hashing</a>
+        <div class="sidebar-title">Part 3 — Storage, Graphs &amp; Placement</div>
+        <a class="ads-topic-link" href="level-19-files.html">📁 Level 19 — Files &amp; File Organization</a><a class="ads-topic-link" href="level-20-advanced-graphs.html">🕸️ Level 20 — Advanced Graph Algorithms</a><a class="ads-topic-link" href="level-21-placement-problems.html">💼 Level 21 — Placement Problems</a>
+    </aside>
+
+    <main class="main-content">
+        <section class="ads-topic-hero"><span class="subject-label">CODEBHAVYA • ADS LEVEL 12</span><h1 class="page-title">⚡ Advanced Sorting</h1><p class="page-description">Master divide-and-conquer, gap-based and non-comparison sorting methods, then select an algorithm using time, memory, stability, key range and input distribution.</p></section>
+        <nav class="ads-page-jump-nav" aria-label="Page sections"><a href="#objectives">Objectives</a><a href="#merge-sort">Merge</a><a href="#quick-sort">Quick</a><a href="#shell-sort">Shell</a><a href="#counting-sort">Counting</a><a href="#radix-sort">Radix</a><a href="#bucket-sort">Bucket</a><a href="#visualizer">Premium Visualizer</a><a href="#c-program">C Program</a><a href="#tracing">Program Tracing</a><a href="#practice">Practice</a><a href="#revision">Revision</a></nav>
+
+        <section class="content-card ads-lesson-section" id="objectives">
+            <div class="ads-section-heading"><span class="section-label">LEARNING GOALS</span><h2>🎯 Learning Objectives</h2></div>
+            <p>After completing this level, you should be able to:</p>
+            <ul class="ads-spaced-list"><li>Distinguish comparison and non-comparison sorting.</li><li>Explain stability, in-place behavior, adaptiveness and external sorting.</li><li>Trace Merge, Quick and Shell Sort.</li><li>Apply Counting, Radix and Bucket Sort under suitable key constraints.</li><li>Implement Quick Sort with a correct partition procedure.</li><li>Compare best, average and worst-case performance.</li><li>Select an algorithm for practical and interview scenarios.</li></ul>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="foundation">
+            <div class="ads-section-heading"><span class="section-label">SORTING PROPERTIES</span><h2>🧭 1. How Do We Compare Sorting Algorithms?</h2></div>
+            <div class="ads-rule-grid">
+                <article><strong>Stable</strong><p>Equal keys preserve their original relative order.</p></article>
+                <article><strong>In Place</strong><p>The algorithm uses only small auxiliary memory.</p></article>
+                <article><strong>Adaptive</strong><p>Existing order helps reduce the work.</p></article>
+                <article><strong>Online</strong><p>Items can be processed as they arrive.</p></article>
+            </div>
+            <div class="ads-comparison-grid"><article class="ads-info-panel blue-panel"><h3>Comparison Sort</h3><p>Ordering decisions come from comparing pairs of keys.</p><strong>General lower bound: Ω(n log n)</strong></article><article class="ads-info-panel purple-panel"><h3>Non-Comparison Sort</h3><p>Uses key digits, ranges or distribution assumptions.</p><strong>Can achieve linear time under constraints</strong></article></div>
+            <div class="ads-warning-box"><strong>Important:</strong> O(n) sorting does not violate the comparison lower bound because Counting, Radix and Bucket Sort use information beyond pairwise comparisons.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="merge-sort">
+            <div class="ads-section-heading"><span class="section-label">DIVIDE AND CONQUER</span><h2>🧩 2. Merge Sort</h2></div>
+            <p>Merge Sort divides the array into halves until single-element ranges remain, then combines sorted halves.</p>
+            <div class="ads-step-flow"><article><span>1</span><h3>Divide</h3><p>Split at the middle index.</p></article><article><span>2</span><h3>Recurse Left</h3><p>Sort the left half.</p></article><article><span>3</span><h3>Recurse Right</h3><p>Sort the right half.</p></article><article><span>4</span><h3>Merge</h3><p>Repeatedly copy the smaller front value.</p></article></div>
+            <div class="ads-comparison-grid"><article class="ads-info-panel blue-panel"><h3>Guarantee</h3><p>Its running time is independent of initial order.</p><strong>Best/Average/Worst: O(n log n)</strong></article><article class="ads-info-panel purple-panel"><h3>Trade-off</h3><p>Array merging normally requires auxiliary storage.</p><strong>Extra space: O(n)</strong></article></div>
+            <p>Merge Sort is stable and works especially well for linked lists and external files, where sequential access is preferred.</p>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="quick-sort">
+            <div class="ads-section-heading"><span class="section-label">PARTITIONING</span><h2>⚡ 3. Quick Sort</h2></div>
+            <p>Quick Sort chooses a pivot, partitions the array, then recursively sorts values on both sides of the pivot.</p>
+            <div class="ads-definition-box"><strong>Lomuto invariant:</strong> before processing index j, values in <code>low…i</code> are ≤ pivot, values in <code>i+1…j−1</code> are &gt; pivot and <code>j…high−1</code> are unclassified.</div>
+            <div class="ads-rule-grid"><article><strong>Good Pivot</strong><p>Creates two reasonably balanced subarrays.</p></article><article><strong>Bad Pivot</strong><p>Creates a 0 and n−1 split repeatedly.</p></article><article><strong>Randomized Pivot</strong><p>Reduces the chance of consistently poor input-dependent splits.</p></article><article><strong>Three-Way Partition</strong><p>Handles many duplicate keys efficiently.</p></article></div>
+            <div class="ads-formula-box"><strong>Time:</strong> average O(n log n), worst O(n²). <strong>Space:</strong> O(log n) average recursion; Quick Sort is generally in-place but not stable.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="shell-sort">
+            <div class="ads-section-heading"><span class="section-label">GAP-BASED INSERTION</span><h2>🪜 4. Shell Sort</h2></div>
+            <p>Shell Sort performs insertion sorting on elements separated by a gap. The gap decreases until the final pass uses gap 1.</p>
+            <div class="ads-definition-box"><strong>Common simple sequence:</strong> n/2, n/4, …, 1. Better gap sequences often improve performance, so Shell Sort complexity depends strongly on this choice.</div>
+            <div class="ads-comparison-grid"><article class="ads-info-panel blue-panel"><h3>Why It Helps</h3><p>Large gaps move far-away values closer to their final positions early.</p><strong>In-place: O(1) auxiliary space</strong></article><article class="ads-info-panel purple-panel"><h3>Limitation</h3><p>It is not stable and has no single complexity for every gap sequence.</p><strong>Simple halving worst case: O(n²)</strong></article></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="counting-sort">
+            <div class="ads-section-heading"><span class="section-label">KEY FREQUENCIES</span><h2>🔢 5. Counting Sort</h2></div>
+            <p>Counting Sort counts how many times each integer key occurs. Cumulative counts can place records into a stable output array.</p>
+            <div class="ads-step-flow"><article><span>1</span><h3>Find Range</h3><p>Identify minimum and maximum keys.</p></article><article><span>2</span><h3>Count</h3><p>Build the frequency array.</p></article><article><span>3</span><h3>Accumulate</h3><p>Convert counts into ending positions.</p></article><article><span>4</span><h3>Place</h3><p>Scan input right to left for stability.</p></article></div>
+            <div class="ads-formula-box"><strong>Complexity:</strong> O(n + k) time and O(n + k) space, where k is the key range. It is attractive only when k is not excessively larger than n.</div>
+            <div class="ads-warning-box"><strong>Negative keys:</strong> use an offset such as <code>count[value − minimum]</code>; never use a negative value directly as an array index.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="radix-sort">
+            <div class="ads-section-heading"><span class="section-label">DIGIT-BY-DIGIT ORDERING</span><h2>🧮 6. Radix Sort</h2></div>
+            <p>LSD Radix Sort processes digits from least significant to most significant. Each digit pass must use a <strong>stable</strong> sub-sort.</p>
+            <div class="ads-definition-box"><strong>Example passes:</strong> ones → tens → hundreds. After every stable pass, all processed lower-order digits remain correctly ordered.</div>
+            <div class="ads-comparison-grid"><article class="ads-info-panel blue-panel"><h3>Time</h3><p>d passes over n keys using base b.</p><strong>O(d(n + b))</strong></article><article class="ads-info-panel purple-panel"><h3>Requirements</h3><p>Keys must be separable into digits or fixed-position symbols.</p><strong>Stable digit sort required</strong></article></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="bucket-sort">
+            <div class="ads-section-heading"><span class="section-label">DISTRIBUTION BY RANGE</span><h2>🪣 7. Bucket Sort</h2></div>
+            <p>Bucket Sort distributes values into range-based containers, sorts each bucket and concatenates the buckets.</p>
+            <div class="ads-comparison-grid"><article class="ads-info-panel blue-panel"><h3>Expected Strength</h3><p>With near-uniform data and balanced buckets, distribution and collection are efficient.</p><strong>Expected: O(n + k)</strong></article><article class="ads-info-panel purple-panel"><h3>Worst Case</h3><p>If most values enter one bucket, sorting that bucket can dominate.</p><strong>Worst: O(n²) with insertion-sorted buckets</strong></article></div>
+            <p>Bucket Sort is often taught for uniformly distributed real values, but range mapping can also be designed for integers.</p>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="comparison">
+            <div class="ads-section-heading"><span class="section-label">ALGORITHM SELECTION</span><h2>⚖️ 8. Complete Comparison</h2></div>
+            <div class="ads-table-wrap"><table class="ads-data-table"><thead><tr><th>Algorithm</th><th>Best</th><th>Average</th><th>Worst</th><th>Stable</th><th>In Place</th></tr></thead><tbody><tr><td>Merge</td><td>n log n</td><td>n log n</td><td>n log n</td><td>Yes</td><td>No for arrays</td></tr><tr><td>Quick</td><td>n log n</td><td>n log n</td><td>n²</td><td>No</td><td>Mostly yes</td></tr><tr><td>Shell</td><td>Gap-dependent</td><td>Gap-dependent</td><td>Often n² for simple gaps</td><td>No</td><td>Yes</td></tr><tr><td>Counting</td><td>n + k</td><td>n + k</td><td>n + k</td><td>Yes*</td><td>No</td></tr><tr><td>Radix</td><td>d(n + b)</td><td>d(n + b)</td><td>d(n + b)</td><td>Yes*</td><td>No</td></tr><tr><td>Bucket</td><td>n + k</td><td>n + k expected</td><td>n²</td><td>Depends</td><td>No</td></tr></tbody></table></div>
+            <p><small>*Counting Sort is stable when cumulative positions and right-to-left placement are used; Radix Sort is stable when every digit pass is stable.</small></p>
+        </section>
+
+        <section class="ads-premium-viz" id="visualizer">
+            <div class="ads-premium-header"><div><span class="ads-premium-label">INTERACTIVE ALGORITHM VISUALIZATION</span><h2>🎬 9. Premium Advanced Sorting Visualizer</h2></div><a class="ads-premium-brand" href="../index.html" aria-label="CodeBhavya Home"><img src="../images/codebhavya-main-logo.png" alt=""><span class="brand-code">Code</span><span class="brand-bhavya">Bhavya</span></a></div>
+            <div class="ads-premium-body">
+                <p>Enter 2–12 integers, select an algorithm and click <strong>Load Visualizer</strong>. No sorting occurs before the button is pressed.</p>
+                <div class="sorting-controls"><label>Array Values<input id="sortingArrayInput" type="text" value="8, 3, 1, 7, 0, 10, 2"></label><label>Algorithm<select id="sortingAlgorithm"><option value="quick">Quick Sort</option><option value="merge">Merge Sort</option><option value="shell">Shell Sort</option><option value="counting">Counting Sort</option><option value="radix">Radix Sort</option><option value="bucket">Bucket Sort</option></select></label><button id="loadSortingVisualizer" type="button" class="primary-button">Load Visualizer</button></div>
+                <div class="ads-example-chips"><button type="button" data-sorting-example="mixed">Merge example</button><button type="button" data-sorting-example="quick">Quick example</button><button type="button" data-sorting-example="digits">Radix example</button></div>
+                <div id="sortingVisualizerPrompt" class="ads-explorer-prompt">Choose an example or enter values, then click <strong>Load Visualizer</strong>.</div>
+                <div id="sortingVisualizerResult" class="sorting-visualizer-result" hidden>
+                    <div class="sorting-viz-layout"><section class="sorting-bars-panel"><h3>📊 Live Array State</h3><div id="sortingBars" class="sorting-bars"></div><div id="sortingVisualizerMessage" class="ads-explorer-message">—</div><div class="ads-progress-track"><span id="sortingProgress"></span></div></section><aside class="sorting-stat-panel"><h3>📈 Live Statistics</h3><div class="sorting-stat-grid"><div><span>Phase</span><strong id="sortingPhase">Ready</strong></div><div><span>Comparisons</span><strong id="sortingComparisons">0</strong></div><div><span>Array Writes</span><strong id="sortingWrites">0</strong></div><div><span>Pivot</span><strong id="sortingPivot">—</strong></div></div></aside></div>
+                    <div class="ads-tracer-controls sorting-visual-controls"><button type="button" class="trace-previous" id="sortingPrevious">← Previous</button><button type="button" class="trace-next" id="sortingNext">Next →</button><button type="button" class="trace-auto" id="sortingAuto">▶ Auto Run</button><button type="button" class="trace-pause" id="sortingPause">⏸ Pause</button><button type="button" class="trace-reset" id="sortingReset">↻ Reset</button></div><p class="ads-tracer-status" id="sortingStepStatus">Step 0 of 0</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="c-program">
+            <div class="ads-section-heading"><span class="section-label">C IMPLEMENTATION</span><h2>💻 10. Quick Sort Using Lomuto Partition</h2></div>
+            <pre><code>#include &lt;stdio.h&gt;
+
+void swap(int *a, int *b) {
+    int temp = *a; *a = *b; *b = temp;
+}
+
+int partition(int a[], int low, int high) {
+    int pivot = a[high];
+    int i = low - 1;
+    for (int j = low; j &lt; high; j++) {
+        if (a[j] &lt;= pivot) {
+            i++;
+            swap(&amp;a[i], &amp;a[j]);
+        }
+    }
+    swap(&amp;a[i + 1], &amp;a[high]);
+    return i + 1;
+}
+
+void quickSort(int a[], int low, int high) {
+    if (low &lt; high) {
+        int p = partition(a, low, high);
+        quickSort(a, low, p - 1);
+        quickSort(a, p + 1, high);
+    }
+}
+
+int main(void) {
+    int n; scanf("%d", &amp;n);
+    int a[n];
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+    quickSort(a, 0, n - 1);
+    for (int i = 0; i &lt; n; i++) printf("%d ", a[i]);
+    return 0;
+}</code></pre>
+            <div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>7
+8 3 1 7 0 10 2</code></pre></div><div><h3>Sample Output</h3><pre><code>0 1 2 3 7 8 10</code></pre></div></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="tracing">
+            <div class="ads-section-heading"><span class="section-label">C PROGRAM + TRACING</span><h2>🔍 11. Program Tracing — Quick Sort</h2></div>
+            <p>Trace <code>[8, 3, 1, 7, 0, 10, 2]</code>. The highlighted statement moves before every pointer, comparison, swap, pivot placement and recursive-range update.</p>
+            <button class="ads-tracer-toggle" id="quickTraceToggle" type="button" aria-expanded="false" aria-controls="quickTracePanel">▶ Program Tracing — Quick Sort</button>
+            <div class="ads-tracer" id="quickTracePanel" hidden><div class="ads-tracer-title">PROGRAM TRACING — QUICK SORT</div><div class="ads-tracer-grid">
+                <section class="ads-tracer-panel"><h3>💻 C Program</h3><pre class="ads-tracer-code" aria-label="Traceable Quick Sort program"><code><span data-quick-trace-line="1">quickSort(a, low, high);</span>
+<span data-quick-trace-line="2">if (low &lt; high) {</span>
+<span data-quick-trace-line="3">    p = partition(a, low, high);</span>
+<span data-quick-trace-line="4">    quickSort(a, low, p - 1);</span>
+<span data-quick-trace-line="5">    quickSort(a, p + 1, high);</span>
+<span data-quick-trace-line="6">pivot = a[high];</span>
+<span data-quick-trace-line="7">i = low - 1;</span>
+<span data-quick-trace-line="8">for (j = low; j &lt; high; j++)</span>
+<span data-quick-trace-line="9">    if (a[j] &lt;= pivot)</span>
+<span data-quick-trace-line="10">        i++;</span>
+<span data-quick-trace-line="11">        swap(&amp;a[i], &amp;a[j]);</span>
+<span data-quick-trace-line="12">swap(&amp;a[i + 1], &amp;a[high]);</span>
+<span data-quick-trace-line="13">return i + 1;</span></code></pre></section>
+                <section class="ads-tracer-panel ads-tracer-live-panel"><h3>🧠 What is happening?</h3><div class="ads-tracer-explain" id="quickTraceMessage">Press Next to begin the Quick Sort trace.</div><h3>📊 Live Variables</h3><div class="ads-trace-vars"><div><span>Low</span><strong id="quickTraceLow">0</strong></div><div><span>High</span><strong id="quickTraceHigh">6</strong></div><div><span>i</span><strong id="quickTraceI">—</strong></div><div><span>j</span><strong id="quickTraceJ">—</strong></div><div><span>Pivot</span><strong id="quickTracePivot">—</strong></div><div><span>Comparisons</span><strong id="quickTraceComparisons">0</strong></div></div><div class="ads-trace-array"><span>Array</span><code id="quickTraceArray">[8, 3, 1, 7, 0, 10, 2]</code></div><h3>Output</h3><pre class="ads-trace-output" id="quickTraceOutput">—</pre></section>
+            </div><div class="ads-tracer-controls"><button type="button" class="trace-previous" id="quickTracePrevious">← Previous</button><button type="button" class="trace-next" id="quickTraceNext">Next →</button><button type="button" class="trace-auto" id="quickTraceAuto">▶ Auto Run</button><button type="button" class="trace-pause" id="quickTracePause">⏸ Pause</button><button type="button" class="trace-reset" id="quickTraceReset">↻ Reset</button></div><p class="ads-tracer-status" id="quickTraceStatus">Step 0</p></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="complexity"><div class="ads-section-heading"><span class="section-label">PERFORMANCE SUMMARY</span><h2>📈 12. Complexity and Recursion</h2></div><div class="ads-table-wrap"><table class="ads-data-table"><thead><tr><th>Situation</th><th>Quick Sort Recurrence</th><th>Time</th><th>Stack</th></tr></thead><tbody><tr><td>Balanced partitions</td><td>T(n)=2T(n/2)+Θ(n)</td><td>Θ(n log n)</td><td>Θ(log n)</td></tr><tr><td>Highly unbalanced</td><td>T(n)=T(n−1)+Θ(n)</td><td>Θ(n²)</td><td>Θ(n)</td></tr><tr><td>Randomized expected</td><td>Expected balanced progress</td><td>O(n log n)</td><td>O(log n) expected</td></tr></tbody></table></div><div class="ads-warning-box"><strong>Stack optimization:</strong> recursively process the smaller partition and loop over the larger one to keep worst-case auxiliary stack usage closer to O(log n).</div></section>
+
+        <section class="content-card ads-lesson-section" id="selection"><div class="ads-section-heading"><span class="section-label">PRACTICAL DECISIONS</span><h2>💡 13. Which Sorting Algorithm Should You Choose?</h2></div><div class="ads-interview-grid"><article><h3>Stable records</h3><p>Use Merge Sort or a stable Counting/Radix implementation when equal-key order matters.</p></article><article><h3>Fast general array sorting</h3><p>Use randomized or introspective Quick Sort when cache behavior and low extra memory matter.</p></article><article><h3>Linked lists or external files</h3><p>Merge Sort suits sequential access and does not require random indexing.</p></article><article><h3>Small integer range</h3><p>Counting Sort can outperform comparison sorts when k is reasonably small.</p></article><article><h3>Fixed-width integer keys</h3><p>Radix Sort is useful when the digit count and base are controlled.</p></article><article><h3>Uniform distribution</h3><p>Bucket Sort works well when values spread evenly across ranges.</p></article></div></section>
+
+        <section class="content-card ads-lesson-section" id="mistakes"><div class="ads-section-heading"><span class="section-label">AVOID THESE ERRORS</span><h2>⚠️ 14. Common Mistakes</h2></div><div class="ads-mistake-grid"><article><h3>❌ Wrong recursive bounds</h3><p>After partition p, recurse on low…p−1 and p+1…high.</p></article><article><h3>❌ Losing stability</h3><p>Forward placement in Counting Sort may reverse equal records.</p></article><article><h3>❌ Huge count array</h3><p>Counting Sort wastes memory when key range k is enormous.</p></article><article><h3>❌ Unstable radix pass</h3><p>Later digit passes cannot repair order destroyed by an unstable earlier pass.</p></article></div></section>
+
+        <section class="content-card ads-lesson-section" id="practice">
+            <div class="ads-section-heading"><span class="section-label">CHECK YOUR UNDERSTANDING</span><h2>✍️ 15. Practice Problems</h2></div><div class="ads-practice-note">Solve each question first. Use Hint only when needed and Show Answer to verify your reasoning.</div><div class="ads-practice-list">
+                <article class="ads-practice-problem"><h3>1. Which advanced sort guarantees O(n log n) in every case?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-1">Hint</button><button data-toggle-target="solution-1">Show Answer</button></div><div id="hint-1" class="ads-hint-box" hidden>It repeatedly merges sorted halves.</div><div id="solution-1" class="ads-solution-box" hidden><strong>Merge Sort.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>2. Is standard array Merge Sort in place?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-2">Hint</button><button data-toggle-target="solution-2">Show Answer</button></div><div id="hint-2" class="ads-hint-box" hidden>Think about the temporary merge array.</div><div id="solution-2" class="ads-solution-box" hidden><strong>No.</strong> It normally requires O(n) auxiliary storage.</div></article>
+                <article class="ads-practice-problem"><h3>3. Why is Merge Sort useful for linked lists?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-3">Hint</button><button data-toggle-target="solution-3">Show Answer</button></div><div id="hint-3" class="ads-hint-box" hidden>Nodes can be split and relinked sequentially.</div><div id="solution-3" class="ads-solution-box" hidden>It needs no random indexing and merging can relink nodes with O(1) node-storage overhead.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>4. What is the final position of a Quick Sort pivot after partition?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-4">Hint</button><button data-toggle-target="solution-4">Show Answer</button></div><div id="hint-4" class="ads-hint-box" hidden>All smaller/equal values are placed before it.</div><div id="solution-4" class="ads-solution-box" hidden>The pivot is at its <strong>correct final sorted index</strong>.</div></article>
+                <article class="ads-practice-problem"><h3>5. What input can cause O(n²) Quick Sort with the last element as pivot?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-5">Hint</button><button data-toggle-target="solution-5">Show Answer</button></div><div id="hint-5" class="ads-hint-box" hidden>Think of consistently unbalanced partitions.</div><div id="solution-5" class="ads-solution-box" hidden>An already sorted or reverse-sorted array can repeatedly create partitions of sizes 0 and n−1.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>6. Why randomize the Quick Sort pivot?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-6">Hint</button><button data-toggle-target="solution-6">Show Answer</button></div><div id="hint-6" class="ads-hint-box" hidden>Remove dependence on a predictable input order.</div><div id="solution-6" class="ads-solution-box" hidden>It makes consistently bad partitions unlikely and gives expected O(n log n) time.</div></article>
+                <article class="ads-practice-problem"><h3>7. Is Quick Sort stable in its common in-place form?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-7">Hint</button><button data-toggle-target="solution-7">Show Answer</button></div><div id="hint-7" class="ads-hint-box" hidden>Partition swaps may cross equal keys.</div><div id="solution-7" class="ads-solution-box" hidden><strong>No.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>8. What is the final gap used by Shell Sort?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-8">Hint</button><button data-toggle-target="solution-8">Show Answer</button></div><div id="hint-8" class="ads-hint-box" hidden>The last pass becomes ordinary insertion sorting.</div><div id="solution-8" class="ads-solution-box" hidden><strong>Gap 1.</strong></div></article>
+                <article class="ads-practice-problem"><h3>9. Is Shell Sort stable?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-9">Hint</button><button data-toggle-target="solution-9">Show Answer</button></div><div id="hint-9" class="ads-hint-box" hidden>Gap movements can make equal values cross.</div><div id="solution-9" class="ads-solution-box" hidden><strong>No.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>10. Give Counting Sort time for n items and key range k.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-10">Hint</button><button data-toggle-target="solution-10">Show Answer</button></div><div id="hint-10" class="ads-hint-box" hidden>Scan the input and the count range.</div><div id="solution-10" class="ads-solution-box" hidden><strong>O(n + k).</strong></div></article>
+                <article class="ads-practice-problem"><h3>11. Why is Counting Sort unsuitable when k ≫ n?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-11">Hint</button><button data-toggle-target="solution-11">Show Answer</button></div><div id="hint-11" class="ads-hint-box" hidden>Consider the size and initialization of the count array.</div><div id="solution-11" class="ads-solution-box" hidden>Time and memory become dominated by the huge key range rather than the number of records.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>12. How can Counting Sort support negative values?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-12">Hint</button><button data-toggle-target="solution-12">Show Answer</button></div><div id="hint-12" class="ads-hint-box" hidden>Shift the smallest key to index 0.</div><div id="solution-12" class="ads-solution-box" hidden>Use <strong>value − minimum</strong> as the count-array index.</div></article>
+                <article class="ads-practice-problem"><h3>13. Why must each Radix Sort digit pass be stable?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-13">Hint</button><button data-toggle-target="solution-13">Show Answer</button></div><div id="hint-13" class="ads-hint-box" hidden>Lower digits were processed earlier.</div><div id="solution-13" class="ads-solution-box" hidden>Stability preserves the order established by previously processed less-significant digits.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>14. Give LSD Radix Sort time with d digits and base b.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-14">Hint</button><button data-toggle-target="solution-14">Show Answer</button></div><div id="hint-14" class="ads-hint-box" hidden>Perform d stable Counting Sort passes.</div><div id="solution-14" class="ads-solution-box" hidden><strong>O(d(n + b)).</strong></div></article>
+                <article class="ads-practice-problem"><h3>15. Under what distribution does Bucket Sort perform well?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-15">Hint</button><button data-toggle-target="solution-15">Show Answer</button></div><div id="hint-15" class="ads-hint-box" hidden>Balanced bucket sizes are desirable.</div><div id="solution-15" class="ads-solution-box" hidden>A roughly <strong>uniform distribution</strong> across bucket ranges.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>16. What causes Bucket Sort’s O(n²) worst case?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-16">Hint</button><button data-toggle-target="solution-16">Show Answer</button></div><div id="hint-16" class="ads-hint-box" hidden>Imagine all values entering one insertion-sorted bucket.</div><div id="solution-16" class="ads-solution-box" hidden>A highly uneven distribution can place nearly all n values in one bucket.</div></article>
+                <article class="ads-practice-problem"><h3>17. Which sort is preferred for very large external files?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-17">Hint</button><button data-toggle-target="solution-17">Show Answer</button></div><div id="hint-17" class="ads-hint-box" hidden>Sequential merging minimizes random disk access.</div><div id="solution-17" class="ads-solution-box" hidden><strong>External Merge Sort.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>18. Which studied algorithm is in-place, gap-based and not stable?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-18">Hint</button><button data-toggle-target="solution-18">Show Answer</button></div><div id="hint-18" class="ads-hint-box" hidden>Its final gap is 1.</div><div id="solution-18" class="ads-solution-box" hidden><strong>Shell Sort.</strong></div></article>
+                <article class="ads-practice-problem"><h3>19. Can a comparison sort guarantee o(n log n) for arbitrary keys?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-19">Hint</button><button data-toggle-target="solution-19">Show Answer</button></div><div id="hint-19" class="ads-hint-box" hidden>Use the comparison decision-tree lower bound.</div><div id="solution-19" class="ads-solution-box" hidden><strong>No.</strong> General comparison sorting requires Ω(n log n) comparisons in the worst case.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>20. Choose a sort for stable ordering of one million small-range integer keys.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-20">Hint</button><button data-toggle-target="solution-20">Show Answer</button></div><div id="hint-20" class="ads-hint-box" hidden>The key range is small and stability is required.</div><div id="solution-20" class="ads-solution-box" hidden>A <strong>stable Counting Sort</strong> is an excellent choice.</div></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="revision"><div class="ads-section-heading"><span class="section-label">QUICK RECALL</span><h2>📝 16. Quick Revision</h2></div><ul class="ads-revision-list"><li>Comparison sorting has an Ω(n log n) worst-case lower bound.</li><li>Merge Sort is stable and always O(n log n), but arrays need O(n) extra space.</li><li>Quick Sort is fast and cache-friendly on average, but poor pivots can cause O(n²).</li><li>Shell Sort performs gapped insertion passes and ends with gap 1.</li><li>Counting Sort is O(n+k) when the integer key range is manageable.</li><li>Radix Sort requires a stable digit-level sort.</li><li>Bucket Sort depends on balanced value distribution.</li><li>Algorithm choice depends on stability, memory, data size, range and distribution.</li></ul></section>
+
+        <nav class="ads-topic-navigation" aria-label="ADS topic navigation"><a href="level-11-string-pattern-matching.html" class="previous-topic">← Previous: String Pattern Matching</a><span class="next-topic disabled-topic" aria-disabled="true">Next: Advanced Searching →</span></nav>
+    </main>
+</div>
+
+<footer class="footer"><div class="footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div><div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C Programming</a></div><div class="footer-column"><h3>Learning</h3><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html">Advanced Data Structures</a><a href="../Python/index.html">Python</a></div><div class="footer-column"><h3>Practice</h3><a href="level-10-sparse-matrices.html#practice">Sparse Matrices Practice</a><a href="level-11-string-pattern-matching.html#practice">Pattern Matching Practice</a><a href="#practice">Advanced Sorting Practice</a></div></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer>
+<script src="../script.js"></script><script src="ads.js"></script><script>
+(function () {
+    "use strict";
+
+    function snapshot(array, active, phase, message, comparisons, writes, pivot, complete) {
+        return {
+            array: array.slice(),
+            active: (active || []).slice(),
+            phase: phase,
+            message: message,
+            comparisons: comparisons,
+            writes: writes,
+            pivot: typeof pivot === "number" ? pivot : -1,
+            complete: Boolean(complete)
+        };
+    }
+
+    function mergeSortSteps(values) {
+        const array = values.slice();
+        const steps = [snapshot(array, [], "Ready", "Split the array, sort both halves and merge them.", 0, 0)];
+        let comparisons = 0;
+        let writes = 0;
+
+        function sort(left, right) {
+            if (left >= right) { return; }
+            const middle = Math.floor((left + right) / 2);
+            steps.push(snapshot(array, [left, middle, right], "Divide", "Divide range [" + left + ", " + right + "] at index " + middle + ".", comparisons, writes));
+            sort(left, middle);
+            sort(middle + 1, right);
+            const leftPart = array.slice(left, middle + 1);
+            const rightPart = array.slice(middle + 1, right + 1);
+            let i = 0;
+            let j = 0;
+            let output = left;
+            while (i < leftPart.length && j < rightPart.length) {
+                comparisons += 1;
+                steps.push(snapshot(array, [left + i, middle + 1 + j], "Compare", "Compare " + leftPart[i] + " and " + rightPart[j] + ".", comparisons, writes));
+                if (leftPart[i] <= rightPart[j]) {
+                    array[output] = leftPart[i];
+                    i += 1;
+                } else {
+                    array[output] = rightPart[j];
+                    j += 1;
+                }
+                writes += 1;
+                steps.push(snapshot(array, [output], "Merge", "Write the smaller value at index " + output + ".", comparisons, writes));
+                output += 1;
+            }
+            while (i < leftPart.length) {
+                array[output] = leftPart[i]; i += 1; output += 1; writes += 1;
+                steps.push(snapshot(array, [output - 1], "Merge", "Copy the remaining left-half value.", comparisons, writes));
+            }
+            while (j < rightPart.length) {
+                array[output] = rightPart[j]; j += 1; output += 1; writes += 1;
+                steps.push(snapshot(array, [output - 1], "Merge", "Copy the remaining right-half value.", comparisons, writes));
+            }
+        }
+
+        sort(0, array.length - 1);
+        steps.push(snapshot(array, [], "Complete", "Merge Sort is complete.", comparisons, writes, -1, true));
+        return steps;
+    }
+
+    function quickSortSteps(values) {
+        const array = values.slice();
+        const steps = [snapshot(array, [], "Ready", "Partition around a pivot and recursively sort both sides.", 0, 0)];
+        let comparisons = 0;
+        let writes = 0;
+
+        function swap(first, second) {
+            if (first === second) { return; }
+            const temp = array[first]; array[first] = array[second]; array[second] = temp;
+            writes += 2;
+        }
+
+        function partition(low, high) {
+            const pivotValue = array[high];
+            let smaller = low - 1;
+            steps.push(snapshot(array, [high], "Choose Pivot", "Choose " + pivotValue + " at index " + high + " as the pivot.", comparisons, writes, high));
+            for (let scan = low; scan < high; scan += 1) {
+                comparisons += 1;
+                steps.push(snapshot(array, [scan], "Compare", "Compare " + array[scan] + " with pivot " + pivotValue + ".", comparisons, writes, high));
+                if (array[scan] <= pivotValue) {
+                    smaller += 1;
+                    swap(smaller, scan);
+                    steps.push(snapshot(array, [smaller, scan], "Move Left", "Place the value in the ≤ pivot region.", comparisons, writes, high));
+                }
+            }
+            swap(smaller + 1, high);
+            steps.push(snapshot(array, [smaller + 1], "Place Pivot", "Place pivot " + pivotValue + " at its final index " + (smaller + 1) + ".", comparisons, writes, smaller + 1));
+            return smaller + 1;
+        }
+
+        function sort(low, high) {
+            if (low >= high) { return; }
+            const pivot = partition(low, high);
+            sort(low, pivot - 1);
+            sort(pivot + 1, high);
+        }
+
+        sort(0, array.length - 1);
+        steps.push(snapshot(array, [], "Complete", "Quick Sort is complete.", comparisons, writes, -1, true));
+        return steps;
+    }
+
+    function shellSortSteps(values) {
+        const array = values.slice();
+        const steps = [snapshot(array, [], "Ready", "Perform insertion sorting over progressively smaller gaps.", 0, 0)];
+        let comparisons = 0;
+        let writes = 0;
+        for (let gap = Math.floor(array.length / 2); gap > 0; gap = Math.floor(gap / 2)) {
+            steps.push(snapshot(array, [], "Gap " + gap, "Use gap = " + gap + ".", comparisons, writes));
+            for (let index = gap; index < array.length; index += 1) {
+                const value = array[index];
+                let position = index;
+                while (position >= gap) {
+                    comparisons += 1;
+                    steps.push(snapshot(array, [position - gap, position], "Compare", "Compare gap-separated values " + array[position - gap] + " and " + value + ".", comparisons, writes));
+                    if (array[position - gap] <= value) { break; }
+                    array[position] = array[position - gap];
+                    writes += 1;
+                    steps.push(snapshot(array, [position - gap, position], "Shift", "Shift the larger value forward by gap " + gap + ".", comparisons, writes));
+                    position -= gap;
+                }
+                array[position] = value;
+                writes += 1;
+                steps.push(snapshot(array, [position], "Insert", "Insert " + value + " at index " + position + ".", comparisons, writes));
+            }
+        }
+        steps.push(snapshot(array, [], "Complete", "Shell Sort is complete.", comparisons, writes, -1, true));
+        return steps;
+    }
+
+    function countingSortSteps(values) {
+        const array = values.slice();
+        const minimum = Math.min.apply(null, array);
+        const maximum = Math.max.apply(null, array);
+        if (maximum - minimum > 80) {
+            throw new Error("For Counting Sort visualization, keep max − min at or below 80.");
+        }
+        const counts = new Array(maximum - minimum + 1).fill(0);
+        const steps = [snapshot(array, [], "Ready", "Count the frequency of each key from " + minimum + " to " + maximum + ".", 0, 0)];
+        let writes = 0;
+        array.forEach(function (value, index) {
+            counts[value - minimum] += 1;
+            steps.push(snapshot(array, [index], "Count", "Count[" + value + "] becomes " + counts[value - minimum] + ".", 0, writes));
+        });
+        let output = 0;
+        counts.forEach(function (frequency, offset) {
+            for (let used = 0; used < frequency; used += 1) {
+                array[output] = offset + minimum;
+                writes += 1;
+                steps.push(snapshot(array, [output], "Reconstruct", "Write " + (offset + minimum) + " at output index " + output + ".", 0, writes));
+                output += 1;
+            }
+        });
+        steps.push(snapshot(array, [], "Complete", "Counting Sort is complete.", 0, writes, -1, true));
+        return steps;
+    }
+
+    function radixSortSteps(values) {
+        const array = values.slice();
+        if (array.some(function (value) { return value < 0; })) {
+            throw new Error("This Radix Sort visualizer accepts non-negative integers only.");
+        }
+        const maximum = Math.max.apply(null, array);
+        const steps = [snapshot(array, [], "Ready", "Sort by one decimal digit at a time, from least significant to most significant.", 0, 0)];
+        let writes = 0;
+        for (let place = 1; Math.floor(maximum / place) > 0; place *= 10) {
+            const counts = new Array(10).fill(0);
+            const output = new Array(array.length);
+            array.forEach(function (value, index) {
+                const digit = Math.floor(value / place) % 10;
+                counts[digit] += 1;
+                steps.push(snapshot(array, [index], "Digit " + place, "Value " + value + " has digit " + digit + " at place " + place + ".", 0, writes));
+            });
+            for (let digit = 1; digit < 10; digit += 1) { counts[digit] += counts[digit - 1]; }
+            for (let index = array.length - 1; index >= 0; index -= 1) {
+                const digit = Math.floor(array[index] / place) % 10;
+                output[counts[digit] - 1] = array[index];
+                counts[digit] -= 1;
+            }
+            for (let index = 0; index < array.length; index += 1) { array[index] = output[index]; writes += 1; }
+            steps.push(snapshot(array, [], "Complete Pass", "Stable ordering after processing place " + place + ".", 0, writes));
+        }
+        steps.push(snapshot(array, [], "Complete", "Radix Sort is complete.", 0, writes, -1, true));
+        return steps;
+    }
+
+    function bucketSortSteps(values) {
+        const array = values.slice();
+        const minimum = Math.min.apply(null, array);
+        const maximum = Math.max.apply(null, array);
+        const bucketCount = Math.min(6, array.length);
+        const buckets = Array.from({ length: bucketCount }, function () { return []; });
+        const steps = [snapshot(array, [], "Ready", "Distribute values into " + bucketCount + " ranges, sort each bucket and concatenate them.", 0, 0)];
+        let comparisons = 0;
+        let writes = 0;
+        array.forEach(function (value, index) {
+            const ratio = maximum === minimum ? 0 : (value - minimum) / (maximum - minimum + 1);
+            const bucketIndex = Math.min(bucketCount - 1, Math.floor(ratio * bucketCount));
+            buckets[bucketIndex].push(value);
+            steps.push(snapshot(array, [index], "Distribute", "Place " + value + " into bucket " + bucketIndex + ".", comparisons, writes));
+        });
+        buckets.forEach(function (bucket, bucketIndex) {
+            for (let index = 1; index < bucket.length; index += 1) {
+                const value = bucket[index];
+                let position = index - 1;
+                while (position >= 0) {
+                    comparisons += 1;
+                    if (bucket[position] <= value) { break; }
+                    bucket[position + 1] = bucket[position];
+                    writes += 1;
+                    position -= 1;
+                }
+                bucket[position + 1] = value;
+                writes += 1;
+            }
+            steps.push(snapshot(array, [], "Sort Bucket", "Bucket " + bucketIndex + " becomes [" + bucket.join(", ") + "].", comparisons, writes));
+        });
+        let outputIndex = 0;
+        buckets.forEach(function (bucket) {
+            bucket.forEach(function (value) {
+                array[outputIndex] = value;
+                writes += 1;
+                steps.push(snapshot(array, [outputIndex], "Collect", "Copy " + value + " from its bucket to output index " + outputIndex + ".", comparisons, writes));
+                outputIndex += 1;
+            });
+        });
+        steps.push(snapshot(array, [], "Complete", "Bucket Sort is complete.", comparisons, writes, -1, true));
+        return steps;
+    }
+
+    const visualizer = {
+        input: document.getElementById("sortingArrayInput"), algorithm: document.getElementById("sortingAlgorithm"), load: document.getElementById("loadSortingVisualizer"),
+        prompt: document.getElementById("sortingVisualizerPrompt"), result: document.getElementById("sortingVisualizerResult"), bars: document.getElementById("sortingBars"), message: document.getElementById("sortingVisualizerMessage"),
+        phase: document.getElementById("sortingPhase"), comparisons: document.getElementById("sortingComparisons"), writes: document.getElementById("sortingWrites"), pivot: document.getElementById("sortingPivot"),
+        progress: document.getElementById("sortingProgress"), status: document.getElementById("sortingStepStatus"), previous: document.getElementById("sortingPrevious"), next: document.getElementById("sortingNext"),
+        auto: document.getElementById("sortingAuto"), pause: document.getElementById("sortingPause"), reset: document.getElementById("sortingReset")
+    };
+    let visualSteps = [];
+    let visualIndex = 0;
+    let visualTimer = null;
+
+    function stopVisualizer() {
+        if (visualTimer !== null) { window.clearInterval(visualTimer); visualTimer = null; }
+    }
+
+    function parseValues() {
+        const values = visualizer.input.value.trim().split(/[\s,]+/).filter(Boolean).map(Number);
+        if (values.length < 2 || values.length > 12 || values.some(function (value) { return !Number.isInteger(value); })) {
+            throw new Error("Enter 2 to 12 valid integers separated by commas or spaces.");
+        }
+        visualizer.input.value = values.join(", ");
+        return values;
+    }
+
+    function buildVisualSteps(values, algorithm) {
+        if (algorithm === "merge") { return mergeSortSteps(values); }
+        if (algorithm === "quick") { return quickSortSteps(values); }
+        if (algorithm === "shell") { return shellSortSteps(values); }
+        if (algorithm === "counting") { return countingSortSteps(values); }
+        if (algorithm === "radix") { return radixSortSteps(values); }
+        return bucketSortSteps(values);
+    }
+
+    function renderBars(step) {
+        visualizer.bars.innerHTML = "";
+        const minimum = Math.min.apply(null, step.array);
+        const maximum = Math.max.apply(null, step.array);
+        const range = Math.max(1, maximum - minimum);
+        step.array.forEach(function (value, index) {
+            const wrapper = document.createElement("div");
+            wrapper.className = "sorting-bar-wrap";
+            const bar = document.createElement("span");
+            bar.className = "sorting-bar";
+            bar.style.height = (42 + ((value - minimum) / range) * 145) + "px";
+            if (step.active.indexOf(index) !== -1) { bar.classList.add("is-active"); }
+            if (index === step.pivot) { bar.classList.add("is-pivot"); }
+            if (step.complete) { bar.classList.add("is-sorted"); }
+            const label = document.createElement("strong"); label.textContent = String(value);
+            const sub = document.createElement("small"); sub.textContent = "i" + index;
+            wrapper.appendChild(bar); wrapper.appendChild(label); wrapper.appendChild(sub); visualizer.bars.appendChild(wrapper);
+        });
+    }
+
+    function renderVisualizer() {
+        if (!visualSteps.length) { return; }
+        const step = visualSteps[visualIndex];
+        renderBars(step);
+        visualizer.message.textContent = step.message;
+        visualizer.phase.textContent = step.phase;
+        visualizer.comparisons.textContent = String(step.comparisons);
+        visualizer.writes.textContent = String(step.writes);
+        visualizer.pivot.textContent = step.pivot < 0 ? "—" : String(step.array[step.pivot]);
+        visualizer.status.textContent = "Step " + visualIndex + " of " + (visualSteps.length - 1);
+        visualizer.progress.style.width = ((visualIndex / Math.max(1, visualSteps.length - 1)) * 100) + "%";
+        visualizer.previous.disabled = visualIndex === 0;
+        visualizer.next.disabled = visualIndex === visualSteps.length - 1;
+    }
+
+    function loadVisualizer() {
+        let values;
+        try { values = parseValues(); visualSteps = buildVisualSteps(values, visualizer.algorithm.value); }
+        catch (error) { window.alert(error.message); return; }
+        stopVisualizer(); visualIndex = 0; visualizer.prompt.hidden = true; visualizer.result.hidden = false; renderVisualizer();
+    }
+
+    if (visualizer.load) {
+        visualizer.load.addEventListener("click", loadVisualizer);
+        [visualizer.input, visualizer.algorithm].forEach(function (control) {
+            control.addEventListener("input", function () { stopVisualizer(); visualizer.result.hidden = true; visualizer.prompt.hidden = false; });
+            control.addEventListener("change", function () { stopVisualizer(); visualizer.result.hidden = true; visualizer.prompt.hidden = false; });
+        });
+        document.querySelectorAll("[data-sorting-example]").forEach(function (button) {
+            button.addEventListener("click", function () {
+                stopVisualizer();
+                const examples = { mixed: ["38, 27, 43, 3, 9, 82, 10", "merge"], quick: ["8, 3, 1, 7, 0, 10, 2", "quick"], digits: ["170, 45, 75, 90, 802, 24, 2, 66", "radix"] };
+                const example = examples[button.dataset.sortingExample]; if (!example) { return; }
+                visualizer.input.value = example[0]; visualizer.algorithm.value = example[1]; visualizer.result.hidden = true; visualizer.prompt.hidden = false; visualizer.input.focus();
+            });
+        });
+        visualizer.previous.addEventListener("click", function () { stopVisualizer(); visualIndex = Math.max(0, visualIndex - 1); renderVisualizer(); });
+        visualizer.next.addEventListener("click", function () { stopVisualizer(); visualIndex = Math.min(visualSteps.length - 1, visualIndex + 1); renderVisualizer(); });
+        visualizer.auto.addEventListener("click", function () {
+            stopVisualizer(); if (visualIndex === visualSteps.length - 1) { visualIndex = 0; renderVisualizer(); }
+            visualTimer = window.setInterval(function () { if (visualIndex >= visualSteps.length - 1) { stopVisualizer(); return; } visualIndex += 1; renderVisualizer(); }, 800);
+        });
+        visualizer.pause.addEventListener("click", stopVisualizer);
+        visualizer.reset.addEventListener("click", function () { stopVisualizer(); visualIndex = 0; renderVisualizer(); });
+    }
+
+    function buildQuickTraceSteps() {
+        const array = [8, 3, 1, 7, 0, 10, 2];
+        const steps = [];
+        let comparisons = 0;
+        function add(line, low, high, smaller, scan, pivot, message, output) {
+            steps.push({ line: line, array: array.slice(), low: low, high: high, smaller: smaller, scan: scan, pivot: pivot, comparisons: comparisons, message: message, output: output || "—" });
+        }
+        function swap(first, second) { const temp = array[first]; array[first] = array[second]; array[second] = temp; }
+        function partition(low, high) {
+            add(3, low, high, "—", "—", "—", "Call partition for range [" + low + ", " + high + "].");
+            const pivot = array[high];
+            add(6, low, high, "—", "—", pivot, "Choose a[" + high + "] = " + pivot + " as the pivot.");
+            let smaller = low - 1;
+            add(7, low, high, smaller, "—", pivot, "Initialize i to low − 1 = " + smaller + ".");
+            for (let scan = low; scan < high; scan += 1) {
+                add(8, low, high, smaller, scan, pivot, "The for loop selects j = " + scan + ".");
+                comparisons += 1;
+                add(9, low, high, smaller, scan, pivot, "Compare a[" + scan + "] = " + array[scan] + " with pivot " + pivot + ".");
+                if (array[scan] <= pivot) {
+                    smaller += 1;
+                    add(10, low, high, smaller, scan, pivot, "Increment i to " + smaller + ".");
+                    swap(smaller, scan);
+                    add(11, low, high, smaller, scan, pivot, "Swap a[i] and a[j]; the ≤ pivot region grows.");
+                }
+            }
+            swap(smaller + 1, high);
+            add(12, low, high, smaller, high, pivot, "Swap the pivot into final position " + (smaller + 1) + ".");
+            add(13, low, high, smaller, high, pivot, "Return partition index " + (smaller + 1) + ".", "Pivot " + pivot + " fixed at index " + (smaller + 1));
+            return smaller + 1;
+        }
+        function quickSort(low, high) {
+            add(1, low, high, "—", "—", "—", "Enter quickSort for range [" + low + ", " + high + "].");
+            add(2, low, high, "—", "—", "—", low < high ? "The range contains at least two elements." : "Base case: this range needs no sorting.");
+            if (low < high) {
+                const pivotIndex = partition(low, high);
+                add(4, low, high, "—", "—", array[pivotIndex], "Recursively sort the left range [" + low + ", " + (pivotIndex - 1) + "].");
+                quickSort(low, pivotIndex - 1);
+                add(5, low, high, "—", "—", array[pivotIndex], "Recursively sort the right range [" + (pivotIndex + 1) + ", " + high + "].");
+                quickSort(pivotIndex + 1, high);
+            }
+        }
+        quickSort(0, array.length - 1);
+        add(1, 0, array.length - 1, "—", "—", "—", "Quick Sort is complete.", "Sorted: [" + array.join(", ") + "]");
+        return steps;
+    }
+
+    const tracer = {
+        toggle: document.getElementById("quickTraceToggle"), panel: document.getElementById("quickTracePanel"), message: document.getElementById("quickTraceMessage"), array: document.getElementById("quickTraceArray"),
+        low: document.getElementById("quickTraceLow"), high: document.getElementById("quickTraceHigh"), smaller: document.getElementById("quickTraceI"), scan: document.getElementById("quickTraceJ"), pivot: document.getElementById("quickTracePivot"),
+        comparisons: document.getElementById("quickTraceComparisons"), output: document.getElementById("quickTraceOutput"), status: document.getElementById("quickTraceStatus"),
+        previous: document.getElementById("quickTracePrevious"), next: document.getElementById("quickTraceNext"), auto: document.getElementById("quickTraceAuto"), pause: document.getElementById("quickTracePause"), reset: document.getElementById("quickTraceReset")
+    };
+    const traceSteps = buildQuickTraceSteps();
+    let traceIndex = 0;
+    let traceTimer = null;
+    function stopTrace() { if (traceTimer !== null) { window.clearInterval(traceTimer); traceTimer = null; } }
+    function renderTrace() {
+        const step = traceSteps[traceIndex]; let activeLine = null;
+        document.querySelectorAll("[data-quick-trace-line]").forEach(function (line) { const active = Number(line.dataset.quickTraceLine) === step.line; line.classList.toggle("is-active-line", active); if (active) { activeLine = line; } });
+        tracer.message.textContent = step.message; tracer.array.textContent = "[" + step.array.join(", ") + "]"; tracer.low.textContent = String(step.low); tracer.high.textContent = String(step.high);
+        tracer.smaller.textContent = String(step.smaller); tracer.scan.textContent = String(step.scan); tracer.pivot.textContent = String(step.pivot); tracer.comparisons.textContent = String(step.comparisons); tracer.output.textContent = step.output;
+        tracer.status.textContent = "Step " + traceIndex + " of " + (traceSteps.length - 1); tracer.previous.disabled = traceIndex === 0; tracer.next.disabled = traceIndex === traceSteps.length - 1;
+        if (activeLine) { const codeWindow = activeLine.closest(".ads-tracer-code"); const top = activeLine.offsetTop; const bottom = top + activeLine.offsetHeight; if (codeWindow && (top < codeWindow.scrollTop + 12 || bottom > codeWindow.scrollTop + codeWindow.clientHeight - 12)) { codeWindow.scrollTo({ top: Math.max(0, top - codeWindow.clientHeight / 2), behavior: "smooth" }); } }
+    }
+    if (tracer.toggle && tracer.panel) {
+        tracer.panel.hidden = true;
+        tracer.toggle.addEventListener("click", function () { const open = tracer.panel.hidden; tracer.panel.hidden = !open; tracer.toggle.setAttribute("aria-expanded", String(open)); tracer.toggle.textContent = open ? "▼ Hide Program Tracing — Quick Sort" : "▶ Program Tracing — Quick Sort"; if (!open) { stopTrace(); } });
+        tracer.previous.addEventListener("click", function () { stopTrace(); traceIndex = Math.max(0, traceIndex - 1); renderTrace(); });
+        tracer.next.addEventListener("click", function () { stopTrace(); traceIndex = Math.min(traceSteps.length - 1, traceIndex + 1); renderTrace(); });
+        tracer.auto.addEventListener("click", function () { stopTrace(); if (traceIndex === traceSteps.length - 1) { traceIndex = 0; renderTrace(); } traceTimer = window.setInterval(function () { if (traceIndex >= traceSteps.length - 1) { stopTrace(); return; } traceIndex += 1; renderTrace(); }, 820); });
+        tracer.pause.addEventListener("click", stopTrace); tracer.reset.addEventListener("click", function () { stopTrace(); traceIndex = 0; renderTrace(); }); renderTrace();
+    }
+
+    document.querySelectorAll("[data-toggle-target]").forEach(function (button) {
+        const target = document.getElementById(button.dataset.toggleTarget); if (!target) { return; }
+        target.hidden = true; button.dataset.originalLabel = button.textContent.trim(); button.setAttribute("aria-expanded", "false"); button.setAttribute("aria-controls", target.id);
+        button.addEventListener("click", function () { const open = target.hidden; target.hidden = !open; button.setAttribute("aria-expanded", String(open)); button.textContent = open ? (target.classList.contains("ads-hint-box") ? "Hide Hint" : "Hide Answer") : button.dataset.originalLabel; });
+    });
+}());
+</script>
+</body>
+</html>
