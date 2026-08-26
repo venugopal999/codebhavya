@@ -65,8 +65,9 @@
         <nav class="ads-page-jump-nav" aria-label="Page sections">
             <a href="#objectives">Objectives</a><a href="#time-complexity">Time</a>
             <a href="#asymptotic">Notation</a><a href="#space-complexity">Space</a>
-            <a href="#explorer">Explorer</a><a href="#c-program">C Program</a>
-            <a href="#practice">Practice</a><a href="#revision">Revision</a>
+            <a href="#explorer">Premium Visualizer</a><a href="#c-program">C Program</a>
+            <a href="#tracing">Program Tracing</a><a href="#practice">Practice</a>
+            <a href="#revision">Revision</a>
         </nav>
 
         <section class="content-card ads-lesson-section" id="objectives">
@@ -179,8 +180,12 @@
             <div class="ads-definition-box"><strong>Amortized analysis:</strong> A dynamic-array resize may cost O(n), but across n appends the total copying is O(n). Therefore, append has amortized O(1) time.</div>
         </section>
 
-        <section class="content-card ads-lesson-section ads-interactive-section" id="explorer">
-            <div class="ads-section-heading"><span class="section-label">INTERACTIVE ANALYZER</span><h2>🧪 9. Complexity Growth Explorer</h2></div>
+        <section class="ads-premium-viz" id="explorer">
+            <div class="ads-premium-header">
+                <div><span class="ads-premium-label">INTERACTIVE ALGORITHM VISUALIZATION</span><h2>🎬 9. Premium Complexity Growth Visualizer</h2></div>
+                <a class="ads-premium-brand" href="../index.html" aria-label="CodeBhavya Home"><img src="../images/codebhavya-main-logo.png" alt=""><span class="brand-code">Code</span><span class="brand-bhavya">Bhavya</span></a>
+            </div>
+            <div class="ads-premium-body">
             <p>Choose an input size and loop pattern. Results appear only after you click <strong>Analyze Growth</strong>.</p>
             <div class="ads-explorer-controls">
                 <label>Input size n<input id="growthInput" type="number" min="1" max="1000" value="16"></label>
@@ -194,6 +199,7 @@
                 <p id="growthExplanation" class="ads-explorer-explanation"></p>
                 <div id="growthBars" class="ads-growth-bars"></div>
             </div>
+            </div>
         </section>
 
         <section class="content-card ads-lesson-section" id="c-program">
@@ -204,8 +210,58 @@
             <div class="ads-complexity-grid"><article><span>Linear Search</span><strong>Best O(1), Worst O(n)</strong><p>It may inspect every item.</p></article><article><span>Binary Search</span><strong>Best O(1), Worst O(log n)</strong><p>It halves the interval.</p></article><article><span>Auxiliary Space</span><strong>O(1) for both</strong><p>Both versions are iterative.</p></article></div>
         </section>
 
+        <section class="content-card ads-lesson-section" id="tracing">
+            <div class="ads-section-heading"><span class="section-label">C PROGRAM + TRACING</span><h2>🔍 11. Program Tracing — Linear vs Binary Search</h2></div>
+            <p>Trace the sample program one statement at a time and compare how both searches locate key <strong>42</strong>.</p>
+            <button class="ads-tracer-toggle" id="performanceTraceToggle" type="button" aria-expanded="false" aria-controls="performanceTracePanel">▶ Program Tracing — Linear vs Binary Search</button>
+            <div class="ads-tracer" id="performanceTracePanel" hidden>
+                <div class="ads-tracer-title">PROGRAM TRACING — LINEAR VS BINARY SEARCH</div>
+                <div class="ads-tracer-grid">
+                    <section class="ads-tracer-panel">
+                        <h3>💻 C Program</h3>
+                        <pre class="ads-tracer-code" aria-label="Traceable C program"><code><span data-performance-line="1">int a[] = {4, 9, 13, 18, 25, 31, 42, 57};</span>
+<span data-performance-line="2">for (int i = 0; i &lt; n; i++) {</span>
+<span data-performance-line="3">    linearCount++;</span>
+<span data-performance-line="4">    if (a[i] == key) return i;</span>
+<span data-performance-line="5">int low = 0, high = n - 1;</span>
+<span data-performance-line="6">while (low &lt;= high) {</span>
+<span data-performance-line="7">    int mid = low + (high - low) / 2;</span>
+<span data-performance-line="8">    binaryCount++;</span>
+<span data-performance-line="9">    if (a[mid] == key) return mid;</span>
+<span data-performance-line="10">    if (a[mid] &lt; key) low = mid + 1;</span>
+<span data-performance-line="11">    else high = mid - 1;</span></code></pre>
+                    </section>
+                    <section class="ads-tracer-panel ads-tracer-live-panel">
+                        <h3>🧠 What is happening?</h3>
+                        <div class="ads-tracer-explain" id="performanceTraceMessage">Press Next to begin with the sample input.</div>
+                        <h3>📊 Live Variables</h3>
+                        <div class="ads-trace-vars">
+                            <div><span>Algorithm</span><strong id="performanceTraceAlgorithm">—</strong></div>
+                            <div><span>Index i</span><strong id="performanceTraceIndex">—</strong></div>
+                            <div><span>Low</span><strong id="performanceTraceLow">—</strong></div>
+                            <div><span>High</span><strong id="performanceTraceHigh">—</strong></div>
+                            <div><span>Mid</span><strong id="performanceTraceMid">—</strong></div>
+                            <div><span>Current Value</span><strong id="performanceTraceValue">—</strong></div>
+                            <div><span>Comparisons</span><strong id="performanceTraceComparisons">0</strong></div>
+                            <div><span>Key</span><strong>42</strong></div>
+                        </div>
+                        <h3>Output</h3>
+                        <pre class="ads-trace-output" id="performanceTraceOutput">—</pre>
+                    </section>
+                </div>
+                <div class="ads-tracer-controls">
+                    <button type="button" class="trace-previous" id="performanceTracePrevious">← Previous</button>
+                    <button type="button" class="trace-next" id="performanceTraceNext">Next →</button>
+                    <button type="button" class="trace-auto" id="performanceTraceAuto">▶ Auto Run</button>
+                    <button type="button" class="trace-pause" id="performanceTracePause">⏸ Pause</button>
+                    <button type="button" class="trace-reset" id="performanceTraceReset">↻ Reset</button>
+                </div>
+                <p class="ads-tracer-status" id="performanceTraceStatus">Step 0 of 14</p>
+            </div>
+        </section>
+
         <section class="content-card ads-lesson-section" id="interview">
-            <div class="ads-section-heading"><span class="section-label">PLACEMENT PREPARATION</span><h2>💼 11. Interview Points</h2></div>
+            <div class="ads-section-heading"><span class="section-label">PLACEMENT PREPARATION</span><h2>💼 12. Interview Points</h2></div>
             <ul class="ads-interview-list">
                 <li><strong>Explain the reason:</strong> state how many times the dominant operation executes.</li>
                 <li><strong>Mention assumptions:</strong> sorted input, balanced trees and uniform hashing can change complexity.</li>
@@ -217,7 +273,7 @@
         </section>
 
         <section class="content-card ads-lesson-section" id="practice">
-            <div class="ads-section-heading"><span class="section-label">PRACTICE WITH HINTS</span><h2>✍️ 12. Practice Problems</h2></div>
+            <div class="ads-section-heading"><span class="section-label">PRACTICE WITH HINTS</span><h2>✍️ 13. Practice Problems</h2></div>
             <div class="ads-practice-note">Solve each problem first. Use Hint only when needed and Show Answer to verify your reasoning.</div>
             <div class="ads-practice-list">
                 <article class="ads-practice-problem"><h3>1. Complexity of accessing <code>a[k]</code>?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-1">Hint</button><button data-toggle-target="solution-1">Show Answer</button></div><div id="hint-1" class="ads-hint-box" hidden>Array elements have direct indexed addresses.</div><div id="solution-1" class="ads-solution-box" hidden><strong>Θ(1).</strong> Address calculation and access do not depend on array length.</div></article>
@@ -244,7 +300,7 @@
         </section>
 
         <section class="content-card ads-lesson-section" id="revision">
-            <div class="ads-section-heading"><span class="section-label">QUICK RECALL</span><h2>📝 13. Quick Revision</h2></div>
+            <div class="ads-section-heading"><span class="section-label">QUICK RECALL</span><h2>📝 14. Quick Revision</h2></div>
             <ul class="ads-revision-list">
                 <li>Performance analysis studies resource growth as input size increases.</li>
                 <li>Time counts dominant operations; space counts growing memory.</li>
@@ -454,6 +510,124 @@
             input.focus();
         });
     });
+
+    const performanceTraceSteps = [
+        { line: 1, algorithm: "Setup", index: "—", low: "—", high: "—", mid: "—", value: "—", comparisons: "0", message: "The sorted array is loaded and the search key is 42.", output: "—" },
+        { line: 2, algorithm: "Linear Search", index: "0", low: "—", high: "—", mid: "—", value: "4", comparisons: "1", message: "Linear search begins at index 0. The value 4 does not match 42.", output: "—" },
+        { line: 4, algorithm: "Linear Search", index: "1", low: "—", high: "—", mid: "—", value: "9", comparisons: "2", message: "Move one position right. The value 9 does not match 42.", output: "—" },
+        { line: 4, algorithm: "Linear Search", index: "2", low: "—", high: "—", mid: "—", value: "13", comparisons: "3", message: "The third comparison checks 13. Linear search must continue.", output: "—" },
+        { line: 4, algorithm: "Linear Search", index: "3", low: "—", high: "—", mid: "—", value: "18", comparisons: "4", message: "Index 3 contains 18, so the key has not been found yet.", output: "—" },
+        { line: 4, algorithm: "Linear Search", index: "4", low: "—", high: "—", mid: "—", value: "25", comparisons: "5", message: "Linear search examines every preceding element, including 25.", output: "—" },
+        { line: 4, algorithm: "Linear Search", index: "5", low: "—", high: "—", mid: "—", value: "31", comparisons: "6", message: "Value 31 is smaller than the key, but linear search still advances only one position.", output: "—" },
+        { line: 4, algorithm: "Linear Search", index: "6", low: "—", high: "—", mid: "—", value: "42", comparisons: "7", message: "The seventh comparison finds 42 at index 6.", output: "Linear Search: index = 6, comparisons = 7" },
+        { line: 5, algorithm: "Binary Search", index: "—", low: "0", high: "7", mid: "—", value: "—", comparisons: "0", message: "Binary search starts with the full sorted interval from index 0 to 7.", output: "Linear Search: index = 6, comparisons = 7" },
+        { line: 7, algorithm: "Binary Search", index: "—", low: "0", high: "7", mid: "3", value: "18", comparisons: "1", message: "The midpoint is 3. Since 18 is smaller than 42, discard the left half including index 3.", output: "Linear Search: index = 6, comparisons = 7" },
+        { line: 10, algorithm: "Binary Search", index: "—", low: "4", high: "7", mid: "3", value: "18", comparisons: "1", message: "Set low to mid + 1, reducing the active interval to indexes 4 through 7.", output: "Linear Search: index = 6, comparisons = 7" },
+        { line: 7, algorithm: "Binary Search", index: "—", low: "4", high: "7", mid: "5", value: "31", comparisons: "2", message: "The new midpoint is 5. Value 31 is still smaller than 42.", output: "Linear Search: index = 6, comparisons = 7" },
+        { line: 10, algorithm: "Binary Search", index: "—", low: "6", high: "7", mid: "5", value: "31", comparisons: "2", message: "Move low to 6. Only indexes 6 and 7 remain possible.", output: "Linear Search: index = 6, comparisons = 7" },
+        { line: 9, algorithm: "Binary Search", index: "—", low: "6", high: "7", mid: "6", value: "42", comparisons: "3", message: "The third midpoint is index 6, where the key 42 is found.", output: "Linear Search: index = 6, comparisons = 7\nBinary Search: index = 6, comparisons = 3" },
+        { line: 9, algorithm: "Complete", index: "6", low: "6", high: "7", mid: "6", value: "42", comparisons: "Linear 7 | Binary 3", message: "Both algorithms return index 6, but binary search uses only three comparisons because it repeatedly halves the search interval.", output: "Linear Search: index = 6, comparisons = 7\nBinary Search: index = 6, comparisons = 3" }
+    ];
+
+    const performanceTrace = {
+        toggle: document.getElementById("performanceTraceToggle"),
+        panel: document.getElementById("performanceTracePanel"),
+        message: document.getElementById("performanceTraceMessage"),
+        algorithm: document.getElementById("performanceTraceAlgorithm"),
+        index: document.getElementById("performanceTraceIndex"),
+        low: document.getElementById("performanceTraceLow"),
+        high: document.getElementById("performanceTraceHigh"),
+        mid: document.getElementById("performanceTraceMid"),
+        value: document.getElementById("performanceTraceValue"),
+        comparisons: document.getElementById("performanceTraceComparisons"),
+        output: document.getElementById("performanceTraceOutput"),
+        status: document.getElementById("performanceTraceStatus"),
+        previous: document.getElementById("performanceTracePrevious"),
+        next: document.getElementById("performanceTraceNext"),
+        auto: document.getElementById("performanceTraceAuto"),
+        pause: document.getElementById("performanceTracePause"),
+        reset: document.getElementById("performanceTraceReset")
+    };
+
+    let performanceTraceIndex = 0;
+    let performanceTraceTimer = null;
+
+    function pausePerformanceTrace() {
+        if (performanceTraceTimer !== null) {
+            window.clearInterval(performanceTraceTimer);
+            performanceTraceTimer = null;
+        }
+    }
+
+    function renderPerformanceTrace() {
+        if (!performanceTrace.panel) {
+            return;
+        }
+
+        const step = performanceTraceSteps[performanceTraceIndex];
+        document.querySelectorAll("[data-performance-line]").forEach(function (line) {
+            line.classList.toggle("is-active-line", Number(line.dataset.performanceLine) === step.line);
+        });
+        performanceTrace.message.textContent = step.message;
+        performanceTrace.algorithm.textContent = step.algorithm;
+        performanceTrace.index.textContent = step.index;
+        performanceTrace.low.textContent = step.low;
+        performanceTrace.high.textContent = step.high;
+        performanceTrace.mid.textContent = step.mid;
+        performanceTrace.value.textContent = step.value;
+        performanceTrace.comparisons.textContent = step.comparisons;
+        performanceTrace.output.textContent = step.output;
+        performanceTrace.status.textContent = "Step " + performanceTraceIndex + " of " + (performanceTraceSteps.length - 1);
+        performanceTrace.previous.disabled = performanceTraceIndex === 0;
+        performanceTrace.next.disabled = performanceTraceIndex === performanceTraceSteps.length - 1;
+    }
+
+    if (performanceTrace.toggle && performanceTrace.panel) {
+        performanceTrace.panel.hidden = true;
+        performanceTrace.toggle.addEventListener("click", function () {
+            const willOpen = performanceTrace.panel.hidden;
+            performanceTrace.panel.hidden = !willOpen;
+            performanceTrace.toggle.setAttribute("aria-expanded", String(willOpen));
+            performanceTrace.toggle.textContent = willOpen
+                ? "▼ Hide Program Tracing — Linear vs Binary Search"
+                : "▶ Program Tracing — Linear vs Binary Search";
+            if (!willOpen) {
+                pausePerformanceTrace();
+            }
+        });
+        performanceTrace.previous.addEventListener("click", function () {
+            pausePerformanceTrace();
+            performanceTraceIndex = Math.max(0, performanceTraceIndex - 1);
+            renderPerformanceTrace();
+        });
+        performanceTrace.next.addEventListener("click", function () {
+            pausePerformanceTrace();
+            performanceTraceIndex = Math.min(performanceTraceSteps.length - 1, performanceTraceIndex + 1);
+            renderPerformanceTrace();
+        });
+        performanceTrace.auto.addEventListener("click", function () {
+            pausePerformanceTrace();
+            if (performanceTraceIndex === performanceTraceSteps.length - 1) {
+                performanceTraceIndex = 0;
+                renderPerformanceTrace();
+            }
+            performanceTraceTimer = window.setInterval(function () {
+                if (performanceTraceIndex >= performanceTraceSteps.length - 1) {
+                    pausePerformanceTrace();
+                    return;
+                }
+                performanceTraceIndex += 1;
+                renderPerformanceTrace();
+            }, 950);
+        });
+        performanceTrace.pause.addEventListener("click", pausePerformanceTrace);
+        performanceTrace.reset.addEventListener("click", function () {
+            pausePerformanceTrace();
+            performanceTraceIndex = 0;
+            renderPerformanceTrace();
+        });
+        renderPerformanceTrace();
+    }
 
     document.querySelectorAll("[data-toggle-target]").forEach(function (button) {
         const target = document.getElementById(button.dataset.toggleTarget);
