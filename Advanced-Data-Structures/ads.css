@@ -348,6 +348,188 @@
     }
 }
 
+/* =========================================
+   LEVEL 15 — DIGITAL SEARCH TREES
+   ========================================= */
+
+.digital-controls,
+.digital-tracer-loader {
+    display: grid;
+    grid-template-columns: minmax(250px, 1.35fr) minmax(180px, 0.7fr) minmax(210px, 0.8fr) auto;
+    align-items: end;
+    gap: 12px;
+    margin: 18px 0 12px;
+}
+
+.digital-controls label,
+.digital-tracer-loader label {
+    display: grid;
+    gap: 7px;
+    color: #334155;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+}
+
+.digital-controls input,
+.digital-controls select,
+.digital-tracer-loader input,
+.digital-tracer-loader select {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #0f172a;
+    font: 700 14px/1.3 Consolas, Monaco, "Courier New", monospace;
+    text-transform: none;
+}
+
+.digital-controls input:focus,
+.digital-controls select:focus,
+.digital-tracer-loader input:focus,
+.digital-tracer-loader select:focus {
+    border-color: #2563eb;
+    outline: 3px solid rgba(37, 99, 235, 0.14);
+}
+
+.digital-controls .primary-button,
+.digital-tracer-loader .primary-button {
+    min-height: 46px;
+    white-space: nowrap;
+}
+
+.digital-tree-panel {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid #d9e4f0;
+    border-radius: 13px;
+    background: #f8fafc;
+}
+
+.digital-tree-panel h3 { margin: 0 0 12px; color: #173f73; }
+
+.digital-svg-scroll {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #d9e4f0;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.digital-tree-svg {
+    display: block;
+    width: 100%;
+    min-width: 780px;
+    min-height: 220px;
+    max-height: 390px;
+    background:
+        radial-gradient(circle at top, rgba(219, 234, 254, 0.72), transparent 58%),
+        #ffffff;
+}
+
+.digital-tree-edge {
+    stroke: #94a3b8;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+}
+
+.digital-edge-label {
+    fill: #1e3a5f;
+    font-size: 12px;
+    font-weight: 900;
+    text-anchor: middle;
+    paint-order: stroke;
+    stroke: #ffffff;
+    stroke-width: 5px;
+    stroke-linejoin: round;
+}
+
+.digital-tree-node circle {
+    fill: #2563eb;
+    stroke: #93c5fd;
+    stroke-width: 3;
+}
+
+.digital-tree-node.is-binary circle { fill: #0f766e; stroke: #99f6e4; }
+.digital-tree-node.is-patricia circle { fill: #7c3aed; stroke: #ddd6fe; }
+.digital-tree-node.is-suffix circle { fill: #c2410c; stroke: #fed7aa; }
+.digital-tree-node.is-terminal circle { stroke-width: 4; }
+.digital-tree-node .digital-terminal-ring { fill: none; stroke: rgba(255, 255, 255, 0.88); stroke-width: 2; }
+
+.digital-tree-node.is-active circle:first-child {
+    stroke: #facc15;
+    stroke-width: 5;
+    filter: drop-shadow(0 0 7px rgba(250, 204, 21, 0.72));
+}
+
+.digital-node-key {
+    fill: #ffffff;
+    font-size: 13px;
+    font-weight: 900;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+.digital-tree-panel .ads-explorer-message,
+.digital-tree-panel .ads-progress-track { margin-top: 12px; }
+
+#digitalTraceResult { margin-top: 16px; }
+
+#digitalTraceResult .ads-tracer-code {
+    height: 350px;
+    min-height: 350px;
+    max-height: 350px;
+    overflow: auto;
+}
+
+.digital-trace-scroll {
+    border-color: #334155;
+    background: #0f172a;
+}
+
+.digital-trace-svg {
+    min-height: 190px;
+    max-height: 285px;
+    background:
+        radial-gradient(circle at top, rgba(37, 99, 235, 0.17), transparent 60%),
+        #0f172a;
+}
+
+.digital-trace-svg .digital-tree-edge { stroke: #64748b; }
+.digital-trace-svg .digital-edge-label { fill: #bfdbfe; stroke: #0f172a; }
+
+.digital-search-page .ads-interactive-header h2 {
+    margin-bottom: 7px;
+    font-size: clamp(24px, 2.15vw, 33px);
+}
+
+.digital-search-page .ads-interactive-header p { margin: 0; }
+
+@media (max-width: 1120px) {
+    .digital-controls,
+    .digital-tracer-loader { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .digital-controls .primary-button,
+    .digital-tracer-loader .primary-button { width: 100%; }
+}
+
+@media (max-width: 650px) {
+    .digital-controls,
+    .digital-tracer-loader { grid-template-columns: 1fr; }
+
+    .digital-tree-panel { padding: 11px; }
+    .digital-tree-svg { min-width: 660px; min-height: 190px; }
+
+    #digitalTraceResult .ads-tracer-code {
+        height: 310px;
+        min-height: 310px;
+        max-height: 310px;
+    }
+}
+
 @media (max-width: 700px) {
     .ads-course-map,
     .ads-index-page .topic-grid { grid-template-columns: 1fr; }
