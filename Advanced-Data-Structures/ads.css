@@ -1637,6 +1637,140 @@
 }
 
 /* =========================================
+   LEVEL 12 — ADVANCED SORTING
+   ========================================= */
+
+.sorting-controls {
+    display: grid;
+    grid-template-columns: minmax(280px, 1.6fr) minmax(190px, 0.8fr) auto;
+    gap: 12px;
+    align-items: end;
+    margin: 18px 0 12px;
+}
+
+.sorting-controls label {
+    display: grid;
+    gap: 7px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.sorting-controls input,
+.sorting-controls select {
+    min-width: 0;
+    height: 46px;
+    padding: 0 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #0f172a;
+    font: 16px/1.2 Consolas, Monaco, "Courier New", monospace;
+    text-transform: none;
+}
+
+.sorting-controls .primary-button { min-height: 46px; white-space: nowrap; }
+.sorting-visualizer-result { margin-top: 17px; }
+
+.sorting-viz-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(260px, 0.7fr);
+    gap: 14px;
+}
+
+.sorting-bars-panel,
+.sorting-stat-panel {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid #d9e4f0;
+    border-radius: 13px;
+    background: #f8fafc;
+}
+
+.sorting-bars-panel h3,
+.sorting-stat-panel h3 { margin: 0 0 13px; color: #123f78; }
+
+.sorting-bars {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 7px;
+    min-height: 235px;
+    overflow-x: auto;
+    padding: 16px 8px 8px;
+    border: 1px solid #dce6f1;
+    border-radius: 11px;
+    background: linear-gradient(180deg, #ffffff, #eef5fd);
+}
+
+.sorting-bar-wrap {
+    display: grid;
+    flex: 0 0 48px;
+    justify-items: center;
+    gap: 5px;
+}
+
+.sorting-bar {
+    display: block;
+    width: 37px;
+    min-height: 34px;
+    border: 2px solid #7db7f3;
+    border-radius: 8px 8px 4px 4px;
+    background: linear-gradient(180deg, #60a5fa, #2563eb);
+    box-shadow: 0 6px 12px rgba(37, 99, 235, 0.16);
+    transition: height 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.sorting-bar.is-active { border-color: #e3aa16; background: linear-gradient(180deg, #fde68a, #e3a414); transform: translateY(-4px); }
+.sorting-bar.is-pivot { border-color: #7c3aed; background: linear-gradient(180deg, #c4b5fd, #7c3aed); }
+.sorting-bar.is-sorted { border-color: #16a34a; background: linear-gradient(180deg, #86efac, #16a34a); }
+.sorting-bar-wrap strong { color: #102a51; font-size: 13px; }
+.sorting-bar-wrap small { color: #64748b; font-size: 10px; }
+
+.sorting-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.sorting-stat-grid > div {
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #d7e2ee;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.sorting-stat-grid span {
+    display: block;
+    margin-bottom: 5px;
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.sorting-stat-grid strong { color: #102a51; overflow-wrap: anywhere; }
+.sorting-visual-controls { margin-top: 14px; border: 1px solid #d9e4f0; border-bottom: 0; border-radius: 11px 11px 0 0; }
+.sorting-visualizer-result .ads-tracer-status { padding-top: 11px; border: 1px solid #d9e4f0; border-top: 0; border-radius: 0 0 11px 11px; background: #f8fafc; }
+
+@media (max-width: 950px) {
+    .sorting-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sorting-controls .primary-button { width: 100%; }
+    .sorting-viz-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+    .sorting-controls { grid-template-columns: 1fr; }
+    .sorting-bars { justify-content: flex-start; min-height: 210px; }
+    .sorting-bar-wrap { flex-basis: 42px; }
+    .sorting-bar { width: 32px; }
+    .sorting-stat-grid { grid-template-columns: 1fr; }
+}
+
+/* =========================================
    LEVEL 10 — SPARSE MATRICES
    ========================================= */
 
