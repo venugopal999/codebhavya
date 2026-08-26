@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sparse Matrices | Advanced Data Structures | CodeBhavya</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="ads.css">
+</head>
+<body class="ads-page ads-topic-page sparse-matrices-page">
+
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo">
+        <img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </a>
+    <nav class="top-nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a>
+        <a href="../C-Programming/index.html">C</a>
+        <a href="../Data-Structures/index.html">Data Structures</a>
+        <a href="index.html" class="active">Advanced Data Structures</a>
+        <a href="../Python/index.html">Python</a><a href="../AI-ML/index.html">AI &amp; ML</a>
+        <a href="../Placement/index.html">Placement</a>
+    </nav>
+</header>
+
+<div class="docs-layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">Advanced Data Structures</div>
+        <input type="text" id="topicSearch" class="search-box" placeholder="🔍 Search ADS topics..." aria-label="Search ADS topics">
+        <a href="index.html" class="sidebar-course-home">🧠 ADS Home</a>
+
+        <div class="sidebar-title">Part 1 — Foundations &amp; Algorithms</div>
+        <a class="ads-topic-link is-available" href="level-08-performance-analysis.html">📊 Level 8 — Performance Analysis</a>
+        <a class="ads-topic-link is-available" href="level-09-disjoint-sets.html">🔗 Level 9 — Disjoint Sets</a>
+        <a class="ads-topic-link is-available active" href="level-10-sparse-matrices.html">🧮 Level 10 — Sparse Matrices</a>
+        <a class="ads-topic-link" href="level-11-string-pattern-matching.html">🔤 Level 11 — String Pattern Matching</a>
+        <a class="ads-topic-link" href="level-12-advanced-sorting.html">⚡ Level 12 — Advanced Sorting</a>
+        <a class="ads-topic-link" href="level-13-advanced-searching.html">🎯 Level 13 — Advanced Searching</a>
+
+        <div class="sidebar-title">Part 2 — Advanced Trees &amp; Hashing</div>
+        <a class="ads-topic-link" href="level-14-balanced-bst.html">🌲 Level 14 — Balanced BST</a>
+        <a class="ads-topic-link" href="level-15-digital-search-trees.html">🔠 Level 15 — Digital Search Trees</a>
+        <a class="ads-topic-link" href="level-16-multiway-search-trees.html">🌳 Level 16 — Multiway Search Trees</a>
+        <a class="ads-topic-link" href="level-17-heaps.html">⛰️ Level 17 — Heaps</a>
+        <a class="ads-topic-link" href="level-18-hashing.html">#️⃣ Level 18 — Hashing</a>
+
+        <div class="sidebar-title">Part 3 — Storage, Graphs &amp; Placement</div>
+        <a class="ads-topic-link" href="level-19-files.html">📁 Level 19 — Files &amp; File Organization</a>
+        <a class="ads-topic-link" href="level-20-advanced-graphs.html">🕸️ Level 20 — Advanced Graph Algorithms</a>
+        <a class="ads-topic-link" href="level-21-placement-problems.html">💼 Level 21 — Placement Problems</a>
+    </aside>
+
+    <main class="main-content">
+        <section class="ads-topic-hero">
+            <span class="subject-label">CODEBHAVYA • ADS LEVEL 10</span>
+            <h1 class="page-title">🧮 Sparse Matrices</h1>
+            <p class="page-description">Represent matrices containing mostly zero values efficiently using triplet, CSR and CSC formats, then perform transpose, addition and multiplication without wasting storage.</p>
+        </section>
+
+        <nav class="ads-page-jump-nav" aria-label="Page sections">
+            <a href="#objectives">Objectives</a><a href="#triplet">Triplet</a>
+            <a href="#csr">CSR</a><a href="#csc">CSC</a><a href="#operations">Operations</a>
+            <a href="#visualizer">Premium Visualizer</a><a href="#c-program">C Program</a>
+            <a href="#tracing">Program Tracing</a><a href="#practice">Practice</a><a href="#revision">Revision</a>
+        </nav>
+
+        <section class="content-card ads-lesson-section" id="objectives">
+            <div class="ads-section-heading"><span class="section-label">LEARNING GOALS</span><h2>🎯 Learning Objectives</h2></div>
+            <p>After completing this level, you should be able to:</p>
+            <ul class="ads-spaced-list">
+                <li>Identify when a matrix should be treated as sparse.</li>
+                <li>Compare dense storage with triplet, CSR and CSC representations.</li>
+                <li>Construct row pointers and column pointers correctly.</li>
+                <li>Transpose a sparse matrix using the simple and fast methods.</li>
+                <li>Add compatible sparse matrices by merging ordered terms.</li>
+                <li>Explain sparse-matrix multiplication and its practical uses.</li>
+                <li>Analyze storage requirements and operation complexity.</li>
+            </ul>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="introduction">
+            <div class="ads-section-heading"><span class="section-label">FOUNDATION</span><h2>🧭 1. What Is a Sparse Matrix?</h2></div>
+            <p>A matrix is called <strong>sparse</strong> when most of its elements are zero. Instead of storing every zero, a sparse representation stores only the <strong>non-zero values</strong> and enough position information to reconstruct the matrix.</p>
+            <div class="ads-definition-box"><strong>Density:</strong> nnz ÷ (rows × columns). <strong>Sparsity:</strong> 1 − density, where <strong>nnz</strong> is the number of non-zero terms.</div>
+            <div class="sparse-matrix-demo" style="--matrix-columns: 5" aria-label="Example sparse matrix">
+                <span>0</span><span>0</span><span class="non-zero-cell">5</span><span>0</span><span>0</span>
+                <span class="non-zero-cell">8</span><span>0</span><span>0</span><span class="non-zero-cell">7</span><span>0</span>
+                <span>0</span><span class="non-zero-cell">6</span><span>0</span><span>0</span><span>0</span>
+                <span>0</span><span>0</span><span>0</span><span>0</span><span class="non-zero-cell">9</span>
+            </div>
+            <div class="ads-note-box"><strong>Example:</strong> The 4 × 5 matrix above has 20 positions but only 5 non-zero terms. Its density is 25% and its sparsity is 75%.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="storage-comparison">
+            <div class="ads-section-heading"><span class="section-label">WHY SPARSE STORAGE?</span><h2>💾 2. Dense and Sparse Storage Comparison</h2></div>
+            <div class="ads-comparison-grid">
+                <article class="ads-info-panel blue-panel"><h3>Dense Representation</h3><p>Stores rows × columns values, including every zero.</p><strong>Storage: Θ(mn)</strong></article>
+                <article class="ads-info-panel purple-panel"><h3>Sparse Representation</h3><p>Stores only nnz values plus row/column metadata.</p><strong>Storage: Θ(nnz + m + n)</strong></article>
+            </div>
+            <div class="ads-table-wrap"><table class="ads-data-table">
+                <thead><tr><th>Situation</th><th>Suitable Choice</th><th>Reason</th></tr></thead>
+                <tbody>
+                    <tr><td>Most values are non-zero</td><td>Dense array</td><td>Direct indexing with little metadata overhead</td></tr>
+                    <tr><td>Mostly zero, row operations dominate</td><td>CSR</td><td>Efficient row traversal and matrix-vector multiplication</td></tr>
+                    <tr><td>Mostly zero, column operations dominate</td><td>CSC</td><td>Efficient column traversal</td></tr>
+                    <tr><td>Simple storage or teaching</td><td>Triplet/COO</td><td>Easy to construct and understand</td></tr>
+                </tbody>
+            </table></div>
+            <div class="ads-warning-box"><strong>Important:</strong> Sparse storage is not always smaller. When nnz is large, index metadata can cost more than storing the matrix densely.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="triplet">
+            <div class="ads-section-heading"><span class="section-label">COORDINATE FORMAT</span><h2>📍 3. Triplet Representation (COO)</h2></div>
+            <p>Every non-zero term is stored as <strong>(row, column, value)</strong>. A header may additionally store the matrix dimensions and the number of non-zero terms.</p>
+            <div class="ads-table-wrap"><table class="ads-data-table sparse-example-table">
+                <thead><tr><th>Row</th><th>Column</th><th>Value</th><th>Meaning</th></tr></thead>
+                <tbody>
+                    <tr class="sparse-header-row"><td>4</td><td>5</td><td>5</td><td>4 rows, 5 columns, 5 non-zero terms</td></tr>
+                    <tr><td>0</td><td>2</td><td>5</td><td>A[0][2] = 5</td></tr>
+                    <tr><td>1</td><td>0</td><td>8</td><td>A[1][0] = 8</td></tr>
+                    <tr><td>1</td><td>3</td><td>7</td><td>A[1][3] = 7</td></tr>
+                    <tr><td>2</td><td>1</td><td>6</td><td>A[2][1] = 6</td></tr>
+                    <tr><td>3</td><td>4</td><td>9</td><td>A[3][4] = 9</td></tr>
+                </tbody>
+            </table></div>
+            <div class="ads-comparison-grid">
+                <article class="ads-info-panel blue-panel"><h3>Advantages</h3><ul><li>Simple to build</li><li>Easy to append terms</li><li>Convenient intermediate format</li></ul></article>
+                <article class="ads-info-panel purple-panel"><h3>Limitations</h3><ul><li>Row boundaries are not explicit</li><li>Searching a particular row may scan terms</li><li>Repeated row/column indices add overhead</li></ul></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="csr">
+            <div class="ads-section-heading"><span class="section-label">ROW-COMPRESSED FORMAT</span><h2>➡️ 4. Compressed Sparse Row (CSR)</h2></div>
+            <p>CSR stores non-zero terms row by row using three arrays:</p>
+            <div class="sparse-array-stack">
+                <div><span>values</span><code>[5, 8, 7, 6, 9]</code><p>Non-zero values in row-major order.</p></div>
+                <div><span>columnIndex</span><code>[2, 0, 3, 1, 4]</code><p>Column of every stored value.</p></div>
+                <div><span>rowPointer</span><code>[0, 1, 3, 4, 5]</code><p>Starting offset of each row; the final entry equals nnz.</p></div>
+            </div>
+            <div class="ads-formula-box"><strong>Terms in row r:</strong> indexes rowPointer[r] through rowPointer[r + 1] − 1.</div>
+            <div class="ads-example-box"><h3>Reading Row 1</h3><p>rowPointer[1] = 1 and rowPointer[2] = 3. Therefore, CSR entries 1 and 2 belong to row 1: values 8 and 7 at columns 0 and 3.</p></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="csc">
+            <div class="ads-section-heading"><span class="section-label">COLUMN-COMPRESSED FORMAT</span><h2>⬇️ 5. Compressed Sparse Column (CSC)</h2></div>
+            <p>CSC is the column-oriented counterpart of CSR. It stores:</p>
+            <div class="sparse-array-stack purple-stack">
+                <div><span>values</span><code>[8, 6, 5, 7, 9]</code><p>Non-zero values in column-major order.</p></div>
+                <div><span>rowIndex</span><code>[1, 2, 0, 1, 3]</code><p>Row of every stored value.</p></div>
+                <div><span>columnPointer</span><code>[0, 1, 2, 3, 4, 5]</code><p>Starting offset of each column.</p></div>
+            </div>
+            <div class="ads-comparison-grid">
+                <article class="ads-info-panel blue-panel"><h3>Choose CSR When</h3><p>Rows are accessed repeatedly, such as sparse matrix-vector multiplication.</p></article>
+                <article class="ads-info-panel purple-panel"><h3>Choose CSC When</h3><p>Columns are accessed repeatedly, such as many numerical factorization routines.</p></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="operations">
+            <div class="ads-section-heading"><span class="section-label">CORE OPERATIONS</span><h2>⚙️ 6. Operations on Sparse Matrices</h2></div>
+            <div class="ads-operation-grid sparse-operation-grid">
+                <article><span>1</span><h3>Access</h3><p>Locate a row/column range, then search its stored indices.</p><code>O(nnz in row)</code></article>
+                <article><span>2</span><h3>Transpose</h3><p>Swap each term’s row and column while maintaining order.</p><code>O(nnz + columns)</code></article>
+                <article><span>3</span><h3>Addition</h3><p>Merge two ordered term sequences and combine matching positions.</p><code>O(nnzA + nnzB)</code></article>
+                <article><span>4</span><h3>Multiplication</h3><p>Match non-zero entries from rows of A with compatible rows/columns of B.</p><code>Depends on structure</code></article>
+                <article><span>5</span><h3>Insertion</h3><p>Insert metadata while preserving sorted positions.</p><code>May shift entries</code></article>
+                <article><span>6</span><h3>Matrix–Vector</h3><p>Multiply using only stored terms instead of every matrix cell.</p><code>O(nnz)</code></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="transpose">
+            <div class="ads-section-heading"><span class="section-label">ROW–COLUMN EXCHANGE</span><h2>🔄 7. Simple and Fast Transpose</h2></div>
+            <p>The transpose Aᵀ changes an m × n matrix into an n × m matrix, with Aᵀ[j][i] = A[i][j].</p>
+            <div class="ads-comparison-grid">
+                <article class="ads-info-panel blue-panel"><h3>Simple Transpose</h3><p>For each column, scan all triplet terms and copy matching entries.</p><strong>O(columns × nnz)</strong></article>
+                <article class="ads-info-panel purple-panel"><h3>Fast Transpose</h3><p>Count terms per column, compute starting positions and place each term once.</p><strong>O(columns + nnz)</strong></article>
+            </div>
+            <div class="ads-rule-list">
+                <article><span>1</span><div><h3>Count each original column</h3><p>These columns become rows in the transpose.</p></div></article>
+                <article><span>2</span><div><h3>Calculate starting positions</h3><p>Use prefix sums of the column counts.</p></div></article>
+                <article><span>3</span><div><h3>Place every term</h3><p>Swap row and column and advance that column’s next position.</p></div></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="addition">
+            <div class="ads-section-heading"><span class="section-label">MERGING TERMS</span><h2>➕ 8. Sparse Matrix Addition</h2></div>
+            <p>Two matrices can be added only when they have identical dimensions. If their triplets are sorted by (row, column), addition resembles merging two sorted arrays.</p>
+            <div class="ads-rule-list">
+                <article><span>1</span><div><h3>Compare positions</h3><p>Copy the term with the smaller (row, column) position.</p></div></article>
+                <article><span>2</span><div><h3>Combine equal positions</h3><p>Add their values; store the sum only when it is non-zero.</p></div></article>
+                <article><span>3</span><div><h3>Copy remaining terms</h3><p>Append any unprocessed terms from either matrix.</p></div></article>
+            </div>
+            <div class="ads-warning-box"><strong>Cancellation:</strong> If values at the same position sum to zero, do not store that term in the result.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="multiplication">
+            <div class="ads-section-heading"><span class="section-label">ADVANCED OPERATION</span><h2>✖️ 9. Sparse Matrix Multiplication</h2></div>
+            <p>For A(m × n) × B(n × p), a result entry C[i][j] is formed from matching column indices of row i in A and row indices of column j in B. Efficient implementations commonly use CSR for A and CSC for B.</p>
+            <div class="ads-definition-box"><strong>Main saving:</strong> zero terms never participate. Work is performed only for compatible non-zero pairs.</div>
+            <div class="ads-note-box"><strong>Practical warning:</strong> The product of two sparse matrices can become much denser. This is called <em>fill-in</em> and may significantly increase memory use.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="format-choice">
+            <div class="ads-section-heading"><span class="section-label">DESIGN DECISION</span><h2>🧠 10. Choosing the Correct Format</h2></div>
+            <div class="ads-table-wrap"><table class="ads-data-table">
+                <thead><tr><th>Format</th><th>Best Strength</th><th>Weakness</th><th>Common Use</th></tr></thead>
+                <tbody>
+                    <tr><td>COO/Triplet</td><td>Easy construction</td><td>Repeated row and column indices</td><td>Loading and coordinate data</td></tr>
+                    <tr><td>CSR</td><td>Fast row access</td><td>Costly structural insertion</td><td>Matrix-vector multiplication</td></tr>
+                    <tr><td>CSC</td><td>Fast column access</td><td>Costly structural insertion</td><td>Column-oriented numerical methods</td></tr>
+                    <tr><td>DOK/Hash</td><td>Flexible updates</td><td>Higher metadata overhead</td><td>Building a sparse matrix</td></tr>
+                </tbody>
+            </table></div>
+        </section>
+
+        <section class="ads-premium-viz" id="visualizer">
+            <div class="ads-premium-header">
+                <div><span class="ads-premium-label">INTERACTIVE ALGORITHM VISUALIZATION</span><h2>🎬 11. Premium Sparse Matrix Visualizer</h2></div>
+                <a class="ads-premium-brand" href="../index.html" aria-label="CodeBhavya Home"><img src="../images/codebhavya-main-logo.png" alt=""><span class="brand-code">Code</span><span class="brand-bhavya">Bhavya</span></a>
+            </div>
+            <div class="ads-premium-body">
+                <p>Enter a matrix and click <strong>Analyze Matrix</strong>. The visualizer generates Triplet, CSR and CSC representations only after the button is pressed.</p>
+                <div class="sparse-input-grid">
+                    <label>Rows<input id="sparseRows" type="number" min="2" max="6" value="4"></label>
+                    <label>Columns<input id="sparseColumns" type="number" min="2" max="6" value="5"></label>
+                    <label class="sparse-matrix-input-label">Matrix values<textarea id="sparseMatrixInput" rows="5">0 0 5 0 0
+8 0 0 7 0
+0 6 0 0 0
+0 0 0 0 9</textarea></label>
+                    <button id="analyzeSparseButton" type="button" class="primary-button">Analyze Matrix</button>
+                </div>
+                <div class="ads-example-chips"><button type="button" data-sparse-example="standard">Standard example</button><button type="button" data-sparse-example="diagonal">Diagonal matrix</button><button type="button" data-sparse-example="rowHeavy">Row-oriented example</button><button type="button" data-sparse-example="dense">Mostly dense example</button></div>
+                <div id="sparseVisualizerPrompt" class="ads-explorer-prompt">Choose an example or enter values, then click <strong>Analyze Matrix</strong>.</div>
+                <div id="sparseVisualizerResult" class="sparse-visualizer-result" hidden>
+                    <div class="ads-explorer-summary sparse-summary"><div><span>Dense Cells</span><strong id="denseCellCount">—</strong></div><div><span>Non-Zero Terms</span><strong id="nonZeroTermCount">—</strong></div><div><span>Sparsity</span><strong id="matrixSparsity">—</strong></div><div><span>Recommendation</span><strong id="recommendedFormat">—</strong></div></div>
+                    <div class="sparse-result-grid">
+                        <section><h3>Matrix View</h3><div id="sparseMatrixGrid" class="sparse-matrix-demo compact-matrix"></div></section>
+                        <section><h3>Triplet / COO</h3><div class="ads-table-wrap"><table class="ads-data-table compact-data-table"><thead><tr><th>Row</th><th>Column</th><th>Value</th></tr></thead><tbody id="sparseTripletBody"></tbody></table></div></section>
+                    </div>
+                    <div class="sparse-format-grid">
+                        <section><h3>CSR Representation</h3><div class="sparse-output-array"><span>Values</span><code id="csrValues">[]</code></div><div class="sparse-output-array"><span>Column Index</span><code id="csrColumns">[]</code></div><div class="sparse-output-array"><span>Row Pointer</span><code id="csrRowPointer">[]</code></div></section>
+                        <section><h3>CSC Representation</h3><div class="sparse-output-array"><span>Values</span><code id="cscValues">[]</code></div><div class="sparse-output-array"><span>Row Index</span><code id="cscRows">[]</code></div><div class="sparse-output-array"><span>Column Pointer</span><code id="cscColumnPointer">[]</code></div></section>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="c-program">
+            <div class="ads-section-heading"><span class="section-label">C IMPLEMENTATION</span><h2>💻 12. Fast Transpose Using Triplets</h2></div>
+            <p>The first triplet stores rows, columns and nnz. The algorithm counts original columns and uses starting positions to build an ordered transpose.</p>
+            <pre><code>#include &lt;stdio.h&gt;
+
+#define MAX_TERMS 100
+#define MAX_COLS 50
+
+typedef struct {
+    int row, col, value;
+} Term;
+
+void fastTranspose(Term a[], Term b[]) {
+    int rows = a[0].row;
+    int cols = a[0].col;
+    int terms = a[0].value;
+    int count[MAX_COLS] = {0};
+    int start[MAX_COLS];
+
+    b[0] = (Term){cols, rows, terms};
+    for (int i = 1; i &lt;= terms; i++)
+        count[a[i].col]++;
+
+    start[0] = 1;
+    for (int i = 1; i &lt; cols; i++)
+        start[i] = start[i - 1] + count[i - 1];
+
+    for (int i = 1; i &lt;= terms; i++) {
+        int position = start[a[i].col]++;
+        b[position] = (Term){a[i].col, a[i].row, a[i].value};
+    }
+}
+
+int main(void) {
+    Term a[MAX_TERMS], b[MAX_TERMS];
+    scanf("%d %d %d", &amp;a[0].row, &amp;a[0].col, &amp;a[0].value);
+    for (int i = 1; i &lt;= a[0].value; i++)
+        scanf("%d %d %d", &amp;a[i].row, &amp;a[i].col, &amp;a[i].value);
+
+    fastTranspose(a, b);
+    printf("%d %d %d\n", b[0].row, b[0].col, b[0].value);
+    for (int i = 1; i &lt;= b[0].value; i++)
+        printf("%d %d %d\n", b[i].row, b[i].col, b[i].value);
+    return 0;
+}</code></pre>
+            <div class="ads-io-grid">
+                <div><h3>Sample Input</h3><pre><code>4 5 5
+0 2 5
+1 0 8
+1 3 7
+2 1 6
+3 4 9</code></pre></div>
+                <div><h3>Sample Output</h3><pre><code>5 4 5
+0 1 8
+1 2 6
+2 0 5
+3 1 7
+4 3 9</code></pre></div>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="tracing">
+            <div class="ads-section-heading"><span class="section-label">C PROGRAM + TRACING</span><h2>🔍 13. Program Tracing — Fast Transpose</h2></div>
+            <p>Trace column counting, starting-position calculation and placement of all five non-zero terms.</p>
+            <button class="ads-tracer-toggle" id="sparseTraceToggle" type="button" aria-expanded="false" aria-controls="sparseTracePanel">▶ Program Tracing — Fast Transpose</button>
+            <div class="ads-tracer" id="sparseTracePanel" hidden>
+                <div class="ads-tracer-title">PROGRAM TRACING — FAST TRANSPOSE</div>
+                <div class="ads-tracer-grid">
+                    <section class="ads-tracer-panel">
+                        <h3>💻 C Program</h3>
+                        <pre class="ads-tracer-code" aria-label="Traceable C program"><code><span data-sparse-trace-line="1">b[0] = (Term){cols, rows, terms};</span>
+<span data-sparse-trace-line="2">for (i = 1; i &lt;= terms; i++)</span>
+<span data-sparse-trace-line="3">    count[a[i].col]++;</span>
+<span data-sparse-trace-line="4">start[0] = 1;</span>
+<span data-sparse-trace-line="5">start[i] = start[i - 1] + count[i - 1];</span>
+<span data-sparse-trace-line="6">position = start[a[i].col]++;</span>
+<span data-sparse-trace-line="7">b[position] = {a[i].col, a[i].row, a[i].value};</span></code></pre>
+                    </section>
+                    <section class="ads-tracer-panel ads-tracer-live-panel">
+                        <h3>🧠 What is happening?</h3>
+                        <div class="ads-tracer-explain" id="sparseTraceMessage">Press Next to begin the fast-transpose trace.</div>
+                        <h3>📊 Live Variables</h3>
+                        <div class="ads-trace-vars">
+                            <div><span>Term i</span><strong id="sparseTraceIndex">—</strong></div>
+                            <div><span>Original Column</span><strong id="sparseTraceColumn">—</strong></div>
+                            <div><span>Output Position</span><strong id="sparseTracePosition">—</strong></div>
+                        </div>
+                        <div class="ads-trace-array"><span>Column Counts</span><code id="sparseTraceCounts">[0, 0, 0, 0, 0]</code></div>
+                        <div class="ads-trace-array"><span>Next Start Positions</span><code id="sparseTraceStarts">[—, —, —, —, —]</code></div>
+                        <h3>Transpose Output</h3>
+                        <pre class="ads-trace-output" id="sparseTraceOutput">row col value</pre>
+                    </section>
+                </div>
+                <div class="ads-tracer-controls">
+                    <button type="button" class="trace-previous" id="sparseTracePrevious">← Previous</button>
+                    <button type="button" class="trace-next" id="sparseTraceNext">Next →</button>
+                    <button type="button" class="trace-auto" id="sparseTraceAuto">▶ Auto Run</button>
+                    <button type="button" class="trace-pause" id="sparseTracePause">⏸ Pause</button>
+                    <button type="button" class="trace-reset" id="sparseTraceReset">↻ Reset</button>
+                </div>
+                <p class="ads-tracer-status" id="sparseTraceStatus">Step 0 of 12</p>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="complexity">
+            <div class="ads-section-heading"><span class="section-label">PERFORMANCE SUMMARY</span><h2>📈 14. Complexity Analysis</h2></div>
+            <div class="ads-table-wrap"><table class="ads-data-table">
+                <thead><tr><th>Operation</th><th>Time Complexity</th><th>Extra Space</th></tr></thead>
+                <tbody>
+                    <tr><td>Build triplet from dense matrix</td><td>O(rows × columns)</td><td>O(nnz)</td></tr>
+                    <tr><td>Fast transpose</td><td>O(columns + nnz)</td><td>O(columns + nnz)</td></tr>
+                    <tr><td>Add ordered triplets</td><td>O(nnzA + nnzB)</td><td>O(nnzResult)</td></tr>
+                    <tr><td>CSR matrix-vector multiplication</td><td>O(nnz)</td><td>O(rows) for result</td></tr>
+                    <tr><td>CSR row traversal</td><td>O(nnz in that row)</td><td>O(1)</td></tr>
+                </tbody>
+            </table></div>
+            <div class="ads-formula-box"><strong>CSR storage:</strong> nnz values + nnz column indices + (rows + 1) row pointers = 2nnz + rows + 1 stored numbers.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="interview">
+            <div class="ads-section-heading"><span class="section-label">INTERVIEW PREPARATION</span><h2>💡 15. Important Points and Common Mistakes</h2></div>
+            <div class="ads-mistake-grid">
+                <article><h3>❌ Incorrect row pointer length</h3><p>CSR rowPointer must contain rows + 1 entries.</p></article>
+                <article><h3>❌ Omitting the final pointer</h3><p>The final pointer must equal nnz so the last row has an ending boundary.</p></article>
+                <article><h3>❌ Unsorted triplets</h3><p>Addition and conversion are simpler when terms are ordered by row and column.</p></article>
+                <article><h3>❌ Storing zero results</h3><p>When addition cancels values, omit the resulting zero term.</p></article>
+                <article><h3>❌ Ignoring metadata cost</h3><p>Sparse formats may waste space when the matrix is not sufficiently sparse.</p></article>
+                <article><h3>❌ Assuming sparse product</h3><p>Multiplication can create fill-in and a much denser result.</p></article>
+            </div>
+            <div class="ads-interview-question-grid"><article><span>01</span><p>Why does CSR have rows + 1 pointers?</p></article><article><span>02</span><p>When is CSC preferable to CSR?</p></article><article><span>03</span><p>How does fast transpose improve simple transpose?</p></article><article><span>04</span><p>What is fill-in during multiplication?</p></article></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="practice">
+            <div class="ads-section-heading"><span class="section-label">CHECK YOUR UNDERSTANDING</span><h2>✍️ 16. Practice Problems</h2></div>
+            <div class="ads-practice-note">Solve each problem first. Use Hint only when needed and Show Answer to verify your reasoning.</div>
+            <div class="ads-practice-list">
+                <article class="ads-practice-problem"><h3>1. A 10 × 10 matrix has 12 non-zero terms. Find its density and sparsity.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-1">Hint</button><button data-toggle-target="solution-1">Show Answer</button></div><div id="hint-1" class="ads-hint-box" hidden>Density = nnz ÷ total cells.</div><div id="solution-1" class="ads-solution-box" hidden><strong>Density = 12% and sparsity = 88%.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>2. What does the triplet (3, 5, −7) represent?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-2">Hint</button><button data-toggle-target="solution-2">Show Answer</button></div><div id="hint-2" class="ads-hint-box" hidden>Read it as row, column and value.</div><div id="solution-2" class="ads-solution-box" hidden>The matrix entry at <strong>row 3, column 5 is −7</strong>.</div></article>
+                <article class="ads-practice-problem"><h3>3. How many integers are stored by a triplet format with a header and 20 non-zero terms?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-3">Hint</button><button data-toggle-target="solution-3">Show Answer</button></div><div id="hint-3" class="ads-hint-box" hidden>Every triplet and the header contain three integers.</div><div id="solution-3" class="ads-solution-box" hidden><strong>63 integers:</strong> 3 × (20 + 1).</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>4. What is the required length of CSR rowPointer for a matrix with 8 rows?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-4">Hint</button><button data-toggle-target="solution-4">Show Answer</button></div><div id="hint-4" class="ads-hint-box" hidden>Include one final ending pointer.</div><div id="solution-4" class="ads-solution-box" hidden><strong>9 entries.</strong></div></article>
+                <article class="ads-practice-problem"><h3>5. What must the last CSR rowPointer entry equal?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-5">Hint</button><button data-toggle-target="solution-5">Show Answer</button></div><div id="hint-5" class="ads-hint-box" hidden>It marks the position immediately after all stored terms.</div><div id="solution-5" class="ads-solution-box" hidden>It must equal <strong>nnz</strong>.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>6. CSR rowPointer is [0, 2, 2, 5]. How many non-zero terms are in each row?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-6">Hint</button><button data-toggle-target="solution-6">Show Answer</button></div><div id="hint-6" class="ads-hint-box" hidden>Subtract consecutive pointers.</div><div id="solution-6" class="ads-solution-box" hidden><strong>Row counts are 2, 0 and 3.</strong></div></article>
+                <article class="ads-practice-problem"><h3>7. Which format is generally better for repeated row traversal?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-7">Hint</button><button data-toggle-target="solution-7">Show Answer</button></div><div id="hint-7" class="ads-hint-box" hidden>Its name contains Row.</div><div id="solution-7" class="ads-solution-box" hidden><strong>CSR.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>8. Which format is generally better for repeated column traversal?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-8">Hint</button><button data-toggle-target="solution-8">Show Answer</button></div><div id="hint-8" class="ads-hint-box" hidden>Its name contains Column.</div><div id="solution-8" class="ads-solution-box" hidden><strong>CSC.</strong></div></article>
+                <article class="ads-practice-problem"><h3>9. Transpose the triplet (2, 4, 9).</h3><div class="ads-practice-actions"><button data-toggle-target="hint-9">Hint</button><button data-toggle-target="solution-9">Show Answer</button></div><div id="hint-9" class="ads-hint-box" hidden>Swap row and column.</div><div id="solution-9" class="ads-solution-box" hidden><strong>(4, 2, 9).</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>10. What is the time complexity of simple triplet transpose?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-10">Hint</button><button data-toggle-target="solution-10">Show Answer</button></div><div id="hint-10" class="ads-hint-box" hidden>It scans all terms once for every column.</div><div id="solution-10" class="ads-solution-box" hidden><strong>O(columns × nnz).</strong></div></article>
+                <article class="ads-practice-problem"><h3>11. What is the time complexity of fast transpose?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-11">Hint</button><button data-toggle-target="solution-11">Show Answer</button></div><div id="hint-11" class="ads-hint-box" hidden>Count the column-frequency work and one pass over terms.</div><div id="solution-11" class="ads-solution-box" hidden><strong>O(columns + nnz).</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>12. Can a 3 × 4 matrix be added to a 4 × 3 matrix?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-12">Hint</button><button data-toggle-target="solution-12">Show Answer</button></div><div id="hint-12" class="ads-hint-box" hidden>Addition requires matching dimensions.</div><div id="solution-12" class="ads-solution-box" hidden><strong>No.</strong></div></article>
+                <article class="ads-practice-problem"><h3>13. During addition, what should happen when matching values 6 and −6 are combined?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-13">Hint</button><button data-toggle-target="solution-13">Show Answer</button></div><div id="hint-13" class="ads-hint-box" hidden>The sum is zero.</div><div id="solution-13" class="ads-solution-box" hidden>Do not store the term because <strong>6 + (−6) = 0</strong>.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>14. Give the time for merging ordered triplets containing p and q terms.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-14">Hint</button><button data-toggle-target="solution-14">Show Answer</button></div><div id="hint-14" class="ads-hint-box" hidden>Each input term is processed at most once.</div><div id="solution-14" class="ads-solution-box" hidden><strong>O(p + q).</strong></div></article>
+                <article class="ads-practice-problem"><h3>15. How many stored numbers does CSR use for m rows and k non-zero terms?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-15">Hint</button><button data-toggle-target="solution-15">Show Answer</button></div><div id="hint-15" class="ads-hint-box" hidden>Count values, column indices and row pointers.</div><div id="solution-15" class="ads-solution-box" hidden><strong>2k + m + 1 numbers.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>16. Why can sparse storage be inefficient for a nearly dense matrix?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-16">Hint</button><button data-toggle-target="solution-16">Show Answer</button></div><div id="hint-16" class="ads-hint-box" hidden>Every non-zero value requires index metadata.</div><div id="solution-16" class="ads-solution-box" hidden>Row/column metadata can exceed the cost of directly storing the few zero entries.</div></article>
+                <article class="ads-practice-problem"><h3>17. What is fill-in?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-17">Hint</button><button data-toggle-target="solution-17">Show Answer</button></div><div id="hint-17" class="ads-hint-box" hidden>It occurs during operations such as multiplication or factorization.</div><div id="solution-17" class="ads-solution-box" hidden><strong>Fill-in</strong> is the creation of new non-zero result positions that were zero in the original sparse structures.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>18. What is the time of CSR matrix-vector multiplication?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-18">Hint</button><button data-toggle-target="solution-18">Show Answer</button></div><div id="hint-18" class="ads-hint-box" hidden>Every stored value participates once.</div><div id="solution-18" class="ads-solution-box" hidden><strong>O(nnz).</strong></div></article>
+                <article class="ads-practice-problem"><h3>19. Which representation is usually easiest while incrementally constructing a matrix?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-19">Hint</button><button data-toggle-target="solution-19">Show Answer</button></div><div id="hint-19" class="ads-hint-box" hidden>Compressed arrays are costly to insert into.</div><div id="solution-19" class="ads-solution-box" hidden>A flexible format such as <strong>COO/triplet or DOK</strong>, followed by conversion to CSR/CSC.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>20. Why are triplets normally sorted by row and then column?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-20">Hint</button><button data-toggle-target="solution-20">Show Answer</button></div><div id="hint-20" class="ads-hint-box" hidden>Consider merging, conversion and predictable traversal.</div><div id="solution-20" class="ads-solution-box" hidden>Sorted order enables efficient merging, CSR construction and sequential row traversal.</div></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="revision">
+            <div class="ads-section-heading"><span class="section-label">QUICK RECALL</span><h2>📝 17. Quick Revision</h2></div>
+            <ul class="ads-revision-list">
+                <li>A sparse matrix contains mostly zero values; nnz counts its non-zero terms.</li>
+                <li>Triplet/COO stores (row, column, value) for each non-zero term.</li>
+                <li>CSR uses values, columnIndex and rowPointer arrays.</li>
+                <li>CSC uses values, rowIndex and columnPointer arrays.</li>
+                <li>Fast transpose takes O(columns + nnz) time.</li>
+                <li>Ordered sparse addition merges terms in O(nnzA + nnzB) time.</li>
+                <li>Sparse multiplication may create fill-in and a denser result.</li>
+                <li>Choose a format according to access direction, update needs and actual sparsity.</li>
+            </ul>
+        </section>
+
+        <nav class="ads-topic-navigation" aria-label="ADS topic navigation">
+            <a href="level-09-disjoint-sets.html" class="previous-topic">← Previous: Disjoint Sets</a>
+            <span class="next-topic disabled-topic" aria-disabled="true">Next: String Pattern Matching →</span>
+        </nav>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div>
+        <div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C Programming</a></div>
+        <div class="footer-column"><h3>Learning</h3><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html">Advanced Data Structures</a><a href="../Python/index.html">Python</a></div>
+        <div class="footer-column"><h3>Practice</h3><a href="level-08-performance-analysis.html#practice">Performance Analysis Practice</a><a href="level-09-disjoint-sets.html#practice">Disjoint Sets Practice</a><a href="#practice">Sparse Matrices Practice</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div>
+</footer>
+
+<script src="../script.js"></script>
+<script src="ads.js"></script>
+<script>
+(function () {
+    "use strict";
+
+    const rowInput = document.getElementById("sparseRows");
+    const columnInput = document.getElementById("sparseColumns");
+    const matrixInput = document.getElementById("sparseMatrixInput");
+    const analyzeButton = document.getElementById("analyzeSparseButton");
+    const prompt = document.getElementById("sparseVisualizerPrompt");
+    const result = document.getElementById("sparseVisualizerResult");
+    const matrixGrid = document.getElementById("sparseMatrixGrid");
+    const tripletBody = document.getElementById("sparseTripletBody");
+    const csrValues = document.getElementById("csrValues");
+    const csrColumns = document.getElementById("csrColumns");
+    const csrRowPointer = document.getElementById("csrRowPointer");
+    const cscValues = document.getElementById("cscValues");
+    const cscRows = document.getElementById("cscRows");
+    const cscColumnPointer = document.getElementById("cscColumnPointer");
+    const denseCells = document.getElementById("denseCellCount");
+    const nonZeroTerms = document.getElementById("nonZeroTermCount");
+    const sparsityOutput = document.getElementById("matrixSparsity");
+    const recommendedFormat = document.getElementById("recommendedFormat");
+
+    const examples = {
+        standard: {
+            rows: 4,
+            columns: 5,
+            matrix: "0 0 5 0 0\n8 0 0 7 0\n0 6 0 0 0\n0 0 0 0 9"
+        },
+        diagonal: {
+            rows: 5,
+            columns: 5,
+            matrix: "4 0 0 0 0\n0 8 0 0 0\n0 0 3 0 0\n0 0 0 6 0\n0 0 0 0 2"
+        },
+        rowHeavy: {
+            rows: 4,
+            columns: 6,
+            matrix: "0 2 0 0 5 0\n0 0 0 0 0 0\n7 0 4 0 0 8\n0 0 0 3 0 0"
+        },
+        dense: {
+            rows: 3,
+            columns: 4,
+            matrix: "1 2 0 4\n5 0 7 8\n9 10 11 0"
+        }
+    };
+
+    function clampDimension(value) {
+        const parsed = Number(value);
+        if (!Number.isFinite(parsed)) {
+            return 4;
+        }
+        return Math.min(6, Math.max(2, Math.floor(parsed)));
+    }
+
+    function resetVisualizer() {
+        if (result) {
+            result.hidden = true;
+        }
+        if (prompt) {
+            prompt.hidden = false;
+        }
+    }
+
+    function parseMatrix() {
+        const rows = clampDimension(rowInput.value);
+        const columns = clampDimension(columnInput.value);
+        rowInput.value = String(rows);
+        columnInput.value = String(columns);
+
+        const lines = matrixInput.value.trim().split(/\n+/).map(function (line) {
+            return line.trim();
+        }).filter(Boolean);
+
+        if (lines.length !== rows) {
+            throw new Error("Enter exactly " + rows + " matrix rows.");
+        }
+
+        return lines.map(function (line, rowIndex) {
+            const values = line.split(/[\s,]+/).filter(Boolean).map(Number);
+            if (values.length !== columns || values.some(function (value) { return !Number.isFinite(value); })) {
+                throw new Error("Row " + (rowIndex + 1) + " must contain exactly " + columns + " valid numbers.");
+            }
+            return values;
+        });
+    }
+
+    function getTriplets(matrix) {
+        const terms = [];
+        matrix.forEach(function (row, rowIndex) {
+            row.forEach(function (value, columnIndex) {
+                if (value !== 0) {
+                    terms.push({ row: rowIndex, column: columnIndex, value: value });
+                }
+            });
+        });
+        return terms;
+    }
+
+    function renderMatrix(matrix) {
+        matrixGrid.innerHTML = "";
+        matrixGrid.style.setProperty("--matrix-columns", String(matrix[0].length));
+        matrix.forEach(function (row) {
+            row.forEach(function (value) {
+                const cell = document.createElement("span");
+                cell.className = "sparse-matrix-cell";
+                cell.textContent = String(value);
+                if (value !== 0) {
+                    cell.classList.add("non-zero-cell");
+                }
+                matrixGrid.appendChild(cell);
+            });
+        });
+    }
+
+    function renderTriplets(terms) {
+        tripletBody.innerHTML = "";
+        terms.forEach(function (term) {
+            const row = document.createElement("tr");
+            [term.row, term.column, term.value].forEach(function (value) {
+                const cell = document.createElement("td");
+                cell.textContent = String(value);
+                row.appendChild(cell);
+            });
+            tripletBody.appendChild(row);
+        });
+    }
+
+    function createCsr(matrix, terms) {
+        const rowPointer = [0];
+        let count = 0;
+        matrix.forEach(function (row) {
+            row.forEach(function (value) {
+                if (value !== 0) {
+                    count += 1;
+                }
+            });
+            rowPointer.push(count);
+        });
+        return {
+            values: terms.map(function (term) { return term.value; }),
+            columns: terms.map(function (term) { return term.column; }),
+            rowPointer: rowPointer
+        };
+    }
+
+    function createCsc(matrix, terms) {
+        const columns = matrix[0].length;
+        const ordered = [];
+        const columnPointer = [0];
+        let count = 0;
+
+        for (let column = 0; column < columns; column += 1) {
+            terms.forEach(function (term) {
+                if (term.column === column) {
+                    ordered.push(term);
+                    count += 1;
+                }
+            });
+            columnPointer.push(count);
+        }
+
+        return {
+            values: ordered.map(function (term) { return term.value; }),
+            rows: ordered.map(function (term) { return term.row; }),
+            columnPointer: columnPointer
+        };
+    }
+
+    function arrayText(values) {
+        return "[" + values.join(", ") + "]";
+    }
+
+    function analyzeMatrix() {
+        let matrix;
+        try {
+            matrix = parseMatrix();
+        } catch (error) {
+            window.alert(error.message);
+            return;
+        }
+
+        const terms = getTriplets(matrix);
+        const csr = createCsr(matrix, terms);
+        const csc = createCsc(matrix, terms);
+        const cellCount = matrix.length * matrix[0].length;
+        const zeroCount = cellCount - terms.length;
+        const sparsity = (zeroCount / cellCount) * 100;
+
+        renderMatrix(matrix);
+        renderTriplets(terms);
+        csrValues.textContent = arrayText(csr.values);
+        csrColumns.textContent = arrayText(csr.columns);
+        csrRowPointer.textContent = arrayText(csr.rowPointer);
+        cscValues.textContent = arrayText(csc.values);
+        cscRows.textContent = arrayText(csc.rows);
+        cscColumnPointer.textContent = arrayText(csc.columnPointer);
+        denseCells.textContent = String(cellCount);
+        nonZeroTerms.textContent = String(terms.length);
+        sparsityOutput.textContent = sparsity.toFixed(1) + "% zeros";
+        recommendedFormat.textContent = sparsity >= 60
+            ? "Sparse storage is useful"
+            : "Dense storage may be simpler";
+
+        prompt.hidden = true;
+        result.hidden = false;
+    }
+
+    if (analyzeButton) {
+        analyzeButton.addEventListener("click", analyzeMatrix);
+    }
+
+    [rowInput, columnInput, matrixInput].forEach(function (control) {
+        if (control) {
+            control.addEventListener("input", resetVisualizer);
+            control.addEventListener("change", resetVisualizer);
+        }
+    });
+
+    document.querySelectorAll("[data-sparse-example]").forEach(function (button) {
+        button.addEventListener("click", function () {
+            const example = examples[button.dataset.sparseExample];
+            if (!example) {
+                return;
+            }
+            rowInput.value = String(example.rows);
+            columnInput.value = String(example.columns);
+            matrixInput.value = example.matrix;
+            resetVisualizer();
+            matrixInput.focus();
+        });
+    });
+
+    const sparseTraceSteps = [
+        { line: 1, index: "—", column: "—", position: "—", counts: "[0, 0, 0, 0, 0]", starts: "[—, —, —, —, —]", message: "Read the 4 × 5 triplet matrix containing five non-zero terms. The transpose will have dimensions 5 × 4.", output: "row col value" },
+        { line: 2, index: "1", column: "2", position: "—", counts: "[0, 0, 1, 0, 0]", starts: "[—, —, —, —, —]", message: "Term (0, 2, 5) belongs to column 2, so count[2] becomes 1.", output: "row col value" },
+        { line: 2, index: "2", column: "0", position: "—", counts: "[1, 0, 1, 0, 0]", starts: "[—, —, —, —, —]", message: "Term (1, 0, 8) increases the number of terms in column 0.", output: "row col value" },
+        { line: 2, index: "3", column: "3", position: "—", counts: "[1, 0, 1, 1, 0]", starts: "[—, —, —, —, —]", message: "Term (1, 3, 7) increases count[3].", output: "row col value" },
+        { line: 2, index: "4", column: "1", position: "—", counts: "[1, 1, 1, 1, 0]", starts: "[—, —, —, —, —]", message: "Term (2, 1, 6) increases count[1].", output: "row col value" },
+        { line: 2, index: "5", column: "4", position: "—", counts: "[1, 1, 1, 1, 1]", starts: "[—, —, —, —, —]", message: "Term (3, 4, 9) completes the column-frequency array.", output: "row col value" },
+        { line: 4, index: "—", column: "—", position: "—", counts: "[1, 1, 1, 1, 1]", starts: "[1, 2, 3, 4, 5]", message: "Prefix sums calculate the first output position for every original column.", output: "row col value" },
+        { line: 6, index: "1", column: "2", position: "3", counts: "[1, 1, 1, 1, 1]", starts: "[1, 2, 4, 4, 5]", message: "Original term (0, 2, 5) becomes transpose term (2, 0, 5) at position 3.", output: "row col value\n2   0   5" },
+        { line: 6, index: "2", column: "0", position: "1", counts: "[1, 1, 1, 1, 1]", starts: "[2, 2, 4, 4, 5]", message: "Original term (1, 0, 8) becomes (0, 1, 8) at position 1.", output: "row col value\n0   1   8\n2   0   5" },
+        { line: 6, index: "3", column: "3", position: "4", counts: "[1, 1, 1, 1, 1]", starts: "[2, 2, 4, 5, 5]", message: "Original term (1, 3, 7) becomes (3, 1, 7) at position 4.", output: "row col value\n0   1   8\n2   0   5\n3   1   7" },
+        { line: 6, index: "4", column: "1", position: "2", counts: "[1, 1, 1, 1, 1]", starts: "[2, 3, 4, 5, 5]", message: "Original term (2, 1, 6) becomes (1, 2, 6) at position 2.", output: "row col value\n0   1   8\n1   2   6\n2   0   5\n3   1   7" },
+        { line: 6, index: "5", column: "4", position: "5", counts: "[1, 1, 1, 1, 1]", starts: "[2, 3, 4, 5, 6]", message: "Original term (3, 4, 9) becomes (4, 3, 9) at position 5.", output: "row col value\n0   1   8\n1   2   6\n2   0   5\n3   1   7\n4   3   9" },
+        { line: 7, index: "5", column: "4", position: "5", counts: "[1, 1, 1, 1, 1]", starts: "[2, 3, 4, 5, 6]", message: "Fast transpose is complete. Terms are already ordered by row in the transposed matrix.", output: "5 4 5\n0 1 8\n1 2 6\n2 0 5\n3 1 7\n4 3 9" }
+    ];
+
+    const sparseTrace = {
+        toggle: document.getElementById("sparseTraceToggle"),
+        panel: document.getElementById("sparseTracePanel"),
+        message: document.getElementById("sparseTraceMessage"),
+        index: document.getElementById("sparseTraceIndex"),
+        column: document.getElementById("sparseTraceColumn"),
+        position: document.getElementById("sparseTracePosition"),
+        counts: document.getElementById("sparseTraceCounts"),
+        starts: document.getElementById("sparseTraceStarts"),
+        output: document.getElementById("sparseTraceOutput"),
+        status: document.getElementById("sparseTraceStatus"),
+        previous: document.getElementById("sparseTracePrevious"),
+        next: document.getElementById("sparseTraceNext"),
+        auto: document.getElementById("sparseTraceAuto"),
+        pause: document.getElementById("sparseTracePause"),
+        reset: document.getElementById("sparseTraceReset")
+    };
+
+    let sparseTraceIndex = 0;
+    let sparseTraceTimer = null;
+
+    function pauseSparseTrace() {
+        if (sparseTraceTimer !== null) {
+            window.clearInterval(sparseTraceTimer);
+            sparseTraceTimer = null;
+        }
+    }
+
+    function renderSparseTrace() {
+        if (!sparseTrace.panel) {
+            return;
+        }
+        const step = sparseTraceSteps[sparseTraceIndex];
+        let activeLine = null;
+        document.querySelectorAll("[data-sparse-trace-line]").forEach(function (line) {
+            const isActive = Number(line.dataset.sparseTraceLine) === step.line;
+            line.classList.toggle("is-active-line", isActive);
+            if (isActive) {
+                activeLine = line;
+            }
+        });
+
+        sparseTrace.message.textContent = step.message;
+        sparseTrace.index.textContent = step.index;
+        sparseTrace.column.textContent = step.column;
+        sparseTrace.position.textContent = step.position;
+        sparseTrace.counts.textContent = step.counts;
+        sparseTrace.starts.textContent = step.starts;
+        sparseTrace.output.textContent = step.output;
+        sparseTrace.status.textContent = "Step " + sparseTraceIndex + " of " + (sparseTraceSteps.length - 1);
+        sparseTrace.previous.disabled = sparseTraceIndex === 0;
+        sparseTrace.next.disabled = sparseTraceIndex === sparseTraceSteps.length - 1;
+
+        if (activeLine) {
+            const codeWindow = activeLine.closest(".ads-tracer-code");
+            if (codeWindow) {
+                const lineTop = activeLine.offsetTop;
+                const lineBottom = lineTop + activeLine.offsetHeight;
+                const visibleTop = codeWindow.scrollTop;
+                const visibleBottom = visibleTop + codeWindow.clientHeight;
+                if (lineTop < visibleTop + 12 || lineBottom > visibleBottom - 12) {
+                    codeWindow.scrollTo({ top: Math.max(0, lineTop - (codeWindow.clientHeight / 2)), behavior: "smooth" });
+                }
+            }
+        }
+    }
+
+    if (sparseTrace.toggle && sparseTrace.panel) {
+        sparseTrace.panel.hidden = true;
+        sparseTrace.toggle.addEventListener("click", function () {
+            const willOpen = sparseTrace.panel.hidden;
+            sparseTrace.panel.hidden = !willOpen;
+            sparseTrace.toggle.setAttribute("aria-expanded", String(willOpen));
+            sparseTrace.toggle.textContent = willOpen
+                ? "▼ Hide Program Tracing — Fast Transpose"
+                : "▶ Program Tracing — Fast Transpose";
+            if (!willOpen) {
+                pauseSparseTrace();
+            }
+        });
+        sparseTrace.previous.addEventListener("click", function () {
+            pauseSparseTrace();
+            sparseTraceIndex = Math.max(0, sparseTraceIndex - 1);
+            renderSparseTrace();
+        });
+        sparseTrace.next.addEventListener("click", function () {
+            pauseSparseTrace();
+            sparseTraceIndex = Math.min(sparseTraceSteps.length - 1, sparseTraceIndex + 1);
+            renderSparseTrace();
+        });
+        sparseTrace.auto.addEventListener("click", function () {
+            pauseSparseTrace();
+            if (sparseTraceIndex === sparseTraceSteps.length - 1) {
+                sparseTraceIndex = 0;
+                renderSparseTrace();
+            }
+            sparseTraceTimer = window.setInterval(function () {
+                if (sparseTraceIndex >= sparseTraceSteps.length - 1) {
+                    pauseSparseTrace();
+                    return;
+                }
+                sparseTraceIndex += 1;
+                renderSparseTrace();
+            }, 1000);
+        });
+        sparseTrace.pause.addEventListener("click", pauseSparseTrace);
+        sparseTrace.reset.addEventListener("click", function () {
+            pauseSparseTrace();
+            sparseTraceIndex = 0;
+            renderSparseTrace();
+        });
+        renderSparseTrace();
+    }
+
+    document.querySelectorAll("[data-toggle-target]").forEach(function (button) {
+        const target = document.getElementById(button.dataset.toggleTarget);
+        if (!target) {
+            return;
+        }
+        target.hidden = true;
+        button.dataset.originalLabel = button.textContent.trim();
+        button.setAttribute("aria-expanded", "false");
+        button.setAttribute("aria-controls", target.id);
+        button.addEventListener("click", function () {
+            const willOpen = target.hidden;
+            target.hidden = !willOpen;
+            button.setAttribute("aria-expanded", String(willOpen));
+            if (willOpen) {
+                button.textContent = target.classList.contains("ads-hint-box") ? "Hide Hint" : "Hide Answer";
+            } else {
+                button.textContent = button.dataset.originalLabel;
+            }
+        });
+    });
+
+    resetVisualizer();
+}());
+
+</script>
+</body>
+</html>
