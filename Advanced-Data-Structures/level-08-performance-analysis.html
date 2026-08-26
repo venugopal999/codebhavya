@@ -565,8 +565,13 @@
         }
 
         const step = performanceTraceSteps[performanceTraceIndex];
+        let activeLine = null;
         document.querySelectorAll("[data-performance-line]").forEach(function (line) {
-            line.classList.toggle("is-active-line", Number(line.dataset.performanceLine) === step.line);
+            const isActive = Number(line.dataset.performanceLine) === step.line;
+            line.classList.toggle("is-active-line", isActive);
+            if (isActive) {
+                activeLine = line;
+            }
         });
         performanceTrace.message.textContent = step.message;
         performanceTrace.algorithm.textContent = step.algorithm;
@@ -580,6 +585,23 @@
         performanceTrace.status.textContent = "Step " + performanceTraceIndex + " of " + (performanceTraceSteps.length - 1);
         performanceTrace.previous.disabled = performanceTraceIndex === 0;
         performanceTrace.next.disabled = performanceTraceIndex === performanceTraceSteps.length - 1;
+
+        if (activeLine) {
+            const codeWindow = activeLine.closest(".ads-tracer-code");
+            if (codeWindow) {
+                const lineTop = activeLine.offsetTop;
+                const lineBottom = lineTop + activeLine.offsetHeight;
+                const visibleTop = codeWindow.scrollTop;
+                const visibleBottom = visibleTop + codeWindow.clientHeight;
+
+                if (lineTop < visibleTop + 12 || lineBottom > visibleBottom - 12) {
+                    codeWindow.scrollTo({
+                        top: Math.max(0, lineTop - (codeWindow.clientHeight / 2)),
+                        behavior: "smooth"
+                    });
+                }
+            }
+        }
     }
 
     if (performanceTrace.toggle && performanceTrace.panel) {
