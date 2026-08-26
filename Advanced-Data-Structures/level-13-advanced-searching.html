@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Searching | Advanced Data Structures | CodeBhavya</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="ads.css">
+</head>
+<body class="ads-page ads-topic-page advanced-searching-page">
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo"><img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a>
+    <nav class="top-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C</a><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html" class="active">Advanced Data Structures</a><a href="../Python/index.html">Python</a><a href="../AI-ML/index.html">AI &amp; ML</a><a href="../Placement/index.html">Placement</a></nav>
+</header>
+
+<div class="docs-layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">Advanced Data Structures</div>
+        <input type="text" id="topicSearch" class="search-box" placeholder="🔍 Search ADS topics..." aria-label="Search ADS topics">
+        <a href="index.html" class="sidebar-course-home">🧠 ADS Home</a>
+        <div class="sidebar-title">Part 1 — Foundations &amp; Algorithms</div>
+        <a class="ads-topic-link is-available" href="level-08-performance-analysis.html">📊 Level 8 — Performance Analysis</a>
+        <a class="ads-topic-link is-available" href="level-09-disjoint-sets.html">🔗 Level 9 — Disjoint Sets</a>
+        <a class="ads-topic-link is-available" href="level-10-sparse-matrices.html">🧮 Level 10 — Sparse Matrices</a>
+        <a class="ads-topic-link is-available" href="level-11-string-pattern-matching.html">🔤 Level 11 — String Pattern Matching</a>
+        <a class="ads-topic-link is-available" href="level-12-advanced-sorting.html">⚡ Level 12 — Advanced Sorting</a>
+        <a class="ads-topic-link is-available active" href="level-13-advanced-searching.html">🎯 Level 13 — Advanced Searching</a>
+        <div class="sidebar-title">Part 2 — Advanced Trees &amp; Hashing</div>
+        <a class="ads-topic-link" href="level-14-balanced-bst.html">🌲 Level 14 — Balanced BST</a><a class="ads-topic-link" href="level-15-digital-search-trees.html">🔠 Level 15 — Digital Search Trees</a><a class="ads-topic-link" href="level-16-multiway-search-trees.html">🌳 Level 16 — Multiway Search Trees</a><a class="ads-topic-link" href="level-17-heaps.html">⛰️ Level 17 — Heaps</a><a class="ads-topic-link" href="level-18-hashing.html">#️⃣ Level 18 — Hashing</a>
+        <div class="sidebar-title">Part 3 — Storage, Graphs &amp; Placement</div>
+        <a class="ads-topic-link" href="level-19-files.html">📁 Level 19 — Files &amp; File Organization</a><a class="ads-topic-link" href="level-20-advanced-graphs.html">🕸️ Level 20 — Advanced Graph Algorithms</a><a class="ads-topic-link" href="level-21-placement-problems.html">💼 Level 21 — Placement Problems</a>
+    </aside>
+
+    <main class="main-content">
+        <section class="ads-topic-hero"><span class="subject-label">CODEBHAVYA • ADS LEVEL 13</span><h1 class="page-title">🎯 Advanced Searching</h1><p class="page-description">Choose and implement efficient searching strategies by considering sorted order, value distribution, access cost, unknown range and multi-level indexing.</p></section>
+        <nav class="ads-page-jump-nav" aria-label="Page sections"><a href="#objectives">Objectives</a><a href="#jump-search">Jump</a><a href="#interpolation-search">Interpolation</a><a href="#exponential-search">Exponential</a><a href="#fibonacci-search">Fibonacci</a><a href="#skip-list-search">Skip List</a><a href="#comparison">Comparison</a><a href="#visualizer">Premium Visualizer</a><a href="#tracing">Program Tracing</a><a href="#practice">Practice</a><a href="#revision">Revision</a></nav>
+
+        <section class="content-card ads-lesson-section" id="objectives">
+            <div class="ads-section-heading"><span class="section-label">LEARNING GOALS</span><h2>🎯 Learning Objectives</h2></div>
+            <p>After completing this level, you should be able to:</p>
+            <ul class="ads-spaced-list"><li>Identify the assumptions required by each advanced searching method.</li><li>Trace Jump, Interpolation, Exponential and Fibonacci Search.</li><li>Explain how a Skip List uses multiple forward levels.</li><li>Implement all five methods in C.</li><li>Compare expected and worst-case performance.</li><li>Select a search method using ordering, distribution and access cost.</li><li>Recognize failure cases such as unsorted input and poor interpolation.</li></ul>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="foundation">
+            <div class="ads-section-heading"><span class="section-label">SEARCHING DECISIONS</span><h2>🧭 1. Choosing a Searching Strategy</h2></div>
+            <p>The best search method depends on what is known about the data—not only on the number of elements.</p>
+            <div class="ads-rule-grid"><article><strong>Sorted Order</strong><p>All four array methods on this page require ascending values.</p></article><article><strong>Distribution</strong><p>Interpolation Search is strongest when values are approximately uniform.</p></article><article><strong>Access Model</strong><p>Jump Search reduces random probes, while Fibonacci Search avoids division.</p></article><article><strong>Dynamic Updates</strong><p>A Skip List supports expected logarithmic search, insertion and deletion.</p></article></div>
+            <div class="ads-warning-box"><strong>Essential precondition:</strong> never apply these array-searching algorithms directly to unsorted data. Sort first or choose a structure designed for unsorted keys.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="jump-search">
+            <div class="ads-section-heading"><span class="section-label">BLOCK-BASED SEARCH</span><h2>🦘 2. Jump Search</h2></div>
+            <p>Jump Search moves through a sorted array in blocks, then performs a short linear scan inside the block that can contain the target.</p>
+            <div class="ads-step-flow"><article><span>1</span><h3>Choose Jump</h3><p>Use a block size near √n.</p></article><article><span>2</span><h3>Probe Ends</h3><p>Check the last value of each block.</p></article><article><span>3</span><h3>Stop Jumping</h3><p>Find the first block whose end is ≥ target.</p></article><article><span>4</span><h3>Scan</h3><p>Search linearly inside that block.</p></article></div>
+            <div class="ads-worked-example"><strong>Worked example</strong><p>For ten values, jump size is 3. Searching for 44 probes indices 2 and 5, then scans indices 6–8 until 44 is found at index 6.</p></div>
+            <div class="ads-formula-box"><strong>Time:</strong> O(√n) comparisons with an optimal jump. <strong>Space:</strong> O(1). It is useful when sequential access inside a block is cheaper than many random probes.</div>
+            <details class="ads-program-details" id="jump-program"><summary><span>💻 Complete C Program — Jump Search</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="jump-search">#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+int minInt(int first, int second) {
+    return first &lt; second ? first : second;
+}
+
+int jumpSearch(const int a[], int n, int target) {
+    int step = (int)sqrt((double)n);
+    int previous = 0;
+
+    while (previous &lt; n &amp;&amp; a[minInt(step, n) - 1] &lt; target) {
+        previous = step;
+        step += (int)sqrt((double)n);
+        if (previous &gt;= n) return -1;
+    }
+
+    while (previous &lt; minInt(step, n) &amp;&amp; a[previous] &lt; target)
+        previous++;
+
+    if (previous &lt; n &amp;&amp; a[previous] == target)
+        return previous;
+
+    return -1;
+}
+
+int main(void) {
+    int n, target;
+    scanf("%d", &amp;n);
+    int a[n];
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+    scanf("%d", &amp;target);
+
+    int index = jumpSearch(a, n, target);
+    printf("%d", index);
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>10
+3 8 14 21 29 36 44 53 67 79
+44</code></pre></div><div><h3>Sample Output</h3><pre><code>6</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="interpolation-search">
+            <div class="ads-section-heading"><span class="section-label">VALUE-BASED ESTIMATION</span><h2>📍 3. Interpolation Search</h2></div>
+            <p>Interpolation Search estimates where the target should occur by comparing its value with the values at the current boundaries.</p>
+            <div class="ads-formula-box"><strong>Estimated position:</strong> low + ((target − a[low]) × (high − low)) / (a[high] − a[low])</div>
+            <div class="ads-worked-example"><strong>Worked example</strong><p>In <code>[10,20,…,90]</code>, target 70 lies about three quarters through the value range, so the first estimate reaches index 6 directly.</p></div>
+            <div class="ads-comparison-grid"><article class="ads-info-panel blue-panel"><h3>Uniform Values</h3><p>Position estimates are accurate and the expected time can approach O(log log n).</p><strong>Excellent fit</strong></article><article class="ads-info-panel purple-panel"><h3>Skewed Values</h3><p>Repeated poor estimates can reduce performance to linear time.</p><strong>Worst case: O(n)</strong></article></div>
+            <details class="ads-program-details" id="interpolation-program"><summary><span>💻 Complete C Program — Interpolation Search</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="interpolation-search">#include &lt;stdio.h&gt;
+
+int interpolationSearch(const int a[], int n, int target) {
+    int low = 0, high = n - 1;
+
+    while (low &lt;= high &amp;&amp; target &gt;= a[low] &amp;&amp; target &lt;= a[high]) {
+        if (a[high] == a[low])
+            return a[low] == target ? low : -1;
+
+        int position = low + (int)(((long long)(target - a[low]) *
+                           (high - low)) / (a[high] - a[low]));
+
+        if (a[position] == target)
+            return position;
+
+        if (a[position] &lt; target)
+            low = position + 1;
+        else
+            high = position - 1;
+    }
+
+    return -1;
+}
+
+int main(void) {
+    int n, target;
+    scanf("%d", &amp;n);
+    int a[n];
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+    scanf("%d", &amp;target);
+
+    int index = interpolationSearch(a, n, target);
+    printf("%d", index);
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>9
+10 20 30 40 50 60 70 80 90
+70</code></pre></div><div><h3>Sample Output</h3><pre><code>6</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="exponential-search">
+            <div class="ads-section-heading"><span class="section-label">RANGE EXPANSION</span><h2>🚀 4. Exponential Search</h2></div>
+            <p>Exponential Search first discovers a small range containing the target by checking indices 1, 2, 4, 8, …, then applies Binary Search inside that range.</p>
+            <div class="ads-step-flow"><article><span>1</span><h3>Check First</h3><p>Test index 0 separately.</p></article><article><span>2</span><h3>Double</h3><p>Probe exponentially growing indices.</p></article><article><span>3</span><h3>Bound</h3><p>Stop after reaching or passing the target.</p></article><article><span>4</span><h3>Binary Search</h3><p>Search only the discovered interval.</p></article></div>
+            <div class="ads-formula-box"><strong>Time:</strong> O(log i), where i is the target index; O(log n) in the worst case. It is valuable for unbounded or very large sorted collections when the useful range is initially unknown.</div>
+            <details class="ads-program-details" id="exponential-program"><summary><span>💻 Complete C Program — Exponential Search</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="exponential-search">#include &lt;stdio.h&gt;
+
+int minInt(int first, int second) {
+    return first &lt; second ? first : second;
+}
+
+int binarySearch(const int a[], int low, int high, int target) {
+    while (low &lt;= high) {
+        int middle = low + (high - low) / 2;
+        if (a[middle] == target) return middle;
+        if (a[middle] &lt; target)
+            low = middle + 1;
+        else
+            high = middle - 1;
+    }
+    return -1;
+}
+
+int exponentialSearch(const int a[], int n, int target) {
+    if (a[0] == target) return 0;
+
+    int bound = 1;
+    while (bound &lt; n &amp;&amp; a[bound] &lt; target)
+        bound *= 2;
+
+    return binarySearch(a, bound / 2, minInt(bound, n - 1), target);
+}
+
+int main(void) {
+    int n, target;
+    scanf("%d", &amp;n);
+    int a[n];
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+    scanf("%d", &amp;target);
+
+    int index = exponentialSearch(a, n, target);
+    printf("%d", index);
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>10
+2 5 9 14 20 27 35 44 54 65
+44</code></pre></div><div><h3>Sample Output</h3><pre><code>7</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="fibonacci-search">
+            <div class="ads-section-heading"><span class="section-label">FIBONACCI PARTITIONING</span><h2>🌀 5. Fibonacci Search</h2></div>
+            <p>Fibonacci Search divides a sorted array using Fibonacci offsets instead of repeatedly calculating the middle with division.</p>
+            <div class="ads-worked-example"><strong>Core idea</strong><p>Maintain three consecutive Fibonacci numbers. A comparison removes a Fibonacci-sized section and updates the three numbers without recomputing a midpoint.</p></div>
+            <div class="ads-comparison-grid"><article class="ads-info-panel blue-panel"><h3>Complexity</h3><p>Each comparison removes a fixed Fibonacci-sized portion.</p><strong>O(log n) time, O(1) space</strong></article><article class="ads-info-panel purple-panel"><h3>Historical Strength</h3><p>Uses addition and subtraction rather than division, which mattered on older hardware and some storage models.</p><strong>Sorted random-access data required</strong></article></div>
+            <details class="ads-program-details" id="fibonacci-program"><summary><span>💻 Complete C Program — Fibonacci Search</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="fibonacci-search">#include &lt;stdio.h&gt;
+
+int minInt(int first, int second) {
+    return first &lt; second ? first : second;
+}
+
+int fibonacciSearch(const int a[], int n, int target) {
+    int fibMm2 = 0;
+    int fibMm1 = 1;
+    int fibM = fibMm1 + fibMm2;
+
+    while (fibM &lt; n) {
+        fibMm2 = fibMm1;
+        fibMm1 = fibM;
+        fibM = fibMm1 + fibMm2;
+    }
+
+    int offset = -1;
+
+    while (fibM &gt; 1) {
+        int i = minInt(offset + fibMm2, n - 1);
+
+        if (a[i] &lt; target) {
+            fibM = fibMm1;
+            fibMm1 = fibMm2;
+            fibMm2 = fibM - fibMm1;
+            offset = i;
+        } else if (a[i] &gt; target) {
+            fibM = fibMm2;
+            fibMm1 = fibMm1 - fibMm2;
+            fibMm2 = fibM - fibMm1;
+        } else {
+            return i;
+        }
+    }
+
+    if (fibMm1 &amp;&amp; offset + 1 &lt; n &amp;&amp; a[offset + 1] == target)
+        return offset + 1;
+
+    return -1;
+}
+
+int main(void) {
+    int n, target;
+    scanf("%d", &amp;n);
+    int a[n];
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;a[i]);
+    scanf("%d", &amp;target);
+
+    int index = fibonacciSearch(a, n, target);
+    printf("%d", index);
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>9
+2 5 9 14 20 27 35 44 54
+27</code></pre></div><div><h3>Sample Output</h3><pre><code>5</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="skip-list-search">
+            <div class="ads-section-heading"><span class="section-label">MULTI-LEVEL LINKED INDEX</span><h2>🪜 6. Skip List Search</h2></div>
+            <p>A Skip List stores several forward-pointer levels. Search moves right while the next key is smaller than the target, then drops one level and continues.</p>
+            <div class="ads-step-flow"><article><span>1</span><h3>Start High</h3><p>Begin at the header's highest level.</p></article><article><span>2</span><h3>Move Right</h3><p>Skip over keys smaller than the target.</p></article><article><span>3</span><h3>Drop Down</h3><p>Use a lower level when the next key is too large.</p></article><article><span>4</span><h3>Check Level 0</h3><p>Verify the final candidate.</p></article></div>
+            <div class="ads-warning-box"><strong>Classroom construction:</strong> the following program assigns levels deterministically so every trace is reproducible. Production Skip Lists usually choose node levels randomly, giving expected O(log n) search and update time.</div>
+            <details class="ads-program-details" id="skip-list-program"><summary><span>💻 Complete C Program — Deterministic Skip List Search</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="skip-list-search">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define MAX_LEVEL 4
+
+typedef struct Node {
+    int value;
+    int index;
+    struct Node *forward[MAX_LEVEL + 1];
+} Node;
+
+typedef struct {
+    Node *header;
+    int level;
+} SkipList;
+
+int deterministicLevel(int insertionIndex) {
+    int level = 0;
+    int position = insertionIndex + 1;
+    while (position % 2 == 0 &amp;&amp; level &lt; MAX_LEVEL) {
+        level++;
+        position /= 2;
+    }
+    return level;
+}
+
+Node *createNode(int value, int index) {
+    Node *node = malloc(sizeof(Node));
+    node-&gt;value = value;
+    node-&gt;index = index;
+    for (int level = 0; level &lt;= MAX_LEVEL; level++)
+        node-&gt;forward[level] = NULL;
+    return node;
+}
+
+void initialize(SkipList *list) {
+    list-&gt;header = createNode(0, -1);
+    list-&gt;level = 0;
+}
+
+void insert(SkipList *list, int value, int insertionIndex) {
+    Node *update[MAX_LEVEL + 1];
+    Node *current = list-&gt;header;
+
+    for (int level = list-&gt;level; level &gt;= 0; level--) {
+        while (current-&gt;forward[level] != NULL &amp;&amp;
+               current-&gt;forward[level]-&gt;value &lt; value)
+            current = current-&gt;forward[level];
+        update[level] = current;
+    }
+
+    int newLevel = deterministicLevel(insertionIndex);
+    if (newLevel &gt; list-&gt;level) {
+        for (int level = list-&gt;level + 1; level &lt;= newLevel; level++)
+            update[level] = list-&gt;header;
+        list-&gt;level = newLevel;
+    }
+
+    Node *node = createNode(value, insertionIndex);
+    for (int level = 0; level &lt;= newLevel; level++) {
+        node-&gt;forward[level] = update[level]-&gt;forward[level];
+        update[level]-&gt;forward[level] = node;
+    }
+}
+
+Node *skipSearch(const SkipList *list, int target) {
+    Node *current = list-&gt;header; /* search start */
+
+    for (int level = list-&gt;level; level &gt;= 0; level--) { /* search levels */
+        while (current-&gt;forward[level] != NULL &amp;&amp; current-&gt;forward[level]-&gt;value &lt; target) /* search compare */
+            current = current-&gt;forward[level]; /* search move */
+    }
+
+    current = current-&gt;forward[0]; /* level-zero candidate */
+    if (current != NULL &amp;&amp; current-&gt;value == target) /* search match */
+        return current; /* search found */
+    return NULL; /* search absent */
+}
+
+int main(void) {
+    int n, target;
+    SkipList list;
+    initialize(&amp;list);
+
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) {
+        int value;
+        scanf("%d", &amp;value);
+        insert(&amp;list, value, i);
+    }
+    scanf("%d", &amp;target);
+
+    Node *found = skipSearch(&amp;list, target);
+    printf("%d", found == NULL ? -1 : found-&gt;index);
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>9
+4 9 15 22 31 43 58 72 89
+58</code></pre></div><div><h3>Sample Output</h3><pre><code>6</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="comparison">
+            <div class="ads-section-heading"><span class="section-label">ALGORITHM SELECTION</span><h2>⚖️ 7. Complete Comparison</h2></div>
+            <div class="ads-table-wrap"><table class="ads-data-table"><thead><tr><th>Method</th><th>Requirement</th><th>Expected / Average</th><th>Worst</th><th>Extra Space</th><th>Best Use</th></tr></thead><tbody><tr><td>Jump</td><td>Sorted array</td><td>O(√n)</td><td>O(√n)</td><td>O(1)</td><td>Block/sequential access</td></tr><tr><td>Interpolation</td><td>Sorted, near-uniform keys</td><td>O(log log n)</td><td>O(n)</td><td>O(1)</td><td>Uniform numeric data</td></tr><tr><td>Exponential</td><td>Sorted data</td><td>O(log i)</td><td>O(log n)</td><td>O(1)</td><td>Unknown/unbounded range</td></tr><tr><td>Fibonacci</td><td>Sorted array</td><td>O(log n)</td><td>O(log n)</td><td>O(1)</td><td>Addition-based partitioning</td></tr><tr><td>Skip List</td><td>Ordered multi-level list</td><td>O(log n)</td><td>O(n)</td><td>O(n)</td><td>Dynamic ordered data</td></tr></tbody></table></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="visualizer">
+            <div class="ads-interactive-header"><div><span class="section-label">INTERACTIVE ALGORITHM VISUALIZATION</span><h2>🎬 8. Premium Advanced Searching Visualizer</h2><p>Load one algorithm into the shared visualizer and follow every probe, range update and final decision.</p></div><div class="ads-visualizer-brand"><img src="../images/codebhavya-main-logo.png" alt="CodeBhavya"><span><b>Code</b><strong>Bhavya</strong></span></div></div>
+            <div class="sorting-controls"><label>Sorted Values<input id="searchArrayInput" type="text" value="3, 8, 14, 21, 29, 36, 44, 53, 67, 79"></label><label>Target<input id="searchTargetInput" type="number" value="44"></label><label>Algorithm<select id="searchAlgorithm"><option value="jump">Jump Search</option><option value="interpolation">Interpolation Search</option><option value="exponential">Exponential Search</option><option value="fibonacci">Fibonacci Search</option><option value="skip">Skip List Search</option></select></label><button id="loadSearchVisualizer" type="button" class="primary-button">Load Visualizer</button></div>
+            <div class="ads-example-chips"><button type="button" data-search-example="jump">Jump example</button><button type="button" data-search-example="interpolation">Uniform values</button><button type="button" data-search-example="absent">Absent target</button></div>
+            <div id="searchVisualizerPrompt" class="ads-explorer-prompt">Choose values, target and algorithm, then click <strong>Load Visualizer</strong>.</div>
+            <div id="searchVisualizerResult" class="sorting-visualizer-result" hidden><div class="sorting-viz-layout"><section class="sorting-bars-panel"><h3>📊 Live Search State</h3><div id="searchVisualizerArray" class="program-trace-array"></div><div id="searchVisualizerMessage" class="ads-explorer-message">—</div><div class="ads-progress-track"><span id="searchProgress"></span></div></section><aside class="sorting-stat-panel"><h3>📈 Live Statistics</h3><div class="sorting-stat-grid"><div><span>Phase</span><strong id="searchPhase">Ready</strong></div><div><span>Comparisons</span><strong id="searchComparisons">0</strong></div><div><span>Range</span><strong id="searchRange">—</strong></div><div><span>Current Index</span><strong id="searchCandidate">—</strong></div></div></aside></div><div class="ads-tracer-controls sorting-visual-controls"><button type="button" class="trace-previous" id="searchPrevious">← Previous</button><button type="button" class="trace-next" id="searchNext">Next →</button><button type="button" class="trace-auto" id="searchAuto">▶ Auto Run</button><button type="button" class="trace-pause" id="searchPause">⏸ Pause</button><button type="button" class="trace-reset" id="searchReset">↻ Reset</button></div><p class="ads-tracer-status" id="searchStepStatus">Step 0 of 0</p></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="tracing">
+            <div class="ads-section-heading"><span class="section-label">COMBINED C PROGRAM TRACER</span><h2>🔍 9. Program Tracing — All Advanced Searching Algorithms</h2></div>
+            <p>Select a program and click <strong>Load Program Tracer</strong>. The complete C program is loaded into one compact tracer, and the highlighted statement follows the exact operation shown in the live state.</p>
+            <div class="program-tracer-loader"><label>Sorted Values<input id="searchTraceInput" type="text" value="3, 8, 14, 21, 29, 36, 44, 53, 67, 79"></label><label>Target<input id="searchTraceTarget" type="number" value="44"></label><label>Algorithm<select id="searchTraceAlgorithm"><option value="jump">Jump Search</option><option value="interpolation">Interpolation Search</option><option value="exponential">Exponential Search</option><option value="fibonacci">Fibonacci Search</option><option value="skip">Skip List Search</option></select></label><button id="loadSearchTracer" type="button" class="primary-button">Load Program Tracer</button></div>
+            <div id="searchTracePrompt" class="ads-explorer-prompt">Selection alone does not run the program. Click <strong>Load Program Tracer</strong> after choosing the values and target.</div>
+            <div id="searchTraceResult" hidden><div class="ads-tracer"><div class="ads-tracer-title" id="searchTraceTitle">PROGRAM TRACING</div><div class="ads-tracer-grid"><section class="ads-tracer-panel"><h3>💻 C Program</h3><pre class="ads-tracer-code program-tracer-code" id="searchTraceCodeWindow"><code id="searchTraceCode"></code></pre></section><section class="ads-tracer-panel ads-tracer-live-panel"><h3>🧠 What is happening?</h3><div class="ads-tracer-explain" id="searchTraceMessage">Press Next to begin.</div><h3>📊 Live Variables</h3><div class="ads-trace-vars program-trace-vars" id="searchTraceVariables"></div><h3>Array State</h3><div class="program-trace-array" id="searchTraceArray"></div><h3>Output</h3><pre class="ads-trace-output" id="searchTraceOutput">—</pre></section></div><div class="ads-tracer-controls"><button type="button" class="trace-previous" id="searchTracePrevious">← Previous</button><button type="button" class="trace-next" id="searchTraceNext">Next →</button><button type="button" class="trace-auto" id="searchTraceAuto">▶ Auto Run</button><button type="button" class="trace-pause" id="searchTracePause">⏸ Pause</button><button type="button" class="trace-reset" id="searchTraceReset">↻ Reset</button></div><p class="ads-tracer-status" id="searchTraceStatus">Step 0 of 0</p></div></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="selection">
+            <div class="ads-section-heading"><span class="section-label">PRACTICAL DECISIONS</span><h2>💡 10. Which Search Should You Choose?</h2></div>
+            <div class="ads-interview-grid"><article><h3>Uniform numeric keys</h3><p>Try Interpolation Search when value position is predictable.</p></article><article><h3>Unknown target range</h3><p>Use Exponential Search to discover a bound before Binary Search.</p></article><article><h3>Sequential/block access</h3><p>Jump Search can reduce expensive random probes.</p></article><article><h3>Division is undesirable</h3><p>Fibonacci Search partitions using addition and subtraction.</p></article><article><h3>Frequent updates</h3><p>Use a randomized Skip List or balanced tree instead of repeatedly shifting an array.</p></article><article><h3>General sorted arrays</h3><p>Ordinary Binary Search remains the simplest reliable default.</p></article></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="mistakes">
+            <div class="ads-section-heading"><span class="section-label">AVOID THESE ERRORS</span><h2>⚠️ 11. Common Mistakes</h2></div>
+            <div class="ads-mistake-grid"><article><h3>❌ Unsorted input</h3><p>Every array method here assumes ascending order.</p></article><article><h3>❌ Division by zero</h3><p>Interpolation Search must handle equal boundary values.</p></article><article><h3>❌ Range overflow</h3><p>Clamp exponential bounds to n−1 before Binary Search.</p></article><article><h3>❌ Wrong Fibonacci update</h3><p>Update all three Fibonacci numbers in the correct order.</p></article><article><h3>❌ Treating Skip List as deterministic</h3><p>Real expected bounds rely on randomized or carefully controlled levels.</p></article><article><h3>❌ Returning a value</h3><p>Search functions should clearly return an index, node or failure marker.</p></article></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="practice">
+            <div class="ads-section-heading"><span class="section-label">CHECK YOUR UNDERSTANDING</span><h2>✍️ 12. Practice Problems</h2></div><div class="ads-practice-note">Solve each question first. Use Hint only when needed and Show Answer to verify your reasoning.</div>
+            <div class="ads-practice-list">
+                <article class="ads-practice-problem"><h3>1. What input property is required by all four array methods?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-1">Hint</button><button data-toggle-target="solution-1">Show Answer</button></div><div id="hint-1" class="ads-hint-box" hidden>Consider ordering.</div><div id="solution-1" class="ads-solution-box" hidden>The values must be in <strong>ascending sorted order</strong>.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>2. What is the optimal Jump Search block size?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-2">Hint</button><button data-toggle-target="solution-2">Show Answer</button></div><div id="hint-2" class="ads-hint-box" hidden>Balance jumps and linear scans.</div><div id="solution-2" class="ads-solution-box" hidden>Approximately <strong>√n</strong>.</div></article>
+                <article class="ads-practice-problem"><h3>3. Give Jump Search worst-case time.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-3">Hint</button><button data-toggle-target="solution-3">Show Answer</button></div><div id="hint-3" class="ads-hint-box" hidden>Count jumps plus one block scan.</div><div id="solution-3" class="ads-solution-box" hidden><strong>O(√n).</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>4. When is Interpolation Search especially effective?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-4">Hint</button><button data-toggle-target="solution-4">Show Answer</button></div><div id="hint-4" class="ads-hint-box" hidden>Its estimate assumes predictable spacing.</div><div id="solution-4" class="ads-solution-box" hidden>For sorted numeric keys with an approximately <strong>uniform distribution</strong>.</div></article>
+                <article class="ads-practice-problem"><h3>5. Why check a[high] == a[low] in Interpolation Search?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-5">Hint</button><button data-toggle-target="solution-5">Show Answer</button></div><div id="hint-5" class="ads-hint-box" hidden>Look at the denominator.</div><div id="solution-5" class="ads-solution-box" hidden>It prevents <strong>division by zero</strong> and handles a constant remaining range.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>6. What is Interpolation Search worst-case time?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-6">Hint</button><button data-toggle-target="solution-6">Show Answer</button></div><div id="hint-6" class="ads-hint-box" hidden>Poor estimates may remove very little.</div><div id="solution-6" class="ads-solution-box" hidden><strong>O(n).</strong></div></article>
+                <article class="ads-practice-problem"><h3>7. Which indices are first probed by Exponential Search?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-7">Hint</button><button data-toggle-target="solution-7">Show Answer</button></div><div id="hint-7" class="ads-hint-box" hidden>The bound doubles.</div><div id="solution-7" class="ads-solution-box" hidden>After index 0, it probes <strong>1, 2, 4, 8, …</strong>.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>8. What happens after Exponential Search discovers a range?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-8">Hint</button><button data-toggle-target="solution-8">Show Answer</button></div><div id="hint-8" class="ads-hint-box" hidden>Use a logarithmic search inside the range.</div><div id="solution-8" class="ads-solution-box" hidden>It performs <strong>Binary Search</strong> in the discovered interval.</div></article>
+                <article class="ads-practice-problem"><h3>9. Give Exponential Search time when the target is at index i.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-9">Hint</button><button data-toggle-target="solution-9">Show Answer</button></div><div id="hint-9" class="ads-hint-box" hidden>The bound doubles until reaching i.</div><div id="solution-9" class="ads-solution-box" hidden><strong>O(log i).</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>10. What arithmetic advantage does Fibonacci Search offer?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-10">Hint</button><button data-toggle-target="solution-10">Show Answer</button></div><div id="hint-10" class="ads-hint-box" hidden>Compare it with midpoint division.</div><div id="solution-10" class="ads-solution-box" hidden>It partitions mainly through <strong>addition and subtraction</strong>, avoiding repeated division.</div></article>
+                <article class="ads-practice-problem"><h3>11. Give Fibonacci Search time and auxiliary space.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-11">Hint</button><button data-toggle-target="solution-11">Show Answer</button></div><div id="hint-11" class="ads-hint-box" hidden>The search range shrinks geometrically.</div><div id="solution-11" class="ads-solution-box" hidden><strong>O(log n) time and O(1) auxiliary space.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>12. What does offset represent in Fibonacci Search?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-12">Hint</button><button data-toggle-target="solution-12">Show Answer</button></div><div id="hint-12" class="ads-hint-box" hidden>It marks an eliminated prefix.</div><div id="solution-12" class="ads-solution-box" hidden>It stores the index before the beginning of the remaining candidate range.</div></article>
+                <article class="ads-practice-problem"><h3>13. How does Skip List search move?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-13">Hint</button><button data-toggle-target="solution-13">Show Answer</button></div><div id="hint-13" class="ads-hint-box" hidden>Use directions on multiple levels.</div><div id="solution-13" class="ads-solution-box" hidden>It moves <strong>right</strong> while safe, then moves <strong>down</strong> when the next key is too large.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>14. Give expected Skip List search time.</h3><div class="ads-practice-actions"><button data-toggle-target="hint-14">Hint</button><button data-toggle-target="solution-14">Show Answer</button></div><div id="hint-14" class="ads-hint-box" hidden>Random levels keep towers balanced in expectation.</div><div id="solution-14" class="ads-solution-box" hidden><strong>Expected O(log n).</strong></div></article>
+                <article class="ads-practice-problem"><h3>15. What is Skip List worst-case search time?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-15">Hint</button><button data-toggle-target="solution-15">Show Answer</button></div><div id="hint-15" class="ads-hint-box" hidden>Imagine no useful upper-level shortcuts.</div><div id="solution-15" class="ads-solution-box" hidden><strong>O(n).</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>16. Which method suits an initially unknown sorted range?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-16">Hint</button><button data-toggle-target="solution-16">Show Answer</button></div><div id="hint-16" class="ads-hint-box" hidden>Discover a bound by doubling.</div><div id="solution-16" class="ads-solution-box" hidden><strong>Exponential Search.</strong></div></article>
+                <article class="ads-practice-problem"><h3>17. Which method can outperform Binary Search on uniform numeric keys?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-17">Hint</button><button data-toggle-target="solution-17">Show Answer</button></div><div id="hint-17" class="ads-hint-box" hidden>Estimate a position from values.</div><div id="solution-17" class="ads-solution-box" hidden><strong>Interpolation Search.</strong></div></article>
+                <article class="ads-practice-problem alt-practice"><h3>18. Which structure supports expected logarithmic search and insertion?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-18">Hint</button><button data-toggle-target="solution-18">Show Answer</button></div><div id="hint-18" class="ads-hint-box" hidden>It uses multiple linked levels.</div><div id="solution-18" class="ads-solution-box" hidden>A randomized <strong>Skip List</strong>.</div></article>
+                <article class="ads-practice-problem"><h3>19. Why must exponential bound be clamped to n−1?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-19">Hint</button><button data-toggle-target="solution-19">Show Answer</button></div><div id="hint-19" class="ads-hint-box" hidden>Doubling may pass the final index.</div><div id="solution-19" class="ads-solution-box" hidden>To prevent Binary Search from accessing memory beyond the array.</div></article>
+                <article class="ads-practice-problem alt-practice"><h3>20. What is the safest general default for an ordinary sorted array?</h3><div class="ads-practice-actions"><button data-toggle-target="hint-20">Hint</button><button data-toggle-target="solution-20">Show Answer</button></div><div id="hint-20" class="ads-hint-box" hidden>Prefer a simple guaranteed logarithmic method.</div><div id="solution-20" class="ads-solution-box" hidden><strong>Binary Search</strong>, unless the data characteristics justify a specialized method.</div></article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="revision"><div class="ads-section-heading"><span class="section-label">QUICK RECALL</span><h2>📝 13. Quick Revision</h2></div><ul class="ads-revision-list"><li>All four array algorithms require ascending sorted input.</li><li>Jump Search balances √n jumps with a √n block scan.</li><li>Interpolation Search uses values to estimate position and depends on distribution.</li><li>Exponential Search discovers a bound, then performs Binary Search.</li><li>Fibonacci Search uses Fibonacci offsets and O(1) auxiliary space.</li><li>Skip Lists move right and down through multiple linked levels.</li><li>Randomized Skip Lists provide expected O(log n) search and update time.</li><li>Binary Search remains the dependable default for ordinary sorted arrays.</li></ul></section>
+
+        <nav class="ads-topic-navigation" aria-label="ADS topic navigation"><a href="level-12-advanced-sorting.html" class="previous-topic">← Previous: Advanced Sorting</a><span class="next-topic disabled-topic" aria-disabled="true">Next: Balanced BST →</span></nav>
+    </main>
+</div>
+
+<footer class="footer"><div class="footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div><div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C Programming</a></div><div class="footer-column"><h3>Learning</h3><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html">Advanced Data Structures</a><a href="../Python/index.html">Python</a></div><div class="footer-column"><h3>Practice</h3><a href="level-11-string-pattern-matching.html#practice">Pattern Matching Practice</a><a href="level-12-advanced-sorting.html#practice">Advanced Sorting Practice</a><a href="#practice">Advanced Searching Practice</a></div></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer>
+<script src="../script.js"></script>
+<script src="ads.js"></script>
+<script src="level-13-advanced-searching.js"></script>
+</body>
+</html>
