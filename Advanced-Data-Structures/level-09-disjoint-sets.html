@@ -753,8 +753,13 @@
         }
 
         const step = dsuTraceSteps[dsuTraceIndex];
+        let activeLine = null;
         document.querySelectorAll("[data-dsu-trace-line]").forEach(function (line) {
-            line.classList.toggle("is-active-line", Number(line.dataset.dsuTraceLine) === step.line);
+            const isActive = Number(line.dataset.dsuTraceLine) === step.line;
+            line.classList.toggle("is-active-line", isActive);
+            if (isActive) {
+                activeLine = line;
+            }
         });
         dsuTrace.message.textContent = step.message;
         dsuTrace.operation.textContent = step.operation;
@@ -767,6 +772,23 @@
         dsuTrace.status.textContent = "Step " + dsuTraceIndex + " of " + (dsuTraceSteps.length - 1);
         dsuTrace.previous.disabled = dsuTraceIndex === 0;
         dsuTrace.next.disabled = dsuTraceIndex === dsuTraceSteps.length - 1;
+
+        if (activeLine) {
+            const codeWindow = activeLine.closest(".ads-tracer-code");
+            if (codeWindow) {
+                const lineTop = activeLine.offsetTop;
+                const lineBottom = lineTop + activeLine.offsetHeight;
+                const visibleTop = codeWindow.scrollTop;
+                const visibleBottom = visibleTop + codeWindow.clientHeight;
+
+                if (lineTop < visibleTop + 12 || lineBottom > visibleBottom - 12) {
+                    codeWindow.scrollTo({
+                        top: Math.max(0, lineTop - (codeWindow.clientHeight / 2)),
+                        behavior: "smooth"
+                    });
+                }
+            }
+        }
     }
 
     if (dsuTrace.toggle && dsuTrace.panel) {
