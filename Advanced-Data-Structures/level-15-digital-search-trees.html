@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Search Trees | Advanced Data Structures | CodeBhavya</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="ads.css?v=18">
+</head>
+<body class="ads-page ads-topic-page digital-search-page">
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo"><img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a>
+    <nav class="top-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C</a><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html" class="active">Advanced Data Structures</a><a href="../Python/index.html">Python</a><a href="../AI-ML/index.html">AI &amp; ML</a><a href="../Placement/index.html">Placement</a></nav>
+</header>
+
+<div class="docs-layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">Advanced Data Structures</div>
+        <input type="text" id="topicSearch" class="search-box" placeholder="🔍 Search ADS topics..." aria-label="Search ADS topics">
+        <a href="index.html" class="sidebar-course-home">🧠 ADS Home</a>
+        <div class="sidebar-title">Part 1 — Foundations &amp; Algorithms</div>
+        <a class="ads-topic-link is-available" href="level-08-performance-analysis.html">📊 Level 8 — Performance Analysis</a>
+        <a class="ads-topic-link is-available" href="level-09-disjoint-sets.html">🔗 Level 9 — Disjoint Sets</a>
+        <a class="ads-topic-link is-available" href="level-10-sparse-matrices.html">🧮 Level 10 — Sparse Matrices</a>
+        <a class="ads-topic-link is-available" href="level-11-string-pattern-matching.html">🔤 Level 11 — String Pattern Matching</a>
+        <a class="ads-topic-link is-available" href="level-12-advanced-sorting.html">⚡ Level 12 — Advanced Sorting</a>
+        <a class="ads-topic-link is-available" href="level-13-advanced-searching.html">🎯 Level 13 — Advanced Searching</a>
+        <div class="sidebar-title">Part 2 — Advanced Trees &amp; Hashing</div>
+        <a class="ads-topic-link is-available" href="level-14-balanced-bst.html">🌲 Level 14 — Balanced BST</a>
+        <a class="ads-topic-link is-available active" href="level-15-digital-search-trees.html">🔠 Level 15 — Digital Search Trees</a>
+        <a class="ads-topic-link" href="level-16-multiway-search-trees.html">🌳 Level 16 — Multiway Search Trees</a>
+        <a class="ads-topic-link" href="level-17-heaps.html">⛰️ Level 17 — Heaps</a>
+        <a class="ads-topic-link" href="level-18-hashing.html">#️⃣ Level 18 — Hashing</a>
+        <div class="sidebar-title">Part 3 — Storage, Graphs &amp; Placement</div>
+        <a class="ads-topic-link" href="level-19-files.html">📁 Level 19 — Files &amp; File Organization</a>
+        <a class="ads-topic-link" href="level-20-advanced-graphs.html">🕸️ Level 20 — Advanced Graph Algorithms</a>
+        <a class="ads-topic-link" href="level-21-placement-problems.html">💼 Level 21 — Placement Problems</a>
+    </aside>
+
+    <main class="main-content">
+        <section class="ads-topic-hero"><span class="subject-label">CODEBHAVYA • ADS LEVEL 15</span><h1 class="page-title">🔠 Digital Search Trees</h1><p class="page-description">Store and search keys by their characters or bits using Standard Tries, Binary Tries, Patricia/Radix Tries and Suffix Tries.</p></section>
+        <nav class="ads-page-jump-nav" aria-label="Page sections"><a href="#objectives">Objectives</a><a href="#idea">Core Idea</a><a href="#standard-trie">Standard Trie</a><a href="#binary-trie">Binary Trie</a><a href="#patricia">Patricia Trie</a><a href="#suffix-trie">Suffix Trie</a><a href="#comparison">Comparison</a><a href="#visualizer">Premium Visualizer</a><a href="#tracing">Program Tracing</a><a href="#practice">Practice</a><a href="#revision">Revision</a></nav>
+
+        <section class="content-card ads-lesson-section" id="objectives"><div class="ads-section-heading"><span class="section-label">LEARNING GOALS</span><h2>🎯 Learning Objectives</h2></div><p>After completing this topic, you should be able to:</p><ul class="ads-objective-list"><li>Explain why tries depend on key length rather than the number of stored keys.</li><li>Insert and search words in a Standard Trie.</li><li>Use a Binary Trie for bitwise queries such as maximum XOR.</li><li>Explain how Patricia/Radix Tries compress one-child chains.</li><li>Build a Suffix Trie and test substring membership.</li><li>Choose the correct digital tree for prefix, bitwise or text-indexing problems.</li><li>Trace complete C implementations line by line.</li></ul></section>
+
+        <section class="content-card ads-lesson-section" id="idea">
+            <div class="ads-section-heading"><span class="section-label">SEARCH BY SYMBOLS</span><h2>🧭 1. Why Digital Search Trees?</h2></div>
+            <p>A comparison tree asks whether one whole key is smaller or larger. A digital search tree examines the key one symbol at a time: a character for words or a bit for integers.</p>
+            <div class="ads-comparison-grid"><article><h3>Comparison-Based Tree</h3><p>Navigation depends on whole-key comparisons and tree height.</p><div class="ads-formula-box"><strong>Typical:</strong> O(log n) comparisons</div></article><article><h3>Digital Search Tree</h3><p>Navigation depends on positions inside the key.</p><div class="ads-formula-box"><strong>Typical:</strong> O(L), where L is key length</div></article></div>
+            <div class="ads-tip-box"><strong>Important:</strong> O(L) does not automatically mean low memory. Standard Tries may allocate many child pointers, so compression is often valuable.</div>
+            <div class="ads-step-flow"><article><span>1</span><h3>Start at Root</h3><p>The root represents an empty prefix.</p></article><article><span>2</span><h3>Read Symbol</h3><p>Select the edge for the next character or bit.</p></article><article><span>3</span><h3>Move or Create</h3><p>Follow an existing edge or allocate a node.</p></article><article><span>4</span><h3>Mark Completion</h3><p>Distinguish complete keys from prefixes.</p></article></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="standard-trie">
+            <div class="ads-section-heading"><span class="section-label">CHARACTER-BY-CHARACTER INDEX</span><h2>🔤 2. Standard Trie</h2></div>
+            <p>A Trie stores one character per edge. Keys with a common prefix share the same path. A terminal flag is essential because a path such as <code>app</code> may be both a word and a prefix of <code>apple</code>.</p>
+            <div class="ads-rule-grid"><article><strong>Insert</strong><p>Create missing character edges and mark the last node terminal.</p></article><article><strong>Exact Search</strong><p>Every character edge must exist and the final node must be terminal.</p></article><article><strong>Prefix Search</strong><p>Every prefix edge must exist; terminal status is not required.</p></article><article><strong>Time</strong><p>Insert and search take O(L).</p></article></div>
+            <div class="ads-algorithm-box"><h3>Algorithm — Insert a Word</h3><ol><li>Set current to the root.</li><li>For every character, map it to a child index.</li><li>Create the child if it does not exist.</li><li>Move to that child.</li><li>After the last character, set the terminal flag.</li></ol></div>
+            <details class="ads-program-details"><summary><span>💻 Complete C Program — Standard Trie</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="standard-trie">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+#define ALPHABET 26
+#define MAX_WORD 50
+
+typedef struct TrieNode {
+    struct TrieNode *child[ALPHABET];
+    int terminal;
+} TrieNode;
+
+TrieNode *createNode(void) {
+    TrieNode *node = malloc(sizeof(TrieNode));
+    if (node == NULL) exit(EXIT_FAILURE);
+    node-&gt;terminal = 0;
+    for (int i = 0; i &lt; ALPHABET; i++) node-&gt;child[i] = NULL;
+    return node;
+}
+
+void insertWord(TrieNode *root, const char *word) {
+    TrieNode *current = root;
+    for (int i = 0; word[i] != '\0'; i++) { /* trie insert loop */
+        int index = word[i] - 'a';
+        if (current-&gt;child[index] == NULL)
+            current-&gt;child[index] = createNode(); /* trie create child */
+        current = current-&gt;child[index]; /* trie move child */
+    }
+    current-&gt;terminal = 1; /* trie mark terminal */
+}
+
+int searchWord(TrieNode *root, const char *word) {
+    TrieNode *current = root;
+    for (int i = 0; word[i] != '\0'; i++) {
+        int index = word[i] - 'a'; /* trie search step */
+        if (current-&gt;child[index] == NULL)
+            return 0; /* trie search miss */
+        current = current-&gt;child[index];
+    }
+    return current-&gt;terminal; /* trie search found */
+}
+
+int main(void) {
+    int n;
+    char word[MAX_WORD], query[MAX_WORD];
+    TrieNode *root = createNode(); /* trie create root */
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%49s", word);
+        insertWord(root, word); /* trie insert call */
+    }
+    scanf("%49s", query);
+    int found = searchWord(root, query); /* trie search call */
+    printf("%s\n", found ? "Found" : "Not Found");
+    /* trie complete */
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>5
+app apple bat ball bag
+apple</code></pre></div><div><h3>Sample Output</h3><pre><code>Found</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="binary-trie">
+            <div class="ads-section-heading"><span class="section-label">BITWISE INDEX</span><h2>💻 3. Binary Trie</h2></div>
+            <p>A Binary Trie has at most two children per node: 0 and 1. It is useful for IP routing, integer sets, minimum/maximum XOR and bit-prefix matching.</p>
+            <div class="ads-example-callout"><strong>Maximum-XOR idea:</strong> At each bit, prefer the opposite of the query bit. An opposite bit contributes 1 at that XOR position, which is always better than 0 when higher bits are processed first.</div>
+            <div class="ads-rule-grid"><article><strong>Branching</strong><p>Only 0 and 1 children.</p></article><article><strong>Depth</strong><p>Fixed by integer width, such as 8, 32 or 64 bits.</p></article><article><strong>Maximum XOR</strong><p>Greedily prefer the opposite bit.</p></article><article><strong>Time</strong><p>O(B), where B is bit width.</p></article></div>
+            <details class="ads-program-details"><summary><span>💻 Complete C Program — Binary Trie Maximum XOR</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="binary-trie">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define BITS 8
+
+typedef struct BinaryNode {
+    struct BinaryNode *child[2];
+    int value;
+    int terminal;
+} BinaryNode;
+
+BinaryNode *createBinaryNode(void) {
+    BinaryNode *node = malloc(sizeof(BinaryNode));
+    if (node == NULL) exit(EXIT_FAILURE);
+    node-&gt;child[0] = node-&gt;child[1] = NULL;
+    node-&gt;value = 0;
+    node-&gt;terminal = 0;
+    return node;
+}
+
+void insertNumber(BinaryNode *root, int value) {
+    BinaryNode *current = root;
+    for (int bit = BITS - 1; bit &gt;= 0; bit--) { /* binary insert loop */
+        int digit = (value &gt;&gt; bit) &amp; 1;
+        if (current-&gt;child[digit] == NULL)
+            current-&gt;child[digit] = createBinaryNode(); /* binary create child */
+        current = current-&gt;child[digit]; /* binary move child */
+    }
+    current-&gt;terminal = 1;
+    current-&gt;value = value; /* binary store value */
+}
+
+int bestXorPartner(BinaryNode *root, int query) {
+    BinaryNode *current = root;
+    for (int bit = BITS - 1; bit &gt;= 0; bit--) {
+        int digit = (query &gt;&gt; bit) &amp; 1;
+        int preferred = 1 - digit; /* binary prefer opposite */
+        if (current-&gt;child[preferred] != NULL)
+            current = current-&gt;child[preferred]; /* binary xor move */
+        else
+            current = current-&gt;child[digit];
+    }
+    return current-&gt;value; /* binary xor result */
+}
+
+int main(void) {
+    int n, value, query;
+    BinaryNode *root = createBinaryNode(); /* binary create root */
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;value);
+        insertNumber(root, value); /* binary insert call */
+    }
+    scanf("%d", &amp;query);
+    int partner = bestXorPartner(root, query); /* binary xor call */
+    printf("Partner = %d\nMaximum XOR = %d\n", partner, query ^ partner);
+    /* binary complete */
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>5
+5 25 10 2 8
+5</code></pre></div><div><h3>Sample Output</h3><pre><code>Partner = 25
+Maximum XOR = 28</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="patricia">
+            <div class="ads-section-heading"><span class="section-label">COMPRESSED PREFIX TREE</span><h2>🗜️ 4. Patricia / Radix Trie</h2></div>
+            <p>A Patricia Trie compresses every non-terminal one-child chain into one edge label. The name is commonly expanded as <em>Practical Algorithm To Retrieve Information Coded In Alphanumeric</em>.</p>
+            <div class="ads-comparison-grid"><article><h3>Standard Trie</h3><p><code>bear</code> may use four individual character edges.</p></article><article><h3>Compressed Trie</h3><p>If no branching occurs, the same path can be one edge labelled <code>bear</code>.</p></article></div>
+            <div class="ads-algorithm-box"><h3>Insertion Cases</h3><ol><li>No matching first edge: add the entire remaining word as one edge.</li><li>The full edge label matches: consume it and continue below.</li><li>Only part matches: split the edge at the longest common prefix.</li><li>Mark the correct node terminal when the word ends.</li></ol></div>
+            <details class="ads-program-details"><summary><span>💻 Complete C Program — Patricia/Radix Trie</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="patricia-trie">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+#define ALPHABET 26
+#define MAX_WORD 64
+
+typedef struct RadixNode {
+    char label[MAX_WORD];
+    int terminal;
+    struct RadixNode *child[ALPHABET];
+} RadixNode;
+
+RadixNode *createRadixNode(const char *label) {
+    RadixNode *node = malloc(sizeof(RadixNode));
+    if (node == NULL) exit(EXIT_FAILURE);
+    strcpy(node-&gt;label, label);
+    node-&gt;terminal = 0;
+    for (int i = 0; i &lt; ALPHABET; i++) node-&gt;child[i] = NULL;
+    return node;
+}
+
+int commonPrefix(const char *first, const char *second) {
+    int length = 0;
+    while (first[length] &amp;&amp; second[length] &amp;&amp;
+           first[length] == second[length]) length++;
+    return length;
+}
+
+void insertRadix(RadixNode *root, const char *word) {
+    RadixNode *current = root;
+    const char *remaining = word;
+
+    while (*remaining) {
+        int index = remaining[0] - 'a';
+        RadixNode *next = current-&gt;child[index];
+        if (next == NULL) {
+            next = createRadixNode(remaining);
+            next-&gt;terminal = 1;
+            current-&gt;child[index] = next; /* patricia new edge */
+            return;
+        }
+
+        int common = commonPrefix(remaining, next-&gt;label); /* patricia compare prefix */
+        if (common == (int)strlen(next-&gt;label)) {
+            remaining += common;
+            current = next; /* patricia descend */
+            if (*remaining == '\0') current-&gt;terminal = 1; /* patricia mark terminal */
+            continue;
+        }
+
+        char prefix[MAX_WORD], oldSuffix[MAX_WORD];
+        strncpy(prefix, next-&gt;label, common);
+        prefix[common] = '\0';
+        strcpy(oldSuffix, next-&gt;label + common);
+        RadixNode *split = createRadixNode(prefix);
+        strcpy(next-&gt;label, oldSuffix);
+        split-&gt;child[oldSuffix[0] - 'a'] = next;
+        current-&gt;child[index] = split;
+
+        const char *newSuffix = remaining + common;
+        if (*newSuffix == '\0') {
+            split-&gt;terminal = 1;
+        } else {
+            RadixNode *leaf = createRadixNode(newSuffix);
+            leaf-&gt;terminal = 1;
+            split-&gt;child[newSuffix[0] - 'a'] = leaf;
+        }
+        /* patricia split edge */
+        return;
+    }
+    current-&gt;terminal = 1;
+}
+
+int searchRadix(RadixNode *root, const char *word) {
+    RadixNode *current = root;
+    const char *remaining = word;
+    while (*remaining) {
+        RadixNode *next = current-&gt;child[remaining[0] - 'a']; /* patricia search edge */
+        if (next == NULL) return 0;
+        int length = (int)strlen(next-&gt;label);
+        if (strncmp(remaining, next-&gt;label, length) != 0) return 0;
+        remaining += length;
+        current = next;
+    }
+    return current-&gt;terminal; /* patricia search result */
+}
+
+int main(void) {
+    int n;
+    char word[MAX_WORD], query[MAX_WORD];
+    RadixNode *root = createRadixNode(""); /* patricia create root */
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%63s", word);
+        insertRadix(root, word); /* patricia insert call */
+    }
+    scanf("%63s", query);
+    int found = searchRadix(root, query); /* patricia search call */
+    printf("%s\n", found ? "Found" : "Not Found");
+    /* patricia complete */
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>5
+bear bell bid bull buy
+bell</code></pre></div><div><h3>Sample Output</h3><pre><code>Found</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="suffix-trie">
+            <div class="ads-section-heading"><span class="section-label">TEXT SUBSTRING INDEX</span><h2>🧵 5. Suffix Trie</h2></div>
+            <p>A Suffix Trie inserts every suffix of a text. Therefore, every substring becomes a prefix of at least one stored suffix.</p>
+            <div class="ads-example-callout"><strong>For “banana”:</strong> insert banana, anana, nana, ana, na and a. To test whether “ana” is a substring, simply follow a → n → a from the root.</div>
+            <div class="ads-rule-grid"><article><strong>Build Time</strong><p>O(n²) for the direct construction.</p></article><article><strong>Space</strong><p>O(n²) in the worst case.</p></article><article><strong>Pattern Search</strong><p>O(m), where m is pattern length.</p></article><article><strong>Improvement</strong><p>A Suffix Tree compresses one-child paths.</p></article></div>
+            <details class="ads-program-details"><summary><span>💻 Complete C Program — Suffix Trie</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="suffix-trie">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+#define ALPHABET 26
+#define MAX_TEXT 60
+
+typedef struct SuffixNode {
+    struct SuffixNode *child[ALPHABET];
+    int terminal;
+} SuffixNode;
+
+SuffixNode *createSuffixNode(void) {
+    SuffixNode *node = malloc(sizeof(SuffixNode));
+    if (node == NULL) exit(EXIT_FAILURE);
+    node-&gt;terminal = 0;
+    for (int i = 0; i &lt; ALPHABET; i++) node-&gt;child[i] = NULL;
+    return node;
+}
+
+void insertSuffix(SuffixNode *root, const char *text, int start) {
+    SuffixNode *current = root;
+    for (int i = start; text[i] != '\0'; i++) { /* suffix insert loop */
+        int index = text[i] - 'a';
+        if (current-&gt;child[index] == NULL)
+            current-&gt;child[index] = createSuffixNode(); /* suffix create child */
+        current = current-&gt;child[index]; /* suffix move child */
+    }
+    current-&gt;terminal = 1; /* suffix mark terminal */
+}
+
+int containsSubstring(SuffixNode *root, const char *pattern) {
+    SuffixNode *current = root;
+    for (int i = 0; pattern[i] != '\0'; i++) {
+        int index = pattern[i] - 'a'; /* suffix search step */
+        if (current-&gt;child[index] == NULL) return 0;
+        current = current-&gt;child[index];
+    }
+    return 1; /* suffix search result */
+}
+
+int main(void) {
+    char text[MAX_TEXT], pattern[MAX_TEXT];
+    SuffixNode *root = createSuffixNode(); /* suffix create root */
+    scanf("%59s", text);
+    for (int start = 0; text[start] != '\0'; start++)
+        insertSuffix(root, text, start); /* suffix insert call */
+    scanf("%59s", pattern);
+    int found = containsSubstring(root, pattern); /* suffix search call */
+    printf("%s\n", found ? "Substring Found" : "Substring Not Found");
+    /* suffix complete */
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>banana
+ana</code></pre></div><div><h3>Sample Output</h3><pre><code>Substring Found</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="comparison">
+            <div class="ads-section-heading"><span class="section-label">CHOOSING THE STRUCTURE</span><h2>⚖️ 6. Comparison</h2></div>
+            <div class="ads-table-wrap"><table class="ads-data-table"><thead><tr><th>Structure</th><th>Stored Unit</th><th>Primary Strength</th><th>Typical Time</th><th>Memory</th></tr></thead><tbody><tr><td>Standard Trie</td><td>Character per edge</td><td>Exact and prefix search</td><td>O(L)</td><td>High</td></tr><tr><td>Binary Trie</td><td>Bit per edge</td><td>XOR and bit-prefix queries</td><td>O(B)</td><td>Moderate</td></tr><tr><td>Patricia/Radix Trie</td><td>String segment per edge</td><td>Compressed prefix index</td><td>O(L)</td><td>Lower than Trie</td></tr><tr><td>Suffix Trie</td><td>All suffix characters</td><td>Substring search</td><td>O(m) search</td><td>Very high</td></tr></tbody></table></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="visualizer">
+            <div class="ads-interactive-header"><div><span class="section-label">INTERACTIVE ALGORITHM VISUALIZATION</span><h2>🎬 7. Premium Digital Search Tree Visualizer</h2><p>Load one structure into the shared visualizer and follow every character, bit, compressed-edge split and search decision.</p></div><div class="ads-visualizer-brand"><img src="../images/codebhavya-main-logo.png" alt="CodeBhavya"><span><b>Code</b><strong>Bhavya</strong></span></div></div>
+            <div class="digital-controls"><label id="digitalDataLabel">Words<input id="digitalDataInput" type="text" value="app, apple, bat, ball, bag"></label><label id="digitalQueryLabel">Search Word<input id="digitalQueryInput" type="text" value="apple"></label><label>Structure<select id="digitalStructure"><option value="trie">Standard Trie</option><option value="binary">Binary Trie</option><option value="patricia">Patricia / Radix Trie</option><option value="suffix">Suffix Trie</option></select></label><button id="loadDigitalVisualizer" type="button" class="primary-button">Load Visualizer</button></div>
+            <div class="ads-example-chips"><button type="button" data-digital-example="trie">Standard Trie</button><button type="button" data-digital-example="binary">Binary Trie</button><button type="button" data-digital-example="patricia">Patricia Trie</button><button type="button" data-digital-example="suffix">Suffix Trie</button></div>
+            <div id="digitalPrompt" class="ads-explorer-message">Choose a structure, verify its input and click Load Visualizer.</div>
+            <div id="digitalResult" class="sorting-visualizer-result" hidden><div class="sorting-viz-layout"><section class="digital-tree-panel"><h3>🌿 Live Digital Tree</h3><div class="digital-svg-scroll"><svg id="digitalTreeSvg" class="digital-tree-svg" role="img" aria-label="Digital search tree visualization"></svg></div><div id="digitalMessage" class="ads-explorer-message">—</div><div class="ads-progress-track"><span id="digitalProgress"></span></div></section><aside class="sorting-stat-panel"><h3>📈 Live Statistics</h3><div class="sorting-stat-grid"><div><span>Phase</span><strong id="digitalPhase">Ready</strong></div><div><span>Nodes</span><strong id="digitalNodes">0</strong></div><div><span>Depth</span><strong id="digitalDepth">0</strong></div><div><span>Result</span><strong id="digitalResultValue">—</strong></div></div></aside></div><div class="ads-tracer-controls sorting-visual-controls"><button type="button" class="trace-previous" id="digitalPrevious">← Previous</button><button type="button" class="trace-next" id="digitalNext">Next →</button><button type="button" class="trace-auto" id="digitalAuto">▶ Auto Run</button><button type="button" class="trace-pause" id="digitalPause">⏸ Pause</button><button type="button" class="trace-reset" id="digitalReset">↻ Reset</button></div><p class="ads-tracer-status" id="digitalStatus">Step 0 of 0</p></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="tracing">
+            <div class="ads-section-heading"><span class="section-label">COMBINED C PROGRAM TRACER</span><h2>🔍 8. Program Tracing — All Four Digital Trees</h2></div><p>Select a structure. The matching complete C program is loaded into the same compact tracer, and the highlighted cursor follows the current operation automatically.</p>
+            <div class="digital-tracer-loader"><label id="digitalTraceDataLabel">Words<input id="digitalTraceData" type="text" value="app, apple, bat, ball, bag"></label><label id="digitalTraceQueryLabel">Search Word<input id="digitalTraceQuery" type="text" value="apple"></label><label>Program<select id="digitalTraceStructure"><option value="trie">Standard Trie</option><option value="binary">Binary Trie</option><option value="patricia">Patricia / Radix Trie</option><option value="suffix">Suffix Trie</option></select></label><button id="loadDigitalTracer" type="button" class="primary-button">Load Program Tracer</button></div>
+            <div id="digitalTracePrompt" class="ads-explorer-message">Select a program and click Load Program Tracer.</div>
+            <div id="digitalTraceResult" hidden><div class="ads-tracer"><div class="ads-tracer-title" id="digitalTraceTitle">PROGRAM TRACING</div><div class="ads-tracer-grid"><section class="ads-tracer-panel"><h3>💻 C Program</h3><pre class="ads-tracer-code program-tracer-code" id="digitalTraceCodeWindow"><code id="digitalTraceCode"></code></pre></section><section class="ads-tracer-panel ads-tracer-live-panel"><h3>🧠 What is happening?</h3><div class="ads-tracer-explain" id="digitalTraceMessage">Press Next to begin.</div><h3>📊 Live Variables</h3><div class="ads-trace-vars program-trace-vars" id="digitalTraceVariables"></div><h3>Digital Tree State</h3><div class="digital-svg-scroll digital-trace-scroll"><svg id="digitalTraceSvg" class="digital-tree-svg digital-trace-svg" role="img" aria-label="Digital tree program tracing state"></svg></div><h3>Output</h3><pre class="ads-trace-output" id="digitalTraceOutput">—</pre></section></div><div class="ads-tracer-controls"><button type="button" class="trace-previous" id="digitalTracePrevious">← Previous</button><button type="button" class="trace-next" id="digitalTraceNext">Next →</button><button type="button" class="trace-auto" id="digitalTraceAuto">▶ Auto Run</button><button type="button" class="trace-pause" id="digitalTracePause">⏸ Pause</button><button type="button" class="trace-reset" id="digitalTraceReset">↻ Reset</button></div><p class="ads-tracer-status" id="digitalTraceStatus">Step 0 of 0</p></div></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="guidance"><div class="ads-section-heading"><span class="section-label">DESIGN DECISION</span><h2>🧠 9. Which One Should You Use?</h2></div><div class="ads-decision-grid"><article><h3>Autocomplete or Dictionary</h3><p>Use a Standard Trie when prefix operations dominate and memory is acceptable.</p></article><article><h3>IP or XOR Problems</h3><p>Use a Binary Trie because each decision depends on one bit.</p></article><article><h3>Memory-Sensitive Prefix Index</h3><p>Use a Patricia/Radix Trie to eliminate long one-child chains.</p></article><article><h3>Substring Queries</h3><p>Use a Suffix Trie for teaching or small inputs; use a Suffix Tree/Array for large inputs.</p></article></div></section>
+
+        <section class="content-card ads-lesson-section" id="mistakes"><div class="ads-section-heading"><span class="section-label">DEBUGGING CHECKLIST</span><h2>⚠️ 10. Common Mistakes</h2></div><div class="ads-mistake-grid"><article><h3>Missing Terminal Flag</h3><p>A path does not prove an exact word exists.</p></article><article><h3>Unsafe Character Index</h3><p>Validate lowercase input before using <code>ch-'a'</code>.</p></article><article><h3>Reading Bits in Wrong Order</h3><p>Maximum-XOR traversal must start from the most significant bit.</p></article><article><h3>Wrong Patricia Split</h3><p>Preserve both the old suffix and new suffix after the common prefix.</p></article><article><h3>Confusing Suffix and Substring</h3><p>Every suffix is a substring, but most substrings are not suffixes.</p></article><article><h3>Ignoring Memory</h3><p>Freeing recursively allocated trie nodes is required in long-running applications.</p></article></div></section>
+
+        <section class="content-card ads-lesson-section" id="practice"><div class="ads-section-heading"><span class="section-label">CHECK YOUR UNDERSTANDING</span><h2>✍️ 11. Practice Problems</h2></div><div class="ads-practice-note">Solve each problem first. Use Hint only when required, then open Show Answer to verify your reasoning.</div><div class="ads-practice-list">
+            <article class="ads-practice-problem"><h3>1. What does the root of a Trie represent?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-1">Hint</button><button data-toggle-target="d-answer-1">Show Answer</button></div><div id="d-hint-1" class="ads-hint-box" hidden>It is before the first character.</div><div id="d-answer-1" class="ads-solution-box" hidden><strong>The empty prefix.</strong></div></article>
+            <article class="ads-practice-problem alt-practice"><h3>2. What is Trie search time for a word of length L?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-2">Hint</button><button data-toggle-target="d-answer-2">Show Answer</button></div><div id="d-hint-2" class="ads-hint-box" hidden>One edge is processed per character.</div><div id="d-answer-2" class="ads-solution-box" hidden><strong>O(L).</strong></div></article>
+            <article class="ads-practice-problem"><h3>3. Why is a terminal flag required?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-3">Hint</button><button data-toggle-target="d-answer-3">Show Answer</button></div><div id="d-hint-3" class="ads-hint-box" hidden>A path can be only a prefix.</div><div id="d-answer-3" class="ads-solution-box" hidden>It distinguishes a complete stored key from a path that is only a prefix.</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>4. After inserting app and apple, where are terminal flags set?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-4">Hint</button><button data-toggle-target="d-answer-4">Show Answer</button></div><div id="d-hint-4" class="ads-hint-box" hidden>Both are complete words.</div><div id="d-answer-4" class="ads-solution-box" hidden>At the nodes reached after <strong>app</strong> and after <strong>apple</strong>.</div></article>
+            <article class="ads-practice-problem"><h3>5. Does prefix search require a terminal final node?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-5">Hint</button><button data-toggle-target="d-answer-5">Show Answer</button></div><div id="d-hint-5" class="ads-hint-box" hidden>Only the path matters.</div><div id="d-answer-5" class="ads-solution-box" hidden><strong>No.</strong> Every prefix edge only needs to exist.</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>6. How many children can a Binary Trie node have?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-6">Hint</button><button data-toggle-target="d-answer-6">Show Answer</button></div><div id="d-hint-6" class="ads-hint-box" hidden>The alphabet is {0,1}.</div><div id="d-answer-6" class="ads-solution-box" hidden><strong>At most two.</strong></div></article>
+            <article class="ads-practice-problem"><h3>7. For maximum XOR, which branch is preferred?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-7">Hint</button><button data-toggle-target="d-answer-7">Show Answer</button></div><div id="d-hint-7" class="ads-hint-box" hidden>An XOR bit becomes 1 when bits differ.</div><div id="d-answer-7" class="ads-solution-box" hidden>Prefer the branch containing the <strong>opposite query bit</strong>.</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>8. Why process maximum-XOR bits from MSB to LSB?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-8">Hint</button><button data-toggle-target="d-answer-8">Show Answer</button></div><div id="d-hint-8" class="ads-hint-box" hidden>Higher positions have larger values.</div><div id="d-answer-8" class="ads-solution-box" hidden>A 1 at a higher bit outweighs every possible combination of lower bits.</div></article>
+            <article class="ads-practice-problem"><h3>9. What does a Patricia Trie compress?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-9">Hint</button><button data-toggle-target="d-answer-9">Show Answer</button></div><div id="d-hint-9" class="ads-hint-box" hidden>Look for nodes without branching.</div><div id="d-answer-9" class="ads-solution-box" hidden>Non-terminal <strong>one-child chains</strong> are combined into one labelled edge.</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>10. What triggers a Patricia edge split?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-10">Hint</button><button data-toggle-target="d-answer-10">Show Answer</button></div><div id="d-hint-10" class="ads-hint-box" hidden>Only part of an edge label matches.</div><div id="d-answer-10" class="ads-solution-box" hidden>A partial match where the common prefix is shorter than the existing edge label.</div></article>
+            <article class="ads-practice-problem"><h3>11. Insert bear after bell: what prefix becomes the split node?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-11">Hint</button><button data-toggle-target="d-answer-11">Show Answer</button></div><div id="d-hint-11" class="ads-hint-box" hidden>Compare letters from the beginning.</div><div id="d-answer-11" class="ads-solution-box" hidden><strong>be</strong>, with remaining edges <strong>ll</strong> and <strong>ar</strong>.</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>12. Which structure normally uses less memory: Trie or Patricia Trie?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-12">Hint</button><button data-toggle-target="d-answer-12">Show Answer</button></div><div id="d-hint-12" class="ads-hint-box" hidden>Compression removes nodes.</div><div id="d-answer-12" class="ads-solution-box" hidden><strong>Patricia Trie.</strong></div></article>
+            <article class="ads-practice-problem"><h3>13. List the suffixes of “aba”.</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-13">Hint</button><button data-toggle-target="d-answer-13">Show Answer</button></div><div id="d-hint-13" class="ads-hint-box" hidden>Start at indices 0, 1 and 2.</div><div id="d-answer-13" class="ads-solution-box" hidden><strong>aba, ba and a.</strong></div></article>
+            <article class="ads-practice-problem alt-practice"><h3>14. Why does a Suffix Trie support substring search?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-14">Hint</button><button data-toggle-target="d-answer-14">Show Answer</button></div><div id="d-hint-14" class="ads-hint-box" hidden>A substring begins at some text index.</div><div id="d-answer-14" class="ads-solution-box" hidden>Every substring is a prefix of the suffix that begins at the same text position.</div></article>
+            <article class="ads-practice-problem"><h3>15. What is direct Suffix Trie construction time?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-15">Hint</button><button data-toggle-target="d-answer-15">Show Answer</button></div><div id="d-hint-15" class="ads-hint-box" hidden>The total suffix length is n+(n−1)+...</div><div id="d-answer-15" class="ads-solution-box" hidden><strong>O(n²).</strong></div></article>
+            <article class="ads-practice-problem alt-practice"><h3>16. Is “ana” a substring of “banana”?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-16">Hint</button><button data-toggle-target="d-answer-16">Show Answer</button></div><div id="d-hint-16" class="ads-hint-box" hidden>It starts at index 1 and again at index 3.</div><div id="d-answer-16" class="ads-solution-box" hidden><strong>Yes.</strong></div></article>
+            <article class="ads-practice-problem"><h3>17. Which structure is most natural for autocomplete?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-17">Hint</button><button data-toggle-target="d-answer-17">Show Answer</button></div><div id="d-hint-17" class="ads-hint-box" hidden>Autocomplete begins with a prefix.</div><div id="d-answer-17" class="ads-solution-box" hidden>A <strong>Standard Trie</strong> or compressed Patricia/Radix Trie.</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>18. Which structure suits IPv4 longest-prefix matching?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-18">Hint</button><button data-toggle-target="d-answer-18">Show Answer</button></div><div id="d-hint-18" class="ads-hint-box" hidden>IP addresses are bit strings.</div><div id="d-answer-18" class="ads-solution-box" hidden>A <strong>Binary Trie</strong>, commonly compressed as a Patricia Trie.</div></article>
+            <article class="ads-practice-problem"><h3>19. What is the main Standard Trie disadvantage?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-19">Hint</button><button data-toggle-target="d-answer-19">Show Answer</button></div><div id="d-hint-19" class="ads-hint-box" hidden>Consider child-pointer arrays.</div><div id="d-answer-19" class="ads-solution-box" hidden><strong>High memory consumption</strong>, especially with a large sparse alphabet.</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>20. Which scalable structures replace a large Suffix Trie?</h3><div class="ads-practice-actions"><button data-toggle-target="d-hint-20">Hint</button><button data-toggle-target="d-answer-20">Show Answer</button></div><div id="d-hint-20" class="ads-hint-box" hidden>One compresses paths; another stores sorted suffix positions.</div><div id="d-answer-20" class="ads-solution-box" hidden><strong>Suffix Trees and Suffix Arrays.</strong></div></article>
+        </div></section>
+
+        <section class="content-card ads-lesson-section" id="revision"><div class="ads-section-heading"><span class="section-label">QUICK RECALL</span><h2>📝 12. Quick Revision</h2></div><ul class="ads-revision-list"><li>Digital trees navigate by characters or bits rather than whole-key comparison.</li><li>Trie operations are O(L) for key length L.</li><li>Terminal flags separate complete words from prefixes.</li><li>Binary Tries have 0/1 branches and support greedy XOR queries.</li><li>Patricia/Radix Tries compress one-child paths into labelled edges.</li><li>Partial edge matches require a Patricia split at the longest common prefix.</li><li>A Suffix Trie stores every suffix, making each substring a root path.</li><li>Direct Suffix Trie construction uses O(n²) time and space.</li><li>Choose the structure according to prefix, bitwise or substring requirements.</li></ul></section>
+
+        <nav class="ads-topic-navigation" aria-label="ADS topic navigation"><a href="level-14-balanced-bst.html" class="previous-topic">← Previous: Balanced BST</a><span class="next-topic disabled-topic" aria-disabled="true">Next: Multiway Search Trees →</span></nav>
+    </main>
+</div>
+
+<footer class="footer"><div class="footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div><div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C Programming</a></div><div class="footer-column"><h3>Learning</h3><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html">Advanced Data Structures</a><a href="../Python/index.html">Python</a></div><div class="footer-column"><h3>Practice</h3><a href="level-13-advanced-searching.html#practice">Advanced Searching Practice</a><a href="level-14-balanced-bst.html#practice">Balanced BST Practice</a><a href="#practice">Digital Search Tree Practice</a></div></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer>
+<script src="../script.js"></script>
+<script src="ads.js"></script>
+<script src="level-15-digital-search-trees.js"></script>
+</body>
+</html>
