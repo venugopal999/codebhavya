@@ -1,0 +1,2854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiway Search Trees | Advanced Data Structures | CodeBhavya</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="ads.css?v=19">
+</head>
+
+<body class="ads-page ads-topic-page multiway-search-page">
+
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo">
+        <img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo">
+        <span class="logo-code">Code</span>
+        <span class="logo-bhavya">Bhavya</span>
+    </a>
+
+    <nav class="top-nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../Maths/index.html">Maths</a>
+        <a href="../C-Programming/index.html">C</a>
+        <a href="../Data-Structures/index.html">Data Structures</a>
+        <a href="index.html" class="active">Advanced Data Structures</a>
+        <a href="../Python/index.html">Python</a>
+        <a href="../AI-ML/index.html">AI &amp; ML</a>
+        <a href="../Placement/index.html">Placement</a>
+    </nav>
+</header>
+
+<div class="docs-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-title">Advanced Data Structures</div>
+
+        <input
+            type="text"
+            id="topicSearch"
+            class="search-box"
+            placeholder="🔍 Search ADS topics..."
+            aria-label="Search ADS topics"
+        >
+
+        <a href="index.html" class="sidebar-course-home">🧠 ADS Home</a>
+
+        <div class="sidebar-title">Part 1 — Foundations &amp; Algorithms</div>
+
+        <a class="ads-topic-link is-available" href="level-08-performance-analysis.html">
+            📊 Level 8 — Performance Analysis
+        </a>
+
+        <a class="ads-topic-link is-available" href="level-09-disjoint-sets.html">
+            🔗 Level 9 — Disjoint Sets
+        </a>
+
+        <a class="ads-topic-link is-available" href="level-10-sparse-matrices.html">
+            🧮 Level 10 — Sparse Matrices
+        </a>
+
+        <a class="ads-topic-link is-available" href="level-11-string-pattern-matching.html">
+            🔤 Level 11 — String Pattern Matching
+        </a>
+
+        <a class="ads-topic-link is-available" href="level-12-advanced-sorting.html">
+            ⚡ Level 12 — Advanced Sorting
+        </a>
+
+        <a class="ads-topic-link is-available" href="level-13-advanced-searching.html">
+            🎯 Level 13 — Advanced Searching
+        </a>
+
+        <div class="sidebar-title">Part 2 — Advanced Trees &amp; Hashing</div>
+
+        <a class="ads-topic-link is-available" href="level-14-balanced-bst.html">
+            🌲 Level 14 — Balanced BST
+        </a>
+
+        <a class="ads-topic-link is-available" href="level-15-digital-search-trees.html">
+            🔠 Level 15 — Digital Search Trees
+        </a>
+
+        <a class="ads-topic-link is-available active" href="level-16-multiway-search-trees.html">
+            🌳 Level 16 — Multiway Search Trees
+        </a>
+
+        <a class="ads-topic-link is-available" href="level-17-heaps.html">
+            ⛰️ Level 17 — Heaps
+        </a>
+
+        <a class="ads-topic-link" href="level-18-hashing.html">
+            #️⃣ Level 18 — Hashing
+        </a>
+
+        <div class="sidebar-title">Part 3 — Storage, Graphs &amp; Placement</div>
+
+        <a class="ads-topic-link" href="level-19-files.html">
+            📁 Level 19 — Files &amp; File Organization
+        </a>
+
+        <a class="ads-topic-link" href="level-20-advanced-graphs.html">
+            🕸️ Level 20 — Advanced Graph Algorithms
+        </a>
+
+        <a class="ads-topic-link" href="level-21-placement-problems.html">
+            💼 Level 21 — Placement Problems
+        </a>
+    </aside>
+
+    <main class="main-content">
+
+        <section class="ads-topic-hero">
+            <span class="subject-label">CODEBHAVYA • ADS LEVEL 16</span>
+
+            <h1 class="page-title">🌳 Multiway Search Trees</h1>
+
+            <p class="page-description">
+                Store several sorted keys in every node using B-Trees,
+                B+ Trees, 2–3 Trees and 2–3–4 Trees—the foundation of
+                database and file-system indexes.
+            </p>
+        </section>
+
+        <nav class="ads-page-jump-nav" aria-label="Page sections">
+            <a href="#objectives">Objectives</a>
+            <a href="#idea">Core Idea</a>
+            <a href="#operations">Operations &amp; Algorithms</a>
+            <a href="#btree">B-Tree</a>
+            <a href="#bplus">B+ Tree</a>
+            <a href="#two-three">2–3 Tree</a>
+            <a href="#two-three-four">2–3–4 Tree</a>
+            <a href="#comparison">Comparison</a>
+            <a href="#visualizer">Premium Visualizer</a>
+            <a href="#tracing">Program Tracing</a>
+            <a href="#practice">Practice</a>
+            <a href="#revision">Revision</a>
+        </nav>
+
+        <section class="content-card ads-lesson-section" id="objectives">
+
+            <div class="ads-section-heading">
+                <span class="section-label">LEARNING GOALS</span>
+                <h2>🎯 Learning Objectives</h2>
+            </div>
+
+            <p>After completing this topic, you should be able to:</p>
+
+            <ul class="ads-objective-list">
+                <li>Explain the order, minimum occupancy and height rules of a multiway search tree.</li>
+                <li>Search and traverse a node containing several sorted keys.</li>
+                <li>Insert into B-Trees using node splitting and median promotion.</li>
+                <li>Delete using predecessor/successor replacement, borrowing, merging and root contraction.</li>
+                <li>Explain why B+ Trees keep records in linked leaves and support efficient range queries.</li>
+                <li>Differentiate B-Trees, B+ Trees, 2–3 Trees and 2–3–4 Trees.</li>
+                <li>Trace complete C implementations and every balancing decision.</li>
+            </ul>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="idea">
+
+            <div class="ads-section-heading">
+                <span class="section-label">MORE KEYS, FEWER LEVELS</span>
+                <h2>🧭 1. Why Multiway Search Trees?</h2>
+            </div>
+
+            <p>
+                A binary search tree stores one key and at most two children
+                per node. A multiway tree stores several sorted keys, so one
+                node can direct the search into many child ranges.
+            </p>
+
+            <div class="ads-comparison-grid">
+                <article>
+                    <h3>Binary Search Tree</h3>
+                    <p>One key divides the number line into two ranges.</p>
+
+                    <div class="ads-formula-box">
+                        <strong>Fan-out:</strong> at most 2
+                    </div>
+                </article>
+
+                <article>
+                    <h3>Multiway Search Tree</h3>
+                    <p>k sorted keys divide the number line into k + 1 ranges.</p>
+
+                    <div class="ads-formula-box">
+                        <strong>Fan-out:</strong> many children
+                    </div>
+                </article>
+            </div>
+
+            <div class="ads-step-flow">
+                <article>
+                    <span>1</span>
+                    <h3>Read Node</h3>
+                    <p>Load one disk-sized node containing several keys.</p>
+                </article>
+
+                <article>
+                    <span>2</span>
+                    <h3>Find Interval</h3>
+                    <p>Locate the first key greater than or equal to the target.</p>
+                </article>
+
+                <article>
+                    <span>3</span>
+                    <h3>Match or Descend</h3>
+                    <p>Return on equality or choose the corresponding child range.</p>
+                </article>
+
+                <article>
+                    <span>4</span>
+                    <h3>Stay Balanced</h3>
+                    <p>Split overflow and repair underflow so all leaves remain level.</p>
+                </article>
+            </div>
+
+            <div class="ads-tip-box">
+                <strong>Main advantage:</strong>
+                High fan-out produces a very small height, reducing expensive
+                disk or SSD page reads in databases and file systems.
+            </div>
+
+            <div class="ads-rule-grid">
+                <article>
+                    <strong>Order m</strong>
+                    <p>A node has at most m children and m − 1 keys.</p>
+                </article>
+
+                <article>
+                    <strong>Internal rule</strong>
+                    <p>A node with k keys has k + 1 children.</p>
+                </article>
+
+                <article>
+                    <strong>Sorted keys</strong>
+                    <p>Keys inside every node remain strictly ordered.</p>
+                </article>
+
+                <article>
+                    <strong>Balanced leaves</strong>
+                    <p>All leaves occur at the same depth.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="operations">
+
+            <div class="ads-section-heading">
+                <span class="section-label">COMPLETE PRACTICAL SET</span>
+                <h2>🧰 2. Operations &amp; Algorithms</h2>
+            </div>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Operation</th>
+                            <th>Main action</th>
+                            <th>Balancing event</th>
+                            <th>Typical time</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Search</td>
+                            <td>Search keys inside a node, then choose one child interval</td>
+                            <td>None</td>
+                            <td>O(log n)</td>
+                        </tr>
+
+                        <tr>
+                            <td>Insertion</td>
+                            <td>Insert in a leaf or descend through non-full nodes</td>
+                            <td>Split a full node and promote a separator</td>
+                            <td>O(log n)</td>
+                        </tr>
+
+                        <tr>
+                            <td>Deletion</td>
+                            <td>Remove from leaf or replace an internal key</td>
+                            <td>Borrow, rotate, merge and possibly contract root</td>
+                            <td>O(log n)</td>
+                        </tr>
+
+                        <tr>
+                            <td>Traversal</td>
+                            <td>Visit children and keys in sorted order</td>
+                            <td>None</td>
+                            <td>O(n)</td>
+                        </tr>
+
+                        <tr>
+                            <td>Range search</td>
+                            <td>Find the first key, then scan consecutive leaves</td>
+                            <td>Uses B+ leaf links</td>
+                            <td>O(log n + k)</td>
+                        </tr>
+
+                        <tr>
+                            <td>Bulk loading</td>
+                            <td>Build leaves from sorted data, then build upper levels</td>
+                            <td>Occupancy planned bottom-up</td>
+                            <td>O(n)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>➕ Insertion — Split and Promote</span>
+                    <small>Open algorithm</small>
+                </summary>
+
+                <div class="ads-program-body">
+                    <div class="ads-algorithm-box">
+                        <h3>Top-Down B-Tree Insertion</h3>
+
+                        <ol>
+                            <li>If the root is full, create a new root and split the old root.</li>
+                            <li>Within the current node, find the child range for the new key.</li>
+                            <li>Before descending, split that child if it is full.</li>
+                            <li>After promotion, choose the left or right split child.</li>
+                            <li>Insert the key into the final non-full leaf in sorted order.</li>
+                        </ol>
+                    </div>
+
+                    <div class="ads-example-callout">
+                        <strong>Why split before descending?</strong>
+                        It guarantees that insertion never enters a full node,
+                        so the algorithm finishes in one downward pass.
+                    </div>
+                </div>
+            </details>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>➖ Deletion — Complete Cases</span>
+                    <small>Open algorithm</small>
+                </summary>
+
+                <div class="ads-program-body">
+                    <div class="ads-rule-grid">
+                        <article>
+                            <strong>Leaf deletion</strong>
+                            <p>Remove the key directly if the node keeps the minimum number of keys.</p>
+                        </article>
+
+                        <article>
+                            <strong>Internal key</strong>
+                            <p>Replace with predecessor or successor when the corresponding child has spare keys.</p>
+                        </article>
+
+                        <article>
+                            <strong>Borrow / rotation</strong>
+                            <p>Move a parent separator down and a sibling key up.</p>
+                        </article>
+
+                        <article>
+                            <strong>Merge</strong>
+                            <p>Combine two minimum children with their parent separator.</p>
+                        </article>
+
+                        <article>
+                            <strong>Prepare before descent</strong>
+                            <p>Never descend into a minimum child; borrow or merge first.</p>
+                        </article>
+
+                        <article>
+                            <strong>Root contraction</strong>
+                            <p>If an internal root becomes empty, its only child becomes the new root.</p>
+                        </article>
+                    </div>
+
+                    <div class="ads-algorithm-box">
+                        <h3>Top-Down Deletion</h3>
+
+                        <ol>
+                            <li>Locate the key position in the current node.</li>
+                            <li>If found in a leaf, remove it.</li>
+                            <li>If found internally, use predecessor, successor or merge according to child occupancy.</li>
+                            <li>If not found internally, ensure the chosen child has more than the minimum keys before descending.</li>
+                            <li>Borrow from a rich sibling; otherwise merge with a sibling.</li>
+                            <li>After deletion, replace an empty root by its only child.</li>
+                        </ol>
+                    </div>
+                </div>
+            </details>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>🔎 Search, Traversal and Range Search</span>
+                    <small>Open algorithms</small>
+                </summary>
+
+                <div class="ads-program-body">
+                    <div class="ads-rule-grid">
+                        <article>
+                            <strong>Search</strong>
+                            <p>Find the first key ≥ target. Return on equality; otherwise descend through child i.</p>
+                        </article>
+
+                        <article>
+                            <strong>Sorted traversal</strong>
+                            <p>Visit child 0, key 0, child 1, key 1, …, then the final child.</p>
+                        </article>
+
+                        <article>
+                            <strong>B+ exact search</strong>
+                            <p>Use internal separators only for routing; confirm the record in a leaf.</p>
+                        </article>
+
+                        <article>
+                            <strong>B+ range search</strong>
+                            <p>Find the first qualifying leaf, then follow next-leaf links until the upper bound is passed.</p>
+                        </article>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="btree">
+
+            <div class="ads-section-heading">
+                <span class="section-label">DATABASE-STYLE BALANCED INDEX</span>
+                <h2>🌲 3. B-Tree</h2>
+            </div>
+
+            <p>
+                A B-Tree stores keys and records in both internal and leaf nodes.
+                With minimum degree t, every non-root node has t − 1 to 2t − 1
+                keys, and every internal non-root node has t to 2t children.
+            </p>
+
+            <div class="ads-rule-grid">
+                <article>
+                    <strong>Maximum keys</strong>
+                    <p>2t − 1</p>
+                </article>
+
+                <article>
+                    <strong>Minimum keys</strong>
+                    <p>t − 1 for every non-root node</p>
+                </article>
+
+                <article>
+                    <strong>Maximum children</strong>
+                    <p>2t</p>
+                </article>
+
+                <article>
+                    <strong>All leaves</strong>
+                    <p>At the same depth</p>
+                </article>
+            </div>
+
+            <div class="ads-example-callout">
+                <strong>Example with t = 2:</strong>
+                every node holds 1 to 3 keys and at most 4 children.
+                This special case is exactly a 2–3–4 Tree.
+            </div>
+
+            <div class="ads-algorithm-box">
+                <h3>Search Algorithm</h3>
+
+                <ol>
+                    <li>Scan keys until key[i] ≥ target or the node ends.</li>
+                    <li>If key[i] equals target, return the node and position.</li>
+                    <li>If the node is a leaf, return not found.</li>
+                    <li>Otherwise continue with child[i].</li>
+                </ol>
+            </div>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>💻 Complete C Program — B-Tree Insert, Search, Traverse and Delete</span>
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="btree">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define T 2
+#define MAX_KEYS (2 * T - 1)
+#define MAX_CHILDREN (2 * T)
+
+typedef struct BTreeNode {
+    int keys[MAX_KEYS];
+    struct BTreeNode *child[MAX_CHILDREN];
+    int count;
+    int leaf;
+} BTreeNode;
+
+BTreeNode *createBTreeNode(int leaf) {
+    BTreeNode *node = malloc(sizeof(BTreeNode));
+
+    if (node == NULL) {
+        exit(EXIT_FAILURE);
+    }
+
+    node-&gt;count = 0;
+    node-&gt;leaf = leaf;
+
+    for (int i = 0; i &lt; MAX_CHILDREN; i++) {
+        node-&gt;child[i] = NULL;
+    }
+
+    return node;
+}
+
+void traverseBTree(BTreeNode *node) {
+    int i;
+
+    for (i = 0; i &lt; node-&gt;count; i++) {
+        if (!node-&gt;leaf) {
+            traverseBTree(node-&gt;child[i]);
+        }
+
+        printf("%d ", node-&gt;keys[i]); /* btree traverse */
+    }
+
+    if (!node-&gt;leaf) {
+        traverseBTree(node-&gt;child[i]);
+    }
+}
+
+BTreeNode *searchBTree(BTreeNode *node, int key) {
+    int i = 0;
+
+    while (
+        i &lt; node-&gt;count &amp;&amp;
+        key &gt; node-&gt;keys[i]
+    ) {
+        i++;
+    } /* btree search loop */
+
+    if (
+        i &lt; node-&gt;count &amp;&amp;
+        key == node-&gt;keys[i]
+    ) {
+        return node;
+    } /* btree search result */
+
+    if (node-&gt;leaf) {
+        return NULL;
+    }
+
+    return searchBTree(node-&gt;child[i], key);
+}
+
+void splitBTreeChild(
+    BTreeNode *parent,
+    int index
+) {
+    BTreeNode *full =
+        parent-&gt;child[index];
+
+    BTreeNode *right =
+        createBTreeNode(full-&gt;leaf);
+
+    right-&gt;count = T - 1;
+
+    for (int j = 0; j &lt; T - 1; j++) {
+        right-&gt;keys[j] =
+            full-&gt;keys[j + T];
+    }
+
+    if (!full-&gt;leaf) {
+        for (int j = 0; j &lt; T; j++) {
+            right-&gt;child[j] =
+                full-&gt;child[j + T];
+        }
+    }
+
+    full-&gt;count = T - 1;
+
+    for (
+        int j = parent-&gt;count;
+        j &gt;= index + 1;
+        j--
+    ) {
+        parent-&gt;child[j + 1] =
+            parent-&gt;child[j];
+    }
+
+    parent-&gt;child[index + 1] =
+        right;
+
+    for (
+        int j = parent-&gt;count - 1;
+        j &gt;= index;
+        j--
+    ) {
+        parent-&gt;keys[j + 1] =
+            parent-&gt;keys[j];
+    }
+
+    parent-&gt;keys[index] =
+        full-&gt;keys[T - 1]; /* btree promote median */
+
+    parent-&gt;count++; /* btree split child */
+}
+
+void insertBTreeNonFull(
+    BTreeNode *node,
+    int key
+) {
+    int i = node-&gt;count - 1;
+
+    if (node-&gt;leaf) {
+        while (
+            i &gt;= 0 &amp;&amp;
+            key &lt; node-&gt;keys[i]
+        ) {
+            node-&gt;keys[i + 1] =
+                node-&gt;keys[i];
+
+            i--;
+        }
+
+        node-&gt;keys[i + 1] = key;
+        node-&gt;count++; /* btree insert leaf */
+
+        return;
+    }
+
+    while (
+        i &gt;= 0 &amp;&amp;
+        key &lt; node-&gt;keys[i]
+    ) {
+        i--;
+    }
+
+    i++; /* btree choose child */
+
+    if (
+        node-&gt;child[i]-&gt;count ==
+        MAX_KEYS
+    ) {
+        splitBTreeChild(node, i);
+
+        if (key &gt; node-&gt;keys[i]) {
+            i++;
+        }
+    }
+
+    insertBTreeNonFull(
+        node-&gt;child[i],
+        key
+    );
+}
+
+void insertBTree(
+    BTreeNode **root,
+    int key
+) {
+    if (
+        searchBTree(*root, key) != NULL
+    ) {
+        return;
+    }
+
+    if ((*root)-&gt;count == MAX_KEYS) {
+        BTreeNode *newRoot =
+            createBTreeNode(0);
+
+        newRoot-&gt;child[0] = *root;
+
+        splitBTreeChild(
+            newRoot,
+            0
+        ); /* btree split root */
+
+        *root = newRoot;
+    }
+
+    insertBTreeNonFull(
+        *root,
+        key
+    ); /* btree insert call */
+}
+
+int findKey(
+    BTreeNode *node,
+    int key
+) {
+    int index = 0;
+
+    while (
+        index &lt; node-&gt;count &amp;&amp;
+        node-&gt;keys[index] &lt; key
+    ) {
+        index++;
+    }
+
+    return index;
+}
+
+int predecessor(
+    BTreeNode *node,
+    int index
+) {
+    BTreeNode *current =
+        node-&gt;child[index];
+
+    while (!current-&gt;leaf) {
+        current =
+            current-&gt;child[
+                current-&gt;count
+            ];
+    }
+
+    return current-&gt;keys[
+        current-&gt;count - 1
+    ];
+}
+
+int successor(
+    BTreeNode *node,
+    int index
+) {
+    BTreeNode *current =
+        node-&gt;child[index + 1];
+
+    while (!current-&gt;leaf) {
+        current = current-&gt;child[0];
+    }
+
+    return current-&gt;keys[0];
+}
+
+void removeBTreeKey(
+    BTreeNode *node,
+    int key
+);
+
+void mergeBTreeChildren(
+    BTreeNode *node,
+    int index
+) {
+    BTreeNode *left =
+        node-&gt;child[index];
+
+    BTreeNode *right =
+        node-&gt;child[index + 1];
+
+    left-&gt;keys[T - 1] =
+        node-&gt;keys[index];
+
+    for (
+        int i = 0;
+        i &lt; right-&gt;count;
+        i++
+    ) {
+        left-&gt;keys[i + T] =
+            right-&gt;keys[i];
+    }
+
+    if (!left-&gt;leaf) {
+        for (
+            int i = 0;
+            i &lt;= right-&gt;count;
+            i++
+        ) {
+            left-&gt;child[i + T] =
+                right-&gt;child[i];
+        }
+    }
+
+    for (
+        int i = index + 1;
+        i &lt; node-&gt;count;
+        i++
+    ) {
+        node-&gt;keys[i - 1] =
+            node-&gt;keys[i];
+    }
+
+    for (
+        int i = index + 2;
+        i &lt;= node-&gt;count;
+        i++
+    ) {
+        node-&gt;child[i - 1] =
+            node-&gt;child[i];
+    }
+
+    left-&gt;count +=
+        right-&gt;count + 1;
+
+    node-&gt;count--;
+
+    free(right); /* btree merge children */
+}
+
+void borrowBTreeLeft(
+    BTreeNode *node,
+    int index
+) {
+    BTreeNode *child =
+        node-&gt;child[index];
+
+    BTreeNode *sibling =
+        node-&gt;child[index - 1];
+
+    for (
+        int i = child-&gt;count - 1;
+        i &gt;= 0;
+        i--
+    ) {
+        child-&gt;keys[i + 1] =
+            child-&gt;keys[i];
+    }
+
+    if (!child-&gt;leaf) {
+        for (
+            int i = child-&gt;count;
+            i &gt;= 0;
+            i--
+        ) {
+            child-&gt;child[i + 1] =
+                child-&gt;child[i];
+        }
+    }
+
+    child-&gt;keys[0] =
+        node-&gt;keys[index - 1];
+
+    if (!child-&gt;leaf) {
+        child-&gt;child[0] =
+            sibling-&gt;child[
+                sibling-&gt;count
+            ];
+    }
+
+    node-&gt;keys[index - 1] =
+        sibling-&gt;keys[
+            sibling-&gt;count - 1
+        ];
+
+    child-&gt;count++;
+    sibling-&gt;count--; /* btree borrow left */
+}
+
+void borrowBTreeRight(
+    BTreeNode *node,
+    int index
+) {
+    BTreeNode *child =
+        node-&gt;child[index];
+
+    BTreeNode *sibling =
+        node-&gt;child[index + 1];
+
+    child-&gt;keys[child-&gt;count] =
+        node-&gt;keys[index];
+
+    if (!child-&gt;leaf) {
+        child-&gt;child[
+            child-&gt;count + 1
+        ] = sibling-&gt;child[0];
+    }
+
+    node-&gt;keys[index] =
+        sibling-&gt;keys[0];
+
+    for (
+        int i = 1;
+        i &lt; sibling-&gt;count;
+        i++
+    ) {
+        sibling-&gt;keys[i - 1] =
+            sibling-&gt;keys[i];
+    }
+
+    if (!sibling-&gt;leaf) {
+        for (
+            int i = 1;
+            i &lt;= sibling-&gt;count;
+            i++
+        ) {
+            sibling-&gt;child[i - 1] =
+                sibling-&gt;child[i];
+        }
+    }
+
+    child-&gt;count++;
+    sibling-&gt;count--; /* btree borrow right */
+}
+
+void prepareBTreeChild(
+    BTreeNode *node,
+    int index
+) {
+    if (
+        index &gt; 0 &amp;&amp;
+        node-&gt;child[
+            index - 1
+        ]-&gt;count &gt;= T
+    ) {
+        borrowBTreeLeft(node, index);
+    } else if (
+        index &lt; node-&gt;count &amp;&amp;
+        node-&gt;child[
+            index + 1
+        ]-&gt;count &gt;= T
+    ) {
+        borrowBTreeRight(node, index);
+    } else if (
+        index &lt; node-&gt;count
+    ) {
+        mergeBTreeChildren(node, index);
+    } else {
+        mergeBTreeChildren(
+            node,
+            index - 1
+        );
+    }
+}
+
+void removeBTreeKey(
+    BTreeNode *node,
+    int key
+) {
+    int index =
+        findKey(node, key); /* btree delete locate */
+
+    if (
+        index &lt; node-&gt;count &amp;&amp;
+        node-&gt;keys[index] == key
+    ) {
+        if (node-&gt;leaf) {
+            for (
+                int i = index + 1;
+                i &lt; node-&gt;count;
+                i++
+            ) {
+                node-&gt;keys[i - 1] =
+                    node-&gt;keys[i];
+            }
+
+            node-&gt;count--; /* btree delete leaf */
+        } else if (
+            node-&gt;child[index]-&gt;count &gt;= T
+        ) {
+            int value =
+                predecessor(node, index);
+
+            node-&gt;keys[index] =
+                value; /* btree delete predecessor */
+
+            removeBTreeKey(
+                node-&gt;child[index],
+                value
+            );
+        } else if (
+            node-&gt;child[
+                index + 1
+            ]-&gt;count &gt;= T
+        ) {
+            int value =
+                successor(node, index);
+
+            node-&gt;keys[index] =
+                value; /* btree delete successor */
+
+            removeBTreeKey(
+                node-&gt;child[index + 1],
+                value
+            );
+        } else {
+            mergeBTreeChildren(
+                node,
+                index
+            );
+
+            removeBTreeKey(
+                node-&gt;child[index],
+                key
+            );
+        }
+
+        return;
+    }
+
+    if (node-&gt;leaf) {
+        return;
+    }
+
+    int last =
+        index == node-&gt;count;
+
+    if (
+        node-&gt;child[index]-&gt;count &lt; T
+    ) {
+        prepareBTreeChild(
+            node,
+            index
+        );
+    }
+
+    if (
+        last &amp;&amp;
+        index &gt; node-&gt;count
+    ) {
+        removeBTreeKey(
+            node-&gt;child[index - 1],
+            key
+        );
+    } else {
+        removeBTreeKey(
+            node-&gt;child[index],
+            key
+        );
+    }
+}
+
+void deleteBTree(
+    BTreeNode **root,
+    int key
+) {
+    removeBTreeKey(
+        *root,
+        key
+    ); /* btree delete call */
+
+    if (
+        (*root)-&gt;count == 0 &amp;&amp;
+        !(*root)-&gt;leaf
+    ) {
+        BTreeNode *old = *root;
+
+        *root =
+            (*root)-&gt;child[0];
+
+        free(old); /* btree contract root */
+    }
+}
+
+int main(void) {
+    int n;
+    int key;
+    int query;
+    int removeKey;
+
+    BTreeNode *root =
+        createBTreeNode(1); /* btree create root */
+
+    scanf("%d", &amp;n);
+
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;key);
+        insertBTree(&amp;root, key);
+    }
+
+    scanf(
+        "%d%d",
+        &amp;query,
+        &amp;removeKey
+    );
+
+    printf(
+        "Search: %s\n",
+        searchBTree(root, query)
+            ? "Found"
+            : "Not Found"
+    ); /* btree search call */
+
+    deleteBTree(
+        &amp;root,
+        removeKey
+    );
+
+    printf("After deletion: ");
+
+    traverseBTree(root);
+
+    printf("\n"); /* btree complete */ /* multiway complete */
+
+    return 0;
+}</code></pre>
+
+                    <div class="ads-io-grid">
+                        <div>
+                            <h3>Sample Input</h3>
+<pre><code>10
+10 20 5 6 12 30 7 17 3 25
+17 6</code></pre>
+                        </div>
+
+                        <div>
+                            <h3>Sample Output</h3>
+<pre><code>Search: Found
+After deletion: 3 5 7 10 12 17 20 25 30</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="bplus">
+
+            <div class="ads-section-heading">
+                <span class="section-label">RANGE-QUERY SPECIALIST</span>
+                <h2>🍃 4. B+ Tree</h2>
+            </div>
+
+            <p>
+                A B+ Tree stores separator copies in internal nodes and keeps
+                every actual record in leaves. Leaves are linked from left to
+                right, making sequential and range access exceptionally efficient.
+            </p>
+
+            <div class="ads-comparison-grid">
+                <article>
+                    <h3>Internal Nodes</h3>
+                    <p>Contain only routing keys and child pointers, so fan-out is high.</p>
+                </article>
+
+                <article>
+                    <h3>Leaf Nodes</h3>
+                    <p>Contain all searchable records and a pointer to the next leaf.</p>
+                </article>
+            </div>
+
+            <div class="ads-rule-grid">
+                <article>
+                    <strong>Exact search</strong>
+                    <p>Always finishes at a leaf.</p>
+                </article>
+
+                <article>
+                    <strong>Range search</strong>
+                    <p>O(log n + k) using leaf links.</p>
+                </article>
+
+                <article>
+                    <strong>Leaf split</strong>
+                    <p>Copy the first key of the right leaf into the parent.</p>
+                </article>
+
+                <article>
+                    <strong>Internal split</strong>
+                    <p>Promote the middle separator and remove it from the children.</p>
+                </article>
+            </div>
+
+            <div class="ads-algorithm-box">
+                <h3>Range Search Algorithm</h3>
+
+                <ol>
+                    <li>Search for the lower bound and reach its leaf.</li>
+                    <li>Skip leaf keys smaller than the lower bound.</li>
+                    <li>Output keys while they are within the upper bound.</li>
+                    <li>Follow the next-leaf pointer when the current leaf ends.</li>
+                    <li>Stop as soon as a key exceeds the upper bound.</li>
+                </ol>
+            </div>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>💻 Complete C Program — B+ Tree Insert, Search and Range Search</span>
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="bplus">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define ORDER 4
+#define MAX_KEYS (ORDER - 1)
+
+typedef struct BPlusNode {
+    int keys[ORDER];
+    struct BPlusNode *child[ORDER + 1];
+    struct BPlusNode *next;
+    int count;
+    int leaf;
+} BPlusNode;
+
+typedef struct SplitResult {
+    int split;
+    int separator;
+    BPlusNode *right;
+} SplitResult;
+
+BPlusNode *createBPlusNode(int leaf) {
+    BPlusNode *node =
+        malloc(sizeof(BPlusNode));
+
+    if (node == NULL) {
+        exit(EXIT_FAILURE);
+    }
+
+    node-&gt;count = 0;
+    node-&gt;leaf = leaf;
+    node-&gt;next = NULL;
+
+    for (int i = 0; i &lt;= ORDER; i++) {
+        node-&gt;child[i] = NULL;
+    }
+
+    return node;
+}
+
+SplitResult insertBPlusRecursive(
+    BPlusNode *node,
+    int key
+) {
+    SplitResult result = {
+        0,
+        0,
+        NULL
+    };
+
+    if (node-&gt;leaf) {
+        int index = 0;
+
+        while (
+            index &lt; node-&gt;count &amp;&amp;
+            node-&gt;keys[index] &lt; key
+        ) {
+            index++;
+        }
+
+        if (
+            index &lt; node-&gt;count &amp;&amp;
+            node-&gt;keys[index] == key
+        ) {
+            return result;
+        }
+
+        for (
+            int i = node-&gt;count;
+            i &gt; index;
+            i--
+        ) {
+            node-&gt;keys[i] =
+                node-&gt;keys[i - 1];
+        }
+
+        node-&gt;keys[index] = key;
+        node-&gt;count++; /* bplus insert leaf */
+
+        if (node-&gt;count &lt;= MAX_KEYS) {
+            return result;
+        }
+
+        BPlusNode *right =
+            createBPlusNode(1);
+
+        int leftCount =
+            node-&gt;count / 2;
+
+        right-&gt;count =
+            node-&gt;count - leftCount;
+
+        for (
+            int i = 0;
+            i &lt; right-&gt;count;
+            i++
+        ) {
+            right-&gt;keys[i] =
+                node-&gt;keys[
+                    leftCount + i
+                ];
+        }
+
+        node-&gt;count = leftCount;
+
+        right-&gt;next = node-&gt;next;
+        node-&gt;next = right;
+
+        result.split = 1;
+        result.separator =
+            right-&gt;keys[0];
+
+        result.right =
+            right; /* bplus split leaf */
+
+        return result;
+    }
+
+    int index = 0;
+
+    while (
+        index &lt; node-&gt;count &amp;&amp;
+        key &gt;= node-&gt;keys[index]
+    ) {
+        index++;
+    } /* bplus choose child */
+
+    SplitResult childResult =
+        insertBPlusRecursive(
+            node-&gt;child[index],
+            key
+        );
+
+    if (!childResult.split) {
+        return result;
+    }
+
+    for (
+        int i = node-&gt;count;
+        i &gt; index;
+        i--
+    ) {
+        node-&gt;keys[i] =
+            node-&gt;keys[i - 1];
+    }
+
+    for (
+        int i = node-&gt;count + 1;
+        i &gt; index + 1;
+        i--
+    ) {
+        node-&gt;child[i] =
+            node-&gt;child[i - 1];
+    }
+
+    node-&gt;keys[index] =
+        childResult.separator;
+
+    node-&gt;child[index + 1] =
+        childResult.right;
+
+    node-&gt;count++;
+
+    if (node-&gt;count &lt;= MAX_KEYS) {
+        return result;
+    }
+
+    int middle =
+        node-&gt;count / 2;
+
+    BPlusNode *right =
+        createBPlusNode(0);
+
+    result.separator =
+        node-&gt;keys[middle];
+
+    right-&gt;count =
+        node-&gt;count - middle - 1;
+
+    for (
+        int i = 0;
+        i &lt; right-&gt;count;
+        i++
+    ) {
+        right-&gt;keys[i] =
+            node-&gt;keys[
+                middle + 1 + i
+            ];
+    }
+
+    for (
+        int i = 0;
+        i &lt;= right-&gt;count;
+        i++
+    ) {
+        right-&gt;child[i] =
+            node-&gt;child[
+                middle + 1 + i
+            ];
+    }
+
+    node-&gt;count = middle;
+    result.split = 1;
+
+    result.right =
+        right; /* bplus split internal */
+
+    return result;
+}
+
+void insertBPlus(
+    BPlusNode **root,
+    int key
+) {
+    SplitResult result =
+        insertBPlusRecursive(
+            *root,
+            key
+        ); /* bplus insert call */
+
+    if (result.split) {
+        BPlusNode *newRoot =
+            createBPlusNode(0);
+
+        newRoot-&gt;keys[0] =
+            result.separator;
+
+        newRoot-&gt;child[0] = *root;
+
+        newRoot-&gt;child[1] =
+            result.right;
+
+        newRoot-&gt;count = 1;
+
+        *root =
+            newRoot; /* bplus new root */
+    }
+}
+
+BPlusNode *findBPlusLeaf(
+    BPlusNode *root,
+    int key
+) {
+    BPlusNode *node = root;
+
+    while (!node-&gt;leaf) {
+        int index = 0;
+
+        while (
+            index &lt; node-&gt;count &amp;&amp;
+            key &gt;= node-&gt;keys[index]
+        ) {
+            index++;
+        } /* bplus search loop */
+
+        node = node-&gt;child[index];
+    }
+
+    return node;
+}
+
+int searchBPlus(
+    BPlusNode *root,
+    int key
+) {
+    BPlusNode *leaf =
+        findBPlusLeaf(root, key);
+
+    for (
+        int i = 0;
+        i &lt; leaf-&gt;count;
+        i++
+    ) {
+        if (leaf-&gt;keys[i] == key) {
+            return 1;
+        } /* bplus search result */
+    }
+
+    return 0;
+}
+
+void rangeBPlus(
+    BPlusNode *root,
+    int low,
+    int high
+) {
+    BPlusNode *leaf =
+        findBPlusLeaf(
+            root,
+            low
+        ); /* bplus range call */
+
+    while (leaf != NULL) {
+        for (
+            int i = 0;
+            i &lt; leaf-&gt;count;
+            i++
+        ) {
+            if (leaf-&gt;keys[i] &gt; high) {
+                return;
+            }
+
+            if (leaf-&gt;keys[i] &gt;= low) {
+                printf(
+                    "%d ",
+                    leaf-&gt;keys[i]
+                ); /* bplus range output */
+            }
+        }
+
+        leaf = leaf-&gt;next;
+    }
+}
+
+int main(void) {
+    int n;
+    int key;
+    int query;
+    int low;
+    int high;
+
+    BPlusNode *root =
+        createBPlusNode(1); /* bplus create root */
+
+    scanf("%d", &amp;n);
+
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;key);
+        insertBPlus(&amp;root, key);
+    }
+
+    scanf(
+        "%d%d%d",
+        &amp;query,
+        &amp;low,
+        &amp;high
+    );
+
+    printf(
+        "Search: %s\n",
+        searchBPlus(root, query)
+            ? "Found"
+            : "Not Found"
+    ); /* bplus search call */
+
+    printf("Range: ");
+
+    rangeBPlus(
+        root,
+        low,
+        high
+    );
+
+    printf("\n"); /* bplus complete */ /* multiway complete */
+
+    return 0;
+}</code></pre>
+
+                    <div class="ads-io-grid">
+                        <div>
+                            <h3>Sample Input</h3>
+<pre><code>10
+5 10 15 20 25 30 35 40 45 50
+25 18 42</code></pre>
+                        </div>
+
+                        <div>
+                            <h3>Sample Output</h3>
+<pre><code>Search: Found
+Range: 20 25 30 35 40</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="two-three">
+
+            <div class="ads-section-heading">
+                <span class="section-label">TWO OR THREE CHILDREN</span>
+                <h2>🌿 5. 2–3 Tree</h2>
+            </div>
+
+            <p>
+                Every internal node is either a 2-node containing one key and
+                two children, or a 3-node containing two keys and three children.
+                All leaves remain at the same level.
+            </p>
+
+            <div class="ads-rule-grid">
+                <article>
+                    <strong>2-node</strong>
+                    <p>One key and two child ranges.</p>
+                </article>
+
+                <article>
+                    <strong>3-node</strong>
+                    <p>Two ordered keys and three child ranges.</p>
+                </article>
+
+                <article>
+                    <strong>Overflow</strong>
+                    <p>A temporary three-key node splits and promotes its middle key.</p>
+                </article>
+
+                <article>
+                    <strong>Underflow</strong>
+                    <p>Redistribute through the parent or merge with a sibling.</p>
+                </article>
+            </div>
+
+            <div class="ads-algorithm-box">
+                <h3>Bottom-Up Insertion</h3>
+
+                <ol>
+                    <li>Search down to the appropriate leaf.</li>
+                    <li>Insert the key in sorted order.</li>
+                    <li>If the leaf now has three keys, promote the middle key.</li>
+                    <li>Keep the smallest key in the left node and the largest in a new right node.</li>
+                    <li>Repeat the split upward; create a new root if required.</li>
+                </ol>
+            </div>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>💻 Complete C Program — 2–3 Tree Insert, Search and Traverse</span>
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="two-three">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct TTNode {
+    int keys[3];
+    struct TTNode *child[4];
+    struct TTNode *parent;
+    int count;
+    int leaf;
+} TTNode;
+
+TTNode *createTTNode(int leaf) {
+    TTNode *node =
+        malloc(sizeof(TTNode));
+
+    if (node == NULL) {
+        exit(EXIT_FAILURE);
+    }
+
+    node-&gt;count = 0;
+    node-&gt;leaf = leaf;
+    node-&gt;parent = NULL;
+
+    for (int i = 0; i &lt; 4; i++) {
+        node-&gt;child[i] = NULL;
+    }
+
+    return node;
+}
+
+TTNode *searchTT(
+    TTNode *node,
+    int key
+) {
+    while (node != NULL) {
+        int index = 0;
+
+        while (
+            index &lt; node-&gt;count &amp;&amp;
+            key &gt; node-&gt;keys[index]
+        ) {
+            index++;
+        } /* tt search loop */
+
+        if (
+            index &lt; node-&gt;count &amp;&amp;
+            key == node-&gt;keys[index]
+        ) {
+            return node;
+        } /* tt search result */
+
+        if (node-&gt;leaf) {
+            return NULL;
+        }
+
+        node = node-&gt;child[index];
+    }
+
+    return NULL;
+}
+
+void insertKeySorted(
+    TTNode *node,
+    int key
+) {
+    int index = node-&gt;count;
+
+    while (
+        index &gt; 0 &amp;&amp;
+        key &lt; node-&gt;keys[index - 1]
+    ) {
+        node-&gt;keys[index] =
+            node-&gt;keys[index - 1];
+
+        index--;
+    }
+
+    node-&gt;keys[index] = key;
+    node-&gt;count++;
+}
+
+void insertPromoted(
+    TTNode *parent,
+    TTNode *left,
+    int key,
+    TTNode *right
+) {
+    int childIndex = 0;
+
+    while (
+        childIndex &lt;= parent-&gt;count &amp;&amp;
+        parent-&gt;child[childIndex] != left
+    ) {
+        childIndex++;
+    }
+
+    for (
+        int i = parent-&gt;count;
+        i &gt; childIndex;
+        i--
+    ) {
+        parent-&gt;keys[i] =
+            parent-&gt;keys[i - 1];
+    }
+
+    for (
+        int i = parent-&gt;count + 1;
+        i &gt; childIndex + 1;
+        i--
+    ) {
+        parent-&gt;child[i] =
+            parent-&gt;child[i - 1];
+    }
+
+    parent-&gt;keys[childIndex] = key;
+
+    parent-&gt;child[childIndex + 1] =
+        right;
+
+    right-&gt;parent = parent;
+    parent-&gt;count++;
+}
+
+void splitTT(
+    TTNode **root,
+    TTNode *node
+) {
+    while (node-&gt;count == 3) {
+        int promoted =
+            node-&gt;keys[1];
+
+        TTNode *right =
+            createTTNode(node-&gt;leaf);
+
+        right-&gt;keys[0] =
+            node-&gt;keys[2];
+
+        right-&gt;count = 1;
+        node-&gt;count = 1;
+
+        if (!node-&gt;leaf) {
+            right-&gt;child[0] =
+                node-&gt;child[2];
+
+            right-&gt;child[1] =
+                node-&gt;child[3];
+
+            right-&gt;child[0]-&gt;parent =
+                right;
+
+            right-&gt;child[1]-&gt;parent =
+                right;
+        }
+
+        if (node-&gt;parent == NULL) {
+            TTNode *newRoot =
+                createTTNode(0);
+
+            newRoot-&gt;keys[0] =
+                promoted;
+
+            newRoot-&gt;count = 1;
+
+            newRoot-&gt;child[0] =
+                node;
+
+            newRoot-&gt;child[1] =
+                right;
+
+            node-&gt;parent =
+                newRoot;
+
+            right-&gt;parent =
+                newRoot;
+
+            *root =
+                newRoot; /* tt new root */
+
+            return;
+        }
+
+        TTNode *parent =
+            node-&gt;parent;
+
+        insertPromoted(
+            parent,
+            node,
+            promoted,
+            right
+        ); /* tt promote middle */
+
+        node = parent;
+    }
+}
+
+void insertTT(
+    TTNode **root,
+    int key
+) {
+    if (
+        searchTT(*root, key) != NULL
+    ) {
+        return;
+    }
+
+    TTNode *node = *root;
+
+    while (!node-&gt;leaf) {
+        int index = 0;
+
+        while (
+            index &lt; node-&gt;count &amp;&amp;
+            key &gt; node-&gt;keys[index]
+        ) {
+            index++;
+        }
+
+        node =
+            node-&gt;child[index]; /* tt choose child */
+    }
+
+    insertKeySorted(
+        node,
+        key
+    ); /* tt insert leaf */
+
+    splitTT(
+        root,
+        node
+    ); /* tt insert call */
+}
+
+void traverseTT(TTNode *node) {
+    int i;
+
+    for (i = 0; i &lt; node-&gt;count; i++) {
+        if (!node-&gt;leaf) {
+            traverseTT(node-&gt;child[i]);
+        }
+
+        printf(
+            "%d ",
+            node-&gt;keys[i]
+        ); /* tt traverse */
+    }
+
+    if (!node-&gt;leaf) {
+        traverseTT(node-&gt;child[i]);
+    }
+}
+
+int main(void) {
+    int n;
+    int key;
+    int query;
+
+    TTNode *root =
+        createTTNode(1); /* tt create root */
+
+    scanf("%d", &amp;n);
+
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;key);
+        insertTT(&amp;root, key);
+    }
+
+    scanf("%d", &amp;query);
+
+    printf(
+        "Search: %s\n",
+        searchTT(root, query)
+            ? "Found"
+            : "Not Found"
+    ); /* tt search call */
+
+    printf("Sorted: ");
+
+    traverseTT(root);
+
+    printf("\n"); /* tt complete */ /* multiway complete */
+
+    return 0;
+}</code></pre>
+
+                    <div class="ads-io-grid">
+                        <div>
+                            <h3>Sample Input</h3>
+<pre><code>9
+20 10 30 5 15 25 35 12 18
+25</code></pre>
+                        </div>
+
+                        <div>
+                            <h3>Sample Output</h3>
+<pre><code>Search: Found
+Sorted: 5 10 12 15 18 20 25 30 35</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="two-three-four">
+
+            <div class="ads-section-heading">
+                <span class="section-label">B-TREE OF MINIMUM DEGREE TWO</span>
+                <h2>🌴 6. 2–3–4 Tree</h2>
+            </div>
+
+            <p>
+                A 2–3–4 Tree permits 2-nodes, 3-nodes and 4-nodes.
+                It is exactly a B-Tree with t = 2, so a node stores
+                one, two or three keys and has two, three or four children.
+            </p>
+
+            <div class="ads-rule-grid">
+                <article>
+                    <strong>2-node</strong>
+                    <p>1 key, 2 children</p>
+                </article>
+
+                <article>
+                    <strong>3-node</strong>
+                    <p>2 keys, 3 children</p>
+                </article>
+
+                <article>
+                    <strong>4-node</strong>
+                    <p>3 keys, 4 children</p>
+                </article>
+
+                <article>
+                    <strong>Red–Black relation</strong>
+                    <p>Each 3/4-node can be represented by linked red nodes.</p>
+                </article>
+            </div>
+
+            <div class="ads-algorithm-box">
+                <h3>Top-Down Insertion</h3>
+
+                <ol>
+                    <li>Split every 4-node encountered before descending through it.</li>
+                    <li>Promote the middle key into the parent.</li>
+                    <li>Continue into the correct 2-node or 3-node child.</li>
+                    <li>Insert the key into the non-full leaf.</li>
+                    <li>If the root was a 4-node, split it and increase the height by one.</li>
+                </ol>
+            </div>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>💻 C Program Note — 2–3–4 Tree</span>
+                    <small>View explanation</small>
+                </summary>
+
+                <div class="ads-program-body">
+                    <p>
+                        The complete B-Tree C program above uses
+                        <code>T = 2</code>; therefore, it is already a complete
+                        2–3–4 Tree program supporting insertion, search,
+                        traversal and deletion.
+                    </p>
+
+                    <p>
+                        The visualizer provides a separate 2–3–4 selection so
+                        you can study the same rules using the familiar node names.
+                    </p>
+
+                    <div class="ads-tip-box">
+                        <strong>Exam connection:</strong>
+                        B-Tree with minimum degree 2 = 2–3–4 Tree.
+                        A 2–3–4 Tree can also be transformed into an
+                        equivalent Red–Black Tree.
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="comparison">
+
+            <div class="ads-section-heading">
+                <span class="section-label">CHOOSING THE STRUCTURE</span>
+                <h2>⚖️ 7. Comparison</h2>
+            </div>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Structure</th>
+                            <th>Keys per node</th>
+                            <th>Where records live</th>
+                            <th>Best strength</th>
+                            <th>Common use</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>B-Tree</td>
+                            <td>Many</td>
+                            <td>Internal and leaves</td>
+                            <td>General balanced disk index</td>
+                            <td>File systems, storage engines</td>
+                        </tr>
+
+                        <tr>
+                            <td>B+ Tree</td>
+                            <td>Many</td>
+                            <td>Leaves only</td>
+                            <td>Range and sequential access</td>
+                            <td>Database indexes</td>
+                        </tr>
+
+                        <tr>
+                            <td>2–3 Tree</td>
+                            <td>1 or 2</td>
+                            <td>All nodes</td>
+                            <td>Simple multiway balancing theory</td>
+                            <td>Teaching and proofs</td>
+                        </tr>
+
+                        <tr>
+                            <td>2–3–4 Tree</td>
+                            <td>1, 2 or 3</td>
+                            <td>All nodes</td>
+                            <td>Connection to B-Trees and Red–Black Trees</td>
+                            <td>Teaching balanced search trees</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="visualizer">
+
+            <div class="ads-interactive-header">
+                <div>
+                    <span class="section-label">INTERACTIVE ALGORITHM VISUALIZATION</span>
+                    <h2>🎬 8. Premium Multiway Tree Visualizer</h2>
+
+                    <p>
+                        Choose a structure and operation, then follow node scans,
+                        child selection, median promotion, splitting, searching,
+                        deletion repair and range output step by step.
+                    </p>
+                </div>
+
+                <div class="ads-visualizer-brand">
+                    <img src="../images/codebhavya-main-logo.png" alt="CodeBhavya">
+
+                    <span>
+                        <b>Code</b>
+                        <strong>Bhavya</strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="digital-controls">
+                <label>
+                    Keys
+                    <input
+                        id="multiwayDataInput"
+                        type="text"
+                        value="10, 20, 5, 6, 12, 30, 7, 17"
+                    >
+                </label>
+
+                <label id="multiwayQueryLabel">
+                    Search Key
+                    <input
+                        id="multiwayQueryInput"
+                        type="text"
+                        value="17"
+                    >
+                </label>
+
+                <label>
+                    Structure
+
+                    <select id="multiwayStructure">
+                        <option value="btree">B-Tree (t = 2)</option>
+                        <option value="bplus">B+ Tree (order 4)</option>
+                        <option value="two-three">2–3 Tree</option>
+                        <option value="two-three-four">2–3–4 Tree</option>
+                    </select>
+                </label>
+
+                <label>
+                    Operation
+
+                    <select id="multiwayOperation">
+                        <option value="search">Search</option>
+                    </select>
+                </label>
+
+                <button
+                    id="loadMultiwayVisualizer"
+                    type="button"
+                    class="primary-button"
+                >
+                    Load Visualizer
+                </button>
+            </div>
+
+            <div class="ads-example-chips">
+                <button type="button" data-multiway-example="btree">B-Tree</button>
+                <button type="button" data-multiway-example="bplus">B+ Tree</button>
+                <button type="button" data-multiway-example="two-three">2–3 Tree</button>
+                <button type="button" data-multiway-example="two-three-four">2–3–4 Tree</button>
+            </div>
+
+            <div id="multiwayPrompt" class="ads-explorer-message">
+                Choose a structure and operation, verify the input and click
+                Load Visualizer.
+            </div>
+
+            <div id="multiwayResult" class="sorting-visualizer-result" hidden>
+
+                <div class="sorting-viz-layout">
+                    <section class="digital-tree-panel">
+                        <h3>🌳 Live Multiway Tree</h3>
+
+                        <div class="digital-svg-scroll">
+                            <svg
+                                id="multiwayTreeSvg"
+                                class="digital-tree-svg"
+                                role="img"
+                                aria-label="Multiway search tree visualization"
+                            ></svg>
+                        </div>
+
+                        <div id="multiwayMessage" class="ads-explorer-message">—</div>
+
+                        <div class="ads-progress-track">
+                            <span id="multiwayProgress"></span>
+                        </div>
+                    </section>
+
+                    <aside class="sorting-stat-panel">
+                        <h3>📈 Live Statistics</h3>
+
+                        <div class="sorting-stat-grid">
+                            <div>
+                                <span>Structure</span>
+                                <strong id="multiwayStructureValue">B-Tree</strong>
+                            </div>
+
+                            <div>
+                                <span>Operation</span>
+                                <strong id="multiwayOperationValue">Search</strong>
+                            </div>
+
+                            <div>
+                                <span>Phase</span>
+                                <strong id="multiwayPhase">Ready</strong>
+                            </div>
+
+                            <div>
+                                <span>Height</span>
+                                <strong id="multiwayHeight">0</strong>
+                            </div>
+
+                            <div>
+                                <span>Nodes</span>
+                                <strong id="multiwayNodes">0</strong>
+                            </div>
+
+                            <div>
+                                <span>Result</span>
+                                <strong id="multiwayResultValue">—</strong>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+
+                <div class="ads-tracer-controls sorting-visual-controls">
+                    <button type="button" class="trace-previous" id="multiwayPrevious">
+                        ← Previous
+                    </button>
+
+                    <button type="button" class="trace-next" id="multiwayNext">
+                        Next →
+                    </button>
+
+                    <button type="button" class="trace-auto" id="multiwayAuto">
+                        ▶ Auto Run
+                    </button>
+
+                    <button type="button" class="trace-pause" id="multiwayPause">
+                        ⏸ Pause
+                    </button>
+
+                    <button type="button" class="trace-reset" id="multiwayReset">
+                        ↻ Reset
+                    </button>
+                </div>
+
+                <p class="ads-tracer-status" id="multiwayStatus">Step 0 of 0</p>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="tracing">
+
+            <div class="ads-section-heading">
+                <span class="section-label">SELECTABLE C PROGRAM TRACER</span>
+                <h2>🔍 9. Program Tracing — Multiway Trees</h2>
+            </div>
+
+            <p>
+                Select a program. The matching complete C source appears with
+                line numbers, live variables and the evolving multiway tree.
+            </p>
+
+            <div class="digital-tracer-loader">
+                <label>
+                    Keys
+                    <input
+                        id="multiwayTraceData"
+                        type="text"
+                        value="10, 20, 5, 6, 12, 30, 7, 17"
+                    >
+                </label>
+
+                <label id="multiwayTraceQueryLabel">
+                    Search Key
+                    <input
+                        id="multiwayTraceQuery"
+                        type="text"
+                        value="17"
+                    >
+                </label>
+
+                <label>
+                    Program
+
+                    <select id="multiwayTraceStructure">
+                        <option value="btree">B-Tree</option>
+                        <option value="bplus">B+ Tree</option>
+                        <option value="two-three">2–3 Tree</option>
+                        <option value="two-three-four">2–3–4 Tree</option>
+                    </select>
+                </label>
+
+                <button
+                    id="loadMultiwayTracer"
+                    type="button"
+                    class="primary-button"
+                >
+                    Load Program Tracer
+                </button>
+            </div>
+
+            <div id="multiwayTracePrompt" class="ads-explorer-message">
+                Select a program and click Load Program Tracer.
+            </div>
+
+            <div id="multiwayTraceResult" hidden>
+                <div class="ads-tracer">
+
+                    <div class="ads-tracer-title" id="multiwayTraceTitle">
+                        PROGRAM TRACING
+                    </div>
+
+                    <div class="ads-tracer-grid">
+
+                        <section class="ads-tracer-panel">
+                            <h3>💻 C Program</h3>
+
+                            <pre
+                                class="ads-tracer-code program-tracer-code"
+                                id="multiwayTraceCodeWindow"
+                            ><code id="multiwayTraceCode"></code></pre>
+                        </section>
+
+                        <section class="ads-tracer-panel ads-tracer-live-panel">
+                            <h3>🧠 What is happening?</h3>
+
+                            <div class="ads-tracer-explain" id="multiwayTraceMessage">
+                                Press Next to begin.
+                            </div>
+
+                            <h3>📊 Live Variables</h3>
+
+                            <div
+                                class="ads-trace-vars program-trace-vars"
+                                id="multiwayTraceVariables"
+                            ></div>
+
+                            <h3>Multiway Tree State</h3>
+
+                            <div class="digital-svg-scroll digital-trace-scroll">
+                                <svg
+                                    id="multiwayTraceSvg"
+                                    class="digital-tree-svg digital-trace-svg"
+                                    role="img"
+                                    aria-label="Multiway tree program tracing state"
+                                ></svg>
+                            </div>
+
+                            <h3>Output</h3>
+
+                            <pre class="ads-trace-output" id="multiwayTraceOutput">—</pre>
+                        </section>
+                    </div>
+
+                    <div class="ads-tracer-controls">
+                        <button type="button" class="trace-previous" id="multiwayTracePrevious">
+                            ← Previous
+                        </button>
+
+                        <button type="button" class="trace-next" id="multiwayTraceNext">
+                            Next →
+                        </button>
+
+                        <button type="button" class="trace-auto" id="multiwayTraceAuto">
+                            ▶ Auto Run
+                        </button>
+
+                        <button type="button" class="trace-pause" id="multiwayTracePause">
+                            ⏸ Pause
+                        </button>
+
+                        <button type="button" class="trace-reset" id="multiwayTraceReset">
+                            ↻ Reset
+                        </button>
+                    </div>
+
+                    <p class="ads-tracer-status" id="multiwayTraceStatus">
+                        Step 0 of 0
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="guidance">
+
+            <div class="ads-section-heading">
+                <span class="section-label">DESIGN DECISION</span>
+                <h2>🧠 10. Which One Should You Use?</h2>
+            </div>
+
+            <div class="ads-decision-grid">
+                <article>
+                    <h3>General Disk Index</h3>
+                    <p>Use a B-Tree when records may be stored throughout the tree.</p>
+                </article>
+
+                <article>
+                    <h3>Database Range Queries</h3>
+                    <p>Use a B+ Tree because all records are in linked leaves.</p>
+                </article>
+
+                <article>
+                    <h3>Learn Multiway Balancing</h3>
+                    <p>Use a 2–3 Tree for the smallest clean split and underflow cases.</p>
+                </article>
+
+                <article>
+                    <h3>Connect to Red–Black Trees</h3>
+                    <p>Use a 2–3–4 Tree to understand how red links encode multi-key nodes.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="mistakes">
+
+            <div class="ads-section-heading">
+                <span class="section-label">DEBUGGING CHECKLIST</span>
+                <h2>⚠️ 11. Common Mistakes</h2>
+            </div>
+
+            <div class="ads-mistake-grid">
+                <article>
+                    <h3>Wrong child interval</h3>
+                    <p>Child i contains keys between separator i − 1 and separator i.</p>
+                </article>
+
+                <article>
+                    <h3>Losing a child during split</h3>
+                    <p>An internal split must redistribute both keys and child pointers.</p>
+                </article>
+
+                <article>
+                    <h3>Copy vs promote confusion</h3>
+                    <p>B+ leaf split copies a separator; a B-Tree split moves the median.</p>
+                </article>
+
+                <article>
+                    <h3>Descending into a minimum child</h3>
+                    <p>Top-down deletion repairs the child before descent.</p>
+                </article>
+
+                <article>
+                    <h3>Forgetting root contraction</h3>
+                    <p>An empty internal root must be replaced by its only child.</p>
+                </article>
+
+                <article>
+                    <h3>Searching B+ internal keys as records</h3>
+                    <p>Internal separators route the search; records are confirmed in leaves.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="practice">
+
+            <div class="ads-section-heading">
+                <span class="section-label">CHECK YOUR UNDERSTANDING</span>
+                <h2>✍️ 12. Practice Problems</h2>
+            </div>
+
+            <div class="ads-practice-note">
+                Solve each problem first. Use Hint only when required,
+                then open Show Answer to verify your reasoning.
+            </div>
+
+            <div class="ads-practice-list">
+
+                <article class="ads-practice-problem">
+                    <h3>1. If a multiway node contains k keys, how many children can it have?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-1">Hint</button>
+                        <button data-toggle-target="m-answer-1">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-1" class="ads-hint-box" hidden>
+                        Count the ranges before, between and after the keys.
+                    </div>
+
+                    <div id="m-answer-1" class="ads-solution-box" hidden>
+                        <strong>k + 1 children.</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>2. What is the maximum number of keys in an order-m B-Tree node?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-2">Hint</button>
+                        <button data-toggle-target="m-answer-2">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-2" class="ads-hint-box" hidden>
+                        One fewer key than children.
+                    </div>
+
+                    <div id="m-answer-2" class="ads-solution-box" hidden>
+                        <strong>m − 1 keys.</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>3. Why are B-Trees shallow?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-3">Hint</button>
+                        <button data-toggle-target="m-answer-3">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-3" class="ads-hint-box" hidden>
+                        Consider the number of children per node.
+                    </div>
+
+                    <div id="m-answer-3" class="ads-solution-box" hidden>
+                        High fan-out multiplies the number of reachable records at each level.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>4. In a B-Tree with t = 2, how many keys can a node hold?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-4">Hint</button>
+                        <button data-toggle-target="m-answer-4">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-4" class="ads-hint-box" hidden>
+                        Use t − 1 and 2t − 1.
+                    </div>
+
+                    <div id="m-answer-4" class="ads-solution-box" hidden>
+                        A non-root node holds <strong>1 to 3 keys</strong>.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>5. Which key is promoted when a full node splits?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-5">Hint</button>
+                        <button data-toggle-target="m-answer-5">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-5" class="ads-hint-box" hidden>
+                        It separates the two resulting nodes.
+                    </div>
+
+                    <div id="m-answer-5" class="ads-solution-box" hidden>
+                        The <strong>median key</strong>.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>6. What happens when a full root splits?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-6">Hint</button>
+                        <button data-toggle-target="m-answer-6">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-6" class="ads-hint-box" hidden>
+                        The promoted median needs a parent.
+                    </div>
+
+                    <div id="m-answer-6" class="ads-solution-box" hidden>
+                        A new root is created and the tree height increases by one.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>7. Where are records stored in a B+ Tree?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-7">Hint</button>
+                        <button data-toggle-target="m-answer-7">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-7" class="ads-hint-box" hidden>
+                        Internal nodes are routing indexes.
+                    </div>
+
+                    <div id="m-answer-7" class="ads-solution-box" hidden>
+                        <strong>All records are stored in leaf nodes.</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>8. Why are B+ leaves linked?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-8">Hint</button>
+                        <button data-toggle-target="m-answer-8">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-8" class="ads-hint-box" hidden>
+                        Think about scanning consecutive keys.
+                    </div>
+
+                    <div id="m-answer-8" class="ads-solution-box" hidden>
+                        To support fast sequential and range traversal without returning to internal nodes.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>9. What is B+ range-search complexity when k keys are reported?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-9">Hint</button>
+                        <button data-toggle-target="m-answer-9">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-9" class="ads-hint-box" hidden>
+                        Search for the first leaf, then output k items.
+                    </div>
+
+                    <div id="m-answer-9" class="ads-solution-box" hidden>
+                        <strong>O(log n + k).</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>10. What is the difference between a B-Tree split and B+ leaf split?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-10">Hint</button>
+                        <button data-toggle-target="m-answer-10">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-10" class="ads-hint-box" hidden>
+                        Does the separator remain in the leaf?
+                    </div>
+
+                    <div id="m-answer-10" class="ads-solution-box" hidden>
+                        B-Tree moves the median to the parent; B+ leaf split
+                        <strong>copies</strong> the right leaf’s first key to the parent.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>11. What node types exist in a 2–3 Tree?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-11">Hint</button>
+                        <button data-toggle-target="m-answer-11">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-11" class="ads-hint-box" hidden>
+                        Look at its name.
+                    </div>
+
+                    <div id="m-answer-11" class="ads-solution-box" hidden>
+                        <strong>2-nodes and 3-nodes.</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>12. How is 2–3 Tree overflow repaired?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-12">Hint</button>
+                        <button data-toggle-target="m-answer-12">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-12" class="ads-hint-box" hidden>
+                        A temporary three-key node is too large.
+                    </div>
+
+                    <div id="m-answer-12" class="ads-solution-box" hidden>
+                        Split it into two one-key nodes and promote the middle key.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>13. A 2–3–4 Tree is which B-Tree special case?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-13">Hint</button>
+                        <button data-toggle-target="m-answer-13">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-13" class="ads-hint-box" hidden>
+                        Its maximum is three keys.
+                    </div>
+
+                    <div id="m-answer-13" class="ads-solution-box" hidden>
+                        A B-Tree with <strong>minimum degree t = 2</strong>.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>14. What deletion repair borrows through the parent?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-14">Hint</button>
+                        <button data-toggle-target="m-answer-14">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-14" class="ads-hint-box" hidden>
+                        A sibling has more than the minimum keys.
+                    </div>
+
+                    <div id="m-answer-14" class="ads-solution-box" hidden>
+                        <strong>Rotation or redistribution:</strong>
+                        a parent separator moves down and a sibling key moves up.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>15. When is merging required during deletion?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-15">Hint</button>
+                        <button data-toggle-target="m-answer-15">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-15" class="ads-hint-box" hidden>
+                        Can either sibling lend?
+                    </div>
+
+                    <div id="m-answer-15" class="ads-solution-box" hidden>
+                        When the target child and available sibling both have
+                        the minimum number of keys.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>16. What is root contraction?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-16">Hint</button>
+                        <button data-toggle-target="m-answer-16">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-16" class="ads-hint-box" hidden>
+                        The root becomes empty after a merge.
+                    </div>
+
+                    <div id="m-answer-16" class="ads-solution-box" hidden>
+                        Replacing an empty internal root with its only child,
+                        reducing height by one.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>17. Does an internal separator prove a record exists in a B+ Tree?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-17">Hint</button>
+                        <button data-toggle-target="m-answer-17">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-17" class="ads-hint-box" hidden>
+                        Internal keys may be copies.
+                    </div>
+
+                    <div id="m-answer-17" class="ads-solution-box" hidden>
+                        <strong>No.</strong>
+                        The search must reach and confirm the record in a leaf.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>18. What order does multiway in-order traversal produce?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-18">Hint</button>
+                        <button data-toggle-target="m-answer-18">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-18" class="ads-hint-box" hidden>
+                        Children and separators alternate.
+                    </div>
+
+                    <div id="m-answer-18" class="ads-solution-box" hidden>
+                        Keys in <strong>ascending sorted order</strong>.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>19. Why are large node orders useful on disk?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-19">Hint</button>
+                        <button data-toggle-target="m-answer-19">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-19" class="ads-hint-box" hidden>
+                        One node is designed to fit one page.
+                    </div>
+
+                    <div id="m-answer-19" class="ads-solution-box" hidden>
+                        One page read examines many keys and chooses among many
+                        children, greatly reducing tree height and I/O.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>20. Which structure is usually preferred for database indexes?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="m-hint-20">Hint</button>
+                        <button data-toggle-target="m-answer-20">Show Answer</button>
+                    </div>
+
+                    <div id="m-hint-20" class="ads-hint-box" hidden>
+                        Databases need equality and range queries.
+                    </div>
+
+                    <div id="m-answer-20" class="ads-solution-box" hidden>
+                        A <strong>B+ Tree</strong>.
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="revision">
+
+            <div class="ads-section-heading">
+                <span class="section-label">QUICK RECALL</span>
+                <h2>📝 13. Quick Revision</h2>
+            </div>
+
+            <ul class="ads-revision-list">
+                <li>A multiway node with k keys separates k + 1 child ranges.</li>
+                <li>All B-Tree-family leaves stay at the same depth.</li>
+                <li>Insertion repairs overflow by splitting and promoting a separator.</li>
+                <li>Deletion uses predecessor/successor replacement, borrowing, merging and root contraction.</li>
+                <li>B-Trees may store records in internal and leaf nodes.</li>
+                <li>B+ Trees store records in linked leaves and support O(log n + k) range search.</li>
+                <li>A 2–3 Tree contains only 2-nodes and 3-nodes.</li>
+                <li>A 2–3–4 Tree is a B-Tree with minimum degree t = 2.</li>
+                <li>High fan-out minimizes height and external-memory I/O.</li>
+            </ul>
+        </section>
+
+        <nav class="ads-topic-navigation" aria-label="ADS topic navigation">
+            <a href="level-15-digital-search-trees.html" class="previous-topic">
+                ← Previous: Digital Search Trees
+            </a>
+
+            <a href="level-17-heaps.html" class="next-topic">
+                Next: Heaps →
+            </a>
+        </nav>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-brand-section">
+            <div class="footer-brand">
+                <span class="footer-code">Code</span>
+                <span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with structured learning resources.
+            </p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <a href="../index.html">Home</a>
+            <a href="../Maths/index.html">Maths</a>
+            <a href="../C-Programming/index.html">C Programming</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Learning</h3>
+            <a href="../Data-Structures/index.html">Data Structures</a>
+            <a href="index.html">Advanced Data Structures</a>
+            <a href="../Python/index.html">Python</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Practice</h3>
+            <a href="level-14-balanced-bst.html#practice">Balanced BST Practice</a>
+            <a href="level-15-digital-search-trees.html#practice">Digital Search Tree Practice</a>
+            <a href="#practice">Multiway Tree Practice</a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 CodeBhavya. All Rights Reserved.</p>
+        <p>From Learning to Limitless Possibilities.</p>
+    </div>
+</footer>
+
+<script src="../script.js"></script>
+<script src="ads.js"></script>
+<script src="level-16-multiway-search-trees.js?v=1"></script>
+
+</body>
+</html>
