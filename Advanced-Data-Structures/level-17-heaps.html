@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heaps | Advanced Data Structures | CodeBhavya</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="ads.css?v=19">
+</head>
+<body class="ads-page ads-topic-page heaps-page">
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo"><img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></a>
+    <nav class="top-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C</a><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html" class="active">Advanced Data Structures</a><a href="../Python/index.html">Python</a><a href="../AI-ML/index.html">AI &amp; ML</a><a href="../Placement/index.html">Placement</a></nav>
+</header>
+
+<div class="docs-layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">Advanced Data Structures</div>
+        <input type="text" id="topicSearch" class="search-box" placeholder="🔍 Search ADS topics..." aria-label="Search ADS topics">
+        <a href="index.html" class="sidebar-course-home">🧠 ADS Home</a>
+        <div class="sidebar-title">Part 1 — Foundations &amp; Algorithms</div>
+        <a class="ads-topic-link is-available" href="level-08-performance-analysis.html">📊 Level 8 — Performance Analysis</a>
+        <a class="ads-topic-link is-available" href="level-09-disjoint-sets.html">🔗 Level 9 — Disjoint Sets</a>
+        <a class="ads-topic-link is-available" href="level-10-sparse-matrices.html">🧮 Level 10 — Sparse Matrices</a>
+        <a class="ads-topic-link is-available" href="level-11-string-pattern-matching.html">🔤 Level 11 — String Pattern Matching</a>
+        <a class="ads-topic-link is-available" href="level-12-advanced-sorting.html">⚡ Level 12 — Advanced Sorting</a>
+        <a class="ads-topic-link is-available" href="level-13-advanced-searching.html">🎯 Level 13 — Advanced Searching</a>
+        <div class="sidebar-title">Part 2 — Advanced Trees &amp; Hashing</div>
+        <a class="ads-topic-link is-available" href="level-14-balanced-bst.html">🌲 Level 14 — Balanced BST</a>
+        <a class="ads-topic-link is-available" href="level-15-digital-search-trees.html">🔠 Level 15 — Digital Search Trees</a>
+        <a class="ads-topic-link is-available" href="level-16-multiway-search-trees.html">🌳 Level 16 — Multiway Search Trees</a>
+        <a class="ads-topic-link is-available active" href="level-17-heaps.html">⛰️ Level 17 — Heaps</a>
+        <a class="ads-topic-link" href="level-18-hashing.html">#️⃣ Level 18 — Hashing</a>
+        <div class="sidebar-title">Part 3 — Storage, Graphs &amp; Placement</div>
+        <a class="ads-topic-link" href="level-19-files.html">📁 Level 19 — Files &amp; File Organization</a>
+        <a class="ads-topic-link" href="level-20-advanced-graphs.html">🕸️ Level 20 — Advanced Graph Algorithms</a>
+        <a class="ads-topic-link" href="level-21-placement-problems.html">💼 Level 21 — Placement Problems</a>
+    </aside>
+
+    <main class="main-content">
+        <section class="ads-topic-hero"><span class="subject-label">CODEBHAVYA • ADS LEVEL 17</span><h1 class="page-title">⛰️ Heaps and Mergeable Priority Queues</h1><p class="page-description">Master Binary Min/Max Heaps, d-ary heaps, Binomial Heaps and Fibonacci Heaps—from array heapify to lazy consolidation and cascading cuts.</p></section>
+        <nav class="ads-page-jump-nav" aria-label="Page sections"><a href="#objectives">Objectives</a><a href="#idea">Core Idea</a><a href="#operations">Algorithms</a><a href="#binary">Binary Heap</a><a href="#dary">d-ary Heap</a><a href="#binomial">Binomial Heap</a><a href="#fibonacci">Fibonacci Heap</a><a href="#comparison">Comparison</a><a href="#visualizer">Visualizer</a><a href="#tracing">Tracing</a><a href="#practice">Practice</a><a href="#revision">Revision</a></nav>
+
+        <section class="content-card ads-lesson-section" id="objectives"><div class="ads-section-heading"><span class="section-label">LEARNING GOALS</span><h2>🎯 Learning Objectives</h2></div><ul class="ads-objective-list"><li>Distinguish shape order from heap order and explain why a heap is not a search tree.</li><li>Build a Binary Heap bottom-up in O(n), and perform insert, peek, extract, key change, deletion and heap sort.</li><li>Generalize parent/child formulas to d-ary heaps.</li><li>Represent a Binomial Heap as a forest with at most one tree of each degree.</li><li>Trace Binomial linking, union, extract-min, decrease-key and deletion.</li><li>Explain Fibonacci Heap lazy insertion, consolidation, cuts and cascading cuts.</li><li>Compare worst-case and amortized costs and select the right priority queue.</li></ul></section>
+
+        <section class="content-card ads-lesson-section" id="idea">
+            <div class="ads-section-heading"><span class="section-label">THE PRIORITY-QUEUE VIEW</span><h2>🧭 1. Heap Fundamentals</h2></div>
+            <p>A heap guarantees only that every parent has higher priority than its children. It does not order siblings or entire subtrees, so arbitrary search remains O(n).</p>
+            <div class="ads-comparison-grid"><article><h3>Min-Heap</h3><p>Every parent key is ≤ its child keys. The minimum is at the root.</p></article><article><h3>Max-Heap</h3><p>Every parent key is ≥ its child keys. The maximum is at the root.</p></article></div>
+            <div class="ads-rule-grid"><article><strong>Shape property</strong><p>A Binary Heap is a complete binary tree.</p></article><article><strong>Heap-order property</strong><p>Every edge respects the selected priority direction.</p></article><article><strong>Root access</strong><p>Peek is O(1).</p></article><article><strong>Height</strong><p>A complete binary heap has height O(log n).</p></article></div>
+            <div class="ads-formula-box"><strong>0-based Binary Heap:</strong> parent(i) = ⌊(i − 1)/2⌋, left(i) = 2i + 1, right(i) = 2i + 2.</div>
+            <div class="ads-tip-box"><strong>Important:</strong> A heap supports fast priority operations, not fast arbitrary membership queries. Use a hash map alongside it when an application must locate items quickly.</div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="operations">
+            <div class="ads-section-heading"><span class="section-label">COMPLETE OPERATION SET</span><h2>🧰 2. Core Algorithms</h2></div>
+            <div class="ads-table-wrap"><table class="ads-data-table"><thead><tr><th>Operation</th><th>Binary</th><th>Binomial</th><th>Fibonacci (amortized)</th></tr></thead><tbody><tr><td>Build</td><td>O(n)</td><td>O(n log n) repeated insert</td><td>O(n)</td></tr><tr><td>Insert</td><td>O(log n)</td><td>O(log n)</td><td>O(1)</td></tr><tr><td>Find min/max</td><td>O(1)</td><td>O(log n)</td><td>O(1)</td></tr><tr><td>Extract root/min</td><td>O(log n)</td><td>O(log n)</td><td>O(log n)</td></tr><tr><td>Decrease key</td><td>O(log n)</td><td>O(log n)</td><td>O(1)</td></tr><tr><td>Delete</td><td>O(log n)</td><td>O(log n)</td><td>O(log n)</td></tr><tr><td>Union</td><td>O(n)</td><td>O(log n)</td><td>O(1)</td></tr></tbody></table></div>
+            <details class="ads-program-details"><summary><span>🔽 Heapify-Down and Extract</span><small>Open algorithm</small></summary><div class="ads-program-body"><div class="ads-algorithm-box"><ol><li>Save the root value.</li><li>Move the last array item to the root and reduce heap size.</li><li>Compare the current item with its highest-priority child.</li><li>If the heap order is violated, swap and continue downward.</li><li>Stop at a leaf or when the heap property is restored.</li></ol></div></div></details>
+            <details class="ads-program-details"><summary><span>🔼 Insert and Key Change</span><small>Open algorithm</small></summary><div class="ads-program-body"><div class="ads-algorithm-box"><ol><li>Insert appends the new value at the complete tree’s next position.</li><li>Compare it with its parent and swap upward while priority improves.</li><li>For a changed key, bubble up if priority improved.</li><li>Otherwise heapify down because priority became worse.</li></ol></div></div></details>
+            <details class="ads-program-details"><summary><span>🏗️ Bottom-Up Build-Heap</span><small>Open algorithm</small></summary><div class="ads-program-body"><div class="ads-algorithm-box"><ol><li>Leaves are already one-item heaps.</li><li>Start at the last internal node ⌊n/2⌋ − 1.</li><li>Run heapify-down at each index moving backward to the root.</li><li>The total work is O(n), not O(n log n), because most nodes are near the leaves.</li></ol></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="binary">
+            <div class="ads-section-heading"><span class="section-label">COMPACT ARRAY PRIORITY QUEUE</span><h2>🌲 3. Binary Min and Max Heaps</h2></div>
+            <p>The complete-tree shape lets a Binary Heap use a contiguous array without child pointers. It has excellent cache locality and is usually the best general-purpose priority queue.</p>
+            <div class="ads-rule-grid"><article><strong>Insert</strong><p>Append, then bubble up.</p></article><article><strong>Extract root</strong><p>Move last to root, then heapify down.</p></article><article><strong>Delete at index</strong><p>Replace by last, then repair up or down.</p></article><article><strong>Heap sort</strong><p>Build a heap, then repeatedly remove the root.</p></article></div>
+            <details class="ads-program-details"><summary><span>💻 Complete C Program — Binary Min/Max Heap and Heap Sort</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="binary-heap">#include &lt;limits.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define CAPACITY 100
+
+typedef struct {
+    int data[CAPACITY];
+    int size;
+    int isMin;
+} BinaryHeap;
+
+int before(BinaryHeap *heap, int first, int second) {
+    return heap-&gt;isMin ? first &lt; second : first &gt; second;
+}
+
+void swapInt(int *first, int *second) {
+    int temporary = *first;
+    *first = *second;
+    *second = temporary; /* heap swap */
+}
+
+void heapifyDown(BinaryHeap *heap, int index) {
+    for (;;) { /* heap heapify loop */
+        int best = index;
+        int left = 2 * index + 1;
+        int right = 2 * index + 2;
+        if (left &lt; heap-&gt;size &amp;&amp; before(heap, heap-&gt;data[left], heap-&gt;data[best])) best = left; /* heap compare child */
+        if (right &lt; heap-&gt;size &amp;&amp; before(heap, heap-&gt;data[right], heap-&gt;data[best])) best = right;
+        if (best == index) return;
+        swapInt(&amp;heap-&gt;data[index], &amp;heap-&gt;data[best]);
+        index = best;
+    }
+}
+
+void bubbleUp(BinaryHeap *heap, int index) {
+    while (index &gt; 0) { /* heap bubble loop */
+        int parent = (index - 1) / 2;
+        if (!before(heap, heap-&gt;data[index], heap-&gt;data[parent])) break;
+        swapInt(&amp;heap-&gt;data[index], &amp;heap-&gt;data[parent]);
+        index = parent;
+    }
+}
+
+void buildHeap(BinaryHeap *heap, int values[], int count, int isMin) {
+    heap-&gt;size = count;
+    heap-&gt;isMin = isMin;
+    for (int i = 0; i &lt; count; i++) heap-&gt;data[i] = values[i];
+    for (int i = count / 2 - 1; i &gt;= 0; i--) heapifyDown(heap, i); /* heap build */
+}
+
+void insertHeap(BinaryHeap *heap, int key) {
+    if (heap-&gt;size == CAPACITY) return;
+    heap-&gt;data[heap-&gt;size] = key;
+    heap-&gt;size++;
+    bubbleUp(heap, heap-&gt;size - 1); /* heap insert */
+}
+
+int peekHeap(BinaryHeap *heap) {
+    if (heap-&gt;size == 0) exit(EXIT_FAILURE);
+    return heap-&gt;data[0]; /* heap peek */
+}
+
+int extractRoot(BinaryHeap *heap) {
+    int answer = peekHeap(heap);
+    heap-&gt;data[0] = heap-&gt;data[heap-&gt;size - 1];
+    heap-&gt;size--;
+    if (heap-&gt;size) heapifyDown(heap, 0); /* heap extract */
+    return answer;
+}
+
+int findIndex(BinaryHeap *heap, int key) {
+    for (int i = 0; i &lt; heap-&gt;size; i++)
+        if (heap-&gt;data[i] == key) return i;
+    return -1;
+}
+
+void changeKey(BinaryHeap *heap, int oldKey, int newKey) {
+    int index = findIndex(heap, oldKey);
+    if (index &lt; 0) return;
+    heap-&gt;data[index] = newKey; /* heap change key */
+    if (index &gt; 0 &amp;&amp; before(heap, heap-&gt;data[index], heap-&gt;data[(index - 1) / 2])) bubbleUp(heap, index);
+    else heapifyDown(heap, index);
+}
+
+void deleteKey(BinaryHeap *heap, int key) {
+    int index = findIndex(heap, key);
+    if (index &lt; 0) return;
+    heap-&gt;data[index] = heap-&gt;data[heap-&gt;size - 1];
+    heap-&gt;size--; /* heap delete */
+    if (index &lt; heap-&gt;size) {
+        if (index &gt; 0 &amp;&amp; before(heap, heap-&gt;data[index], heap-&gt;data[(index - 1) / 2])) bubbleUp(heap, index);
+        else heapifyDown(heap, index);
+    }
+}
+
+void heapSort(int values[], int count) {
+    BinaryHeap heap;
+    buildHeap(&amp;heap, values, count, 1);
+    for (int i = 0; i &lt; count; i++) values[i] = extractRoot(&amp;heap); /* heap sort */
+}
+
+int main(void) {
+    int n, values[CAPACITY], insertKey, oldKey, newKey, removeKey;
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) scanf("%d", &amp;values[i]);
+    scanf("%d%d%d%d", &amp;insertKey, &amp;oldKey, &amp;newKey, &amp;removeKey);
+    BinaryHeap heap;
+    buildHeap(&amp;heap, values, n, 1); /* heap create */
+    insertHeap(&amp;heap, insertKey);
+    changeKey(&amp;heap, oldKey, newKey);
+    deleteKey(&amp;heap, removeKey);
+    printf("Minimum: %d\n", peekHeap(&amp;heap));
+    printf("Extracted: %d\n", extractRoot(&amp;heap));
+    heapSort(values, n);
+    printf("Sorted:");
+    for (int i = 0; i &lt; n; i++) printf(" %d", values[i]);
+    printf("\n"); /* heap complete */
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>7
+12 3 17 8 25 1 10
+5 17 2 8</code></pre></div><div><h3>Sample Output</h3><pre><code>Minimum: 1
+Extracted: 1
+Sorted: 1 3 8 10 12 17 25</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="dary"><div class="ads-section-heading"><span class="section-label">MORE CHILDREN PER NODE</span><h2>🌿 4. d-ary Heap</h2></div><p>A d-ary heap is a complete tree in which each node has at most d children. Larger d reduces height and bubble-up steps but increases the comparisons needed by heapify-down.</p><div class="ads-formula-box"><strong>0-based formulas:</strong> parent(i) = ⌊(i − 1)/d⌋; children of i are di + 1 through di + d.</div><div class="ads-table-wrap"><table class="ads-data-table"><thead><tr><th>Choice</th><th>Height</th><th>Insert</th><th>Extract root</th></tr></thead><tbody><tr><td>Binary, d = 2</td><td>Θ(log₂ n)</td><td>O(log₂ n)</td><td>O(log₂ n)</td></tr><tr><td>d-ary</td><td>Θ(log<sub>d</sub> n)</td><td>O(log<sub>d</sub> n)</td><td>O(d log<sub>d</sub> n)</td></tr></tbody></table></div><div class="ads-tip-box"><strong>Use case:</strong> d-ary heaps can perform well in graph algorithms such as Dijkstra when decrease-key is much more frequent than extract-min.</div></section>
+
+        <section class="content-card ads-lesson-section" id="binomial">
+            <div class="ads-section-heading"><span class="section-label">MERGEABLE HEAP FOREST</span><h2>🌳 5. Binomial Heap</h2></div>
+            <p>A Binomial Heap is a forest of heap-ordered binomial trees. There is at most one tree of each degree, matching the unique 1-bits in the binary representation of the heap size.</p>
+            <div class="ads-rule-grid"><article><strong>B₀</strong><p>One node.</p></article><article><strong>Bₖ</strong><p>Link two Bₖ₋₁ trees.</p></article><article><strong>Nodes in Bₖ</strong><p>2ᵏ nodes.</p></article><article><strong>Root degree uniqueness</strong><p>At most one root of each degree.</p></article></div>
+            <div class="ads-algorithm-box"><h3>Union Algorithm</h3><ol><li>Merge both root lists in increasing degree order.</li><li>Scan consecutive roots with equal degree.</li><li>Link the root with the larger key under the smaller-key root.</li><li>Continue until every root degree is unique.</li></ol></div>
+            <details class="ads-program-details"><summary><span>💻 Complete C Program — Binomial Min Heap</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="binomial-heap">#include &lt;limits.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct BinomialNode {
+    int key;
+    int degree;
+    struct BinomialNode *parent;
+    struct BinomialNode *child;
+    struct BinomialNode *sibling;
+} BinomialNode;
+
+BinomialNode *createBinomialNode(int key) {
+    BinomialNode *node = malloc(sizeof(BinomialNode));
+    if (node == NULL) exit(EXIT_FAILURE);
+    node-&gt;key = key;
+    node-&gt;degree = 0;
+    node-&gt;parent = node-&gt;child = node-&gt;sibling = NULL;
+    return node; /* binomial create */
+}
+
+void linkBinomial(BinomialNode *larger, BinomialNode *smaller) {
+    larger-&gt;parent = smaller;
+    larger-&gt;sibling = smaller-&gt;child;
+    smaller-&gt;child = larger;
+    smaller-&gt;degree++; /* binomial link */
+}
+
+BinomialNode *mergeByDegree(BinomialNode *first, BinomialNode *second) {
+    BinomialNode dummy;
+    BinomialNode *tail = &amp;dummy;
+    dummy.sibling = NULL;
+    while (first != NULL &amp;&amp; second != NULL) {
+        if (first-&gt;degree &lt;= second-&gt;degree) {
+            tail-&gt;sibling = first;
+            first = first-&gt;sibling;
+        } else {
+            tail-&gt;sibling = second;
+            second = second-&gt;sibling;
+        }
+        tail = tail-&gt;sibling;
+    }
+    tail-&gt;sibling = first != NULL ? first : second;
+    return dummy.sibling;
+}
+
+BinomialNode *unionBinomial(BinomialNode *first, BinomialNode *second) {
+    BinomialNode *head = mergeByDegree(first, second); /* binomial union */
+    if (head == NULL) return NULL;
+    BinomialNode *previous = NULL;
+    BinomialNode *current = head;
+    BinomialNode *next = current-&gt;sibling;
+    while (next != NULL) { /* binomial union loop */
+        if (current-&gt;degree != next-&gt;degree ||
+            (next-&gt;sibling != NULL &amp;&amp; next-&gt;sibling-&gt;degree == current-&gt;degree)) {
+            previous = current;
+            current = next;
+        } else if (current-&gt;key &lt;= next-&gt;key) {
+            current-&gt;sibling = next-&gt;sibling;
+            linkBinomial(next, current);
+        } else {
+            if (previous == NULL) head = next;
+            else previous-&gt;sibling = next;
+            linkBinomial(current, next);
+            current = next;
+        }
+        next = current-&gt;sibling;
+    }
+    return head;
+}
+
+BinomialNode *insertBinomial(BinomialNode *heap, int key) {
+    return unionBinomial(heap, createBinomialNode(key)); /* binomial insert */
+}
+
+BinomialNode *findMinimumRoot(BinomialNode *heap) {
+    BinomialNode *answer = NULL;
+    for (BinomialNode *root = heap; root != NULL; root = root-&gt;sibling)
+        if (answer == NULL || root-&gt;key &lt; answer-&gt;key) answer = root; /* binomial find min */
+    return answer;
+}
+
+BinomialNode *reverseChildren(BinomialNode *child) {
+    BinomialNode *answer = NULL;
+    while (child != NULL) {
+        BinomialNode *next = child-&gt;sibling;
+        child-&gt;sibling = answer;
+        child-&gt;parent = NULL;
+        answer = child;
+        child = next;
+    }
+    return answer;
+}
+
+BinomialNode *extractMinimum(BinomialNode *heap, int *answer) {
+    if (heap == NULL) return NULL;
+    BinomialNode *minimum = heap, *minimumPrevious = NULL;
+    BinomialNode *previous = NULL;
+    for (BinomialNode *root = heap; root != NULL; root = root-&gt;sibling) {
+        if (root-&gt;key &lt; minimum-&gt;key) {
+            minimum = root;
+            minimumPrevious = previous;
+        }
+        previous = root;
+    }
+    if (minimumPrevious == NULL) heap = minimum-&gt;sibling;
+    else minimumPrevious-&gt;sibling = minimum-&gt;sibling;
+    BinomialNode *children = reverseChildren(minimum-&gt;child);
+    *answer = minimum-&gt;key;
+    free(minimum);
+    return unionBinomial(heap, children); /* binomial extract min */
+}
+
+BinomialNode *findBinomialNode(BinomialNode *root, int key) {
+    while (root != NULL) {
+        if (root-&gt;key == key) return root;
+        BinomialNode *found = findBinomialNode(root-&gt;child, key);
+        if (found != NULL) return found;
+        root = root-&gt;sibling;
+    }
+    return NULL;
+}
+
+void decreaseBinomialKey(BinomialNode *heap, int oldKey, int newKey) {
+    BinomialNode *node = findBinomialNode(heap, oldKey);
+    if (node == NULL || newKey &gt; oldKey) return;
+    node-&gt;key = newKey; /* binomial decrease key */
+    while (node-&gt;parent != NULL &amp;&amp; node-&gt;key &lt; node-&gt;parent-&gt;key) {
+        int temporary = node-&gt;key;
+        node-&gt;key = node-&gt;parent-&gt;key;
+        node-&gt;parent-&gt;key = temporary;
+        node = node-&gt;parent;
+    }
+}
+
+BinomialNode *deleteBinomialKey(BinomialNode *heap, int key) {
+    int removed;
+    if (findBinomialNode(heap, key) == NULL) return heap;
+    decreaseBinomialKey(heap, key, INT_MIN); /* binomial delete */
+    return extractMinimum(heap, &amp;removed);
+}
+
+int main(void) {
+    int n, key, oldKey, newKey, removeKey, minimum;
+    BinomialNode *heap = NULL;
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;key);
+        heap = insertBinomial(heap, key);
+    }
+    scanf("%d%d%d", &amp;oldKey, &amp;newKey, &amp;removeKey);
+    printf("Minimum: %d\n", findMinimumRoot(heap)-&gt;key);
+    decreaseBinomialKey(heap, oldKey, newKey);
+    heap = deleteBinomialKey(heap, removeKey);
+    heap = extractMinimum(heap, &amp;minimum);
+    printf("Extracted: %d\n", minimum); /* binomial complete */
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>8
+10 3 17 8 25 1 12 6
+17 2 8</code></pre></div><div><h3>Sample Output</h3><pre><code>Minimum: 1
+Extracted: 1</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="fibonacci">
+            <div class="ads-section-heading"><span class="section-label">LAZY MERGEABLE HEAP</span><h2>🔥 6. Fibonacci Heap</h2></div>
+            <p>A Fibonacci Heap delays structural work. Insert and union only splice circular root lists; extract-min performs consolidation. Decrease-key cuts a violating node, and repeated child loss triggers cascading cuts.</p>
+            <div class="ads-rule-grid"><article><strong>Root list</strong><p>Circular doubly linked list of heap-ordered trees.</p></article><article><strong>Min pointer</strong><p>Direct pointer makes find-min O(1).</p></article><article><strong>Mark bit</strong><p>Records whether a non-root has already lost one child.</p></article><article><strong>Potential method</strong><p>Many trees and marked nodes store deferred work.</p></article></div>
+            <div class="ads-algorithm-box"><h3>Decrease-Key with Cascading Cuts</h3><ol><li>Assign the smaller key.</li><li>If it violates parent order, cut the node into the root list.</li><li>If its parent was unmarked, mark it and stop.</li><li>If its parent was already marked, cut that parent too and continue upward.</li><li>Update the minimum pointer.</li></ol></div>
+            <details class="ads-program-details"><summary><span>💻 Complete C Program — Fibonacci Min Heap</span><small>View program</small></summary><div class="ads-program-body"><pre><code data-c-program="fibonacci-heap">#include &lt;limits.h&gt;
+#include &lt;math.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define DEGREE_LIMIT 64
+
+typedef struct FibonacciNode {
+    int key, degree, mark;
+    struct FibonacciNode *parent, *child, *left, *right;
+} FibonacciNode;
+
+typedef struct {
+    FibonacciNode *minimum;
+    int count;
+} FibonacciHeap;
+
+FibonacciNode *createFibonacciNode(int key) {
+    FibonacciNode *node = malloc(sizeof(FibonacciNode));
+    if (node == NULL) exit(EXIT_FAILURE);
+    node-&gt;key = key;
+    node-&gt;degree = node-&gt;mark = 0;
+    node-&gt;parent = node-&gt;child = NULL;
+    node-&gt;left = node-&gt;right = node;
+    return node; /* fibonacci create */
+}
+
+void addRoot(FibonacciHeap *heap, FibonacciNode *node) {
+    node-&gt;parent = NULL;
+    if (heap-&gt;minimum == NULL) {
+        node-&gt;left = node-&gt;right = node;
+        heap-&gt;minimum = node;
+    } else {
+        node-&gt;right = heap-&gt;minimum-&gt;right;
+        node-&gt;left = heap-&gt;minimum;
+        heap-&gt;minimum-&gt;right-&gt;left = node;
+        heap-&gt;minimum-&gt;right = node;
+        if (node-&gt;key &lt; heap-&gt;minimum-&gt;key) heap-&gt;minimum = node;
+    }
+}
+
+void insertFibonacci(FibonacciHeap *heap, int key) {
+    addRoot(heap, createFibonacciNode(key));
+    heap-&gt;count++; /* fibonacci insert */
+}
+
+void concatenateRoots(FibonacciHeap *first, FibonacciHeap *second) {
+    if (second-&gt;minimum == NULL) return;
+    if (first-&gt;minimum == NULL) {
+        *first = *second;
+        return;
+    }
+    FibonacciNode *aRight = first-&gt;minimum-&gt;right;
+    FibonacciNode *bLeft = second-&gt;minimum-&gt;left;
+    first-&gt;minimum-&gt;right = second-&gt;minimum;
+    second-&gt;minimum-&gt;left = first-&gt;minimum;
+    aRight-&gt;left = bLeft;
+    bLeft-&gt;right = aRight;
+    if (second-&gt;minimum-&gt;key &lt; first-&gt;minimum-&gt;key) first-&gt;minimum = second-&gt;minimum;
+    first-&gt;count += second-&gt;count; /* fibonacci union */
+}
+
+void addChild(FibonacciNode *parent, FibonacciNode *child) {
+    child-&gt;parent = parent;
+    child-&gt;mark = 0;
+    if (parent-&gt;child == NULL) {
+        child-&gt;left = child-&gt;right = child;
+        parent-&gt;child = child;
+    } else {
+        child-&gt;right = parent-&gt;child-&gt;right;
+        child-&gt;left = parent-&gt;child;
+        parent-&gt;child-&gt;right-&gt;left = child;
+        parent-&gt;child-&gt;right = child;
+    }
+    parent-&gt;degree++; /* fibonacci link */
+}
+
+void consolidateFibonacci(FibonacciHeap *heap) {
+    FibonacciNode *degreeTable[DEGREE_LIMIT] = {NULL};
+    FibonacciNode *roots[256];
+    int rootCount = 0;
+    FibonacciNode *start = heap-&gt;minimum;
+    if (start == NULL) return;
+    FibonacciNode *node = start;
+    do {
+        roots[rootCount++] = node;
+        node = node-&gt;right;
+    } while (node != start);
+    for (int i = 0; i &lt; rootCount; i++) {
+        FibonacciNode *x = roots[i];
+        x-&gt;left = x-&gt;right = x;
+        int degree = x-&gt;degree;
+        while (degreeTable[degree] != NULL) { /* fibonacci consolidate */
+            FibonacciNode *y = degreeTable[degree];
+            if (x-&gt;key &gt; y-&gt;key) {
+                FibonacciNode *temporary = x;
+                x = y;
+                y = temporary;
+            }
+            degreeTable[degree] = NULL;
+            addChild(x, y);
+            degree++;
+        }
+        degreeTable[degree] = x;
+    }
+    heap-&gt;minimum = NULL;
+    for (int degree = 0; degree &lt; DEGREE_LIMIT; degree++) {
+        if (degreeTable[degree] != NULL) {
+            degreeTable[degree]-&gt;left = degreeTable[degree]-&gt;right = degreeTable[degree];
+            addRoot(heap, degreeTable[degree]);
+        }
+    }
+}
+
+int extractFibonacciMinimum(FibonacciHeap *heap) {
+    FibonacciNode *minimum = heap-&gt;minimum;
+    if (minimum == NULL) exit(EXIT_FAILURE);
+    FibonacciNode *children[256];
+    int childCount = 0;
+    if (minimum-&gt;child != NULL) {
+        FibonacciNode *child = minimum-&gt;child;
+        do {
+            children[childCount++] = child;
+            child = child-&gt;right;
+        } while (child != minimum-&gt;child);
+    }
+    if (minimum-&gt;right == minimum) heap-&gt;minimum = NULL;
+    else {
+        minimum-&gt;left-&gt;right = minimum-&gt;right;
+        minimum-&gt;right-&gt;left = minimum-&gt;left;
+        heap-&gt;minimum = minimum-&gt;right;
+    }
+    for (int i = 0; i &lt; childCount; i++) {
+        children[i]-&gt;left = children[i]-&gt;right = children[i];
+        children[i]-&gt;parent = NULL;
+        addRoot(heap, children[i]);
+    }
+    int answer = minimum-&gt;key;
+    free(minimum);
+    heap-&gt;count--;
+    if (heap-&gt;minimum != NULL) consolidateFibonacci(heap); /* fibonacci extract min */
+    return answer;
+}
+
+FibonacciNode *findInCircularList(FibonacciNode *start, int key) {
+    if (start == NULL) return NULL;
+    FibonacciNode *node = start;
+    do {
+        if (node-&gt;key == key) return node;
+        FibonacciNode *found = findInCircularList(node-&gt;child, key);
+        if (found != NULL) return found;
+        node = node-&gt;right;
+    } while (node != start);
+    return NULL;
+}
+
+void cutFibonacci(FibonacciHeap *heap, FibonacciNode *node, FibonacciNode *parent) {
+    if (node-&gt;right == node) parent-&gt;child = NULL;
+    else {
+        node-&gt;left-&gt;right = node-&gt;right;
+        node-&gt;right-&gt;left = node-&gt;left;
+        if (parent-&gt;child == node) parent-&gt;child = node-&gt;right;
+    }
+    parent-&gt;degree--;
+    node-&gt;left = node-&gt;right = node;
+    node-&gt;mark = 0;
+    addRoot(heap, node); /* fibonacci cut */
+}
+
+void cascadingCut(FibonacciHeap *heap, FibonacciNode *node) {
+    FibonacciNode *parent = node-&gt;parent;
+    if (parent == NULL) return;
+    if (!node-&gt;mark) node-&gt;mark = 1;
+    else {
+        cutFibonacci(heap, node, parent);
+        cascadingCut(heap, parent); /* fibonacci cascading cut */
+    }
+}
+
+void decreaseFibonacciKey(FibonacciHeap *heap, int oldKey, int newKey) {
+    FibonacciNode *node = findInCircularList(heap-&gt;minimum, oldKey);
+    if (node == NULL || newKey &gt; oldKey) return;
+    node-&gt;key = newKey;
+    FibonacciNode *parent = node-&gt;parent;
+    if (parent != NULL &amp;&amp; node-&gt;key &lt; parent-&gt;key) {
+        cutFibonacci(heap, node, parent);
+        cascadingCut(heap, parent);
+    }
+    if (node-&gt;key &lt; heap-&gt;minimum-&gt;key) heap-&gt;minimum = node; /* fibonacci decrease key */
+}
+
+void deleteFibonacciKey(FibonacciHeap *heap, int key) {
+    if (findInCircularList(heap-&gt;minimum, key) == NULL) return;
+    decreaseFibonacciKey(heap, key, INT_MIN); /* fibonacci delete */
+    extractFibonacciMinimum(heap);
+}
+
+int main(void) {
+    int n, key, oldKey, newKey, removeKey;
+    FibonacciHeap heap = {NULL, 0};
+    scanf("%d", &amp;n);
+    for (int i = 0; i &lt; n; i++) {
+        scanf("%d", &amp;key);
+        insertFibonacci(&amp;heap, key);
+    }
+    scanf("%d%d%d", &amp;oldKey, &amp;newKey, &amp;removeKey);
+    printf("Minimum: %d\n", heap.minimum-&gt;key); /* fibonacci find min */
+    decreaseFibonacciKey(&amp;heap, oldKey, newKey);
+    deleteFibonacciKey(&amp;heap, removeKey);
+    printf("Extracted: %d\n", extractFibonacciMinimum(&amp;heap)); /* fibonacci complete */
+    return 0;
+}</code></pre><div class="ads-io-grid"><div><h3>Sample Input</h3><pre><code>8
+10 3 17 8 25 1 12 6
+17 2 8</code></pre></div><div><h3>Sample Output</h3><pre><code>Minimum: 1
+Extracted: 1</code></pre></div></div></div></details>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="comparison"><div class="ads-section-heading"><span class="section-label">TRADE-OFFS</span><h2>⚖️ 7. Heap Comparison</h2></div><div class="ads-table-wrap"><table class="ads-data-table"><thead><tr><th>Heap</th><th>Representation</th><th>Strongest operation</th><th>Main cost</th><th>Typical use</th></tr></thead><tbody><tr><td>Binary</td><td>Array</td><td>Simple extract, cache locality</td><td>Union O(n)</td><td>Schedulers, standard priority queues</td></tr><tr><td>d-ary</td><td>Array</td><td>Fewer upward levels</td><td>More child comparisons</td><td>Graph algorithms</td></tr><tr><td>Binomial</td><td>Forest</td><td>Union O(log n)</td><td>More pointers</td><td>Mergeable queues</td></tr><tr><td>Fibonacci</td><td>Lazy circular forest</td><td>Insert, union, decrease-key O(1) amortized</td><td>Complex implementation</td><td>Theoretical graph bounds</td></tr></tbody></table></div></section>
+
+        <section class="content-card ads-lesson-section" id="visualizer">
+            <div class="ads-interactive-header"><div><span class="section-label">INTERACTIVE ALGORITHM VISUALIZATION</span><h2>🎬 8. Premium Heap Visualizer</h2><p>Choose a heap and operation, then trace comparisons, swaps, linking, consolidation, cuts, root changes and output.</p></div><div class="ads-visualizer-brand"><img src="../images/codebhavya-main-logo.png" alt="CodeBhavya"><span><b>Code</b><strong>Bhavya</strong></span></div></div>
+            <div class="digital-controls"><label>Keys<input id="heapDataInput" type="text" value="12, 3, 17, 8, 25, 1, 10"></label><label id="heapQueryLabel">No value required<input id="heapQueryInput" type="text" value="" disabled></label><label>Heap<select id="heapStructure"><option value="binary-min">Binary Min-Heap</option><option value="binary-max">Binary Max-Heap</option><option value="binomial">Binomial Min-Heap</option><option value="fibonacci">Fibonacci Min-Heap</option></select></label><label>Operation<select id="heapOperation"><option value="build">Build Heap</option></select></label><button id="loadHeapVisualizer" type="button" class="primary-button">Load Visualizer</button></div>
+            <div class="ads-example-chips"><button type="button" data-heap-example="binary-min">Min-Heap</button><button type="button" data-heap-example="binary-max">Max-Heap</button><button type="button" data-heap-example="binomial">Binomial</button><button type="button" data-heap-example="fibonacci">Fibonacci</button></div>
+            <div id="heapPrompt" class="ads-explorer-message">Choose a heap and operation, verify the input and click Load Visualizer.</div>
+            <div id="heapResult" class="sorting-visualizer-result" hidden><div class="sorting-viz-layout"><section class="digital-tree-panel"><h3>⛰️ Live Heap State</h3><div class="digital-svg-scroll"><svg id="heapTreeSvg" class="digital-tree-svg" role="img" aria-label="Heap visualization"></svg></div><div id="heapArrayView" class="ads-explorer-message">Array / roots: —</div><div id="heapMessage" class="ads-explorer-message">—</div><div class="ads-progress-track"><span id="heapProgress"></span></div></section><aside class="sorting-stat-panel"><h3>📈 Live Statistics</h3><div class="sorting-stat-grid"><div><span>Heap</span><strong id="heapStructureValue">Binary Min-Heap</strong></div><div><span>Operation</span><strong id="heapOperationValue">Build</strong></div><div><span>Phase</span><strong id="heapPhase">Ready</strong></div><div><span>Nodes</span><strong id="heapNodes">0</strong></div><div><span>Height</span><strong id="heapHeight">0</strong></div><div><span>Result</span><strong id="heapResultValue">—</strong></div></div></aside></div><div class="ads-tracer-controls sorting-visual-controls"><button type="button" class="trace-previous" id="heapPrevious">← Previous</button><button type="button" class="trace-next" id="heapNext">Next →</button><button type="button" class="trace-auto" id="heapAuto">▶ Auto Run</button><button type="button" class="trace-pause" id="heapPause">⏸ Pause</button><button type="button" class="trace-reset" id="heapReset">↻ Reset</button></div><p class="ads-tracer-status" id="heapStatus">Step 0 of 0</p></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="tracing">
+            <div class="ads-section-heading"><span class="section-label">SELECTABLE C PROGRAM TRACER</span><h2>🔍 9. Program Tracing — Heaps</h2></div><p>Select the heap and operation. The complete matching C program appears with live source highlighting, variables and forest state.</p>
+            <div class="digital-tracer-loader"><label>Keys<input id="heapTraceData" type="text" value="12, 3, 17, 8, 25, 1, 10"></label><label id="heapTraceQueryLabel">No value required<input id="heapTraceQuery" type="text" value="" disabled></label><label>Program<select id="heapTraceStructure"><option value="binary-min">Binary Min-Heap</option><option value="binary-max">Binary Max-Heap</option><option value="binomial">Binomial Min-Heap</option><option value="fibonacci">Fibonacci Min-Heap</option></select></label><label>Operation<select id="heapTraceOperation"><option value="build">Build Heap</option></select></label><button id="loadHeapTracer" type="button" class="primary-button">Load Program Tracer</button></div>
+            <div id="heapTracePrompt" class="ads-explorer-message">Select a program and operation, then click Load Program Tracer.</div>
+            <div id="heapTraceResult" hidden><div class="ads-tracer"><div class="ads-tracer-title" id="heapTraceTitle">PROGRAM TRACING</div><div class="ads-tracer-grid"><section class="ads-tracer-panel"><h3>💻 C Program</h3><pre class="ads-tracer-code program-tracer-code" id="heapTraceCodeWindow"><code id="heapTraceCode"></code></pre></section><section class="ads-tracer-panel ads-tracer-live-panel"><h3>🧠 What is happening?</h3><div class="ads-tracer-explain" id="heapTraceMessage">Press Next to begin.</div><h3>📊 Live Variables</h3><div class="ads-trace-vars program-trace-vars" id="heapTraceVariables"></div><h3>Heap State</h3><div class="digital-svg-scroll digital-trace-scroll"><svg id="heapTraceSvg" class="digital-tree-svg digital-trace-svg" role="img" aria-label="Heap program tracing state"></svg></div><h3>Output</h3><pre class="ads-trace-output" id="heapTraceOutput">—</pre></section></div><div class="ads-tracer-controls"><button type="button" class="trace-previous" id="heapTracePrevious">← Previous</button><button type="button" class="trace-next" id="heapTraceNext">Next →</button><button type="button" class="trace-auto" id="heapTraceAuto">▶ Auto Run</button><button type="button" class="trace-pause" id="heapTracePause">⏸ Pause</button><button type="button" class="trace-reset" id="heapTraceReset">↻ Reset</button></div><p class="ads-tracer-status" id="heapTraceStatus">Step 0 of 0</p></div></div>
+        </section>
+
+        <section class="content-card ads-lesson-section" id="applications"><div class="ads-section-heading"><span class="section-label">WHERE HEAPS WIN</span><h2>🧠 10. Applications</h2></div><div class="ads-decision-grid"><article><h3>CPU / Job Scheduling</h3><p>Always remove the highest-priority ready job.</p></article><article><h3>Dijkstra and Prim</h3><p>Repeated extract-min and decrease-key operations drive greedy graph algorithms.</p></article><article><h3>Event Simulation</h3><p>Process the event with the earliest timestamp.</p></article><article><h3>Top-k and Streaming</h3><p>Maintain a bounded heap containing the best k values.</p></article></div></section>
+
+        <section class="content-card ads-lesson-section" id="mistakes"><div class="ads-section-heading"><span class="section-label">DEBUGGING CHECKLIST</span><h2>⚠️ 11. Common Mistakes</h2></div><div class="ads-mistake-grid"><article><h3>Treating a heap as sorted</h3><p>Only parent-child order is guaranteed.</p></article><article><h3>Using O(n log n) build</h3><p>Bottom-up build-heap is O(n).</p></article><article><h3>Repairing only downward</h3><p>A key change may require bubble-up or heapify-down.</p></article><article><h3>Forgetting binomial degree order</h3><p>Union must end with one root of each degree.</p></article><article><h3>Eager Fibonacci linking</h3><p>Insertion and union are lazy; consolidation belongs to extract-min.</p></article><article><h3>Skipping cascading cuts</h3><p>A marked parent losing another child must also be cut.</p></article></div></section>
+
+        <section class="content-card ads-lesson-section" id="practice"><div class="ads-section-heading"><span class="section-label">CHECK YOUR UNDERSTANDING</span><h2>✍️ 12. Practice Problems</h2></div><div class="ads-practice-note">Solve first, use Hint only when required, then open Show Answer.</div><div class="ads-practice-list">
+            <article class="ads-practice-problem"><h3>1. Where is the minimum stored in a Min-Heap?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-1">Hint</button><button data-toggle-target="h-answer-1">Show Answer</button></div><div id="h-hint-1" class="ads-hint-box" hidden>Every parent is no larger than its children.</div><div id="h-answer-1" class="ads-solution-box" hidden>At the <strong>root</strong>.</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>2. Is a heap’s array completely sorted?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-2">Hint</button><button data-toggle-target="h-answer-2">Show Answer</button></div><div id="h-hint-2" class="ads-hint-box" hidden>Compare siblings.</div><div id="h-answer-2" class="ads-solution-box" hidden><strong>No.</strong> Only parent-child heap order is guaranteed.</div></article>
+            <article class="ads-practice-problem"><h3>3. What is the parent of 0-based index i?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-3">Hint</button><button data-toggle-target="h-answer-3">Show Answer</button></div><div id="h-hint-3" class="ads-hint-box" hidden>Subtract before dividing.</div><div id="h-answer-3" class="ads-solution-box" hidden>⌊(i − 1) / 2⌋.</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>4. Why is bottom-up build-heap O(n)?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-4">Hint</button><button data-toggle-target="h-answer-4">Show Answer</button></div><div id="h-hint-4" class="ads-hint-box" hidden>Most nodes have very small height.</div><div id="h-answer-4" class="ads-solution-box" hidden>The weighted sum of nodes by height is linear; most nodes are leaves or close to leaves.</div></article>
+            <article class="ads-practice-problem"><h3>5. What operation repairs a newly inserted Binary Heap item?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-5">Hint</button><button data-toggle-target="h-answer-5">Show Answer</button></div><div id="h-hint-5" class="ads-hint-box" hidden>It starts at the new last position.</div><div id="h-answer-5" class="ads-solution-box" hidden><strong>Bubble-up</strong> (sift-up).</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>6. What is arbitrary search complexity in a heap?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-6">Hint</button><button data-toggle-target="h-answer-6">Show Answer</button></div><div id="h-hint-6" class="ads-hint-box" hidden>Heap order cannot choose one search subtree.</div><div id="h-answer-6" class="ads-solution-box" hidden><strong>O(n)</strong>.</div></article>
+            <article class="ads-practice-problem"><h3>7. How many nodes are in a binomial tree Bₖ?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-7">Hint</button><button data-toggle-target="h-answer-7">Show Answer</button></div><div id="h-hint-7" class="ads-hint-box" hidden>Each rank is formed by linking two smaller equal-rank trees.</div><div id="h-answer-7" class="ads-solution-box" hidden><strong>2ᵏ nodes.</strong></div></article>
+            <article class="ads-practice-problem alt-practice"><h3>8. Why is there at most one binomial root of each degree?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-8">Hint</button><button data-toggle-target="h-answer-8">Show Answer</button></div><div id="h-hint-8" class="ads-hint-box" hidden>Equal degrees are like equal binary digits.</div><div id="h-answer-8" class="ads-solution-box" hidden>Union repeatedly links equal-degree roots until all root degrees are unique.</div></article>
+            <article class="ads-practice-problem"><h3>9. What does Binomial Heap union resemble?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-9">Hint</button><button data-toggle-target="h-answer-9">Show Answer</button></div><div id="h-hint-9" class="ads-hint-box" hidden>Linking equal degrees produces a carry.</div><div id="h-answer-9" class="ads-solution-box" hidden><strong>Binary addition with carries.</strong></div></article>
+            <article class="ads-practice-problem alt-practice"><h3>10. How does Binomial decrease-key move upward?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-10">Hint</button><button data-toggle-target="h-answer-10">Show Answer</button></div><div id="h-hint-10" class="ads-hint-box" hidden>Compare with the parent.</div><div id="h-answer-10" class="ads-solution-box" hidden>Swap the decreased key with parent keys until heap order holds.</div></article>
+            <article class="ads-practice-problem"><h3>11. Which Fibonacci operations are O(1) amortized?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-11">Hint</button><button data-toggle-target="h-answer-11">Show Answer</button></div><div id="h-hint-11" class="ads-hint-box" hidden>Think lazy root-list operations and cuts.</div><div id="h-answer-11" class="ads-solution-box" hidden>Insert, find-min, union and decrease-key.</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>12. When does Fibonacci consolidation occur?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-12">Hint</button><button data-toggle-target="h-answer-12">Show Answer</button></div><div id="h-hint-12" class="ads-hint-box" hidden>It follows root removal.</div><div id="h-answer-12" class="ads-solution-box" hidden>During <strong>extract-min</strong>.</div></article>
+            <article class="ads-practice-problem"><h3>13. What does a Fibonacci mark mean?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-13">Hint</button><button data-toggle-target="h-answer-13">Show Answer</button></div><div id="h-hint-13" class="ads-hint-box" hidden>It tracks child loss.</div><div id="h-answer-13" class="ads-solution-box" hidden>A non-root node has already lost one child since becoming a child itself.</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>14. What triggers a cascading cut?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-14">Hint</button><button data-toggle-target="h-answer-14">Show Answer</button></div><div id="h-hint-14" class="ads-hint-box" hidden>The parent was marked before another loss.</div><div id="h-answer-14" class="ads-solution-box" hidden>A marked non-root loses another child, so it is cut and the check continues upward.</div></article>
+            <article class="ads-practice-problem"><h3>15. Why can Fibonacci union be O(1)?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-15">Hint</button><button data-toggle-target="h-answer-15">Show Answer</button></div><div id="h-hint-15" class="ads-hint-box" hidden>No consolidation is performed yet.</div><div id="h-answer-15" class="ads-solution-box" hidden>It concatenates two circular root lists and updates the minimum pointer.</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>16. Which heap is normally simplest and fastest in practice?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-16">Hint</button><button data-toggle-target="h-answer-16">Show Answer</button></div><div id="h-hint-16" class="ads-hint-box" hidden>It uses a compact array.</div><div id="h-answer-16" class="ads-solution-box" hidden>The <strong>Binary Heap</strong>.</div></article>
+            <article class="ads-practice-problem"><h3>17. What is d-ary Heap height?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-17">Hint</button><button data-toggle-target="h-answer-17">Show Answer</button></div><div id="h-hint-17" class="ads-hint-box" hidden>Each level multiplies capacity by d.</div><div id="h-answer-17" class="ads-solution-box" hidden>Θ(log<sub>d</sub> n).</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>18. What trade-off appears as d grows?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-18">Hint</button><button data-toggle-target="h-answer-18">Show Answer</button></div><div id="h-hint-18" class="ads-hint-box" hidden>Height falls, but each parent has more children.</div><div id="h-answer-18" class="ads-solution-box" hidden>Fewer levels and faster upward movement, but more comparisons per heapify-down level.</div></article>
+            <article class="ads-practice-problem"><h3>19. How can delete be reduced to other Min-Heap operations?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-19">Hint</button><button data-toggle-target="h-answer-19">Show Answer</button></div><div id="h-hint-19" class="ads-hint-box" hidden>Make the target the global minimum.</div><div id="h-answer-19" class="ads-solution-box" hidden>Decrease its key to −∞, then extract-min.</div></article>
+            <article class="ads-practice-problem alt-practice"><h3>20. Which heap gives Dijkstra’s best classic theoretical bound?</h3><div class="ads-practice-actions"><button data-toggle-target="h-hint-20">Hint</button><button data-toggle-target="h-answer-20">Show Answer</button></div><div id="h-hint-20" class="ads-hint-box" hidden>Decrease-key is O(1) amortized.</div><div id="h-answer-20" class="ads-solution-box" hidden>A <strong>Fibonacci Heap</strong>, giving O(E + V log V) with adjacency lists.</div></article>
+        </div></section>
+
+        <section class="content-card ads-lesson-section" id="revision"><div class="ads-section-heading"><span class="section-label">QUICK RECALL</span><h2>📝 13. Quick Revision</h2></div><ul class="ads-revision-list"><li>A heap guarantees local parent-child priority order, not global sorting.</li><li>Binary Heap build is O(n); insert and extract are O(log n); peek is O(1).</li><li>Key change repairs upward when priority improves and downward when it worsens.</li><li>A d-ary heap trades fewer levels for more comparisons per downward step.</li><li>A Binomial Heap has at most one tree of each degree and supports O(log n) union.</li><li>A Fibonacci Heap delays consolidation until extract-min.</li><li>Fibonacci marks and cascading cuts make decrease-key O(1) amortized.</li><li>Binary Heaps are simple and cache-friendly; Fibonacci Heaps optimize theoretical merge/decrease workloads.</li></ul></section>
+
+        <nav class="ads-topic-navigation" aria-label="ADS topic navigation"><a href="level-16-multiway-search-trees.html" class="previous-topic">← Previous: Multiway Search Trees</a><span class="next-topic disabled-topic" aria-disabled="true">Next: Hashing →</span></nav>
+    </main>
+</div>
+
+<footer class="footer"><div class="footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div><div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C Programming</a></div><div class="footer-column"><h3>Learning</h3><a href="../Data-Structures/index.html">Data Structures</a><a href="index.html">Advanced Data Structures</a><a href="../Python/index.html">Python</a></div><div class="footer-column"><h3>Practice</h3><a href="level-15-digital-search-trees.html#practice">Digital Trees Practice</a><a href="level-16-multiway-search-trees.html#practice">Multiway Trees Practice</a><a href="#practice">Heaps Practice</a></div></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer>
+<script src="../script.js"></script>
+<script src="ads.js"></script>
+<script src="level-17-heaps.js?v=1"></script>
+</body>
+</html>
