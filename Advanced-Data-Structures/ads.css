@@ -3372,3 +3372,345 @@
         max-height: 310px;
     }
 }
+
+/* =========================================
+   LEVEL 18 — VISUALIZER AND TRACER FIX
+   ========================================= */
+
+.hashing-page .sorting-viz-layout {
+    align-items: start;
+}
+
+.hashing-page .sorting-stat-panel {
+    align-self: start;
+}
+
+/* Visualizer and tracer control buttons */
+
+.hashing-page .sorting-control-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding: 13px 14px;
+    border: 1px solid #d7e2ee;
+    border-radius: 11px;
+    background: #f8fafc;
+}
+
+.hashing-page .sorting-control-row button {
+    min-width: 104px;
+    min-height: 42px;
+    padding: 10px 15px;
+    border: 0;
+    border-radius: 9px;
+    background: #2563eb;
+    color: #ffffff;
+    font: inherit;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow:
+        0 5px 12px
+        rgba(37, 99, 235, 0.16);
+    transition:
+        filter 0.18s ease,
+        transform 0.18s ease;
+}
+
+.hashing-page
+.sorting-control-row
+button:hover:not(:disabled) {
+    filter: brightness(0.94);
+    transform: translateY(-1px);
+}
+
+.hashing-page
+.sorting-control-row
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.42;
+    box-shadow: none;
+}
+
+#hashPrevious,
+#hashReset,
+#hashTracePrevious,
+#hashTraceReset {
+    background: #64748b;
+}
+
+#hashNext,
+#hashTraceNext {
+    background: #2563eb;
+}
+
+#hashAuto,
+#hashTraceAuto {
+    background: #159447;
+}
+
+#hashPause,
+#hashTracePause {
+    background: #ea7800;
+}
+
+.hashing-page .sorting-control-row > span {
+    margin-left: auto;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+/* Complete tracer container */
+
+#hashTraceResult {
+    overflow: hidden;
+    margin-top: 17px;
+    border: 1px solid #cbd9e8;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow:
+        0 10px 24px
+        rgba(15, 42, 81, 0.08);
+}
+
+#hashTraceResult > h3 {
+    margin: 0;
+    padding: 15px 18px;
+    border-bottom: 1px solid #334155;
+    background: #102a51;
+    color: #f6d76b;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+}
+
+/* Two-column tracer layout */
+
+#hashTraceResult .ads-tracer-layout {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.35fr)
+        minmax(330px, 0.7fr);
+    align-items: stretch;
+}
+
+/* C code panel */
+
+#hashTraceResult .ads-tracer-code-panel {
+    min-width: 0;
+    padding: 16px;
+    border-right: 1px solid #334155;
+    background: #0f172a;
+}
+
+#hashTraceResult .ads-tracer-code-panel h4 {
+    margin: 0 0 11px;
+    color: #ffffff;
+    font-size: 15px;
+}
+
+#hashTraceResult .ads-tracer-code-window {
+    overflow: auto;
+    height: 350px;
+    min-height: 350px;
+    max-height: 350px;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    background: #020617;
+    scrollbar-color: #64748b #111c2f;
+    scrollbar-width: thin;
+}
+
+#hashTraceResult
+.ads-tracer-code-window::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+#hashTraceResult
+.ads-tracer-code-window::-webkit-scrollbar-track {
+    background: #111c2f;
+}
+
+#hashTraceResult
+.ads-tracer-code-window::-webkit-scrollbar-thumb {
+    border: 2px solid #111c2f;
+    border-radius: 999px;
+    background: #64748b;
+}
+
+/*
+   Override the earlier hash tracer height rule.
+   The outer code window must scroll because
+   JavaScript scrolls hashTraceCodeWindow.
+*/
+
+#hashTraceResult code.ads-tracer-code {
+    display: block;
+    overflow: visible;
+    width: max-content;
+    min-width: 100%;
+    height: auto;
+    min-height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 12px 8px;
+    border: 0;
+    border-radius: 0;
+    background: #020617;
+    color: #e2e8f0;
+    font:
+        13px/1.65
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+    white-space: pre;
+    box-sizing: border-box;
+}
+
+#hashTraceResult
+code.ads-tracer-code > span {
+    display: block;
+    min-height: 21px;
+    padding: 0 10px;
+    border-left: 4px solid transparent;
+    color: inherit;
+}
+
+#hashTraceResult
+code.ads-tracer-code
+> span.is-active-line {
+    border-left-color: #f6d76b;
+    border-radius: 4px;
+    background: #25466f;
+    color: #ffffff;
+}
+
+/* Tracer right side */
+
+#hashTraceResult .ads-tracer-side {
+    min-width: 0;
+    padding: 16px;
+    background: #f8fafc;
+}
+
+#hashTraceResult
+.ads-tracer-side
+> .ads-explorer-message {
+    margin: 0 0 13px;
+}
+
+/* Live variable cards */
+
+#hashTraceResult .ads-tracer-variables {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 9px;
+}
+
+#hashTraceResult
+.ads-tracer-variables > div {
+    min-width: 0;
+    padding: 11px 12px;
+    border: 1px solid #d7e2ee;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+#hashTraceResult
+.ads-tracer-variables span {
+    display: block;
+    margin-bottom: 5px;
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+#hashTraceResult
+.ads-tracer-variables strong {
+    display: block;
+    color: #102a51;
+    overflow-wrap: anywhere;
+}
+
+/* Tracer program output */
+
+#hashTraceResult .ads-tracer-output {
+    margin-top: 13px;
+    padding: 13px 14px;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    background: #102a51;
+}
+
+#hashTraceResult
+.ads-tracer-output span {
+    display: block;
+    margin-bottom: 6px;
+    color: #93c5fd;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+#hashTraceResult
+.ads-tracer-output strong {
+    display: block;
+    color: #ffffff;
+    overflow-wrap: anywhere;
+}
+
+/* Tracer controls join the container */
+
+#hashTraceResult > .sorting-control-row {
+    margin: 0;
+    border: 0;
+    border-top: 1px solid #d7e2ee;
+    border-radius: 0;
+}
+
+/* Responsive tracer */
+
+@media (max-width: 1050px) {
+    #hashTraceResult .ads-tracer-layout {
+        grid-template-columns: 1fr;
+    }
+
+    #hashTraceResult
+    .ads-tracer-code-panel {
+        border-right: 0;
+        border-bottom: 1px solid #334155;
+    }
+}
+
+@media (max-width: 650px) {
+    .hashing-page
+    .sorting-control-row button {
+        flex: 1 1 125px;
+    }
+
+    .hashing-page
+    .sorting-control-row > span {
+        flex: 1 0 100%;
+        margin-left: 0;
+        text-align: center;
+    }
+
+    #hashTraceResult
+    .ads-tracer-code-window {
+        height: 310px;
+        min-height: 310px;
+        max-height: 310px;
+    }
+
+    #hashTraceResult
+    .ads-tracer-variables {
+        grid-template-columns: 1fr;
+    }
+}
