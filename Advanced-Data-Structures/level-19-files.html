@@ -1,0 +1,3418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Files and File Organization |
+        Advanced Data Structures | CodeBhavya
+    </title>
+
+    <link rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="../images/codebhavya-icon-32.png">
+
+    <link rel="icon"
+          type="image/png"
+          sizes="128x128"
+          href="../images/codebhavya-icon-128.png">
+
+    <link rel="icon"
+          type="image/png"
+          sizes="512x512"
+          href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="ads.css?v=25">
+</head>
+
+<body class="ads-page ads-topic-page files-page">
+
+<header class="top-header">
+    <a href="../index.html"
+       class="logo codebhavya-new-logo">
+
+        <img src="../images/codebhavya-main-logo.png"
+             alt="CodeBhavya Logo"
+             class="main-logo">
+
+        <span class="logo-code">Code</span>
+        <span class="logo-bhavya">Bhavya</span>
+    </a>
+
+    <nav class="top-nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../Maths/index.html">Maths</a>
+        <a href="../C-Programming/index.html">C</a>
+
+        <a href="../Data-Structures/index.html">
+            Data Structures
+        </a>
+
+        <a href="index.html" class="active">
+            Advanced Data Structures
+        </a>
+
+        <a href="../Python/index.html">Python</a>
+        <a href="../AI-ML/index.html">AI &amp; ML</a>
+        <a href="../Placement/index.html">Placement</a>
+    </nav>
+</header>
+
+<div class="docs-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-title">
+            Advanced Data Structures
+        </div>
+
+        <input type="text"
+               id="topicSearch"
+               class="search-box"
+               placeholder="🔍 Search ADS topics..."
+               aria-label="Search ADS topics">
+
+        <a href="index.html"
+           class="sidebar-course-home">
+            🧠 ADS Home
+        </a>
+
+        <div class="sidebar-title">
+            Part 1 — Foundations &amp; Algorithms
+        </div>
+
+        <a class="ads-topic-link is-available"
+           href="level-08-performance-analysis.html">
+            📊 Level 8 — Performance Analysis
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-09-disjoint-sets.html">
+            🔗 Level 9 — Disjoint Sets
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-10-sparse-matrices.html">
+            🧮 Level 10 — Sparse Matrices
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-11-string-pattern-matching.html">
+            🔤 Level 11 — String Pattern Matching
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-12-advanced-sorting.html">
+            ⚡ Level 12 — Advanced Sorting
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-13-advanced-searching.html">
+            🎯 Level 13 — Advanced Searching
+        </a>
+
+        <div class="sidebar-title">
+            Part 2 — Advanced Trees &amp; Hashing
+        </div>
+
+        <a class="ads-topic-link is-available"
+           href="level-14-balanced-bst.html">
+            🌲 Level 14 — Balanced BST
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-15-digital-search-trees.html">
+            🔠 Level 15 — Digital Search Trees
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-16-multiway-search-trees.html">
+            🌳 Level 16 — Multiway Search Trees
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-17-heaps.html">
+            ⛰️ Level 17 — Heaps
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-18-hashing.html">
+            #️⃣ Level 18 — Hashing
+        </a>
+
+        <div class="sidebar-title">
+            Part 3 — Storage, Graphs &amp; Placement
+        </div>
+
+        <a class="ads-topic-link is-available active"
+           href="level-19-files.html">
+            📁 Level 19 — Files &amp; File Organization
+        </a>
+
+        <a class="ads-topic-link"
+           href="level-20-advanced-graphs.html">
+            🕸️ Level 20 — Advanced Graph Algorithms
+        </a>
+
+        <a class="ads-topic-link"
+           href="level-21-placement-problems.html">
+            💼 Level 21 — Placement Problems
+        </a>
+    </aside>
+
+    <main class="main-content">
+
+        <section class="ads-topic-hero">
+            <span class="subject-label">
+                CODEBHAVYA • ADS LEVEL 19
+            </span>
+
+            <h1 class="page-title">
+                📁 Files and File Organization
+            </h1>
+
+            <p class="page-description">
+                Organize persistent records using sequential,
+                indexed sequential and direct files while
+                mastering blocks, indexes, record operations,
+                buffering and external-storage cost.
+            </p>
+        </section>
+
+        <nav class="ads-page-jump-nav"
+             aria-label="Page sections">
+
+            <a href="#objectives">Objectives</a>
+            <a href="#fundamentals">Fundamentals</a>
+            <a href="#blocks">Blocks</a>
+            <a href="#access">Access Methods</a>
+            <a href="#sequential">Sequential</a>
+            <a href="#indexed">Indexed Sequential</a>
+            <a href="#direct">Direct Files</a>
+            <a href="#indexes">Indexes</a>
+            <a href="#comparison">Comparison</a>
+            <a href="#visualizer">Visualizer</a>
+            <a href="#tracing">Tracing</a>
+            <a href="#practice">Practice</a>
+            <a href="#revision">Revision</a>
+        </nav>
+
+        <section class="content-card ads-lesson-section"
+                 id="objectives">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    LEARNING GOALS
+                </span>
+
+                <h2>🎯 Learning Objectives</h2>
+            </div>
+
+            <ul class="ads-objective-list">
+                <li>
+                    Differentiate fields, records, files,
+                    blocks, pages and indexes.
+                </li>
+
+                <li>
+                    Calculate blocking factor and identify
+                    spanned or unspanned storage.
+                </li>
+
+                <li>
+                    Perform record creation, insertion,
+                    search, update, deletion and traversal.
+                </li>
+
+                <li>
+                    Explain sequential, indexed sequential
+                    and direct file organization.
+                </li>
+
+                <li>
+                    Build primary, clustering, secondary
+                    and multilevel indexes.
+                </li>
+
+                <li>
+                    Compare ISAM with dynamic B+ Tree indexing.
+                </li>
+
+                <li>
+                    Trace complete C file-processing programs
+                    and disk-access decisions.
+                </li>
+
+                <li>
+                    Select an organization from workload
+                    and storage requirements.
+                </li>
+            </ul>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="fundamentals">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    PERSISTENT STRUCTURED DATA
+                </span>
+
+                <h2>🧭 1. File Fundamentals</h2>
+            </div>
+
+            <p>
+                A file is a named collection of persistent
+                data stored on secondary storage. A logical
+                record describes one entity; a physical block
+                is the transfer unit exchanged between storage
+                and main memory.
+            </p>
+
+            <div class="ads-step-flow">
+                <article>
+                    <span>1</span>
+                    <h3>Field</h3>
+
+                    <p>
+                        One attribute such as roll number,
+                        name or marks.
+                    </p>
+                </article>
+
+                <article>
+                    <span>2</span>
+                    <h3>Record</h3>
+
+                    <p>
+                        A related group of fields representing
+                        one entity.
+                    </p>
+                </article>
+
+                <article>
+                    <span>3</span>
+                    <h3>File</h3>
+
+                    <p>
+                        A persistent collection of
+                        similar records.
+                    </p>
+                </article>
+
+                <article>
+                    <span>4</span>
+                    <h3>Block / Page</h3>
+
+                    <p>
+                        The physical unit read from or
+                        written to storage.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-rule-grid">
+                <article class="ads-rule-card">
+                    <strong>Key field</strong>
+
+                    <p>
+                        Identifies a record or determines
+                        its storage position.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card purple-panel">
+                    <strong>Fixed record</strong>
+
+                    <p>
+                        Every record uses the same number
+                        of bytes.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card green-rule">
+                    <strong>Variable record</strong>
+
+                    <p>
+                        Length is stored explicitly or
+                        fields use delimiters.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card gold-rule">
+                    <strong>Metadata</strong>
+
+                    <p>
+                        Describes schema, format, size
+                        and organization.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-tip-box">
+                <strong>Performance principle:</strong>
+                File algorithms minimize block transfers.
+                CPU comparisons are usually much cheaper than
+                an additional disk or SSD page access.
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="blocks">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    PACK RECORDS INTO PAGES
+                </span>
+
+                <h2>📦 2. Blocking and Buffering</h2>
+            </div>
+
+            <div class="ads-comparison-grid">
+                <article class="ads-info-panel">
+                    <h3>Unspanned Records</h3>
+
+                    <p>
+                        Every record remains inside one block.
+                        Unused bytes may remain at the end
+                        of a block.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Spanned Records</h3>
+
+                    <p>
+                        A record may continue in another block.
+                        Space utilization improves, but
+                        reconstruction is required.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-formula-box">
+                <strong>Unspanned blocking factor:</strong>
+                bfr = ⌊B/R⌋, where B is block size and R
+                is fixed record size.
+            </div>
+
+            <div class="ads-rule-grid">
+                <article class="ads-rule-card">
+                    <strong>Buffer</strong>
+
+                    <p>
+                        A memory area holding one or more
+                        file blocks.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card purple-panel">
+                    <strong>Read-ahead</strong>
+
+                    <p>
+                        Prefetch future sequential blocks
+                        before they are requested.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card green-rule">
+                    <strong>Dirty page</strong>
+
+                    <p>
+                        A buffered block changed in memory
+                        but not yet written.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card gold-rule">
+                    <strong>Double buffering</strong>
+
+                    <p>
+                        Process one buffer while the next
+                        block is transferred.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-example-callout">
+                <strong>Example:</strong>
+                If B = 4096 bytes and R = 100 bytes,
+                bfr = 40 records and 96 bytes remain unused
+                in every unspanned block.
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="access">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    HOW RECORDS ARE REACHED
+                </span>
+
+                <h2>🛣️ 3. File Access Methods</h2>
+            </div>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Access method</th>
+                            <th>Main idea</th>
+                            <th>Best workload</th>
+                            <th>Main cost</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Sequential</td>
+
+                            <td>
+                                Read records in physical order
+                            </td>
+
+                            <td>
+                                Complete scans and batch processing
+                            </td>
+
+                            <td>O(n) search</td>
+                        </tr>
+
+                        <tr>
+                            <td>Direct / random</td>
+
+                            <td>
+                                Jump to a byte offset or
+                                hashed bucket
+                            </td>
+
+                            <td>Equality lookup</td>
+
+                            <td>
+                                Collision and overflow handling
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Indexed</td>
+
+                            <td>
+                                Search a smaller key-to-address
+                                structure
+                            </td>
+
+                            <td>
+                                Mixed equality and range access
+                            </td>
+
+                            <td>
+                                Index storage and maintenance
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Indexed sequential</td>
+
+                            <td>
+                                Ordered data plus sparse index
+                            </td>
+
+                            <td>
+                                Both scans and keyed lookup
+                            </td>
+
+                            <td>
+                                Overflow chains and reorganization
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="ads-algorithm-box">
+                <h3>General Record Operation</h3>
+
+                <ol>
+                    <li>
+                        Translate a logical key into a candidate
+                        block or byte offset.
+                    </li>
+
+                    <li>
+                        Read the required block into a buffer.
+                    </li>
+
+                    <li>
+                        Locate the record inside the block.
+                    </li>
+
+                    <li>
+                        Return, modify, insert or mark
+                        the record deleted.
+                    </li>
+
+                    <li>
+                        Write dirty blocks and update
+                        affected indexes.
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="sequential">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    ORDERED RECORD STREAM
+                </span>
+
+                <h2>
+                    📜 4. Sequential File Organization
+                </h2>
+            </div>
+
+            <p>
+                Records are stored one after another, often in
+                primary-key order. Sequential processing is
+                efficient, but maintaining physical order can
+                make insertion and deletion expensive.
+            </p>
+
+            <div class="ads-rule-grid">
+                <article class="ads-rule-card">
+                    <strong>Traversal</strong>
+
+                    <p>
+                        Read every record from beginning to end.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card purple-panel">
+                    <strong>Search</strong>
+
+                    <p>
+                        Scan until the key is found or the
+                        ordered file passes it.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card green-rule">
+                    <strong>Insertion</strong>
+
+                    <p>
+                        Rewrite records around the correct
+                        sorted position.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card gold-rule">
+                    <strong>Deletion</strong>
+
+                    <p>
+                        Rewrite without the record or mark it
+                        for later compaction.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-algorithm-box">
+                <h3>Ordered Sequential Search</h3>
+
+                <ol>
+                    <li>
+                        Open the file in binary read mode.
+                    </li>
+
+                    <li>
+                        Read one fixed-length record.
+                    </li>
+
+                    <li>
+                        Return when record.key equals
+                        the target.
+                    </li>
+
+                    <li>
+                        Stop early when record.key becomes
+                        greater than the target.
+                    </li>
+
+                    <li>
+                        Otherwise continue until end-of-file.
+                    </li>
+                </ol>
+            </div>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>
+                        💻 Complete C Program — Ordered
+                        Sequential Record File
+                    </span>
+
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="sequential-file">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+#define FILE_NAME "students.dat"
+#define TEMP_NAME "students.tmp"
+#define MAX_RECORDS 100
+
+typedef struct {
+    int key;
+    char name[32];
+    int marks;
+} Record;
+
+int compareRecord(
+    const void *first,
+    const void *second
+) {
+    const Record *a = first;
+    const Record *b = second;
+
+    return (
+        a-&gt;key &gt; b-&gt;key
+    ) - (
+        a-&gt;key &lt; b-&gt;key
+    );
+}
+
+void buildFile(
+    Record records[],
+    int count
+) {
+    qsort(
+        records,
+        count,
+        sizeof(Record),
+        compareRecord
+    ); /* sequential sort */
+
+    FILE *file = fopen(
+        FILE_NAME,
+        "wb"
+    ); /* sequential open write */
+
+    if (file == NULL)
+        exit(EXIT_FAILURE);
+
+    fwrite(
+        records,
+        sizeof(Record),
+        count,
+        file
+    ); /* sequential write */
+
+    fclose(file);
+}
+
+long searchRecord(
+    int key,
+    Record *result
+) {
+    FILE *file = fopen(
+        FILE_NAME,
+        "rb"
+    ); /* sequential open read */
+
+    if (file == NULL)
+        return -1;
+
+    Record current;
+    long position = 0;
+
+    while (
+        fread(
+            &amp;current,
+            sizeof(Record),
+            1,
+            file
+        ) == 1
+    ) { /* sequential search loop */
+
+        if (current.key == key) {
+            if (result != NULL)
+                *result = current;
+
+            fclose(file);
+
+            return position;
+            /* sequential search found */
+        }
+
+        if (current.key &gt; key)
+            break;
+        /* sequential early stop */
+
+        position++;
+    }
+
+    fclose(file);
+
+    return -1;
+    /* sequential search miss */
+}
+
+int insertRecord(Record value) {
+    Record records[MAX_RECORDS];
+    int count = 0;
+
+    FILE *file = fopen(
+        FILE_NAME,
+        "rb"
+    );
+
+    if (file != NULL) {
+        while (
+            count &lt; MAX_RECORDS &amp;&amp;
+            fread(
+                &amp;records[count],
+                sizeof(Record),
+                1,
+                file
+            ) == 1
+        ) {
+            count++;
+        }
+
+        fclose(file);
+    }
+
+    for (int i = 0; i &lt; count; i++) {
+        if (records[i].key == value.key)
+            return 0;
+    }
+
+    if (count == MAX_RECORDS)
+        return 0;
+
+    records[count++] = value;
+    /* sequential insert append */
+
+    buildFile(
+        records,
+        count
+    ); /* sequential insert rewrite */
+
+    return 1;
+}
+
+int updateRecord(
+    int key,
+    const char *name,
+    int marks
+) {
+    FILE *file = fopen(
+        FILE_NAME,
+        "rb+"
+    );
+
+    if (file == NULL)
+        return 0;
+
+    Record current;
+
+    while (
+        fread(
+            &amp;current,
+            sizeof(Record),
+            1,
+            file
+        ) == 1
+    ) { /* sequential update loop */
+
+        if (current.key == key) {
+            strncpy(
+                current.name,
+                name,
+                sizeof(current.name) - 1
+            );
+
+            current.name[
+                sizeof(current.name) - 1
+            ] = '\0';
+
+            current.marks = marks;
+
+            fseek(
+                file,
+                -(long)sizeof(Record),
+                SEEK_CUR
+            );
+
+            fwrite(
+                &amp;current,
+                sizeof(Record),
+                1,
+                file
+            ); /* sequential update write */
+
+            fclose(file);
+            return 1;
+        }
+    }
+
+    fclose(file);
+    return 0;
+}
+
+int deleteRecord(int key) {
+    FILE *source = fopen(
+        FILE_NAME,
+        "rb"
+    );
+
+    FILE *target = fopen(
+        TEMP_NAME,
+        "wb"
+    );
+
+    if (
+        source == NULL ||
+        target == NULL
+    ) {
+        return 0;
+    }
+
+    Record current;
+    int deleted = 0;
+
+    while (
+        fread(
+            &amp;current,
+            sizeof(Record),
+            1,
+            source
+        ) == 1
+    ) { /* sequential delete loop */
+
+        if (current.key == key) {
+            deleted = 1;
+            /* sequential delete skip */
+        } else {
+            fwrite(
+                &amp;current,
+                sizeof(Record),
+                1,
+                target
+            );
+        }
+    }
+
+    fclose(source);
+    fclose(target);
+
+    remove(FILE_NAME);
+
+    rename(
+        TEMP_NAME,
+        FILE_NAME
+    ); /* sequential delete replace */
+
+    return deleted;
+}
+
+void displayFile(void) {
+    FILE *file = fopen(
+        FILE_NAME,
+        "rb"
+    );
+
+    Record current;
+
+    if (file == NULL)
+        return;
+
+    while (
+        fread(
+            &amp;current,
+            sizeof(Record),
+            1,
+            file
+        ) == 1
+    ) {
+        printf(
+            "%d %-12s %d\n",
+            current.key,
+            current.name,
+            current.marks
+        );
+    }
+
+    fclose(file);
+}
+
+int main(void) {
+    Record records[] = {
+        {105, "Asha", 82},
+        {101, "Ravi", 76},
+        {109, "Meena", 91},
+        {103, "Kiran", 68},
+        {107, "Divya", 88}
+    };
+
+    int count =
+        sizeof(records) /
+        sizeof(records[0]);
+
+    buildFile(records, count);
+
+    Record found;
+
+    printf(
+        "Search 103: %s\n",
+        searchRecord(103, &amp;found) &gt;= 0
+            ? "Found"
+            : "Not Found"
+    );
+
+    insertRecord(
+        (Record){
+            106,
+            "Nikhil",
+            79
+        }
+    );
+
+    updateRecord(
+        103,
+        "Kiran",
+        74
+    );
+
+    deleteRecord(105);
+
+    displayFile();
+
+    return 0;
+}</code></pre>
+
+                    <div class="ads-io-grid">
+                        <div>
+                            <h3>Initial Records</h3>
+
+<pre><code>105 Asha 82
+101 Ravi 76
+109 Meena 91
+103 Kiran 68
+107 Divya 88</code></pre>
+                        </div>
+
+                        <div>
+                            <h3>Operations</h3>
+
+<pre><code>Search 103
+Insert 106 Nikhil 79
+Update 103 to 74
+Delete 105</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="indexed">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    SPARSE INDEX PLUS ORDERED DATA
+                </span>
+
+                <h2>
+                    🗂️ 5. Indexed Sequential Organization
+                </h2>
+            </div>
+
+            <p>
+                An indexed sequential file keeps data records
+                sorted and stores a sparse index entry for the
+                first key of each data block. The index finds a
+                candidate block; a short sequential scan finishes
+                the search.
+            </p>
+
+            <div class="ads-rule-grid">
+                <article class="ads-rule-card">
+                    <strong>Data area</strong>
+
+                    <p>
+                        Sorted fixed-size records grouped
+                        into blocks.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card purple-panel">
+                    <strong>Sparse index</strong>
+
+                    <p>
+                        One key and block address for each
+                        data block.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card green-rule">
+                    <strong>Overflow area</strong>
+
+                    <p>
+                        Receives inserted records when a
+                        home block is full.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card gold-rule">
+                    <strong>Reorganization</strong>
+
+                    <p>
+                        Merges overflow records back into
+                        ordered blocks.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-algorithm-box">
+                <h3>Indexed Sequential Search</h3>
+
+                <ol>
+                    <li>
+                        Search the index for the greatest
+                        index key not exceeding the target.
+                    </li>
+
+                    <li>
+                        Seek directly to that block’s
+                        starting record.
+                    </li>
+
+                    <li>
+                        Scan only the records belonging
+                        to the selected block.
+                    </li>
+
+                    <li>
+                        Return on equality or stop when
+                        a larger key is reached.
+                    </li>
+
+                    <li>
+                        Follow the block’s overflow chain
+                        before reporting failure.
+                    </li>
+                </ol>
+            </div>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>
+                        💻 Complete C Program — Sparse
+                        Indexed Sequential File
+                    </span>
+
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="indexed-file">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define DATA_FILE "indexed.dat"
+#define INDEX_FILE "indexed.idx"
+#define BLOCK_FACTOR 3
+
+typedef struct {
+    int key;
+    char name[32];
+    int marks;
+} Record;
+
+typedef struct {
+    int firstKey;
+    long recordNumber;
+} IndexEntry;
+
+int compareRecord(
+    const void *first,
+    const void *second
+) {
+    const Record *a = first;
+    const Record *b = second;
+
+    return (
+        a-&gt;key &gt; b-&gt;key
+    ) - (
+        a-&gt;key &lt; b-&gt;key
+    );
+}
+
+void buildIndexedFile(
+    Record records[],
+    int count
+) {
+    qsort(
+        records,
+        count,
+        sizeof(Record),
+        compareRecord
+    ); /* indexed sort */
+
+    FILE *data = fopen(
+        DATA_FILE,
+        "wb"
+    );
+
+    FILE *index = fopen(
+        INDEX_FILE,
+        "wb"
+    ); /* indexed create files */
+
+    if (
+        data == NULL ||
+        index == NULL
+    ) {
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i &lt; count; i++) {
+        if (i % BLOCK_FACTOR == 0) {
+            IndexEntry entry = {
+                records[i].key,
+                i
+            };
+
+            fwrite(
+                &amp;entry,
+                sizeof(IndexEntry),
+                1,
+                index
+            ); /* indexed write entry */
+        }
+
+        fwrite(
+            &amp;records[i],
+            sizeof(Record),
+            1,
+            data
+        ); /* indexed write data */
+    }
+
+    fclose(data);
+    fclose(index);
+}
+
+long chooseBlock(int key) {
+    FILE *index = fopen(
+        INDEX_FILE,
+        "rb"
+    );
+
+    if (index == NULL)
+        return -1;
+
+    IndexEntry current;
+    long candidate = -1;
+
+    while (
+        fread(
+            &amp;current,
+            sizeof(IndexEntry),
+            1,
+            index
+        ) == 1
+    ) { /* indexed scan index */
+
+        if (current.firstKey &gt; key)
+            break;
+
+        candidate =
+            current.recordNumber;
+        /* indexed choose block */
+    }
+
+    fclose(index);
+
+    return candidate;
+}
+
+long searchIndexed(
+    int key,
+    Record *result
+) {
+    long start =
+        chooseBlock(key);
+    /* indexed search index */
+
+    if (start &lt; 0)
+        return -1;
+
+    FILE *data = fopen(
+        DATA_FILE,
+        "rb"
+    );
+
+    if (data == NULL)
+        return -1;
+
+    fseek(
+        data,
+        start * (long)sizeof(Record),
+        SEEK_SET
+    ); /* indexed seek block */
+
+    Record current;
+
+    for (
+        int offset = 0;
+        offset &lt; BLOCK_FACTOR;
+        offset++
+    ) { /* indexed scan block */
+
+        if (
+            fread(
+                &amp;current,
+                sizeof(Record),
+                1,
+                data
+            ) != 1
+        ) {
+            break;
+        }
+
+        if (current.key == key) {
+            if (result != NULL)
+                *result = current;
+
+            fclose(data);
+
+            return start + offset;
+            /* indexed search found */
+        }
+
+        if (current.key &gt; key)
+            break;
+    }
+
+    fclose(data);
+
+    return -1;
+    /* indexed search miss */
+}
+
+int main(void) {
+    Record records[] = {
+        {105, "Asha", 82},
+        {101, "Ravi", 76},
+        {109, "Meena", 91},
+        {103, "Kiran", 68},
+        {107, "Divya", 88},
+        {111, "Arun", 73},
+        {113, "Sara", 85}
+    };
+
+    int count =
+        sizeof(records) /
+        sizeof(records[0]);
+
+    buildIndexedFile(
+        records,
+        count
+    );
+
+    Record result;
+
+    long position =
+        searchIndexed(
+            109,
+            &amp;result
+        );
+
+    if (position &gt;= 0) {
+        printf(
+            "Found %d %s at record %ld\n",
+            result.key,
+            result.name,
+            position
+        );
+    } else {
+        printf("Not Found\n");
+    }
+
+    return 0;
+}</code></pre>
+
+                    <div class="ads-io-grid">
+                        <div>
+                            <h3>Sparse Index</h3>
+
+<pre><code>101 → record 0
+107 → record 3
+111 → record 6</code></pre>
+                        </div>
+
+                        <div>
+                            <h3>Search 109</h3>
+
+<pre><code>Choose record 3
+Scan 107, 109
+Found at record 4</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="direct">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    KEY TO BUCKET OR OFFSET
+                </span>
+
+                <h2>🎯 6. Direct and Hashed Files</h2>
+            </div>
+
+            <p>
+                A direct file converts a record key into a
+                bucket or relative record number. Fixed-length
+                slots permit fseek to reach a record without
+                scanning earlier data.
+            </p>
+
+            <div class="ads-rule-grid">
+                <article class="ads-rule-card">
+                    <strong>Home bucket</strong>
+
+                    <p>
+                        Initial position produced by the
+                        file hash function.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card purple-panel">
+                    <strong>Collision</strong>
+
+                    <p>
+                        Two file records request the same
+                        home bucket.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card green-rule">
+                    <strong>Overflow</strong>
+
+                    <p>
+                        Alternative slot, overflow block
+                        or chain stores the record.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card gold-rule">
+                    <strong>Deletion marker</strong>
+
+                    <p>
+                        Preserves an open-address probe
+                        path in the file.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-algorithm-box">
+                <h3>Direct File Lookup</h3>
+
+                <ol>
+                    <li>
+                        Calculate home =
+                        positiveMod(key, FILE_SIZE).
+                    </li>
+
+                    <li>
+                        Generate the collision-resolution
+                        probe sequence.
+                    </li>
+
+                    <li>
+                        Seek to probe × sizeof(Slot).
+                    </li>
+
+                    <li>
+                        Read exactly one fixed-size slot.
+                    </li>
+
+                    <li>
+                        Return on equality, stop at a never-used
+                        slot or continue through deleted slots.
+                    </li>
+                </ol>
+            </div>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>
+                        💻 Complete C Program —
+                        Direct Hashed File
+                    </span>
+
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="direct-file">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+#define FILE_NAME "direct.dat"
+#define FILE_SIZE 11
+
+#define EMPTY 0
+#define OCCUPIED 1
+#define DELETED 2
+
+typedef struct {
+    int state;
+    int key;
+    char name[32];
+    int marks;
+} Slot;
+
+int hashKey(int key) {
+    int value =
+        key % FILE_SIZE;
+    /* direct hash */
+
+    return value &lt; 0
+        ? value + FILE_SIZE
+        : value;
+}
+
+void createDirectFile(void) {
+    FILE *file = fopen(
+        FILE_NAME,
+        "wb"
+    );
+
+    if (file == NULL)
+        exit(EXIT_FAILURE);
+
+    Slot empty = {
+        EMPTY,
+        0,
+        "",
+        0
+    };
+
+    for (
+        int i = 0;
+        i &lt; FILE_SIZE;
+        i++
+    ) {
+        fwrite(
+            &amp;empty,
+            sizeof(Slot),
+            1,
+            file
+        ); /* direct initialize */
+    }
+
+    fclose(file);
+}
+
+int readSlot(
+    FILE *file,
+    int index,
+    Slot *slot
+) {
+    fseek(
+        file,
+        index * (long)sizeof(Slot),
+        SEEK_SET
+    ); /* direct seek */
+
+    return fread(
+        slot,
+        sizeof(Slot),
+        1,
+        file
+    ) == 1;
+}
+
+void writeSlot(
+    FILE *file,
+    int index,
+    const Slot *slot
+) {
+    fseek(
+        file,
+        index * (long)sizeof(Slot),
+        SEEK_SET
+    );
+
+    fwrite(
+        slot,
+        sizeof(Slot),
+        1,
+        file
+    ); /* direct write */
+}
+
+int searchDirect(
+    int key,
+    Slot *result
+) {
+    FILE *file = fopen(
+        FILE_NAME,
+        "rb"
+    );
+
+    if (file == NULL)
+        return -1;
+
+    int home = hashKey(key);
+
+    for (
+        int attempt = 0;
+        attempt &lt; FILE_SIZE;
+        attempt++
+    ) { /* direct search loop */
+
+        int index =
+            (
+                home + attempt
+            ) % FILE_SIZE;
+        /* direct probe */
+
+        Slot slot;
+
+        readSlot(
+            file,
+            index,
+            &amp;slot
+        );
+
+        if (slot.state == EMPTY) {
+            fclose(file);
+
+            return -1;
+            /* direct search empty */
+        }
+
+        if (
+            slot.state == OCCUPIED &amp;&amp;
+            slot.key == key
+        ) {
+            if (result != NULL)
+                *result = slot;
+
+            fclose(file);
+
+            return index;
+            /* direct search found */
+        }
+    }
+
+    fclose(file);
+
+    return -1;
+}
+
+int insertDirect(
+    int key,
+    const char *name,
+    int marks
+) {
+    FILE *file = fopen(
+        FILE_NAME,
+        "rb+"
+    );
+
+    if (file == NULL)
+        return 0;
+
+    int home = hashKey(key);
+    int deleted = -1;
+
+    for (
+        int attempt = 0;
+        attempt &lt; FILE_SIZE;
+        attempt++
+    ) { /* direct insert loop */
+
+        int index =
+            (
+                home + attempt
+            ) % FILE_SIZE;
+
+        Slot slot;
+
+        readSlot(
+            file,
+            index,
+            &amp;slot
+        );
+
+        if (
+            slot.state == OCCUPIED &amp;&amp;
+            slot.key == key
+        ) {
+            fclose(file);
+            return 0;
+        }
+
+        if (
+            slot.state == DELETED &amp;&amp;
+            deleted == -1
+        ) {
+            deleted = index;
+        }
+
+        if (slot.state == EMPTY) {
+            if (deleted != -1)
+                index = deleted;
+
+            Slot value = {
+                OCCUPIED,
+                key,
+                "",
+                marks
+            };
+
+            strncpy(
+                value.name,
+                name,
+                sizeof(value.name) - 1
+            );
+
+            writeSlot(
+                file,
+                index,
+                &amp;value
+            ); /* direct insert store */
+
+            fclose(file);
+
+            return 1;
+        }
+    }
+
+    fclose(file);
+    return 0;
+}
+
+int updateDirect(
+    int key,
+    const char *name,
+    int marks
+) {
+    int index =
+        searchDirect(
+            key,
+            NULL
+        );
+    /* direct update search */
+
+    if (index &lt; 0)
+        return 0;
+
+    FILE *file = fopen(
+        FILE_NAME,
+        "rb+"
+    );
+
+    Slot slot;
+
+    readSlot(
+        file,
+        index,
+        &amp;slot
+    );
+
+    strncpy(
+        slot.name,
+        name,
+        sizeof(slot.name) - 1
+    );
+
+    slot.marks = marks;
+
+    writeSlot(
+        file,
+        index,
+        &amp;slot
+    ); /* direct update write */
+
+    fclose(file);
+
+    return 1;
+}
+
+int deleteDirect(int key) {
+    int index =
+        searchDirect(
+            key,
+            NULL
+        );
+    /* direct delete search */
+
+    if (index &lt; 0)
+        return 0;
+
+    FILE *file = fopen(
+        FILE_NAME,
+        "rb+"
+    );
+
+    Slot slot;
+
+    readSlot(
+        file,
+        index,
+        &amp;slot
+    );
+
+    slot.state = DELETED;
+
+    writeSlot(
+        file,
+        index,
+        &amp;slot
+    ); /* direct delete mark */
+
+    fclose(file);
+
+    return 1;
+}
+
+int main(void) {
+    createDirectFile();
+
+    insertDirect(
+        27,
+        "Asha",
+        82
+    );
+
+    insertDirect(
+        38,
+        "Ravi",
+        76
+    );
+
+    insertDirect(
+        49,
+        "Meena",
+        91
+    );
+
+    insertDirect(
+        16,
+        "Kiran",
+        68
+    );
+
+    Slot result;
+
+    int index =
+        searchDirect(
+            49,
+            &amp;result
+        );
+
+    printf(
+        "Search 49: %s at slot %d\n",
+        index &gt;= 0
+            ? "Found"
+            : "Not Found",
+        index
+    );
+
+    updateDirect(
+        38,
+        "Ravi",
+        80
+    );
+
+    deleteDirect(27);
+
+    return 0;
+}</code></pre>
+
+                    <div class="ads-io-grid">
+                        <div>
+                            <h3>Keys</h3>
+
+<pre><code>27, 38, 49, 16
+FILE_SIZE = 11</code></pre>
+                        </div>
+
+                        <div>
+                            <h3>Probe Result</h3>
+
+<pre><code>27 → 5
+38 → 6
+49 → 7
+16 → 8</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="indexes">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    SMALL STRUCTURES THAT FIND BIG FILES
+                </span>
+
+                <h2>
+                    🌳 7. File Indexes, ISAM and B+ Trees
+                </h2>
+            </div>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Index type</th>
+                            <th>Ordering field</th>
+                            <th>Density</th>
+                            <th>Duplicates</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Primary index</td>
+                            <td>
+                                Ordered unique primary key
+                            </td>
+                            <td>Usually sparse</td>
+                            <td>No</td>
+                        </tr>
+
+                        <tr>
+                            <td>Clustering index</td>
+                            <td>
+                                Ordered non-key field
+                            </td>
+                            <td>Usually sparse</td>
+                            <td>Yes, grouped</td>
+                        </tr>
+
+                        <tr>
+                            <td>Secondary index</td>
+                            <td>Non-ordering field</td>
+                            <td>Usually dense</td>
+                            <td>Uses lists/buckets</td>
+                        </tr>
+
+                        <tr>
+                            <td>Multilevel index</td>
+                            <td>
+                                Index built over another index
+                            </td>
+                            <td>Sparse upper levels</td>
+                            <td>
+                                Depends on base index
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="ads-comparison-grid">
+                <article class="ads-info-panel">
+                    <h3>ISAM</h3>
+
+                    <p>
+                        Static index levels point to ordered
+                        data pages. Insertions commonly enter
+                        overflow areas until periodic
+                        reorganization.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>B+ Tree Index</h3>
+
+                    <p>
+                        Dynamic splits and merges keep the
+                        index balanced. Linked leaves support
+                        efficient ordered and range access.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-tip-box">
+                <strong>Important distinction:</strong>
+                The index is an auxiliary access path. The
+                data file contains complete records, while an
+                index normally stores search keys and record
+                or block addresses.
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="comparison">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    MATCH ORGANIZATION TO WORKLOAD
+                </span>
+
+                <h2>⚖️ 8. Organization Comparison</h2>
+            </div>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Organization</th>
+                            <th>Equality search</th>
+                            <th>Range scan</th>
+                            <th>Insertion</th>
+                            <th>Best use</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Heap / unordered</td>
+                            <td>O(n)</td>
+                            <td>O(n)</td>
+                            <td>Very fast append</td>
+                            <td>Logs and full scans</td>
+                        </tr>
+
+                        <tr>
+                            <td>Ordered sequential</td>
+                            <td>
+                                O(log n) with block binary
+                                search or O(n) scan
+                            </td>
+                            <td>Excellent</td>
+                            <td>Expensive rewrite</td>
+                            <td>Batch and reporting</td>
+                        </tr>
+
+                        <tr>
+                            <td>Indexed sequential</td>
+                            <td>
+                                Fast index plus block scan
+                            </td>
+                            <td>Excellent</td>
+                            <td>
+                                Overflow management
+                            </td>
+                            <td>
+                                Mixed sequential/direct work
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Direct hashed</td>
+                            <td>Expected O(1)</td>
+                            <td>Poor</td>
+                            <td>Expected O(1)</td>
+                            <td>Exact-key transactions</td>
+                        </tr>
+
+                        <tr>
+                            <td>B+ Tree indexed</td>
+                            <td>O(log n)</td>
+                            <td>O(log n + k)</td>
+                            <td>O(log n)</td>
+                            <td>
+                                Dynamic database indexes
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="visualizer">
+
+            <div class="ads-interactive-header">
+                <div>
+                    <span class="section-label">
+                        INTERACTIVE FILE ORGANIZATION
+                    </span>
+
+                    <h2>
+                        🎬 9. Premium File Organization Visualizer
+                    </h2>
+
+                    <p>
+                        Choose an organization and operation,
+                        then follow record sorting, block placement,
+                        index lookup, sequential scans, direct
+                        seeking, overflow and deletion step by step.
+                    </p>
+                </div>
+
+                <div class="ads-visualizer-brand">
+                    <img src="../images/codebhavya-main-logo.png"
+                         alt="CodeBhavya">
+
+                    <span>
+                        <b>Code</b>
+                        <strong>Bhavya</strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="file-controls">
+                <label>
+                    Records: key:name:marks
+
+                    <input id="fileDataInput"
+                           type="text"
+                           value="105:Asha:82, 101:Ravi:76, 109:Meena:91, 103:Kiran:68, 107:Divya:88">
+                </label>
+
+                <label id="fileTargetLabel">
+                    Search Key
+
+                    <input id="fileTargetInput"
+                           type="number"
+                           value="103">
+                </label>
+
+                <label id="fileValueLabel">
+                    Name / Marks
+
+                    <input id="fileValueInput"
+                           type="text"
+                           value="Nikhil:79">
+                </label>
+
+                <label>
+                    Organization
+
+                    <select id="fileOrganization">
+                        <option value="sequential">
+                            Ordered Sequential
+                        </option>
+
+                        <option value="indexed">
+                            Indexed Sequential
+                        </option>
+
+                        <option value="direct">
+                            Direct / Hashed
+                        </option>
+                    </select>
+                </label>
+
+                <label>
+                    Operation
+                    <select id="fileOperation"></select>
+                </label>
+
+                <button id="loadFileVisualizer"
+                        type="button"
+                        class="primary-button">
+                    Load Visualizer
+                </button>
+            </div>
+
+            <div class="ads-example-chips">
+                <button type="button"
+                        data-file-example="sequential">
+                    Sequential
+                </button>
+
+                <button type="button"
+                        data-file-example="indexed">
+                    Indexed Sequential
+                </button>
+
+                <button type="button"
+                        data-file-example="direct">
+                    Direct File
+                </button>
+            </div>
+
+            <div id="filePrompt"
+                 class="ads-explorer-message">
+                Choose an organization and operation, verify the
+                records and click Load Visualizer.
+            </div>
+
+            <div id="fileResult"
+                 class="file-visualizer-result"
+                 hidden>
+
+                <div class="file-viz-layout">
+                    <section class="file-storage-panel">
+                        <h3>💾 Live File Storage</h3>
+
+                        <div id="fileStorageView"
+                             class="file-storage-view"
+                             aria-live="polite">
+                        </div>
+
+                        <div id="fileMessage"
+                             class="ads-explorer-message">
+                            —
+                        </div>
+
+                        <div class="ads-progress-track">
+                            <span id="fileProgress"></span>
+                        </div>
+                    </section>
+
+                    <aside class="file-stat-panel">
+                        <h3>📈 Live Statistics</h3>
+
+                        <div class="file-stat-grid">
+                            <div>
+                                <span>Organization</span>
+                                <strong id="fileOrganizationValue">
+                                    —
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Operation</span>
+                                <strong id="fileOperationValue">
+                                    —
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Phase</span>
+                                <strong id="filePhase">
+                                    Ready
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Block / Slot</span>
+                                <strong id="fileBlockValue">
+                                    —
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Comparisons</span>
+                                <strong id="fileComparisonValue">
+                                    0
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Block Reads</span>
+                                <strong id="fileReadValue">
+                                    0
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Records</span>
+                                <strong id="fileCountValue">
+                                    0
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Result</span>
+                                <strong id="fileResultValue">
+                                    —
+                                </strong>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+
+                <div class="file-control-row">
+                    <button id="filePrevious"
+                            type="button">
+                        ← Previous
+                    </button>
+
+                    <button id="fileNext"
+                            type="button">
+                        Next →
+                    </button>
+
+                    <button id="fileAuto"
+                            type="button">
+                        Auto Play
+                    </button>
+
+                    <button id="filePause"
+                            type="button">
+                        Pause
+                    </button>
+
+                    <button id="fileReset"
+                            type="button">
+                        Reset
+                    </button>
+
+                    <span id="fileStatus">
+                        Step 0 of 0
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="tracing">
+
+            <div class="ads-interactive-header">
+                <div>
+                    <span class="section-label">
+                        SELECTABLE C PROGRAM TRACER
+                    </span>
+
+                    <h2>
+                        🔍 10. Program Tracing —
+                        File Organization
+                    </h2>
+
+                    <p>
+                        Select an organization and operation.
+                        The matching complete C source appears
+                        with line numbers, live variables,
+                        blocks, indexes and evolving records.
+                    </p>
+                </div>
+            </div>
+
+            <div class="file-tracer-loader">
+                <label>
+                    Records: key:name:marks
+
+                    <input id="fileTraceData"
+                           type="text"
+                           value="105:Asha:82, 101:Ravi:76, 109:Meena:91, 103:Kiran:68, 107:Divya:88">
+                </label>
+
+                <label id="fileTraceTargetLabel">
+                    Search Key
+
+                    <input id="fileTraceTarget"
+                           type="number"
+                           value="103">
+                </label>
+
+                <label id="fileTraceValueLabel">
+                    Name / Marks
+
+                    <input id="fileTraceValue"
+                           type="text"
+                           value="Nikhil:79">
+                </label>
+
+                <label>
+                    Program
+
+                    <select id="fileTraceOrganization">
+                        <option value="sequential">
+                            Ordered Sequential
+                        </option>
+
+                        <option value="indexed">
+                            Indexed Sequential
+                        </option>
+
+                        <option value="direct">
+                            Direct / Hashed
+                        </option>
+                    </select>
+                </label>
+
+                <label>
+                    Operation
+
+                    <select id="fileTraceOperation"></select>
+                </label>
+
+                <button id="loadFileTracer"
+                        type="button"
+                        class="primary-button">
+                    Load Program Tracer
+                </button>
+            </div>
+
+            <div id="fileTracePrompt"
+                 class="ads-explorer-message">
+                Select a program and operation, then click
+                Load Program Tracer.
+            </div>
+
+            <div id="fileTraceResult"
+                 class="file-tracer-result"
+                 hidden>
+
+                <h3 id="fileTraceTitle">
+                    PROGRAM TRACING — FILE ORGANIZATION
+                </h3>
+
+                <div class="file-tracer-layout">
+                    <section class="file-tracer-code-panel">
+                        <h4>C Source Code</h4>
+
+                        <div id="fileTraceCodeWindow"
+                             class="file-tracer-code-window">
+
+                            <code id="fileTraceCode"
+                                  class="file-tracer-code">
+                            </code>
+                        </div>
+                    </section>
+
+                    <aside class="file-tracer-side">
+                        <div id="fileTraceMessage"
+                             class="ads-explorer-message">
+                            —
+                        </div>
+
+                        <div id="fileTraceVariables"
+                             class="file-trace-variables">
+                        </div>
+
+                        <div id="fileTraceStorage"
+                             class="file-storage-view compact-file-view">
+                        </div>
+
+                        <div class="file-tracer-output">
+                            <span>Program Output</span>
+
+                            <strong id="fileTraceOutput">
+                                —
+                            </strong>
+                        </div>
+                    </aside>
+                </div>
+
+                <div class="file-control-row">
+                    <button id="fileTracePrevious"
+                            type="button">
+                        ← Previous
+                    </button>
+
+                    <button id="fileTraceNext"
+                            type="button">
+                        Next →
+                    </button>
+
+                    <button id="fileTraceAuto"
+                            type="button">
+                        Auto Play
+                    </button>
+
+                    <button id="fileTracePause"
+                            type="button">
+                        Pause
+                    </button>
+
+                    <button id="fileTraceReset"
+                            type="button">
+                        Reset
+                    </button>
+
+                    <span id="fileTraceStatus">
+                        Step 0 of 0
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="complexity">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    EXTERNAL-MEMORY COST
+                </span>
+
+                <h2>
+                    ⏱️ 11. Complexity and Block Access
+                </h2>
+            </div>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Operation</th>
+                            <th>Sequential</th>
+                            <th>Indexed sequential</th>
+                            <th>Direct hashed</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Build</td>
+                            <td>
+                                O(n log n) sort + O(n) write
+                            </td>
+                            <td>O(n) after sorting</td>
+                            <td>Expected O(n)</td>
+                        </tr>
+
+                        <tr>
+                            <td>Search</td>
+                            <td>O(n) records</td>
+                            <td>
+                                Index search + one block scan
+                            </td>
+                            <td>Expected O(1) slots</td>
+                        </tr>
+
+                        <tr>
+                            <td>Insert</td>
+                            <td>O(n) ordered rewrite</td>
+                            <td>
+                                Overflow or block
+                                split/reorganization
+                            </td>
+                            <td>Expected O(1)</td>
+                        </tr>
+
+                        <tr>
+                            <td>Delete</td>
+                            <td>O(n) rewrite/mark</td>
+                            <td>
+                                Mark plus index/overflow
+                                maintenance
+                            </td>
+                            <td>
+                                Expected O(1) with tombstone
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Range</td>
+                            <td>Excellent ordered scan</td>
+                            <td>
+                                Index start + sequential blocks
+                            </td>
+                            <td>Requires broad scan</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="applications">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    REAL STORAGE SYSTEMS
+                </span>
+
+                <h2>🧩 12. Applications</h2>
+            </div>
+
+            <div class="ads-decision-grid">
+                <article class="ads-info-panel">
+                    <h3>Payroll and Billing</h3>
+
+                    <p>
+                        Sequential files support periodic
+                        complete-record processing.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Database Tables</h3>
+
+                    <p>
+                        Heap files, B+ indexes and clustered
+                        layouts support mixed queries.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel">
+                    <h3>Transaction Lookup</h3>
+
+                    <p>
+                        Hashed files accelerate exact account
+                        or transaction keys.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Reporting Systems</h3>
+
+                    <p>
+                        Ordered and indexed sequential files
+                        support ranges and scans.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel">
+                    <h3>Operating Systems</h3>
+
+                    <p>
+                        Directories and metadata map names
+                        to persistent file locations.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>External Sorting</h3>
+
+                    <p>
+                        Runs and merge buffers organize data
+                        larger than main memory.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="mistakes">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    DEBUGGING CHECKLIST
+                </span>
+
+                <h2>⚠️ 13. Common Mistakes</h2>
+            </div>
+
+            <div class="ads-mistake-grid">
+                <article>
+                    <h3>Using while (!feof(file))</h3>
+
+                    <p>
+                        Test the return value of fread,
+                        fscanf or fgets instead.
+                    </p>
+                </article>
+
+                <article>
+                    <h3>Wrong binary mode</h3>
+
+                    <p>
+                        Use rb, wb or rb+ consistently
+                        with binary records.
+                    </p>
+                </article>
+
+                <article>
+                    <h3>Incorrect fseek offset</h3>
+
+                    <p>
+                        Multiply the record number by sizeof
+                        the stored record or slot.
+                    </p>
+                </article>
+
+                <article>
+                    <h3>Writing structure pointers</h3>
+
+                    <p>
+                        A pointer value is not the pointed
+                        data and is meaningless after reload.
+                    </p>
+                </article>
+
+                <article>
+                    <h3>Not updating indexes</h3>
+
+                    <p>
+                        Every structural data-file change
+                        must preserve all access paths.
+                    </p>
+                </article>
+
+                <article>
+                    <h3>Stopping at deleted hash slots</h3>
+
+                    <p>
+                        A tombstone does not terminate a
+                        direct-file probe sequence.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="practice">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    CHECK YOUR UNDERSTANDING
+                </span>
+
+                <h2>✍️ 14. Practice Problems</h2>
+            </div>
+
+            <div class="ads-practice-note">
+                Solve each problem first. Use Hint only when
+                required, then open Show Answer.
+            </div>
+
+            <div class="ads-practice-list">
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        1. What is the physical transfer unit
+                        between storage and memory?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-1">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-1">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-1"
+                         class="ads-hint-box"
+                         hidden>
+                        It contains several records.
+                    </div>
+
+                    <div id="f-answer-1"
+                         class="ads-solution-box"
+                         hidden>
+                        A <strong>block or page</strong>.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        2. Calculate unspanned bfr for
+                        B = 4096 and R = 100.
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-2">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-2">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-2"
+                         class="ads-hint-box"
+                         hidden>
+                        Use ⌊B/R⌋.
+                    </div>
+
+                    <div id="f-answer-2"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>40 records per block.</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        3. What distinguishes a spanned record?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-3">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-3">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-3"
+                         class="ads-hint-box"
+                         hidden>
+                        Consider a block boundary.
+                    </div>
+
+                    <div id="f-answer-3"
+                         class="ads-solution-box"
+                         hidden>
+                        It may continue across two or more blocks.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        4. Which organization is best for
+                        complete batch scans?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-4">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-4">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-4"
+                         class="ads-hint-box"
+                         hidden>
+                        Read records in physical order.
+                    </div>
+
+                    <div id="f-answer-4"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>Sequential organization.</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        5. Why is sorted sequential insertion
+                        expensive?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-5">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-5">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-5"
+                         class="ads-hint-box"
+                         hidden>
+                        Physical order must remain correct.
+                    </div>
+
+                    <div id="f-answer-5"
+                         class="ads-solution-box"
+                         hidden>
+                        Records may need to be shifted or
+                        the file rewritten.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        6. What does a sparse index entry
+                        normally identify?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-6">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-6">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-6"
+                         class="ads-hint-box"
+                         hidden>
+                        Not every individual record.
+                    </div>
+
+                    <div id="f-answer-6"
+                         class="ads-solution-box"
+                         hidden>
+                        The first key and address of a data block.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        7. Why must a secondary index usually
+                        be dense?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-7">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-7">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-7"
+                         class="ads-hint-box"
+                         hidden>
+                        The data file is not ordered on that field.
+                    </div>
+
+                    <div id="f-answer-7"
+                         class="ads-solution-box"
+                         hidden>
+                        Without physical ordering, each search-key
+                        value needs a direct entry or pointer list.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>8. What is the ISAM overflow area?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-8">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-8">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-8"
+                         class="ads-hint-box"
+                         hidden>
+                        Home blocks may be full.
+                    </div>
+
+                    <div id="f-answer-8"
+                         class="ads-solution-box"
+                         hidden>
+                        Separate storage holding new records that
+                        cannot fit their ordered home blocks.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        9. How does a B+ Tree differ
+                        from static ISAM?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-9">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-9">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-9"
+                         class="ads-hint-box"
+                         hidden>
+                        Think splits and merges.
+                    </div>
+
+                    <div id="f-answer-9"
+                         class="ads-solution-box"
+                         hidden>
+                        A B+ Tree dynamically splits and merges,
+                        while ISAM relies on static levels and
+                        overflow areas.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        10. Which organization is strongest
+                        for equality lookup?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-10">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-10">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-10"
+                         class="ads-hint-box"
+                         hidden>
+                        Calculate a location from the key.
+                    </div>
+
+                    <div id="f-answer-10"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>
+                            Direct or hashed organization.
+                        </strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        11. Why are hashed files poor
+                        for range queries?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-11">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-11">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-11"
+                         class="ads-hint-box"
+                         hidden>
+                        Nearby keys need not occupy nearby slots.
+                    </div>
+
+                    <div id="f-answer-11"
+                         class="ads-solution-box"
+                         hidden>
+                        Hashing destroys key order, so the range
+                        may require scanning most slots.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        12. What does fseek require
+                        for fixed records?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-12">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-12">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-12"
+                         class="ads-hint-box"
+                         hidden>
+                        Convert a record number into bytes.
+                    </div>
+
+                    <div id="f-answer-12"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>
+                            Offset = recordNumber × sizeof(Record).
+                        </strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>13. What is a dirty buffer page?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-13">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-13">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-13"
+                         class="ads-hint-box"
+                         hidden>
+                        Memory and storage differ.
+                    </div>
+
+                    <div id="f-answer-13"
+                         class="ads-solution-box"
+                         hidden>
+                        A page modified in memory but not yet
+                        written back to storage.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>14. What is double buffering?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-14">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-14">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-14"
+                         class="ads-hint-box"
+                         hidden>
+                        Overlap processing and I/O.
+                    </div>
+
+                    <div id="f-answer-14"
+                         class="ads-solution-box"
+                         hidden>
+                        Processing one buffer while another
+                        buffer is filled or written.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        15. Why should C code not use
+                        while (!feof(file))?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-15">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-15">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-15"
+                         class="ads-hint-box"
+                         hidden>
+                        EOF is set only after a failed read.
+                    </div>
+
+                    <div id="f-answer-15"
+                         class="ads-solution-box"
+                         hidden>
+                        It can process stale data once; test the
+                        read function’s return value instead.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        16. Can a structure containing pointers
+                        be safely written directly?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-16">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-16">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-16"
+                         class="ads-hint-box"
+                         hidden>
+                        Pointer addresses belong to one process.
+                    </div>
+
+                    <div id="f-answer-16"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>No.</strong>
+                        Serialize the pointed data, not
+                        memory addresses.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        17. What is a clustering index built on?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-17">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-17">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-17"
+                         class="ads-hint-box"
+                         hidden>
+                        It orders the file but may repeat.
+                    </div>
+
+                    <div id="f-answer-17"
+                         class="ads-solution-box"
+                         hidden>
+                        An ordering non-key field whose equal
+                        values are stored together.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        18. Why build multiple index levels?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-18">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-18">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-18"
+                         class="ads-hint-box"
+                         hidden>
+                        The first index may occupy many blocks.
+                    </div>
+
+                    <div id="f-answer-18"
+                         class="ads-solution-box"
+                         hidden>
+                        Upper levels reduce the number of blocks
+                        read to locate an entry in a large
+                        lower index.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        19. Which index supports efficient
+                        range output through linked leaves?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-19">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-19">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-19"
+                         class="ads-hint-box"
+                         hidden>
+                        All records or pointers occur
+                        at leaf level.
+                    </div>
+
+                    <div id="f-answer-19"
+                         class="ads-solution-box"
+                         hidden>
+                        A <strong>B+ Tree index</strong>.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        20. What is the main performance
+                        measure for external files?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="f-hint-20">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="f-answer-20">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="f-hint-20"
+                         class="ads-hint-box"
+                         hidden>
+                        CPU comparison is relatively cheap.
+                    </div>
+
+                    <div id="f-answer-20"
+                         class="ads-solution-box"
+                         hidden>
+                        The number of
+                        <strong>block/page I/O operations</strong>.
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="revision">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    QUICK RECALL
+                </span>
+
+                <h2>📝 15. Quick Revision</h2>
+            </div>
+
+            <ul class="ads-revision-list">
+                <li>
+                    A logical record contains fields; physical
+                    storage transfers blocks or pages.
+                </li>
+
+                <li>
+                    Unspanned bfr =
+                    ⌊block size / record size⌋.
+                </li>
+
+                <li>
+                    Sequential files excel at full scans but
+                    ordered updates may require rewriting.
+                </li>
+
+                <li>
+                    Indexed sequential files combine ordered
+                    data with a sparse block index.
+                </li>
+
+                <li>
+                    ISAM handles growth with overflow areas
+                    and periodic reorganization.
+                </li>
+
+                <li>
+                    Direct hashed files provide expected
+                    constant-time equality access.
+                </li>
+
+                <li>
+                    Primary indexes use ordered unique keys;
+                    secondary indexes provide alternate paths.
+                </li>
+
+                <li>
+                    B+ Trees dynamically maintain balanced
+                    multilevel indexes and linked leaves.
+                </li>
+
+                <li>
+                    Fixed-length records allow direct
+                    fseek calculations.
+                </li>
+
+                <li>
+                    File performance is dominated by block I/O
+                    rather than CPU comparisons.
+                </li>
+            </ul>
+        </section>
+
+        <nav class="ads-topic-navigation"
+             aria-label="ADS topic navigation">
+
+            <a href="level-18-hashing.html"
+               class="previous-topic">
+                ← Previous: Hashing
+            </a>
+
+            <a href="level-20-advanced-graphs.html"
+               class="next-topic">
+                Next: Advanced Graph Algorithms →
+            </a>
+        </nav>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-brand-section">
+            <div class="footer-brand">
+                <span class="footer-code">Code</span>
+                <span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <a href="../index.html">Home</a>
+            <a href="../Maths/index.html">Maths</a>
+
+            <a href="../C-Programming/index.html">
+                C Programming
+            </a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Learning</h3>
+
+            <a href="../Data-Structures/index.html">
+                Data Structures
+            </a>
+
+            <a href="index.html">
+                Advanced Data Structures
+            </a>
+
+            <a href="../Python/index.html">
+                Python
+            </a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Practice</h3>
+
+            <a href="level-17-heaps.html#practice">
+                Heaps Practice
+            </a>
+
+            <a href="level-18-hashing.html#practice">
+                Hashing Practice
+            </a>
+
+            <a href="#practice">
+                File Organization Practice
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+    </div>
+</footer>
+
+<script src="../script.js"></script>
+<script src="ads.js"></script>
+<script src="level-19-files.js?v=1"></script>
+
+</body>
+</html>
