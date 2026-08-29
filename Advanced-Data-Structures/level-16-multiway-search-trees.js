@@ -2457,7 +2457,7 @@
                                     x1:
                                         start +
                                         index * 46,
-                                    y1: item.y - 22 -,
+                                    y1: item.y - 22,
                                     x2:
                                         start +
                                         index * 46,
