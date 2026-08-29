@@ -1,0 +1,2752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Hashing | Advanced Data Structures | CodeBhavya
+    </title>
+
+    <link rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="../images/codebhavya-icon-32.png">
+
+    <link rel="icon"
+          type="image/png"
+          sizes="128x128"
+          href="../images/codebhavya-icon-128.png">
+
+    <link rel="icon"
+          type="image/png"
+          sizes="512x512"
+          href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="ads.css?v=23">
+</head>
+
+<body class="ads-page ads-topic-page hashing-page">
+
+<header class="top-header">
+    <a href="../index.html"
+       class="logo codebhavya-new-logo">
+
+        <img src="../images/codebhavya-main-logo.png"
+             alt="CodeBhavya Logo"
+             class="main-logo">
+
+        <span class="logo-code">Code</span>
+        <span class="logo-bhavya">Bhavya</span>
+    </a>
+
+    <nav class="top-nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../Maths/index.html">Maths</a>
+        <a href="../C-Programming/index.html">C</a>
+
+        <a href="../Data-Structures/index.html">
+            Data Structures
+        </a>
+
+        <a href="index.html" class="active">
+            Advanced Data Structures
+        </a>
+
+        <a href="../Python/index.html">Python</a>
+        <a href="../AI-ML/index.html">AI &amp; ML</a>
+        <a href="../Placement/index.html">Placement</a>
+    </nav>
+</header>
+
+<div class="docs-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-title">
+            Advanced Data Structures
+        </div>
+
+        <input type="text"
+               id="topicSearch"
+               class="search-box"
+               placeholder="🔍 Search ADS topics..."
+               aria-label="Search ADS topics">
+
+        <a href="index.html" class="sidebar-course-home">
+            🧠 ADS Home
+        </a>
+
+        <div class="sidebar-title">
+            Part 1 — Foundations &amp; Algorithms
+        </div>
+
+        <a class="ads-topic-link is-available"
+           href="level-08-performance-analysis.html">
+            📊 Level 8 — Performance Analysis
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-09-disjoint-sets.html">
+            🔗 Level 9 — Disjoint Sets
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-10-sparse-matrices.html">
+            🧮 Level 10 — Sparse Matrices
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-11-string-pattern-matching.html">
+            🔤 Level 11 — String Pattern Matching
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-12-advanced-sorting.html">
+            ⚡ Level 12 — Advanced Sorting
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-13-advanced-searching.html">
+            🎯 Level 13 — Advanced Searching
+        </a>
+
+        <div class="sidebar-title">
+            Part 2 — Advanced Trees &amp; Hashing
+        </div>
+
+        <a class="ads-topic-link is-available"
+           href="level-14-balanced-bst.html">
+            🌲 Level 14 — Balanced BST
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-15-digital-search-trees.html">
+            🔠 Level 15 — Digital Search Trees
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-16-multiway-search-trees.html">
+            🌳 Level 16 — Multiway Search Trees
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-17-heaps.html">
+            ⛰️ Level 17 — Heaps
+        </a>
+
+        <a class="ads-topic-link is-available active"
+           href="level-18-hashing.html">
+            #️⃣ Level 18 — Hashing
+        </a>
+
+        <div class="sidebar-title">
+            Part 3 — Storage, Graphs &amp; Placement
+        </div>
+
+        <a class="ads-topic-link"
+           href="level-19-files.html">
+            📁 Level 19 — Files &amp; File Organization
+        </a>
+
+        <a class="ads-topic-link"
+           href="level-20-advanced-graphs.html">
+            🕸️ Level 20 — Advanced Graph Algorithms
+        </a>
+
+        <a class="ads-topic-link"
+           href="level-21-placement-problems.html">
+            💼 Level 21 — Placement Problems
+        </a>
+    </aside>
+
+    <main class="main-content">
+
+        <section class="ads-topic-hero">
+            <span class="subject-label">
+                CODEBHAVYA • ADS LEVEL 18
+            </span>
+
+            <h1 class="page-title">
+                #️⃣ Hashing and Hash Tables
+            </h1>
+
+            <p class="page-description">
+                Convert keys into table locations and master
+                collisions using separate chaining, linear probing,
+                quadratic probing, double hashing, tombstones and
+                dynamic rehashing.
+            </p>
+        </section>
+
+        <nav class="ads-page-jump-nav"
+             aria-label="Page sections">
+
+            <a href="#objectives">Objectives</a>
+            <a href="#idea">Core Idea</a>
+            <a href="#functions">Hash Functions</a>
+            <a href="#collisions">Collisions</a>
+            <a href="#chaining">Chaining</a>
+            <a href="#open-addressing">Open Addressing</a>
+            <a href="#rehashing">Rehashing</a>
+            <a href="#advanced">Advanced</a>
+            <a href="#comparison">Comparison</a>
+            <a href="#visualizer">Visualizer</a>
+            <a href="#tracing">Tracing</a>
+            <a href="#practice">Practice</a>
+            <a href="#revision">Revision</a>
+        </nav>
+
+        <section class="content-card ads-lesson-section"
+                 id="objectives">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    LEARNING GOALS
+                </span>
+
+                <h2>🎯 Learning Objectives</h2>
+            </div>
+
+            <ul class="ads-objective-list">
+                <li>
+                    Explain hashing, buckets, collisions,
+                    load factor and clustering.
+                </li>
+
+                <li>
+                    Design division, multiplication, folding
+                    and string hash functions.
+                </li>
+
+                <li>
+                    Insert, search and delete using
+                    separate chaining.
+                </li>
+
+                <li>
+                    Trace linear probing, quadratic probing
+                    and double hashing.
+                </li>
+
+                <li>
+                    Use tombstones correctly during
+                    open-address deletion.
+                </li>
+
+                <li>
+                    Explain resizing and rehashing when
+                    the load factor grows.
+                </li>
+
+                <li>
+                    Compare expected, worst-case and
+                    amortized costs.
+                </li>
+
+                <li>
+                    Recognize universal, perfect, cuckoo
+                    and Robin Hood hashing.
+                </li>
+            </ul>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="idea">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    DIRECT ACCESS THROUGH A FUNCTION
+                </span>
+
+                <h2>🧭 1. Hashing Fundamentals</h2>
+            </div>
+
+            <p>
+                A hash table stores a key in a bucket selected
+                by a hash function. Instead of comparing against
+                many sorted elements, it calculates where the key
+                should be and examines only that location or a
+                short collision path.
+            </p>
+
+            <div class="ads-step-flow">
+                <article>
+                    <span>1</span>
+                    <h3>Read Key</h3>
+
+                    <p>
+                        Accept an integer, string or record key.
+                    </p>
+                </article>
+
+                <article>
+                    <span>2</span>
+                    <h3>Compute Hash</h3>
+
+                    <p>
+                        Transform the key into an integer
+                        hash code.
+                    </p>
+                </article>
+
+                <article>
+                    <span>3</span>
+                    <h3>Select Bucket</h3>
+
+                    <p>
+                        Compress the hash code into the
+                        table range.
+                    </p>
+                </article>
+
+                <article>
+                    <span>4</span>
+                    <h3>Resolve Collision</h3>
+
+                    <p>
+                        Use a chain or a probe sequence
+                        when occupied.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-rule-grid">
+                <article class="ads-rule-card">
+                    <strong>Bucket</strong>
+
+                    <p>
+                        A table location that stores an entry
+                        or begins a chain.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card purple-panel">
+                    <strong>Collision</strong>
+
+                    <p>
+                        Different keys map to the same
+                        initial bucket.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card green-rule">
+                    <strong>Load factor</strong>
+
+                    <p>
+                        α = n/m, where n is keys and m
+                        is buckets.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card gold-rule">
+                    <strong>Expected access</strong>
+
+                    <p>
+                        O(1) with good distribution and
+                        controlled load.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-warning-box">
+                <strong>Worst case:</strong>
+                Hash tables can degrade to O(n) when many keys
+                collide. Constant-time performance is expected,
+                not an unconditional guarantee.
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="functions">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    DISTRIBUTE KEYS UNIFORMLY
+                </span>
+
+                <h2>🧮 2. Hash Functions</h2>
+            </div>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Formula or idea</th>
+                            <th>Important note</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Division</td>
+                            <td>h(k) = k mod m</td>
+                            <td>
+                                Choose m carefully, commonly
+                                a prime.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Multiplication</td>
+                            <td>⌊m(kA mod 1)⌋</td>
+                            <td>
+                                Less sensitive to the table size.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Mid-square</td>
+                            <td>
+                                Square the key and take
+                                middle digits
+                            </td>
+                            <td>
+                                Middle digits depend on several
+                                input digits.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Folding</td>
+                            <td>
+                                Split the key and add its parts
+                            </td>
+                            <td>
+                                Useful for long numeric
+                                identifiers.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Polynomial string</td>
+                            <td>
+                                h = (h × p + character) mod m
+                            </td>
+                            <td>
+                                Character order affects
+                                the result.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Universal</td>
+                            <td>
+                                Randomly choose from a hash family
+                            </td>
+                            <td>
+                                Limits adversarial collision
+                                patterns.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="ads-comparison-grid">
+                <article class="ads-info-panel">
+                    <h3>Good Hash Function</h3>
+
+                    <p>
+                        Fast, deterministic, uses the whole key
+                        and spreads expected inputs uniformly.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Poor Hash Function</h3>
+
+                    <p>
+                        Ignores important key variation or
+                        repeatedly maps common inputs into
+                        a few buckets.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-formula-box">
+                <strong>Integer examples with m = 11:</strong>
+                h(27) = 5, h(38) = 5 and h(49) = 5.
+                These keys collide because each differs by 11.
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="collisions">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    COLLISIONS ARE NORMAL
+                </span>
+
+                <h2>💥 3. Collision Resolution</h2>
+            </div>
+
+            <p>
+                When the key universe is larger than the table,
+                collisions are unavoidable. Correct tables preserve
+                every colliding key and still follow a reproducible
+                search path.
+            </p>
+
+            <div class="ads-comparison-grid">
+                <article class="ads-info-panel">
+                    <h3>Separate Chaining</h3>
+
+                    <p>
+                        Every bucket owns a linked list or another
+                        secondary container. Colliding keys stay
+                        together.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Open Addressing</h3>
+
+                    <p>
+                        All keys stay inside the array. A probe
+                        formula generates alternative buckets.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-rule-grid">
+                <article class="ads-rule-card">
+                    <strong>Linear probing</strong>
+                    <p>(h(k) + i) mod m</p>
+                </article>
+
+                <article class="ads-rule-card purple-panel">
+                    <strong>Quadratic probing</strong>
+                    <p>(h(k) + c₁i + c₂i²) mod m</p>
+                </article>
+
+                <article class="ads-rule-card green-rule">
+                    <strong>Double hashing</strong>
+                    <p>(h₁(k) + i × h₂(k)) mod m</p>
+                </article>
+
+                <article class="ads-rule-card gold-rule">
+                    <strong>Probe requirement</strong>
+
+                    <p>
+                        Search repeats the exact insertion
+                        sequence.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-tip-box">
+                <strong>Golden rule:</strong>
+                Never stop an open-address search at a deleted
+                bucket. Stop only at the key, a truly empty bucket,
+                or after a full probe cycle.
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="chaining">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    ONE LIST PER BUCKET
+                </span>
+
+                <h2>🔗 4. Separate Chaining</h2>
+            </div>
+
+            <p>
+                Separate chaining stores each entry in the linked
+                list selected by h(key). Its load factor may exceed
+                1 because the number of records is not limited by
+                the bucket count.
+            </p>
+
+            <div class="ads-algorithm-box">
+                <h3>Insert, Search and Delete</h3>
+
+                <ol>
+                    <li>Calculate index = h(key).</li>
+
+                    <li>
+                        Search the selected chain for the key.
+                    </li>
+
+                    <li>
+                        Insert a new node if the key is absent.
+                    </li>
+
+                    <li>
+                        Search compares nodes until the key
+                        or list end.
+                    </li>
+
+                    <li>
+                        Delete reconnects the predecessor to
+                        the removed node’s successor.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="ads-example-callout">
+                <strong>Expected chain length:</strong>
+                approximately α under simple uniform hashing.
+                Chaining remains practical near or slightly
+                above α = 1.
+            </div>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>
+                        💻 Complete C Program —
+                        Separate Chaining
+                    </span>
+
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="separate-chaining">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define SIZE 11
+
+typedef struct Node {
+    int key;
+    struct Node *next;
+} Node;
+
+Node *table[SIZE];
+
+int hashKey(int key) {
+    int value = key % SIZE; /* hash compute */
+    return value &lt; 0 ? value + SIZE : value;
+}
+
+void initialize(void) {
+    for (int i = 0; i &lt; SIZE; i++)
+        table[i] = NULL; /* chain create table */
+}
+
+Node *searchKey(int key) {
+    int index = hashKey(key); /* chain search hash */
+    Node *current = table[index];
+
+    while (current != NULL) { /* chain search loop */
+        if (current-&gt;key == key)
+            return current; /* chain search found */
+
+        current = current-&gt;next;
+    }
+
+    return NULL; /* chain search miss */
+}
+
+int insertKey(int key) {
+    int index = hashKey(key); /* chain insert hash */
+
+    for (Node *current = table[index];
+         current != NULL;
+         current = current-&gt;next) {
+
+        /* chain insert check */
+
+        if (current-&gt;key == key)
+            return 0;
+    }
+
+    Node *node = malloc(sizeof(Node));
+
+    if (node == NULL)
+        exit(EXIT_FAILURE);
+
+    node-&gt;key = key;
+    node-&gt;next = table[index];
+    table[index] = node; /* chain insert link */
+
+    return 1;
+}
+
+int deleteKey(int key) {
+    int index = hashKey(key); /* chain delete hash */
+    Node *current = table[index];
+    Node *previous = NULL;
+
+    while (current != NULL) { /* chain delete loop */
+        if (current-&gt;key == key) {
+            if (previous == NULL)
+                table[index] = current-&gt;next;
+            else
+                previous-&gt;next = current-&gt;next;
+
+            free(current); /* chain delete remove */
+            return 1;
+        }
+
+        previous = current;
+        current = current-&gt;next;
+    }
+
+    return 0; /* chain delete miss */
+}
+
+void display(void) {
+    for (int i = 0; i &lt; SIZE; i++) {
+        printf("%2d:", i);
+
+        for (Node *current = table[i];
+             current != NULL;
+             current = current-&gt;next) {
+
+            printf(" -&gt; %d", current-&gt;key);
+        }
+
+        printf("\n");
+    }
+}
+
+void destroy(void) {
+    for (int i = 0; i &lt; SIZE; i++) {
+        Node *current = table[i];
+
+        while (current != NULL) {
+            Node *next = current-&gt;next;
+            free(current);
+            current = next;
+        }
+    }
+}
+
+int main(void) {
+    int values[] = {
+        27, 18, 29, 28, 39, 13, 16
+    };
+
+    int count =
+        sizeof(values) / sizeof(values[0]);
+
+    initialize();
+
+    for (int i = 0; i &lt; count; i++)
+        insertKey(values[i]); /* chain build */
+
+    display();
+
+    printf(
+        "Search 39: %s\n",
+        searchKey(39) ? "Found" : "Not Found"
+    );
+
+    printf(
+        "Delete 28: %s\n",
+        deleteKey(28) ? "Deleted" : "Not Found"
+    );
+
+    display();
+    destroy();
+
+    return 0;
+}</code></pre>
+
+                    <div class="ads-io-grid">
+                        <div>
+                            <h3>Sample Input</h3>
+
+<pre><code>27 18 29 28 39 13 16
+Search: 39
+Delete: 28</code></pre>
+                        </div>
+
+                        <div>
+                            <h3>Key Result</h3>
+
+<pre><code>Search 39: Found
+Delete 28: Deleted</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="open-addressing">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    KEEP EVERY KEY IN THE ARRAY
+                </span>
+
+                <h2>📍 5. Open Addressing</h2>
+            </div>
+
+            <p>
+                Open addressing generates a sequence of candidate
+                buckets. It has good cache locality, but performance
+                drops sharply as the table becomes crowded.
+            </p>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Probe</th>
+                            <th>Main strength</th>
+                            <th>Main issue</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Linear</td>
+                            <td>h + i</td>
+                            <td>Simple and cache-friendly</td>
+                            <td>Primary clustering</td>
+                        </tr>
+
+                        <tr>
+                            <td>Quadratic</td>
+                            <td>h + i²</td>
+                            <td>Reduces primary clustering</td>
+                            <td>
+                                Secondary clustering; may not
+                                visit every bucket
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Double hashing</td>
+                            <td>h₁ + i·h₂</td>
+                            <td>
+                                Best distribution of the three
+                            </td>
+                            <td>
+                                Needs a valid non-zero step
+                                relatively prime to m
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="ads-algorithm-box">
+                <h3>Open-Address Search</h3>
+
+                <ol>
+                    <li>
+                        For i = 0 to m − 1, compute the next
+                        probe index.
+                    </li>
+
+                    <li>
+                        If the slot contains the key,
+                        return found.
+                    </li>
+
+                    <li>
+                        If the slot was never used,
+                        return not found.
+                    </li>
+
+                    <li>
+                        If occupied by another key or marked
+                        deleted, continue probing.
+                    </li>
+
+                    <li>
+                        After m probes, report not found.
+                    </li>
+                </ol>
+            </div>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>
+                        💻 Complete C Program — Linear,
+                        Quadratic and Double Hashing
+                    </span>
+
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="open-addressing">#include &lt;stdio.h&gt;
+
+#define SIZE 11
+#define EMPTY 0
+#define OCCUPIED 1
+#define DELETED 2
+
+typedef enum {
+    LINEAR,
+    QUADRATIC,
+    DOUBLE_HASHING
+} Strategy;
+
+typedef struct {
+    int key;
+    int state;
+} Slot;
+
+Slot table[SIZE];
+
+int positiveMod(int value, int modulus) {
+    int result = value % modulus;
+
+    return result &lt; 0
+        ? result + modulus
+        : result;
+}
+
+int hashOne(int key) {
+    return positiveMod(
+        key,
+        SIZE
+    ); /* hash compute */
+}
+
+int hashTwo(int key) {
+    return 1 + positiveMod(
+        key,
+        SIZE - 1
+    ); /* open second hash */
+}
+
+int probeIndex(
+    int key,
+    int attempt,
+    Strategy strategy
+) {
+    int first = hashOne(key);
+
+    if (strategy == LINEAR)
+        return (
+            first + attempt
+        ) % SIZE; /* open linear probe */
+
+    if (strategy == QUADRATIC)
+        return (
+            first + attempt * attempt
+        ) % SIZE; /* open quadratic probe */
+
+    return (
+        first + attempt * hashTwo(key)
+    ) % SIZE; /* open double probe */
+}
+
+void initialize(void) {
+    for (int i = 0; i &lt; SIZE; i++)
+        table[i].state =
+            EMPTY; /* open create table */
+}
+
+int searchKey(
+    int key,
+    Strategy strategy
+) {
+    for (
+        int attempt = 0;
+        attempt &lt; SIZE;
+        attempt++
+    ) { /* open search loop */
+
+        int index = probeIndex(
+            key,
+            attempt,
+            strategy
+        );
+
+        if (table[index].state == EMPTY)
+            return -1; /* open search empty */
+
+        if (
+            table[index].state == OCCUPIED &amp;&amp;
+            table[index].key == key
+        )
+            return index; /* open search found */
+    }
+
+    return -1; /* open search miss */
+}
+
+int insertKey(
+    int key,
+    Strategy strategy
+) {
+    int firstDeleted = -1;
+
+    for (
+        int attempt = 0;
+        attempt &lt; SIZE;
+        attempt++
+    ) { /* open insert loop */
+
+        int index = probeIndex(
+            key,
+            attempt,
+            strategy
+        );
+
+        if (
+            table[index].state == OCCUPIED &amp;&amp;
+            table[index].key == key
+        )
+            return 0;
+
+        if (
+            table[index].state == DELETED &amp;&amp;
+            firstDeleted == -1
+        )
+            firstDeleted =
+                index; /* open remember tombstone */
+
+        if (table[index].state == EMPTY) {
+            if (firstDeleted != -1)
+                index = firstDeleted;
+
+            table[index].key = key;
+
+            table[index].state =
+                OCCUPIED; /* open insert store */
+
+            return 1;
+        }
+    }
+
+    if (firstDeleted != -1) {
+        table[firstDeleted].key = key;
+
+        table[firstDeleted].state =
+            OCCUPIED; /* open insert tombstone */
+
+        return 1;
+    }
+
+    return 0; /* open insert full */
+}
+
+int deleteKey(
+    int key,
+    Strategy strategy
+) {
+    int index =
+        searchKey(
+            key,
+            strategy
+        ); /* open delete search */
+
+    if (index == -1)
+        return 0;
+
+    table[index].state =
+        DELETED; /* open delete tombstone */
+
+    return 1;
+}
+
+void display(void) {
+    for (int i = 0; i &lt; SIZE; i++) {
+        printf("%2d: ", i);
+
+        if (table[i].state == OCCUPIED)
+            printf("%d", table[i].key);
+        else if (table[i].state == DELETED)
+            printf("DELETED");
+        else
+            printf("EMPTY");
+
+        printf("\n");
+    }
+}
+
+int main(void) {
+    int values[] = {
+        27, 18, 29, 28, 39, 13, 16
+    };
+
+    int count =
+        sizeof(values) / sizeof(values[0]);
+
+    Strategy strategy =
+        DOUBLE_HASHING;
+
+    initialize();
+
+    for (int i = 0; i &lt; count; i++)
+        insertKey(
+            values[i],
+            strategy
+        ); /* open build */
+
+    display();
+
+    printf(
+        "Search 39: index %d\n",
+        searchKey(39, strategy)
+    );
+
+    printf(
+        "Delete 28: %s\n",
+        deleteKey(28, strategy)
+            ? "Deleted"
+            : "Not Found"
+    );
+
+    display();
+
+    return 0;
+}</code></pre>
+
+                    <div class="ads-io-grid">
+                        <div>
+                            <h3>Sample Input</h3>
+
+<pre><code>Table size: 11
+Keys: 27 18 29 28 39 13 16
+Strategy: Double Hashing</code></pre>
+                        </div>
+
+                        <div>
+                            <h3>Key Result</h3>
+
+<pre><code>Search 39: Found
+Delete 28: Deleted
+Deleted slot remains a tombstone.</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="rehashing">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    CONTROL THE LOAD FACTOR
+                </span>
+
+                <h2>
+                    ♻️ 6. Deletion, Tombstones and Rehashing
+                </h2>
+            </div>
+
+            <div class="ads-rule-grid">
+                <article class="ads-rule-card">
+                    <strong>True empty slot</strong>
+
+                    <p>
+                        No key has ever occupied it; an
+                        unsuccessful search may stop.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card purple-panel">
+                    <strong>Tombstone</strong>
+
+                    <p>
+                        A key was deleted; search must
+                        continue through it.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card green-rule">
+                    <strong>Insertion reuse</strong>
+
+                    <p>
+                        Remember the first tombstone, but first
+                        ensure the key is not later in the
+                        probe sequence.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card gold-rule">
+                    <strong>Rehash</strong>
+
+                    <p>
+                        Create a larger table and insert every
+                        live key using the new modulus.
+                    </p>
+                </article>
+            </div>
+
+            <div class="ads-algorithm-box">
+                <h3>Dynamic Rehashing</h3>
+
+                <ol>
+                    <li>
+                        Monitor the load factor after insertion
+                        or deletion.
+                    </li>
+
+                    <li>
+                        When the threshold is crossed, choose a
+                        larger table size—commonly the next
+                        prime above 2m.
+                    </li>
+
+                    <li>
+                        Create a completely empty new table.
+                    </li>
+
+                    <li>
+                        Reinsert each occupied entry; never copy
+                        old indices or tombstones directly.
+                    </li>
+
+                    <li>
+                        Replace the old table only after all
+                        live entries are stored.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="ads-tip-box">
+                <strong>Typical policy:</strong>
+                Resize open-address tables near α = 0.5 to 0.75.
+                The precise threshold depends on the probe method
+                and performance target.
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="advanced">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    MODERN HASHING IDEAS
+                </span>
+
+                <h2>🚀 7. Advanced Hashing Techniques</h2>
+            </div>
+
+            <div class="ads-decision-grid">
+                <article class="ads-info-panel">
+                    <h3>Cuckoo Hashing</h3>
+
+                    <p>
+                        Each key has two candidate positions.
+                        Insertion may evict and relocate existing
+                        keys; lookup checks only two places.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Robin Hood Hashing</h3>
+
+                    <p>
+                        During probing, keys with longer probe
+                        distances can take slots from keys with
+                        shorter distances.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel">
+                    <h3>Perfect Hashing</h3>
+
+                    <p>
+                        A static known key set is arranged to
+                        guarantee O(1) worst-case lookup without
+                        collisions.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Universal Hashing</h3>
+
+                    <p>
+                        A function is randomly chosen from a
+                        family to reduce the effect of hostile
+                        input patterns.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel">
+                    <h3>Consistent Hashing</h3>
+
+                    <p>
+                        Distributed keys move only a limited
+                        amount when servers join or leave.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Bloom Filter</h3>
+
+                    <p>
+                        A compact probabilistic structure can
+                        reject definite absences, but may report
+                        false positives.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="comparison">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    CHOOSE THE RIGHT POLICY
+                </span>
+
+                <h2>⚖️ 8. Comparison</h2>
+            </div>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Storage</th>
+                            <th>Deletion</th>
+                            <th>Cache locality</th>
+                            <th>Recommended load</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Separate chaining</td>
+                            <td>Table plus nodes</td>
+                            <td>Direct unlink</td>
+                            <td>Lower</td>
+                            <td>May exceed 1</td>
+                        </tr>
+
+                        <tr>
+                            <td>Linear probing</td>
+                            <td>Array only</td>
+                            <td>Tombstone/backshift</td>
+                            <td>Excellent</td>
+                            <td>Usually below 0.7</td>
+                        </tr>
+
+                        <tr>
+                            <td>Quadratic probing</td>
+                            <td>Array only</td>
+                            <td>Tombstone</td>
+                            <td>Good</td>
+                            <td>Often below 0.5</td>
+                        </tr>
+
+                        <tr>
+                            <td>Double hashing</td>
+                            <td>Array only</td>
+                            <td>Tombstone</td>
+                            <td>Good</td>
+                            <td>Usually below 0.7</td>
+                        </tr>
+
+                        <tr>
+                            <td>Cuckoo hashing</td>
+                            <td>
+                                Two candidate tables/locations
+                            </td>
+                            <td>Simple lookup removal</td>
+                            <td>Good</td>
+                            <td>Resize on insertion cycle</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="visualizer">
+
+            <div class="ads-interactive-header">
+                <div>
+                    <span class="section-label">
+                        INTERACTIVE ALGORITHM VISUALIZATION
+                    </span>
+
+                    <h2>
+                        🎬 9. Premium Hash Table Visualizer
+                    </h2>
+
+                    <p>
+                        Choose a collision strategy and operation,
+                        then follow hash calculations, collisions,
+                        chain movement, probes, tombstones and
+                        rehashing step by step.
+                    </p>
+                </div>
+
+                <div class="ads-visualizer-brand">
+                    <img src="../images/codebhavya-main-logo.png"
+                         alt="CodeBhavya">
+
+                    <span>
+                        <b>Code</b>
+                        <strong>Bhavya</strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="hash-controls">
+                <label>
+                    Keys
+
+                    <input id="hashDataInput"
+                           type="text"
+                           value="27, 18, 29, 28, 39, 13, 16">
+                </label>
+
+                <label id="hashTargetLabel">
+                    Target Key
+
+                    <input id="hashTargetInput"
+                           type="number"
+                           value="39">
+                </label>
+
+                <label>
+                    Table Size
+
+                    <input id="hashSizeInput"
+                           type="number"
+                           min="5"
+                           max="17"
+                           value="11">
+                </label>
+
+                <label>
+                    Collision Strategy
+
+                    <select id="hashMethod">
+                        <option value="chaining">
+                            Separate Chaining
+                        </option>
+
+                        <option value="linear">
+                            Linear Probing
+                        </option>
+
+                        <option value="quadratic">
+                            Quadratic Probing
+                        </option>
+
+                        <option value="double">
+                            Double Hashing
+                        </option>
+                    </select>
+                </label>
+
+                <label>
+                    Operation
+                    <select id="hashOperation"></select>
+                </label>
+
+                <button id="loadHashVisualizer"
+                        type="button"
+                        class="primary-button">
+                    Load Visualizer
+                </button>
+            </div>
+
+            <div class="ads-example-chips">
+                <button type="button"
+                        data-hash-example="chaining">
+                    Chaining
+                </button>
+
+                <button type="button"
+                        data-hash-example="linear">
+                    Linear Probing
+                </button>
+
+                <button type="button"
+                        data-hash-example="quadratic">
+                    Quadratic
+                </button>
+
+                <button type="button"
+                        data-hash-example="double">
+                    Double Hashing
+                </button>
+            </div>
+
+            <div id="hashPrompt"
+                 class="ads-explorer-message">
+                Choose a method and operation, verify the input
+                and click Load Visualizer.
+            </div>
+
+            <div id="hashResult"
+                 class="sorting-visualizer-result"
+                 hidden>
+
+                <div class="sorting-viz-layout">
+                    <section class="hash-table-panel">
+                        <h3>🗂️ Live Hash Table</h3>
+
+                        <div id="hashTableView"
+                             class="hash-table-view"
+                             aria-live="polite">
+                        </div>
+
+                        <div id="hashMessage"
+                             class="ads-explorer-message">
+                            —
+                        </div>
+
+                        <div class="ads-progress-track">
+                            <span id="hashProgress"></span>
+                        </div>
+                    </section>
+
+                    <aside class="sorting-stat-panel">
+                        <h3>📈 Live Statistics</h3>
+
+                        <div class="sorting-stat-grid">
+                            <div>
+                                <span>Method</span>
+                                <strong id="hashMethodValue">
+                                    —
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Operation</span>
+                                <strong id="hashOperationValue">
+                                    —
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Phase</span>
+                                <strong id="hashPhase">
+                                    Ready
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Hash Index</span>
+                                <strong id="hashIndexValue">
+                                    —
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Probe</span>
+                                <strong id="hashProbeValue">
+                                    0
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Collisions</span>
+                                <strong id="hashCollisionValue">
+                                    0
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Keys</span>
+                                <strong id="hashCountValue">
+                                    0
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Load Factor</span>
+                                <strong id="hashLoadValue">
+                                    0.00
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Result</span>
+                                <strong id="hashResultValue">
+                                    —
+                                </strong>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+
+                <div class="sorting-control-row">
+                    <button id="hashPrevious"
+                            type="button">
+                        ← Previous
+                    </button>
+
+                    <button id="hashNext"
+                            type="button">
+                        Next →
+                    </button>
+
+                    <button id="hashAuto"
+                            type="button"
+                            class="primary-button">
+                        Auto Play
+                    </button>
+
+                    <button id="hashPause"
+                            type="button">
+                        Pause
+                    </button>
+
+                    <button id="hashReset"
+                            type="button">
+                        Reset
+                    </button>
+
+                    <span id="hashStatus">
+                        Step 0 of 0
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="tracing">
+
+            <div class="ads-interactive-header">
+                <div>
+                    <span class="section-label">
+                        SELECTABLE C PROGRAM TRACER
+                    </span>
+
+                    <h2>
+                        🔍 10. Program Tracing — Hashing
+                    </h2>
+
+                    <p>
+                        Select a strategy and operation. The
+                        matching complete C source appears with
+                        line numbers, live variables and the
+                        evolving hash table.
+                    </p>
+                </div>
+            </div>
+
+            <div class="hash-tracer-loader">
+                <label>
+                    Keys
+
+                    <input id="hashTraceData"
+                           type="text"
+                           value="27, 18, 29, 28, 39, 13, 16">
+                </label>
+
+                <label id="hashTraceTargetLabel">
+                    Target Key
+
+                    <input id="hashTraceTarget"
+                           type="number"
+                           value="39">
+                </label>
+
+                <label>
+                    Table Size
+
+                    <input id="hashTraceSize"
+                           type="number"
+                           min="5"
+                           max="17"
+                           value="11">
+                </label>
+
+                <label>
+                    Program
+
+                    <select id="hashTraceMethod">
+                        <option value="chaining">
+                            Separate Chaining
+                        </option>
+
+                        <option value="linear">
+                            Linear Probing
+                        </option>
+
+                        <option value="quadratic">
+                            Quadratic Probing
+                        </option>
+
+                        <option value="double">
+                            Double Hashing
+                        </option>
+                    </select>
+                </label>
+
+                <label>
+                    Operation
+                    <select id="hashTraceOperation"></select>
+                </label>
+
+                <button id="loadHashTracer"
+                        type="button"
+                        class="primary-button">
+                    Load Program Tracer
+                </button>
+            </div>
+
+            <div id="hashTracePrompt"
+                 class="ads-explorer-message">
+                Select a program and operation, then click
+                Load Program Tracer.
+            </div>
+
+            <div id="hashTraceResult"
+                 class="ads-tracer-result"
+                 hidden>
+
+                <h3 id="hashTraceTitle">
+                    PROGRAM TRACING — HASHING
+                </h3>
+
+                <div class="ads-tracer-layout">
+                    <section class="ads-tracer-code-panel">
+                        <h4>C Source Code</h4>
+
+                        <div id="hashTraceCodeWindow"
+                             class="ads-tracer-code-window">
+
+                            <code id="hashTraceCode"
+                                  class="ads-tracer-code">
+                            </code>
+                        </div>
+                    </section>
+
+                    <aside class="ads-tracer-side">
+                        <div id="hashTraceMessage"
+                             class="ads-explorer-message">
+                            —
+                        </div>
+
+                        <div id="hashTraceVariables"
+                             class="ads-tracer-variables">
+                        </div>
+
+                        <div id="hashTraceTable"
+                             class="hash-table-view compact-hash-view">
+                        </div>
+
+                        <div class="ads-tracer-output">
+                            <span>Program Output</span>
+
+                            <strong id="hashTraceOutput">
+                                —
+                            </strong>
+                        </div>
+                    </aside>
+                </div>
+
+                <div class="sorting-control-row">
+                    <button id="hashTracePrevious"
+                            type="button">
+                        ← Previous
+                    </button>
+
+                    <button id="hashTraceNext"
+                            type="button">
+                        Next →
+                    </button>
+
+                    <button id="hashTraceAuto"
+                            type="button"
+                            class="primary-button">
+                        Auto Play
+                    </button>
+
+                    <button id="hashTracePause"
+                            type="button">
+                        Pause
+                    </button>
+
+                    <button id="hashTraceReset"
+                            type="button">
+                        Reset
+                    </button>
+
+                    <span id="hashTraceStatus">
+                        Step 0 of 0
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="complexity">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    PERFORMANCE SUMMARY
+                </span>
+
+                <h2>⏱️ 11. Complexity Analysis</h2>
+            </div>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Operation</th>
+                            <th>Expected</th>
+                            <th>Worst case</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Search</td>
+                            <td>O(1)</td>
+                            <td>O(n)</td>
+                            <td>
+                                Short chain/probe versus all
+                                keys colliding
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Insert</td>
+                            <td>O(1)</td>
+                            <td>O(n)</td>
+                            <td>
+                                Available location versus long
+                                collision path
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Delete</td>
+                            <td>O(1)</td>
+                            <td>O(n)</td>
+                            <td>Locate then unlink or mark</td>
+                        </tr>
+
+                        <tr>
+                            <td>Rehash</td>
+                            <td>O(n)</td>
+                            <td>
+                                O(n²) with pathological insertion
+                            </td>
+                            <td>
+                                Every live key must be reinserted
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="ads-example-callout">
+                <strong>Amortized resizing:</strong>
+                If table capacity grows geometrically, occasional
+                O(n) rehashes still give O(1) amortized insertion
+                under standard assumptions.
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="applications">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    WHERE HASHING IS USED
+                </span>
+
+                <h2>🧩 12. Applications</h2>
+            </div>
+
+            <div class="ads-decision-grid">
+                <article class="ads-info-panel">
+                    <h3>Compiler Symbol Tables</h3>
+
+                    <p>
+                        Map identifiers to type, scope and
+                        memory information.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Database Hash Indexes</h3>
+
+                    <p>
+                        Accelerate equality queries and
+                        hash joins.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel">
+                    <h3>Caches and Dictionaries</h3>
+
+                    <p>
+                        Associate request keys or words
+                        with stored values.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Duplicate Detection</h3>
+
+                    <p>
+                        Track previously observed items in
+                        expected constant time.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel">
+                    <h3>Password Storage</h3>
+
+                    <p>
+                        Use dedicated slow salted cryptographic
+                        password hashes—not ordinary table hashes.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Distributed Storage</h3>
+
+                    <p>
+                        Consistent hashing distributes keys
+                        across changing servers.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="mistakes">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    DEBUGGING CHECKLIST
+                </span>
+
+                <h2>⚠️ 13. Common Mistakes</h2>
+            </div>
+
+            <div class="ads-mistake-grid">
+                <article>
+                    <h3>Using negative indices</h3>
+
+                    <p>
+                        Normalize a negative remainder into
+                        the range 0 to m − 1.
+                    </p>
+                </article>
+
+                <article>
+                    <h3>Stopping at a tombstone</h3>
+
+                    <p>
+                        A deleted marker does not terminate
+                        an open-address search.
+                    </p>
+                </article>
+
+                <article>
+                    <h3>Copying positions during resize</h3>
+
+                    <p>
+                        Changing m changes every compressed hash;
+                        all entries must be reinserted.
+                    </p>
+                </article>
+
+                <article>
+                    <h3>Allowing excessive load</h3>
+
+                    <p>
+                        Long chains and probe clusters destroy
+                        expected constant time.
+                    </p>
+                </article>
+
+                <article>
+                    <h3>Invalid double-hash step</h3>
+
+                    <p>
+                        A zero or non-coprime step can prevent
+                        a probe sequence from reaching the table.
+                    </p>
+                </article>
+
+                <article>
+                    <h3>
+                        Confusing table and password hashes
+                    </h3>
+
+                    <p>
+                        Fast non-cryptographic hashes must
+                        not protect passwords.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="practice">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    CHECK YOUR UNDERSTANDING
+                </span>
+
+                <h2>✍️ 14. Practice Problems</h2>
+            </div>
+
+            <div class="ads-practice-note">
+                Solve each problem first. Use Hint only when
+                required, then open Show Answer to verify
+                your reasoning.
+            </div>
+
+            <div class="ads-practice-list">
+
+                <article class="ads-practice-problem">
+                    <h3>1. What is a collision?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-1">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-1">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-1"
+                         class="ads-hint-box"
+                         hidden>
+                        Compare initial bucket indices.
+                    </div>
+
+                    <div id="hash-answer-1"
+                         class="ads-solution-box"
+                         hidden>
+                        Two different keys produce the same
+                        initial table index.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        2. For m = 11, where does key 38
+                        initially hash?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-2">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-2">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-2"
+                         class="ads-hint-box"
+                         hidden>
+                        Use key mod m.
+                    </div>
+
+                    <div id="hash-answer-2"
+                         class="ads-solution-box"
+                         hidden>
+                        38 mod 11 = <strong>5</strong>.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        3. What does α = n/m represent?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-3">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-3">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-3"
+                         class="ads-hint-box"
+                         hidden>
+                        Compare stored keys with buckets.
+                    </div>
+
+                    <div id="hash-answer-3"
+                         class="ads-solution-box"
+                         hidden>
+                        The hash table’s
+                        <strong>load factor</strong>.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        4. Can chaining have α greater than 1?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-4">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-4">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-4"
+                         class="ads-hint-box"
+                         hidden>
+                        One bucket can own several nodes.
+                    </div>
+
+                    <div id="hash-answer-4"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>Yes.</strong>
+                        Chains allow more entries than buckets.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        5. Can open addressing have
+                        α greater than 1?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-5">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-5">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-5"
+                         class="ads-hint-box"
+                         hidden>
+                        All keys must remain in the fixed array.
+                    </div>
+
+                    <div id="hash-answer-5"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>No.</strong>
+                        At most one live key occupies each slot.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        6. What clustering occurs in
+                        linear probing?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-6">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-6">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-6"
+                         class="ads-hint-box"
+                         hidden>
+                        Contiguous occupied regions grow.
+                    </div>
+
+                    <div id="hash-answer-6"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>Primary clustering.</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        7. Why must search use the same probe
+                        formula as insertion?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-7">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-7">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-7"
+                         class="ads-hint-box"
+                         hidden>
+                        The key may not remain at its
+                        home bucket.
+                    </div>
+
+                    <div id="hash-answer-7"
+                         class="ads-solution-box"
+                         hidden>
+                        Only the identical probe sequence reaches
+                        every location where insertion could have
+                        stored the key.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>8. What is a tombstone?</h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-8">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-8">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-8"
+                         class="ads-hint-box"
+                         hidden>
+                        It distinguishes deleted from
+                        never used.
+                    </div>
+
+                    <div id="hash-answer-8"
+                         class="ads-solution-box"
+                         hidden>
+                        A marker showing that a slot was occupied
+                        but its key was deleted.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        9. Why cannot search stop at
+                        a tombstone?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-9">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-9">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-9"
+                         class="ads-hint-box"
+                         hidden>
+                        A collision may have moved a key farther.
+                    </div>
+
+                    <div id="hash-answer-9"
+                         class="ads-solution-box"
+                         hidden>
+                        Later keys in the same probe sequence may
+                        still exist beyond the deleted slot.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        10. What must happen when table
+                        size changes?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-10">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-10">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-10"
+                         class="ads-hint-box"
+                         hidden>
+                        The modulus is different.
+                    </div>
+
+                    <div id="hash-answer-10"
+                         class="ads-solution-box"
+                         hidden>
+                        Every live key must be
+                        <strong>rehash-inserted</strong>
+                        into the new table.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        11. Which method usually has the
+                        strongest cache locality?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-11">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-11">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-11"
+                         class="ads-hint-box"
+                         hidden>
+                        It scans nearby array slots.
+                    </div>
+
+                    <div id="hash-answer-11"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>Linear probing.</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        12. What problem does quadratic
+                        probing reduce?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-12">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-12">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-12"
+                         class="ads-hint-box"
+                         hidden>
+                        Compare with consecutive linear slots.
+                    </div>
+
+                    <div id="hash-answer-12"
+                         class="ads-solution-box"
+                         hidden>
+                        It reduces
+                        <strong>primary clustering</strong>.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        13. What must be true about a
+                        double-hash step?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-13">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-13">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-13"
+                         class="ads-hint-box"
+                         hidden>
+                        It must eventually reach every bucket.
+                    </div>
+
+                    <div id="hash-answer-13"
+                         class="ads-solution-box"
+                         hidden>
+                        It must be non-zero and relatively prime
+                        to the table size.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        14. What is the expected search time
+                        of a controlled hash table?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-14">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-14">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-14"
+                         class="ads-hint-box"
+                         hidden>
+                        Hash tables avoid ordered traversal.
+                    </div>
+
+                    <div id="hash-answer-14"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>O(1) expected time.</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        15. What is the worst-case search time?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-15">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-15">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-15"
+                         class="ads-hint-box"
+                         hidden>
+                        Imagine every key collides.
+                    </div>
+
+                    <div id="hash-answer-15"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>O(n).</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        16. Which method checks two possible
+                        locations during lookup?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-16">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-16">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-16"
+                         class="ads-hint-box"
+                         hidden>
+                        Insertion may evict another key.
+                    </div>
+
+                    <div id="hash-answer-16"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>Cuckoo hashing.</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        17. Which hashing technique supports
+                        changing server sets?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-17">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-17">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-17"
+                         class="ads-hint-box"
+                         hidden>
+                        It minimizes redistributed keys.
+                    </div>
+
+                    <div id="hash-answer-17"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>Consistent hashing.</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        18. Can a Bloom filter produce
+                        false negatives?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-18">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-18">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-18"
+                         class="ads-hint-box"
+                         hidden>
+                        A missing bit proves absence.
+                    </div>
+
+                    <div id="hash-answer-18"
+                         class="ads-solution-box"
+                         hidden>
+                        Not in its standard insertion-only form;
+                        it may produce
+                        <strong>false positives</strong>.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        19. Should a fast table hash
+                        store passwords?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-19">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-19">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-19"
+                         class="ads-hint-box"
+                         hidden>
+                        Password hashing must resist guessing.
+                    </div>
+
+                    <div id="hash-answer-19"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>No.</strong>
+                        Use a salted password-hashing function
+                        such as Argon2id, scrypt or bcrypt.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        20. When is perfect hashing
+                        most suitable?
+                    </h3>
+
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="hash-hint-20">
+                            Hint
+                        </button>
+
+                        <button data-toggle-target="hash-answer-20">
+                            Show Answer
+                        </button>
+                    </div>
+
+                    <div id="hash-hint-20"
+                         class="ads-hint-box"
+                         hidden>
+                        The key set should not keep changing.
+                    </div>
+
+                    <div id="hash-answer-20"
+                         class="ads-solution-box"
+                         hidden>
+                        For a
+                        <strong>static, known set of keys</strong>
+                        requiring worst-case O(1) lookup.
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="revision">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    QUICK RECALL
+                </span>
+
+                <h2>📝 15. Quick Revision</h2>
+            </div>
+
+            <ul class="ads-revision-list">
+                <li>
+                    A hash function maps a key to a bucket;
+                    collisions are unavoidable for large
+                    key universes.
+                </li>
+
+                <li>
+                    Load factor α = n/m strongly affects
+                    performance.
+                </li>
+
+                <li>
+                    Separate chaining stores colliding keys
+                    outside the main array.
+                </li>
+
+                <li>
+                    Open addressing keeps all keys in the array
+                    and follows a probe sequence.
+                </li>
+
+                <li>
+                    Linear probing suffers primary clustering;
+                    quadratic probing reduces it.
+                </li>
+
+                <li>
+                    Double hashing uses a key-dependent
+                    non-zero probe step.
+                </li>
+
+                <li>
+                    Tombstones preserve search paths
+                    after deletion.
+                </li>
+
+                <li>
+                    Resizing requires reinserting all live keys
+                    with the new modulus.
+                </li>
+
+                <li>
+                    Expected operations are O(1);
+                    the worst case is O(n).
+                </li>
+
+                <li>
+                    Cryptographic/password hashes and hash-table
+                    functions serve different purposes.
+                </li>
+            </ul>
+        </section>
+
+        <nav class="ads-topic-navigation"
+             aria-label="ADS topic navigation">
+
+            <a href="level-17-heaps.html"
+               class="previous-topic">
+                ← Previous: Heaps
+            </a>
+
+            <a href="level-19-files.html"
+               class="next-topic">
+                Next: Files &amp; File Organization →
+            </a>
+        </nav>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-brand-section">
+            <div class="footer-brand">
+                <span class="footer-code">Code</span>
+                <span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <a href="../index.html">Home</a>
+            <a href="../Maths/index.html">Maths</a>
+            <a href="../C-Programming/index.html">
+                C Programming
+            </a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Learning</h3>
+
+            <a href="../Data-Structures/index.html">
+                Data Structures
+            </a>
+
+            <a href="index.html">
+                Advanced Data Structures
+            </a>
+
+            <a href="../Python/index.html">
+                Python
+            </a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Practice</h3>
+
+            <a href="level-16-multiway-search-trees.html#practice">
+                Multiway Tree Practice
+            </a>
+
+            <a href="level-17-heaps.html#practice">
+                Heap Practice
+            </a>
+
+            <a href="#practice">
+                Hashing Practice
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 CodeBhavya. All Rights Reserved.</p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+    </div>
+</footer>
+
+<script src="../script.js"></script>
+<script src="ads.js"></script>
+<script src="level-18-hashing.js?v=1"></script>
+
+</body>
+</html>
