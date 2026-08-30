@@ -1888,13 +1888,14 @@
     ) {
         const steps = [];
 
-        const counters = {
-            comparisons: 0,
-            reads: 0
-        };
+      const counters = {
+    comparisons: 0,
+    reads: 0
+};
 
-        let state;
-
+let operationStart = 0;
+let state;
+        
         if (
             organization ===
             "sequential"
@@ -1924,11 +1925,13 @@
                 );
         }
 
-        if (operation !== "build") {
-            if (
-                organization ===
-                "sequential"
-            ) {
+       if (operation !== "build") {
+    operationStart = steps.length;
+
+    if (
+        organization ===
+        "sequential"
+    ) {
                 runSequentialOperation(
                     state,
                     operation,
@@ -2007,7 +2010,9 @@
             })
         ));
 
-        return steps;
+        return operation === "build"
+    ? steps
+    : steps.slice(operationStart);
     }
 
     function parseRecords(input) {
@@ -3512,10 +3517,13 @@
                 activeLine.offsetHeight /
                     2;
 
-            tracer.codeWindow.scrollTo({
-                top: Math.max(0, top),
-                behavior: "smooth"
-            });
+       tracer.codeWindow.scrollTo({
+    top: Math.max(0, top),
+    behavior:
+        traceIndex === 0
+            ? "auto"
+            : "smooth"
+});
         }
     }
 
