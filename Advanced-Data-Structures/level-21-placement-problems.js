@@ -2849,12 +2849,12 @@
                         "div"
                     );
 
-                card.className =
-                    " "placement-item is-" +
-                    (
-                        item.status ||
-                        "normal"
-                    );
+            card.className =
+    "placement-item is-" +
+    (
+        item.status ||
+        "normal"
+    );
 
                 const label =
                     document.createElement(
