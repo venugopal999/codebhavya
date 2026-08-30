@@ -4630,3 +4630,289 @@ code.ads-tracer-code
         max-height: 350px;
     }
 }
+
+/* =========================================
+   LEVEL 19 — FINAL VISUALIZER / TRACER OVERRIDE
+   Keep this block at the end of ads.css.
+   ========================================= */
+
+.files-page #fileResult .file-control-row,
+.files-page #fileTraceResult .file-control-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding: 13px 14px;
+    border: 1px solid #d7e2ee;
+    border-radius: 11px;
+    background: #f8fafc;
+}
+
+.files-page #fileResult .file-control-row button,
+.files-page #fileTraceResult .file-control-row button {
+    min-width: 104px;
+    min-height: 42px;
+    padding: 10px 15px;
+    border: 0;
+    border-radius: 9px;
+    color: #ffffff;
+    font: inherit;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow:
+        0 5px 12px
+        rgba(37, 99, 235, 0.16);
+    transition:
+        filter 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Previous and Reset */
+.files-page #filePrevious,
+.files-page #fileReset,
+.files-page #fileTracePrevious,
+.files-page #fileTraceReset {
+    background: #64748b !important;
+    color: #ffffff !important;
+}
+
+/* Next */
+.files-page #fileNext,
+.files-page #fileTraceNext {
+    background: #2563eb !important;
+    color: #ffffff !important;
+}
+
+/* Auto Play */
+.files-page #fileAuto,
+.files-page #fileTraceAuto {
+    background: #159447 !important;
+    color: #ffffff !important;
+}
+
+/* Pause */
+.files-page #filePause,
+.files-page #fileTracePause {
+    background: #ea7800 !important;
+    color: #ffffff !important;
+}
+
+.files-page #fileResult
+.file-control-row button:hover:not(:disabled),
+.files-page #fileTraceResult
+.file-control-row button:hover:not(:disabled) {
+    filter: brightness(0.94);
+    transform: translateY(-1px);
+}
+
+.files-page #fileResult
+.file-control-row button:disabled,
+.files-page #fileTraceResult
+.file-control-row button:disabled {
+    cursor: not-allowed;
+    opacity: 0.42;
+    box-shadow: none;
+}
+
+.files-page #fileResult .file-control-row > span,
+.files-page #fileTraceResult .file-control-row > span {
+    margin-left: auto;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+/* Complete tracer container */
+.files-page #fileTraceResult {
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid #cbd9e8;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow:
+        0 10px 24px
+        rgba(15, 42, 81, 0.08);
+}
+
+/* Tracer title */
+.files-page #fileTraceResult > #fileTraceTitle {
+    margin: 0;
+    padding: 15px 18px;
+    border-bottom: 1px solid #334155;
+    background: #102a51;
+    color: #f6d76b;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+}
+
+/* Tracer columns */
+.files-page #fileTraceResult .file-tracer-layout {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.35fr)
+        minmax(330px, 0.7fr);
+    align-items: stretch;
+    gap: 0;
+}
+
+/* Dark source-code panel */
+.files-page #fileTraceResult
+.file-tracer-code-panel {
+    min-width: 0;
+    padding: 16px;
+    border: 0;
+    border-right: 1px solid #334155;
+    border-radius: 0;
+    background: #0f172a !important;
+}
+
+.files-page #fileTraceResult
+.file-tracer-code-panel > h4 {
+    margin: 0 0 11px;
+    padding: 0;
+    color: #ffffff;
+    font-size: 15px;
+}
+
+/* Code scrolling window */
+.files-page #fileTraceCodeWindow {
+    overflow: auto;
+    height: 545px;
+    min-height: 545px;
+    max-height: 545px;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    background: #020617 !important;
+    color: #e2e8f0 !important;
+    scrollbar-color: #64748b #111c2f;
+    scrollbar-width: thin;
+}
+
+.files-page
+#fileTraceCodeWindow::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.files-page
+#fileTraceCodeWindow::-webkit-scrollbar-track {
+    background: #111c2f;
+}
+
+.files-page
+#fileTraceCodeWindow::-webkit-scrollbar-thumb {
+    border: 2px solid #111c2f;
+    border-radius: 999px;
+    background: #64748b;
+}
+
+/* C source code */
+.files-page #fileTraceCode {
+    display: block;
+    overflow: visible;
+    width: max-content;
+    min-width: 100%;
+    height: auto;
+    min-height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 12px 8px;
+    border: 0;
+    border-radius: 0;
+    background: #020617 !important;
+    color: #e2e8f0 !important;
+    font:
+        13px/1.65
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+    white-space: pre;
+    box-sizing: border-box;
+}
+
+.files-page #fileTraceCode > span {
+    display: block;
+    min-height: 21px;
+    padding: 0 10px;
+    border-left: 4px solid transparent;
+    background: transparent;
+    color: inherit !important;
+}
+
+/* Currently executing C line */
+.files-page
+#fileTraceCode > span.is-active-line {
+    border-left-color: #f6d76b;
+    border-radius: 4px;
+    background: #25466f !important;
+    color: #ffffff !important;
+}
+
+/* Right-side tracer information */
+.files-page #fileTraceResult
+.file-tracer-side {
+    min-width: 0;
+    padding: 16px;
+    border: 0;
+    border-radius: 0;
+    background: #f8fafc;
+}
+
+/* Controls at bottom of tracer */
+.files-page
+#fileTraceResult > .file-control-row {
+    margin: 0;
+    padding: 13px 14px;
+    border: 0;
+    border-top: 1px solid #d7e2ee;
+    border-radius: 0;
+}
+
+@media (max-width: 1050px) {
+    .files-page #fileTraceResult
+    .file-tracer-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .files-page #fileTraceResult
+    .file-tracer-code-panel {
+        border-right: 0;
+        border-bottom:
+            1px solid #334155;
+    }
+
+    .files-page #fileTraceCodeWindow {
+        height: 430px;
+        min-height: 430px;
+        max-height: 430px;
+    }
+}
+
+@media (max-width: 560px) {
+    .files-page #fileResult
+    .file-control-row button,
+    .files-page #fileTraceResult
+    .file-control-row button {
+        min-width: 0;
+        flex:
+            1 1
+            calc(50% - 10px);
+    }
+
+    .files-page #fileResult
+    .file-control-row > span,
+    .files-page #fileTraceResult
+    .file-control-row > span {
+        width: 100%;
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .files-page #fileTraceCodeWindow {
+        height: 350px;
+        min-height: 350px;
+        max-height: 350px;
+    }
+}
