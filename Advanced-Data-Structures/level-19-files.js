@@ -3221,7 +3221,8 @@ let state;
     let traceIndex = 0;
     let traceTimer = null;
     let traceLookupLines = [];
-    let activeTraceDefinition = null;
+let traceVisibleLines = [];
+let activeTraceDefinition = null;
 
     function stopTrace() {
         if (traceTimer !== null) {
@@ -3265,68 +3266,121 @@ let state;
                     ""
                 );
 
-        traceLookupLines =
-            text.split("\n");
+       traceLookupLines =
+    text.split("\n");
 
-        tracer.code.innerHTML = "";
-
-        traceLookupLines.forEach(
-            function (line, index) {
-                const visible =
-                    line
-                        .replace(
-                            /\s*\/\*\s*(?:sequential|indexed|direct)[^*]*\*\//g,
-                            ""
-                        )
-                        .replace(
-                            /\s+$/g,
-                            ""
-                        );
-
-                const row =
-                    document.createElement(
-                        "span"
-                    );
-
-                row.dataset.fileTraceLine =
-                    String(index + 1);
-
-                row.textContent =
-                    String(index + 1)
-                        .padStart(
-                            3,
-                            "0"
-                        ) +
-                    " │ " +
-                    (visible || " ");
-
-                tracer.code.appendChild(
-                    row
+traceVisibleLines =
+    traceLookupLines.map(
+        function (line) {
+            return line
+                .replace(
+                    /\s*\/\*\s*(?:sequential|indexed|direct)[^*]*\*\//g,
+                    ""
+                )
+                .replace(
+                    /\s+$/g,
+                    ""
                 );
-            }
+        }
+    );
+
+tracer.code.innerHTML = "";
+
+traceVisibleLines.forEach(
+    function (visible, index) {
+        const row =
+            document.createElement(
+                "span"
+            );
+
+        row.dataset.fileTraceLine =
+            String(index + 1);
+
+        row.textContent =
+            String(index + 1)
+                .padStart(
+                    3,
+                    "0"
+                ) +
+            " │ " +
+            (visible || " ");
+
+        tracer.code.appendChild(
+            row
         );
+    }
+);
 
         tracer.codeWindow.scrollTop = 0;
     }
 
     function findLine(needle) {
-        for (
-            let index = 0;
-            index <
-                traceLookupLines.length;
-            index += 1
+    for (
+        let index = 0;
+        index <
+            traceLookupLines.length;
+        index += 1
+    ) {
+        if (
+            traceLookupLines[index]
+                .indexOf(needle) !==
+            -1
         ) {
+            /*
+             * If C code and the marker are
+             * on the same line, use it.
+             */
             if (
-                traceLookupLines[index]
-                    .indexOf(needle) !==
-                -1
+                traceVisibleLines[index]
+                    .trim()
             ) {
                 return index + 1;
             }
-        }
 
-        return -1;
+            /*
+             * A marker-only line becomes
+             * empty after hiding the marker.
+             * Use the previous real C line.
+             */
+            for (
+                let previous =
+                    index - 1;
+                previous >= 0;
+                previous -= 1
+            ) {
+                if (
+                    traceVisibleLines[
+                        previous
+                    ].trim()
+                ) {
+                    return previous + 1;
+                }
+            }
+
+            /*
+             * Safety fallback when the
+             * marker appears before code.
+             */
+            for (
+                let next =
+                    index + 1;
+                next <
+                    traceVisibleLines.length;
+                next += 1
+            ) {
+                if (
+                    traceVisibleLines[
+                        next
+                    ].trim()
+                ) {
+                    return next + 1;
+                }
+            }
+        }
     }
+
+    return -1;
+}
 
     function decorate(steps) {
         let previous = 1;
@@ -3517,12 +3571,8 @@ let state;
                 activeLine.offsetHeight /
                     2;
 
-       tracer.codeWindow.scrollTo({
-    top: Math.max(0, top),
-    behavior:
-        traceIndex === 0
-            ? "auto"
-            : "smooth"
+      tracer.codeWindow.scrollTop =
+        Math.max(0, top);
 });
         }
     }
