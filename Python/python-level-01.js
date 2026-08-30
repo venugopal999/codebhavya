@@ -1866,3 +1866,122 @@
         initializeLevelOne();
     }
 }());
+
+/* =========================================================
+   FINAL-STEP BUTTON LOCK — VISUALIZER AND PROGRAM TRACER
+   ========================================================= */
+
+(function () {
+    "use strict";
+
+    function setButtonDisabled(button, disabled) {
+        if (!button) {
+            return;
+        }
+
+        button.disabled = disabled;
+        button.setAttribute("aria-disabled", String(disabled));
+        button.classList.toggle("is-disabled", disabled);
+
+        button.style.opacity = disabled ? "0.42" : "";
+        button.style.cursor = disabled ? "not-allowed" : "";
+        button.style.pointerEvents = disabled ? "none" : "";
+        button.style.filter = disabled ? "grayscale(0.55)" : "";
+        button.style.transform = disabled ? "none" : "";
+        button.style.boxShadow = disabled ? "none" : "";
+    }
+
+    function readStepInformation(statusElement) {
+        if (!statusElement) {
+            return null;
+        }
+
+        const match = statusElement.textContent.match(
+            /Step\s+(\d+)\s+of\s+(\d+)/i
+        );
+
+        if (!match) {
+            return null;
+        }
+
+        return {
+            current: Number(match[1]),
+            total: Number(match[2])
+        };
+    }
+
+    function connectButtonState(options) {
+        const container = document.querySelector(options.container);
+        const statusElement = document.querySelector(options.status);
+
+        if (!container || !statusElement) {
+            return;
+        }
+
+        const previousButton = container.querySelector(
+            "[" + options.attribute + '="previous"]'
+        );
+
+        const nextButton = container.querySelector(
+            "[" + options.attribute + '="next"]'
+        );
+
+        const autoButton = container.querySelector(
+            "[" + options.attribute + '="auto"]'
+        );
+
+        function updateButtons() {
+            const step = readStepInformation(statusElement);
+
+            if (!step) {
+                return;
+            }
+
+            const atBeginning = step.current <= options.firstStep;
+            const atEnd = step.current >= step.total;
+
+            setButtonDisabled(previousButton, atBeginning);
+            setButtonDisabled(nextButton, atEnd);
+            setButtonDisabled(autoButton, atEnd);
+        }
+
+        const observer = new MutationObserver(updateButtons);
+
+        observer.observe(statusElement, {
+            childList: true,
+            characterData: true,
+            subtree: true
+        });
+
+        container.addEventListener("click", function () {
+            window.setTimeout(updateButtons, 0);
+        });
+
+        updateButtons();
+    }
+
+    function initializeFinalButtonLocks() {
+        connectButtonState({
+            container: "[data-python-visualizer]",
+            status: "#pythonVisualStep",
+            attribute: "data-visual-action",
+            firstStep: 1
+        });
+
+        connectButtonState({
+            container: "[data-python-tracer]",
+            status: "#pythonTraceStatus",
+            attribute: "data-trace-action",
+            firstStep: 0
+        });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeFinalButtonLocks
+        );
+    } else {
+        initializeFinalButtonLocks();
+    }
+}());
