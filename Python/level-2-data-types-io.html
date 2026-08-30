@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn Python variables, data types, input, type conversion and formatted output with CodeBhavya examples, programming problems, visualization and tracing.">
+    <title>Level 2 — Data Types &amp; I/O | CodeBhavya</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="python.css?v=8">
+</head>
+
+<body class="python-page python-lesson-page">
+    <header class="top-header">
+        <a href="../index.html" class="logo codebhavya-new-logo" aria-label="CodeBhavya home">
+            <img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo">
+            <span class="brand-name"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></span>
+        </a>
+
+        <nav class="top-nav" aria-label="Main navigation">
+            <a href="../index.html">Home</a>
+            <a href="../Maths/index.html">Maths</a>
+            <a href="../C-Programming/index.html">C</a>
+            <a href="../Data-Structures/index.html">Data Structures</a>
+            <a href="../Advanced-Data-Structures/index.html">Advanced Data Structures</a>
+            <a href="index.html" class="active">Python</a>
+            <a href="../AI-ML/index.html">AI &amp; ML</a>
+            <a href="../Placement/index.html">Placement</a>
+        </nav>
+    </header>
+
+    <button type="button" class="python-sidebar-toggle" id="pythonSidebarToggle" aria-controls="pythonSidebar" aria-expanded="false">☰ Python Topics</button>
+
+    <div class="docs-layout">
+        <aside class="sidebar" id="pythonSidebar">
+            <div class="sidebar-title">Python Programming</div>
+            <label class="python-search-label" for="topicSearch">Find a topic</label>
+            <input type="search" id="topicSearch" class="search-box" placeholder="🔍 Search Python topics..." autocomplete="off">
+            <a href="index.html" class="python-course-home">🐍 Python Home</a>
+
+            <div class="sidebar-title python-sidebar-group">Part 1 — Foundations</div>
+            <a class="python-topic-link" data-level="1" data-search="python foundations syntax indentation comments print interpreter installation" href="level-01-python-foundations.html">🚀 Level 1 — Python Foundations</a>
+            <a class="python-topic-link active" data-level="2" data-search="variables data types input output type conversion f strings" href="level-02-data-types-io.html" aria-current="page">📦 Level 2 — Data Types &amp; I/O</a>
+            <a class="python-topic-link" data-level="3" data-search="operators expressions arithmetic comparison logical precedence" href="level-03-operators-expressions.html">➗ Level 3 — Operators &amp; Expressions</a>
+            <a class="python-topic-link" data-level="4" data-search="decision making if elif else match case" href="level-04-decision-making.html">🔀 Level 4 — Decision Making</a>
+
+            <div class="sidebar-title python-sidebar-group">Part 2 — Problem Solving</div>
+            <a class="python-topic-link" data-level="5" data-search="loops patterns for while range" href="level-05-loops-patterns.html">🔁 Level 5 — Loops &amp; Patterns</a>
+            <a class="python-topic-link" data-level="6" data-search="strings slicing methods formatting" href="level-06-strings.html">🔤 Level 6 — Strings</a>
+            <a class="python-topic-link" data-level="7" data-search="lists tuples sets collections" href="level-07-lists-tuples-sets.html">🧺 Level 7 — Lists, Tuples &amp; Sets</a>
+            <a class="python-topic-link" data-level="8" data-search="dictionaries key value counting" href="level-08-dictionaries.html">🗂️ Level 8 — Dictionaries</a>
+
+            <div class="sidebar-title python-sidebar-group">Part 3 — Applied Python</div>
+            <a class="python-topic-link" data-level="9" data-search="functions parameters recursion scope" href="level-09-functions-recursion.html">🧩 Level 9 — Functions &amp; Recursion</a>
+            <a class="python-topic-link" data-level="10" data-search="modules exceptions files csv json" href="level-10-modules-exceptions-files.html">📁 Level 10 — Modules, Exceptions &amp; Files</a>
+            <a class="python-topic-link" data-level="11" data-search="object oriented class object inheritance polymorphism" href="level-11-object-oriented-python.html">🏗️ Level 11 — Object-Oriented Python</a>
+            <a class="python-topic-link" data-level="12" data-search="advanced python placement interview generators decorators" href="level-12-advanced-python-placement.html">⚡ Level 12 — Advanced Python &amp; Placement</a>
+
+            <div class="sidebar-title python-sidebar-group">Practice</div>
+            <a class="python-topic-link python-practice-link" data-search="practice arena problems quiz" href="practice.html">🏆 Python Practice Arena</a>
+            <p class="python-search-empty" id="pythonSearchEmpty" hidden>No matching Python topic was found.</p>
+        </aside>
+
+        <main class="main-content">
+            <nav class="python-breadcrumb" aria-label="Breadcrumb">
+                <a href="index.html">Python Home</a><span aria-hidden="true">›</span><strong>Level 2 — Data Types &amp; I/O</strong>
+            </nav>
+
+            <section class="python-lesson-hero" aria-labelledby="lessonTitle">
+                <div class="python-lesson-hero-copy">
+                    <span class="subject-label">PART 1 • LEVEL 02</span>
+                    <h1 id="lessonTitle">📦 Data Types &amp; I/O</h1>
+                    <p>Learn how Python stores values, identifies their types, accepts keyboard input, converts data and produces clear formatted output.</p>
+                    <div class="python-lesson-meta" aria-label="Lesson information">
+                        <span>⏱ 75–90 minutes</span><span>📚 8 concepts</span><span>💻 5 programs</span><span>🧠 6-question quiz</span>
+                    </div>
+                    <div class="python-hero-actions">
+                        <a class="python-button python-button-primary" href="#lessonStart">Start Lesson ↓</a>
+                        <a class="python-button python-button-secondary" href="#programmingProblems">Jump to Problems</a>
+                    </div>
+                </div>
+                <div class="python-lesson-terminal" aria-label="Python input and output example">
+                    <div class="python-code-window-bar"><span class="python-window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>student_profile.py</span><span class="python-version">Python 3</span></div>
+                    <pre><code>name = <span class="py-function">input</span>(<span class="py-string">"Name: "</span>)
+age = <span class="py-function">int</span>(<span class="py-function">input</span>(<span class="py-string">"Age: "</span>))
+next_age = age + 1
+
+<span class="py-function">print</span>(<span class="py-string">f"Hello, {name}!"</span>)
+<span class="py-function">print</span>(<span class="py-string">f"Next year: {next_age}"</span>)</code></pre>
+                    <div class="python-code-result"><span>OUTPUT</span><strong>Hello, Venu!<br>Next year: 21</strong></div>
+                </div>
+            </section>
+
+            <section class="content-card python-objectives" id="lessonStart">
+                <div class="section-heading"><div><span class="section-label">LEARNING OUTCOMES</span><h2>By the End of This Level</h2><p>You will be able to store, inspect, receive, convert and display data correctly.</p></div></div>
+                <div class="python-objective-grid">
+                    <article><span>01</span><p>Create variables using meaningful names and assignment.</p></article>
+                    <article><span>02</span><p>Distinguish numeric, text, Boolean and empty values.</p></article>
+                    <article><span>03</span><p>Use <code>input()</code> and convert text into required data types.</p></article>
+                    <article><span>04</span><p>Produce readable output with commas and f-strings.</p></article>
+                </div>
+            </section>
+
+            <section class="python-lesson-section" id="variables">
+                <div class="python-lesson-heading"><span class="python-section-number">01</span><div><span class="section-label">STORE VALUES</span><h2>Variables and Assignment</h2></div></div>
+                <p class="python-section-intro">A variable is a meaningful name that refers to a value. Python creates the variable when an assignment statement runs.</p>
+                <div class="python-explanation-card">
+                    <p>In <code>student_name = "Venu"</code>, the assignment operator <code>=</code> evaluates the value on the right and associates it with the name on the left.</p>
+                    <div class="python-definition"><span>Remember</span><p><code>=</code> assigns a value; it does not mean “is mathematically equal to.”</p></div>
+                </div>
+                <div class="python-example-card">
+                    <div class="python-example-title"><div><span>EXAMPLE 1</span><h3>Create and Update Variables</h3></div><button type="button" class="python-copy-button" data-copy-target="level2Code1">Copy Code</button></div>
+                    <div class="python-example-grid"><pre class="python-code-block"><code id="level2Code1">course = "Python"
+lessons = 12
+progress = 2
+
+progress = progress + 1
+
+print(course)
+print("Completed:", progress)</code></pre><div class="python-example-output"><span>OUTPUT</span><pre>Python
+Completed: 3</pre></div></div>
+                </div>
+                <div class="python-rule-grid">
+                    <article><span>1</span><h3>Start Correctly</h3><pre><code>name
+student_name
+marks2</code></pre><p>Begin with a letter or underscore; digits may appear later.</p></article>
+                    <article><span>2</span><h3>Use Valid Characters</h3><pre><code>total_marks
+course1
+_count</code></pre><p>Use letters, digits and underscores—never spaces or hyphens.</p></article>
+                    <article><span>3</span><h3>Avoid Keywords</h3><pre><code># Invalid names
+class = 10
+if = True</code></pre><p>Reserved Python keywords cannot be variable names.</p></article>
+                    <article><span>4</span><h3>Choose Meaningful Names</h3><pre><code>student_age = 20
+total_price = 499.0</code></pre><p>Clear names explain the value without needing extra comments.</p></article>
+                </div>
+            </section>
+
+            <section class="python-lesson-section" id="numericTypes">
+                <div class="python-lesson-heading"><span class="python-section-number">02</span><div><span class="section-label">NUMBER VALUES</span><h2>Python Numeric Data Types</h2></div></div>
+                <p class="python-section-intro">Python provides different numeric types because whole numbers, decimal values and complex values represent different kinds of information.</p>
+                <div class="python-feature-grid">
+                    <article><span>🔢</span><h3><code>int</code></h3><p>Whole numbers without a decimal point, such as <code>25</code>, <code>-7</code> and <code>0</code>.</p></article>
+                    <article><span>📏</span><h3><code>float</code></h3><p>Numbers with a decimal point, such as <code>72.5</code> and <code>-0.25</code>.</p></article>
+                    <article><span>🧮</span><h3><code>complex</code></h3><p>Numbers containing real and imaginary parts, such as <code>3 + 2j</code>.</p></article>
+                    <article><span>✅</span><h3><code>bool</code></h3><p>Logical values <code>True</code> and <code>False</code>; Boolean is related to integers.</p></article>
+                </div>
+                <div class="python-table-wrap">
+                    <table>
+                        <thead><tr><th>Value</th><th>Type</th><th>Typical use</th></tr></thead>
+                        <tbody><tr><td><code>42</code></td><td><code>int</code></td><td>Count, age, score</td></tr><tr><td><code>85.75</code></td><td><code>float</code></td><td>Average, price, measurement</td></tr><tr><td><code>2 + 3j</code></td><td><code>complex</code></td><td>Scientific and engineering calculations</td></tr><tr><td><code>True</code></td><td><code>bool</code></td><td>Conditions and yes/no states</td></tr></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="python-lesson-section" id="textBooleanNone">
+                <div class="python-lesson-heading"><span class="python-section-number">03</span><div><span class="section-label">OTHER CORE VALUES</span><h2>Strings, Boolean Values and <code>None</code></h2></div></div>
+                <div class="python-choice-grid">
+                    <article class="recommended"><span class="python-choice-badge">TEXT</span><h3>🔤 String — <code>str</code></h3><p>A string stores text inside matching quotes.</p><pre class="python-code-block"><code>name = "CodeBhavya"
+grade = 'A'
+message = "Learn and build"</code></pre></article>
+                    <article><span class="python-choice-badge">LOGICAL STATE</span><h3>🚦 Boolean — <code>bool</code></h3><p>A Boolean records whether something is true or false.</p><pre class="python-code-block"><code>is_registered = True
+is_completed = False</code></pre></article>
+                    <article><span class="python-choice-badge">NO VALUE YET</span><h3>⭕ None — <code>NoneType</code></h3><p><code>None</code> represents the intentional absence of a value.</p><pre class="python-code-block"><code>result = None
+selected_course = None</code></pre></article>
+                </div>
+                <div class="python-note python-note-blue"><strong>Important</strong><p><code>"25"</code> is a string because it is inside quotes, while <code>25</code> is an integer. Their appearance is similar, but their behavior is different.</p></div>
+            </section>
+
+            <section class="python-lesson-section" id="checkingTypes">
+                <div class="python-lesson-heading"><span class="python-section-number">04</span><div><span class="section-label">INSPECT DATA</span><h2>Check a Value with <code>type()</code></h2></div></div>
+                <p class="python-section-intro">The built-in <code>type()</code> function reports the data type of a value or variable.</p>
+                <div class="python-example-card">
+                    <div class="python-example-title"><div><span>EXAMPLE 2</span><h3>Inspect Several Values</h3></div><button type="button" class="python-copy-button" data-copy-target="level2Code2">Copy Code</button></div>
+                    <div class="python-example-grid"><pre class="python-code-block"><code id="level2Code2">age = 20
+average = 87.5
+name = "Venu"
+is_ready = True
+
+print(type(age))
+print(type(average))
+print(type(name))
+print(type(is_ready))</code></pre><div class="python-example-output"><span>OUTPUT</span><pre>&lt;class 'int'&gt;
+&lt;class 'float'&gt;
+&lt;class 'str'&gt;
+&lt;class 'bool'&gt;</pre></div></div>
+                </div>
+            </section>
+
+            <section class="python-lesson-section" id="keyboardInput">
+                <div class="python-lesson-heading"><span class="python-section-number">05</span><div><span class="section-label">READ USER DATA</span><h2>Keyboard Input with <code>input()</code></h2></div></div>
+                <p class="python-section-intro"><code>input()</code> displays an optional prompt, waits for the user, and always returns the entered data as a string.</p>
+                <div class="python-execution-flow" aria-label="Python input flow"><article><span>1</span><strong>Show Prompt</strong><small><code>input("Age: ")</code></small></article><b>→</b><article><span>2</span><strong>User Types</strong><small><code>20</code></small></article><b>→</b><article><span>3</span><strong>String Returned</strong><small><code>"20"</code></small></article></div>
+                <div class="python-example-card">
+                    <div class="python-example-title"><div><span>EXAMPLE 3</span><h3>Receive and Display a Name</h3></div><button type="button" class="python-copy-button" data-copy-target="level2Code3">Copy Code</button></div>
+                    <div class="python-example-grid"><pre class="python-code-block"><code id="level2Code3">name = input("Enter your name: ")
+city = input("Enter your city: ")
+
+print("Student:", name)
+print("City:", city)</code></pre><div class="python-example-output"><span>SAMPLE OUTPUT</span><pre>Enter your name: Venu
+Enter your city: Hyderabad
+Student: Venu
+City: Hyderabad</pre></div></div>
+                </div>
+                <div class="python-note python-note-gold"><strong>Critical rule</strong><p>Even when the user types digits, <code>input()</code> returns text. Convert the value before performing numeric calculations.</p></div>
+            </section>
+
+            <section class="python-lesson-section" id="typeConversion">
+                <div class="python-lesson-heading"><span class="python-section-number">06</span><div><span class="section-label">CHANGE REPRESENTATION</span><h2>Type Conversion</h2></div></div>
+                <p class="python-section-intro">Type conversion creates a value of another compatible type. Common conversion functions are <code>int()</code>, <code>float()</code>, <code>str()</code> and <code>bool()</code>.</p>
+                <div class="python-table-wrap"><table><thead><tr><th>Function</th><th>Purpose</th><th>Example</th><th>Result</th></tr></thead><tbody><tr><td><code>int()</code></td><td>Convert to integer</td><td><code>int("25")</code></td><td><code>25</code></td></tr><tr><td><code>float()</code></td><td>Convert to decimal number</td><td><code>float("7.5")</code></td><td><code>7.5</code></td></tr><tr><td><code>str()</code></td><td>Convert to text</td><td><code>str(100)</code></td><td><code>"100"</code></td></tr><tr><td><code>bool()</code></td><td>Convert to logical value</td><td><code>bool(1)</code></td><td><code>True</code></td></tr></tbody></table></div>
+                <div class="python-example-card">
+                    <div class="python-example-title"><div><span>EXAMPLE 4</span><h3>Calculate Using Converted Input</h3></div><button type="button" class="python-copy-button" data-copy-target="level2Code4">Copy Code</button></div>
+                    <div class="python-example-grid"><pre class="python-code-block"><code id="level2Code4">length = float(input("Length: "))
+width = float(input("Width: "))
+
+area = length * width
+
+print("Area =", area)</code></pre><div class="python-example-output"><span>SAMPLE OUTPUT</span><pre>Length: 8
+Width: 5
+Area = 40.0</pre></div></div>
+                </div>
+                <div class="python-compare-grid"><article class="correct"><span>✓ VALID</span><pre class="python-code-block"><code>age = int("20")
+price = float("49.5")</code></pre><p>The text contains a compatible numeric value.</p></article><article class="wrong"><span>✕ VALUEERROR</span><pre class="python-code-block"><code>age = int("twenty")
+count = int("4.5")</code></pre><p>The text cannot be directly represented as an integer.</p></article></div>
+            </section>
+
+            <section class="python-lesson-section" id="formattedOutput">
+                <div class="python-lesson-heading"><span class="python-section-number">07</span><div><span class="section-label">DISPLAY CLEARLY</span><h2>Formatted Output</h2></div></div>
+                <p class="python-section-intro">Use commas for simple labelled output and f-strings when values must appear naturally inside a message.</p>
+                <div class="python-compare-grid"><article class="correct"><span>COMMA-SEPARATED</span><pre class="python-code-block"><code>name = "Venu"
+score = 92
+print("Student:", name)
+print("Score:", score)</code></pre><p><code>print()</code> automatically places a space between comma-separated values.</p></article><article class="correct"><span>F-STRING</span><pre class="python-code-block"><code>name = "Venu"
+score = 92
+print(f"{name} scored {score}")</code></pre><p>Prefix the string with <code>f</code> and place expressions inside braces.</p></article></div>
+                <div class="python-example-card">
+                    <div class="python-example-title"><div><span>EXAMPLE 5</span><h3>Student Result Card</h3></div><button type="button" class="python-copy-button" data-copy-target="level2Code5">Copy Code</button></div>
+                    <div class="python-example-grid"><pre class="python-code-block"><code id="level2Code5">name = input("Name: ")
+marks = float(input("Marks: "))
+
+print(f"Student: {name}")
+print(f"Marks: {marks}")
+print(f"Passed: {marks &gt;= 40}")</code></pre><div class="python-example-output"><span>SAMPLE OUTPUT</span><pre>Name: Venu
+Marks: 78.5
+Student: Venu
+Marks: 78.5
+Passed: True</pre></div></div>
+                </div>
+            </section>
+
+            <section class="content-card python-mistakes-card" id="commonMistakes" aria-labelledby="mistakesHeading">
+                <span class="section-label">DEBUGGING CORNER</span><h2 id="mistakesHeading">Common Data and Input Mistakes</h2>
+                <div class="python-mistake-list">
+                    <article><span>TypeError</span><div><code>"Age: " + 20</code><p>A string and integer cannot be joined with <code>+</code> without conversion.</p></div></article>
+                    <article><span>ValueError</span><div><code>int("twenty")</code><p>The text does not contain a valid integer representation.</p></div></article>
+                    <article><span>Wrong result</span><div><code>age = input()</code><br><code>print(age + "1")</code><p>Entering <code>20</code> produces <code>201</code> because both values are strings.</p></div></article>
+                </div>
+                <div class="python-debug-steps"><strong>Before calculating:</strong><span>1. Read input</span><span>2. Identify required type</span><span>3. Convert</span><span>4. Calculate</span><span>5. Display</span></div>
+            </section>
+
+            <section class="content-card python-standard-section python-revision-section" id="quickRevision">
+                <span class="python-standard-label">QUICK REVISION</span><h2>📌 Data Types &amp; I/O — Quick Revision</h2><p class="python-standard-intro">Review the complete Level 2 lesson before attempting the quiz and programming problems.</p>
+                <div class="python-revision-grid">
+                    <article><span>01</span><p>A variable is created when a value is assigned using <strong><code>=</code></strong>.</p></article>
+                    <article><span>02</span><p><strong><code>int</code></strong> stores whole numbers and <strong><code>float</code></strong> stores decimal numbers.</p></article>
+                    <article><span>03</span><p><strong><code>str</code></strong> stores text inside matching quotes.</p></article>
+                    <article><span>04</span><p><strong><code>bool</code></strong> has the values <code>True</code> and <code>False</code>.</p></article>
+                    <article><span>05</span><p><strong><code>None</code></strong> represents the intentional absence of a value.</p></article>
+                    <article><span>06</span><p><strong><code>type()</code></strong> reports the data type of a value.</p></article>
+                    <article><span>07</span><p><strong><code>input()</code></strong> always returns a string.</p></article>
+                    <article><span>08</span><p>Use <strong><code>int()</code></strong> or <strong><code>float()</code></strong> before numeric calculations.</p></article>
+                    <article><span>09</span><p><strong>f-strings</strong> insert values using braces such as <code>f"Age: {age}"</code>.</p></article>
+                    <article><span>10</span><p>A failed incompatible conversion normally raises a <strong><code>ValueError</code></strong>.</p></article>
+                </div>
+            </section>
+
+            <section class="content-card python-quiz" id="levelQuiz" data-python-quiz>
+                <div class="section-heading"><div><span class="section-label">KNOWLEDGE CHECK</span><h2>Level 2 Quick Quiz</h2><p>Select one answer for every question, then check your score.</p></div><span class="python-quiz-count">6 Questions</span></div>
+                <fieldset class="python-quiz-question" data-correct="c"><legend><span>1</span>What type is the value <code>25.0</code>?</legend><label><input type="radio" name="q1" value="a"> <code>int</code></label><label><input type="radio" name="q1" value="b"> <code>str</code></label><label><input type="radio" name="q1" value="c"> <code>float</code></label><label><input type="radio" name="q1" value="d"> <code>bool</code></label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="b"><legend><span>2</span>What does <code>input()</code> return?</legend><label><input type="radio" name="q2" value="a"> Always an integer</label><label><input type="radio" name="q2" value="b"> A string</label><label><input type="radio" name="q2" value="c"> Always a float</label><label><input type="radio" name="q2" value="d"> A Boolean</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="d"><legend><span>3</span>Which statement correctly reads an integer age?</legend><label><input type="radio" name="q3" value="a"> <code>age = input.int()</code></label><label><input type="radio" name="q3" value="b"> <code>age = input(integer)</code></label><label><input type="radio" name="q3" value="c"> <code>age = str(input())</code></label><label><input type="radio" name="q3" value="d"> <code>age = int(input())</code></label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="a"><legend><span>4</span>What is the output type of <code>str(100)</code>?</legend><label><input type="radio" name="q4" value="a"> <code>str</code></label><label><input type="radio" name="q4" value="b"> <code>int</code></label><label><input type="radio" name="q4" value="c"> <code>float</code></label><label><input type="radio" name="q4" value="d"> <code>NoneType</code></label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="c"><legend><span>5</span>Which is a valid variable name?</legend><label><input type="radio" name="q5" value="a"> <code>2marks</code></label><label><input type="radio" name="q5" value="b"> <code>student-name</code></label><label><input type="radio" name="q5" value="c"> <code>student_marks</code></label><label><input type="radio" name="q5" value="d"> <code>class</code></label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="b"><legend><span>6</span>What does <code>f"Total: {price}"</code> represent?</legend><label><input type="radio" name="q6" value="a"> A comment</label><label><input type="radio" name="q6" value="b"> A formatted string</label><label><input type="radio" name="q6" value="c"> A Boolean expression</label><label><input type="radio" name="q6" value="d"> A conversion error</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <div class="python-quiz-actions"><button type="button" class="python-button python-button-primary" data-check-quiz>Check My Score</button><button type="button" class="python-button python-button-secondary" data-reset-quiz>Try Again</button><p class="python-quiz-result" role="status" aria-live="polite"></p></div>
+            </section>
+
+            <section class="content-card python-standard-section python-programming-section" id="programmingProblems">
+                <span class="python-standard-label">PRACTICE</span><h2>🎯 5 Programming Problems — Data Types &amp; I/O</h2>
+                <p class="python-standard-intro">Solve every problem in the browser workspace. The runner uses the displayed sample input, so you can practise <code>input()</code>, conversion, variables, calculations and output.</p>
+                <div class="python-practice-overall" data-python-practice-total="5"><div class="python-practice-overall-title">📈 Data Types &amp; I/O Practice Progress</div><div class="python-practice-overall-grid"><div><strong>Solved</strong><span id="pythonPracticeSolved">0 / 5</span></div><div><strong>Completed with Solution</strong><span id="pythonPracticeCompleted">0</span></div><div><strong>Total Score</strong><span id="pythonPracticeScore">0 / 500</span></div><div><strong>Completion</strong><span id="pythonPracticePercent">0%</span></div></div><div class="python-practice-progress-track"><span id="pythonPracticeProgressBar"></span></div><p>A problem counts as <strong>Solved</strong> when its output passes before the official solution is opened.</p></div>
+                <div class="python-coding-problem-list">
+                    <article class="python-coding-problem" data-python-problem="dataio-p1">
+                        <div class="python-coding-problem-head"><strong>1. Personal Greeting</strong><span class="python-practice-badge" data-problem-badge></span></div><p>Read a name and display the exact two-line welcome message.</p><div class="python-problem-io"><span><strong>Sample input:</strong> <code>Venu</code></span><span><strong>Expected output:</strong> <code>Hello, Venu!</code> and <code>Welcome to CodeBhavya.</code></span></div>
+                        <div class="python-coding-buttons"><button type="button" class="python-solve-button" data-problem-action="toggle">💻 Solve It Yourself</button><button type="button" class="python-hint-button" data-problem-action="hint">Hint</button><button type="button" class="python-program-button" data-problem-action="solution">Show Program</button></div><div class="python-problem-hint" data-problem-hint hidden>💡 Read the name with <code>input()</code>, then use an f-string.</div>
+                        <div class="python-coding-workspace" data-problem-workspace hidden><div class="python-workspace-title">💻 Solve It Yourself — Personal Greeting</div><div class="python-workspace-grid"><div class="python-workspace-panel"><h3>Python Code Editor</h3><textarea data-problem-code spellcheck="false" aria-label="Python code for Personal Greeting"></textarea><div class="python-editor-actions"><button type="button" class="python-run-button" data-problem-action="run">▶ Run Code</button><button type="button" class="python-check-button" data-problem-action="check">✓ Check Answer</button><button type="button" class="python-reset-button" data-problem-action="reset">↺ Reset Editor</button></div></div><div class="python-workspace-panel"><h3>Program Output</h3><pre class="python-workspace-output" data-problem-output>Run your program to see the output.</pre><h3>Test Case</h3><div class="python-test-results" data-problem-tests><div><span>No test checked yet.</span><strong>—</strong></div></div></div></div><div class="python-problem-score"><div><strong>Best Score</strong><span data-problem-score>0 / 100</span></div><div><strong>Attempts</strong><span data-problem-attempts>0</span></div><div><strong>Status</strong><span data-problem-status>Not Solved</span></div></div><p class="python-problem-message" data-problem-message>Write your Python program and test it. You can do it! 💪</p></div>
+                        <div class="python-official-solution" data-problem-solution hidden><strong>Official Python Program</strong><pre><code>name = input()
+print(f"Hello, {name}!")
+print("Welcome to CodeBhavya.")</code></pre></div>
+                    </article>
+
+                    <article class="python-coding-problem" data-python-problem="dataio-p2">
+                        <div class="python-coding-problem-head"><strong>2. Age Next Year</strong><span class="python-practice-badge" data-problem-badge></span></div><p>Read the current age as an integer and display the age next year.</p><div class="python-problem-io"><span><strong>Sample input:</strong> <code>20</code></span><span><strong>Expected output:</strong> <code>Next age = 21</code></span></div>
+                        <div class="python-coding-buttons"><button type="button" class="python-solve-button" data-problem-action="toggle">💻 Solve It Yourself</button><button type="button" class="python-hint-button" data-problem-action="hint">Hint</button><button type="button" class="python-program-button" data-problem-action="solution">Show Program</button></div><div class="python-problem-hint" data-problem-hint hidden>💡 Convert the result of <code>input()</code> using <code>int()</code> before adding 1.</div>
+                        <div class="python-coding-workspace" data-problem-workspace hidden><div class="python-workspace-title">💻 Solve It Yourself — Age Next Year</div><div class="python-workspace-grid"><div class="python-workspace-panel"><h3>Python Code Editor</h3><textarea data-problem-code spellcheck="false" aria-label="Python code for Age Next Year"></textarea><div class="python-editor-actions"><button type="button" class="python-run-button" data-problem-action="run">▶ Run Code</button><button type="button" class="python-check-button" data-problem-action="check">✓ Check Answer</button><button type="button" class="python-reset-button" data-problem-action="reset">↺ Reset Editor</button></div></div><div class="python-workspace-panel"><h3>Program Output</h3><pre class="python-workspace-output" data-problem-output>Run your program to see the output.</pre><h3>Test Case</h3><div class="python-test-results" data-problem-tests><div><span>No test checked yet.</span><strong>—</strong></div></div></div></div><div class="python-problem-score"><div><strong>Best Score</strong><span data-problem-score>0 / 100</span></div><div><strong>Attempts</strong><span data-problem-attempts>0</span></div><div><strong>Status</strong><span data-problem-status>Not Solved</span></div></div><p class="python-problem-message" data-problem-message>Convert the input, calculate and test your answer.</p></div>
+                        <div class="python-official-solution" data-problem-solution hidden><strong>Official Python Program</strong><pre><code>age = int(input())
+next_age = age + 1
+print("Next age =", next_age)</code></pre></div>
+                    </article>
+
+                    <article class="python-coding-problem" data-python-problem="dataio-p3">
+                        <div class="python-coding-problem-head"><strong>3. Rectangle Area</strong><span class="python-practice-badge" data-problem-badge></span></div><p>Read integer length and width, calculate the area and display it.</p><div class="python-problem-io"><span><strong>Sample input:</strong> <code>8</code>, <code>5</code></span><span><strong>Expected output:</strong> <code>Area = 40</code></span></div>
+                        <div class="python-coding-buttons"><button type="button" class="python-solve-button" data-problem-action="toggle">💻 Solve It Yourself</button><button type="button" class="python-hint-button" data-problem-action="hint">Hint</button><button type="button" class="python-program-button" data-problem-action="solution">Show Program</button></div><div class="python-problem-hint" data-problem-hint hidden>💡 Convert both inputs with <code>int()</code>, then multiply them.</div>
+                        <div class="python-coding-workspace" data-problem-workspace hidden><div class="python-workspace-title">💻 Solve It Yourself — Rectangle Area</div><div class="python-workspace-grid"><div class="python-workspace-panel"><h3>Python Code Editor</h3><textarea data-problem-code spellcheck="false" aria-label="Python code for Rectangle Area"></textarea><div class="python-editor-actions"><button type="button" class="python-run-button" data-problem-action="run">▶ Run Code</button><button type="button" class="python-check-button" data-problem-action="check">✓ Check Answer</button><button type="button" class="python-reset-button" data-problem-action="reset">↺ Reset Editor</button></div></div><div class="python-workspace-panel"><h3>Program Output</h3><pre class="python-workspace-output" data-problem-output>Run your program to see the output.</pre><h3>Test Case</h3><div class="python-test-results" data-problem-tests><div><span>No test checked yet.</span><strong>—</strong></div></div></div></div><div class="python-problem-score"><div><strong>Best Score</strong><span data-problem-score>0 / 100</span></div><div><strong>Attempts</strong><span data-problem-attempts>0</span></div><div><strong>Status</strong><span data-problem-status>Not Solved</span></div></div><p class="python-problem-message" data-problem-message>Use variables for input and calculated output.</p></div>
+                        <div class="python-official-solution" data-problem-solution hidden><strong>Official Python Program</strong><pre><code>length = int(input())
+width = int(input())
+area = length * width
+print("Area =", area)</code></pre></div>
+                    </article>
+
+                    <article class="python-coding-problem" data-python-problem="dataio-p4">
+                        <div class="python-coding-problem-head"><strong>4. Shopping Bill</strong><span class="python-practice-badge" data-problem-badge></span></div><p>Read a decimal price and integer quantity, then display the total amount.</p><div class="python-problem-io"><span><strong>Sample input:</strong> <code>249.5</code>, <code>2</code></span><span><strong>Expected output:</strong> <code>Total = 499</code></span></div>
+                        <div class="python-coding-buttons"><button type="button" class="python-solve-button" data-problem-action="toggle">💻 Solve It Yourself</button><button type="button" class="python-hint-button" data-problem-action="hint">Hint</button><button type="button" class="python-program-button" data-problem-action="solution">Show Program</button></div><div class="python-problem-hint" data-problem-hint hidden>💡 Use <code>float()</code> for price and <code>int()</code> for quantity.</div>
+                        <div class="python-coding-workspace" data-problem-workspace hidden><div class="python-workspace-title">💻 Solve It Yourself — Shopping Bill</div><div class="python-workspace-grid"><div class="python-workspace-panel"><h3>Python Code Editor</h3><textarea data-problem-code spellcheck="false" aria-label="Python code for Shopping Bill"></textarea><div class="python-editor-actions"><button type="button" class="python-run-button" data-problem-action="run">▶ Run Code</button><button type="button" class="python-check-button" data-problem-action="check">✓ Check Answer</button><button type="button" class="python-reset-button" data-problem-action="reset">↺ Reset Editor</button></div></div><div class="python-workspace-panel"><h3>Program Output</h3><pre class="python-workspace-output" data-problem-output>Run your program to see the output.</pre><h3>Test Case</h3><div class="python-test-results" data-problem-tests><div><span>No test checked yet.</span><strong>—</strong></div></div></div></div><div class="python-problem-score"><div><strong>Best Score</strong><span data-problem-score>0 / 100</span></div><div><strong>Attempts</strong><span data-problem-attempts>0</span></div><div><strong>Status</strong><span data-problem-status>Not Solved</span></div></div><p class="python-problem-message" data-problem-message>Choose a suitable data type for each input.</p></div>
+                        <div class="python-official-solution" data-problem-solution hidden><strong>Official Python Program</strong><pre><code>price = float(input())
+quantity = int(input())
+total = price * quantity
+print("Total =", total)</code></pre></div>
+                    </article>
+
+                    <article class="python-coding-problem" data-python-problem="dataio-p5">
+                        <div class="python-coding-problem-head"><strong>5. Celsius to Fahrenheit</strong><span class="python-practice-badge" data-problem-badge></span></div><p>Read Celsius temperature, convert it and display the Fahrenheit value.</p><div class="python-problem-io"><span><strong>Sample input:</strong> <code>25</code></span><span><strong>Expected output:</strong> <code>Fahrenheit = 77</code></span></div>
+                        <div class="python-coding-buttons"><button type="button" class="python-solve-button" data-problem-action="toggle">💻 Solve It Yourself</button><button type="button" class="python-hint-button" data-problem-action="hint">Hint</button><button type="button" class="python-program-button" data-problem-action="solution">Show Program</button></div><div class="python-problem-hint" data-problem-hint hidden>💡 Use the formula <code>celsius * 9 / 5 + 32</code>.</div>
+                        <div class="python-coding-workspace" data-problem-workspace hidden><div class="python-workspace-title">💻 Solve It Yourself — Temperature Conversion</div><div class="python-workspace-grid"><div class="python-workspace-panel"><h3>Python Code Editor</h3><textarea data-problem-code spellcheck="false" aria-label="Python code for Temperature Conversion"></textarea><div class="python-editor-actions"><button type="button" class="python-run-button" data-problem-action="run">▶ Run Code</button><button type="button" class="python-check-button" data-problem-action="check">✓ Check Answer</button><button type="button" class="python-reset-button" data-problem-action="reset">↺ Reset Editor</button></div></div><div class="python-workspace-panel"><h3>Program Output</h3><pre class="python-workspace-output" data-problem-output>Run your program to see the output.</pre><h3>Test Case</h3><div class="python-test-results" data-problem-tests><div><span>No test checked yet.</span><strong>—</strong></div></div></div></div><div class="python-problem-score"><div><strong>Best Score</strong><span data-problem-score>0 / 100</span></div><div><strong>Attempts</strong><span data-problem-attempts>0</span></div><div><strong>Status</strong><span data-problem-status>Not Solved</span></div></div><p class="python-problem-message" data-problem-message>Translate the conversion formula into a Python expression.</p></div>
+                        <div class="python-official-solution" data-problem-solution hidden><strong>Official Python Program</strong><pre><code>celsius = float(input())
+fahrenheit = celsius * 9 / 5 + 32
+print("Fahrenheit =", fahrenheit)</code></pre></div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="content-card python-standard-section python-takeaway-section" id="keyTakeaway">
+                <span class="python-standard-label">KEY TAKEAWAY</span><h2>🎯 Give Every Value the Right Journey</h2>
+                <div class="python-takeaway-flow"><article><span>1</span><strong>Read</strong><p>Receive raw text using <code>input()</code>.</p></article><b>→</b><article><span>2</span><strong>Convert</strong><p>Choose <code>int</code>, <code>float</code> or another suitable type.</p></article><b>→</b><article><span>3</span><strong>Process</strong><p>Calculate using clearly named variables.</p></article><b>→</b><article><span>4</span><strong>Present</strong><p>Display a labelled result with <code>print()</code> or an f-string.</p></article></div>
+                <p class="python-takeaway-message">Correct programs depend on correct data representation. Before every operation, ask: “What value do I have, and what type does this operation require?”</p>
+            </section>
+
+            <section class="content-card python-standard-section python-compact-learning" id="interactiveLearning">
+                <span class="python-standard-label">INTERACTIVE LEARNING</span><h2>🎬 Input, Conversion and Output — Visual Flow</h2><p class="python-standard-intro">Follow user data from the keyboard until Python displays the calculated result.</p>
+                <button type="button" class="python-compact-toggle" data-python-panel-toggle="pythonDataVisualPanel" aria-expanded="false">▶ Open Visualization</button>
+                <div class="python-compact-panel" id="pythonDataVisualPanel" hidden><div class="python-visualizer" data-python-visualizer><div class="python-interactive-topbar"><span>INTERACTIVE CONCEPT VISUALIZATION</span><strong><i>Code</i>Bhavya</strong></div><h3>⌨️ How Python Processes User Input</h3><div class="python-visual-flow" aria-label="Python input and output steps"><span data-visual-step="0">User Enters Data</span><b>→</b><span data-visual-step="1"><code>input()</code> Reads</span><b>→</b><span data-visual-step="2">Convert Type</span><b>→</b><span data-visual-step="3">Process Value</span><b>→</b><span data-visual-step="4">Display Result</span></div><div class="python-visual-stage"><span id="pythonDataVisualStep">Step 1 of 5</span><h3 id="pythonDataVisualTitle">1. User Enters Data</h3><p id="pythonDataVisualDetail">The user types a value using the keyboard, such as 20 for age.</p><div class="python-visual-dots" id="pythonDataVisualDots"></div></div><div class="python-standard-controls"><button type="button" class="previous" data-visual-action="previous">← Previous</button><button type="button" class="next" data-visual-action="next">Next →</button><button type="button" class="auto" data-visual-action="auto">▶ Auto Run</button><button type="button" class="pause" data-visual-action="pause">Ⅱ Pause</button><button type="button" class="reset" data-visual-action="reset">↺ Reset</button></div><div class="python-mini-progress"><span id="pythonDataVisualProgress"></span></div></div></div>
+            </section>
+
+            <section class="content-card python-standard-section python-compact-learning" id="programTracing">
+                <span class="python-standard-label">PROGRAM TRACING</span><h2>🔎 Program Tracing — Student Input</h2><p class="python-standard-intro">Move through the program one statement at a time and observe input consumption, variable types, calculations and output.</p>
+                <button type="button" class="python-compact-toggle" data-python-panel-toggle="pythonDataTracePanel" aria-expanded="false">▶ Open Program Tracer</button>
+                <div class="python-compact-panel" id="pythonDataTracePanel" hidden><div class="python-program-tracer" data-python-tracer><div class="python-tracer-grid"><div class="python-tracer-code-wrap"><div class="python-tracer-heading">Python Program</div><pre id="pythonDataTraceCode" class="python-tracer-code"></pre></div><div class="python-tracer-state-wrap"><div class="python-tracer-heading">Live State</div><p id="pythonDataTraceNote" class="python-tracer-note">Click Next to begin tracing.</p><div id="pythonDataTraceState" class="python-live-state"></div><div class="python-tracer-output"><strong>Output</strong><pre id="pythonDataTraceOutput">—</pre></div></div></div><div class="python-standard-controls"><button type="button" class="previous" data-trace-action="previous">← Previous</button><button type="button" class="next" data-trace-action="next">Next →</button><button type="button" class="auto" data-trace-action="auto">▶ Auto Run</button><button type="button" class="pause" data-trace-action="pause">Ⅱ Pause</button><button type="button" class="reset" data-trace-action="reset">↺ Reset</button></div><div class="python-tracer-status" id="pythonDataTraceStatus">Step 0 of 6</div></div></div>
+            </section>
+
+            <section class="content-card python-standard-section" id="interviewQuestions">
+                <span class="python-standard-label">INTERVIEW PREPARATION</span><h2>🎤 Data Types &amp; I/O — Interview Questions</h2><p class="python-standard-intro">Answer aloud before opening each explanation.</p>
+                <div class="python-interview-list">
+                    <article><div><span>1.</span><p>What is dynamic typing in Python?</p><button type="button" data-reveal-target="pythonDataInterview1" data-hide-label="Hide Answer" aria-expanded="false">Show Answer</button></div><p id="pythonDataInterview1" hidden>Python determines a variable's type from its current value at runtime. The same variable name can later refer to a value of another type.</p></article>
+                    <article><div><span>2.</span><p>What is the difference between <code>int</code> and <code>float</code>?</p><button type="button" data-reveal-target="pythonDataInterview2" data-hide-label="Hide Answer" aria-expanded="false">Show Answer</button></div><p id="pythonDataInterview2" hidden><code>int</code> represents whole numbers, while <code>float</code> represents floating-point numbers that can contain a fractional part.</p></article>
+                    <article><div><span>3.</span><p>Why must numeric keyboard input often be converted?</p><button type="button" data-reveal-target="pythonDataInterview3" data-hide-label="Hide Answer" aria-expanded="false">Show Answer</button></div><p id="pythonDataInterview3" hidden><code>input()</code> returns a string. Numeric calculations require a compatible numeric type such as <code>int</code> or <code>float</code>.</p></article>
+                    <article><div><span>4.</span><p>What is the difference between implicit and explicit conversion?</p><button type="button" data-reveal-target="pythonDataInterview4" data-hide-label="Hide Answer" aria-expanded="false">Show Answer</button></div><p id="pythonDataInterview4" hidden>Implicit conversion is performed automatically by Python in compatible operations; explicit conversion is requested by the programmer using functions such as <code>int()</code> or <code>float()</code>.</p></article>
+                    <article><div><span>5.</span><p>What does <code>None</code> represent?</p><button type="button" data-reveal-target="pythonDataInterview5" data-hide-label="Hide Answer" aria-expanded="false">Show Answer</button></div><p id="pythonDataInterview5" hidden><code>None</code> is a special singleton value representing no value or a value that has not yet been assigned meaningfully.</p></article>
+                    <article><div><span>6.</span><p>Why are f-strings useful?</p><button type="button" data-reveal-target="pythonDataInterview6" data-hide-label="Hide Answer" aria-expanded="false">Show Answer</button></div><p id="pythonDataInterview6" hidden>F-strings place variables and expressions directly inside readable string templates using braces, making formatted output concise and clear.</p></article>
+                </div>
+            </section>
+
+            <section class="content-card python-standard-section" id="extraTips">
+                <span class="python-standard-label">EXTRA TIPS</span><h2>💡 Data Types &amp; I/O — Extra Tips</h2>
+                <ul class="python-extra-tip-grid"><li><span>01</span><p>Name variables according to meaning: prefer <code>total_marks</code> over <code>x</code>.</p></li><li><span>02</span><p>Use <code>type()</code> while learning or debugging unexpected data behavior.</p></li><li><span>03</span><p>Convert input immediately when the rest of the program expects a number.</p></li><li><span>04</span><p>Use <code>float()</code> when valid input may contain a decimal point.</p></li><li><span>05</span><p>Keep input, processing and output as three clear stages in beginner programs.</p></li><li><span>06</span><p>Test conversions with normal, boundary and invalid values to understand failures.</p></li></ul>
+            </section>
+
+            <section class="content-card python-standard-section" id="extraPracticeQuestions">
+                <span class="python-standard-label">EXTRA PRACTICE</span><h2>✍️ Data Types &amp; I/O — Extra Practice Questions</h2>
+                <ol class="python-extra-practice-list"><li><span class="python-extra-practice-text">Create variables for a student's name, roll number, percentage and pass status; display their types.</span></li><li><span class="python-extra-practice-text">Read two integers and display their sum, difference and product.</span></li><li><span class="python-extra-practice-text">Read length and breadth as decimal values and display a rectangle's area and perimeter.</span></li><li><span class="python-extra-practice-text">Read a name and department, then create a two-line profile using f-strings.</span></li><li><span class="python-extra-practice-text">Convert the string <code>"125"</code> to an integer and add <code>25</code>.</span></li><li><span class="python-extra-practice-text">Predict the results of <code>type("10")</code>, <code>type(10)</code> and <code>type(10.0)</code>.</span></li><li><span class="python-extra-practice-text">Explain why <code>input() + input()</code> may join digits instead of adding numbers.</span></li><li><span class="python-extra-practice-text">Correct the error in <code>total = "Price: " + 499</code> using two different approaches.</span></li><li><span class="python-extra-practice-text">Read minutes and convert them into hours and remaining minutes.</span></li><li><span class="python-extra-practice-text">Build a bill program that reads item name, price and quantity and prints a formatted summary.</span></li></ol>
+            </section>
+
+            <section class="content-card python-level-complete"><div><span class="section-label">LEVEL 2 CHECKPOINT</span><h2>Data Types &amp; I/O Complete</h2><p>When you can choose suitable types, convert input correctly and solve the five programs without help, mark this level complete and continue.</p></div><div class="python-level-complete-actions"><button type="button" class="python-complete-button" data-complete-level="2" aria-pressed="false">Mark Complete</button><a href="level-03-operators-expressions.html" class="python-button python-button-primary">Continue to Level 3 →</a></div></section>
+
+            <nav class="python-topic-navigation" aria-label="Python course navigation"><a href="level-01-python-foundations.html" class="previous-topic">← Previous: Python Foundations</a><a href="level-03-operators-expressions.html" class="next-topic">Next: Operators &amp; Expressions →</a></nav>
+        </main>
+    </div>
+
+    <footer class="footer"><div class="footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div><div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C Programming</a></div><div class="footer-column"><h3>Learning</h3><a href="../Data-Structures/index.html">Data Structures</a><a href="../Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="index.html">Python</a></div><div class="footer-column"><h3>Python</h3><a href="index.html">Course Home</a><a href="level-03-operators-expressions.html">Next Level</a><a href="practice.html">Practice Arena</a></div></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer>
+
+    <script src="../script.js"></script>
+    <script src="python.js?v=1"></script>
+    <script src="python-level-02.js?v=1"></script>
+</body>
+</html>
