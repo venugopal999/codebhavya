@@ -1,0 +1,2464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Graph Algorithms | Advanced Data Structures | CodeBhavya</title>
+
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="../images/codebhavya-icon-32.png">
+    <link rel="icon" type="image/png" sizes="128x128"
+          href="../images/codebhavya-icon-128.png">
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="ads.css?v=28">
+</head>
+
+<body class="ads-page ads-topic-page graphs-page">
+
+<header class="top-header">
+    <a href="../index.html"
+       class="logo codebhavya-new-logo">
+        <img src="../images/codebhavya-main-logo.png"
+             alt="CodeBhavya Logo"
+             class="main-logo">
+        <span class="logo-code">Code</span>
+        <span class="logo-bhavya">Bhavya</span>
+    </a>
+
+    <nav class="top-nav"
+         aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../Maths/index.html">Maths</a>
+        <a href="../C-Programming/index.html">C</a>
+        <a href="../Data-Structures/index.html">
+            Data Structures
+        </a>
+        <a href="index.html" class="active">
+            Advanced Data Structures
+        </a>
+        <a href="../Python/index.html">Python</a>
+        <a href="../AI-ML/index.html">AI &amp; ML</a>
+        <a href="../Placement/index.html">Placement</a>
+    </nav>
+</header>
+
+<div class="docs-layout">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-title">
+            Advanced Data Structures
+        </div>
+
+        <input
+            type="text"
+            id="topicSearch"
+            class="search-box"
+            placeholder="🔍 Search ADS topics..."
+            aria-label="Search ADS topics"
+        >
+
+        <a href="index.html"
+           class="sidebar-course-home">
+            🧠 ADS Home
+        </a>
+
+        <div class="sidebar-title">
+            Part 1 — Foundations &amp; Algorithms
+        </div>
+
+        <a class="ads-topic-link is-available"
+           href="level-08-performance-analysis.html">
+            📊 Level 8 — Performance Analysis
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-09-disjoint-sets.html">
+            🔗 Level 9 — Disjoint Sets
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-10-sparse-matrices.html">
+            🧮 Level 10 — Sparse Matrices
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-11-string-pattern-matching.html">
+            🔤 Level 11 — String Pattern Matching
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-12-advanced-sorting.html">
+            ⚡ Level 12 — Advanced Sorting
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-13-advanced-searching.html">
+            🎯 Level 13 — Advanced Searching
+        </a>
+
+        <div class="sidebar-title">
+            Part 2 — Advanced Trees &amp; Hashing
+        </div>
+
+        <a class="ads-topic-link is-available"
+           href="level-14-balanced-bst.html">
+            🌲 Level 14 — Balanced BST
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-15-digital-search-trees.html">
+            🔠 Level 15 — Digital Search Trees
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-16-multiway-search-trees.html">
+            🌳 Level 16 — Multiway Search Trees
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-17-heaps.html">
+            ⛰️ Level 17 — Heaps
+        </a>
+
+        <a class="ads-topic-link is-available"
+           href="level-18-hashing.html">
+            #️⃣ Level 18 — Hashing
+        </a>
+
+        <div class="sidebar-title">
+            Part 3 — Storage, Graphs &amp; Placement
+        </div>
+
+        <a class="ads-topic-link is-available"
+           href="level-19-files.html">
+            📁 Level 19 — Files &amp; File Organization
+        </a>
+
+        <a class="ads-topic-link is-available active"
+           href="level-20-advanced-graphs.html">
+            🕸️ Level 20 — Advanced Graph Algorithms
+        </a>
+
+        <a class="ads-topic-link"
+           href="level-21-placement-problems.html">
+            💼 Level 21 — Placement Problems
+        </a>
+
+    </aside>
+
+    <main class="main-content">
+
+        <section class="ads-topic-hero">
+            <span class="subject-label">
+                CODEBHAVYA • ADS LEVEL 20
+            </span>
+
+            <h1 class="page-title">
+                🕸️ Advanced Graph Algorithms
+            </h1>
+
+            <p class="page-description">
+                Master minimum spanning trees, shortest paths,
+                directed acyclic graphs, strongly connected
+                components and maximum flow through complete
+                algorithms, C programs, visualization and
+                line-by-line tracing.
+            </p>
+        </section>
+
+        <nav class="ads-page-jump-nav"
+             aria-label="Page sections">
+            <a href="#objectives">Objectives</a>
+            <a href="#foundations">Foundations</a>
+            <a href="#mst">MST</a>
+            <a href="#shortest">Shortest Paths</a>
+            <a href="#directed">Directed Graphs</a>
+            <a href="#flow">Maximum Flow</a>
+            <a href="#programs">C Programs</a>
+            <a href="#visualizer">Visualizer</a>
+            <a href="#tracing">Tracing</a>
+            <a href="#practice">Practice</a>
+            <a href="#revision">Revision</a>
+        </nav>
+
+        <section class="content-card ads-lesson-section"
+                 id="objectives">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    LEARNING GOALS
+                </span>
+                <h2>🎯 Learning Objectives</h2>
+            </div>
+
+            <ul class="ads-objective-list">
+                <li>
+                    Distinguish directed, undirected, weighted,
+                    connected and residual graphs.
+                </li>
+                <li>
+                    Construct minimum spanning trees using
+                    Prim and Kruskal.
+                </li>
+                <li>
+                    Compute single-source and all-pairs
+                    shortest paths.
+                </li>
+                <li>
+                    Detect negative cycles using
+                    Bellman–Ford.
+                </li>
+                <li>
+                    Produce a topological ordering and
+                    identify cycles in a directed graph.
+                </li>
+                <li>
+                    Find strongly connected components using
+                    Kosaraju.
+                </li>
+                <li>
+                    Calculate maximum flow using
+                    Edmonds–Karp residual networks.
+                </li>
+                <li>
+                    Trace every loop, comparison, relaxation
+                    and structural update in C.
+                </li>
+            </ul>
+
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="foundations">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    GRAPH MODEL AND INVARIANTS
+                </span>
+                <h2>🧭 1. Advanced Graph Foundations</h2>
+            </div>
+
+            <div class="ads-rule-grid">
+
+                <article class="ads-rule-card">
+                    <strong>Weighted edge</strong>
+                    <p>
+                        Associates a cost, distance, capacity
+                        or time with a connection.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card purple-panel">
+                    <strong>Cut</strong>
+                    <p>
+                        Partitions vertices into two sets;
+                        crossing edges connect the sets.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card green-rule">
+                    <strong>Relaxation</strong>
+                    <p>
+                        Improves a known distance through an
+                        edge when a cheaper route exists.
+                    </p>
+                </article>
+
+                <article class="ads-rule-card gold-rule">
+                    <strong>Residual edge</strong>
+                    <p>
+                        Shows how much additional flow can be
+                        sent or cancelled.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Representation</th>
+                            <th>Space</th>
+                            <th>Check edge</th>
+                            <th>Enumerate neighbors</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Adjacency matrix</td>
+                            <td>O(V²)</td>
+                            <td>O(1)</td>
+                            <td>O(V)</td>
+                        </tr>
+                        <tr>
+                            <td>Adjacency list</td>
+                            <td>O(V + E)</td>
+                            <td>O(deg u)</td>
+                            <td>O(deg u)</td>
+                        </tr>
+                        <tr>
+                            <td>Edge list</td>
+                            <td>O(E)</td>
+                            <td>O(E)</td>
+                            <td>O(E)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="ads-tip-box">
+                <strong>Tracer rule:</strong>
+                A repeated loop iteration returns to the actual
+                loop or edge-reading line. A comparison and a
+                successful update are displayed as separate
+                steps.
+            </div>
+
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="mst">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    CONNECT ALL VERTICES CHEAPLY
+                </span>
+                <h2>🌉 2. Minimum Spanning Trees</h2>
+            </div>
+
+            <p>
+                A spanning tree of a connected undirected graph
+                contains all V vertices, exactly V − 1 edges and
+                no cycle. A minimum spanning tree has the minimum
+                possible total edge weight.
+            </p>
+
+            <div class="ads-comparison-grid">
+
+                <article class="ads-info-panel">
+                    <h3>Prim’s Algorithm</h3>
+                    <p>
+                        Grow one tree. Repeatedly choose the
+                        lightest edge crossing from the visited
+                        set to an unvisited vertex.
+                    </p>
+                    <ol>
+                        <li>
+                            Set every key to ∞ and the source
+                            key to 0.
+                        </li>
+                        <li>
+                            Select the unused vertex with the
+                            minimum key.
+                        </li>
+                        <li>Add it to the tree.</li>
+                        <li>Relax its incident edges.</li>
+                    </ol>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Kruskal’s Algorithm</h3>
+                    <p>
+                        Grow a forest. Process edges in
+                        nondecreasing weight and accept an edge
+                        only when it joins different components.
+                    </p>
+                    <ol>
+                        <li>Sort all edges.</li>
+                        <li>Find both component roots.</li>
+                        <li>
+                            Skip an edge that creates a cycle.
+                        </li>
+                        <li>Union accepted components.</li>
+                    </ol>
+                </article>
+
+            </div>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Algorithm</th>
+                            <th>Main structure</th>
+                            <th>Time</th>
+                            <th>Best fit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Prim</td>
+                            <td>Priority queue / key array</td>
+                            <td>O(E log V)</td>
+                            <td>
+                                Dense or adjacency-list graphs
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Kruskal</td>
+                            <td>Sorted edges + DSU</td>
+                            <td>O(E log E)</td>
+                            <td>Sparse edge-list graphs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="shortest">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    OPTIMAL ROUTES
+                </span>
+                <h2>🛣️ 3. Shortest-Path Algorithms</h2>
+            </div>
+
+            <div class="ads-decision-grid">
+
+                <article class="ads-info-panel">
+                    <h3>Dijkstra</h3>
+                    <p>
+                        Greedy single-source shortest paths.
+                        Requires nonnegative edge weights.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Bellman–Ford</h3>
+                    <p>
+                        Relaxes every edge V − 1 times and
+                        detects reachable negative cycles.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel">
+                    <h3>Floyd–Warshall</h3>
+                    <p>
+                        Dynamic programming for all-pairs
+                        shortest paths using each vertex as an
+                        intermediate.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="ads-algorithm-box">
+                <h3>Relaxation Algorithm</h3>
+                <ol>
+                    <li>
+                        Read edge u → v with weight w.
+                    </li>
+                    <li>
+                        Verify that distance[u] is finite.
+                    </li>
+                    <li>
+                        Compare distance[u] + w with
+                        distance[v].
+                    </li>
+                    <li>
+                        If it is smaller, update distance[v]
+                        and predecessor[v].
+                    </li>
+                </ol>
+            </div>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Algorithm</th>
+                            <th>Negative edges</th>
+                            <th>Negative-cycle detection</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dijkstra</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>O(E log V)</td>
+                        </tr>
+                        <tr>
+                            <td>Bellman–Ford</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>O(VE)</td>
+                        </tr>
+                        <tr>
+                            <td>Floyd–Warshall</td>
+                            <td>Yes</td>
+                            <td>Via dist[i][i] &lt; 0</td>
+                            <td>O(V³)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="directed">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    ORDER AND COMPONENT STRUCTURE
+                </span>
+                <h2>🧩 4. Directed Graph Algorithms</h2>
+            </div>
+
+            <div class="ads-comparison-grid">
+
+                <article class="ads-info-panel">
+                    <h3>Kahn Topological Sort</h3>
+                    <p>
+                        Place all zero-indegree vertices in a
+                        queue. Remove one, output it and reduce
+                        every outgoing neighbor’s indegree.
+                        Fewer than V outputs proves a cycle.
+                    </p>
+                </article>
+
+                <article class="ads-info-panel purple-panel">
+                    <h3>Kosaraju SCC</h3>
+                    <p>
+                        Run DFS to record decreasing finish time,
+                        transpose every edge, then process
+                        vertices in finish-time order to reveal
+                        strongly connected components.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="ads-tip-box">
+                <strong>Related algorithms:</strong>
+                Tarjan finds SCCs in one DFS using discovery and
+                low-link values. The same low-link idea identifies
+                articulation points and bridges in undirected
+                graphs.
+            </div>
+
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="flow">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    CAPACITY-CONSTRAINED NETWORKS
+                </span>
+                <h2>🌊 5. Maximum Flow</h2>
+            </div>
+
+            <p>
+                A feasible flow respects capacity constraints and
+                flow conservation. Ford–Fulkerson repeatedly
+                augments an s–t path. Edmonds–Karp chooses the
+                shortest augmenting path in number of edges using
+                BFS.
+            </p>
+
+            <div class="ads-step-flow">
+
+                <article>
+                    <span>1</span>
+                    <h3>Build residual graph</h3>
+                    <p>
+                        Initial residual capacity equals original
+                        capacity.
+                    </p>
+                </article>
+
+                <article>
+                    <span>2</span>
+                    <h3>Run BFS</h3>
+                    <p>
+                        Find a residual path from source to sink.
+                    </p>
+                </article>
+
+                <article>
+                    <span>3</span>
+                    <h3>Bottleneck</h3>
+                    <p>
+                        Take the minimum residual capacity on the
+                        path.
+                    </p>
+                </article>
+
+                <article>
+                    <span>4</span>
+                    <h3>Augment</h3>
+                    <p>
+                        Decrease forward capacity and increase
+                        reverse capacity.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="ads-formula-box">
+                <strong>Edmonds–Karp complexity:</strong>
+                O(VE²). At termination, maximum flow equals the
+                capacity of a minimum s–t cut.
+            </div>
+
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="programs">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    COMPLETE TRACEABLE IMPLEMENTATIONS
+                </span>
+                <h2>💻 6. Complete C Programs</h2>
+            </div>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>
+                        Prim’s Minimum Spanning Tree
+                    </span>
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="prim">#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt;
+
+#define V 6
+
+int minimumKey(int key[], int used[]) {
+    int best = INT_MAX;
+    int vertex = -1;
+
+    for (int i = 0; i &lt; V; i++) { /* prim select loop */
+        if (!used[i] &amp;&amp; key[i] &lt; best) { /* prim select compare */
+            best = key[i];
+            vertex = i;
+        }
+    }
+
+    return vertex; /* prim select result */
+}
+
+void prim(int graph[V][V]) {
+    int parent[V];
+    int key[V];
+    int used[V] = {0};
+
+    for (int i = 0; i &lt; V; i++) { /* prim initialize */
+        key[i] = INT_MAX;
+        parent[i] = -1;
+    }
+
+    key[0] = 0;
+
+    for (int count = 0; count &lt; V; count++) { /* prim main loop */
+        int u = minimumKey(key, used); /* prim choose */
+
+        if (u == -1)
+            break;
+
+        used[u] = 1; /* prim add vertex */
+
+        for (int v = 0; v &lt; V; v++) { /* prim edge loop */
+            if (
+                graph[u][v] &amp;&amp;
+                !used[v] &amp;&amp;
+                graph[u][v] &lt; key[v]
+            ) { /* prim relax compare */
+                key[v] = graph[u][v]; /* prim relax update */
+                parent[v] = u;
+            }
+        }
+    }
+
+    int total = 0;
+
+    for (int v = 1; v &lt; V; v++) {
+        if (parent[v] != -1) {
+            printf(
+                "%c-%c %d\n",
+                'A' + parent[v],
+                'A' + v,
+                graph[v][parent[v]]
+            );
+
+            total += graph[v][parent[v]];
+        }
+    }
+
+    printf("MST cost = %d\n", total); /* prim output */
+}
+
+int main(void) {
+    int graph[V][V] = {
+        {0, 4, 2, 0, 0, 0},
+        {4, 0, 1, 5, 0, 0},
+        {2, 1, 0, 8, 10, 0},
+        {0, 5, 8, 0, 2, 6},
+        {0, 0, 10, 2, 0, 3},
+        {0, 0, 0, 6, 3, 0}
+    };
+
+    prim(graph);
+
+    return 0;
+}</code></pre>
+                </div>
+            </details>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>
+                        Kruskal’s Minimum Spanning Tree
+                    </span>
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="kruskal">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define V 6
+#define E 9
+
+typedef struct {
+    int u;
+    int v;
+    int w;
+} Edge;
+
+int compare(const void *first, const void *second) {
+    const Edge *a = first;
+    const Edge *b = second;
+
+    return a-&gt;w - b-&gt;w;
+}
+
+int find(int parent[], int vertex) {
+    if (parent[vertex] != vertex) {
+        parent[vertex] =
+            find(parent, parent[vertex]);
+    }
+
+    return parent[vertex]; /* kruskal find */
+}
+
+void unite(
+    int parent[],
+    int rank[],
+    int first,
+    int second
+) {
+    first = find(parent, first);
+    second = find(parent, second);
+
+    if (rank[first] &lt; rank[second]) {
+        parent[first] = second;
+    } else if (rank[first] &gt; rank[second]) {
+        parent[second] = first;
+    } else {
+        parent[second] = first;
+        rank[first]++;
+    }
+}
+
+int main(void) {
+    Edge edges[E] = {
+        {0, 1, 4},
+        {0, 2, 2},
+        {1, 2, 1},
+        {1, 3, 5},
+        {2, 3, 8},
+        {2, 4, 10},
+        {3, 4, 2},
+        {3, 5, 6},
+        {4, 5, 3}
+    };
+
+    int parent[V];
+    int rank[V] = {0};
+    int selected = 0;
+    int total = 0;
+
+    for (int i = 0; i &lt; V; i++) { /* kruskal initialize */
+        parent[i] = i;
+    }
+
+    qsort(
+        edges,
+        E,
+        sizeof(Edge),
+        compare
+    ); /* kruskal sort */
+
+    for (
+        int i = 0;
+        i &lt; E &amp;&amp; selected &lt; V - 1;
+        i++
+    ) { /* kruskal edge loop */
+
+        Edge edge = edges[i]; /* kruskal consider */
+
+        int firstRoot =
+            find(parent, edge.u);
+
+        int secondRoot =
+            find(parent, edge.v);
+
+        if (firstRoot != secondRoot) { /* kruskal cycle check */
+
+            printf(
+                "%c-%c %d\n",
+                'A' + edge.u,
+                'A' + edge.v,
+                edge.w
+            );
+
+            total += edge.w;
+            selected++; /* kruskal accept */
+
+            unite(
+                parent,
+                rank,
+                firstRoot,
+                secondRoot
+            );
+        }
+    }
+
+    printf("MST cost = %d\n", total); /* kruskal output */
+
+    return 0;
+}</code></pre>
+                </div>
+            </details>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>
+                        Dijkstra’s Shortest Paths
+                    </span>
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="dijkstra">#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt;
+
+#define V 6
+
+int minimumDistance(
+    int distance[],
+    int completed[]
+) {
+    int best = INT_MAX;
+    int vertex = -1;
+
+    for (int i = 0; i &lt; V; i++) { /* dijkstra select loop */
+        if (
+            !completed[i] &amp;&amp;
+            distance[i] &lt; best
+        ) { /* dijkstra select compare */
+
+            best = distance[i];
+            vertex = i;
+        }
+    }
+
+    return vertex; /* dijkstra select result */
+}
+
+void dijkstra(
+    int graph[V][V],
+    int source
+) {
+    int distance[V];
+    int parent[V];
+    int completed[V] = {0};
+
+    for (int i = 0; i &lt; V; i++) { /* dijkstra initialize */
+        distance[i] = INT_MAX;
+        parent[i] = -1;
+    }
+
+    distance[source] = 0;
+
+    for (
+        int count = 0;
+        count &lt; V;
+        count++
+    ) { /* dijkstra main loop */
+
+        int u = minimumDistance(
+            distance,
+            completed
+        ); /* dijkstra choose */
+
+        if (u == -1)
+            break;
+
+        completed[u] = 1; /* dijkstra settle */
+
+        for (int v = 0; v &lt; V; v++) { /* dijkstra edge loop */
+
+            if (
+                graph[u][v] &amp;&amp;
+                !completed[v] &amp;&amp;
+                distance[u] != INT_MAX
+            ) { /* dijkstra edge check */
+
+                int candidate =
+                    distance[u] +
+                    graph[u][v];
+
+                if (
+                    candidate &lt; distance[v]
+                ) { /* dijkstra relax compare */
+
+                    distance[v] =
+                        candidate; /* dijkstra relax update */
+
+                    parent[v] = u;
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i &lt; V; i++) {
+        printf(
+            "A to %c = %d\n",
+            'A' + i,
+            distance[i]
+        ); /* dijkstra output */
+    }
+}
+
+int main(void) {
+    int graph[V][V] = {
+        {0, 4, 2, 0, 0, 0},
+        {4, 0, 1, 5, 0, 0},
+        {2, 1, 0, 8, 10, 0},
+        {0, 5, 8, 0, 2, 6},
+        {0, 0, 10, 2, 0, 3},
+        {0, 0, 0, 6, 3, 0}
+    };
+
+    dijkstra(graph, 0);
+
+    return 0;
+}</code></pre>
+                </div>
+            </details>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>
+                        Bellman–Ford Shortest Paths
+                    </span>
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="bellman">#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt;
+
+#define V 6
+#define E 9
+
+typedef struct {
+    int u;
+    int v;
+    int w;
+} Edge;
+
+int main(void) {
+    Edge edges[E] = {
+        {0, 1, 4},
+        {0, 2, 2},
+        {1, 2, -1},
+        {1, 3, 5},
+        {2, 3, 8},
+        {2, 4, 10},
+        {3, 4, 2},
+        {3, 5, 6},
+        {4, 5, 3}
+    };
+
+    int distance[V];
+    int parent[V];
+
+    for (int i = 0; i &lt; V; i++) { /* bellman initialize */
+        distance[i] = INT_MAX;
+        parent[i] = -1;
+    }
+
+    distance[0] = 0;
+
+    for (
+        int pass = 1;
+        pass &lt; V;
+        pass++
+    ) { /* bellman pass loop */
+
+        int changed = 0;
+
+        for (int i = 0; i &lt; E; i++) { /* bellman edge loop */
+
+            Edge edge =
+                edges[i]; /* bellman read edge */
+
+            if (
+                distance[edge.u] != INT_MAX &amp;&amp;
+                distance[edge.u] + edge.w
+                    &lt; distance[edge.v]
+            ) { /* bellman relax compare */
+
+                distance[edge.v] =
+                    distance[edge.u] +
+                    edge.w; /* bellman relax update */
+
+                parent[edge.v] = edge.u;
+                changed = 1;
+            }
+        }
+
+        if (!changed) {
+            break; /* bellman early stop */
+        }
+    }
+
+    for (int i = 0; i &lt; E; i++) { /* bellman cycle loop */
+
+        Edge edge = edges[i];
+
+        if (
+            distance[edge.u] != INT_MAX &amp;&amp;
+            distance[edge.u] + edge.w
+                &lt; distance[edge.v]
+        ) { /* bellman cycle check */
+
+            printf("Negative cycle\n");
+            return 0;
+        }
+    }
+
+    for (int i = 0; i &lt; V; i++) {
+        printf(
+            "A to %c = %d\n",
+            'A' + i,
+            distance[i]
+        ); /* bellman output */
+    }
+
+    return 0;
+}</code></pre>
+                </div>
+            </details>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>
+                        Floyd–Warshall All-Pairs Shortest Paths
+                    </span>
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="floyd">#include &lt;stdio.h&gt;
+
+#define V 5
+#define INF 99999
+
+int main(void) {
+    int distance[V][V] = { /* floyd initialize */
+        {0, 3, INF, 7, INF},
+        {8, 0, 2, INF, INF},
+        {5, INF, 0, 1, INF},
+        {2, INF, INF, 0, 4},
+        {INF, INF, 1, INF, 0}
+    };
+
+    for (int k = 0; k &lt; V; k++) { /* floyd k loop */
+
+        for (int i = 0; i &lt; V; i++) { /* floyd i loop */
+
+            for (int j = 0; j &lt; V; j++) { /* floyd j loop */
+
+                if (
+                    distance[i][k] != INF &amp;&amp;
+                    distance[k][j] != INF
+                ) { /* floyd path check */
+
+                    int through =
+                        distance[i][k] +
+                        distance[k][j];
+
+                    if (
+                        through &lt; distance[i][j]
+                    ) { /* floyd relax compare */
+
+                        distance[i][j] =
+                            through; /* floyd relax update */
+                    }
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i &lt; V; i++) { /* floyd output */
+
+        for (int j = 0; j &lt; V; j++) {
+            printf(
+                "%5d",
+                distance[i][j]
+            );
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}</code></pre>
+                </div>
+            </details>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>
+                        Kahn’s Topological Sort
+                    </span>
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="topological">#include &lt;stdio.h&gt;
+
+#define V 6
+
+int main(void) {
+    int graph[V][V] = {
+        {0, 0, 0, 1, 0, 0},
+        {0, 0, 0, 1, 1, 0},
+        {0, 0, 0, 0, 1, 0},
+        {0, 0, 0, 0, 0, 1},
+        {0, 0, 0, 0, 0, 1},
+        {0, 0, 0, 0, 0, 0}
+    };
+
+    int indegree[V] = {0};
+    int queue[V];
+    int front = 0;
+    int rear = 0;
+    int count = 0;
+
+    for (int u = 0; u &lt; V; u++) { /* topo indegree outer */
+
+        for (int v = 0; v &lt; V; v++) {
+
+            if (graph[u][v]) {
+                indegree[v]++; /* topo indegree update */
+            }
+        }
+    }
+
+    for (int i = 0; i &lt; V; i++) {
+
+        if (indegree[i] == 0) {
+            queue[rear++] =
+                i; /* topo enqueue initial */
+        }
+    }
+
+    while (front &lt; rear) { /* topo queue loop */
+
+        int u =
+            queue[front++]; /* topo dequeue */
+
+        printf(
+            "%c ",
+            'A' + u
+        ); /* topo output vertex */
+
+        count++;
+
+        for (int v = 0; v &lt; V; v++) { /* topo edge loop */
+
+            if (graph[u][v]) {
+
+                indegree[v]--; /* topo reduce indegree */
+
+                if (indegree[v] == 0) {
+                    queue[rear++] =
+                        v; /* topo enqueue */
+                }
+            }
+        }
+    }
+
+    if (count != V) {
+        printf(
+            "Cycle detected"
+        ); /* topo cycle check */
+    }
+
+    printf("\n");
+
+    return 0;
+}</code></pre>
+                </div>
+            </details>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>
+                        Kosaraju Strongly Connected Components
+                    </span>
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="kosaraju">#include &lt;stdio.h&gt;
+
+#define V 6
+
+void firstDFS(
+    int vertex,
+    int graph[V][V],
+    int visited[],
+    int stack[],
+    int *top
+) {
+    visited[vertex] = 1; /* kosa first visit */
+
+    for (int next = 0; next &lt; V; next++) { /* kosa first edge loop */
+
+        if (
+            graph[vertex][next] &amp;&amp;
+            !visited[next]
+        ) {
+            firstDFS(
+                next,
+                graph,
+                visited,
+                stack,
+                top
+            ); /* kosa first recurse */
+        }
+    }
+
+    stack[(*top)++] =
+        vertex; /* kosa finish push */
+}
+
+void secondDFS(
+    int vertex,
+    int transpose[V][V],
+    int visited[]
+) {
+    visited[vertex] = 1; /* kosa second visit */
+
+    printf(
+        "%c ",
+        'A' + vertex
+    );
+
+    for (int next = 0; next &lt; V; next++) { /* kosa second edge loop */
+
+        if (
+            transpose[vertex][next] &amp;&amp;
+            !visited[next]
+        ) {
+            secondDFS(
+                next,
+                transpose,
+                visited
+            ); /* kosa second recurse */
+        }
+    }
+}
+
+int main(void) {
+    int graph[V][V] = {
+        {0, 1, 0, 0, 0, 0},
+        {0, 0, 1, 0, 0, 0},
+        {1, 0, 0, 1, 0, 0},
+        {0, 0, 0, 0, 1, 0},
+        {0, 0, 0, 1, 0, 1},
+        {0, 0, 0, 0, 0, 0}
+    };
+
+    int transpose[V][V] = {{0}};
+    int visited[V] = {0};
+    int stack[V];
+    int top = 0;
+
+    for (int i = 0; i &lt; V; i++) {
+
+        if (!visited[i]) {
+            firstDFS(
+                i,
+                graph,
+                visited,
+                stack,
+                &amp;top
+            ); /* kosa first start */
+        }
+    }
+
+    for (int u = 0; u &lt; V; u++) {
+
+        for (int v = 0; v &lt; V; v++) {
+
+            transpose[v][u] =
+                graph[u][v]; /* kosa transpose */
+        }
+    }
+
+    for (int i = 0; i &lt; V; i++) {
+        visited[i] = 0;
+    }
+
+    while (top &gt; 0) { /* kosa stack loop */
+
+        int vertex =
+            stack[--top]; /* kosa pop */
+
+        if (!visited[vertex]) {
+
+            secondDFS(
+                vertex,
+                transpose,
+                visited
+            ); /* kosa component */
+
+            printf("\n");
+        }
+    }
+
+    return 0;
+}</code></pre>
+                </div>
+            </details>
+
+            <details class="ads-program-details">
+                <summary>
+                    <span>
+                        Edmonds–Karp Maximum Flow
+                    </span>
+                    <small>View program</small>
+                </summary>
+
+                <div class="ads-program-body">
+<pre><code data-c-program="edmonds-karp">#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt;
+
+#define V 6
+
+int bfs(
+    int residual[V][V],
+    int source,
+    int sink,
+    int parent[]
+) {
+    int visited[V] = {0};
+    int queue[V];
+    int front = 0;
+    int rear = 0;
+
+    queue[rear++] = source;
+    visited[source] = 1; /* flow bfs initialize */
+
+    while (front &lt; rear) { /* flow bfs loop */
+
+        int u =
+            queue[front++]; /* flow dequeue */
+
+        for (int v = 0; v &lt; V; v++) { /* flow edge loop */
+
+            if (
+                !visited[v] &amp;&amp;
+                residual[u][v] &gt; 0
+            ) { /* flow residual check */
+
+                parent[v] = u;
+                visited[v] = 1;
+
+                queue[rear++] =
+                    v; /* flow enqueue */
+            }
+        }
+    }
+
+    return visited[sink]; /* flow bfs result */
+}
+
+int main(void) {
+    int capacity[V][V] = {
+        {0, 16, 13, 0, 0, 0},
+        {0, 0, 10, 12, 0, 0},
+        {0, 4, 0, 0, 14, 0},
+        {0, 0, 9, 0, 0, 20},
+        {0, 0, 0, 7, 0, 4},
+        {0, 0, 0, 0, 0, 0}
+    };
+
+    int residual[V][V];
+    int parent[V];
+    int maximum = 0;
+
+    for (int u = 0; u &lt; V; u++) {
+
+        for (int v = 0; v &lt; V; v++) {
+
+            residual[u][v] =
+                capacity[u][v]; /* flow initialize */
+        }
+    }
+
+    while (
+        bfs(
+            residual,
+            0,
+            5,
+            parent
+        )
+    ) { /* flow augment loop */
+
+        int pathFlow = INT_MAX;
+
+        for (
+            int v = 5;
+            v != 0;
+            v = parent[v]
+        ) { /* flow bottleneck loop */
+
+            int u = parent[v];
+
+            if (
+                residual[u][v] &lt; pathFlow
+            ) {
+                pathFlow =
+                    residual[u][v]; /* flow bottleneck */
+            }
+        }
+
+        for (
+            int v = 5;
+            v != 0;
+            v = parent[v]
+        ) { /* flow update loop */
+
+            int u = parent[v];
+
+            residual[u][v] -=
+                pathFlow; /* flow forward update */
+
+            residual[v][u] +=
+                pathFlow; /* flow reverse update */
+        }
+
+        maximum +=
+            pathFlow; /* flow total update */
+    }
+
+    printf(
+        "Maximum flow = %d\n",
+        maximum
+    ); /* flow output */
+
+    return 0;
+}</code></pre>
+                </div>
+            </details>
+
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="visualizer">
+
+            <div class="ads-interactive-header">
+
+                <div>
+                    <span class="section-label">
+                        INTERACTIVE GRAPH ALGORITHMS
+                    </span>
+
+                    <h2>
+                        🎬 7. Premium Advanced Graph Visualizer
+                    </h2>
+
+                    <p>
+                        Select an algorithm and follow vertex
+                        selection, edge inspection, relaxation,
+                        union, queue, stack, component and
+                        residual-flow updates.
+                    </p>
+                </div>
+
+                <div class="ads-visualizer-brand">
+                    <img
+                        src="../images/codebhavya-main-logo.png"
+                        alt="CodeBhavya"
+                    >
+                    <span>
+                        <b>Code</b>
+                        <strong>Bhavya</strong>
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="graph-controls">
+
+                <label>
+                    Edges: U-V:weight
+                    <input
+                        id="graphEdges"
+                        type="text"
+                        value="A-B:4, A-C:2, B-C:1, B-D:5, C-D:8, C-E:10, D-E:2, D-F:6, E-F:3"
+                    >
+                </label>
+
+                <label>
+                    Source
+                    <input
+                        id="graphSource"
+                        type="text"
+                        maxlength="1"
+                        value="A"
+                    >
+                </label>
+
+                <label>
+                    Sink
+                    <input
+                        id="graphSink"
+                        type="text"
+                        maxlength="1"
+                        value="F"
+                    >
+                </label>
+
+                <label>
+                    Algorithm
+                    <select id="graphAlgorithm">
+                        <option value="prim">
+                            Prim MST
+                        </option>
+                        <option value="kruskal">
+                            Kruskal MST
+                        </option>
+                        <option value="dijkstra">
+                            Dijkstra
+                        </option>
+                        <option value="bellman">
+                            Bellman–Ford
+                        </option>
+                        <option value="floyd">
+                            Floyd–Warshall
+                        </option>
+                        <option value="topological">
+                            Kahn Topological Sort
+                        </option>
+                        <option value="kosaraju">
+                            Kosaraju SCC
+                        </option>
+                        <option value="edmonds-karp">
+                            Edmonds–Karp Max Flow
+                        </option>
+                    </select>
+                </label>
+
+                <button
+                    id="loadGraphVisualizer"
+                    type="button"
+                    class="primary-button"
+                >
+                    Load Visualizer
+                </button>
+
+            </div>
+
+            <div class="ads-example-chips">
+                <button type="button"
+                        data-graph-example="prim">
+                    Prim
+                </button>
+                <button type="button"
+                        data-graph-example="kruskal">
+                    Kruskal
+                </button>
+                <button type="button"
+                        data-graph-example="dijkstra">
+                    Dijkstra
+                </button>
+                <button type="button"
+                        data-graph-example="bellman">
+                    Bellman–Ford
+                </button>
+                <button type="button"
+                        data-graph-example="floyd">
+                    Floyd
+                </button>
+                <button type="button"
+                        data-graph-example="topological">
+                    Topological
+                </button>
+                <button type="button"
+                        data-graph-example="kosaraju">
+                    SCC
+                </button>
+                <button type="button"
+                        data-graph-example="edmonds-karp">
+                    Max Flow
+                </button>
+            </div>
+
+            <div id="graphPrompt"
+                 class="ads-explorer-message">
+                Choose an algorithm, verify the graph and
+                click Load Visualizer.
+            </div>
+
+            <div id="graphResult"
+                 class="graph-visualizer-result"
+                 hidden>
+
+                <div class="graph-viz-layout">
+
+                    <section class="graph-canvas-panel">
+
+                        <h3>🕸️ Live Graph</h3>
+
+                        <div class="graph-svg-wrap">
+                            <svg
+                                id="graphSvg"
+                                role="img"
+                                aria-label="Graph algorithm visualization"
+                            ></svg>
+                        </div>
+
+                        <div id="graphMessage"
+                             class="ads-explorer-message">
+                            —
+                        </div>
+
+                        <div class="ads-progress-track">
+                            <span id="graphProgress"></span>
+                        </div>
+
+                    </section>
+
+                    <aside class="graph-stat-panel">
+
+                        <h3>📈 Live State</h3>
+
+                        <div class="graph-stat-grid">
+
+                            <div>
+                                <span>Algorithm</span>
+                                <strong id="graphAlgorithmValue">
+                                    —
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Phase</span>
+                                <strong id="graphPhase">
+                                    Ready
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Current</span>
+                                <strong id="graphCurrent">
+                                    —
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Frontier</span>
+                                <strong id="graphFrontier">
+                                    —
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Cost / Flow</span>
+                                <strong id="graphCost">
+                                    0
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Result</span>
+                                <strong id="graphResultValue">
+                                    —
+                                </strong>
+                            </div>
+
+                        </div>
+
+                        <div id="graphTable"
+                             class="graph-state-table">
+                        </div>
+
+                    </aside>
+
+                </div>
+
+                <div class="graph-control-row">
+
+                    <button id="graphPrevious"
+                            type="button">
+                        ← Previous
+                    </button>
+
+                    <button id="graphNext"
+                            type="button">
+                        Next →
+                    </button>
+
+                    <button id="graphAuto"
+                            type="button">
+                        Auto Play
+                    </button>
+
+                    <button id="graphPause"
+                            type="button">
+                        Pause
+                    </button>
+
+                    <button id="graphReset"
+                            type="button">
+                        Reset
+                    </button>
+
+                    <span id="graphStatus">
+                        Step 0 of 0
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="tracing">
+
+            <div class="ads-interactive-header">
+
+                <div>
+                    <span class="section-label">
+                        SELECTABLE C PROGRAM TRACER
+                    </span>
+
+                    <h2>
+                        🔍 8. Program Tracing —
+                        Advanced Graphs
+                    </h2>
+
+                    <p>
+                        The complete selected C program appears
+                        with executable-line highlighting, live
+                        variables, graph state and automatic
+                        current-line scrolling.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="graph-tracer-loader">
+
+                <label>
+                    Edges: U-V:weight
+                    <input
+                        id="graphTraceEdges"
+                        type="text"
+                        value="A-B:4, A-C:2, B-C:1, B-D:5, C-D:8, C-E:10, D-E:2, D-F:6, E-F:3"
+                    >
+                </label>
+
+                <label>
+                    Source
+                    <input
+                        id="graphTraceSource"
+                        type="text"
+                        maxlength="1"
+                        value="A"
+                    >
+                </label>
+
+                <label>
+                    Sink
+                    <input
+                        id="graphTraceSink"
+                        type="text"
+                        maxlength="1"
+                        value="F"
+                    >
+                </label>
+
+                <label>
+                    Program
+                    <select id="graphTraceAlgorithm">
+                        <option value="prim">
+                            Prim MST
+                        </option>
+                        <option value="kruskal">
+                            Kruskal MST
+                        </option>
+                        <option value="dijkstra">
+                            Dijkstra
+                        </option>
+                        <option value="bellman">
+                            Bellman–Ford
+                        </option>
+                        <option value="floyd">
+                            Floyd–Warshall
+                        </option>
+                        <option value="topological">
+                            Kahn Topological Sort
+                        </option>
+                        <option value="kosaraju">
+                            Kosaraju SCC
+                        </option>
+                        <option value="edmonds-karp">
+                            Edmonds–Karp Max Flow
+                        </option>
+                    </select>
+                </label>
+
+                <button
+                    id="loadGraphTracer"
+                    type="button"
+                    class="primary-button"
+                >
+                    Load Program Tracer
+                </button>
+
+            </div>
+
+            <div id="graphTracePrompt"
+                 class="ads-explorer-message">
+                Select a program and click
+                Load Program Tracer.
+            </div>
+
+            <div id="graphTraceResult"
+                 class="graph-tracer-result"
+                 hidden>
+
+                <h3 id="graphTraceTitle">
+                    PROGRAM TRACING —
+                    ADVANCED GRAPH ALGORITHMS
+                </h3>
+
+                <div class="graph-tracer-layout">
+
+                    <section class="graph-tracer-code-panel">
+
+                        <h4>C Source Code</h4>
+
+                        <div
+                            id="graphTraceCodeWindow"
+                            class="graph-tracer-code-window"
+                        >
+                            <code
+                                id="graphTraceCode"
+                                class="graph-tracer-code"
+                            ></code>
+                        </div>
+
+                    </section>
+
+                    <aside class="graph-tracer-side">
+
+                        <div
+                            id="graphTraceMessage"
+                            class="ads-explorer-message"
+                        >
+                            —
+                        </div>
+
+                        <div
+                            id="graphTraceVariables"
+                            class="graph-trace-variables"
+                        ></div>
+
+                        <div class="graph-trace-svg-wrap">
+                            <svg
+                                id="graphTraceSvg"
+                                role="img"
+                                aria-label="Current traced graph"
+                            ></svg>
+                        </div>
+
+                        <div
+                            id="graphTraceTable"
+                            class="graph-state-table"
+                        ></div>
+
+                        <div class="graph-tracer-output">
+                            <span>Program Output</span>
+                            <strong id="graphTraceOutput">
+                                —
+                            </strong>
+                        </div>
+
+                    </aside>
+
+                </div>
+
+                <div class="graph-control-row">
+
+                    <button id="graphTracePrevious"
+                            type="button">
+                        ← Previous
+                    </button>
+
+                    <button id="graphTraceNext"
+                            type="button">
+                        Next →
+                    </button>
+
+                    <button id="graphTraceAuto"
+                            type="button">
+                        Auto Play
+                    </button>
+
+                    <button id="graphTracePause"
+                            type="button">
+                        Pause
+                    </button>
+
+                    <button id="graphTraceReset"
+                            type="button">
+                        Reset
+                    </button>
+
+                    <span id="graphTraceStatus">
+                        Step 0 of 0
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="complexity">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    ASYMPTOTIC SUMMARY
+                </span>
+                <h2>⏱️ 9. Complexity Comparison</h2>
+            </div>
+
+            <div class="ads-table-wrap">
+                <table class="ads-data-table">
+                    <thead>
+                        <tr>
+                            <th>Algorithm</th>
+                            <th>Time</th>
+                            <th>Space</th>
+                            <th>Output</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Prim</td>
+                            <td>O(E log V)</td>
+                            <td>O(V + E)</td>
+                            <td>MST</td>
+                        </tr>
+                        <tr>
+                            <td>Kruskal</td>
+                            <td>O(E log E)</td>
+                            <td>O(V + E)</td>
+                            <td>MST</td>
+                        </tr>
+                        <tr>
+                            <td>Dijkstra</td>
+                            <td>O(E log V)</td>
+                            <td>O(V + E)</td>
+                            <td>Single-source distances</td>
+                        </tr>
+                        <tr>
+                            <td>Bellman–Ford</td>
+                            <td>O(VE)</td>
+                            <td>O(V)</td>
+                            <td>
+                                Distances and negative cycle
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Floyd–Warshall</td>
+                            <td>O(V³)</td>
+                            <td>O(V²)</td>
+                            <td>All-pairs distances</td>
+                        </tr>
+                        <tr>
+                            <td>Kahn</td>
+                            <td>O(V + E)</td>
+                            <td>O(V)</td>
+                            <td>
+                                Topological order or cycle
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Kosaraju</td>
+                            <td>O(V + E)</td>
+                            <td>O(V + E)</td>
+                            <td>SCC partition</td>
+                        </tr>
+                        <tr>
+                            <td>Edmonds–Karp</td>
+                            <td>O(VE²)</td>
+                            <td>O(V²)</td>
+                            <td>Maximum flow</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="practice">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    CHECK YOUR UNDERSTANDING
+                </span>
+                <h2>✍️ 10. Practice Problems</h2>
+            </div>
+
+            <div class="ads-practice-note">
+                Solve each problem first. Use Hint only when
+                required, then open Show Answer.
+            </div>
+
+            <div class="ads-practice-list">
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        1. How many edges does a spanning tree
+                        of V vertices contain?
+                    </h3>
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="g-h1">
+                            Hint
+                        </button>
+                        <button data-toggle-target="g-a1">
+                            Show Answer
+                        </button>
+                    </div>
+                    <div id="g-h1"
+                         class="ads-hint-box"
+                         hidden>
+                        A tree has no cycle.
+                    </div>
+                    <div id="g-a1"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>V − 1 edges.</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        2. Why does Kruskal require DSU?
+                    </h3>
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="g-h2">
+                            Hint
+                        </button>
+                        <button data-toggle-target="g-a2">
+                            Show Answer
+                        </button>
+                    </div>
+                    <div id="g-h2"
+                         class="ads-hint-box"
+                         hidden>
+                        It must test components quickly.
+                    </div>
+                    <div id="g-a2"
+                         class="ads-solution-box"
+                         hidden>
+                        DSU detects whether an edge would create
+                        a cycle and efficiently merges components.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        3. Can Dijkstra process a negative
+                        edge safely?
+                    </h3>
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="g-h3">
+                            Hint
+                        </button>
+                        <button data-toggle-target="g-a3">
+                            Show Answer
+                        </button>
+                    </div>
+                    <div id="g-h3"
+                         class="ads-hint-box"
+                         hidden>
+                        A settled vertex is assumed final.
+                    </div>
+                    <div id="g-a3"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>No.</strong>
+                        A later negative edge could improve an
+                        already settled distance.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        4. Why are V − 1 Bellman–Ford passes
+                        sufficient?
+                    </h3>
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="g-h4">
+                            Hint
+                        </button>
+                        <button data-toggle-target="g-a4">
+                            Show Answer
+                        </button>
+                    </div>
+                    <div id="g-h4"
+                         class="ads-hint-box"
+                         hidden>
+                        A simple path contains limited edges.
+                    </div>
+                    <div id="g-a4"
+                         class="ads-solution-box"
+                         hidden>
+                        Any simple shortest path contains at most
+                        V − 1 edges.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        5. What Floyd–Warshall value reveals a
+                        negative cycle?
+                    </h3>
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="g-h5">
+                            Hint
+                        </button>
+                        <button data-toggle-target="g-a5">
+                            Show Answer
+                        </button>
+                    </div>
+                    <div id="g-h5"
+                         class="ads-hint-box"
+                         hidden>
+                        Inspect the diagonal.
+                    </div>
+                    <div id="g-a5"
+                         class="ads-solution-box"
+                         hidden>
+                        <strong>dist[i][i] &lt; 0.</strong>
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        6. When does Kahn’s algorithm report
+                        a cycle?
+                    </h3>
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="g-h6">
+                            Hint
+                        </button>
+                        <button data-toggle-target="g-a6">
+                            Show Answer
+                        </button>
+                    </div>
+                    <div id="g-h6"
+                         class="ads-hint-box"
+                         hidden>
+                        Count removed vertices.
+                    </div>
+                    <div id="g-a6"
+                         class="ads-solution-box"
+                         hidden>
+                        When fewer than V vertices can be output.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        7. Why does Kosaraju transpose the graph?
+                    </h3>
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="g-h7">
+                            Hint
+                        </button>
+                        <button data-toggle-target="g-a7">
+                            Show Answer
+                        </button>
+                    </div>
+                    <div id="g-h7"
+                         class="ads-hint-box"
+                         hidden>
+                        Reverse all reachability directions.
+                    </div>
+                    <div id="g-a7"
+                         class="ads-solution-box"
+                         hidden>
+                        Processing reversed edges in finish-time
+                        order isolates one SCC at a time.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        8. What is an augmenting path?
+                    </h3>
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="g-h8">
+                            Hint
+                        </button>
+                        <button data-toggle-target="g-a8">
+                            Show Answer
+                        </button>
+                    </div>
+                    <div id="g-h8"
+                         class="ads-hint-box"
+                         hidden>
+                        Use positive residual capacity.
+                    </div>
+                    <div id="g-a8"
+                         class="ads-solution-box"
+                         hidden>
+                        A source-to-sink path whose every residual
+                        edge has positive capacity.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem">
+                    <h3>
+                        9. What does a reverse residual edge
+                        permit?
+                    </h3>
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="g-h9">
+                            Hint
+                        </button>
+                        <button data-toggle-target="g-a9">
+                            Show Answer
+                        </button>
+                    </div>
+                    <div id="g-h9"
+                         class="ads-hint-box"
+                         hidden>
+                        Earlier decisions may be revised.
+                    </div>
+                    <div id="g-a9"
+                         class="ads-solution-box"
+                         hidden>
+                        It permits cancelling and rerouting
+                        previously assigned flow.
+                    </div>
+                </article>
+
+                <article class="ads-practice-problem alt-practice">
+                    <h3>
+                        10. Which MST cut property justifies
+                        a greedy choice?
+                    </h3>
+                    <div class="ads-practice-actions">
+                        <button data-toggle-target="g-h10">
+                            Hint
+                        </button>
+                        <button data-toggle-target="g-a10">
+                            Show Answer
+                        </button>
+                    </div>
+                    <div id="g-h10"
+                         class="ads-hint-box"
+                         hidden>
+                        Choose the lightest crossing edge.
+                    </div>
+                    <div id="g-a10"
+                         class="ads-solution-box"
+                         hidden>
+                        The lightest edge crossing any cut is safe
+                        for some minimum spanning tree.
+                    </div>
+                </article>
+
+            </div>
+
+        </section>
+
+        <section class="content-card ads-lesson-section"
+                 id="revision">
+
+            <div class="ads-section-heading">
+                <span class="section-label">
+                    QUICK RECALL
+                </span>
+                <h2>📝 11. Quick Revision</h2>
+            </div>
+
+            <ul class="ads-revision-list">
+                <li>
+                    Prim grows one tree; Kruskal joins a forest
+                    using DSU.
+                </li>
+                <li>
+                    Dijkstra requires nonnegative weights.
+                </li>
+                <li>
+                    Bellman–Ford supports negative edges and
+                    detects reachable negative cycles.
+                </li>
+                <li>
+                    Floyd–Warshall solves all-pairs shortest paths
+                    in O(V³).
+                </li>
+                <li>
+                    Kahn’s algorithm uses indegrees and a
+                    zero-indegree queue.
+                </li>
+                <li>
+                    Kosaraju uses finish order, a transpose and
+                    a second DFS.
+                </li>
+                <li>
+                    Residual forward and reverse edges make flow
+                    decisions reversible.
+                </li>
+                <li>
+                    Edmonds–Karp uses BFS and runs in O(VE²).
+                </li>
+                <li>
+                    Relaxation comparisons and updates are traced
+                    separately.
+                </li>
+                <li>
+                    Repeated iterations return to their actual
+                    loop line.
+                </li>
+            </ul>
+
+        </section>
+
+        <nav class="ads-topic-navigation"
+             aria-label="ADS topic navigation">
+
+            <a href="level-19-files.html"
+               class="previous-topic">
+                ← Previous: Files &amp; File Organization
+            </a>
+
+            <a href="level-21-placement-problems.html"
+               class="next-topic">
+                Next: Placement Problems →
+            </a>
+
+        </nav>
+
+    </main>
+
+</div>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span>
+                <span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with structured
+                learning resources.
+            </p>
+
+        </div>
+
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <a href="../index.html">Home</a>
+            <a href="../Maths/index.html">Maths</a>
+            <a href="../C-Programming/index.html">
+                C Programming
+            </a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Learning</h3>
+            <a href="../Data-Structures/index.html">
+                Data Structures
+            </a>
+            <a href="index.html">
+                Advanced Data Structures
+            </a>
+            <a href="../Python/index.html">
+                Python
+            </a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Practice</h3>
+            <a href="level-18-hashing.html#practice">
+                Hashing Practice
+            </a>
+            <a href="level-19-files.html#practice">
+                File Organization Practice
+            </a>
+            <a href="#practice">
+                Graph Practice
+            </a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+    </div>
+
+</footer>
+
+<script src="../script.js"></script>
+<script src="ads.js"></script>
+<script src="level-20-advanced-graphs.js?v=1"></script>
+
+</body>
+</html>
