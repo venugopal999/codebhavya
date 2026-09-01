@@ -188,28 +188,34 @@
     }
 
     function initializeReveals() {
-        document.querySelectorAll("[data-reveal-target]").forEach(function (button) {
-            button.dataset.closedLabel = button.textContent;
+    document.querySelectorAll("[data-reveal-target]").forEach(function (button) {
+        button.dataset.closedLabel = button.textContent;
 
-            button.addEventListener("click", function () {
-                const target = document.getElementById(
-                    button.dataset.revealTarget
-                );
+        button.addEventListener("click", function () {
+            const target = document.getElementById(
+                button.dataset.revealTarget
+            );
+            const indicator = button.querySelector("span");
 
-                if (!target) {
-                    return;
-                }
+            if (!target) {
+                return;
+            }
 
-                const show = target.hidden;
+            const show = target.hidden;
 
-                target.hidden = !show;
-                button.setAttribute("aria-expanded", String(show));
+            target.hidden = !show;
+            button.setAttribute("aria-expanded", String(show));
+
+            if (indicator) {
+                indicator.textContent = show ? "−" : "+";
+            } else {
                 button.textContent = show
                     ? (button.dataset.hideLabel || "Hide Answer")
                     : button.dataset.closedLabel;
-            });
+            }
         });
-    }
+    });
+}
 
     function initializeQuiz() {
         const quiz = document.querySelector("[data-python-quiz]");
