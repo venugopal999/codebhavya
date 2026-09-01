@@ -1174,19 +1174,7 @@ body.python-page {
 
     .python-page .sidebar {
         width: 260px;
-        
         flex-basis: 260px;
-
-
-        height: auto;
-
-        position: relative;
-
-        top: 0;
-
-        border-right: none;
-
-        border-bottom: 1px solid #e2e8f0;
     }
 
     .python-page .main-content {
@@ -1271,17 +1259,29 @@ body.python-page {
     }
 
     .python-page .docs-layout {
-        display: block;
+        position: relative !important;
+        display: block !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        inset: auto !important;
+        transform: none !important;
     }
 
-    .python-page .sidebar {
-        position: fixed;
-        top: 45px;
-        bottom: 0;
-        left: 0;
-        z-index: 850;
-        width: min(330px, 88vw);
-        height: calc(100vh - 45px);
+    .python-page .docs-layout > .sidebar {
+        position: fixed !important;
+        top: 45px !important;
+        right: auto !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        z-index: 850 !important;
+        width: min(330px, 88vw) !important;
+        min-width: 0 !important;
+        height: calc(100vh - 45px) !important;
+        max-height: none !important;
+        margin: 0 !important;
+        float: none !important;
         transform: translateX(-105%);
         box-shadow: 12px 0 30px rgba(15, 23, 42, 0.16);
         transition: transform 0.22s ease;
@@ -1291,9 +1291,21 @@ body.python-page {
         transform: translateX(0);
     }
 
-    .python-page .main-content {
-        width: 100%;
-        padding: 24px 18px 45px;
+    .python-page .docs-layout > .main-content {
+        position: relative !important;
+        display: block !important;
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 24px 18px 45px !important;
+        float: none !important;
+        transform: none !important;
     }
 
     .python-page .python-progress-card,
@@ -1331,9 +1343,8 @@ body.python-page {
         font-size: 12px;
     }
 
-    .python-page .main-content {
-        padding-right: 12px;
-        padding-left: 12px;
+    .python-page .docs-layout > .main-content {
+        padding: 18px 12px 40px !important;
     }
 
     .python-page .python-hero,
@@ -3580,47 +3591,6 @@ body.python-page {
     line-height: 1.65;
 }
 
-/* Interview accordion structure: question button followed by answer panel */
-.python-lesson-page .python-interview-list article > button {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    padding: 14px 18px;
-    border: 0;
-    border-radius: 0;
-    text-align: left;
-}
-
-.python-lesson-page .python-interview-list article > button > span {
-    flex: 0 0 auto;
-    font-size: 18px;
-    line-height: 1;
-}
-
-.python-lesson-page .python-interview-list article > div {
-    display: block !important;
-    width: 100%;
-    grid-template-columns: none !important;
-    box-sizing: border-box;
-    padding: 16px 18px;
-    border-top: 1px solid #dbeafe;
-    background: #f8fbff;
-}
-
-.python-lesson-page .python-interview-list article > div > p {
-    display: block;
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0;
-    color: #475569;
-    font-weight: 500;
-    line-height: 1.7;
-    overflow-wrap: normal;
-    word-break: normal;
-}
-
 .python-lesson-page .python-extra-tip-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3864,5 +3834,78 @@ body.python-page {
     .python-lesson-page .python-interactive-topbar {
         align-items: flex-start;
         flex-direction: column;
+    }
+}
+
+/* ================================================================
+   FINAL MOBILE SIDEBAR SAFEGUARD
+
+   Keep the topic control visible while scrolling. The closed sidebar
+   is removed from layout completely, so it can never leave an empty
+   sidebar-height gap above the lesson content. When opened, it becomes
+   a viewport overlay below the sticky control.
+   ================================================================ */
+@media (max-width: 880px) {
+    html,
+    body.python-page {
+        overflow-x: hidden !important;
+    }
+
+    .python-page .python-sidebar-toggle {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1200 !important;
+        display: flex !important;
+        align-items: center;
+        width: 100% !important;
+        min-height: 48px !important;
+        margin: 0 !important;
+        padding: 11px 18px !important;
+        box-sizing: border-box !important;
+        box-shadow: 0 5px 14px rgba(15, 23, 42, 0.08);
+    }
+
+    .python-page .docs-layout {
+        display: block !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .python-page .docs-layout > .sidebar {
+        display: none !important;
+        position: fixed !important;
+        top: 48px !important;
+        right: auto !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        z-index: 1150 !important;
+        width: min(340px, 90vw) !important;
+        min-width: 0 !important;
+        height: calc(100dvh - 48px) !important;
+        max-height: calc(100dvh - 48px) !important;
+        margin: 0 !important;
+        padding: 20px 14px !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        overscroll-behavior: contain;
+        transform: none !important;
+        box-shadow: 14px 0 34px rgba(15, 23, 42, 0.24);
+    }
+
+    .python-page .docs-layout > .sidebar.is-open {
+        display: block !important;
+    }
+
+    .python-page .docs-layout > .main-content {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        display: block !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        float: none !important;
+        transform: none !important;
     }
 }
