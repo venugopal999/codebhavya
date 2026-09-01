@@ -1781,14 +1781,15 @@ body.python-page {
 }
 
 .python-lesson-page .python-execution-flow {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    display: flex;
     align-items: center;
     gap: 14px;
     margin: 22px 0;
 }
 
 .python-lesson-page .python-execution-flow article {
+    flex: 1 1 0;
+    min-width: 0;
     min-height: 145px;
     padding: 19px;
     text-align: center;
@@ -1827,6 +1828,7 @@ body.python-page {
 }
 
 .python-lesson-page .python-execution-flow > b {
+    flex: 0 0 auto;
     color: var(--python-gold);
     font-size: 28px;
 }
@@ -2174,6 +2176,32 @@ body.python-page {
 .python-lesson-page .python-rule-grid p {
     color: #64748b;
     font-size: 11px;
+}
+
+/* Text labels used by the Level 12 complexity cards */
+.python-lesson-page .python-complexity-grid article {
+    padding-top: 22px;
+}
+
+.python-lesson-page .python-complexity-grid article > span {
+    position: static !important;
+    display: inline-flex !important;
+    width: auto !important;
+    max-width: 100%;
+    height: auto !important;
+    min-height: 28px;
+    margin: 0 0 14px;
+    padding: 5px 10px;
+    place-items: initial;
+    align-items: center;
+    border-radius: 999px;
+    line-height: 1.25;
+    letter-spacing: 0.05em;
+    white-space: normal;
+}
+
+.python-lesson-page .python-complexity-grid h3 {
+    margin: 0 0 14px;
 }
 
 .python-lesson-page .python-compare-grid {
@@ -2559,7 +2587,12 @@ body.python-page {
 
 @media (max-width: 880px) {
     .python-lesson-page .python-execution-flow {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+    }
+
+    .python-lesson-page .python-execution-flow article {
+        flex: none;
+        width: 100%;
     }
 
     .python-lesson-page .python-execution-flow > b {
@@ -3535,6 +3568,47 @@ body.python-page {
     line-height: 1.65;
 }
 
+/* Interview accordion structure: question button followed by answer panel */
+.python-lesson-page .python-interview-list article > button {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 18px;
+    border: 0;
+    border-radius: 0;
+    text-align: left;
+}
+
+.python-lesson-page .python-interview-list article > button > span {
+    flex: 0 0 auto;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.python-lesson-page .python-interview-list article > div {
+    display: block !important;
+    width: 100%;
+    grid-template-columns: none !important;
+    box-sizing: border-box;
+    padding: 16px 18px;
+    border-top: 1px solid #dbeafe;
+    background: #f8fbff;
+}
+
+.python-lesson-page .python-interview-list article > div > p {
+    display: block;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0;
+    color: #475569;
+    font-weight: 500;
+    line-height: 1.7;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
 .python-lesson-page .python-extra-tip-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3778,39 +3852,5 @@ body.python-page {
     .python-lesson-page .python-interactive-topbar {
         align-items: flex-start;
         flex-direction: column;
-    }
-}
-
-/* Keep execution-flow boxes in one line on desktop */
-.python-lesson-page .python-execution-flow {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin: 22px 0;
-}
-
-.python-lesson-page .python-execution-flow article {
-    flex: 1 1 0;
-    min-width: 0;
-}
-
-.python-lesson-page .python-execution-flow > b {
-    flex: 0 0 auto;
-}
-
-/* Stack safely on tablets and mobile */
-@media (max-width: 880px) {
-    .python-lesson-page .python-execution-flow {
-        flex-direction: column;
-    }
-
-    .python-lesson-page .python-execution-flow article {
-        flex: none;
-        width: 100%;
-    }
-
-    .python-lesson-page .python-execution-flow > b {
-        transform: rotate(90deg);
-        text-align: center;
     }
 }
