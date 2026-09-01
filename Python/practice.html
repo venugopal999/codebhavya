@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Practise all twelve CodeBhavya Python levels with progress tracking, mixed challenges and a rapid revision quiz.">
+    <title>Python Practice Arena | CodeBhavya</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="../images/codebhavya-icon-128.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../images/codebhavya-icon-512.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="python.css?v=11">
+    <style>
+        .python-practice-page .python-arena-hero {
+            position: relative;
+            overflow: hidden;
+            padding: clamp(26px, 4vw, 48px);
+            border-top: 5px solid #d4af37;
+            background:
+                radial-gradient(circle at 88% 12%, rgba(245, 215, 110, 0.22), transparent 28%),
+                radial-gradient(circle at 8% 94%, rgba(37, 99, 235, 0.13), transparent 27%),
+                linear-gradient(135deg, #ffffff, #f8fbff);
+        }
+
+        .python-practice-page .python-arena-kicker {
+            display: inline-flex;
+            padding: 6px 11px;
+            border: 1px solid #fde68a;
+            border-radius: 999px;
+            background: #fffbeb;
+            color: #9a6700;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .python-practice-page .python-arena-hero h1 {
+            max-width: 900px;
+            margin: 15px 0 10px;
+            color: #0d1b2a;
+            font-size: clamp(34px, 5vw, 58px);
+            line-height: 1.08;
+        }
+
+        .python-practice-page .python-arena-hero > p {
+            max-width: 920px;
+            margin: 0;
+            color: #475569;
+            font-size: 16px;
+            line-height: 1.75;
+        }
+
+        .python-practice-page .python-arena-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .python-practice-page .python-arena-stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 11px;
+            margin-top: 26px;
+        }
+
+        .python-practice-page .python-arena-stat {
+            padding: 15px;
+            border: 1px solid #dbeafe;
+            border-radius: 13px;
+            background: rgba(255, 255, 255, 0.86);
+        }
+
+        .python-practice-page .python-arena-stat strong,
+        .python-practice-page .python-arena-stat span {
+            display: block;
+        }
+
+        .python-practice-page .python-arena-stat strong {
+            color: #153b6f;
+            font-size: 23px;
+            line-height: 1.2;
+        }
+
+        .python-practice-page .python-arena-stat span {
+            margin-top: 5px;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 750;
+        }
+
+        .python-practice-page .python-arena-dashboard {
+            padding: 22px;
+            border: 1px solid rgba(147, 197, 253, 0.22);
+            border-radius: 16px;
+            background: linear-gradient(135deg, #0d1b2a, #153b6f);
+            color: #ffffff;
+        }
+
+        .python-practice-page .python-arena-dashboard-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .python-practice-page .python-arena-dashboard h2 {
+            margin: 0;
+            color: #ffffff;
+            font-size: clamp(23px, 3vw, 31px);
+        }
+
+        .python-practice-page .python-arena-dashboard p {
+            margin: 5px 0 0;
+            color: #cbd5e1;
+            font-size: 13px;
+        }
+
+        .python-practice-page .python-arena-progress-value {
+            flex: 0 0 auto;
+            color: #f5d76e;
+            font-size: 28px;
+            font-weight: 900;
+        }
+
+        .python-practice-page .python-arena-progress-track,
+        .python-practice-page .python-level-progress-track {
+            overflow: hidden;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .python-practice-page .python-arena-progress-track {
+            height: 11px;
+            margin-top: 18px;
+        }
+
+        .python-practice-page .python-arena-progress-track span,
+        .python-practice-page .python-level-progress-track span {
+            display: block;
+            width: 0;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #22c55e, #f5d76e);
+            transition: width 0.28s ease;
+        }
+
+        .python-practice-page .python-arena-dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 17px;
+        }
+
+        .python-practice-page .python-arena-dashboard-grid > div {
+            padding: 13px;
+            border: 1px solid rgba(191, 219, 254, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .python-practice-page .python-arena-dashboard-grid strong,
+        .python-practice-page .python-arena-dashboard-grid span {
+            display: block;
+        }
+
+        .python-practice-page .python-arena-dashboard-grid strong {
+            color: #ffffff;
+            font-size: 17px;
+        }
+
+        .python-practice-page .python-arena-dashboard-grid span {
+            margin-top: 4px;
+            color: #cbd5e1;
+            font-size: 11px;
+        }
+
+        .python-practice-page .python-arena-filterbar {
+            display: grid;
+            grid-template-columns: minmax(220px, 1fr) repeat(2, minmax(155px, 210px));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .python-practice-page .python-arena-filterbar input,
+        .python-practice-page .python-arena-filterbar select {
+            width: 100%;
+            min-height: 44px;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            background: #ffffff;
+            color: #334155;
+            font: inherit;
+            font-size: 13px;
+        }
+
+        .python-practice-page .python-arena-filterbar input:focus,
+        .python-practice-page .python-arena-filterbar select:focus {
+            border-color: #2563eb;
+            outline: 0;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .python-practice-page .python-arena-level-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .python-practice-page .python-arena-level-card {
+            display: flex;
+            min-width: 0;
+            min-height: 285px;
+            flex-direction: column;
+            padding: 20px;
+            border: 1px solid #dbe4f0;
+            border-radius: 15px;
+            background: #ffffff;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+            transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .python-practice-page .python-arena-level-card:hover {
+            transform: translateY(-2px);
+            border-color: #93c5fd;
+            box-shadow: 0 12px 26px rgba(37, 99, 235, 0.09);
+        }
+
+        .python-practice-page .python-arena-level-card[hidden] {
+            display: none !important;
+        }
+
+        .python-practice-page .python-level-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .python-practice-page .python-level-card-number {
+            color: #1d4ed8;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.09em;
+        }
+
+        .python-practice-page .python-level-card-icon {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            place-items: center;
+            border-radius: 12px;
+            background: #eff6ff;
+            font-size: 22px;
+        }
+
+        .python-practice-page .python-arena-level-card h3 {
+            margin: 15px 0 7px;
+            color: #0d1b2a;
+            font-size: 19px;
+            line-height: 1.3;
+        }
+
+        .python-practice-page .python-arena-level-card > p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .python-practice-page .python-level-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 13px;
+        }
+
+        .python-practice-page .python-level-tags span {
+            padding: 4px 7px;
+            border-radius: 999px;
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .python-practice-page .python-level-progress {
+            margin-top: auto;
+            padding-top: 16px;
+        }
+
+        .python-practice-page .python-level-progress-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 7px;
+            color: #475569;
+            font-size: 11px;
+            font-weight: 850;
+        }
+
+        .python-practice-page .python-level-progress-track {
+            height: 7px;
+            background: #e2e8f0;
+        }
+
+        .python-practice-page .python-level-card-actions {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .python-practice-page .python-level-card-actions a {
+            display: inline-flex;
+            min-height: 40px;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 11px;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            color: #1d4ed8;
+            font-size: 11px;
+            font-weight: 850;
+            text-decoration: none;
+        }
+
+        .python-practice-page .python-level-card-actions a:first-child {
+            border-color: #2563eb;
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        .python-practice-page .python-arena-empty {
+            margin: 18px 0 0;
+            padding: 15px;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            background: #fef2f2;
+            color: #991b1b;
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        .python-practice-page .python-challenge-generator {
+            overflow: hidden;
+            border: 1px solid #26384d;
+            border-radius: 18px;
+            background: #07111f;
+            color: #e2e8f0;
+        }
+
+        .python-practice-page .python-generator-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 14px 18px;
+            border-bottom: 1px solid #26384d;
+            background: #0f1f34;
+        }
+
+        .python-practice-page .python-generator-topbar strong {
+            color: #93c5fd;
+            font-size: 11px;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+        }
+
+        .python-practice-page .python-generator-topbar span {
+            color: #f5d76e;
+            font-size: 11px;
+            font-weight: 850;
+        }
+
+        .python-practice-page .python-generator-body {
+            padding: clamp(20px, 3vw, 30px);
+        }
+
+        .python-practice-page .python-generator-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .python-practice-page .python-generator-meta span {
+            padding: 5px 8px;
+            border: 1px solid #334155;
+            border-radius: 999px;
+            background: #101d31;
+            color: #bfdbfe;
+            font-size: 10px;
+            font-weight: 850;
+        }
+
+        .python-practice-page .python-generator-body h3 {
+            margin: 17px 0 8px;
+            color: #ffffff;
+            font-size: clamp(22px, 3vw, 29px);
+        }
+
+        .python-practice-page .python-generator-prompt {
+            max-width: 950px;
+            margin: 0;
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 1.75;
+        }
+
+        .python-practice-page .python-generator-sample,
+        .python-practice-page .python-generator-reveal {
+            margin-top: 16px;
+            padding: 14px;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            background: #0b1728;
+        }
+
+        .python-practice-page .python-generator-sample strong,
+        .python-practice-page .python-generator-reveal strong {
+            display: block;
+            margin-bottom: 7px;
+            color: #f5d76e;
+            font-size: 10px;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .python-practice-page .python-generator-sample pre,
+        .python-practice-page .python-generator-reveal pre {
+            margin: 0;
+            overflow-x: auto;
+            color: #86efac;
+            font-size: 13px;
+            white-space: pre-wrap;
+        }
+
+        .python-practice-page .python-generator-reveal p {
+            margin: 0;
+            color: #e2e8f0;
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .python-practice-page .python-generator-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .python-practice-page .python-generator-actions button,
+        .python-practice-page .python-generator-actions a {
+            display: inline-flex;
+            min-height: 42px;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 14px;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+            background: #2563eb;
+            color: #ffffff;
+            font: inherit;
+            font-size: 11px;
+            font-weight: 850;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .python-practice-page .python-generator-actions button:nth-child(2),
+        .python-practice-page .python-generator-actions button:nth-child(3) {
+            border-color: #475569;
+            background: #101d31;
+        }
+
+        .python-practice-page .python-generator-actions button:nth-child(4) {
+            border-color: #16a34a;
+            background: #16a34a;
+        }
+
+        .python-practice-page .python-generator-actions button:disabled {
+            opacity: 0.42;
+            cursor: not-allowed;
+            filter: grayscale(0.5);
+        }
+
+        .python-practice-page #pythonResetChallengeDeck {
+            border-color: #7c3aed;
+            background: #7c3aed;
+        }
+
+        .python-practice-page .python-practice-plan-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .python-practice-page .python-practice-plan-grid article {
+            padding: 18px;
+            border: 1px solid #dbe4f0;
+            border-radius: 13px;
+            background: #f8fafc;
+        }
+
+        .python-practice-page .python-practice-plan-grid span {
+            display: inline-grid;
+            width: 37px;
+            height: 37px;
+            place-items: center;
+            border-radius: 10px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 11px;
+            font-weight: 900;
+        }
+
+        .python-practice-page .python-practice-plan-grid h3 {
+            margin: 13px 0 7px;
+            color: #0d1b2a;
+            font-size: 17px;
+        }
+
+        .python-practice-page .python-practice-plan-grid p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        @media (max-width: 1080px) {
+            .python-practice-page .python-arena-level-grid,
+            .python-practice-page .python-practice-plan-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .python-practice-page .python-arena-stats,
+            .python-practice-page .python-arena-dashboard-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .python-practice-page .python-arena-filterbar {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .python-practice-page .python-arena-hero,
+            .python-practice-page .content-card {
+                padding: 18px;
+            }
+
+            .python-practice-page .python-arena-hero h1 {
+                font-size: 34px;
+            }
+
+            .python-practice-page .python-arena-stats,
+            .python-practice-page .python-arena-dashboard-grid,
+            .python-practice-page .python-arena-level-grid,
+            .python-practice-page .python-practice-plan-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .python-practice-page .python-arena-dashboard-head,
+            .python-practice-page .python-generator-topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .python-practice-page .python-level-card-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .python-practice-page .python-generator-actions button,
+            .python-practice-page .python-generator-actions a {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="python-page python-lesson-page python-practice-page">
+    <header class="top-header"><a href="../index.html" class="logo codebhavya-new-logo" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="brand-name"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></span></a><nav class="top-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C</a><a href="../Data-Structures/index.html">Data Structures</a><a href="../Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="index.html" class="active">Python</a><a href="../AI-ML/index.html">AI &amp; ML</a><a href="../Placement/index.html">Placement</a></nav></header>
+    <button type="button" class="python-sidebar-toggle" id="pythonSidebarToggle" aria-controls="pythonSidebar" aria-expanded="false">☰ Python Topics</button>
+    <div class="docs-layout">
+        <aside class="sidebar" id="pythonSidebar">
+            <div class="sidebar-title">Python Programming</div><label class="python-search-label" for="topicSearch">Find a topic</label><input type="search" id="topicSearch" class="search-box" placeholder="🔍 Search Python topics..." autocomplete="off"><a href="index.html" class="python-course-home">🐍 Python Home</a>
+            <div class="sidebar-title python-sidebar-group">Part 1 — Foundations</div><a class="python-topic-link" data-level="1" data-search="python foundations syntax indentation comments print interpreter installation" href="level-01-python-foundations.html">🚀 Level 1 — Python Foundations</a><a class="python-topic-link" data-level="2" data-search="variables data types input output type conversion f strings" href="level-02-data-types-io.html">📦 Level 2 — Data Types &amp; I/O</a><a class="python-topic-link" data-level="3" data-search="operators expressions arithmetic comparison logical precedence associativity assignment membership identity" href="level-03-operators-expressions.html">➗ Level 3 — Operators &amp; Expressions</a><a class="python-topic-link" data-level="4" data-search="decision making if elif else nested conditions conditional expression match case" href="level-04-decision-making.html">🔀 Level 4 — Decision Making</a>
+            <div class="sidebar-title python-sidebar-group">Part 2 — Problem Solving</div><a class="python-topic-link" data-level="5" data-search="loops patterns for while range break continue nested" href="level-05-loops-patterns.html">🔁 Level 5 — Loops &amp; Patterns</a><a class="python-topic-link" data-level="6" data-search="strings indexing slicing methods formatting traversal immutability" href="level-06-strings.html">🔤 Level 6 — Strings</a><a class="python-topic-link" data-level="7" data-search="lists tuples sets collections methods unpacking uniqueness union intersection" href="level-07-lists-tuples-sets.html">🧺 Level 7 — Lists, Tuples &amp; Sets</a><a class="python-topic-link" data-level="8" data-search="dictionaries key value lookup counting grouping methods nesting iteration" href="level-08-dictionaries.html">🗂️ Level 8 — Dictionaries</a>
+            <div class="sidebar-title python-sidebar-group">Part 3 — Applied Python</div><a class="python-topic-link" data-level="9" data-search="functions parameters arguments return recursion scope call stack" href="level-09-functions-recursion.html">🧩 Level 9 — Functions &amp; Recursion</a><a class="python-topic-link" data-level="10" data-search="modules import standard library exceptions files paths modes csv json" href="level-10-modules-exceptions-files.html">📁 Level 10 — Modules, Exceptions &amp; Files</a><a class="python-topic-link" data-level="11" data-search="object oriented class object constructor self methods encapsulation inheritance polymorphism composition" href="level-11-object-oriented-python.html">🏗️ Level 11 — Object-Oriented Python</a><a class="python-topic-link" data-level="12" data-search="advanced python placement interview comprehensions lambda generators decorators regex collections complexity" href="level-12-advanced-python-placement.html">⚡ Level 12 — Advanced Python &amp; Placement</a>
+            <div class="sidebar-title python-sidebar-group">Practice</div><a class="python-topic-link python-practice-link active" data-search="practice arena problems quiz mixed challenge" href="practice.html" aria-current="page">🏆 Python Practice Arena</a><p class="python-search-empty" id="pythonSearchEmpty" hidden>No matching Python topic was found.</p>
+        </aside>
+
+        <main class="main-content">
+            <nav class="python-breadcrumb" aria-label="Breadcrumb"><a href="index.html">Python Home</a><span aria-hidden="true">›</span><strong>Practice Arena</strong></nav>
+
+            <section class="content-card python-arena-hero">
+                <span class="python-arena-kicker">Final Practice Hub</span>
+                <h1>🏆 Python Practice Arena</h1>
+                <p>Revise all twelve levels, continue unfinished browser problems, generate mixed challenges and test your complete Python understanding in one place.</p>
+                <div class="python-arena-actions"><a class="python-button python-button-primary" href="#levelPractice">Choose a Level ↓</a><a class="python-button python-button-secondary" href="#mixedChallenge">Start Mixed Challenge</a></div>
+                <div class="python-arena-stats"><div class="python-arena-stat"><strong>12</strong><span>Progressive levels</span></div><div class="python-arena-stat"><strong>60</strong><span>Browser coding problems</span></div><div class="python-arena-stat"><strong>24</strong><span>Mixed challenge prompts</span></div><div class="python-arena-stat"><strong>12</strong><span>Rapid revision questions</span></div></div>
+            </section>
+
+            <section class="content-card python-standard-section" aria-labelledby="arenaProgressTitle">
+                <span class="python-standard-label">YOUR PROGRESS</span>
+                <div class="python-arena-dashboard">
+                    <div class="python-arena-dashboard-head"><div><h2 id="arenaProgressTitle">Course Practice Dashboard</h2><p>Progress is collected automatically from the five programming problems in every Python level.</p></div><strong class="python-arena-progress-value" id="pythonArenaPercent">0%</strong></div>
+                    <div class="python-arena-progress-track" aria-hidden="true"><span id="pythonArenaProgressBar"></span></div>
+                    <div class="python-arena-dashboard-grid"><div><strong id="pythonArenaSolved">0 / 60</strong><span>Solved independently</span></div><div><strong id="pythonArenaCompleted">0</strong><span>Completed with solution</span></div><div><strong id="pythonArenaScore">0 / 6000</strong><span>Best coding score</span></div><div><strong id="pythonArenaLevels">0 / 12</strong><span>Levels fully practised</span></div></div>
+                </div>
+            </section>
+
+            <section class="content-card python-standard-section" id="levelPractice">
+                <span class="python-standard-label">LEVEL-WISE PRACTICE</span>
+                <h2>🎯 Continue from Any Python Level</h2>
+                <p class="python-standard-intro">Search by topic, select a learning stage or show only the levels that still need practice.</p>
+                <div class="python-arena-filterbar"><input type="search" id="pythonArenaSearch" placeholder="Search levels or concepts..." autocomplete="off"><select id="pythonArenaStage" aria-label="Filter by learning stage"><option value="all">All learning stages</option><option value="foundations">Foundations</option><option value="problem-solving">Problem Solving</option><option value="applied">Applied Python</option></select><select id="pythonArenaStatus" aria-label="Filter by practice status"><option value="all">All practice statuses</option><option value="complete">Fully practised</option><option value="progress">In progress</option><option value="not-started">Not started</option></select></div>
+                <div class="python-arena-level-grid">
+                    <article class="python-arena-level-card" data-arena-level="1" data-stage="foundations" data-search="python foundations syntax comments print interpreter"><div class="python-level-card-top"><span class="python-level-card-number">LEVEL 01</span><span class="python-level-card-icon">🚀</span></div><h3>Python Foundations</h3><p>Practise output, comments, indentation and the basic source-to-output workflow.</p><div class="python-level-tags"><span>Syntax</span><span>print()</span><span>Comments</span></div><div class="python-level-progress"><div class="python-level-progress-row"><span data-level-count>0 / 5 complete</span><span data-level-percent>0%</span></div><div class="python-level-progress-track"><span data-level-bar></span></div></div><div class="python-level-card-actions"><a href="level-01-python-foundations.html#programmingProblems">Open Problems</a><a href="level-01-python-foundations.html">Review</a></div></article>
+                    <article class="python-arena-level-card" data-arena-level="2" data-stage="foundations" data-search="data types variables input output conversion f strings"><div class="python-level-card-top"><span class="python-level-card-number">LEVEL 02</span><span class="python-level-card-icon">📦</span></div><h3>Data Types &amp; I/O</h3><p>Work with variables, numeric and text values, input, conversion and formatted output.</p><div class="python-level-tags"><span>input()</span><span>Types</span><span>f-strings</span></div><div class="python-level-progress"><div class="python-level-progress-row"><span data-level-count>0 / 5 complete</span><span data-level-percent>0%</span></div><div class="python-level-progress-track"><span data-level-bar></span></div></div><div class="python-level-card-actions"><a href="level-02-data-types-io.html#programmingProblems">Open Problems</a><a href="level-02-data-types-io.html">Review</a></div></article>
+                    <article class="python-arena-level-card" data-arena-level="3" data-stage="foundations" data-search="operators expressions precedence associativity arithmetic comparison logical"><div class="python-level-card-top"><span class="python-level-card-number">LEVEL 03</span><span class="python-level-card-icon">➗</span></div><h3>Operators &amp; Expressions</h3><p>Build correct expressions with arithmetic, comparison, logical and assignment operators.</p><div class="python-level-tags"><span>Operators</span><span>Precedence</span><span>Boolean</span></div><div class="python-level-progress"><div class="python-level-progress-row"><span data-level-count>0 / 5 complete</span><span data-level-percent>0%</span></div><div class="python-level-progress-track"><span data-level-bar></span></div></div><div class="python-level-card-actions"><a href="level-03-operators-expressions.html#programmingProblems">Open Problems</a><a href="level-03-operators-expressions.html">Review</a></div></article>
+                    <article class="python-arena-level-card" data-arena-level="4" data-stage="foundations" data-search="decision making if elif else nested conditions match case"><div class="python-level-card-top"><span class="python-level-card-number">LEVEL 04</span><span class="python-level-card-icon">🔀</span></div><h3>Decision Making</h3><p>Choose the correct path using conditions, chained decisions and clear boundary checks.</p><div class="python-level-tags"><span>if</span><span>elif</span><span>match</span></div><div class="python-level-progress"><div class="python-level-progress-row"><span data-level-count>0 / 5 complete</span><span data-level-percent>0%</span></div><div class="python-level-progress-track"><span data-level-bar></span></div></div><div class="python-level-card-actions"><a href="level-04-decision-making.html#programmingProblems">Open Problems</a><a href="level-04-decision-making.html">Review</a></div></article>
+                    <article class="python-arena-level-card" data-arena-level="5" data-stage="problem-solving" data-search="loops patterns for while range break continue nested"><div class="python-level-card-top"><span class="python-level-card-number">LEVEL 05</span><span class="python-level-card-icon">🔁</span></div><h3>Loops &amp; Patterns</h3><p>Repeat safely, trace accumulators and build number or star patterns with nested loops.</p><div class="python-level-tags"><span>for</span><span>while</span><span>Patterns</span></div><div class="python-level-progress"><div class="python-level-progress-row"><span data-level-count>0 / 5 complete</span><span data-level-percent>0%</span></div><div class="python-level-progress-track"><span data-level-bar></span></div></div><div class="python-level-card-actions"><a href="level-05-loops-patterns.html#programmingProblems">Open Problems</a><a href="level-05-loops-patterns.html">Review</a></div></article>
+                    <article class="python-arena-level-card" data-arena-level="6" data-stage="problem-solving" data-search="strings indexing slicing methods formatting traversal immutability"><div class="python-level-card-top"><span class="python-level-card-number">LEVEL 06</span><span class="python-level-card-icon">🔤</span></div><h3>Strings</h3><p>Inspect, transform and analyse text using indexing, slicing, traversal and string methods.</p><div class="python-level-tags"><span>Slicing</span><span>Methods</span><span>Traversal</span></div><div class="python-level-progress"><div class="python-level-progress-row"><span data-level-count>0 / 5 complete</span><span data-level-percent>0%</span></div><div class="python-level-progress-track"><span data-level-bar></span></div></div><div class="python-level-card-actions"><a href="level-06-strings.html#programmingProblems">Open Problems</a><a href="level-06-strings.html">Review</a></div></article>
+                    <article class="python-arena-level-card" data-arena-level="7" data-stage="problem-solving" data-search="lists tuples sets collections methods unpacking uniqueness union intersection"><div class="python-level-card-top"><span class="python-level-card-number">LEVEL 07</span><span class="python-level-card-icon">🧺</span></div><h3>Lists, Tuples &amp; Sets</h3><p>Select and manipulate the right sequence or set collection for each requirement.</p><div class="python-level-tags"><span>Lists</span><span>Tuples</span><span>Sets</span></div><div class="python-level-progress"><div class="python-level-progress-row"><span data-level-count>0 / 5 complete</span><span data-level-percent>0%</span></div><div class="python-level-progress-track"><span data-level-bar></span></div></div><div class="python-level-card-actions"><a href="level-07-lists-tuples-sets.html#programmingProblems">Open Problems</a><a href="level-07-lists-tuples-sets.html">Review</a></div></article>
+                    <article class="python-arena-level-card" data-arena-level="8" data-stage="problem-solving" data-search="dictionaries key value lookup counting grouping methods nesting iteration"><div class="python-level-card-top"><span class="python-level-card-number">LEVEL 08</span><span class="python-level-card-icon">🗂️</span></div><h3>Dictionaries</h3><p>Use key-value lookup for counting, grouping, record storage and nested data.</p><div class="python-level-tags"><span>Keys</span><span>Counting</span><span>Nesting</span></div><div class="python-level-progress"><div class="python-level-progress-row"><span data-level-count>0 / 5 complete</span><span data-level-percent>0%</span></div><div class="python-level-progress-track"><span data-level-bar></span></div></div><div class="python-level-card-actions"><a href="level-08-dictionaries.html#programmingProblems">Open Problems</a><a href="level-08-dictionaries.html">Review</a></div></article>
+                    <article class="python-arena-level-card" data-arena-level="9" data-stage="applied" data-search="functions parameters arguments return recursion scope call stack"><div class="python-level-card-top"><span class="python-level-card-number">LEVEL 09</span><span class="python-level-card-icon">🧩</span></div><h3>Functions &amp; Recursion</h3><p>Decompose solutions into reusable functions and trace recursive calls correctly.</p><div class="python-level-tags"><span>Parameters</span><span>Return</span><span>Recursion</span></div><div class="python-level-progress"><div class="python-level-progress-row"><span data-level-count>0 / 5 complete</span><span data-level-percent>0%</span></div><div class="python-level-progress-track"><span data-level-bar></span></div></div><div class="python-level-card-actions"><a href="level-09-functions-recursion.html#programmingProblems">Open Problems</a><a href="level-09-functions-recursion.html">Review</a></div></article>
+                    <article class="python-arena-level-card" data-arena-level="10" data-stage="applied" data-search="modules import exceptions files paths modes csv json"><div class="python-level-card-top"><span class="python-level-card-number">LEVEL 10</span><span class="python-level-card-icon">📁</span></div><h3>Modules, Exceptions &amp; Files</h3><p>Organise programs, handle failures and read or write persistent file data safely.</p><div class="python-level-tags"><span>Modules</span><span>Exceptions</span><span>Files</span></div><div class="python-level-progress"><div class="python-level-progress-row"><span data-level-count>0 / 5 complete</span><span data-level-percent>0%</span></div><div class="python-level-progress-track"><span data-level-bar></span></div></div><div class="python-level-card-actions"><a href="level-10-modules-exceptions-files.html#programmingProblems">Open Problems</a><a href="level-10-modules-exceptions-files.html">Review</a></div></article>
+                    <article class="python-arena-level-card" data-arena-level="11" data-stage="applied" data-search="object oriented class object constructor self methods encapsulation inheritance polymorphism composition"><div class="python-level-card-top"><span class="python-level-card-number">LEVEL 11</span><span class="python-level-card-icon">🏗️</span></div><h3>Object-Oriented Python</h3><p>Model state and behaviour with classes, inheritance, composition and polymorphism.</p><div class="python-level-tags"><span>Classes</span><span>Inheritance</span><span>Composition</span></div><div class="python-level-progress"><div class="python-level-progress-row"><span data-level-count>0 / 5 complete</span><span data-level-percent>0%</span></div><div class="python-level-progress-track"><span data-level-bar></span></div></div><div class="python-level-card-actions"><a href="level-11-object-oriented-python.html#programmingProblems">Open Problems</a><a href="level-11-object-oriented-python.html">Review</a></div></article>
+                    <article class="python-arena-level-card" data-arena-level="12" data-stage="applied" data-search="advanced placement comprehensions lambda generators decorators regex collections complexity interview"><div class="python-level-card-top"><span class="python-level-card-number">LEVEL 12</span><span class="python-level-card-icon">⚡</span></div><h3>Advanced Python &amp; Placement</h3><p>Combine concise Python with efficient structures and interview-ready reasoning.</p><div class="python-level-tags"><span>Generators</span><span>Decorators</span><span>Complexity</span></div><div class="python-level-progress"><div class="python-level-progress-row"><span data-level-count>0 / 5 complete</span><span data-level-percent>0%</span></div><div class="python-level-progress-track"><span data-level-bar></span></div></div><div class="python-level-card-actions"><a href="level-12-advanced-python-placement.html#programmingProblems">Open Problems</a><a href="level-12-advanced-python-placement.html">Review</a></div></article>
+                </div>
+                <p class="python-arena-empty" id="pythonArenaEmpty" hidden>No Python level matches the selected filters.</p>
+            </section>
+
+            <section class="content-card python-standard-section" id="mixedChallenge">
+                <span class="python-standard-label">MIXED PRACTICE</span>
+                <h2>🎲 CodeBhavya Challenge Generator</h2>
+                <p class="python-standard-intro">Attempt the requirement first, then reveal the hint or model approach only when needed.</p>
+                <div class="python-challenge-generator">
+                    <div class="python-generator-topbar"><strong>Python Mixed Challenge</strong><span id="pythonChallengeDeckStatus">Challenge 1 of 24</span></div>
+                    <div class="python-generator-body">
+                        <div class="python-generator-meta"><span id="pythonChallengeLevel">Level 1</span><span id="pythonChallengeTopic">Foundations</span><span id="pythonChallengeDifficulty">Easy</span></div>
+                        <h3 id="pythonChallengeTitle">Loading challenge…</h3>
+                        <p class="python-generator-prompt" id="pythonChallengePrompt"></p>
+                        <div class="python-generator-sample"><strong>Sample</strong><pre id="pythonChallengeSample"></pre></div>
+                        <div class="python-generator-reveal" id="pythonChallengeHint" hidden><strong>Hint</strong><p></p></div>
+                        <div class="python-generator-reveal" id="pythonChallengeSolution" hidden><strong>Model approach</strong><pre></pre></div>
+                        <div class="python-generator-actions"><button type="button" id="pythonNewChallenge">Next Challenge →</button><button type="button" id="pythonShowChallengeHint">Show Hint</button><button type="button" id="pythonShowChallengeSolution">Show Approach</button><button type="button" id="pythonMarkChallenge">✓ Mark Practised</button><a id="pythonOpenChallengeLevel" href="level-01-python-foundations.html#programmingProblems">Open Level Editor</a><button type="button" id="pythonResetChallengeDeck">↺ Reset Deck</button></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-card python-standard-section python-quiz" id="rapidQuiz" data-python-arena-quiz>
+                <div class="section-heading"><div><span class="section-label">FINAL REVISION CHECK</span><h2>🧠 12-Topic Python Rapid Quiz</h2><p>One question represents each level of the complete Python course.</p></div><span class="python-quiz-count">12 QUESTIONS</span></div>
+                <fieldset class="python-quiz-question" data-correct="b"><legend><span>1</span>Which function displays output in Python?</legend><label><input type="radio" name="arena-q1" value="a"> input()</label><label><input type="radio" name="arena-q1" value="b"> print()</label><label><input type="radio" name="arena-q1" value="c"> show()</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="c"><legend><span>2</span>What does <code>int("25")</code> return?</legend><label><input type="radio" name="arena-q2" value="a"> The string "25"</label><label><input type="radio" name="arena-q2" value="b"> An error</label><label><input type="radio" name="arena-q2" value="c"> The integer 25</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="a"><legend><span>3</span>Which operator tests equality?</legend><label><input type="radio" name="arena-q3" value="a"> ==</label><label><input type="radio" name="arena-q3" value="b"> =</label><label><input type="radio" name="arena-q3" value="c"> !=</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="b"><legend><span>4</span>Which keyword checks another condition after <code>if</code>?</legend><label><input type="radio" name="arena-q4" value="a"> else if</label><label><input type="radio" name="arena-q4" value="b"> elif</label><label><input type="radio" name="arena-q4" value="c"> switch</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="c"><legend><span>5</span>Which statement skips only the current loop iteration?</legend><label><input type="radio" name="arena-q5" value="a"> break</label><label><input type="radio" name="arena-q5" value="b"> return</label><label><input type="radio" name="arena-q5" value="c"> continue</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="a"><legend><span>6</span>What is the result of <code>"Python"[1:4]</code>?</legend><label><input type="radio" name="arena-q6" value="a"> yth</label><label><input type="radio" name="arena-q6" value="b"> Pyt</label><label><input type="radio" name="arena-q6" value="c"> ytho</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="b"><legend><span>7</span>Which collection automatically removes duplicates?</legend><label><input type="radio" name="arena-q7" value="a"> list</label><label><input type="radio" name="arena-q7" value="b"> set</label><label><input type="radio" name="arena-q7" value="c"> tuple</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="c"><legend><span>8</span>Which dictionary method safely supplies a default value?</legend><label><input type="radio" name="arena-q8" value="a"> read()</label><label><input type="radio" name="arena-q8" value="b"> find()</label><label><input type="radio" name="arena-q8" value="c"> get()</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="a"><legend><span>9</span>Which keyword sends a result back from a function?</legend><label><input type="radio" name="arena-q9" value="a"> return</label><label><input type="radio" name="arena-q9" value="b"> yield from</label><label><input type="radio" name="arena-q9" value="c"> print</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="b"><legend><span>10</span>Which block handles a raised exception?</legend><label><input type="radio" name="arena-q10" value="a"> finally only</label><label><input type="radio" name="arena-q10" value="b"> except</label><label><input type="radio" name="arena-q10" value="c"> assert</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="c"><legend><span>11</span>What does <code>self</code> represent in an instance method?</legend><label><input type="radio" name="arena-q11" value="a"> The parent class</label><label><input type="radio" name="arena-q11" value="b"> Every object</label><label><input type="radio" name="arena-q11" value="c"> The current object</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <fieldset class="python-quiz-question" data-correct="a"><legend><span>12</span>Which construct produces values lazily?</legend><label><input type="radio" name="arena-q12" value="a"> generator</label><label><input type="radio" name="arena-q12" value="b"> list literal</label><label><input type="radio" name="arena-q12" value="c"> f-string</label><p class="python-quiz-feedback" hidden></p></fieldset>
+                <div class="python-quiz-actions"><button type="button" class="python-button python-button-primary" data-check-arena-quiz>Check All Answers</button><button type="button" class="python-button python-button-secondary" data-reset-arena-quiz>Reset Quiz</button><p class="python-quiz-result" aria-live="polite"></p></div>
+            </section>
+
+            <section class="content-card python-standard-section">
+                <span class="python-standard-label">PRACTICE ROUTINE</span>
+                <h2>📅 A Simple Three-Day Revision Cycle</h2>
+                <p class="python-standard-intro">Repeat this cycle until every level card reaches 100%.</p>
+                <div class="python-practice-plan-grid"><article><span>01</span><h3>Day 1 — Foundations</h3><p>Review Levels 1–4, solve two unfinished problems and complete four mixed challenges.</p></article><article><span>02</span><h3>Day 2 — Problem Solving</h3><p>Review Levels 5–8, trace one program manually and solve two collection problems.</p></article><article><span>03</span><h3>Day 3 — Applied Python</h3><p>Review Levels 9–12, explain one interview concept aloud and attempt the rapid quiz.</p></article></div>
+            </section>
+
+            <nav class="python-topic-navigation" aria-label="Python course navigation"><a href="level-12-advanced-python-placement.html" class="previous-topic">← Previous: Advanced Python &amp; Placement</a><a href="index.html" class="next-topic">Return to Python Home →</a></nav>
+        </main>
+    </div>
+    <footer class="footer"><div class="footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practice, build and grow with structured learning resources.</p></div><div class="footer-column"><h3>Quick Links</h3><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C Programming</a></div><div class="footer-column"><h3>Learning</h3><a href="../Data-Structures/index.html">Data Structures</a><a href="../Advanced-Data-Structures/index.html">Advanced Data Structures</a><a href="index.html">Python</a></div><div class="footer-column"><h3>Python</h3><a href="index.html">Course Home</a><a href="level-12-advanced-python-placement.html">Final Level</a><a href="practice.html">Practice Arena</a></div></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer>
+    <script src="../script.js"></script><script src="python.js?v=1"></script><script src="python-practice.js?v=1"></script>
+</body>
+</html>
