@@ -510,7 +510,7 @@
         return [20, 30, 10];
     }
 
-    function updateSprint(profileKey, minutes) {
+    function updateSprint(profileKey, minutes, shouldSave) {
         const profile = targetProfiles[profileKey];
         const list = document.getElementById("sprintList");
         const title = document.getElementById("sprintTitle");
@@ -547,7 +547,9 @@
             });
         });
 
-        writeStorage(STORAGE_KEYS.sprint, { signature: signature, completed: completed });
+        if (shouldSave) {
+            writeStorage(STORAGE_KEYS.sprint, { signature: signature, completed: completed });
+        }
         updateSprintProgress();
     }
 
@@ -589,7 +591,7 @@
             weekTasks.append(item);
         });
 
-        updateSprint(profileKey, minutes);
+        updateSprint(profileKey, minutes, shouldSave);
         selectRoadmap(days);
 
         if (shouldSave) {
@@ -1064,7 +1066,7 @@
         renderMistakes();
     }
 
-    function updateProofProgress() {
+    function updateProofProgress(shouldSave) {
         const inputs = Array.from(document.querySelectorAll("[data-proof-item]"));
         const completed = inputs.filter(function (input) {
             return input.checked;
@@ -1079,7 +1081,9 @@
         document.getElementById("proofProgressText").textContent = completed + "/" + inputs.length + " complete";
         document.getElementById("proofProgressBar").style.width = percent + "%";
         document.getElementById("proofProgress").setAttribute("aria-valuenow", String(completed));
-        writeStorage(STORAGE_KEYS.proof, saved);
+        if (shouldSave !== false) {
+            writeStorage(STORAGE_KEYS.proof, saved);
+        }
     }
 
     function initializeProofChecklist() {
@@ -1087,9 +1091,35 @@
         const saved = readStorage(STORAGE_KEYS.proof, {});
         inputs.forEach(function (input) {
             input.checked = Boolean(saved[input.dataset.proofItem]);
-            input.addEventListener("change", updateProofProgress);
+            input.addEventListener("change", function () {
+                updateProofProgress(true);
+            });
         });
-        updateProofProgress();
+        updateProofProgress(false);
+    }
+
+    function refreshFromLocalProgress() {
+        const storedPlan = readStorage(STORAGE_KEYS.plan, {
+            target: "general",
+            days: 30,
+            minutes: 60
+        });
+        applyPlan(storedPlan, false);
+
+        const readinessInputs = Array.from(document.querySelectorAll("[data-readiness]"));
+        const savedReadiness = readStorage(STORAGE_KEYS.readiness, []);
+        readinessInputs.forEach(function (input, index) {
+            input.checked = Boolean(savedReadiness[index]);
+        });
+        calculateReadiness({ save: false, animate: false });
+
+        const proofInputs = Array.from(document.querySelectorAll("[data-proof-item]"));
+        const savedProof = readStorage(STORAGE_KEYS.proof, {});
+        proofInputs.forEach(function (input) {
+            input.checked = Boolean(savedProof[input.dataset.proofItem]);
+        });
+        updateProofProgress(false);
+        renderMistakes();
     }
 
     function initialize() {
@@ -1102,6 +1132,11 @@
         initializeInterviewStudio();
         initializeMistakeBank();
         initializeProofChecklist();
+        window.addEventListener("codebhavya:cloud-progress-loaded", function (event) {
+            if (event.detail && event.detail.needsRefresh) {
+                refreshFromLocalProgress();
+            }
+        });
     }
 
     if (document.readyState === "loading") {
