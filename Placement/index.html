@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,6 +85,23 @@
         <button type="button" class="placement-drawer-backdrop" id="placementDrawerBackdrop" aria-label="Close Placement Navigator" tabindex="-1"></button>
 
         <main class="placement-main" id="mainContent">
+            <section class="placement-cloud-panel" id="placementCloudPanel" aria-labelledby="placementCloudTitle">
+                <div class="placement-cloud-summary">
+                    <span class="placement-cloud-icon" aria-hidden="true">☁</span>
+                    <div>
+                        <small>OPTIONAL CLOUD PROGRESS</small>
+                        <strong id="placementCloudTitle">Progress saved on this device</strong>
+                        <p id="placementCloudDescription">Sign in to keep your plan, readiness and learning history across devices.</p>
+                    </div>
+                </div>
+                <div class="placement-cloud-actions">
+                    <button type="button" class="placement-cloud-primary" id="placementOpenAuth">Sign in / Create account</button>
+                    <button type="button" class="placement-cloud-primary" id="placementSyncNow" hidden>Sync now</button>
+                    <button type="button" class="placement-cloud-secondary" id="placementSignOut" hidden>Sign out</button>
+                </div>
+                <p class="placement-cloud-status" id="placementCloudStatus" role="status" aria-live="polite">You can continue without an account.</p>
+            </section>
+
             <section class="placement-hero" id="launchpad" aria-labelledby="placementTitle">
                 <div class="placement-hero-copy">
                     <span class="placement-eyebrow">CODEBHAVYA • PLACEMENT COMMAND CENTRE</span>
@@ -138,7 +156,7 @@
                     </div>
 
                     <button type="submit" class="placement-primary-button">Create My Starting Plan →</button>
-                    <p class="placement-privacy-note">Your selections and progress stay in this browser.</p>
+                    <p class="placement-privacy-note" id="placementPrivacyNote">Your selections and progress stay in this browser.</p>
                 </form>
             </section>
 
@@ -602,6 +620,44 @@
         </main>
     </div>
 
+    <dialog class="placement-auth-dialog" id="placementAuthDialog" aria-labelledby="placementAuthTitle">
+        <div class="placement-auth-card">
+            <button type="button" class="placement-auth-close" id="placementAuthClose" aria-label="Close account window">×</button>
+
+            <div class="placement-auth-heading">
+                <span aria-hidden="true">☁</span>
+                <div>
+                    <small>CODEBHAVYA CLOUD PROGRESS</small>
+                    <h2 id="placementAuthTitle">Sign in to continue your journey</h2>
+                    <p>Your public learning resources remain available without an account.</p>
+                </div>
+            </div>
+
+            <div class="placement-auth-tabs" role="tablist" aria-label="Account options">
+                <button type="button" id="placementSignInTab" role="tab" aria-selected="true">Sign in</button>
+                <button type="button" id="placementSignUpTab" role="tab" aria-selected="false">Create account</button>
+            </div>
+
+            <form class="placement-auth-form" id="placementAuthForm" novalidate>
+                <div id="placementNameField" hidden>
+                    <label for="placementDisplayName">Your name</label>
+                    <input type="text" id="placementDisplayName" name="displayName" maxlength="80" autocomplete="name" placeholder="Example: Bhavya">
+                </div>
+
+                <label for="placementAuthEmail">Email address</label>
+                <input type="email" id="placementAuthEmail" name="email" autocomplete="email" placeholder="student@example.com" required>
+
+                <label for="placementAuthPassword">Password</label>
+                <input type="password" id="placementAuthPassword" name="password" minlength="8" autocomplete="current-password" placeholder="Minimum 8 characters" required>
+
+                <button type="submit" class="placement-primary-button" id="placementAuthSubmit">Sign in securely</button>
+                <p class="placement-auth-message" id="placementAuthMessage" role="status" aria-live="polite"></p>
+            </form>
+
+            <p class="placement-auth-privacy">CodeBhavya stores only your learning progress. Do not enter resume files, phone numbers or sensitive personal information.</p>
+        </div>
+    </dialog>
+
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-brand-section">
@@ -619,6 +675,11 @@
     <noscript>
         <div class="placement-noscript">Interactive planning needs JavaScript, but all learning tracks and preparation guidance remain available on this page.</div>
     </noscript>
-    <script src="placement.js?v=1"></script>
+    <script src="supabase-config.js?v=1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js?v=1"></script>
+    <script src="placement.js?v=2"></script>
+    <script src="placement-auth.js?v=1"></script>
+    <script src="placement-sync.js?v=1"></script>
 </body>
 </html>
