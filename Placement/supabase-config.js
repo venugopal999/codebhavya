@@ -1,0 +1,13 @@
+(function () {
+    "use strict";
+
+    /*
+     * Replace only the two placeholder values below.
+     * The publishable key is designed for browser code and is protected by RLS.
+     * Never place a secret key, service_role key or database password here.
+     */
+    window.CODEBHAVYA_SUPABASE_CONFIG = Object.freeze({
+        url: "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE",
+        publishableKey: "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE"
+    });
+}());
