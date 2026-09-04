@@ -48,6 +48,15 @@
     let activeSync = null;
     const timers = new Map();
 
+    function announceProgressLoaded(needsRefresh, reason) {
+        window.dispatchEvent(new CustomEvent("codebhavya:cloud-progress-loaded", {
+            detail: {
+                needsRefresh: Boolean(needsRefresh),
+                reason: reason || "sync"
+            }
+        }));
+    }
+
     function setStatus(message, tone) {
         if (window.CodeBhavyaAuth && typeof window.CodeBhavyaAuth.setCloudStatus === "function") {
             window.CodeBhavyaAuth.setCloudStatus(message, tone);
@@ -360,13 +369,7 @@
 
         initialSyncFinished = true;
         setStatus("Progress synchronized successfully.", "success");
-        setSyncButtonBusy(false);
-
-        if (needsReload) {
-            window.setTimeout(function () {
-                window.location.reload();
-            }, 350);
-        }
+        announceProgressLoaded(needsReload, manual ? "manual" : "initial");
 
         return true;
     }
@@ -380,10 +383,10 @@
         }
 
         activeSync = performFullSync(user, manual).catch(function () {
-            setSyncButtonBusy(false);
             setStatus("Cloud sync could not finish. Your progress is still safe on this device.", "error");
             return false;
         }).finally(function () {
+            setSyncButtonBusy(false);
             activeSync = null;
         });
 
@@ -504,10 +507,13 @@
             if (hadUser && detail && detail.explicitSignOut) {
                 resetLocalProgress();
                 setStatus("Signed out. Cloud progress remains in your account.", "success");
-                window.setTimeout(function () {
-                    window.location.reload();
-                }, 350);
+                announceProgressLoaded(true, "signout");
             }
+            return;
+        }
+
+        const sameUser = Boolean(currentUser && currentUser.id === user.id);
+        if (sameUser && (activeSync || initialSyncFinished)) {
             return;
         }
 
