@@ -789,6 +789,9 @@
         window.addEventListener("codebhavya:auth-changed", function (event) {
             handleAuthentication(event.detail || {});
         });
+        window.addEventListener("codebhavya:cloud-progress-loaded", function () {
+            updateRecommendation();
+        });
         window.addEventListener("storage", function (event) {
             if (event.key === READINESS_KEY) {
                 updateRecommendation();
