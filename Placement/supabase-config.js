@@ -7,7 +7,7 @@
      * Never place a secret key, service_role key or database password here.
      */
     window.CODEBHAVYA_SUPABASE_CONFIG = Object.freeze({
-        url: "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE",
-        publishableKey: "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE"
+        url: "https://etldagovmkmmowrrrlhs.supabase.co",
+        publishableKey: "sb_publishable_AFTthoxbavYyiQnwU8D7GQ_d8w8Fa4w"
     });
 }());
