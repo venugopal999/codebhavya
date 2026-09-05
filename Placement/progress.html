@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Track evidence-based C placement readiness across MCQ mastery, coding problems, quiz accuracy, company collections and daily practice.">
+    <title>My Placement Progress | CodeBhavya</title>
+    <link rel="canonical" href="https://codebhavya.com/Placement/progress.html">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="placement.css?v=2">
+    <link rel="stylesheet" href="placement-progress.css?v=1">
+</head>
+<body class="placement-page progress-page">
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="" class="main-logo"><span class="brand-name"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></span></a>
+    <nav class="top-nav" aria-label="Main navigation"><a href="practice.html">Practice Hub</a><a href="mcq-library.html?topic=c">MCQ Library</a><a href="quiz.html?topic=c">C Quiz</a><a href="company-prep.html">Company Prep</a><a href="coding.html?topic=c">Coding Arena</a><a href="progress.html" class="active">My Progress</a></nav>
+</header>
+
+<main class="progress-main" id="mainContent">
+    <nav class="progress-breadcrumb" aria-label="Breadcrumb"><a href="index.html">Placement</a><span>›</span><a href="practice.html">Practice Hub</a><span>›</span><strong>My Progress</strong></nav>
+
+    <section class="progress-state progress-loading" id="progressLoading" aria-live="polite"><span class="progress-spinner" aria-hidden="true"></span><h1>Building your progress dashboard…</h1><p>Combining your quiz and coding evidence.</p></section>
+
+    <section class="progress-state" id="progressSignedOut" hidden>
+        <span class="state-icon" aria-hidden="true">↗</span><small>PERSONAL PROGRESS</small><h1>Sign in to see your placement dashboard.</h1><p>Your submitted quizzes, accepted solutions, points and rank are securely connected to your account.</p><a href="index.html#cloudProgress">Go to Placement sign in</a>
+    </section>
+
+    <section class="progress-state progress-error" id="progressError" hidden>
+        <span class="state-icon" aria-hidden="true">!</span><small>DASHBOARD NEEDS ATTENTION</small><h1>Progress could not load.</h1><p id="progressErrorMessage">Please try again.</p><div><button type="button" id="retryProgress">Try again</button><a href="practice.html">Continue practising</a></div>
+    </section>
+
+    <div class="progress-dashboard" id="progressDashboard" hidden>
+        <header class="progress-intro">
+            <div><small>YOUR PLACEMENT COMMAND CENTRE</small><h1><span id="studentName">Student</span>, turn practice into proof.</h1><p>Every number below comes from completed assessments and submitted coding work. Use the recommended actions to strengthen the weakest evidence first.</p></div>
+            <div class="progress-intro-actions"><span id="lastUpdated">Updated now</span><button type="button" id="refreshProgress">Refresh progress</button></div>
+        </header>
+
+        <section class="readiness-command" aria-labelledby="readinessTitle">
+            <div class="readiness-ring" id="readinessRing" role="img" aria-label="Placement readiness 0 percent"><div><strong id="readinessValue">0%</strong><span>READINESS</span></div></div>
+            <div class="readiness-copy"><small>EVIDENCE-BASED READINESS</small><h2 id="readinessTitle">Build the foundation.</h2><p id="readinessMessage">Complete your first quiz and coding challenge to start measuring your progress.</p><div class="readiness-formula"><span><b>35%</b> MCQ mastery</span><span><b>45%</b> coding</span><span><b>10%</b> quiz accuracy</span><span><b>10%</b> consistency</span></div></div>
+            <div class="readiness-next"><small>NEXT MILESTONE</small><strong id="nextMilestone">Reach 25% readiness</strong><span id="milestoneGap">25 points to go</span></div>
+        </section>
+
+        <section class="evidence-grid" aria-label="Progress summary">
+            <article><span class="evidence-icon blue" aria-hidden="true">✓</span><div><small>MCQ MASTERY</small><strong id="mcqMasteryValue">0 / 0</strong><p id="mcqMasteryNote">No scored answers yet</p></div></article>
+            <article><span class="evidence-icon violet" aria-hidden="true">◎</span><div><small>QUIZ ACCURACY</small><strong id="quizAccuracyValue">0%</strong><p id="quizAccuracyNote">No submitted quizzes</p></div></article>
+            <article><span class="evidence-icon green" aria-hidden="true">&lt;/&gt;</span><div><small>CODING PROGRESS</small><strong id="codingSolvedValue">0 / 0</strong><p id="codingSolvedNote">0 attempted · 0 new</p></div></article>
+            <article><span class="evidence-icon gold" aria-hidden="true">★</span><div><small>POINTS &amp; RANK</small><strong id="pointsValue">0 points</strong><p id="rankValue">Rank begins after submission</p></div></article>
+            <article><span class="evidence-icon teal" aria-hidden="true">▣</span><div><small>THIS DEVICE</small><strong id="deviceMarkersValue">0 marked</strong><p id="deviceMarkersNote">0 bookmarks · 0 mastered</p></div></article>
+        </section>
+
+        <section class="dashboard-panel action-panel" aria-labelledby="nextActionsTitle"><header><div><small>DO THIS NEXT</small><h2 id="nextActionsTitle">Three actions chosen from your evidence</h2></div><p>Focused work beats random practice.</p></header><div class="next-actions" id="nextActions"></div></section>
+
+        <div class="dashboard-columns">
+            <section class="dashboard-panel skill-panel" aria-labelledby="skillStrengthTitle"><header><div><small>SKILL MAP</small><h2 id="skillStrengthTitle">Topic strength</h2></div><span>MCQ + coding evidence</span></header><div class="skill-grid" id="skillProgressGrid"></div></section>
+            <section class="dashboard-panel activity-panel" aria-labelledby="activityTitle"><header><div><small>LAST 7 DAYS</small><h2 id="activityTitle">Practice consistency</h2></div><strong id="activeDaysValue">0 active days</strong></header><div class="activity-chart" id="activityChart" role="img" aria-label="Activity over the last seven days"></div><p class="activity-note">A day counts when you submit a quiz or coding solution.</p></section>
+        </div>
+
+        <div class="dashboard-columns lower-columns">
+            <section class="dashboard-panel difficulty-panel" aria-labelledby="difficultyTitle"><header><div><small>CODING DEPTH</small><h2 id="difficultyTitle">Difficulty completion</h2></div><a href="coding.html?topic=c">Open problem library →</a></header><div class="difficulty-grid" id="difficultyGrid"></div></section>
+            <section class="dashboard-panel company-readiness" aria-labelledby="companyReadinessTitle"><header><div><small>COMPANY COLLECTIONS</small><h2 id="companyReadinessTitle">Collection readiness</h2></div></header><label for="companyReadinessSelect">Choose a company profile</label><select id="companyReadinessSelect"></select><div class="company-readiness-card"><div><strong id="companyReadinessValue">0%</strong><span id="companyReadinessCount">0 of 0 solved</span></div><div class="mini-progress"><span id="companyReadinessBar"></span></div><p id="companyReadinessMessage">Start the mapped collection to build evidence.</p><a id="companyReadinessLink" href="coding.html?topic=c&amp;mode=company">Open this company collection →</a></div><p class="company-disclaimer">Collections show likely skill emphasis, not guaranteed current hiring questions.</p></section>
+        </div>
+
+        <section class="dashboard-panel plan-panel" aria-labelledby="studyPlanTitle"><header><div><small>YOUR NEXT 7 DAYS</small><h2 id="studyPlanTitle">A balanced study plan</h2></div><p>Generated from your weakest current skills.</p></header><div class="study-plan" id="studyPlan"></div></section>
+
+        <section class="dashboard-panel recent-panel" aria-labelledby="recentActivityTitle"><header><div><small>RECENT EVIDENCE</small><h2 id="recentActivityTitle">Latest submitted work</h2></div><a href="practice.html">Choose another activity →</a></header><div class="recent-activity" id="recentActivity"></div></section>
+    </div>
+</main>
+
+<script src="supabase-config.js?v=1"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-client.js?v=1"></script><script src="placement-progress.js?v=1"></script>
+</body>
+</html>
