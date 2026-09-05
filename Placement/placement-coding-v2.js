@@ -34,6 +34,17 @@
         return value.c || "#include <stdio.h>\n\nint main(void) {\n    // Write your solution here\n    return 0;\n}\n";
     }
 
+    function arrayValue(value) {
+        if (Array.isArray(value)) return value;
+        if (typeof value !== "string") return [];
+        try {
+            const parsed = JSON.parse(value);
+            return Array.isArray(parsed) ? parsed : [];
+        } catch (_error) {
+            return [];
+        }
+    }
+
     function updateFallbackLines() {
         if (editor) return;
         const textarea = $("codeEditor");
@@ -148,16 +159,28 @@
             const button = document.createElement("button");
             button.type = "button";
             button.className = "problem-card" + (active?.id === problem.id ? " active" : "");
+            button.dataset.problemSlug = problem.slug;
+            button.setAttribute("aria-pressed", String(active?.id === problem.id));
             const title = document.createElement("strong");
             title.textContent = problem.title;
             const meta = document.createElement("span");
-            meta.textContent = problem.difficulty + " · " + targetLabels[problem.target_path];
+            meta.textContent = problem.difficulty + " · " + (targetLabels[problem.target_path] || problem.target_path || "General");
             const points = document.createElement("i");
             points.textContent = problem.points + " points";
             button.append(title, meta, points);
-            button.addEventListener("click", () => selectProblem(problem));
             box.append(button);
         });
+    }
+
+    function openProblemFromList(event) {
+        const button = event.target.closest("button[data-problem-slug]");
+        if (!button || !$("problemList").contains(button)) return;
+        const problem = problems.find((item) => item.slug === button.dataset.problemSlug);
+        if (!problem) {
+            setEmpty("Problem unavailable", "Reload the problem list and try again.");
+            return;
+        }
+        selectProblem(problem);
     }
 
     function showProblemMessage(text) {
@@ -224,7 +247,7 @@
     function renderExamples(values) {
         const box = $("problemExamples");
         box.replaceChildren();
-        (Array.isArray(values) ? values : []).forEach((example, index) => {
+        arrayValue(values).forEach((example, index) => {
             const card = document.createElement("article");
             card.className = "example-card";
             const heading = document.createElement("strong");
@@ -245,12 +268,11 @@
 
     function selectProblem(problem) {
         active = problem;
-        renderList();
-        $("codingEmpty").hidden = true;
-        $("codingActive").hidden = false;
+        $("codingEmpty").setAttribute("hidden", "");
+        $("codingActive").removeAttribute("hidden");
         collapseStatement(false);
         $("problemDifficulty").textContent = problem.difficulty;
-        $("problemTarget").textContent = targetLabels[problem.target_path];
+        $("problemTarget").textContent = targetLabels[problem.target_path] || problem.target_path || "General";
         $("problemPoints").textContent = problem.points + " points";
         $("problemTitle").textContent = problem.title;
         $("problemText").textContent = problem.statement;
@@ -259,7 +281,7 @@
 
         const constraints = $("problemConstraints");
         constraints.replaceChildren();
-        (problem.constraints || []).forEach((value) => {
+        arrayValue(problem.constraints).forEach((value) => {
             const item = document.createElement("li");
             item.textContent = value;
             constraints.append(item);
@@ -268,6 +290,7 @@
         renderExamples(problem.examples);
         setEditorValue(starter(problem));
         resetResultState();
+        renderList();
         collapseProblems(true);
     }
 
@@ -479,6 +502,7 @@
         }
 
         $("reloadProblems").addEventListener("click", loadProblems);
+        $("problemList").addEventListener("click", openProblemFromList);
         $("codingTarget").addEventListener("change", filtersChanged);
         $("codingDifficulty").addEventListener("change", filtersChanged);
         $("toggleProblems").addEventListener("click", () => {
