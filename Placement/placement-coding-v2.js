@@ -111,8 +111,10 @@
                 editor.addOverlay({
                     token(stream) {
                         if (stream.match(builtins)) return "builtin";
-                        while (stream.next() !== null) {
+                        stream.next();
+                        while (!stream.eol()) {
                             if (stream.match(builtins, false)) break;
+                            stream.next();
                         }
                         return null;
                     }
