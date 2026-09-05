@@ -17,6 +17,7 @@
     let busy = false;
     let editor = null;
     let lastSubmissionId = null;
+    const problemLoadTimeoutMs = 15000;
 
     function setStatus(text, tone = "neutral") {
         $("judgeStatus").textContent = text;
@@ -52,6 +53,31 @@
         } catch (_error) {
             return [];
         }
+    }
+
+    function withTimeout(request, milliseconds, message) {
+        let timer;
+        const timeout = new Promise((_resolve, reject) => {
+            timer = window.setTimeout(() => reject(new Error(message)), milliseconds);
+        });
+        return Promise.race([Promise.resolve(request), timeout]).finally(() => window.clearTimeout(timer));
+    }
+
+    function readableProblemError(error) {
+        const message = String(error?.message || "Unknown database error");
+        if (/timed out/i.test(message)) {
+            return "The database did not respond within 15 seconds. Check that the Supabase project is active, then click Load problems to retry.";
+        }
+        if (/failed to fetch|networkerror|load failed/i.test(message)) {
+            return "The browser cannot reach Supabase. Check the project URL, internet connection and Supabase project status.";
+        }
+        if (/column .* does not exist/i.test(message)) {
+            return "The Coding Arena database schema is older than the page. Run the latest placement-v2-schema.sql file.";
+        }
+        if (/permission|row-level security|401|403/i.test(message)) {
+            return "Supabase blocked the problem query. Confirm the published-problems read policy and anon access from the placement schema.";
+        }
+        return "Supabase returned: " + message;
     }
 
     function updateFallbackLines() {
@@ -237,7 +263,11 @@
                 .eq("topic", "c")
                 .eq("target_path", target);
             if (difficulty !== "all") query = query.eq("difficulty", difficulty);
-            const result = await query.order("difficulty").order("title");
+            const result = await withTimeout(
+                query.order("difficulty").order("title").limit(100),
+                problemLoadTimeoutMs,
+                "Problem loading timed out"
+            );
             if (result.error) throw result.error;
             problems = result.data || [];
             renderList();
@@ -247,12 +277,14 @@
             } else {
                 setEmpty("No matching problems", "Choose another company or difficulty and load the problem set again.");
             }
-        } catch (_error) {
+        } catch (error) {
             problems = [];
             $("problemCount").textContent = "0";
             $("toggleProblems").hidden = true;
-            showProblemMessage("Run the latest placement schema and C coding seed first.");
-            setEmpty("Problems are unavailable", "The selected problem set could not be loaded.");
+            const message = readableProblemError(error);
+            showProblemMessage(message);
+            setEmpty("Problems could not load", message);
+            console.error("Unable to load coding problems", error);
         } finally {
             button.disabled = false;
             button.textContent = "Load problems";
