@@ -1,30 +1,504 @@
-(function(){
-"use strict";
-const cloud=window.CodeBhavyaSupabase||{},client=cloud.client||null;
-const $=id=>document.getElementById(id);
-const targetLabels={general:"General",service:"Service-based",product:"Product-based",ai:"AI / data"};
-let user=null,problems=[],active=null,busy=false;
-function setStatus(text,tone="neutral"){$("judgeStatus").textContent=text;$("judgeStatus").dataset.tone=tone}
-function starter(problem){const value=problem?.starter_code||{};return value.c||"#include <stdio.h>\n\nint main(void) {\n    // Write your solution here\n    return 0;\n}\n"}
-function updateLines(){const count=$("codeEditor").value.split("\n").length;$("lineNumbers").textContent=Array.from({length:count},(_,i)=>i+1).join("\n");$("lineNumbers").scrollTop=$("codeEditor").scrollTop}
-function addEditorBehaviour(){const editor=$("codeEditor");editor.addEventListener("input",updateLines);editor.addEventListener("scroll",()=>{$("lineNumbers").scrollTop=editor.scrollTop});editor.addEventListener("keydown",e=>{if(e.key!=="Tab")return;e.preventDefault();const start=editor.selectionStart,end=editor.selectionEnd;editor.setRangeText("    ",start,end,"end");updateLines()})}
-function renderList(){const box=$("problemList");box.replaceChildren();$("problemCount").textContent=String(problems.length);if(!problems.length){const p=document.createElement("p");p.className="coding-muted";p.textContent="No problems match this filter.";box.append(p);return}problems.forEach(problem=>{const b=document.createElement("button");b.type="button";b.className="problem-card"+(active?.id===problem.id?" active":"");const title=document.createElement("strong");title.textContent=problem.title;const meta=document.createElement("span");meta.textContent=problem.difficulty+" · "+targetLabels[problem.target_path];const points=document.createElement("i");points.textContent=problem.points+" points";b.append(title,meta,points);b.addEventListener("click",()=>selectProblem(problem));box.append(b)})}
-function showProblemMessage(text){const p=document.createElement("p");p.className="coding-muted";p.textContent=text;$("problemList").replaceChildren(p)}
-async function loadProblems(){if(!client){showProblemMessage("Database connection unavailable.");return}const target=$("codingTarget").value,difficulty=$("codingDifficulty").value;let q=client.from("coding_problems").select("id,slug,title,topic,difficulty,target_path,statement,input_format,output_format,constraints,examples,starter_code,points,time_limit_seconds,memory_limit_kb").eq("is_published",true).eq("topic","c").eq("target_path",target);if(difficulty!=="all")q=q.eq("difficulty",difficulty);const result=await q.order("difficulty").order("title");if(result.error){showProblemMessage("Run the V2 schema and coding seed first.");return}problems=result.data||[];active=null;$("codingActive").hidden=true;$("codingEmpty").hidden=false;renderList()}
-function renderExamples(values){const box=$("problemExamples");box.replaceChildren();(Array.isArray(values)?values:[]).forEach((example,i)=>{const card=document.createElement("article");card.className="example-card";const h=document.createElement("strong");h.textContent="Example "+(i+1);const input=document.createElement("pre");input.textContent="Input\n"+(example.input||"");const output=document.createElement("pre");output.textContent="Output\n"+(example.output||"");card.append(h,input,output);if(example.explanation){const p=document.createElement("p");p.textContent=example.explanation;card.append(p)}box.append(card)})}
-function selectProblem(problem){active=problem;renderList();$("codingEmpty").hidden=true;$("codingActive").hidden=false;$("problemDifficulty").textContent=problem.difficulty;$("problemTarget").textContent=targetLabels[problem.target_path];$("problemPoints").textContent=problem.points+" points";$("problemTitle").textContent=problem.title;$("problemText").textContent=problem.statement;$("inputFormat").textContent=problem.input_format;$("outputFormat").textContent=problem.output_format;const constraints=$("problemConstraints");constraints.replaceChildren();(problem.constraints||[]).forEach(value=>{const li=document.createElement("li");li.textContent=value;constraints.append(li)});renderExamples(problem.examples);$("codeEditor").value=starter(problem);updateLines();$("testResults").replaceChildren();$("testSummary").textContent="Run your code to see results.";setStatus("Ready")}
-function renderTests(result,mode){const box=$("testResults");box.replaceChildren();const tests=result.tests||[];tests.forEach((test,i)=>{const row=document.createElement("article");row.className="test-row "+(test.passed?"pass":"fail");const icon=document.createElement("b");icon.textContent=test.passed?"✓":"!";const title=document.createElement("strong");title.textContent=(mode==="run"?"Sample ":"Test ")+(i+1);const status=document.createElement("span");status.textContent=test.status|| (test.passed?"Passed":"Failed");row.append(icon,title,status);if(mode==="run"){const detail=document.createElement("pre");detail.textContent="Input: "+(test.input||"(empty)")+"\nExpected: "+(test.expected_output||"")+"\nYour output: "+(test.actual_output||"");row.append(detail)}box.append(row)});if(result.compile_output||result.stderr){const row=document.createElement("article");row.className="test-row fail";const pre=document.createElement("pre");pre.textContent=result.compile_output||result.stderr;row.append(document.createTextNode("Compiler / runtime output"),pre);box.prepend(row)}$("testSummary").textContent=(result.passed_tests||0)+" of "+(result.total_tests||0)+" tests passed"+(result.points_awarded!==undefined?" · "+result.points_awarded+" points":"")}
-async function readableFunctionError(error){
- const fallback="The judge could not run this submission.";
- if(error?.context){try{const payload=await error.context.clone().json();if(payload?.error)return String(payload.error)}catch(_ignored){/* The response did not contain JSON. */}}
- const message=String(error?.message||fallback);
- if(/failed to send a request/i.test(message))return "Cannot reach the judge-submission Edge Function. Confirm that it is deployed with this exact name, then deploy the latest CORS update.";
- if(/non-2xx/i.test(message))return "The Edge Function responded with an error. Open Supabase → Edge Functions → judge-submission → Logs for the exact cause.";
- return message;
-}
-async function judge(mode){if(busy||!active||!client)return;if(!user){setStatus("Sign in from the Placement page before running or submitting code.","error");return}const code=$("codeEditor").value;if(code.trim().length<20){setStatus("Write a complete C program before running.","error");return}busy=true;$("runSamples").disabled=true;$("submitCode").disabled=true;setStatus(mode==="run"?"Running sample tests…":"Running protected tests…");try{const response=await client.functions.invoke("judge-submission",{body:{problem_slug:active.slug,language:"c",source_code:code,mode}});if(response.error)throw response.error;renderTests(response.data,mode);setStatus(response.data.status||"Finished",response.data.passed_tests===response.data.total_tests?"success":"error");if(mode==="submit")loadMyScore()}catch(error){setStatus(await readableFunctionError(error),"error")}finally{busy=false;$("runSamples").disabled=false;$("submitCode").disabled=false}}
-async function loadMyScore(){if(!client||!user){$("myCodingScore").textContent="0";return}const result=await client.from("coding_submissions").select("problem_id,points_awarded").eq("user_id",user.id);if(result.error)return;const best={};(result.data||[]).forEach(x=>best[x.problem_id]=Math.max(best[x.problem_id]||0,x.points_awarded||0));$("myCodingScore").textContent=String(Object.values(best).reduce((a,b)=>a+b,0))}
-async function showLeaderboard(){if(!client)return;const result=await client.rpc("get_coding_leaderboard",{p_topic:"c"});const body=$("leaderboardRows");body.replaceChildren();(result.data||[]).forEach(row=>{const tr=document.createElement("tr");[row.rank,row.student_alias,row.solved,row.points].forEach(value=>{const td=document.createElement("td");td.textContent=String(value);tr.append(td)});body.append(tr)});if(!body.children.length){const tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=4;td.textContent="No accepted submissions yet.";tr.append(td);body.append(tr)}$("leaderboardDialog").showModal()}
-async function initialize(){addEditorBehaviour();if(client){const auth=await client.auth.getUser();user=auth.data?.user||null;client.auth.onAuthStateChange((_event,s)=>{user=s?.user||null;loadMyScore()})}$("reloadProblems").addEventListener("click",loadProblems);$("codingTarget").addEventListener("change",loadProblems);$("codingDifficulty").addEventListener("change",loadProblems);$("runSamples").addEventListener("click",()=>judge("run"));$("submitCode").addEventListener("click",()=>judge("submit"));$("resetCode").addEventListener("click",()=>{if(active&&confirm("Reset your code to the starter template?")){ $("codeEditor").value=starter(active);updateLines()}});$("toggleStatement").addEventListener("click",()=>{const body=$("statementBody"),hidden=!body.hidden;body.hidden=hidden;$("toggleStatement").textContent=hidden?"Show problem":"Hide problem"});$("openLeaderboard").addEventListener("click",showLeaderboard);loadProblems();loadMyScore()}
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initialize);else initialize();
+(function () {
+    "use strict";
+
+    const cloud = window.CodeBhavyaSupabase || {};
+    const client = cloud.client || null;
+    const $ = (id) => document.getElementById(id);
+    const targetLabels = {
+        general: "General",
+        service: "Service-based",
+        product: "Product-based",
+        ai: "AI / data"
+    };
+
+    let user = null;
+    let problems = [];
+    let active = null;
+    let busy = false;
+    let editor = null;
+    let lastSubmissionId = null;
+
+    function setStatus(text, tone = "neutral") {
+        $("judgeStatus").textContent = text;
+        $("judgeStatus").dataset.tone = tone;
+    }
+
+    function setEmpty(title, text) {
+        const empty = $("codingEmpty");
+        empty.querySelector("h2").textContent = title;
+        empty.querySelector("p").textContent = text;
+    }
+
+    function starter(problem) {
+        const value = problem?.starter_code || {};
+        return value.c || "#include <stdio.h>\n\nint main(void) {\n    // Write your solution here\n    return 0;\n}\n";
+    }
+
+    function updateFallbackLines() {
+        if (editor) return;
+        const textarea = $("codeEditor");
+        const count = textarea.value.split("\n").length;
+        $("lineNumbers").textContent = Array.from({ length: count }, (_, index) => index + 1).join("\n");
+        $("lineNumbers").scrollTop = textarea.scrollTop;
+    }
+
+    function initializeEditor() {
+        const textarea = $("codeEditor");
+        if (window.CodeMirror) {
+            editor = window.CodeMirror.fromTextArea(textarea, {
+                mode: "text/x-csrc",
+                lineNumbers: true,
+                matchBrackets: true,
+                autoCloseBrackets: true,
+                indentUnit: 4,
+                tabSize: 4,
+                indentWithTabs: false,
+                lineWrapping: false
+            });
+            textarea.closest(".editor-shell").classList.add("has-codemirror");
+            editor.getWrapperElement().setAttribute("data-gramm", "false");
+            editor.getInputField().setAttribute("data-gramm", "false");
+            editor.setSize("100%", "100%");
+
+            if (typeof editor.addOverlay === "function") {
+                const builtins = /^(?:printf|scanf|fgets|puts|putchar|getchar|strlen|strcmp|strcpy|strncpy|malloc|calloc|realloc|free|abs|labs|sqrt|pow|tolower|toupper|isdigit|isalpha|qsort)\b/;
+                editor.addOverlay({
+                    token(stream) {
+                        if (stream.match(builtins)) return "builtin";
+                        while (stream.next() !== null) {
+                            if (stream.match(builtins, false)) break;
+                        }
+                        return null;
+                    }
+                });
+            }
+            return;
+        }
+
+        textarea.addEventListener("input", updateFallbackLines);
+        textarea.addEventListener("scroll", () => {
+            $("lineNumbers").scrollTop = textarea.scrollTop;
+        });
+        textarea.addEventListener("keydown", (event) => {
+            if (event.key !== "Tab") return;
+            event.preventDefault();
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            textarea.setRangeText("    ", start, end, "end");
+            updateFallbackLines();
+        });
+    }
+
+    function editorValue() {
+        return editor ? editor.getValue() : $("codeEditor").value;
+    }
+
+    function setEditorValue(value) {
+        if (editor) {
+            editor.setValue(value);
+            window.setTimeout(() => editor.refresh(), 0);
+        } else {
+            $("codeEditor").value = value;
+            updateFallbackLines();
+        }
+    }
+
+    function collapseProblems(collapsed) {
+        const layout = document.querySelector(".coding-layout");
+        const sidebar = document.querySelector(".problem-sidebar");
+        const toggle = $("toggleProblems");
+        layout.classList.toggle("problems-collapsed", collapsed);
+        sidebar.hidden = collapsed;
+        toggle.textContent = collapsed ? "Show problems" : "Hide problems";
+        toggle.setAttribute("aria-expanded", String(!collapsed));
+        if (editor) window.setTimeout(() => editor.refresh(), 210);
+    }
+
+    function collapseStatement(collapsed) {
+        $("codingActive").classList.toggle("statement-collapsed", collapsed);
+        $("toggleStatement").textContent = collapsed ? "Show problem" : "Hide problem";
+        $("toggleStatement").setAttribute("aria-expanded", String(!collapsed));
+        if (editor) window.setTimeout(() => editor.refresh(), 0);
+    }
+
+    function resetResultState() {
+        lastSubmissionId = null;
+        $("revealCase").hidden = true;
+        $("revealCase").disabled = false;
+        $("assistanceNote").hidden = true;
+        $("assistanceNote").textContent = "";
+        $("testResults").replaceChildren();
+        $("testSummary").textContent = "Run your code to see results.";
+        setStatus("Ready");
+    }
+
+    function renderList() {
+        const box = $("problemList");
+        box.replaceChildren();
+        $("problemCount").textContent = String(problems.length);
+        if (!problems.length) {
+            const message = document.createElement("p");
+            message.className = "coding-muted";
+            message.textContent = "No problems match this filter.";
+            box.append(message);
+            return;
+        }
+
+        problems.forEach((problem) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "problem-card" + (active?.id === problem.id ? " active" : "");
+            const title = document.createElement("strong");
+            title.textContent = problem.title;
+            const meta = document.createElement("span");
+            meta.textContent = problem.difficulty + " · " + targetLabels[problem.target_path];
+            const points = document.createElement("i");
+            points.textContent = problem.points + " points";
+            button.append(title, meta, points);
+            button.addEventListener("click", () => selectProblem(problem));
+            box.append(button);
+        });
+    }
+
+    function showProblemMessage(text) {
+        const message = document.createElement("p");
+        message.className = "coding-muted";
+        message.textContent = text;
+        $("problemList").replaceChildren(message);
+    }
+
+    function filtersChanged() {
+        problems = [];
+        active = null;
+        $("problemCount").textContent = "0";
+        $("toggleProblems").hidden = true;
+        collapseProblems(false);
+        $("codingActive").hidden = true;
+        $("codingEmpty").hidden = false;
+        setEmpty("Filters changed", "Click Load problems to fetch this exact company and difficulty selection.");
+        showProblemMessage("Filters changed. Click Load problems when you are ready.");
+    }
+
+    async function loadProblems() {
+        if (!client) {
+            showProblemMessage("Database connection unavailable.");
+            return;
+        }
+
+        const button = $("reloadProblems");
+        button.disabled = true;
+        button.textContent = "Loading…";
+        showProblemMessage("Loading the selected problem set…");
+        collapseProblems(false);
+        active = null;
+        $("codingActive").hidden = true;
+        $("codingEmpty").hidden = false;
+
+        try {
+            const target = $("codingTarget").value;
+            const difficulty = $("codingDifficulty").value;
+            let query = client.from("coding_problems")
+                .select("id,slug,title,topic,difficulty,target_path,statement,input_format,output_format,constraints,examples,starter_code,points,time_limit_seconds,memory_limit_kb")
+                .eq("is_published", true)
+                .eq("topic", "c")
+                .eq("target_path", target);
+            if (difficulty !== "all") query = query.eq("difficulty", difficulty);
+            const result = await query.order("difficulty").order("title");
+            if (result.error) throw result.error;
+            problems = result.data || [];
+            renderList();
+            $("toggleProblems").hidden = problems.length === 0;
+            setEmpty("Select a C problem", "Choose one problem from the list. The list will collapse automatically so you have more working space.");
+        } catch (_error) {
+            problems = [];
+            $("problemCount").textContent = "0";
+            $("toggleProblems").hidden = true;
+            showProblemMessage("Run the latest placement schema and C coding seed first.");
+            setEmpty("Problems are unavailable", "The selected problem set could not be loaded.");
+        } finally {
+            button.disabled = false;
+            button.textContent = "Load problems";
+        }
+    }
+
+    function renderExamples(values) {
+        const box = $("problemExamples");
+        box.replaceChildren();
+        (Array.isArray(values) ? values : []).forEach((example, index) => {
+            const card = document.createElement("article");
+            card.className = "example-card";
+            const heading = document.createElement("strong");
+            heading.textContent = "Example " + (index + 1);
+            const input = document.createElement("pre");
+            input.textContent = "Input\n" + (example.input || "");
+            const output = document.createElement("pre");
+            output.textContent = "Output\n" + (example.output || "");
+            card.append(heading, input, output);
+            if (example.explanation) {
+                const explanation = document.createElement("p");
+                explanation.textContent = example.explanation;
+                card.append(explanation);
+            }
+            box.append(card);
+        });
+    }
+
+    function selectProblem(problem) {
+        active = problem;
+        renderList();
+        $("codingEmpty").hidden = true;
+        $("codingActive").hidden = false;
+        collapseStatement(false);
+        $("problemDifficulty").textContent = problem.difficulty;
+        $("problemTarget").textContent = targetLabels[problem.target_path];
+        $("problemPoints").textContent = problem.points + " points";
+        $("problemTitle").textContent = problem.title;
+        $("problemText").textContent = problem.statement;
+        $("inputFormat").textContent = problem.input_format;
+        $("outputFormat").textContent = problem.output_format;
+
+        const constraints = $("problemConstraints");
+        constraints.replaceChildren();
+        (problem.constraints || []).forEach((value) => {
+            const item = document.createElement("li");
+            item.textContent = value;
+            constraints.append(item);
+        });
+
+        renderExamples(problem.examples);
+        setEditorValue(starter(problem));
+        resetResultState();
+        collapseProblems(true);
+    }
+
+    function renderTests(result, mode) {
+        const box = $("testResults");
+        box.replaceChildren();
+        const tests = result.tests || [];
+        tests.forEach((test, index) => {
+            const row = document.createElement("article");
+            row.className = "test-row " + (test.passed ? "pass" : "fail");
+            const icon = document.createElement("b");
+            icon.textContent = test.passed ? "✓" : "!";
+            const title = document.createElement("strong");
+            title.textContent = (mode === "run" ? "Sample " : "Test ") + (index + 1);
+            const status = document.createElement("span");
+            status.textContent = test.status || (test.passed ? "Passed" : "Failed");
+            row.append(icon, title, status);
+            if (mode === "run") {
+                const detail = document.createElement("pre");
+                detail.textContent = "Input: " + (test.input || "(empty)") + "\nExpected: " + (test.expected_output || "") + "\nYour output: " + (test.actual_output || "");
+                row.append(detail);
+            }
+            box.append(row);
+        });
+
+        if (result.compile_output || result.stderr) {
+            const row = document.createElement("article");
+            row.className = "test-row fail";
+            const output = document.createElement("pre");
+            output.textContent = result.compile_output || result.stderr;
+            row.append(document.createTextNode("Compiler / runtime output"), output);
+            box.prepend(row);
+        }
+
+        const pointText = result.points_awarded !== undefined ? " · " + result.points_awarded + " points" + (result.assisted ? " (assisted)" : "") : "";
+        $("testSummary").textContent = (result.passed_tests || 0) + " of " + (result.total_tests || 0) + " tests passed" + pointText;
+
+        if (mode === "submit") {
+            lastSubmissionId = result.submission_id || null;
+            $("revealCase").hidden = !(result.reveal_available && lastSubmissionId);
+            $("revealCase").disabled = false;
+        }
+    }
+
+    function renderRevealedCase(result) {
+        const test = result.test;
+        if (!test) return;
+        const row = document.createElement("article");
+        row.className = "test-row revealed";
+        const icon = document.createElement("b");
+        icon.textContent = "?";
+        const title = document.createElement("strong");
+        title.textContent = "Revealed failed hidden case";
+        const status = document.createElement("span");
+        status.textContent = test.status || "Wrong Answer";
+        const detail = document.createElement("pre");
+        detail.textContent = "Input:\n" + (test.input || "(empty)") + "\n\nExpected output:\n" + (test.expected_output || "") + "\n\nYour output:\n" + (test.actual_output || "");
+        row.append(icon, title, status, detail);
+        $("testResults").prepend(row);
+
+        const assistedPoints = Math.ceil(Number(active?.points || 0) / 2);
+        const note = $("assistanceNote");
+        note.textContent = "Learning reveal used. This problem is now assisted: a future accepted solution can earn up to " + assistedPoints + " points (50%) so the leaderboard remains fair.";
+        note.hidden = false;
+        $("problemPoints").textContent = (active?.points || 0) + " points · assisted max " + assistedPoints;
+        $("revealCase").hidden = true;
+    }
+
+    async function readableFunctionError(error) {
+        const fallback = "The judge could not run this submission.";
+        if (error?.context) {
+            try {
+                const payload = await error.context.clone().json();
+                if (payload?.error) return String(payload.error);
+            } catch (_ignored) {
+                // The error response did not contain JSON.
+            }
+        }
+        const message = String(error?.message || fallback);
+        if (/failed to send a request/i.test(message)) return "Cannot reach the judge-submission Edge Function. Confirm that the latest function is deployed.";
+        if (/non-2xx/i.test(message)) return "The Edge Function responded with an error. Open Supabase → Edge Functions → judge-submission → Logs for the exact cause.";
+        return message;
+    }
+
+    async function invokeJudge(body) {
+        const sessionResult = await client.auth.getSession();
+        const accessToken = sessionResult.data?.session?.access_token;
+        if (!accessToken) throw new Error("Your sign-in session expired. Sign in again, then retry.");
+        const response = await client.functions.invoke("judge-submission", {
+            headers: { Authorization: "Bearer " + accessToken },
+            body
+        });
+        if (response.error) throw response.error;
+        return response.data;
+    }
+
+    function setJudgeBusy(isBusy) {
+        busy = isBusy;
+        $("runSamples").disabled = isBusy;
+        $("submitCode").disabled = isBusy;
+        $("revealCase").disabled = isBusy;
+    }
+
+    async function judge(mode) {
+        if (busy || !active || !client) return;
+        if (!user) {
+            setStatus("Sign in from the Placement page before running or submitting code.", "error");
+            return;
+        }
+        const code = editorValue();
+        if (code.trim().length < 20) {
+            setStatus("Write a complete C program before running.", "error");
+            return;
+        }
+
+        setJudgeBusy(true);
+        setStatus(mode === "run" ? "Running sample tests…" : "Running 10 protected tests…");
+        try {
+            const result = await invokeJudge({
+                problem_slug: active.slug,
+                language: "c",
+                source_code: code,
+                mode
+            });
+            renderTests(result, mode);
+            setStatus(result.status || "Finished", result.passed_tests === result.total_tests ? "success" : "error");
+            if (mode === "submit") loadMyScore();
+        } catch (error) {
+            setStatus(await readableFunctionError(error), "error");
+        } finally {
+            setJudgeBusy(false);
+        }
+    }
+
+    async function revealFailedCase() {
+        if (busy || !active || !lastSubmissionId || !client) return;
+        const accepted = window.confirm("Reveal one failed hidden case from your last submission? This is learning assistance, so future accepted attempts for this problem will earn at most 50% of its points.");
+        if (!accepted) return;
+
+        setJudgeBusy(true);
+        setStatus("Finding a useful failed hidden case…");
+        try {
+            const result = await invokeJudge({
+                problem_slug: active.slug,
+                language: "c",
+                submission_id: lastSubmissionId,
+                mode: "reveal"
+            });
+            renderRevealedCase(result);
+            setStatus("Failed hidden case revealed", "neutral");
+            loadMyScore();
+        } catch (error) {
+            setStatus(await readableFunctionError(error), "error");
+        } finally {
+            setJudgeBusy(false);
+        }
+    }
+
+    async function loadMyScore() {
+        if (!client || !user) {
+            $("myCodingScore").textContent = "0";
+            return;
+        }
+        const result = await client.from("coding_submissions")
+            .select("problem_id,points_awarded")
+            .eq("user_id", user.id);
+        if (result.error) return;
+        const best = {};
+        (result.data || []).forEach((entry) => {
+            best[entry.problem_id] = Math.max(best[entry.problem_id] || 0, entry.points_awarded || 0);
+        });
+        $("myCodingScore").textContent = String(Object.values(best).reduce((sum, value) => sum + value, 0));
+    }
+
+    async function showLeaderboard() {
+        if (!client) return;
+        const result = await client.rpc("get_coding_leaderboard", { p_topic: "c" });
+        const body = $("leaderboardRows");
+        body.replaceChildren();
+        (result.data || []).forEach((row) => {
+            const tableRow = document.createElement("tr");
+            [row.rank, row.student_alias, row.solved, row.points].forEach((value) => {
+                const cell = document.createElement("td");
+                cell.textContent = String(value);
+                tableRow.append(cell);
+            });
+            body.append(tableRow);
+        });
+        if (!body.children.length) {
+            const tableRow = document.createElement("tr");
+            const cell = document.createElement("td");
+            cell.colSpan = 4;
+            cell.textContent = "No accepted submissions yet.";
+            tableRow.append(cell);
+            body.append(tableRow);
+        }
+        $("leaderboardDialog").showModal();
+    }
+
+    async function initialize() {
+        initializeEditor();
+        if (client) {
+            const auth = await client.auth.getUser();
+            user = auth.data?.user || null;
+            client.auth.onAuthStateChange((_event, session) => {
+                user = session?.user || null;
+                loadMyScore();
+            });
+        }
+
+        $("reloadProblems").addEventListener("click", loadProblems);
+        $("codingTarget").addEventListener("change", filtersChanged);
+        $("codingDifficulty").addEventListener("change", filtersChanged);
+        $("toggleProblems").addEventListener("click", () => {
+            collapseProblems(!document.querySelector(".problem-sidebar").hidden);
+        });
+        $("runSamples").addEventListener("click", () => judge("run"));
+        $("submitCode").addEventListener("click", () => judge("submit"));
+        $("revealCase").addEventListener("click", revealFailedCase);
+        $("resetCode").addEventListener("click", () => {
+            if (active && window.confirm("Reset your code to the starter template?")) setEditorValue(starter(active));
+        });
+        $("toggleStatement").addEventListener("click", () => {
+            collapseStatement(!$("codingActive").classList.contains("statement-collapsed"));
+        });
+        $("openLeaderboard").addEventListener("click", showLeaderboard);
+
+        updateFallbackLines();
+        loadMyScore();
+    }
+
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initialize);
+    else initialize();
 }());
