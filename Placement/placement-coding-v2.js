@@ -29,6 +29,15 @@
         empty.querySelector("p").textContent = text;
     }
 
+    function showWorkspace(hasProblem) {
+        const empty = $("codingEmpty");
+        const workspace = $("codingActive");
+        empty.hidden = hasProblem;
+        workspace.hidden = !hasProblem;
+        empty.style.display = hasProblem ? "none" : "";
+        workspace.style.display = hasProblem ? "grid" : "none";
+    }
+
     function starter(problem) {
         const value = problem?.starter_code || {};
         return value.c || "#include <stdio.h>\n\nint main(void) {\n    // Write your solution here\n    return 0;\n}\n";
@@ -168,6 +177,10 @@
             const points = document.createElement("i");
             points.textContent = problem.points + " points";
             button.append(title, meta, points);
+            button.onclick = (event) => {
+                event.stopPropagation();
+                selectProblem(problem);
+            };
             box.append(button);
         });
     }
@@ -196,8 +209,7 @@
         $("problemCount").textContent = "0";
         $("toggleProblems").hidden = true;
         collapseProblems(false);
-        $("codingActive").hidden = true;
-        $("codingEmpty").hidden = false;
+        showWorkspace(false);
         setEmpty("Filters changed", "Click Load problems to fetch this exact company and difficulty selection.");
         showProblemMessage("Filters changed. Click Load problems when you are ready.");
     }
@@ -214,8 +226,7 @@
         showProblemMessage("Loading the selected problem set…");
         collapseProblems(false);
         active = null;
-        $("codingActive").hidden = true;
-        $("codingEmpty").hidden = false;
+        showWorkspace(false);
 
         try {
             const target = $("codingTarget").value;
@@ -231,7 +242,11 @@
             problems = result.data || [];
             renderList();
             $("toggleProblems").hidden = problems.length === 0;
-            setEmpty("Select a C problem", "Choose one problem from the list. The list will collapse automatically so you have more working space.");
+            if (problems.length) {
+                selectProblem(problems[0]);
+            } else {
+                setEmpty("No matching problems", "Choose another company or difficulty and load the problem set again.");
+            }
         } catch (_error) {
             problems = [];
             $("problemCount").textContent = "0";
@@ -267,31 +282,39 @@
     }
 
     function selectProblem(problem) {
-        active = problem;
-        $("codingEmpty").setAttribute("hidden", "");
-        $("codingActive").removeAttribute("hidden");
-        collapseStatement(false);
-        $("problemDifficulty").textContent = problem.difficulty;
-        $("problemTarget").textContent = targetLabels[problem.target_path] || problem.target_path || "General";
-        $("problemPoints").textContent = problem.points + " points";
-        $("problemTitle").textContent = problem.title;
-        $("problemText").textContent = problem.statement;
-        $("inputFormat").textContent = problem.input_format;
-        $("outputFormat").textContent = problem.output_format;
+        try {
+            active = problem;
+            showWorkspace(true);
+            collapseStatement(false);
+            $("problemDifficulty").textContent = problem.difficulty || "beginner";
+            $("problemTarget").textContent = targetLabels[problem.target_path] || problem.target_path || "General";
+            $("problemPoints").textContent = Number(problem.points || 0) + " points";
+            $("problemTitle").textContent = problem.title || "C problem";
+            $("problemText").textContent = problem.statement || "Problem statement unavailable.";
+            $("inputFormat").textContent = problem.input_format || "See the examples.";
+            $("outputFormat").textContent = problem.output_format || "See the examples.";
 
-        const constraints = $("problemConstraints");
-        constraints.replaceChildren();
-        arrayValue(problem.constraints).forEach((value) => {
-            const item = document.createElement("li");
-            item.textContent = value;
-            constraints.append(item);
-        });
+            const constraints = $("problemConstraints");
+            constraints.replaceChildren();
+            arrayValue(problem.constraints).forEach((value) => {
+                const item = document.createElement("li");
+                item.textContent = value;
+                constraints.append(item);
+            });
 
-        renderExamples(problem.examples);
-        setEditorValue(starter(problem));
-        resetResultState();
-        renderList();
-        collapseProblems(true);
+            renderExamples(problem.examples);
+            setEditorValue(starter(problem));
+            resetResultState();
+            renderList();
+            collapseProblems(true);
+        } catch (error) {
+            console.error("Unable to open coding problem", error);
+            active = null;
+            showWorkspace(false);
+            setEmpty("Problem could not open", "Refresh the page and load the problems again. If this continues, check the browser console for the reported field.");
+            collapseProblems(false);
+            renderList();
+        }
     }
 
     function renderTests(result, mode) {
