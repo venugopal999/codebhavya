@@ -1,0 +1,445 @@
+(function () {
+    "use strict";
+
+    const cloud = window.CodeBhavyaSupabase || {};
+    const client = cloud.client || null;
+    const $ = (id) => document.getElementById(id);
+    const parameters = new URLSearchParams(location.search);
+    const requestedTopic = parameters.get("topic");
+    const topic = ["c", "python", "dsa", "database", "ai-ml"].includes(requestedTopic) ? requestedTopic : "c";
+    const topicLabel = { c: "C", python: "Python", dsa: "DSA", database: "Database & SQL", "ai-ml": "AI & ML" }[topic];
+    const targetLabels = {
+        general: "General Campus Placement",
+        service: "Foundation & High-Volume Hiring",
+        product: topic === "database" ? "Product Engineering & Advanced SQL" : topic === "ai-ml" ? "Product Engineering & Applied ML" : "Product Engineering & DSA",
+        ai: "Data, AI & Analytics"
+    };
+    const companyLabels = {
+        tcs: "TCS", infosys: "Infosys", wipro: "Wipro", cognizant: "Cognizant",
+        accenture: "Accenture", capgemini: "Capgemini", hcltech: "HCLTech",
+        amazon: "Amazon", microsoft: "Microsoft", adobe: "Adobe", zoho: "Zoho"
+    };
+    const topicCatalogs = {
+        c: {
+            all: "All C topics", fundamentals: "Fundamentals & Number Logic",
+            "control-functions": "Control Flow & Functions", "arrays-matrices": "Arrays & Matrices",
+            strings: "Strings & Characters", "searching-sorting": "Searching & Sorting",
+            "pointers-memory": "Pointers & Dynamic Memory", "structures-files": "Structures & Record Processing",
+            "data-structures": "Data Structures", algorithms: "Algorithms & Optimisation",
+            "data-numerics": "Data & Numerical Computing"
+        },
+        python: {
+            all: "All Python topics", "python-basics": "Python Basics",
+            "control-functions": "Control Flow & Functions", collections: "Collections",
+            strings: "Strings & Parsing", oop: "Object-Oriented Python",
+            "exceptions-files": "Exceptions & Files", algorithms: "Algorithms",
+            "data-ai": "Data & AI Foundations"
+        },
+        dsa: {
+            all: "All DSA topics", "arrays-prefix": "Arrays & Prefix Techniques",
+            "strings-patterns": "Strings & Pattern Processing", "linked-lists": "Linked Lists",
+            "stacks-queues": "Stacks, Queues & Deques", "trees-bst": "Trees & BST",
+            "heaps-hashing": "Heaps, Hashing & Sets", graphs: "Graphs & Connectivity",
+            "searching-sorting": "Searching & Sorting", greedy: "Greedy & Intervals",
+            "dynamic-programming": "Dynamic Programming & Backtracking"
+        },
+        database: {
+            all: "All SQL topics", "sql-basics": "Basic SELECT & Projection",
+            "filtering-sorting": "Filtering & Sorting", "aggregates-grouping": "Aggregates & Grouping",
+            joins: "Joins & Relationships", "subqueries-ctes": "Subqueries & CTEs",
+            "strings-dates-case": "Strings, Dates & CASE", "set-operations": "Set Operations",
+            "window-functions": "Window Functions", "data-quality": "Data Quality & Validation",
+            "advanced-analytics": "Advanced SQL Analytics"
+        },
+        "ai-ml": {
+            all: "All AI & ML topics", "vectors-matrices": "Vectors, Matrices & Linear Models",
+            statistics: "Statistics & Information Measures", probability: "Probability & Probabilistic Models",
+            "data-preparation": "Data Preparation & Feature Engineering",
+            regression: "Regression & Optimisation", classification: "Classification & Metrics",
+            clustering: "Clustering & Unsupervised Learning", "model-evaluation": "Model Evaluation & Selection",
+            "neural-networks": "Neural Networks & Deep Learning",
+            "responsible-production": "Responsible AI & Production Monitoring"
+        }
+    };
+    const topicLabels = topicCatalogs[topic];
+    const difficultyOrder = { beginner: 1, intermediate: 2, advanced: 3 };
+    const PAGE_SIZE = 12;
+    let user = null;
+    let loadedProblems = [];
+    let attemptStates = new Map();
+    let currentPage = 1;
+
+    function arrayValue(value) {
+        if (Array.isArray(value)) return value;
+        if (typeof value !== "string") return [];
+        try {
+            const parsed = JSON.parse(value);
+            return Array.isArray(parsed) ? parsed : [];
+        } catch (_error) {
+            return [];
+        }
+    }
+
+    function mode() {
+        return $("libraryMode").value;
+    }
+
+    function setMode(value) {
+        const selected = ["topic", "track", "company"].includes(value) ? value : "topic";
+        $("libraryMode").value = selected;
+        document.querySelectorAll("[data-library-mode]").forEach((button) => {
+            button.setAttribute("aria-selected", String(button.dataset.libraryMode === selected));
+        });
+        $("libraryTopicField").hidden = selected !== "topic";
+        $("libraryTrackField").hidden = selected !== "track";
+        $("libraryCompanyField").hidden = selected !== "company";
+        $("libraryModeHelp").textContent = selected === "topic"
+            ? `Choose a ${topicLabel} topic and practise its patterns in increasing difficulty.`
+            : selected === "track"
+                ? "Choose an understandable preparation track based on the hiring pattern you expect."
+                : "Choose a company profile to see original CodeBhavya problems mapped to its likely emphasis. Verify the current role notification too.";
+        resetResults("Learning path changed", "Select Load problems to build the new practice set.");
+    }
+
+    function resetResults(title, text) {
+        loadedProblems = [];
+        attemptStates = new Map();
+        currentPage = 1;
+        $("libraryProblemCount").textContent = "0";
+        $("problemResultsTitle").textContent = title;
+        $("problemLibraryGrid").replaceChildren();
+        $("problemLibraryGrid").hidden = true;
+        $("problemPagination").hidden = true;
+        const empty = $("problemLibraryEmpty");
+        empty.querySelector("h3").textContent = title;
+        empty.querySelector("p").textContent = text;
+        empty.hidden = false;
+    }
+
+    function currentFocus() {
+        if (mode() === "topic") return topicLabels[$("libraryTopic").value] || `Selected ${topicLabel} topic`;
+        if (mode() === "track") return targetLabels[$("libraryTrack").value] || "Selected preparation track";
+        return (companyLabels[$("libraryCompany").value] || "Selected company") + " preparation collection";
+    }
+
+    function problemUrl(problem) {
+        const query = new URLSearchParams({ topic, problem: problem.slug });
+        query.set("mode", mode());
+        query.set("difficulty", $("libraryDifficulty").value);
+        if (mode() === "topic") query.set("group", $("libraryTopic").value);
+        else if (mode() === "track") query.set("track", $("libraryTrack").value);
+        else query.set("company", $("libraryCompany").value);
+        return "solve.html?" + query.toString();
+    }
+
+    function makeTag(text, className) {
+        const tag = document.createElement("span");
+        tag.className = className || "";
+        tag.textContent = text;
+        return tag;
+    }
+
+    function renderProblems() {
+        const search = $("librarySearch").value.trim().toLowerCase();
+        const filtered = loadedProblems.filter((problem) => {
+            if (!search) return true;
+            const searchable = [
+                problem.title,
+                problem.subtopic,
+                problem.problem_type,
+                targetLabels[problem.target_path],
+                ...arrayValue(problem.company_tags).map((company) => companyLabels[company] || company),
+                ...arrayValue(problem.skill_tags)
+            ].join(" ").toLowerCase();
+            return searchable.includes(search);
+        });
+
+        const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+        currentPage = Math.min(currentPage, totalPages);
+        const visible = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+        const grid = $("problemLibraryGrid");
+        grid.replaceChildren();
+        $("libraryProblemCount").textContent = String(filtered.length);
+        $("problemResultsTitle").textContent = search
+            ? `Search results in ${currentFocus()}`
+            : currentFocus();
+
+        if (!filtered.length) {
+            grid.hidden = true;
+            const empty = $("problemLibraryEmpty");
+            empty.querySelector("h3").textContent = "No matching problems";
+            empty.querySelector("p").textContent = search
+                ? "Try a broader search or remove the search text."
+                : "Choose another topic, preparation track or difficulty.";
+            empty.hidden = false;
+            $("problemPagination").hidden = true;
+            return;
+        }
+
+        $("problemLibraryEmpty").hidden = true;
+        grid.hidden = false;
+        visible.forEach((problem) => {
+            const state = attemptStates.get(problem.id) || { attempted: false, solved: false, best: 0 };
+            const card = document.createElement("article");
+            card.className = "library-problem-card";
+
+            const top = document.createElement("div");
+            top.className = "library-card-top";
+            const tags = document.createElement("div");
+            tags.className = "library-card-tags";
+            tags.append(
+                makeTag(problem.difficulty || "beginner", "difficulty-tag " + (problem.difficulty || "beginner")),
+                makeTag(problem.subtopic || (topic === "database" ? "SQL query" : `${topicLabel} programming`), "topic-tag")
+            );
+            const status = makeTag(state.solved ? "Solved" : (state.attempted ? "Attempted" : "New"), "progress-tag " + (state.solved ? "solved" : (state.attempted ? "attempted" : "new")));
+            top.append(tags, status);
+
+            const heading = document.createElement("h3");
+            heading.textContent = problem.title;
+            const description = document.createElement("p");
+            description.className = "library-card-description";
+            description.textContent = problem.statement;
+
+            const skills = document.createElement("div");
+            skills.className = "library-skill-list";
+            arrayValue(problem.skill_tags).slice(0, 3).forEach((skill) => skills.append(makeTag(skill)));
+
+            const footer = document.createElement("footer");
+            const metadata = document.createElement("div");
+            metadata.append(
+                makeTag(`${problem.points} points`),
+                makeTag((problem.problem_type || "complete-program").replaceAll("-", " ")),
+                makeTag(mode() === "company"
+                    ? (companyLabels[$("libraryCompany").value] || "Company collection")
+                    : (targetLabels[problem.target_path] || "General Campus Placement"))
+            );
+            const link = document.createElement("a");
+            link.href = problemUrl(problem);
+            link.textContent = state.solved ? "Solve again →" : "Open challenge →";
+            link.setAttribute("aria-label", `${state.solved ? "Solve again" : "Open challenge"}: ${problem.title}`);
+            footer.append(metadata, link);
+
+            card.append(top, heading, description, skills, footer);
+            grid.append(card);
+        });
+
+        const pagination = $("problemPagination");
+        pagination.hidden = filtered.length <= PAGE_SIZE;
+        $("problemPageStatus").textContent = `Page ${currentPage} of ${totalPages} · showing ${(currentPage - 1) * PAGE_SIZE + 1}–${Math.min(currentPage * PAGE_SIZE, filtered.length)} of ${filtered.length}`;
+        $("previousProblemPage").disabled = currentPage === 1;
+        $("nextProblemPage").disabled = currentPage === totalPages;
+    }
+
+    async function loadAttemptStates(problemIds) {
+        attemptStates = new Map();
+        if (!client || !user || !problemIds.length) return;
+        const result = await client.from("coding_submissions")
+            .select("problem_id,status,points_awarded")
+            .eq("user_id", user.id)
+            .in("problem_id", problemIds)
+            .limit(5000);
+        if (result.error) return;
+        (result.data || []).forEach((row) => {
+            const state = attemptStates.get(row.problem_id) || { attempted: false, solved: false, best: 0 };
+            state.attempted = true;
+            state.solved = state.solved || String(row.status).toLowerCase() === "accepted" || Number(row.points_awarded) > 0;
+            state.best = Math.max(state.best, Number(row.points_awarded) || 0);
+            attemptStates.set(row.problem_id, state);
+        });
+    }
+
+    function readableError(error) {
+        const message = String(error?.message || "Unknown database error");
+        if (/topic_group|subtopic|problem_type|skill_tags|column/i.test(message)) {
+            return `Run the latest placement-v2-schema.sql and ${topicLabel} coding seed to enable this problem library.`;
+        }
+        if (/failed to fetch|networkerror|load failed/i.test(message)) {
+            return "The browser cannot reach the database. Check the Supabase project and internet connection.";
+        }
+        return "Problems could not load: " + message;
+    }
+
+    async function loadProblems(event) {
+        event.preventDefault();
+        if (!client) {
+            resetResults("Database connection unavailable", "Confirm the existing Supabase configuration and try again.");
+            return;
+        }
+
+        const button = $("loadLibraryProblems");
+        button.disabled = true;
+        button.textContent = "Loading…";
+        $("problemResultsTitle").textContent = "Building your practice set…";
+        $("problemLibraryEmpty").hidden = false;
+        $("problemLibraryGrid").hidden = true;
+
+        try {
+            let query = client.from("coding_problems")
+                .select("id,slug,title,topic,topic_group,subtopic,problem_type,skill_tags,company_tags,difficulty,target_path,statement,points")
+                .eq("is_published", true)
+                .eq("topic", topic);
+            if (mode() === "topic" && $("libraryTopic").value !== "all") {
+                query = query.eq("topic_group", $("libraryTopic").value);
+            }
+            if (mode() === "track") query = query.eq("target_path", $("libraryTrack").value);
+            if (mode() === "company") query = query.contains("company_tags", [$("libraryCompany").value]);
+            if ($("libraryDifficulty").value !== "all") query = query.eq("difficulty", $("libraryDifficulty").value);
+
+            const result = await query.limit(500);
+            if (result.error) throw result.error;
+            loadedProblems = (result.data || []).sort((a, b) => {
+                const difficultyDifference = (difficultyOrder[a.difficulty] || 9) - (difficultyOrder[b.difficulty] || 9);
+                return difficultyDifference || a.title.localeCompare(b.title);
+            });
+            currentPage = 1;
+            await loadAttemptStates(loadedProblems.map((problem) => problem.id));
+            renderProblems();
+        } catch (error) {
+            loadedProblems = [];
+            resetResults("Problems could not load", readableError(error));
+            console.error("Unable to load problem library", error);
+        } finally {
+            button.disabled = false;
+            button.textContent = "Load problems";
+        }
+    }
+
+    async function loadMyScore() {
+        if (!client || !user) {
+            $("myCodingScore").textContent = "0";
+            return;
+        }
+        const result = await client.rpc("get_my_coding_summary", { p_topic: topic });
+        if (result.error) return;
+        $("myCodingScore").textContent = String(Number(result.data?.points) || 0);
+    }
+
+    async function showLeaderboard() {
+        if (!client) return;
+        const result = await client.rpc("get_coding_leaderboard", { p_topic: topic });
+        const body = $("leaderboardRows");
+        body.replaceChildren();
+        (result.data || []).forEach((row) => {
+            const tableRow = document.createElement("tr");
+            [row.rank, row.student_alias, row.solved, row.points].forEach((value) => {
+                const cell = document.createElement("td");
+                cell.textContent = String(value);
+                tableRow.append(cell);
+            });
+            body.append(tableRow);
+        });
+        if (!body.children.length) {
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+            cell.colSpan = 4;
+            cell.textContent = "No accepted submissions yet.";
+            row.append(cell);
+            body.append(row);
+        }
+        $("leaderboardDialog").showModal();
+    }
+
+    async function initialize() {
+        document.title = `${topicLabel} Problem Library | CodeBhavya`;
+        $("libraryBreadcrumb").textContent = topic === "database" ? "SQL Problem Library" : topic === "ai-ml" ? "AI & ML Applied Lab" : `${topicLabel} Problem Library`;
+        $("libraryEyebrow").textContent = `100-PROBLEM ${topic === "database" ? "SQL" : topic === "ai-ml" ? "APPLIED AI & ML" : topicLabel.toUpperCase()} MASTERY PATH`;
+        $("libraryHeading").textContent = topic === "database" ? "SQL Problem Library" : topic === "ai-ml" ? "AI & ML Applied Problem Library" : `${topicLabel} Problem Library`;
+        $("libraryIntroduction").textContent = topic === "dsa"
+            ? "Master 100 interview-grade DSA problems topic by topic, then solve every challenge in C or Python."
+            : topic === "database"
+                ? "Master SQL one query pattern at a time. Every challenge runs against isolated datasets with visible samples and protected hidden cases."
+            : topic === "ai-ml"
+                ? "Implement vectors, statistics, preprocessing, models, evaluation and responsible-AI checks in pure Python. Every challenge has visible samples and protected hidden cases."
+            : `Master one ${topicLabel} programming pattern at a time, follow a preparation track, or open a transparent company-focused collection.`;
+        $("leaderboardEyebrow").textContent = `${topicLabel.toUpperCase()} PLACEMENT RANKING`;
+        $("navMcq").href = `mcq-library.html?topic=${topic}`;
+        $("navQuiz").href = `quiz.html?topic=${topic}`;
+        $("navQuiz").textContent = `${topicLabel} Quiz`;
+        $("navCoding").href = `coding.html?topic=${topic}`;
+        if (topic === "database") $("navCoding").textContent = "SQL Arena";
+        if (topic === "ai-ml") $("navCoding").textContent = "AI/ML Lab";
+        $("navProgress").href = `progress.html?topic=${topic}`;
+        if (topic === "database") {
+            const productTrack = $("libraryTrack").querySelector('option[value="product"]');
+            if (productTrack) productTrack.textContent = "Product Engineering & Advanced SQL";
+            const cards = document.querySelectorAll("#trackGuideDialog .track-guide-grid article");
+            if (cards[0]) cards[0].querySelector("p").textContent = "Balanced retrieval, filtering, grouping and joins when the target role is not fixed.";
+            if (cards[1]) cards[1].querySelector("p").textContent = "Accurate SELECT, filtering, aggregates, joins and dependable easy-to-medium SQL.";
+            if (cards[2]) { cards[2].querySelector("h3").textContent = "Product Engineering & Advanced SQL"; cards[2].querySelector("p").textContent = "CTEs, windows, analytics, data quality and performance-aware query reasoning."; }
+            if (cards[3]) cards[3].querySelector("p").textContent = "Aggregations, time-series queries, cohorts, data quality and analytical correctness.";
+        }
+        if (topic === "ai-ml") {
+            const productTrack = $("libraryTrack").querySelector('option[value="product"]');
+            if (productTrack) productTrack.textContent = "Product Engineering & Applied ML";
+            const cards = document.querySelectorAll("#trackGuideDialog .track-guide-grid article");
+            if (cards[0]) cards[0].querySelector("p").textContent = "Balanced vectors, statistics, preprocessing, core models and evaluation for general AI-aware roles.";
+            if (cards[1]) cards[1].querySelector("p").textContent = "Reliable numerical foundations, standard model calculations and clear output reasoning for entry-level screening.";
+            if (cards[2]) { cards[2].querySelector("h3").textContent = "Product Engineering & Applied ML"; cards[2].querySelector("p").textContent = "Optimisation, neural networks, monitoring and production-minded model behaviour."; }
+            if (cards[3]) cards[3].querySelector("p").textContent = "Probability, regression, classification, clustering, metrics and responsible model evaluation.";
+        }
+        const topicSelect = $("libraryTopic");
+        topicSelect.replaceChildren();
+        Object.entries(topicLabels).forEach(([value, label]) => {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = label;
+            topicSelect.append(option);
+        });
+        if (client) {
+            const auth = await client.auth.getUser();
+            user = auth.data?.user || null;
+            client.auth.onAuthStateChange((_event, session) => {
+                user = session?.user || null;
+                loadMyScore();
+            });
+        }
+
+        document.querySelectorAll("[data-library-mode]").forEach((button) => {
+            button.addEventListener("click", () => setMode(button.dataset.libraryMode));
+        });
+        $("problemFilterForm").addEventListener("submit", loadProblems);
+        $("librarySearch").addEventListener("input", () => {
+            if (loadedProblems.length) {
+                currentPage = 1;
+                renderProblems();
+            }
+        });
+        [$("libraryTopic"), $("libraryTrack"), $("libraryCompany"), $("libraryDifficulty")].forEach((control) => {
+            control.addEventListener("change", () => resetResults("Filters changed", "Select Load problems to build the new practice set."));
+        });
+        $("openTrackGuide").addEventListener("click", () => $("trackGuideDialog").showModal());
+        $("openLeaderboard").addEventListener("click", showLeaderboard);
+        $("previousProblemPage").addEventListener("click", () => {
+            if (currentPage > 1) {
+                currentPage -= 1;
+                renderProblems();
+                $("problemResultsTitle").scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        });
+        $("nextProblemPage").addEventListener("click", () => {
+            currentPage += 1;
+            renderProblems();
+            $("problemResultsTitle").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        const requestedMode = ["topic", "track", "company"].includes(parameters.get("mode")) ? parameters.get("mode") : "topic";
+        if ([...$("libraryTopic").options].some((option) => option.value === parameters.get("group"))) {
+            $("libraryTopic").value = parameters.get("group");
+        }
+        if ([...$("libraryTrack").options].some((option) => option.value === parameters.get("track"))) {
+            $("libraryTrack").value = parameters.get("track");
+        }
+        if ([...$("libraryCompany").options].some((option) => option.value === parameters.get("company"))) {
+            $("libraryCompany").value = parameters.get("company");
+        }
+        if ([...$("libraryDifficulty").options].some((option) => option.value === parameters.get("difficulty"))) {
+            $("libraryDifficulty").value = parameters.get("difficulty");
+        }
+        setMode(requestedMode);
+        resetResults("Choose filters to begin", `Select Load problems to build your focused ${topicLabel} practice set.`);
+        loadMyScore();
+    }
+
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initialize);
+    else initialize();
+}());
