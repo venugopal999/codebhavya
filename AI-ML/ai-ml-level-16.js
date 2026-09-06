@@ -21,7 +21,7 @@
         let normA = 0;
         let normB = 0;
 
-        for (let index = 0; index < a.length; index += 1)) {
+        for (let index = 0; index < a.length; index += 1) {
             dot += a[index] * b[index];
             normA += a[index] * a[index];
             normB += b[index] * b[index];
@@ -250,7 +250,7 @@
                         0,
                         cosine(
                             itemVectors[candidate],
-                            itemVectors[seenMultiUser]
+                            itemVectors[seenItem]
                         )
                     );
 
@@ -933,7 +933,7 @@
             render();
         });
 
-        resetButton.addEventListener("click",click", reset);
+        resetButton.addEventListener("click", reset);
 
         [
             domainInput,
