@@ -2945,120 +2945,120 @@
         );
     }
 
-    function initInterviews() {
-        const container = get("interviewList");
+function initInterviews() {
+    const container = get("interviewList");
 
-        if (!container || container.dataset.cbActive) return;
-        container.dataset.cbActive = "true";
+    if (!container || container.dataset.cbActive) return;
+    container.dataset.cbActive = "true";
 
-        const questions = [
-            [
-                "What is a recommendation system?",
-                "It is a decision system that retrieves, scores and ranks eligible items for a user and context, then learns from outcomes while respecting product constraints."
-            ],
-            [
-                "Content-based versus collaborative filtering?",
-                "Content methods match user profiles with item attributes and can serve new items. Collaborative methods use shared behaviour to discover relationships not explicitly present in metadata, but suffer from cold start."
-            ],
-            [
-                "User-based versus item-based collaborative filtering?",
-                "User-based CF aggregates preferences from similar users. Item-based CF recommends items similar to what the target user consumed and is often more stable and cacheable."
-            ],
-            [
-                "How do you calculate a collaborative prediction?",
-                "Select neighbours with sufficient overlap, calculate adjusted similarities, take a similarity-weighted preference aggregate and normalize by total absolute similarity."
-            ],
-            [
-                "Explain matrix factorization.",
-                "It learns low-dimensional user and item vectors so their dot product, optionally with global and bias terms, reconstructs observed preference while regularization limits overfitting."
-            ],
-            [
-                "How is implicit feedback different from explicit ratings?",
-                "An observed implicit action gives positive evidence with varying confidence, while an unobserved pair is not a confirmed dislike. Training often uses confidence weighting or sampled ranking objectives."
-            ],
-            [
-                "What is BPR?",
-                "Bayesian Personalized Ranking is a pairwise objective that increases the score of an observed positive item relative to a sampled unobserved item for the same user."
-            ],
-            [
-                "How do you solve cold start?",
-                "For new users use onboarding, context and segment popularity. For new items use metadata and controlled exploration. A hybrid system shifts toward collaborative evidence as interactions grow."
-            ],
-            [
-                "Precision@K versus Recall@K?",
-                "Precision@K measures the relevant fraction of the displayed K items. Recall@K measures how much of the user’s known relevant set appears within those K positions."
-            ],
-            [
-                "Why use NDCG?",
-                "NDCG supports graded relevance and discounts items at lower ranks, so it evaluates whether the strongest relevant items appear early in the list."
-            ],
-            [
-                "How would you add diversity?",
-                "Retrieve a high-recall candidate set, then re-rank using relevance minus similarity to already-selected items, with category, creator, freshness and fairness constraints."
-            ],
-            [
-                "How should a recommender be evaluated online?",
-                "Use controlled experiments with guardrails such as click-through rate, conversion, retention, diversity, latency, complaints and long-term satisfaction."
-            ]
-        ];
+    const questions = [
+        [
+            "What is a recommendation system?",
+            "It is a decision system that retrieves, scores and ranks eligible items for a user and context, then learns from outcomes while respecting product constraints."
+        ],
+        [
+            "Content-based versus collaborative filtering?",
+            "Content methods match user profiles with item attributes and can serve new items. Collaborative methods use shared behaviour to discover relationships not explicitly present in metadata, but suffer from cold start."
+        ],
+        [
+            "User-based versus item-based collaborative filtering?",
+            "User-based CF aggregates preferences from similar users. Item-based CF recommends items similar to what the target user consumed and is often more stable and cacheable."
+        ],
+        [
+            "How do you calculate a collaborative prediction?",
+            "Select neighbours with sufficient overlap, calculate adjusted similarities, take a similarity-weighted preference aggregate and normalize by total absolute similarity."
+        ],
+        [
+            "Explain matrix factorization.",
+            "It learns low-dimensional user and item vectors so their dot product, optionally with global and bias terms, reconstructs observed preference while regularization limits overfitting."
+        ],
+        [
+            "How is implicit feedback different from explicit ratings?",
+            "An observed implicit action gives positive evidence with varying confidence, while an unobserved pair is not a confirmed dislike. Training often uses confidence weighting or sampled ranking objectives."
+        ],
+        [
+            "What is BPR?",
+            "Bayesian Personalized Ranking is a pairwise objective that increases the score of an observed positive item relative to a sampled unobserved item for the same user."
+        ],
+        [
+            "How do you solve cold start?",
+            "For new users use onboarding, context and segment popularity. For new items use metadata and controlled exploration. A hybrid system shifts toward collaborative evidence as interactions grow."
+        ],
+        [
+            "Precision@K versus Recall@K?",
+            "Precision@K measures the relevant fraction of the displayed K items. Recall@K measures how much of the user’s known relevant set appears within those K positions."
+        ],
+        [
+            "Why use NDCG?",
+            "NDCG supports graded relevance and discounts items at lower ranks, so it evaluates whether the strongest relevant items appear early in the list."
+        ],
+        [
+            "How would you add diversity?",
+            "Retrieve a high-recall candidate set, then re-rank using relevance minus similarity to already-selected items, with category, creator, freshness or safety constraints."
+        ],
+        [
+            "Design a production recommender.",
+            "Log eligible exposures and actions, build chronological features, retrieve candidates from several sources, score and re-rank them, cache where useful, run offline Top-K evaluation, experiment with guardrails and monitor quality, coverage, fairness, drift and latency."
+        ]
+    ];
 
-        container.innerHTML = questions
-            .map(function (question, index) {
-                return (
-                    '<article class="aiml-interview-item">' +
-                    '<button type="button" class="aiml-interview-question" aria-expanded="false">' +
-                    '<span class="aiml-interview-number">' +
-                    (index + 1) +
-                    ".</span>" +
-                    "<strong>" +
-                    escapeHtml(question[0]) +
-                    "</strong>" +
-                    '<span class="aiml-interview-toggle">+</span>' +
-                    "</button>" +
-                    '<div class="aiml-interview-answer" hidden>' +
-                    "<p>" +
-                    escapeHtml(question[1]) +
-                    "</p>" +
-                    "</div>" +
-                    "</article>"
-                );
-            })
-            .join("");
+    container.innerHTML = questions.map(function (item, index) {
+        return `
+            <article class="aiml-interview-item">
+                <div class="aiml-interview-question">
+                    <span>${index + 1}.</span>
 
-        container.addEventListener(
-            "click",
-            function (event) {
-                const button = event.target.closest(
-                    ".aiml-interview-question"
-                );
+                    <strong>
+                        ${escapeHtml(item[0])}
+                    </strong>
 
-                if (!button) return;
+                    <button
+                        type="button"
+                        aria-expanded="false"
+                    >
+                        Show Answer
+                    </button>
+                </div>
 
-                const item = button.closest(
-                    ".aiml-interview-item"
-                );
+                <div
+                    class="aiml-interview-answer"
+                    hidden
+                >
+                    <p>${escapeHtml(item[1])}</p>
+                </div>
+            </article>
+        `;
+    }).join("");
 
-                const answer = item.querySelector(
-                    ".aiml-interview-answer"
-                );
-
-                const toggle = button.querySelector(
-                    ".aiml-interview-toggle"
-                );
-
-                const opening = answer.hidden;
-                answer.hidden = !opening;
-
-                button.setAttribute(
-                    "aria-expanded",
-                    String(opening)
-                );
-
-                toggle.textContent =
-                    opening ? "−" : "+";
-            }
+    container.addEventListener("click", function (event) {
+        const button = event.target.closest(
+            ".aiml-interview-question button"
         );
-    }
+
+        if (!button) return;
+
+        const interviewItem = button.closest(
+            ".aiml-interview-item"
+        );
+
+        const answer = interviewItem.querySelector(
+            ".aiml-interview-answer"
+        );
+
+        const opening = answer.hidden;
+
+        answer.hidden = !opening;
+
+        button.textContent = opening
+            ? "Hide Answer"
+            : "Show Answer";
+
+        button.setAttribute(
+            "aria-expanded",
+            String(opening)
+        );
+    });
+}
 
     function init() {
         initRankingLab();
