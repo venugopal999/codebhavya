@@ -411,19 +411,33 @@
                 context.stroke();
             }
 
-            if (step === 0) {
-                context.fillStyle = "#cfe7fb";
-                context.font = "700 17px Inter, sans-serif";
-                context.textAlign = "center";
+          if (step === 0) {
+    const promptWidth = Math.min(width - padding * 2, 390);
 
-                context.fillText(
-                    "Press Show Raw Geometry to begin PCA",
-                    width / 2,
-                    height / 2
-                );
+    context.fillStyle = "rgba(6, 20, 38, .88)";
+    context.strokeStyle = "#2b6389";
+    context.lineWidth = 1;
 
-                return;
-            }
+    context.beginPath();
+    context.roundRect(
+        (width - promptWidth) / 2,
+        18,
+        promptWidth,
+        48,
+        12
+    );
+    context.fill();
+    context.stroke();
+
+    context.fillStyle = "#cfe7fb";
+    context.font = "700 15px Inter, sans-serif";
+    context.textAlign = "center";
+    context.fillText(
+        "Raw data preview • begin the PCA analysis",
+        width / 2,
+        48
+    );
+}
 
             if (usePrepared && minX < 0 && maxX > 0) {
                 const originX = mapPoint([0, 0]).x;
