@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Build an ATS-ready resume, defend projects and collect verifiable placement evidence with private, actionable audits.">
+    <title>Resume &amp; Project Evidence Lab | CodeBhavya</title>
+    <link rel="canonical" href="https://codebhavya.com/Placement/evidence-lab.html">
+    <link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="placement.css?v=2"><link rel="stylesheet" href="placement-evidence-lab.css?v=1">
+</head>
+<body class="placement-page evidence-page">
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="" class="main-logo"><span class="brand-name"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></span></a>
+    <nav class="top-nav" aria-label="Main navigation"><a href="index.html">Placement</a><a href="practice.html">Practice Hub</a><a href="evidence-lab.html" class="active">Evidence Lab</a><a href="interview.html">Interview Coach</a><a href="progress.html">My Progress</a></nav>
+</header>
+<main class="evidence-main">
+    <nav class="evidence-breadcrumb" aria-label="Breadcrumb"><a href="index.html">Placement</a><span>›</span><a href="practice.html">Practice Hub</a><span>›</span><strong>Evidence Lab</strong></nav>
+    <section class="evidence-hero"><div><small>BUILD PROOF · AUDIT HONESTLY · DEFEND CLEARLY</small><h1>Resume &amp; Project Evidence Lab</h1><p>Turn skills, projects and achievements into interview-ready proof. Every audit explains the missing evidence and gives a concrete improvement—not an unexplained score.</p></div><div class="privacy-seal"><strong>Private by design</strong><span>Your resume, project stories and proof links are available only to your signed-in account. Nothing here is added to a public leaderboard.</span></div></section>
+
+    <section class="evidence-state" id="evidenceLoading"><h2>Building your evidence dashboard…</h2><p>Checking your resume, project stories and proof items.</p></section>
+    <section class="evidence-state" id="evidenceSignedOut" hidden><span class="section-label">PERSONAL EVIDENCE</span><h2>Sign in to build your private placement portfolio.</h2><p>Use the existing Placement sign-in. Your work will then stay connected to your account.</p><a href="index.html#cloudProgress">Go to Placement sign in</a></section>
+    <section class="evidence-state error" id="evidenceError" hidden><span class="section-label">SETUP NEEDS ATTENTION</span><h2>Evidence Lab could not load.</h2><p id="evidenceErrorMessage">Please try again.</p><button class="evidence-button" type="button" id="retryEvidence">Try again</button></section>
+
+    <div class="evidence-dashboard" id="evidenceDashboard" hidden>
+        <section class="evidence-metrics" aria-label="Evidence readiness summary">
+            <article class="readiness-card"><small>EVIDENCE READINESS</small><strong id="readinessMetric">0%</strong><span>resume + projects + proof</span></article>
+            <article><small>RESUME AUDIT</small><strong id="resumeMetric">0 / 100</strong><span id="resumeMetricNote">Not audited</span></article>
+            <article><small>PROJECT STORIES</small><strong id="projectMetric">0</strong><span id="projectMetricNote">No stories yet</span></article>
+            <article><small>DEFENSIBLE PROJECTS</small><strong id="defensibleMetric">0</strong><span>score 70 or higher</span></article>
+            <article><small>VERIFIED PROOF LINKS</small><strong id="proofMetric">0</strong><span>certificates, work and achievements</span></article>
+        </section>
+
+        <section class="evidence-panel"><header><div><small class="section-label">DO THIS NEXT</small><h2>Actions chosen from your missing evidence</h2><p>Complete the first unfinished task before adding more claims.</p></div></header><div class="action-list" id="nextEvidenceActions"></div></section>
+
+        <div class="evidence-grid">
+            <section class="evidence-panel"><header><div><small class="section-label">ATS-FRIENDLY RESUME</small><h2>Your one-page evidence resume</h2><p>Build, audit and print a clean resume without decorative ATS obstacles.</p></div><a class="outline-link" href="resume-builder.html">Open Resume Builder →</a></header><div id="resumeSummary"></div><ul class="audit-list" id="resumeRecommendations"></ul></section>
+            <section class="evidence-panel"><header><div><small class="section-label">PROJECT DEFENCE</small><h2>Stories you can explain under questioning</h2><p>Capture ownership, decisions, failures, testing and measurable results.</p></div><a class="outline-link" href="project-story.html">Add project story →</a></header><div class="project-list" id="projectList"></div></section>
+        </div>
+
+        <section class="evidence-panel"><header><div><small class="section-label">PROOF VAULT</small><h2>Add verifiable evidence</h2><p>Save links only when they directly support a resume or interview claim.</p></div></header>
+            <form class="evidence-form" id="proofForm">
+                <label>Evidence type<select id="proofType" required><option value="certificate">Certificate</option><option value="internship">Internship</option><option value="achievement">Achievement</option><option value="hackathon">Hackathon</option><option value="publication">Publication</option><option value="volunteering">Volunteering</option><option value="other">Other evidence</option></select></label>
+                <label>Title<input id="proofTitle" required maxlength="120" placeholder="Example: SQL Intermediate Certificate"></label>
+                <label>Issuing organization<input id="proofOrganization" maxlength="120" placeholder="Organization or platform"></label>
+                <label>Date<input id="proofDate" type="date"></label>
+                <label class="wide">Public proof URL<input id="proofUrl" type="url" required maxlength="500" placeholder="https://..."><span class="form-help">Use a certificate, repository, publication or official result link that an evaluator can open.</span></label>
+                <label class="wide">What this proves<textarea id="proofDescription" maxlength="600" rows="3" placeholder="State the skill, work or result this evidence supports."></textarea></label>
+                <button class="evidence-button" type="submit" id="saveProof">Save proof item</button><p class="evidence-error" id="proofStatus" role="status"></p>
+            </form>
+            <div class="proof-list" id="proofList"></div>
+        </section>
+    </div>
+</main>
+<script src="supabase-config.js?v=1"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-client.js?v=1"></script><script src="placement-evidence-dashboard.js?v=1"></script>
+</body>
+</html>

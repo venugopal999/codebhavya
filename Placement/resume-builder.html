@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Build, audit and print a clean ATS-friendly placement resume with evidence-based correction guidance.">
+    <title>ATS Resume Builder | CodeBhavya</title>
+    <link rel="canonical" href="https://codebhavya.com/Placement/resume-builder.html">
+    <link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="placement.css?v=2"><link rel="stylesheet" href="placement-evidence-lab.css?v=1">
+</head>
+<body class="placement-page evidence-page resume-builder-page">
+<header class="top-header print-hide"><a href="../index.html" class="logo codebhavya-new-logo" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="" class="main-logo"><span class="brand-name"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></span></a><nav class="top-nav"><a href="index.html">Placement</a><a href="practice.html">Practice Hub</a><a href="evidence-lab.html">Evidence Lab</a><a href="resume-builder.html" class="active">Resume Builder</a><a href="interview.html">Interview Coach</a></nav></header>
+<main class="evidence-main">
+    <nav class="evidence-breadcrumb print-hide"><a href="evidence-lab.html">Evidence Lab</a><span>›</span><strong>ATS Resume Builder</strong></nav>
+    <section class="evidence-hero print-hide"><div><small>WRITE FOR PEOPLE · STRUCTURE FOR ATS</small><h1>One-Page Evidence Resume Builder</h1><p>Build a simple, readable resume with defensible claims. The audit rewards clear direction, project depth, action verbs, measurable results and proof links.</p></div><div class="privacy-seal"><strong>No invented claims</strong><span>Use numbers only when you can explain how they were measured. Honest evidence is stronger than exaggerated impact.</span></div></section>
+    <section class="evidence-state" id="resumeLoading"><h2>Opening your private resume…</h2></section>
+    <section class="evidence-state" id="resumeSignedOut" hidden><h2>Sign in before building your resume.</h2><p>Your draft is private and stored against your Placement account.</p><a href="index.html#cloudProgress">Go to Placement sign in</a></section>
+    <section class="evidence-state error" id="resumeError" hidden><h2>Resume Builder could not open.</h2><p id="resumeErrorMessage"></p><button class="evidence-button" type="button" id="retryResume">Try again</button></section>
+    <div class="builder-layout" id="resumeWorkspace" hidden>
+        <section class="builder-card print-hide"><header><div><small class="section-label">YOUR CONTENT</small><h2>Resume evidence</h2><p>Required fields are marked by the browser. Your latest audit is saved with the draft.</p></div></header><div class="builder-scroll">
+            <form class="builder-form" id="resumeForm">
+                <label>Full name<input id="fullName" required maxlength="100"></label><label>Target role<input id="targetRole" required maxlength="100" placeholder="Example: Junior Software Engineer"></label>
+                <label>Email<input id="resumeEmail" type="email" required maxlength="160"></label><label>Phone<input id="resumePhone" required maxlength="30"></label><label class="wide">Location<input id="resumeLocation" maxlength="100" placeholder="City, State"></label>
+                <label>LinkedIn URL<input id="linkedinUrl" type="url" maxlength="500" placeholder="https://linkedin.com/in/..."></label><label>GitHub URL<input id="githubUrl" type="url" maxlength="500" placeholder="https://github.com/..."></label><label class="wide">Portfolio URL<input id="portfolioUrl" type="url" maxlength="500" placeholder="https://..."></label>
+                <label class="wide">Professional summary<textarea id="resumeSummaryInput" rows="4" maxlength="700" placeholder="Target role + strongest skills + credible project or internship evidence."></textarea></label>
+                <label class="wide">Skills, separated by commas<input id="resumeSkills" maxlength="600" placeholder="C, Python, SQL, Data Structures, Git"></label>
+                <section class="field-group"><h3>Education</h3><div class="field-grid"><label>Degree<input id="educationDegree" maxlength="140"></label><label>Institution<input id="educationInstitution" maxlength="160"></label><label>Graduation year<input id="educationYear" maxlength="20"></label><label>Score / CGPA<input id="educationScore" maxlength="40"></label></div></section>
+                <section class="field-group"><h3>Experience or internship</h3><div class="field-grid"><label>Role<input id="experienceRole" maxlength="120"></label><label>Organization<input id="experienceOrganization" maxlength="140"></label><label class="wide">Period<input id="experiencePeriod" maxlength="80" placeholder="Jun 2025 – Aug 2025"></label><label class="wide">Evidence bullets, one per line<textarea id="experienceBullets" rows="5" maxlength="1800" placeholder="Built…&#10;Improved…"></textarea></label></div></section>
+                <section class="field-group"><h3>Primary project</h3><div class="field-grid"><label>Title<input id="project1Title" maxlength="140"></label><label>Technology<input id="project1Technology" maxlength="240"></label><label class="wide">Repository or demo URL<input id="project1Link" type="url" maxlength="500"></label><label class="wide">Evidence bullets, one per line<textarea id="project1Bullets" rows="5" maxlength="1800"></textarea></label></div></section>
+                <section class="field-group"><h3>Second project</h3><div class="field-grid"><label>Title<input id="project2Title" maxlength="140"></label><label>Technology<input id="project2Technology" maxlength="240"></label><label class="wide">Repository or demo URL<input id="project2Link" type="url" maxlength="500"></label><label class="wide">Evidence bullets, one per line<textarea id="project2Bullets" rows="5" maxlength="1800"></textarea></label></div></section>
+                <label class="wide">Achievements, one per line<textarea id="resumeAchievements" rows="4" maxlength="1200" placeholder="Finalist, College Hackathon — built…"></textarea></label>
+                <div class="builder-actions wide"><button class="evidence-button" type="submit" id="saveResume">Save &amp; audit</button><button class="secondary-button" type="button" id="printResume">Print / Save PDF</button><a class="secondary-button" href="evidence-lab.html">Back to Evidence Lab</a><span class="status-text" id="resumeStatus" role="status">Changes preview automatically</span></div>
+            </form>
+        </div></section>
+        <section class="builder-card"><header class="print-hide"><div><small class="section-label">LIVE ATS PREVIEW</small><h2>One-page resume</h2><p>Use your browser’s print dialog to save a PDF after the audit.</p></div></header><div class="builder-scroll">
+            <section class="audit-panel print-hide"><div class="audit-score" id="resumeAuditScore">0</div><div><small>LIVE EVIDENCE CHECK</small><h3 id="resumeAuditLevel">Foundation incomplete</h3><p>Saving runs the authoritative database audit.</p><ul class="audit-list" id="resumeAuditList"></ul></div></section>
+            <article class="resume-paper" id="resumePaper" aria-label="Resume preview"></article>
+        </div></section>
+    </div>
+</main>
+<script src="supabase-config.js?v=1"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-client.js?v=1"></script><script src="placement-resume-builder.js?v=1"></script>
+</body></html>
