@@ -260,6 +260,15 @@ int main() {
 
   function openInputRequest() {
     elements.dialogInput.value = elements.stdin.value;
+    const guide=document.getElementById('programInputGuide');
+    if(guide){
+      guide.replaceChildren();
+      const hints=window.CodeBhavyaInputGuide?.inspect(getSource(),currentLanguage)||{prompts:[],reads:[]};
+      const heading=document.createElement('strong');heading.textContent='Input guide — source preview';guide.append(heading);
+      if(hints.prompts.length){const list=document.createElement('ol');hints.prompts.forEach(prompt=>{const item=document.createElement('li');item.textContent=prompt;list.append(item);});guide.append(list);}
+      if(hints.reads.length){const p=document.createElement('p');p.textContent='C input variables, in source order: '+hints.reads.join(' → ');guide.append(p);}
+      const note=document.createElement('p');note.textContent=hints.prompts.length||hints.reads.length?'These are hints from the source, not live output. Loops may repeat inputs, branches may skip them, and calculated prompts may not appear here. Enter all required values below in execution order.':'No simple prompt was detected. Check the input statements in your code and enter all required values below.';guide.append(note);
+    }
 
     if (typeof elements.inputDialog.showModal === "function") {
       elements.inputDialog.showModal();
