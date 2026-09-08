@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Practise technical, coding, project, communication and HR interview answers with guided frameworks, follow-up help and honest evidence-based review.">
+    <title>Guided Interview Coach | CodeBhavya</title>
+    <link rel="canonical" href="https://codebhavya.com/Placement/interview.html">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="placement.css?v=2">
+    <link rel="stylesheet" href="placement-interview.css?v=1">
+<link rel="stylesheet" href="placement-quality.css?v=27">
+</head>
+<body class="placement-page interview-page">
+<header class="top-header">
+    <a href="../index.html" class="logo codebhavya-new-logo" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="" class="main-logo"><span class="brand-name"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></span></a>
+    <nav class="top-nav" aria-label="Main navigation"><a href="index.html">Placement</a><a href="practice.html">Practice Hub</a><a href="mock-drive.html">Mock Drive</a><a href="evidence-lab.html">Evidence Lab</a><a href="mcq-library.html?topic=core-cs">MCQ Library</a><a href="company-prep.html">Company Prep</a><a href="interview.html" class="active">Interview Coach</a><a href="progress.html?topic=core-cs">My Progress</a></nav>
+</header>
+
+<main class="interview-main" id="mainContent">
+    <nav class="interview-breadcrumb" aria-label="Breadcrumb"><a href="index.html">Placement</a><span>›</span><a href="practice.html">Practice Hub</a><span>›</span><strong>Interview Coach</strong></nav>
+
+    <section class="interview-intro">
+        <div>
+            <small>THINK · SPEAK · REVIEW · IMPROVE</small>
+            <h1>Guided Interview Coach</h1>
+            <p>Practise fresh interview questions, build your own answer first, then compare it with a useful framework, follow-up guidance and an evidence checklist.</p>
+        </div>
+        <div class="interview-intro-note"><strong>No fake AI percentage</strong><p>Your answer is not secretly guessed from keywords. You review five visible criteria and the coach turns every missing item into a correction task.</p></div>
+    </section>
+
+    <section class="interview-dashboard" id="interviewProgress" aria-label="Interview practice summary">
+        <article><small>PROMPTS PRACTISED</small><strong id="metricPractised">0</strong><span>on this device</span></article>
+        <article><small>INDEPENDENT ANSWERS</small><strong id="metricIndependent">0</strong><span>before guidance</span></article>
+        <article><small>IMPROVED ANSWERS</small><strong id="metricImproved">0</strong><span>after remediation</span></article>
+        <article><small>STRONGEST AREA</small><strong id="metricStrongest">Start practising</strong><span id="metricStrongestDetail">Evidence will appear here</span></article>
+    </section>
+
+    <section class="interview-library" id="promptLibrary" aria-labelledby="libraryTitle">
+        <aside class="interview-builder">
+            <small>BUILD YOUR PRACTICE SET</small>
+            <h2 id="libraryTitle">Choose one interview area</h2>
+            <form id="promptFilterForm">
+                <label for="interviewCategory">Interview area</label>
+                <select id="interviewCategory">
+                    <option value="technical">Technical Interview</option>
+                    <option value="coding">Coding Explanation</option>
+                    <option value="resume-projects">Resume &amp; Project Defence</option>
+                    <option value="communication">Technical Communication</option>
+                    <option value="hr">HR &amp; Behavioural</option>
+                </select>
+                <p class="field-help" id="categoryHelp">Explain concepts, compare alternatives and justify technical decisions.</p>
+
+                <label for="interviewGroup">Focused topic</label>
+                <select id="interviewGroup"></select>
+
+                <label for="interviewDifficulty">Difficulty</label>
+                <select id="interviewDifficulty"><option value="all">All levels</option><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option></select>
+
+                <label for="interviewTarget">Preparation track</label>
+                <select id="interviewTarget"><option value="all">All placement tracks</option><option value="general">General Campus Placement</option><option value="service">Service-Based Companies</option><option value="product">Product &amp; Engineering Companies</option><option value="ai">AI, Data &amp; Analytics Roles</option></select>
+
+                <label for="interviewSearch">Search prompts</label>
+                <input id="interviewSearch" type="search" placeholder="Example: deadlock, project failure, teamwork">
+                <button type="submit" id="loadPrompts">Load interview prompts</button>
+            </form>
+            <div class="builder-rule"><strong>Practice rule</strong><p>Answer aloud or write first. Reveal guidance only after making a genuine attempt.</p><a href="evidence-lab.html">Build resume and project evidence first →</a></div>
+        </aside>
+
+        <section class="prompt-results" aria-live="polite">
+            <header class="prompt-results-head"><div><small>TOPIC-WISE PROMPT LIBRARY</small><h2 id="promptResultsTitle">Choose filters to begin</h2><p id="promptResultsSummary">Prompts load only when you request them.</p></div></header>
+            <div class="interview-empty" id="promptEmpty"><span>🎙</span><h3>Build a focused interview session</h3><p>Select an area and topic, then load its question list. Nothing starts automatically.</p></div>
+            <div class="interview-loading" id="promptLoading" hidden><span></span><strong>Loading interview prompts…</strong></div>
+            <div class="prompt-grid" id="promptGrid" hidden></div>
+            <nav class="prompt-pagination" id="promptPagination" aria-label="Prompt pages" hidden><button type="button" id="promptPrevious">← Previous</button><span id="promptPageStatus">Page 1</span><button type="button" id="promptNext">Next →</button></nav>
+            <p class="interview-error" id="promptError" role="alert"></p>
+        </section>
+    </section>
+
+    <section class="practice-workspace" id="practiceWorkspace" hidden aria-live="polite">
+        <header class="workspace-toolbar">
+            <div><button type="button" class="secondary-button" id="backToPrompts">← Back to prompt list</button><span id="workspacePosition">Prompt</span></div>
+            <div><button type="button" class="secondary-button" id="previousPrompt">← Previous</button><button type="button" class="secondary-button" id="nextPrompt">Next →</button></div>
+        </header>
+
+        <div class="workspace-grid">
+            <article class="question-panel">
+                <div class="prompt-meta" id="activePromptMeta"></div>
+                <h2 id="activeQuestion">Interview question</h2>
+                <p class="question-context" id="activeContext"></p>
+                <div class="interviewer-goal"><small>WHAT THE INTERVIEWER IS TESTING</small><p id="activeGoal"></p></div>
+
+                <section class="think-timer" aria-labelledby="timerTitle">
+                    <div><small id="timerTitle">THINKING TIMER</small><strong id="timerDisplay">Not started</strong><p id="timerHint">Start it when you are ready. Revealing guidance pauses it.</p></div>
+                    <button type="button" id="timerButton">Start thinking</button>
+                </section>
+
+                <label class="answer-label" for="answerDraft">Build your answer</label>
+                <textarea id="answerDraft" rows="10" placeholder="Write key points here, or use this space while practising your answer aloud."></textarea>
+                <div class="draft-status"><span id="draftStatus">Saved on this device</span><span id="draftCount">0 characters</span></div>
+
+                <div class="primary-actions"><button type="button" id="reviewAnswer">Review my answer</button><button type="button" class="secondary-button" id="revealFramework">Reveal answer framework</button></div>
+                <p class="action-note" id="answerActionNote">The framework is optional. Using it marks this attempt as assisted, but it never blocks learning.</p>
+            </article>
+
+            <aside class="coach-panel">
+                <section class="coach-welcome" id="coachWelcome"><span>✓</span><h3>Your answer comes first</h3><p>Draft or speak your response, then choose <strong>Review my answer</strong>. The coach will show five exact criteria instead of guessing a score.</p></section>
+
+                <section class="framework-panel" id="frameworkPanel" hidden>
+                    <small>ANSWER FRAMEWORK</small><h3 id="frameworkTitle">Structure your answer</h3><ol id="frameworkSteps"></ol>
+                    <div class="avoid-box"><strong>Avoid</strong><p id="commonMistake"></p></div>
+                </section>
+
+                <section class="review-panel" id="reviewPanel" hidden>
+                    <small>FIVE-EVIDENCE REVIEW</small><h3>What did your answer demonstrate?</h3><p>Tick only what another person could clearly hear or read in your answer.</p>
+                    <div id="rubricList" class="rubric-list"></div>
+                    <button type="button" id="calculateReview">Calculate evidence result</button>
+                    <p class="review-warning" id="reviewWarning" role="alert"></p>
+                </section>
+
+                <section class="review-result" id="reviewResult" hidden>
+                    <div class="review-score"><span id="reviewScore">0/5</span><div><small id="reviewBand">NEEDS A FULL REVIEW</small><h3 id="reviewTitle">Strengthen the answer before moving on.</h3></div></div>
+                    <p id="reviewMessage"></p>
+                    <div class="missing-evidence"><strong>Missing evidence to add</strong><ul id="missingEvidence"></ul></div>
+                    <div class="remediation" id="remediationBox"><strong>Your correction task</strong><ol id="remediationSteps"></ol><label for="improvedDraft">Rewrite the weakest part</label><textarea id="improvedDraft" rows="5" placeholder="Write the improved section here."></textarea><label class="retry-check"><input type="checkbox" id="retryComplete"> <span>I practised the improved answer again.</span></label></div>
+                    <div class="result-actions"><button type="button" class="secondary-button" id="showModelAnswer">Show model answer points</button><button type="button" id="completeReview">Complete this review</button></div>
+                    <p class="review-warning" id="completionWarning" role="alert"></p>
+                </section>
+
+                <section class="model-panel" id="modelPanel" hidden><small>MODEL ANSWER POINTS</small><h3>Compare ideas—not exact wording</h3><p id="modelAnswer"></p></section>
+
+                <section class="followup-panel" id="followupPanel" hidden><small>EVALUATOR FOLLOW-UPS</small><h3>Prepare for the next question</h3><div id="followupList"></div></section>
+            </aside>
+        </div>
+    </section>
+
+    <section class="interview-guide">
+        <article><span>01</span><h2>Attempt independently</h2><p>Use the optional thinking timer, then speak or draft a clear answer before opening any guidance.</p></article>
+        <article><span>02</span><h2>Review visible evidence</h2><p>Check five question-specific criteria. A weak review produces a correction task instead of silently moving ahead.</p></article>
+        <article><span>03</span><h2>Handle follow-ups</h2><p>Every evaluator follow-up includes optional answer guidance, so students do not need to leave the page and search elsewhere.</p></article>
+    </section>
+</main>
+
+<script src="../script.js?v=20260908"></script>
+<script src="supabase-config.js?v=1"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-client.js?v=1"></script><script src="placement-interview.js?v=1"></script>
+<script src="placement-quality.js?v=27"></script>
+</body>
+</html>
