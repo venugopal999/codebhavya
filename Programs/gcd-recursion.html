@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06192c">
+  <meta name="description" content="Learn the C program to find GCD using recursion with an algorithm, sample input and output, complexity analysis and an interactive CodeBhavya debugger.">
+  <link rel="canonical" href="https://codebhavya.com/Programs/gcd-recursion.html">
+  <title>C Program to Find GCD Using Recursion | CodeBhavya</title>
+  <link rel="stylesheet" href="programs.css">
+  <script defer src="programs.js"></script>
+  <script defer src="gcd-recursion.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#programContent">Skip to program</a>
+
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="CodeBhavya home">
+      <img src="../images/codebhavya-main-logo.png" alt="" width="64" height="64">
+      <span>Code<strong>Bhavya</strong></span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="../index.html">Home</a>
+      <details class="nav-dropdown">
+        <summary>Learn <span aria-hidden="true">⌄</span></summary>
+        <div class="nav-menu">
+          <a href="../Maths/index.html">Mathematics</a>
+          <a href="../C-Programming/index.html">C Programming</a>
+          <a href="../Data-Structures/index.html">Data Structures</a>
+          <a href="../Advanced-Data-Structures/index.html">Advanced Data Structures</a>
+          <a href="../Python/index.html">Python</a>
+          <a href="../AI-ML/index.html">AI &amp; Machine Learning</a>
+        </div>
+      </details>
+      <a class="active" href="index.html" aria-current="page">Programs</a>
+      <a href="../Online-Compiler/index.html">Compiler</a>
+      <a href="../Placement/index.html">Placement</a>
+    </nav>
+
+    <details class="mobile-nav">
+      <summary aria-label="Open navigation"><span></span><span></span><span></span></summary>
+      <nav aria-label="Mobile navigation">
+        <a href="../index.html">Home</a>
+        <a href="../C-Programming/index.html">C Programming</a>
+        <a href="../Data-Structures/index.html">Data Structures</a>
+        <a href="../Python/index.html">Python</a>
+        <a href="../AI-ML/index.html">AI &amp; Machine Learning</a>
+        <a href="index.html" aria-current="page">Program Library</a>
+        <a href="../Online-Compiler/index.html">Online Compiler</a>
+        <a href="../Placement/index.html">Placement</a>
+      </nav>
+    </details>
+  </header>
+
+  <main class="program-main" id="programContent">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a><span aria-hidden="true">›</span>
+      <a href="index.html">Program Library</a><span aria-hidden="true">›</span>
+      <span>C Programming</span><span aria-hidden="true">›</span>
+      <span aria-current="page">GCD Using Recursion</span>
+    </nav>
+
+    <details class="mobile-example-menu">
+      <summary>Program navigation</summary>
+      <nav>
+        <a href="index.html">All programs</a>
+        <a href="#programCode">Program code</a>
+        <a href="#debugger">Interactive debugger</a>
+        <a href="#explanation">Explanation</a>
+        <a href="#commonErrors">Common errors</a>
+      </nav>
+    </details>
+
+    <div class="program-page-layout">
+      <aside class="example-sidebar" aria-label="C program navigation">
+        <h2 class="sidebar-title">C Examples</h2>
+        <div class="example-links">
+          <a href="index.html">← All programs</a>
+          <p class="sidebar-section">CURRENT PROGRAM</p>
+          <a class="active" href="gcd-recursion.html" aria-current="page">Find GCD Using Recursion</a>
+          <p class="sidebar-section">ON THIS PAGE</p>
+          <a href="#programCode">Program code</a>
+          <a href="#debugger">Interactive debugger</a>
+          <a href="#explanation">How it works</a>
+          <a href="#complexity">Complexity</a>
+          <a href="#commonErrors">Common errors</a>
+        </div>
+      </aside>
+
+      <article class="program-article">
+        <header class="program-hero">
+          <p class="eyebrow">C PROGRAM • FUNCTIONS &amp; RECURSION</p>
+          <h1>Find GCD of Two Numbers Using Recursion</h1>
+          <p>Use Euclid's algorithm to repeatedly replace two numbers with the smaller problem <code>gcd(b, a % b)</code> until the remainder becomes zero.</p>
+          <div class="meta-row">
+            <span class="meta-chip">Intermediate</span>
+            <span class="meta-chip">Recursive function</span>
+            <span class="meta-chip">Interactive trace</span>
+          </div>
+          <div class="knowledge-links">
+            <span>Review these lessons if required:</span>
+            <a href="../C-Programming/functions.html">C Functions</a>
+            <a href="../C-Programming/functions.html#recursion">C Recursion</a>
+            <a href="../C-Programming/operators.html">Modulus Operator</a>
+          </div>
+        </header>
+
+        <section class="content-card" aria-labelledby="problemTitle">
+          <p class="section-kicker">PROBLEM UNDERSTANDING</p>
+          <h2 id="problemTitle">What should the program do?</h2>
+          <p>Read two positive integers and print their greatest common divisor. The GCD is the largest positive integer that divides both numbers without leaving a remainder.</p>
+          <div class="info-grid">
+            <div class="info-box">
+              <strong>Sample input</strong>
+              <pre class="io-code">48
+18</pre>
+            </div>
+            <div class="info-box">
+              <strong>Sample output</strong>
+              <pre class="io-code">Enter two positive integers: 48 18
+GCD of 48 and 18 is 6.</pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-card" id="programCode" aria-labelledby="codeTitle">
+          <p class="section-kicker">C PROGRAM</p>
+          <h2 id="codeTitle">GCD using recursion</h2>
+          <div class="code-window">
+            <div class="code-toolbar">
+              <strong>gcd_recursion.c</strong>
+              <div class="code-actions">
+                <button type="button" id="copyCode">Copy code</button>
+                <a href="../Online-Compiler/index.html" id="copyOpenCompiler">Copy &amp; open compiler</a>
+              </div>
+            </div>
+            <pre class="source-code" id="sourceCode" tabindex="0" aria-label="C source code"></pre>
+          </div>
+        </section>
+
+        <section class="debug-lab" id="debugger" aria-labelledby="debugTitle">
+          <div class="debug-toolbar">
+            <div class="debug-title">
+              <p class="panel-kicker">INTERACTIVE LEARNING</p>
+              <strong id="debugTitle">Debug the recursive execution</strong>
+              <p>Change the inputs, start debugging and follow the call stack.</p>
+            </div>
+            <div class="debug-controls" aria-label="Debugger controls">
+              <button class="start-debug" type="button" id="startDebug">Start</button>
+              <button type="button" id="previousStep" disabled>Previous</button>
+              <button class="next-step" type="button" id="nextStep" disabled>Next</button>
+              <button type="button" id="autoDebug" disabled>Auto</button>
+              <button type="button" id="pauseDebug" disabled>Pause</button>
+              <button type="button" id="resetDebug">Reset</button>
+            </div>
+          </div>
+
+          <div class="debug-inputs">
+            <label>First positive integer
+              <input id="firstNumber" type="number" min="1" step="1" value="48" inputmode="numeric">
+            </label>
+            <label>Second positive integer
+              <input id="secondNumber" type="number" min="1" step="1" value="18" inputmode="numeric">
+            </label>
+            <p class="input-error" id="inputError" role="alert" hidden></p>
+          </div>
+
+          <div class="debug-grid">
+            <div class="debug-code" id="debugSource" aria-label="Program execution lines"></div>
+
+            <div class="debug-state">
+              <section class="state-panel">
+                <h3>CURRENT STEP</h3>
+                <p class="step-message" id="stepMessage" aria-live="polite">Enter two values and select Start.</p>
+              </section>
+
+              <section class="state-panel">
+                <h3>VARIABLES</h3>
+                <table class="variable-table">
+                  <thead><tr><th>Scope</th><th>Name</th><th>Value</th></tr></thead>
+                  <tbody id="variableBody"><tr><td colspan="3">Not started</td></tr></tbody>
+                </table>
+              </section>
+
+              <section class="state-panel">
+                <h3>CALL STACK</h3>
+                <div class="call-flow" id="callFlow"><span class="call-chip">empty</span></div>
+              </section>
+
+              <section class="state-panel">
+                <h3>PROGRAM OUTPUT</h3>
+                <pre class="terminal" id="debugOutput">Waiting to run…</pre>
+              </section>
+            </div>
+          </div>
+
+          <div class="progress-row">
+            <progress id="debugProgress" max="1" value="0">0%</progress>
+            <span id="progressText">Step 0 of 0</span>
+          </div>
+        </section>
+
+        <section class="content-card" id="explanation" aria-labelledby="explanationTitle">
+          <p class="section-kicker">PROGRAM EXPLANATION</p>
+          <h2 id="explanationTitle">How the recursive solution works</h2>
+          <ol>
+            <li><code>main()</code> reads two positive integers.</li>
+            <li><code>gcd(a, b)</code> checks whether <code>b</code> is zero.</li>
+            <li>If <code>b == 0</code>, the current value of <code>a</code> is the GCD.</li>
+            <li>Otherwise, the function calls <code>gcd(b, a % b)</code>.</li>
+            <li>Each call creates a smaller remainder, so the recursion eventually reaches zero.</li>
+          </ol>
+
+          <h3>Dry run for 48 and 18</h3>
+          <pre class="io-code">gcd(48, 18)
+→ gcd(18, 12)
+→ gcd(12, 6)
+→ gcd(6, 0)
+→ return 6</pre>
+        </section>
+
+        <section class="content-card" id="complexity" aria-labelledby="complexityTitle">
+          <p class="section-kicker">EFFICIENCY</p>
+          <h2 id="complexityTitle">Time and space complexity</h2>
+          <div class="complexity-grid">
+            <div class="complexity-box">
+              <strong>Time complexity</strong>
+              <p><code>O(log(min(a, b)))</code> because each recursive call quickly reduces the remainder.</p>
+            </div>
+            <div class="complexity-box">
+              <strong>Auxiliary space</strong>
+              <p><code>O(log(min(a, b)))</code> because the recursive calls remain on the call stack.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-card" id="commonErrors" aria-labelledby="errorsTitle">
+          <p class="section-kicker">DEBUGGING CHECKLIST</p>
+          <h2 id="errorsTitle">Common mistakes</h2>
+          <div class="mistake-grid">
+            <div class="mistake-box">
+              <strong>Missing base case</strong>
+              <p>Without <code>if (b == 0)</code>, recursive calls may continue incorrectly and exhaust the call stack.</p>
+            </div>
+            <div class="mistake-box">
+              <strong>Wrong argument order</strong>
+              <p>The recursive call must be <code>gcd(b, a % b)</code>, not <code>gcd(a, a % b)</code>.</p>
+            </div>
+            <div class="mistake-box">
+              <strong>Using division</strong>
+              <p>Euclid's algorithm needs the remainder operator <code>%</code>, not the division operator <code>/</code>.</p>
+            </div>
+            <div class="mistake-box">
+              <strong>Ignoring input validation</strong>
+              <p>For this beginner example, use positive integers so that the recursive flow is easy to understand.</p>
+            </div>
+          </div>
+
+          <h3>Try it yourself</h3>
+          <div class="challenge-box">
+            <strong>Practice variation:</strong>
+            Modify the program so it finds the GCD of three integers by reusing the same recursive function.
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <a class="footer-brand" href="../index.html">Code<strong>Bhavya</strong></a>
+      <p>From Learning to Limitless Possibilities.</p>
+    </div>
+    <nav aria-label="Footer navigation">
+      <a href="index.html">Program Library</a>
+      <a href="../Online-Compiler/index.html">Compiler</a>
+      <a href="../C-Programming/index.html">Learn C</a>
+    </nav>
+    <p>© 2026 CodeBhavya. All Rights Reserved.</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
