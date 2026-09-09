@@ -335,6 +335,7 @@ function searchTopics() {
             links: [
                 { label: "Mathematics", path: "Maths/index.html", icon: "M" },
                 { label: "AI & Machine Learning", path: "AI-ML/index.html", icon: "AI" }
+               { label: "Program Library", path: "Programs/", icon: "AI" }
             ]
         },
         {
