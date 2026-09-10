@@ -82,86 +82,9 @@ a:focus-visible,
   transform: translateY(0);
 }
 
-.site-header {
-  position: relative;
-  z-index: 20;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  min-height: 76px;
-  padding: 0 3.2vw;
-  border-bottom: 3px solid var(--gold);
-  background: var(--navy-900);
-  box-shadow: 0 5px 22px rgba(0, 8, 20, 0.2);
-}
-
-.brand {
-  display: inline-flex;
-  gap: 12px;
-  align-items: center;
-  color: var(--white);
-  text-decoration: none;
-}
-
-.brand-mark {
-  display: grid;
-  width: 42px;
-  height: 42px;
-  place-items: center;
-  border: 1px solid #2e648f;
-  border-radius: 12px;
-  color: var(--cyan);
-  background: #0b233d;
-  font-family: var(--font-code);
-  font-size: 15px;
-  font-weight: 800;
-}
-
-.brand-name {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.45rem, 2vw, 2rem);
-  font-weight: 800;
-  line-height: 1;
-}
-
-.brand-name span {
-  color: var(--gold);
-}
-
-.header-nav {
-  display: flex;
-  gap: 28px;
-  justify-self: center;
-}
-
-.header-nav a {
-  position: relative;
-  padding: 25px 0 22px;
-  color: #d9e8f7;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.header-nav a::after {
-  position: absolute;
-  right: 0;
-  bottom: 14px;
-  left: 0;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--gold);
-  content: "";
-  opacity: 0;
-  transform: scaleX(0.4);
-  transition: 160ms ease;
-}
-
-.header-nav a:hover::after,
-.header-nav a:focus-visible::after {
-  opacity: 1;
-  transform: scaleX(1);
-}
+.compiler-body .top-header{font-family:var(--font-ui)}
+.compiler-body .top-header .brand-name{font-family:Georgia,"Times New Roman",serif}
+@media(min-width:769px){.compiler-body .top-header.cb-nav-ready + .compiler-page{padding-top:104px}}
 
 .save-state {
   display: inline-flex;
@@ -171,6 +94,9 @@ a:focus-visible,
   font-size: 0.8rem;
   font-weight: 700;
 }
+
+.compiler-status-group{display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.compiler-status-group .save-state{padding:7px 12px;border:1px solid #244a70;border-radius:999px;background:#0a1f37}
 
 .save-dot,
 .runtime-light {
@@ -879,20 +805,8 @@ body.is-resizing {
 }
 
 @media (max-width: 1100px) {
-  .header-nav {
-    gap: 18px;
-  }
-
   .save-state {
     display: none;
-  }
-
-  .site-header {
-    grid-template-columns: auto 1fr;
-  }
-
-  .header-nav {
-    justify-self: end;
   }
 
   .toolbar-actions .button-ghost {
@@ -908,27 +822,6 @@ body.is-resizing {
   body {
     padding-bottom: calc(78px + env(safe-area-inset-bottom));
     background: var(--navy-950);
-  }
-
-  .site-header {
-    position: sticky;
-    top: 0;
-    grid-template-columns: 1fr;
-    min-height: 62px;
-    padding: 9px 14px;
-  }
-
-  .brand-mark {
-    width: 38px;
-    height: 38px;
-  }
-
-  .brand-name {
-    font-size: 1.45rem;
-  }
-
-  .header-nav {
-    display: none;
   }
 
   .compiler-page {
