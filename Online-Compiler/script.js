@@ -40,7 +40,8 @@ const elements = {
   serverText: $("serverText"), historyDrawer: $("historyDrawer"), historyList: $("historyList"),
   outputNotice: $("outputNotice"), menuButton: $("menuButton"), siteNav: $("siteNav"),
   workspace: $("workspace"), sideStack: $("sideStack"), verticalSplitter: $("verticalSplitter"),
-  horizontalSplitter: $("horizontalSplitter")
+  horizontalSplitter: $("horizontalSplitter"), sourcePanel: document.querySelector(".source-panel"),
+  sourceHeader: document.querySelector(".source-panel .panel-header")
 };
 
 let editor, socket, wakeTimer;
@@ -188,6 +189,11 @@ function clamp(value, minimum, maximum) {
   return Math.min(Math.max(value, minimum), maximum);
 }
 
+function syncSourceHeaderWidth() {
+  if (!elements.sourcePanel || !elements.sourceHeader) return;
+  elements.sourceHeader.style.width = `${elements.sourcePanel.clientWidth}px`;
+}
+
 function loadPanelSizes() {
   let sizes;
   try { sizes = JSON.parse(localStorage.getItem(SPLIT_STORAGE_KEY)); } catch (_error) { sizes = null; }
@@ -211,7 +217,7 @@ function resetPanelSizes() {
   localStorage.removeItem(SPLIT_STORAGE_KEY);
   elements.workspace.style.removeProperty("--editor-size");
   elements.sideStack.style.removeProperty("--output-size");
-  requestAnimationFrame(() => editor?.layout());
+  requestAnimationFrame(() => { syncSourceHeaderWidth(); editor?.layout(); });
 }
 
 function setupSplitter(splitter, orientation) {
@@ -228,6 +234,7 @@ function setupSplitter(splitter, orientation) {
     const pixels = clamp(raw, minimum, total - trailingMinimum);
     const percent = (pixels / Math.max(total, 1)) * 100;
     (isVertical ? elements.workspace : elements.sideStack).style.setProperty(isVertical ? "--editor-size" : "--output-size", `${percent}%`);
+    if (isVertical) syncSourceHeaderWidth();
     editor?.layout();
   }
 
@@ -259,6 +266,7 @@ function setupSplitter(splitter, orientation) {
     const property = isVertical ? "--editor-size" : "--output-size";
     const current = parseFloat(getComputedStyle(target).getPropertyValue(property)) || (isVertical ? DEFAULT_SPLITS.editor : DEFAULT_SPLITS.output);
     target.style.setProperty(property, `${clamp(current + direction * 2, isVertical ? 42 : 33, isVertical ? 74 : 72)}%`);
+    if (isVertical) syncSourceHeaderWidth();
     savePanelSizes();
     editor?.layout();
   });
@@ -299,5 +307,8 @@ window.addEventListener("beforeunload", () => {
 $("year").textContent = new Date().getFullYear();
 renderHistory();
 loadPanelSizes();
+syncSourceHeaderWidth();
+if ("ResizeObserver" in window) new ResizeObserver(syncSourceHeaderWidth).observe(elements.sourcePanel);
+window.addEventListener("resize", syncSourceHeaderWidth);
 setupSplitter(elements.verticalSplitter, "vertical");
 setupSplitter(elements.horizontalSplitter, "horizontal");
