@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn operating system foundations through clear explanations, request tracing, event classification, concept checks and placement questions.">
+    <title>Operating System Foundations — OS Level 1 | CodeBhavya</title>
+    <link rel="icon" href="../images/codebhavya-icon-32.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="os.css?v=1">
+    <link rel="stylesheet" href="os-lesson.css?v=1">
+</head>
+<body class="os-page os-lesson-page">
+    <header class="top-header">
+        <a href="../index.html" class="logo codebhavya-new-logo" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="brand-name"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></span></a>
+        <nav class="top-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../C-Programming/index.html">C</a><a href="../Data-Structures/index.html">Data Structures</a><a href="../DBMS/index.html">DBMS</a><a href="../Placement/index.html">Placement</a></nav>
+    </header>
+
+    <div class="lesson-reading-progress" aria-hidden="true"><span id="lessonReadingBar"></span></div>
+    <button class="os-sidebar-toggle" id="osSidebarToggle" type="button" aria-controls="osSidebar" aria-expanded="false">☰ Level 1 Topics</button>
+    <div class="os-sidebar-backdrop" id="osSidebarBackdrop" hidden></div>
+    <div class="os-layout">
+        <aside class="os-sidebar" id="osSidebar" aria-label="Operating System Foundations topics">
+            <div class="os-sidebar-title">Level 1 — Foundations</div>
+            <a class="os-home-link" href="index.html">← OS Course Home</a>
+            <div class="os-sidebar-group">In this lesson</div>
+            <a class="active lesson-section-link" href="#overview">1. Learning outcomes</a>
+            <a class="lesson-section-link" href="#why-os">2. Why an OS exists</a>
+            <a class="lesson-section-link" href="#layers">3. System layers</a>
+            <a class="lesson-section-link" href="#services">4. OS services</a>
+            <a class="lesson-section-link" href="#modes">5. User &amp; kernel mode</a>
+            <a class="lesson-section-link" href="#request-tracer">6. Request tracer lab</a>
+            <a class="lesson-section-link" href="#events">7. Interrupts &amp; exceptions</a>
+            <a class="lesson-section-link" href="#classifier">8. Event classifier lab</a>
+            <a class="lesson-section-link" href="#boot">9. Boot process</a>
+            <a class="lesson-section-link" href="#types">10. Types of OS</a>
+            <a class="lesson-section-link" href="#checks">11. Concept checks</a>
+            <a class="lesson-section-link" href="#exam-prep">12. Exam &amp; interview prep</a>
+            <a class="lesson-section-link" href="#summary">13. Summary</a>
+            <div class="lesson-sidebar-status"><span>LESSON CHECKPOINT</span><strong id="lessonSidebarStatus">Not completed</strong></div>
+        </aside>
+
+        <main class="os-main">
+            <section class="lesson-hero" id="overview">
+                <div>
+                    <div class="lesson-breadcrumb"><a href="index.html">Operating Systems</a><span>›</span><span>Level 1</span></div>
+                    <span class="os-label">PART 1 • EXECUTION FOUNDATIONS</span>
+                    <h1>Meet the Software That Runs the Whole Computer</h1>
+                    <p>An operating system turns raw processors, memory and devices into a safe, usable environment where many programs can run. In this lesson, you will follow real requests across that boundary.</p>
+                    <div class="lesson-meta"><span>Level 01 of 15</span><span>Beginner</span><span>75–100 minutes</span><span>No prerequisite</span></div>
+                </div>
+                <div class="lesson-goal-card">
+                    <span>BY THE END, YOU CAN</span><h2>Explain the OS as a working system</h2>
+                    <ul><li>Describe the OS without memorised wording.</li><li>Trace an application request into the kernel.</li><li>Distinguish interrupts, exceptions and system calls.</li><li>Explain user mode, kernel mode and booting.</li><li>Compare major operating-system types.</li></ul>
+                </div>
+            </section>
+
+            <nav class="lesson-jump-bar" aria-label="Lesson modes"><a href="#why-os">Understand</a><a href="#request-tracer">Trace</a><a href="#classifier">Classify</a><a href="#checks">Check</a><a href="#exam-prep">Prepare</a></nav>
+
+            <section class="lesson-section" id="why-os">
+                <header class="lesson-heading"><span>01 • BEGIN WITH THE PROBLEM</span><h2>Why Does a Computer Need an Operating System?</h2><p>Hardware offers power, but it does not by itself provide a convenient or safe place for applications.</p></header>
+                <div class="definition-grid">
+                    <article><span class="concept-mark">A</span><h3>Abstraction provider</h3><p>Applications use files, processes and sockets instead of controlling disk sectors, CPU registers and network devices directly.</p></article>
+                    <article><span class="concept-mark">R</span><h3>Resource manager</h3><p>The OS decides which program receives CPU time, memory, storage and device access—and for how long.</p></article>
+                    <article><span class="concept-mark">C</span><h3>Control program</h3><p>It supervises execution, handles errors and prevents one program from damaging another program or the system.</p></article>
+                    <article><span class="concept-mark">P</span><h3>Platform</h3><p>It gives programs stable services and interfaces so developers do not rewrite hardware-control code for every machine.</p></article>
+                </div>
+                <aside class="key-idea"><strong>A useful one-line definition</strong><p>An operating system is system software that manages hardware resources and provides protected services and abstractions to programs and users.</p></aside>
+                <aside class="teacher-note"><strong>Do not reduce the OS to its graphical interface.</strong><p>The desktop, windows and icons are only part of the user environment. The kernel continues managing processes, memory, files and devices even on a server with no graphical desktop.</p></aside>
+            </section>
+
+            <section class="lesson-section" id="layers">
+                <header class="lesson-heading"><span>02 • SEE THE WHOLE STACK</span><h2>From a User Action to Physical Hardware</h2><p>Each layer hides lower-level detail while relying on the layer below it.</p></header>
+                <div class="layer-stack">
+                    <article><span>USER</span><p>Expresses an intention: save a file, open a website or run a program.</p></article>
+                    <article><span>APPLICATION &amp; LIBRARY</span><p>Turns that intention into API calls such as a C library <code>fopen()</code> or browser network request.</p></article>
+                    <article><span>SYSTEM-CALL INTERFACE</span><p>Provides the controlled entry point through which a program asks the kernel for a protected service.</p></article>
+                    <article><span>KERNEL</span><p>Validates the request and coordinates process, memory, file, network and device subsystems.</p></article>
+                    <article><span>HARDWARE</span><p>CPU, RAM, storage, controllers and devices perform the physical operations.</p></article>
+                </div>
+                <div class="flow-strip"><span>User intention</span><b>→</b><span>API</span><b>→</b><span>System call</span><b>→</b><span>Kernel service</span><b>→</b><span>Hardware</span><b>→</b><span>Result</span></div>
+                <aside class="teacher-note"><strong>API and system call are related, not identical.</strong><p>A library function is a developer-facing interface. It may complete entirely in user space, make one system call or make several system calls. For example, buffered output may wait before the library invokes the kernel’s write service.</p></aside>
+            </section>
+
+            <section class="lesson-section" id="services">
+                <header class="lesson-heading"><span>03 • MAP THE RESPONSIBILITIES</span><h2>Services an Operating System Provides</h2><p>These services explain what the OS actually does during normal execution.</p></header>
+                <div class="service-grid">
+                    <article><span>▶</span><h3>Program execution</h3><p>Loads a program, creates its execution context, schedules it and handles normal or abnormal termination.</p></article>
+                    <article><span>⇄</span><h3>I/O operations</h3><p>Offers controlled access to keyboards, displays, disks, networks and other devices through drivers.</p></article>
+                    <article><span>▤</span><h3>File management</h3><p>Creates, opens, reads, writes, names, protects and removes persistent data.</p></article>
+                    <article><span>⌁</span><h3>Communication</h3><p>Lets processes exchange data through shared memory, pipes, messages or network sockets.</p></article>
+                    <article><span>!</span><h3>Error handling</h3><p>Detects CPU, memory, device and application errors and takes a controlled action.</p></article>
+                    <article><span>▦</span><h3>Resource allocation</h3><p>Shares CPU time, memory pages, files and devices among competing processes.</p></article>
+                    <article><span>◎</span><h3>Accounting</h3><p>Records resource consumption for monitoring, limits, performance analysis or billing.</p></article>
+                    <article><span>◆</span><h3>Protection</h3><p>Separates users and processes and checks whether each requested operation is permitted.</p></article>
+                    <article><span>✓</span><h3>Convenient interface</h3><p>Provides command-line, graphical and programmatic interfaces for controlling the system.</p></article>
+                </div>
+            </section>
+
+            <section class="lesson-section" id="modes">
+                <header class="lesson-heading"><span>04 • PROTECT THE MACHINE</span><h2>User Mode and Kernel Mode Create a Safety Boundary</h2><p>A CPU privilege level determines which instructions the currently executing code is allowed to perform.</p></header>
+                <div class="mode-comparison">
+                    <article class="mode-card user"><span>RESTRICTED EXECUTION</span><h3>User mode</h3><ul><li>Applications normally run here.</li><li>Cannot directly reconfigure hardware.</li><li>Cannot access arbitrary physical memory.</li><li>Requests protected work through system calls.</li></ul></article>
+                    <div class="mode-gate"><span>⇄</span><p>Controlled transition</p></div>
+                    <article class="mode-card kernel"><span>PRIVILEGED EXECUTION</span><h3>Kernel mode</h3><ul><li>Core OS code and many drivers run here.</li><li>Can execute privileged instructions.</li><li>Can manage page tables, interrupts and devices.</li><li>A bug can affect the entire system.</li></ul></article>
+                </div>
+                <aside class="key-idea"><strong>Dual mode is enforcement, not merely classification.</strong><p>A hardware mode bit and privilege checks stop user programs from executing protected instructions. A system call switches through a defined entry point; the application does not simply grant itself kernel privilege.</p></aside>
+            </section>
+
+            <section class="lesson-section" id="request-tracer">
+                <header class="lesson-heading"><span>05 • INTERACTIVE LAB</span><h2>Trace a Request through the Operating System</h2><p>Choose an everyday action, then move one step at a time to see the responsible layer and processor mode.</p></header>
+                <div class="tracer">
+                    <div class="tracer-controls">
+                        <label for="traceScenario">REQUEST TO TRACE</label>
+                        <select id="traceScenario"><option value="file">Read a file</option><option value="process">Start a new process</option><option value="memory">Request more memory</option><option value="network">Send network data</option><option value="sleep">Sleep for a duration</option></select>
+                        <div class="trace-scenario" id="traceScenarioText">An editor needs bytes from <code>notes.txt</code>.</div>
+                        <div class="trace-actions"><button type="button" id="traceReset">Reset</button><button type="button" class="primary" id="traceNext">Next step →</button></div>
+                    </div>
+                    <div class="trace-stage" aria-live="polite">
+                        <div class="trace-status"><span id="traceCounter">STEP 1 OF 7</span><span class="trace-mode" id="traceMode">USER MODE</span></div>
+                        <div class="trace-path" id="tracePath"></div>
+                        <article class="trace-detail"><span id="traceLayer">APPLICATION</span><h3 id="traceTitle">The application identifies the work</h3><p id="traceExplanation">The editor decides that it needs data stored in a named file. It does not know the disk location or control the storage device directly.</p></article>
+                        <p class="trace-note" id="traceNote">Notice where the mode changes and where control returns to the application.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lesson-section" id="events">
+                <header class="lesson-heading"><span>06 • DISTINGUISH CONTROL EVENTS</span><h2>Interrupt, Exception, Trap and System Call</h2><p>All can transfer control to an OS handler, but their source and timing differ.</p></header>
+                <div class="event-table-wrap"><table class="event-table"><thead><tr><th>Event</th><th>Where it originates</th><th>Timing</th><th>Example</th></tr></thead><tbody>
+                    <tr><th>Hardware interrupt</th><td>External hardware or a device controller</td><td>Asynchronous to the current instruction</td><td>Keyboard input, disk completion or timer tick</td></tr>
+                    <tr><th>Exception</th><td>The CPU while executing the current instruction</td><td>Synchronous</td><td>Divide by zero, invalid opcode or page fault</td></tr>
+                    <tr><th>Trap</th><td>Intentional or exceptional software-triggered transfer</td><td>Synchronous</td><td>Breakpoint or system-call instruction</td></tr>
+                    <tr><th>System call</th><td>A program deliberately requesting an OS service</td><td>Synchronous to the request</td><td><code>read</code>, <code>write</code>, <code>fork</code> or <code>mmap</code></td></tr>
+                </tbody></table></div>
+                <aside class="teacher-note"><strong>Terminology varies slightly by architecture and textbook.</strong><p>Some sources use “trap” for all synchronous exceptions; others reserve it for deliberate events such as breakpoints or system calls. In an answer, state the convention and focus on source, intention and timing.</p></aside>
+            </section>
+
+            <section class="lesson-section" id="classifier">
+                <header class="lesson-heading"><span>07 • INTERACTIVE LAB</span><h2>Classify the Control Transfer</h2><p>Read the situation, choose the best category, and learn why the tempting alternatives do not fit.</p></header>
+                <div class="classifier">
+                    <article class="classifier-case"><span id="classifierNumber">CASE 1 OF 6</span><h3 id="classifierTitle">A storage controller reports that a disk read has finished.</h3><p id="classifierHint">What caused the CPU to enter the handler?</p><div class="classifier-options" id="classifierOptions"><button type="button" data-kind="interrupt">Hardware interrupt</button><button type="button" data-kind="exception">Exception</button><button type="button" data-kind="syscall">System call / trap</button></div></article>
+                    <article class="classifier-result" id="classifierResult"><span>YOUR REASONING</span><h3>Choose a category</h3><p>Use the source and timing of the event, not only the fact that kernel code eventually runs.</p></article>
+                </div>
+            </section>
+
+            <section class="lesson-section" id="boot">
+                <header class="lesson-heading"><span>08 • START THE MACHINE</span><h2>How the Operating System Begins Running</h2><p>The boot sequence builds a working environment in stages; the OS is not already active when power first arrives.</p></header>
+                <div class="boot-flow">
+                    <article><b>STEP 1</b><h3>Firmware</h3><p>UEFI or BIOS checks essential hardware and selects a boot device.</p></article>
+                    <article><b>STEP 2</b><h3>Bootloader</h3><p>Finds the kernel, loads it into memory and transfers control.</p></article>
+                    <article><b>STEP 3</b><h3>Kernel init</h3><p>Initializes memory management, scheduling, interrupts and drivers.</p></article>
+                    <article><b>STEP 4</b><h3>First user process</h3><p>The kernel starts the system’s initial user-space process.</p></article>
+                    <article><b>STEP 5</b><h3>Services &amp; login</h3><p>Background services start and a command-line or graphical session becomes available.</p></article>
+                </div>
+                <aside class="key-idea"><strong>Bootloader versus kernel</strong><p>The bootloader’s main job is to place the kernel where it can run and pass control to it. The kernel then establishes ongoing resource management and protection.</p></aside>
+            </section>
+
+            <section class="lesson-section" id="types">
+                <header class="lesson-heading"><span>09 • COMPARE DESIGNS</span><h2>Operating Systems Are Shaped by Their Workload</h2><p>The categories overlap; one modern system can support time sharing, multiprocessing and real-time features.</p></header>
+                <div class="types-grid">
+                    <article><h3>Batch OS</h3><p>Collects jobs and executes them with little or no interactive user involvement.</p><strong>GOAL: THROUGHPUT</strong></article>
+                    <article><h3>Multiprogramming OS</h3><p>Keeps several jobs in memory so the CPU can run another when one waits for I/O.</p><strong>GOAL: CPU UTILIZATION</strong></article>
+                    <article><h3>Time-sharing OS</h3><p>Switches rapidly among interactive tasks to provide responsive access for users.</p><strong>GOAL: RESPONSE TIME &amp; FAIRNESS</strong></article>
+                    <article><h3>Real-time OS</h3><p>Provides predictable timing; correctness includes meeting deadlines.</p><strong>GOAL: DETERMINISM</strong></article>
+                    <article><h3>Distributed OS</h3><p>Coordinates networked computers and may present resources as one integrated system.</p><strong>GOAL: SHARING &amp; TRANSPARENCY</strong></article>
+                    <article><h3>Embedded/mobile OS</h3><p>Balances constrained resources, power, responsiveness, sensors and device-specific needs.</p><strong>GOAL: EFFICIENCY &amp; RELIABILITY</strong></article>
+                </div>
+            </section>
+
+            <section class="lesson-section" id="checks">
+                <header class="lesson-heading"><span>10 • CHECK YOUR UNDERSTANDING</span><h2>Ten Formative Concept Checks</h2><p>These are untimed learning checks. Feedback explains the exact misconception behind every answer.</p></header>
+                <div class="concept-check-list" id="conceptChecks"></div>
+                <div class="check-score" id="conceptScore">Answered correctly: 0 of 10</div>
+            </section>
+
+            <section class="lesson-section" id="exam-prep">
+                <header class="lesson-heading"><span>11 • EXPLAIN &amp; PREPARE</span><h2>University and Placement Questions</h2><p>First answer aloud from memory. Then use the frameworks to identify missing reasoning.</p></header>
+                <div class="question-bank-grid">
+                    <article><span>2-MARK QUESTIONS</span><ol><li>Define an operating system.</li><li>What is a system call?</li><li>Define a privileged instruction.</li><li>What is booting?</li><li>State one difference between interrupt and exception.</li></ol></article>
+                    <article><span>5-MARK QUESTIONS</span><ol><li>Explain the major services of an OS.</li><li>Compare user mode and kernel mode.</li><li>Describe the boot sequence.</li><li>Compare batch, time-sharing and real-time systems.</li><li>Explain how a file-read request reaches hardware.</li></ol></article>
+                    <article><span>INTERVIEW QUESTIONS</span><ol><li>What would happen if every program ran in kernel mode?</li><li>Is every library call a system call?</li><li>Why can a page fault be normal?</li><li>How does a timer interrupt help multitasking?</li><li>Kernel versus operating system—are they identical?</li></ol></article>
+                </div>
+                <details class="answer-framework"><summary>Show a strong answer: “What happens during a system call?”</summary><div><ol><li>The application prepares the request, arguments and system-call identifier, usually through an API wrapper.</li><li>A special instruction transfers control through a defined entry point and the CPU begins privileged kernel execution.</li><li>The kernel validates arguments and permissions before dispatching the responsible subsystem.</li><li>The service may finish, block the calling process or ask a device driver to begin I/O.</li><li>The kernel stores a result or error code, restores user context and returns execution to user mode.</li></ol><p><strong>Strong finish:</strong> A system call is therefore a controlled privilege transition, not an unrestricted jump into arbitrary kernel code.</p></div></details>
+                <details class="answer-framework"><summary>Show a strong answer: “Kernel versus operating system”</summary><div><p>The kernel is the privileged core that directly manages fundamental resources and hardware interactions. The operating system is broader: it includes the kernel plus system libraries, utilities, services and often a user interface. In casual usage the terms may be blurred, but they are not strictly identical.</p></div></details>
+            </section>
+
+            <section class="lesson-section summary-section" id="summary">
+                <div><span class="os-label">LEVEL 1 SUMMARY</span><h2>You Can Now Follow Work across the OS Boundary</h2><ul><li>The OS provides useful abstractions while managing and protecting hardware resources.</li><li>Applications normally run with restricted privilege and request protected services using system calls.</li><li>Hardware interrupts are asynchronous; instruction-caused exceptions and deliberate traps are synchronous.</li><li>Booting progresses from firmware and a bootloader to kernel initialization and user-space services.</li><li>OS designs differ because throughput, responsiveness, deadlines, power and scale demand different trade-offs.</li></ul></div>
+                <div class="completion-panel"><span>COURSE CHECKPOINT</span><p>Complete the checks and mark this level when you can explain one request path without reading.</p><button type="button" id="completeLessonButton" aria-pressed="false">Mark Level 1 complete</button><small>Saved only in this browser.</small></div>
+            </section>
+
+            <nav class="os-topic-navigation" aria-label="Operating Systems lesson navigation"><a href="index.html">← OS Course Home</a><a href="level-02-kernels-system-calls.html">Next: Kernels &amp; System Calls →</a></nav>
+        </main>
+    </div>
+
+    <footer class="footer"><div class="footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Understand systems by tracing what they do.</p></div><div class="footer-column"><h3>OS Course</h3><a href="index.html">Course Home</a><a href="#overview">Level 1</a><a href="index.html#roadmap">Roadmap</a></div><div class="footer-column"><h3>Practise</h3><a href="../Placement/practice.html">Core CS Practice</a><a href="../Placement/index.html">Placement Lab</a></div><div class="footer-column"><h3>Continue</h3><a href="index.html#level-2">Kernels &amp; System Calls</a><a href="index.html#level-3">Processes &amp; PCB</a><a href="index.html#level-4">Threads &amp; Concurrency</a></div></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p></div></footer>
+    <script src="../script.js?v=20260910"></script>
+    <script src="os-level-01.js?v=1"></script>
+</body>
+</html>
