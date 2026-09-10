@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn BCNF, lossless decomposition, dependency preservation, multivalued dependencies, 4NF, join dependencies and 5NF with interactive DBMS examples.">
+    <title>Normalization II — DBMS Level 8 | CodeBhavya</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="dbms.css?v=2">
+    <link rel="stylesheet" href="dbms-lesson.css?v=8">
+</head>
+<body class="dbms-page dbms-lesson-page advanced-normalization-page">
+    <header class="top-header"><a href="../index.html" class="logo codebhavya-new-logo" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo"><span class="brand-name"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></span></a><nav class="top-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C</a><a href="../Data-Structures/index.html">Data Structures</a><a href="../Python/index.html">Python</a><a href="../AI-ML/index.html">AI &amp; ML</a><a href="../Placement/index.html">Placement</a></nav></header>
+
+    <div class="lesson-reading-progress" aria-hidden="true"><span id="lessonReadingBar"></span></div>
+    <button type="button" class="dbms-sidebar-toggle" id="dbmsSidebarToggle" aria-controls="dbmsSidebar" aria-expanded="false">☰ Level 8 Topics</button>
+    <div class="dbms-sidebar-backdrop" id="dbmsSidebarBackdrop" hidden></div>
+
+    <div class="docs-layout">
+        <aside class="sidebar lesson-sidebar" id="dbmsSidebar" aria-label="Normalization II topics">
+            <div class="sidebar-title">Level 8 — Normalization II</div>
+            <a class="dbms-home-link" href="index.html">← DBMS Course Home</a>
+            <div class="sidebar-title dbms-sidebar-group">In this lesson</div>
+            <a class="lesson-section-link active" href="#overview">1. Learning outcomes</a>
+            <a class="lesson-section-link" href="#bcnf">2. BCNF and 3NF</a>
+            <a class="lesson-section-link" href="#bcnf-lab">3. BCNF violation lab</a>
+            <a class="lesson-section-link" href="#lossless">4. Lossless decomposition</a>
+            <a class="lesson-section-link" href="#preservation">5. Dependency preservation</a>
+            <a class="lesson-section-link" href="#fourth-normal-form">6. MVDs and 4NF</a>
+            <a class="lesson-section-link" href="#fifth-normal-form">7. Join dependencies and 5NF</a>
+            <a class="lesson-section-link" href="#safety-lab">8. Decomposition safety lab</a>
+            <a class="lesson-section-link" href="#checks">9. Concept checks</a>
+            <a class="lesson-section-link" href="#exam-prep">10. Exam and interview prep</a>
+            <a class="lesson-section-link" href="#summary">11. Summary and completion</a>
+            <div class="lesson-sidebar-status"><span>LESSON CHECKPOINT</span><strong id="lessonSidebarStatus">Not completed</strong></div>
+        </aside>
+
+        <main class="main-content lesson-main">
+            <section class="lesson-hero advanced-normalization-hero" id="overview">
+                <div><div class="lesson-breadcrumb"><a href="index.html">DBMS &amp; SQL</a><span>›</span><span>Level 8</span></div><span class="subject-label">PART 2 • CORRECT DATABASE DESIGN</span><h1>Prove That a Decomposition Is Safe</h1><p>Move beyond 3NF to BCNF, 4NF and 5NF while testing whether decomposed relations reconstruct the original information and preserve its rules.</p><div class="lesson-meta"><span>Level 08 of 18</span><span>Advanced</span><span>140–180 minutes</span><span>Level 7 required</span></div></div>
+                <div class="lesson-goal-card"><span>BY THE END, YOU CAN</span><ul><li>Distinguish 3NF from BCNF formally.</li><li>Test binary lossless decomposition.</li><li>Test dependency preservation.</li><li>Interpret multivalued dependencies.</li><li>Decompose a relation into 4NF.</li><li>Explain the purpose of 5NF.</li></ul></div>
+            </section>
+
+            <nav class="lesson-jump-bar" aria-label="Lesson modes"><a href="#bcnf">Compare</a><a href="#lossless">Prove</a><a href="#fourth-normal-form">Extend</a><a href="#safety-lab">Test</a><a href="#checks">Check</a></nav>
+
+            <section class="lesson-section" id="bcnf">
+                <header class="lesson-heading"><span>01 • STRENGTHEN THIRD NORMAL FORM</span><h2>BCNF Requires Every Determinant to Be a Super Key</h2><p>BCNF removes the prime-attribute exception allowed by 3NF.</p></header>
+                <div class="bcnf-comparison">
+                    <article><span>THIRD NORMAL FORM</span><h3>For every non-trivial X → A</h3><div class="condition-choice"><b>X is a super key</b><em>OR</em><b>A is a prime attribute</b></div><p>3NF may accept a dependency whose determinant is not a super key when its RHS belongs to a candidate key.</p></article>
+                    <article class="strict"><span>BOYCE–CODD NORMAL FORM</span><h3>For every non-trivial X → A</h3><div class="condition-choice"><b>X must be a super key</b></div><p>No prime-attribute exception exists. Every meaningful determinant must uniquely identify a tuple.</p></article>
+                </div>
+                <div class="bcnf-case">
+                    <span>CLASSIC 3NF-BUT-NOT-BCNF CASE</span><h3>TEACHING(student, course, instructor)</h3>
+                    <div class="case-fds"><code>{student, course} → instructor</code><code>instructor → course</code></div>
+                    <p>Candidate keys are <code>{student, course}</code> and <code>{student, instructor}</code>, so every attribute is prime. The FD <code>instructor → course</code> passes 3NF because course is prime, but violates BCNF because instructor is not a super key.</p>
+                </div>
+                <aside class="teacher-note"><strong>Relationship</strong><p>Every BCNF relation is in 3NF, but a 3NF relation need not be in BCNF. BCNF is stricter.</p></aside>
+            </section>
+
+            <section class="lesson-section interactive-section" id="bcnf-lab">
+                <header class="lesson-heading"><span>02 • TEST EACH DETERMINANT</span><h2>BCNF Violation Laboratory</h2><p>Select a dependency to compare its determinant closure with the complete schema.</p></header>
+                <div class="bcnf-lab">
+                    <div class="bcnf-fd-list" role="tablist" aria-label="Functional dependencies"><button type="button" role="tab" aria-selected="true" data-bcnf-fd="student-course">{student, course} → instructor</button><button type="button" role="tab" aria-selected="false" data-bcnf-fd="instructor">instructor → course</button></div>
+                    <article class="bcnf-lab-result" id="bcnfLabResult" aria-live="polite"></article>
+                </div>
+                <div class="bcnf-decomposition"><div><span>ORIGINAL</span><code>TEACHING(student, course, instructor)</code></div><b>→ decompose on instructor → course →</b><div><span>BCNF RELATIONS</span><code>INSTRUCTOR_COURSE(instructor, course)</code><code>STUDENT_INSTRUCTOR(student, instructor)</code></div></div>
+            </section>
+
+            <section class="lesson-section" id="lossless">
+                <header class="lesson-heading"><span>03 • PRESERVE INFORMATION</span><h2>A Lossless Join Reconstructs Exactly the Original Relation</h2><p>After decomposition, the natural join must create neither missing tuples nor spurious tuples.</p></header>
+                <div class="lossless-definition"><div><span>BINARY TEST FOR R → R₁, R₂</span><h3>The common attributes must determine one complete component</h3><code>(R₁ ∩ R₂) → R₁ &nbsp; or &nbsp; (R₁ ∩ R₂) → R₂ in F⁺</code></div><div><strong>Lossless</strong><p>Joining the projections returns exactly R.</p><strong class="danger">Lossy</strong><p>The join can invent spurious combinations.</p></div></div>
+                <div class="lossless-proof"><span>PROOF EXAMPLE</span><h3>R(A,B,C), F = {A → B}, decomposition R₁(A,B), R₂(A,C)</h3><p>The intersection is <code>{A}</code>. Because <code>A → AB</code>, the intersection determines all of R₁. Therefore, the decomposition is <strong>lossless</strong>.</p></div>
+                <div class="spurious-example"><div><span>ORIGINAL R</span><table><tr><th>A</th><th>B</th><th>C</th></tr><tr><td>a1</td><td>b1</td><td>c1</td></tr><tr><td>a2</td><td>b1</td><td>c2</td></tr></table></div><b>R₁(A,B) ⋈ R₂(B,C)</b><div><span>JOIN RESULT</span><table><tr><th>A</th><th>B</th><th>C</th></tr><tr><td>a1</td><td>b1</td><td>c1</td></tr><tr class="spurious"><td>a1</td><td>b1</td><td>c2</td></tr><tr class="spurious"><td>a2</td><td>b1</td><td>c1</td></tr><tr><td>a2</td><td>b1</td><td>c2</td></tr></table></div></div>
+                <p class="spurious-note">Here the common attribute B determines neither AB nor BC under F = {A → B}. The highlighted tuples were not in the original relation.</p>
+            </section>
+
+            <section class="lesson-section" id="preservation">
+                <header class="lesson-heading"><span>04 • PRESERVE ENFORCEABLE RULES</span><h2>Dependency Preservation Avoids Joining Tables to Check Constraints</h2><p>Projected dependencies on the decomposed relations should collectively imply the original FD set.</p></header>
+                <div class="preservation-grid">
+                    <article class="preserved"><span>PRESERVED</span><h3>R(A,B,C), F = {A → B, B → C}</h3><code>R₁(A,B) and R₂(B,C)</code><p>A → B can be checked in R₁. B → C can be checked in R₂. Every original FD is locally enforceable.</p></article>
+                    <article class="not-preserved"><span>NOT PRESERVED</span><h3>Same R and F</h3><code>R₁(A,B) and R₂(A,C)</code><p>A → B is available in R₁, but B → C is contained in neither relation. Checking it requires joining R₁ and R₂.</p></article>
+                </div>
+                <div class="two-safety-goals"><div><b>Lossless join</b><span>Protects information</span><p>No spurious or missing tuples after reconstruction.</p></div><div><b>Dependency preservation</b><span>Protects efficient enforcement</span><p>Rules can be checked without reconstructing the original relation.</p></div></div>
+                <aside class="teacher-note"><strong>BCNF trade-off</strong><p>A BCNF decomposition is designed to be lossless, but it may sacrifice dependency preservation. A 3NF synthesis can guarantee both losslessness and dependency preservation.</p></aside>
+            </section>
+
+            <section class="lesson-section" id="fourth-normal-form">
+                <header class="lesson-heading"><span>05 • HANDLE INDEPENDENT MULTI-VALUED FACTS</span><h2>4NF Removes Non-Key Multivalued Dependencies</h2><p>An MVD X ↠ Y says that, for each X, the set of Y values is independent of the remaining attributes.</p></header>
+                <div class="mvd-story">
+                    <div><span>STUDENT 101</span><strong>Hobbies</strong><p>Chess, Music</p><strong>Languages</strong><p>English, Telugu</p></div><b>independent sets create every combination</b><table><tr><th>student</th><th>hobby</th><th>language</th></tr><tr><td>101</td><td>Chess</td><td>English</td></tr><tr><td>101</td><td>Chess</td><td>Telugu</td></tr><tr><td>101</td><td>Music</td><td>English</td></tr><tr><td>101</td><td>Music</td><td>Telugu</td></tr></table></div>
+                <div class="mvd-rules"><article><span>MVDs</span><code>student ↠ hobby</code><code>student ↠ language</code></article><article><span>WHY NOT AN FD?</span><p>One student has several hobbies, so <code>student → hobby</code> is false. The double arrow expresses a set-valued, independent relationship.</p></article><article><span>4NF CONDITION</span><p>For every non-trivial MVD <code>X ↠ Y</code>, X must be a super key.</p></article></div>
+                <div class="four-nf-decomposition"><div><span>REDUNDANT RELATION</span><code>STUDENT_HOBBY_LANGUAGE</code></div><b>→</b><div><span>4NF RELATIONS</span><code>STUDENT_HOBBY(student, hobby)</code><code>STUDENT_LANGUAGE(student, language)</code></div></div>
+                <p class="four-nf-benefit">The four combination rows become two hobby rows plus two language rows. Adding a hobby no longer requires repeating every language.</p>
+            </section>
+
+            <section class="lesson-section" id="fifth-normal-form">
+                <header class="lesson-heading"><span>06 • HANDLE JOIN DEPENDENCIES</span><h2>5NF Removes Redundancy Caused Only by Multi-Relation Recombination</h2><p>5NF, also called project-join normal form, concerns non-trivial join dependencies not implied by candidate keys.</p></header>
+                <div class="jd-case"><span>SUPPLIER–PART–PROJECT</span><h3>SPJ(supplier, part, project)</h3><p>Suppose the business rule states that a triple is valid whenever its three compatible pairs exist:</p><div class="pair-relations"><code>SP(supplier, part)</code><code>SJ(supplier, project)</code><code>PJ(part, project)</code></div><p>Then SPJ can be reconstructed from the join of those three projections. Storing every triple repeats pairwise facts.</p></div>
+                <div class="five-nf-rule"><strong>5NF CONDITION</strong><p>Every non-trivial join dependency must be implied by candidate keys.</p><small>5NF is uncommon in routine applications. Apply it only when the business semantics genuinely guarantee the join dependency; arbitrary decomposition can invent tuples.</small></div>
+                <div class="normal-form-summary-table"><table><thead><tr><th>Form</th><th>Main dependency/design issue removed</th><th>Key question</th></tr></thead><tbody><tr><th>1NF</th><td>Repeating groups and non-atomic values</td><td>Is each cell atomic?</td></tr><tr><th>2NF</th><td>Partial functional dependency</td><td>Does a non-prime fact need the whole key?</td></tr><tr><th>3NF</th><td>Transitive non-key determination</td><td>Does a non-key fact determine another?</td></tr><tr><th>BCNF</th><td>Any non-super-key FD determinant</td><td>Is every determinant a super key?</td></tr><tr><th>4NF</th><td>Independent non-key MVD</td><td>Are independent multi-valued facts mixed?</td></tr><tr><th>5NF</th><td>Non-key join dependency</td><td>Can pairwise facts safely reconstruct triples?</td></tr></tbody></table></div>
+            </section>
+
+            <section class="lesson-section interactive-section" id="safety-lab">
+                <header class="lesson-heading"><span>07 • ANALYSE COMPLETE DECOMPOSITIONS</span><h2>Decomposition Safety Laboratory</h2><p>Compare losslessness, dependency preservation and target normal form as separate results.</p></header>
+                <div class="safety-lab">
+                    <div class="safety-scenarios" role="tablist" aria-label="Decomposition examples"><button type="button" role="tab" aria-selected="true" data-safety-case="both">Lossless + preserved</button><button type="button" role="tab" aria-selected="false" data-safety-case="not-preserved">Lossless, not preserved</button><button type="button" role="tab" aria-selected="false" data-safety-case="lossy">Lossy decomposition</button><button type="button" role="tab" aria-selected="false" data-safety-case="bcnf-tradeoff">BCNF trade-off</button><button type="button" role="tab" aria-selected="false" data-safety-case="four-nf">4NF decomposition</button></div>
+                    <article class="safety-result" id="safetyResult" aria-live="polite"></article>
+                </div>
+            </section>
+
+            <section class="lesson-section interactive-section" id="checks">
+                <header class="lesson-heading"><span>08 • CHECK YOUR UNDERSTANDING</span><h2>Eight Formative Concept Checks</h2></header>
+                <div class="concept-check-list">
+                    <article class="concept-check" data-answer="c"><h3>1. BCNF requires that every non-trivial FD determinant be:</h3><div class="check-options"><button type="button" data-option="a">A. Prime</button><button type="button" data-option="b">B. A foreign key</button><button type="button" data-option="c">C. A super key</button><button type="button" data-option="d">D. A single attribute</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="b"><h3>2. Which statement is true?</h3><div class="check-options"><button type="button" data-option="a">A. Every 3NF relation is BCNF</button><button type="button" data-option="b">B. Every BCNF relation is 3NF</button><button type="button" data-option="c">C. BCNF permits more FDs than 3NF</button><button type="button" data-option="d">D. BCNF ignores keys</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="d"><h3>3. A lossless decomposition guarantees:</h3><div class="check-options"><button type="button" data-option="a">A. Every FD is local</button><button type="button" data-option="b">B. No foreign keys</button><button type="button" data-option="c">C. Fewer tables</button><button type="button" data-option="d">D. Exact reconstruction without spurious tuples</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="a"><h3>4. For binary R₁ and R₂, a standard lossless test is:</h3><div class="check-options"><button type="button" data-option="a">A. Their intersection determines R₁ or R₂</button><button type="button" data-option="b">B. Their union is empty</button><button type="button" data-option="c">C. They have the same number of tuples</button><button type="button" data-option="d">D. Both lack keys</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="c"><h3>5. Dependency preservation mainly allows constraints to be checked:</h3><div class="check-options"><button type="button" data-option="a">A. Without keys</button><button type="button" data-option="b">B. Only after deletion</button><button type="button" data-option="c">C. Locally without joining decomposed relations</button><button type="button" data-option="d">D. Only in 1NF</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="b"><h3>6. X ↠ Y denotes:</h3><div class="check-options"><button type="button" data-option="a">A. A foreign key</button><button type="button" data-option="b">B. A multivalued dependency</button><button type="button" data-option="c">C. A partial FD</button><button type="button" data-option="d">D. A primary key</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="d"><h3>7. 4NF requires a determinant of every non-trivial MVD to be:</h3><div class="check-options"><button type="button" data-option="a">A. Nullable</button><button type="button" data-option="b">B. Composite</button><button type="button" data-option="c">C. Non-prime</button><button type="button" data-option="d">D. A super key</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="a"><h3>8. 5NF primarily addresses:</h3><div class="check-options"><button type="button" data-option="a">A. Join dependencies</button><button type="button" data-option="b">B. Atomic values</button><button type="button" data-option="c">C. Partial dependencies</button><button type="button" data-option="d">D. Transitive FDs</button></div><p class="check-feedback"></p></article>
+                </div>
+                <div class="check-score" id="conceptScore">Answered correctly: 0 of 8</div>
+            </section>
+
+            <section class="lesson-section" id="exam-prep">
+                <header class="lesson-heading"><span>09 • EXPLAIN &amp; PREPARE</span><h2>University and Interview Questions</h2></header>
+                <div class="question-bank-grid"><article><span>2-MARK QUESTIONS</span><ol><li>Define BCNF.</li><li>What is a lossless join?</li><li>Define dependency preservation.</li><li>What is an MVD?</li><li>State the condition for 4NF.</li></ol></article><article><span>5-MARK / PROBLEMS</span><ol><li>Show a relation that is in 3NF but not BCNF.</li><li>Test a binary decomposition for losslessness.</li><li>Test whether an FD set is preserved.</li><li>Decompose an MVD-based relation into 4NF.</li></ol></article><article><span>INTERVIEW QUESTIONS</span><ol><li>Lossless versus dependency-preserving?</li><li>Why might BCNF lose dependency preservation?</li><li>When would you choose 3NF over BCNF?</li><li>FD versus MVD?</li><li>When is 5NF practically useful?</li></ol></article></div>
+                <details class="answer-framework"><summary>Show the advanced-normalization proof format</summary><div><ol><li>Write R, candidate keys and the complete dependency set.</li><li>Test the current normal form using every non-trivial dependency.</li><li>Name the violating determinant and explain why it is not a super key.</li><li>Show the decomposed relation schemas and their keys.</li><li>Apply the lossless test using the common attributes or chase method.</li><li>Project dependencies onto each new relation.</li><li>Check whether their union implies the original dependencies.</li><li>State the achieved normal form and any preservation trade-off.</li></ol></div></details>
+            </section>
+
+            <section class="lesson-section summary-section" id="summary"><div><span class="section-label">LEVEL 8 SUMMARY</span><h2>You Can Now Judge Decomposition Quality</h2><ul><li>BCNF requires every non-trivial FD determinant to be a super key.</li><li>Lossless decomposition guarantees exact reconstruction.</li><li>Dependency preservation allows local constraint enforcement.</li><li>A design should seek both properties, but BCNF can require a trade-off.</li><li>4NF removes non-key independent multivalued facts.</li><li>5NF handles join dependencies not implied by candidate keys.</li></ul></div><div class="completion-panel"><span>COURSE CHECKPOINT</span><p>Mark this level when you can test BCNF, prove a binary decomposition lossless, check dependency preservation and explain 4NF.</p><button type="button" id="completeLessonButton" aria-pressed="false">Mark Level 8 complete</button><small>Saved in this browser only.</small></div></section>
+
+            <nav class="dbms-topic-navigation" aria-label="DBMS lesson navigation"><a href="level-07-normalization-i.html">← Level 7: Normalization I</a><a href="level-09-sql-foundations.html">Next: SQL Foundations →</a></nav>
+        </main>
+    </div>
+
+    <footer class="footer"><div class="footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><div class="footer-column"><h3>Course</h3><a href="index.html">DBMS Home</a><a href="level-07-normalization-i.html">Level 7</a><a href="#overview">Level 8</a></div><div class="footer-column"><h3>Practice</h3><a href="../Placement/mcq-library.html?topic=database">MCQ Library</a><a href="../Placement/quiz.html?topic=database">Timed Quiz</a><a href="../Placement/coding.html?topic=database">SQL Arena</a></div><div class="footer-column"><h3>Continue</h3><a href="level-09-sql-foundations.html">SQL Foundations</a><a href="index.html#level-10">Database Definition</a><a href="index.html#level-11">Data Manipulation</a></div></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer>
+    <script src="../script.js?v=20260910"></script>
+    <script src="dbms.js?v=2"></script>
+    <script src="dbms-level-08.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn database normalization, anomalies, 1NF, 2NF and 3NF through a realistic university schema, interactive simulations and guided decomposition.">
+    <title>Normalization I — DBMS Level 7 | CodeBhavya</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/codebhavya-icon-32.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="dbms.css?v=2">
+    <link rel="stylesheet" href="dbms-lesson.css?v=7">
+</head>
+<body class="dbms-page dbms-lesson-page normalization-page">
+    <header class="top-header">
+        <a href="../index.html" class="logo codebhavya-new-logo" aria-label="CodeBhavya home">
+            <img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo">
+            <span class="brand-name"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></span>
+        </a>
+        <nav class="top-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Maths/index.html">Maths</a><a href="../C-Programming/index.html">C</a><a href="../Data-Structures/index.html">Data Structures</a><a href="../Python/index.html">Python</a><a href="../AI-ML/index.html">AI &amp; ML</a><a href="../Placement/index.html">Placement</a></nav>
+    </header>
+
+    <div class="lesson-reading-progress" aria-hidden="true"><span id="lessonReadingBar"></span></div>
+    <button type="button" class="dbms-sidebar-toggle" id="dbmsSidebarToggle" aria-controls="dbmsSidebar" aria-expanded="false">☰ Level 7 Topics</button>
+    <div class="dbms-sidebar-backdrop" id="dbmsSidebarBackdrop" hidden></div>
+
+    <div class="docs-layout">
+        <aside class="sidebar lesson-sidebar" id="dbmsSidebar" aria-label="Normalization I topics">
+            <div class="sidebar-title">Level 7 — Normalization I</div>
+            <a class="dbms-home-link" href="index.html">← DBMS Course Home</a>
+            <div class="sidebar-title dbms-sidebar-group">In this lesson</div>
+            <a class="lesson-section-link active" href="#overview">1. Learning outcomes</a>
+            <a class="lesson-section-link" href="#why-normalize">2. Why normalization?</a>
+            <a class="lesson-section-link" href="#anomalies">3. Anomaly laboratory</a>
+            <a class="lesson-section-link" href="#first-normal-form">4. First normal form</a>
+            <a class="lesson-section-link" href="#second-normal-form">5. Second normal form</a>
+            <a class="lesson-section-link" href="#third-normal-form">6. Third normal form</a>
+            <a class="lesson-section-link" href="#decomposition">7. Decomposition visualizer</a>
+            <a class="lesson-section-link" href="#diagnostic">8. Normal-form diagnostic</a>
+            <a class="lesson-section-link" href="#checks">9. Concept checks</a>
+            <a class="lesson-section-link" href="#exam-prep">10. Exam and interview prep</a>
+            <a class="lesson-section-link" href="#summary">11. Summary and completion</a>
+            <div class="lesson-sidebar-status"><span>LESSON CHECKPOINT</span><strong id="lessonSidebarStatus">Not completed</strong></div>
+        </aside>
+
+        <main class="main-content lesson-main">
+            <section class="lesson-hero normalization-hero" id="overview">
+                <div>
+                    <div class="lesson-breadcrumb"><a href="index.html">DBMS &amp; SQL</a><span>›</span><span>Level 7</span></div>
+                    <span class="subject-label">PART 2 • CORRECT DATABASE DESIGN</span>
+                    <h1>Remove Redundancy Without Losing Meaning</h1>
+                    <p>Diagnose unsafe table designs and transform them through 1NF, 2NF and 3NF using keys and functional dependencies—not memorized slogans.</p>
+                    <div class="lesson-meta"><span>Level 07 of 18</span><span>Intermediate</span><span>120–160 minutes</span><span>Level 6 required</span></div>
+                </div>
+                <div class="lesson-goal-card">
+                    <span>BY THE END, YOU CAN</span>
+                    <ul><li>Identify insertion, update and deletion anomalies.</li><li>Verify atomic values for 1NF.</li><li>Remove partial dependencies for 2NF.</li><li>Remove transitive dependencies for 3NF.</li><li>Explain each decomposition using FDs.</li><li>State the highest normal form reached.</li></ul>
+                </div>
+            </section>
+
+            <nav class="lesson-jump-bar" aria-label="Lesson modes"><a href="#why-normalize">Understand</a><a href="#anomalies">Trigger</a><a href="#decomposition">Decompose</a><a href="#diagnostic">Diagnose</a><a href="#checks">Check</a></nav>
+
+            <section class="lesson-section" id="why-normalize">
+                <header class="lesson-heading"><span>01 • START WITH THE DESIGN PROBLEM</span><h2>Normalization Controls Redundancy and Its Side Effects</h2><p>Repeated facts are dangerous when one real-world fact must be changed in many rows.</p></header>
+                <div class="normalization-purpose-grid">
+                    <article><b>01</b><h3>Reduce harmful repetition</h3><p>Store one independent fact in one logical place whenever the dependencies permit it.</p></article>
+                    <article><b>02</b><h3>Protect consistency</h3><p>A department name should not disagree across student-enrolment rows.</p></article>
+                    <article><b>03</b><h3>Make changes safer</h3><p>Insert, update and delete one fact without unintentionally affecting another fact.</p></article>
+                    <article><b>04</b><h3>Clarify responsibility</h3><p>Each relation should describe one focused subject: student, course, department or enrolment.</p></article>
+                </div>
+                <div class="normalization-misconception"><strong>Normalization is not “split every table.”</strong><p>A decomposition must follow dependencies and later must be checked for lossless join and dependency preservation. Those safety tests are covered in Level 8.</p></div>
+                <div class="normal-form-ladder" aria-label="Normal form progression"><span>UNF<small>Repeating groups</small></span><b>→ atomic values</b><span>1NF<small>Partial dependencies may remain</small></span><b>→ remove partial</b><span>2NF<small>Transitive dependencies may remain</small></span><b>→ remove transitive</b><span>3NF<small>Non-key facts depend on keys</small></span></div>
+            </section>
+
+            <section class="lesson-section interactive-section" id="anomalies">
+                <header class="lesson-heading"><span>02 • EXPERIENCE THE FAILURE</span><h2>Anomaly Laboratory</h2><p>Operate on one denormalized ENROLMENT_RECORD table and observe which independent fact is placed at risk.</p></header>
+                <div class="anomaly-lab">
+                    <div class="anomaly-controls" aria-label="Choose a data operation">
+                        <button type="button" data-anomaly="update" aria-pressed="false">Update department</button>
+                        <button type="button" data-anomaly="insert" aria-pressed="false">Insert new course</button>
+                        <button type="button" data-anomaly="delete" aria-pressed="false">Delete last enrolment</button>
+                        <button type="button" data-anomaly="reset">Reset rows</button>
+                    </div>
+                    <div class="anomaly-table-wrap"><table class="lesson-table anomaly-table" id="anomalyTable"><thead><tr><th>student_id</th><th>student_name</th><th>dept_id</th><th>dept_name</th><th>course_id</th><th>course_title</th><th>grade</th></tr></thead><tbody id="anomalyTableBody"></tbody></table></div>
+                    <article class="anomaly-explanation" id="anomalyExplanation" aria-live="polite"></article>
+                </div>
+            </section>
+
+            <section class="lesson-section" id="first-normal-form">
+                <header class="lesson-heading"><span>03 • FIRST NORMAL FORM</span><h2>1NF Gives Every Cell One Atomic Value</h2><p>A relation is in 1NF when each attribute contains values from an atomic domain and there are no repeating groups.</p></header>
+                <div class="nf-rule-card"><div><span>1NF TEST</span><h3>One row × one attribute = one value</h3><p>Atomic means indivisible for the database task. A full address may be atomic in one application but should be separated when city or postcode must be searched independently.</p></div><code>No arrays, lists or repeating course_1, course_2, course_3 columns</code></div>
+                <div class="atomic-comparison">
+                    <article class="bad-design"><span>NOT 1NF</span><table><tr><th>student_id</th><th>phones</th></tr><tr><td>101</td><td>9876, 8765</td></tr></table><p>One cell contains multiple phone values.</p></article>
+                    <b>→</b>
+                    <article class="good-design"><span>1NF</span><table><tr><th>student_id</th><th>phone</th></tr><tr><td>101</td><td>9876</td></tr><tr><td>101</td><td>8765</td></tr></table><p>Each row contains one phone value.</p></article>
+                </div>
+                <aside class="teacher-note"><strong>Exam precision</strong><p>1NF does not automatically remove redundancy. Our university table can contain atomic values and still repeat student, course and department facts.</p></aside>
+            </section>
+
+            <section class="lesson-section" id="second-normal-form">
+                <header class="lesson-heading"><span>04 • SECOND NORMAL FORM</span><h2>2NF Removes Partial Dependency on a Candidate Key</h2><p>A relation must be in 1NF, and every non-prime attribute must depend on the whole of every candidate key.</p></header>
+                <div class="key-dependency-map">
+                    <div class="composite-key"><span>CANDIDATE KEY</span><strong>{student_id, course_id}</strong></div>
+                    <div class="dependency-arrows"><p><code>student_id → student_name, dept_id, dept_name</code><b>PARTIAL</b></p><p><code>course_id → course_title, instructor</code><b>PARTIAL</b></p><p><code>{student_id, course_id} → grade</code><b class="safe">FULL</b></p></div>
+                </div>
+                <div class="partial-explanation"><h3>Why the first two dependencies violate 2NF</h3><p><code>student_id</code> and <code>course_id</code> are proper subsets of the composite key. They determine non-prime attributes without requiring the entire key.</p></div>
+                <div class="two-nf-result"><article><span>STUDENT_2NF</span><code>student_id, student_name, dept_id, dept_name</code></article><article><span>COURSE_2NF</span><code>course_id, course_title, instructor</code></article><article><span>ENROLMENT_2NF</span><code>student_id, course_id, grade</code></article></div>
+                <aside class="teacher-note"><strong>Shortcut with a condition</strong><p>A relation with only single-attribute candidate keys cannot have a partial dependency, so once it is in 1NF it automatically satisfies 2NF. Always check all candidate keys.</p></aside>
+            </section>
+
+            <section class="lesson-section" id="third-normal-form">
+                <header class="lesson-heading"><span>05 • THIRD NORMAL FORM</span><h2>3NF Removes Transitive Non-Key Determination</h2><p>A relation must be in 2NF, and non-prime attributes should not depend transitively on a candidate key through another non-key attribute.</p></header>
+                <div class="transitive-chain"><span>student_id<small>key</small></span><b>→</b><span>dept_id<small>non-key determinant</small></span><b>→</b><span>dept_name<small>non-key fact</small></span></div>
+                <p class="transitive-reading"><code>student_id → dept_id</code> and <code>dept_id → dept_name</code> imply <code>student_id → dept_name</code>. Department name belongs with its real determinant, <code>dept_id</code>.</p>
+                <div class="three-nf-result"><article><span>STUDENT</span><code><u>student_id</u>, student_name, dept_id (FK)</code></article><article><span>DEPARTMENT</span><code><u>dept_id</u>, dept_name</code></article><article><span>COURSE</span><code><u>course_id</u>, course_title, instructor</code></article><article><span>ENROLMENT</span><code><u>student_id</u> (FK), <u>course_id</u> (FK), grade</code></article></div>
+                <div class="formal-three-nf"><span>FORMAL 3NF CONDITION</span><p>For every non-trivial FD <code>X → A</code>, either <strong>X is a super key</strong> or <strong>A is prime</strong> (belongs to some candidate key).</p><small>The common “no transitive dependency” rule is a useful learning test, while this formal condition handles schemas with multiple candidate keys accurately.</small></div>
+            </section>
+
+            <section class="lesson-section interactive-section" id="decomposition">
+                <header class="lesson-heading"><span>06 • WATCH THE SCHEMA CHANGE</span><h2>Guided Decomposition Visualizer</h2><p>Move through the normal forms. Every stage identifies the dependency removed and the design concern that remains.</p></header>
+                <div class="decomposition-tabs" role="tablist" aria-label="Normalization stages">
+                    <button type="button" data-nf-stage="unf" role="tab" aria-selected="true">UNF</button>
+                    <button type="button" data-nf-stage="1nf" role="tab" aria-selected="false">1NF</button>
+                    <button type="button" data-nf-stage="2nf" role="tab" aria-selected="false">2NF</button>
+                    <button type="button" data-nf-stage="3nf" role="tab" aria-selected="false">3NF</button>
+                </div>
+                <div class="decomposition-stage" id="decompositionStage" aria-live="polite"></div>
+                <div class="decomposition-actions"><button type="button" id="previousNfStage">← Previous stage</button><button type="button" id="nextNfStage">Next stage →</button></div>
+            </section>
+
+            <section class="lesson-section interactive-section" id="diagnostic">
+                <header class="lesson-heading"><span>07 • DIAGNOSE, DO NOT GUESS</span><h2>Highest Normal Form Diagnostic</h2><p>Describe a relation’s properties and receive the highest guaranteed normal form with the first required correction.</p></header>
+                <div class="nf-diagnostic">
+                    <form id="nfDiagnosticForm">
+                        <fieldset><legend>1. Are all values atomic with no repeating groups?</legend><label><input type="radio" name="atomic" value="yes" checked> Yes</label><label><input type="radio" name="atomic" value="no"> No</label></fieldset>
+                        <fieldset><legend>2. Does a non-prime attribute depend on only part of a candidate key?</legend><label><input type="radio" name="partial" value="no" checked> No</label><label><input type="radio" name="partial" value="yes"> Yes</label><label><input type="radio" name="partial" value="na"> No composite candidate key</label></fieldset>
+                        <fieldset><legend>3. Does a non-prime attribute determine another non-prime attribute?</legend><label><input type="radio" name="transitive" value="no" checked> No</label><label><input type="radio" name="transitive" value="yes"> Yes</label></fieldset>
+                        <button type="submit">Diagnose normal form</button>
+                    </form>
+                    <article class="nf-diagnostic-result" id="nfDiagnosticResult" aria-live="polite"><span>READY</span><h3>Describe the dependency conditions</h3><p>The result will explain each normal-form gate in order.</p></article>
+                </div>
+            </section>
+
+            <section class="lesson-section interactive-section" id="checks">
+                <header class="lesson-heading"><span>08 • CHECK YOUR UNDERSTANDING</span><h2>Eight Formative Concept Checks</h2></header>
+                <div class="concept-check-list">
+                    <article class="concept-check" data-answer="b"><h3>1. Which situation is an update anomaly?</h3><div class="check-options"><button type="button" data-option="a">A. A table has a primary key</button><button type="button" data-option="b">B. The same department name must be changed in many rows</button><button type="button" data-option="c">C. A query returns zero rows</button><button type="button" data-option="d">D. A foreign key is indexed</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="c"><h3>2. The central 1NF requirement is:</h3><div class="check-options"><button type="button" data-option="a">A. No foreign keys</button><button type="button" data-option="b">B. No composite keys</button><button type="button" data-option="c">C. Atomic values and no repeating groups</button><button type="button" data-option="d">D. Every determinant is a super key</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="a"><h3>3. For key {student_id, course_id}, student_id → student_name is:</h3><div class="check-options"><button type="button" data-option="a">A. A partial dependency</button><button type="button" data-option="b">B. A multivalued dependency</button><button type="button" data-option="c">C. A trivial dependency</button><button type="button" data-option="d">D. A join dependency</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="d"><h3>4. Which normal form removes partial dependencies?</h3><div class="check-options"><button type="button" data-option="a">A. 1NF</button><button type="button" data-option="b">B. 3NF</button><button type="button" data-option="c">C. BCNF</button><button type="button" data-option="d">D. 2NF</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="b"><h3>5. student_id → dept_id and dept_id → dept_name create:</h3><div class="check-options"><button type="button" data-option="a">A. A repeating group</button><button type="button" data-option="b">B. A transitive dependency</button><button type="button" data-option="c">C. A partial key</button><button type="button" data-option="d">D. A Cartesian product</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="c"><h3>6. A 2NF relation with no transitive non-key dependency reaches:</h3><div class="check-options"><button type="button" data-option="a">A. UNF</button><button type="button" data-option="b">B. 1NF only</button><button type="button" data-option="c">C. 3NF</button><button type="button" data-option="d">D. It cannot be determined</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="a"><h3>7. A relation with a single-attribute candidate key is in 1NF. Which is impossible?</h3><div class="check-options"><button type="button" data-option="a">A. A partial dependency on that key</button><button type="button" data-option="b">B. A transitive dependency</button><button type="button" data-option="c">C. An update anomaly</button><button type="button" data-option="d">D. A foreign key</button></div><p class="check-feedback"></p></article>
+                    <article class="concept-check" data-answer="d"><h3>8. Which statement is most accurate?</h3><div class="check-options"><button type="button" data-option="a">A. More tables always mean better design</button><button type="button" data-option="b">B. 1NF removes every anomaly</button><button type="button" data-option="c">C. Normalization ignores business rules</button><button type="button" data-option="d">D. Decomposition must be justified by dependencies and checked for safety</button></div><p class="check-feedback"></p></article>
+                </div>
+                <div class="check-score" id="conceptScore">Answered correctly: 0 of 8</div>
+            </section>
+
+            <section class="lesson-section" id="exam-prep">
+                <header class="lesson-heading"><span>09 • EXPLAIN &amp; PREPARE</span><h2>University and Interview Questions</h2></header>
+                <div class="question-bank-grid">
+                    <article><span>2-MARK QUESTIONS</span><ol><li>Define normalization.</li><li>What is an update anomaly?</li><li>State the condition for 1NF.</li><li>Define partial dependency.</li><li>Define transitive dependency.</li></ol></article>
+                    <article><span>5-MARK / PROBLEMS</span><ol><li>Explain insertion, update and deletion anomalies with one table.</li><li>Normalize a relation from UNF to 1NF.</li><li>Convert a relation with a composite key into 2NF.</li><li>Normalize a 2NF relation into 3NF using its FDs.</li></ol></article>
+                    <article><span>INTERVIEW QUESTIONS</span><ol><li>Can a 1NF table still contain redundancy?</li><li>Why does 2NF matter mainly for composite keys?</li><li>What is the formal 3NF condition?</li><li>Normalization versus denormalization?</li><li>How would you validate a decomposition?</li></ol></article>
+                </div>
+                <details class="answer-framework"><summary>Show the step-by-step normalization answer format</summary><div><ol><li>Write the relation and all candidate keys.</li><li>List the valid functional dependencies.</li><li>State the current normal form and prove why.</li><li>Identify the exact violating dependency.</li><li>Decompose relations with primary and foreign keys marked.</li><li>Repeat the dependency test on every new relation.</li><li>State the final normal form.</li><li>Mention lossless join and dependency preservation as required safety checks.</li></ol></div></details>
+            </section>
+
+            <section class="lesson-section summary-section" id="summary">
+                <div><span class="section-label">LEVEL 7 SUMMARY</span><h2>You Can Now Move a Schema from Repetition to 3NF</h2><ul><li>Anomalies expose harmful redundancy.</li><li>1NF requires atomic values and removes repeating groups.</li><li>2NF removes partial dependency of non-prime attributes on candidate keys.</li><li>3NF removes transitive non-key determination.</li><li>Every decomposition must be justified by keys and dependencies.</li><li>Formal 3NF permits X → A when X is a super key or A is prime.</li></ul></div>
+                <div class="completion-panel"><span>COURSE CHECKPOINT</span><p>Mark this level when you can diagnose a relation and show every decomposition from 1NF through 3NF with written reasoning.</p><button type="button" id="completeLessonButton" aria-pressed="false">Mark Level 7 complete</button><small>Saved in this browser only.</small></div>
+            </section>
+
+            <nav class="dbms-topic-navigation" aria-label="DBMS lesson navigation"><a href="level-06-functional-dependencies.html">← Level 6: Functional Dependencies</a><a href="level-08-normalization-ii.html">Next: Normalization II →</a></nav>
+        </main>
+    </div>
+
+    <footer class="footer"><div class="footer-container"><div class="footer-brand-section"><div class="footer-brand"><span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span></div><p class="footer-tagline">From Learning to Limitless Possibilities.</p><p class="footer-description">Learn, practise, build and grow with structured learning resources.</p></div><div class="footer-column"><h3>Course</h3><a href="index.html">DBMS Home</a><a href="level-06-functional-dependencies.html">Level 6</a><a href="#overview">Level 7</a></div><div class="footer-column"><h3>Practice</h3><a href="../Placement/mcq-library.html?topic=database">MCQ Library</a><a href="../Placement/quiz.html?topic=database">Timed Quiz</a><a href="../Placement/coding.html?topic=database">SQL Arena</a></div><div class="footer-column"><h3>Continue</h3><a href="level-08-normalization-ii.html">Normalization II</a><a href="index.html#level-9">SQL Foundations</a><a href="index.html#level-10">Database Definition</a></div></div><div class="footer-bottom"><p>© 2026 CodeBhavya. All Rights Reserved.</p><p>From Learning to Limitless Possibilities.</p></div></footer>
+    <script src="../script.js?v=20260910"></script>
+    <script src="dbms.js?v=2"></script>
+    <script src="dbms-level-07.js?v=1"></script>
+</body>
+</html>
