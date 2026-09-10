@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06192c">
+  <meta name="description" content="Learn how to compare two text files character by character using a clear C program.">
+  <link rel="canonical" href="https://codebhavya.com/Programs/compare-two-text-files.html">
+  <title>Compare Two Text Files Character by Character | C Programming Program | CodeBhavya</title>
+  <link rel="stylesheet" href="programs.css">
+  <script defer src="program-page.js?v=1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#programContent">Skip to program</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="" width="64" height="64"><span>Code<strong>Bhavya</strong></span></a>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../C-Programming/index.html">Learn C Programming</a><a class="active" href="index.html" aria-current="page">Programs</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Placement/index.html">Placement</a></nav>
+    <details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="../index.html">Home</a><a href="../C-Programming/index.html">Learn C Programming</a><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Online Compiler</a><a href="../Placement/index.html">Placement</a></nav></details>
+  </header>
+  <main class="program-main" id="programContent">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>›</span><a href="index.html">Program Library</a><span>›</span><span>C Programming</span><span>›</span><span aria-current="page">Compare Two Text Files Character by Character</span></nav>
+    <div class="program-page-layout">
+      <aside class="example-sidebar">
+    <h2 class="sidebar-title">C Programming Programs</h2>
+    <div class="example-links">
+      <p class="sidebar-section">CURRENT TOPIC</p>
+      <a class="active" href="index.html">File Handling</a>
+      <p class="sidebar-section">PROGRAM NAVIGATION</p>
+      <a href="merge-two-text-files.html">← Merge Two Text Files</a>
+<a href="index.html">View all 698 programs</a>
+<a href="../Online-Compiler/index.html">Open online compiler</a>
+<a href="search-word-in-file.html">Search for a Word in a Text File →</a>
+    </div>
+  </aside>
+      <article class="program-article">
+        <header class="program-hero">
+          <p class="eyebrow">C PROGRAMMING PROGRAM • FILE HANDLING</p>
+          <h1>Compare Two Text Files Character by Character</h1>
+          <p>Learn how to compare two text files character by character using a clear C program.</p>
+          <div class="meta-row"><span class="meta-chip">Intermediate</span><span class="meta-chip">fgetc()</span><span class="meta-chip">EOF</span><span class="meta-chip">File comparison</span></div>
+        </header>
+
+        <section class="content-card">
+          <p class="section-kicker">PROBLEM UNDERSTANDING</p>
+          <h2>Input and expected output</h2>
+          <div class="info-grid"><div class="info-box"><strong>Sample input</strong><pre class="io-code">No input required</pre></div><div class="info-box"><strong>Sample output</strong><pre class="io-code">Files are identical.</pre></div></div>
+        </section>
+
+        <section class="content-card" id="programCode">
+          <p class="section-kicker">COMPLETE C PROGRAM</p>
+          <h2>Complete C implementation</h2>
+          <div class="code-window"><div class="code-toolbar"><strong>compare-two-text-files.c</strong><div class="code-actions"><button id="copyCode" type="button">Copy code</button><button id="downloadCode" type="button">Download .c</button><a id="copyOpenCompiler" href="../Online-Compiler/index.html">Open in compiler</a></div></div><pre class="source-code" id="sourceCode" tabindex="0">#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    FILE *first = fopen(&quot;first.txt&quot;, &quot;w&quot;);
+    FILE *second = fopen(&quot;second.txt&quot;, &quot;w&quot;);
+    if (first == NULL || second == NULL) return 1;
+    fputs(&quot;CodeBhavya\n&quot;, first); fputs(&quot;CodeBhavya\n&quot;, second);
+    fclose(first); fclose(second);
+    first = fopen(&quot;first.txt&quot;, &quot;r&quot;); second = fopen(&quot;second.txt&quot;, &quot;r&quot;);
+    if (first == NULL || second == NULL) return 1;
+    int left, right;
+    do {
+        left = fgetc(first); right = fgetc(second);
+        if (left != right) break;
+    } while (left != EOF);
+    puts(left == right ? &quot;Files are identical.&quot; : &quot;Files are different.&quot;);
+    fclose(first); fclose(second);
+    return 0;
+}</pre></div>
+        </section>
+
+        <section class="debug-lab code-tour" id="codeTour" aria-labelledby="tourTitle">
+    <div class="debug-toolbar">
+      <div class="debug-title"><p class="panel-kicker">GUIDED CODE TOUR • NOT LIVE EXECUTION</p><strong id="tourTitle">Study the program line by line</strong><p>Use the real compiler button above to run and debug with different inputs.</p></div>
+      <div class="debug-controls"><button class="start-debug" id="startTour" type="button">Start</button><button id="previousTourStep" type="button" disabled>Previous</button><button class="next-step" id="nextTourStep" type="button" disabled>Next</button><button id="autoTour" type="button" disabled>Auto</button><button id="pauseTour" type="button" disabled>Pause</button><button id="resetTour" type="button">Reset</button></div>
+    </div>
+    <div class="debug-grid tour-grid">
+      <div class="debug-code" id="tourSource" aria-label="Guided source code"></div>
+      <div class="debug-state tour-state">
+        <section class="state-panel"><h3>CURRENT STEP</h3><p class="step-message" id="tourMessage" aria-live="polite">Select Start to walk through the important lines.</p></section>
+        <section class="state-panel"><h3>SELECTED LINE</h3><p class="step-message tour-selected-line" id="tourLine">No line selected</p></section>
+        <section class="state-panel tour-output-panel"><h3>EXPECTED OUTPUT FOR THE SAMPLE</h3><pre class="terminal" id="tourOutput">Files are identical.</pre></section>
+      </div>
+    </div>
+    <div class="progress-row"><progress id="tourProgress" max="1" value="0">0%</progress><span id="tourProgressText">Step 0 of 0</span></div>
+  </section>
+
+        <section class="content-card" id="explanation">
+          <p class="section-kicker">PROGRAM EXPLANATION</p>
+          <h2>Algorithm and explanation</h2>
+          <ol><li>Read the required input values.</li><li>Read corresponding characters until they differ or both streams reach the end together.</li><li>Display the computed result.</li></ol>
+          <p>Read corresponding characters until they differ or both streams reach the end together.</p>
+        </section>
+
+        <section class="content-card" id="complexity">
+          <p class="section-kicker">EFFICIENCY</p>
+          <h2>Time and space complexity</h2>
+          <div class="complexity-grid"><div class="complexity-box"><strong>Time complexity</strong><p><code>O(min(n,m))</code></p></div><div class="complexity-box"><strong>Auxiliary space</strong><p><code>O(1)</code></p></div></div>
+        </section>
+
+        <section class="content-card" id="commonErrors">
+          <p class="section-kicker">DEBUGGING CHECKLIST</p>
+          <h2>Common mistakes</h2>
+          <div class="mistake-grid"><div class="mistake-box"><strong>Check this</strong><p>Use the correct format specifier for every variable.</p></div><div class="mistake-box"><strong>Check this</strong><p>Initialize variables before using their values.</p></div><div class="mistake-box"><strong>Check this</strong><p>Check braces, semicolons and input order carefully.</p></div></div>
+          <h3>Try it yourself</h3>
+          <div class="challenge-box"><strong>Practice:</strong> Run the program with the sample input, predict its output, and then test one boundary case of your own.</div>
+        </section>
+
+        <nav class="program-navigation" aria-label="Program navigation">
+    <a href="merge-two-text-files.html"><span>← Previous</span><strong>Merge Two Text Files</strong></a>
+    <a class="next-program" href="search-word-in-file.html"><span>Next →</span><strong>Search for a Word in a Text File</strong></a>
+  </nav>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer"><div><a class="footer-brand" href="../index.html">Code<strong>Bhavya</strong></a><p>From Learning to Limitless Possibilities.</p></div><nav><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../C-Programming/index.html">Learn C Programming</a></nav><p>© 2026 CodeBhavya. All Rights Reserved.</p></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script id="programConfig" type="application/json">{"id":"c-compare-two-text-files","fileName":"compare-two-text-files.c","language":"c","sourceLines":["#include \u003cstdio.h>","","int main(void)","{","    FILE *first = fopen(\"first.txt\", \"w\");","    FILE *second = fopen(\"second.txt\", \"w\");","    if (first == NULL || second == NULL) return 1;","    fputs(\"CodeBhavya\\n\", first); fputs(\"CodeBhavya\\n\", second);","    fclose(first); fclose(second);","    first = fopen(\"first.txt\", \"r\"); second = fopen(\"second.txt\", \"r\");","    if (first == NULL || second == NULL) return 1;","    int left, right;","    do {","        left = fgetc(first); right = fgetc(second);","        if (left != right) break;","    } while (left != EOF);","    puts(left == right ? \"Files are identical.\" : \"Files are different.\");","    fclose(first); fclose(second);","    return 0;","}"],"sampleOutput":"Files are identical."}</script>
+</body>
+</html>
