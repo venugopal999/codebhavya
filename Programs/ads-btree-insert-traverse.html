@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06192c">
+  <meta name="description" content="Learn how to insert and traverse a minimum-degree-2 b-tree using a clear C program.">
+  <link rel="canonical" href="https://codebhavya.com/Programs/ads-btree-insert-traverse.html">
+  <title>Insert and Traverse a Minimum-Degree-2 B-Tree | Advanced Data Structures Program | CodeBhavya</title>
+  <link rel="stylesheet" href="programs.css">
+  <script defer src="program-page.js?v=1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#programContent">Skip to program</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="" width="64" height="64"><span>Code<strong>Bhavya</strong></span></a>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a><a class="active" href="index.html" aria-current="page">Programs</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Placement/index.html">Placement</a></nav>
+    <details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="../index.html">Home</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Online Compiler</a><a href="../Placement/index.html">Placement</a></nav></details>
+  </header>
+  <main class="program-main" id="programContent">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>›</span><a href="index.html">Program Library</a><span>›</span><span>Advanced Data Structures</span><span>›</span><span aria-current="page">Insert and Traverse a Minimum-Degree-2 B-Tree</span></nav>
+    <div class="program-page-layout">
+      <aside class="example-sidebar">
+    <h2 class="sidebar-title">Advanced Data Structures Programs</h2>
+    <div class="example-links">
+      <p class="sidebar-section">CURRENT TOPIC</p>
+      <a class="active" href="index.html">Level 16 — Multiway Search Trees</a>
+      <p class="sidebar-section">PROGRAM NAVIGATION</p>
+      <a href="ads-split-full-btree-root.html">← Split a Full B-Tree Root</a>
+<a href="index.html">View all 698 programs</a>
+<a href="../Online-Compiler/index.html">Open online compiler</a>
+<a href="ads-btree-minimum-maximum.html">Find Minimum and Maximum Keys in a B-Tree →</a>
+    </div>
+  </aside>
+      <article class="program-article">
+        <header class="program-hero">
+          <p class="eyebrow">ADVANCED DATA STRUCTURES PROGRAM • LEVEL 16 — MULTIWAY SEARCH TREES</p>
+          <h1>Insert and Traverse a Minimum-Degree-2 B-Tree</h1>
+          <p>Learn how to insert and traverse a minimum-degree-2 b-tree using a clear C program.</p>
+          <div class="meta-row"><span class="meta-chip">Advanced</span><span class="meta-chip">B-tree</span><span class="meta-chip">Multiway search</span></div>
+        </header>
+
+        <section class="content-card">
+          <p class="section-kicker">PROBLEM UNDERSTANDING</p>
+          <h2>Input and expected output</h2>
+          <div class="info-grid"><div class="info-box"><strong>Sample input</strong><pre class="io-code">No input required</pre></div><div class="info-box"><strong>Sample output</strong><pre class="io-code">5 6 7 10 12 17 20 30</pre></div></div>
+        </section>
+
+        <section class="content-card" id="programCode">
+          <p class="section-kicker">COMPLETE C PROGRAM</p>
+          <h2>Complete C implementation</h2>
+          <div class="code-window"><div class="code-toolbar"><strong>ads-btree-insert-traverse.c</strong><div class="code-actions"><button id="copyCode" type="button">Copy code</button><button id="downloadCode" type="button">Download .c</button><a id="copyOpenCompiler" href="../Online-Compiler/index.html">Open in compiler</a></div></div><pre class="source-code" id="sourceCode" tabindex="0">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define T 2
+struct Node { int keys[2*T-1], count, leaf; struct Node *child[2*T]; };
+struct Node *new_node(int leaf) { struct Node *node = calloc(1, sizeof *node); if (!node) exit(EXIT_FAILURE); node-&gt;leaf = leaf; return node; }
+void split_child(struct Node *parent, int index) { struct Node *full = parent-&gt;child[index], *right = new_node(full-&gt;leaf); right-&gt;count = T - 1; for (int j = 0; j &lt; T - 1; j++) right-&gt;keys[j] = full-&gt;keys[j + T]; if (!full-&gt;leaf) for (int j = 0; j &lt; T; j++) right-&gt;child[j] = full-&gt;child[j + T]; full-&gt;count = T - 1; for (int j = parent-&gt;count; j &gt;= index + 1; j--) parent-&gt;child[j + 1] = parent-&gt;child[j]; parent-&gt;child[index + 1] = right; for (int j = parent-&gt;count - 1; j &gt;= index; j--) parent-&gt;keys[j + 1] = parent-&gt;keys[j]; parent-&gt;keys[index] = full-&gt;keys[T - 1]; parent-&gt;count++; }
+void insert_nonfull(struct Node *node, int key) { int i = node-&gt;count - 1; if (node-&gt;leaf) { while (i &gt;= 0 &amp;&amp; key &lt; node-&gt;keys[i]) { node-&gt;keys[i + 1] = node-&gt;keys[i]; i--; } node-&gt;keys[i + 1] = key; node-&gt;count++; } else { while (i &gt;= 0 &amp;&amp; key &lt; node-&gt;keys[i]) i--; i++; if (node-&gt;child[i]-&gt;count == 2*T-1) { split_child(node, i); if (key &gt; node-&gt;keys[i]) i++; } insert_nonfull(node-&gt;child[i], key); } }
+void insert_key(struct Node **root, int key) { if ((*root)-&gt;count == 2*T-1) { struct Node *new_root = new_node(0); new_root-&gt;child[0] = *root; split_child(new_root, 0); insert_nonfull(new_root, key); *root = new_root; } else insert_nonfull(*root, key); }
+void traverse(struct Node *node) { int i; for (i = 0; i &lt; node-&gt;count; i++) { if (!node-&gt;leaf) traverse(node-&gt;child[i]); printf(&quot;%d &quot;, node-&gt;keys[i]); } if (!node-&gt;leaf) traverse(node-&gt;child[i]); }
+void free_tree(struct Node *node) { if (node) { if (!node-&gt;leaf) for (int i = 0; i &lt;= node-&gt;count; i++) free_tree(node-&gt;child[i]); free(node); } }
+
+int main(void)
+{
+    int keys[] = {10,20,5,6,12,30,7,17}; struct Node *root = new_node(1);
+    for (int i = 0; i &lt; 8; i++) { insert_key(&amp;root, keys[i]); }
+    traverse(root); putchar(&#39;\n&#39;); free_tree(root); return 0;
+}</pre></div>
+        </section>
+
+        <section class="debug-lab code-tour" id="codeTour" aria-labelledby="tourTitle">
+    <div class="debug-toolbar">
+      <div class="debug-title"><p class="panel-kicker">GUIDED CODE TOUR • NOT LIVE EXECUTION</p><strong id="tourTitle">Study the program line by line</strong><p>Use the real compiler button above to run and debug with different inputs.</p></div>
+      <div class="debug-controls"><button class="start-debug" id="startTour" type="button">Start</button><button id="previousTourStep" type="button" disabled>Previous</button><button class="next-step" id="nextTourStep" type="button" disabled>Next</button><button id="autoTour" type="button" disabled>Auto</button><button id="pauseTour" type="button" disabled>Pause</button><button id="resetTour" type="button">Reset</button></div>
+    </div>
+    <div class="debug-grid tour-grid">
+      <div class="debug-code" id="tourSource" aria-label="Guided source code"></div>
+      <div class="debug-state tour-state">
+        <section class="state-panel"><h3>CURRENT STEP</h3><p class="step-message" id="tourMessage" aria-live="polite">Select Start to walk through the important lines.</p></section>
+        <section class="state-panel"><h3>SELECTED LINE</h3><p class="step-message tour-selected-line" id="tourLine">No line selected</p></section>
+        <section class="state-panel tour-output-panel"><h3>EXPECTED OUTPUT FOR THE SAMPLE</h3><pre class="terminal" id="tourOutput">5 6 7 10 12 17 20 30</pre></section>
+      </div>
+    </div>
+    <div class="progress-row"><progress id="tourProgress" max="1" value="0">0%</progress><span id="tourProgressText">Step 0 of 0</span></div>
+  </section>
+
+        <section class="content-card" id="explanation">
+          <p class="section-kicker">PROGRAM EXPLANATION</p>
+          <h2>Algorithm and explanation</h2>
+          <ol><li>Read the required input values.</li><li>Split full children before descent so insertion always reaches a non-full leaf.</li><li>Display the computed result.</li></ol>
+          <p>Split full children before descent so insertion always reaches a non-full leaf.</p>
+        </section>
+
+        <section class="content-card" id="complexity">
+          <p class="section-kicker">EFFICIENCY</p>
+          <h2>Time and space complexity</h2>
+          <div class="complexity-grid"><div class="complexity-box"><strong>Time complexity</strong><p><code>O(t log_t n)</code></p></div><div class="complexity-box"><strong>Auxiliary space</strong><p><code>O(log_t n)</code></p></div></div>
+        </section>
+
+        <section class="content-card" id="commonErrors">
+          <p class="section-kicker">DEBUGGING CHECKLIST</p>
+          <h2>Common mistakes</h2>
+          <div class="mistake-grid"><div class="mistake-box"><strong>Check this</strong><p>Use the correct format specifier for every variable.</p></div><div class="mistake-box"><strong>Check this</strong><p>Initialize variables before using their values.</p></div><div class="mistake-box"><strong>Check this</strong><p>Check braces, semicolons and input order carefully.</p></div></div>
+          <h3>Try it yourself</h3>
+          <div class="challenge-box"><strong>Practice:</strong> Run the program with the sample input, predict its output, and then test one boundary case of your own.</div>
+        </section>
+
+        <nav class="program-navigation" aria-label="Program navigation">
+    <a href="ads-split-full-btree-root.html"><span>← Previous</span><strong>Split a Full B-Tree Root</strong></a>
+    <a class="next-program" href="ads-btree-minimum-maximum.html"><span>Next →</span><strong>Find Minimum and Maximum Keys in a B-Tree</strong></a>
+  </nav>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer"><div><a class="footer-brand" href="../index.html">Code<strong>Bhavya</strong></a><p>From Learning to Limitless Possibilities.</p></div><nav><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a></nav><p>© 2026 CodeBhavya. All Rights Reserved.</p></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script id="programConfig" type="application/json">{"id":"ads-ads-btree-insert-traverse","fileName":"ads-btree-insert-traverse.c","language":"c","sourceLines":["#include \u003cstdio.h>","#include \u003cstdlib.h>","","#define T 2","struct Node { int keys[2*T-1], count, leaf; struct Node *child[2*T]; };","struct Node *new_node(int leaf) { struct Node *node = calloc(1, sizeof *node); if (!node) exit(EXIT_FAILURE); node->leaf = leaf; return node; }","void split_child(struct Node *parent, int index) { struct Node *full = parent->child[index], *right = new_node(full->leaf); right->count = T - 1; for (int j = 0; j \u003c T - 1; j++) right->keys[j] = full->keys[j + T]; if (!full->leaf) for (int j = 0; j \u003c T; j++) right->child[j] = full->child[j + T]; full->count = T - 1; for (int j = parent->count; j >= index + 1; j--) parent->child[j + 1] = parent->child[j]; parent->child[index + 1] = right; for (int j = parent->count - 1; j >= index; j--) parent->keys[j + 1] = parent->keys[j]; parent->keys[index] = full->keys[T - 1]; parent->count++; }","void insert_nonfull(struct Node *node, int key) { int i = node->count - 1; if (node->leaf) { while (i >= 0 && key \u003c node->keys[i]) { node->keys[i + 1] = node->keys[i]; i--; } node->keys[i + 1] = key; node->count++; } else { while (i >= 0 && key \u003c node->keys[i]) i--; i++; if (node->child[i]->count == 2*T-1) { split_child(node, i); if (key > node->keys[i]) i++; } insert_nonfull(node->child[i], key); } }","void insert_key(struct Node **root, int key) { if ((*root)->count == 2*T-1) { struct Node *new_root = new_node(0); new_root->child[0] = *root; split_child(new_root, 0); insert_nonfull(new_root, key); *root = new_root; } else insert_nonfull(*root, key); }","void traverse(struct Node *node) { int i; for (i = 0; i \u003c node->count; i++) { if (!node->leaf) traverse(node->child[i]); printf(\"%d \", node->keys[i]); } if (!node->leaf) traverse(node->child[i]); }","void free_tree(struct Node *node) { if (node) { if (!node->leaf) for (int i = 0; i \u003c= node->count; i++) free_tree(node->child[i]); free(node); } }","","int main(void)","{","    int keys[] = {10,20,5,6,12,30,7,17}; struct Node *root = new_node(1);","    for (int i = 0; i \u003c 8; i++) { insert_key(&root, keys[i]); }","    traverse(root); putchar('\\n'); free_tree(root); return 0;","}"],"sampleOutput":"5 6 7 10 12 17 20 30"}</script>
+</body>
+</html>

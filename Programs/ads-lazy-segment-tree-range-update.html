@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06192c">
+  <meta name="description" content="Learn how to apply range updates with lazy propagation using a clear C program.">
+  <link rel="canonical" href="https://codebhavya.com/Programs/ads-lazy-segment-tree-range-update.html">
+  <title>Apply Range Updates with Lazy Propagation | Advanced Data Structures Program | CodeBhavya</title>
+  <link rel="stylesheet" href="programs.css">
+  <script defer src="program-page.js?v=1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#programContent">Skip to program</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="" width="64" height="64"><span>Code<strong>Bhavya</strong></span></a>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a><a class="active" href="index.html" aria-current="page">Programs</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Placement/index.html">Placement</a></nav>
+    <details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="../index.html">Home</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Online Compiler</a><a href="../Placement/index.html">Placement</a></nav></details>
+  </header>
+  <main class="program-main" id="programContent">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>›</span><a href="index.html">Program Library</a><span>›</span><span>Advanced Data Structures</span><span>›</span><span aria-current="page">Apply Range Updates with Lazy Propagation</span></nav>
+    <div class="program-page-layout">
+      <aside class="example-sidebar">
+    <h2 class="sidebar-title">Advanced Data Structures Programs</h2>
+    <div class="example-links">
+      <p class="sidebar-section">CURRENT TOPIC</p>
+      <a class="active" href="index.html">Level 21 — Placement-Oriented Structures</a>
+      <p class="sidebar-section">PROGRAM NAVIGATION</p>
+      <a href="ads-segment-tree-range-sum.html">← Answer Range Sums with a Segment Tree</a>
+<a href="index.html">View all 698 programs</a>
+<a href="../Online-Compiler/index.html">Open online compiler</a>
+<a href="ads-sparse-table-range-minimum.html">Answer Static Range Minimum Queries with a Sparse Table →</a>
+    </div>
+  </aside>
+      <article class="program-article">
+        <header class="program-hero">
+          <p class="eyebrow">ADVANCED DATA STRUCTURES PROGRAM • LEVEL 21 — PLACEMENT-ORIENTED STRUCTURES</p>
+          <h1>Apply Range Updates with Lazy Propagation</h1>
+          <p>Learn how to apply range updates with lazy propagation using a clear C program.</p>
+          <div class="meta-row"><span class="meta-chip">Advanced</span><span class="meta-chip">Interview pattern</span><span class="meta-chip">Range and stream queries</span></div>
+        </header>
+
+        <section class="content-card">
+          <p class="section-kicker">PROBLEM UNDERSTANDING</p>
+          <h2>Input and expected output</h2>
+          <div class="info-grid"><div class="info-box"><strong>Sample input</strong><pre class="io-code">No input required</pre></div><div class="info-box"><strong>Sample output</strong><pre class="io-code">Point 2 = 7 Point 4 = 2</pre></div></div>
+        </section>
+
+        <section class="content-card" id="programCode">
+          <p class="section-kicker">COMPLETE C PROGRAM</p>
+          <h2>Complete C implementation</h2>
+          <div class="code-window"><div class="code-toolbar"><strong>ads-lazy-segment-tree-range-update.c</strong><div class="code-actions"><button id="copyCode" type="button">Copy code</button><button id="downloadCode" type="button">Download .c</button><a id="copyOpenCompiler" href="../Online-Compiler/index.html">Open in compiler</a></div></div><pre class="source-code" id="sourceCode" tabindex="0">#include &lt;stdio.h&gt;
+
+void push(int tree[],int lazy[],int node,int left,int right){if(lazy[node]){tree[node]+=(right-left+1)*lazy[node];if(left!=right){lazy[node*2]+=lazy[node];lazy[node*2+1]+=lazy[node];}lazy[node]=0;}}void update(int tree[],int lazy[],int node,int left,int right,int ql,int qr,int value){push(tree,lazy,node,left,right);if(qr&lt;left||right&lt;ql)return;if(ql&lt;=left&amp;&amp;right&lt;=qr){lazy[node]+=value;push(tree,lazy,node,left,right);return;}int middle=(left+right)/2;update(tree,lazy,node*2,left,middle,ql,qr,value);update(tree,lazy,node*2+1,middle+1,right,ql,qr,value);tree[node]=tree[node*2]+tree[node*2+1];}int query(int tree[],int lazy[],int node,int left,int right,int index){push(tree,lazy,node,left,right);if(left==right)return tree[node];int middle=(left+right)/2;return index&lt;=middle?query(tree,lazy,node*2,left,middle,index):query(tree,lazy,node*2+1,middle+1,right,index);}
+
+int main(void)
+{
+    int tree[40]={0},lazy[40]={0};update(tree,lazy,1,0,4,1,3,5);update(tree,lazy,1,0,4,2,4,2);printf(&quot;Point 2 = %d Point 4 = %d\n&quot;,query(tree,lazy,1,0,4,2),query(tree,lazy,1,0,4,4));return 0;
+}</pre></div>
+        </section>
+
+        <section class="debug-lab code-tour" id="codeTour" aria-labelledby="tourTitle">
+    <div class="debug-toolbar">
+      <div class="debug-title"><p class="panel-kicker">GUIDED CODE TOUR • NOT LIVE EXECUTION</p><strong id="tourTitle">Study the program line by line</strong><p>Use the real compiler button above to run and debug with different inputs.</p></div>
+      <div class="debug-controls"><button class="start-debug" id="startTour" type="button">Start</button><button id="previousTourStep" type="button" disabled>Previous</button><button class="next-step" id="nextTourStep" type="button" disabled>Next</button><button id="autoTour" type="button" disabled>Auto</button><button id="pauseTour" type="button" disabled>Pause</button><button id="resetTour" type="button">Reset</button></div>
+    </div>
+    <div class="debug-grid tour-grid">
+      <div class="debug-code" id="tourSource" aria-label="Guided source code"></div>
+      <div class="debug-state tour-state">
+        <section class="state-panel"><h3>CURRENT STEP</h3><p class="step-message" id="tourMessage" aria-live="polite">Select Start to walk through the important lines.</p></section>
+        <section class="state-panel"><h3>SELECTED LINE</h3><p class="step-message tour-selected-line" id="tourLine">No line selected</p></section>
+        <section class="state-panel tour-output-panel"><h3>EXPECTED OUTPUT FOR THE SAMPLE</h3><pre class="terminal" id="tourOutput">Point 2 = 7 Point 4 = 2</pre></section>
+      </div>
+    </div>
+    <div class="progress-row"><progress id="tourProgress" max="1" value="0">0%</progress><span id="tourProgressText">Step 0 of 0</span></div>
+  </section>
+
+        <section class="content-card" id="explanation">
+          <p class="section-kicker">PROGRAM EXPLANATION</p>
+          <h2>Algorithm and explanation</h2>
+          <ol><li>Read the required input values.</li><li>Delay a fully covered range update at its node and push it only when descendants are needed.</li><li>Display the computed result.</li></ol>
+          <p>Delay a fully covered range update at its node and push it only when descendants are needed.</p>
+        </section>
+
+        <section class="content-card" id="complexity">
+          <p class="section-kicker">EFFICIENCY</p>
+          <h2>Time and space complexity</h2>
+          <div class="complexity-grid"><div class="complexity-box"><strong>Time complexity</strong><p><code>O(log n) update/query</code></p></div><div class="complexity-box"><strong>Auxiliary space</strong><p><code>O(n)</code></p></div></div>
+        </section>
+
+        <section class="content-card" id="commonErrors">
+          <p class="section-kicker">DEBUGGING CHECKLIST</p>
+          <h2>Common mistakes</h2>
+          <div class="mistake-grid"><div class="mistake-box"><strong>Check this</strong><p>Use the correct format specifier for every variable.</p></div><div class="mistake-box"><strong>Check this</strong><p>Initialize variables before using their values.</p></div><div class="mistake-box"><strong>Check this</strong><p>Check braces, semicolons and input order carefully.</p></div></div>
+          <h3>Try it yourself</h3>
+          <div class="challenge-box"><strong>Practice:</strong> Run the program with the sample input, predict its output, and then test one boundary case of your own.</div>
+        </section>
+
+        <nav class="program-navigation" aria-label="Program navigation">
+    <a href="ads-segment-tree-range-sum.html"><span>← Previous</span><strong>Answer Range Sums with a Segment Tree</strong></a>
+    <a class="next-program" href="ads-sparse-table-range-minimum.html"><span>Next →</span><strong>Answer Static Range Minimum Queries with a Sparse Table</strong></a>
+  </nav>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer"><div><a class="footer-brand" href="../index.html">Code<strong>Bhavya</strong></a><p>From Learning to Limitless Possibilities.</p></div><nav><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a></nav><p>© 2026 CodeBhavya. All Rights Reserved.</p></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script id="programConfig" type="application/json">{"id":"ads-ads-lazy-segment-tree-range-update","fileName":"ads-lazy-segment-tree-range-update.c","language":"c","sourceLines":["#include \u003cstdio.h>","","void push(int tree[],int lazy[],int node,int left,int right){if(lazy[node]){tree[node]+=(right-left+1)*lazy[node];if(left!=right){lazy[node*2]+=lazy[node];lazy[node*2+1]+=lazy[node];}lazy[node]=0;}}void update(int tree[],int lazy[],int node,int left,int right,int ql,int qr,int value){push(tree,lazy,node,left,right);if(qr\u003cleft||right\u003cql)return;if(ql\u003c=left&&right\u003c=qr){lazy[node]+=value;push(tree,lazy,node,left,right);return;}int middle=(left+right)/2;update(tree,lazy,node*2,left,middle,ql,qr,value);update(tree,lazy,node*2+1,middle+1,right,ql,qr,value);tree[node]=tree[node*2]+tree[node*2+1];}int query(int tree[],int lazy[],int node,int left,int right,int index){push(tree,lazy,node,left,right);if(left==right)return tree[node];int middle=(left+right)/2;return index\u003c=middle?query(tree,lazy,node*2,left,middle,index):query(tree,lazy,node*2+1,middle+1,right,index);}","","int main(void)","{","    int tree[40]={0},lazy[40]={0};update(tree,lazy,1,0,4,1,3,5);update(tree,lazy,1,0,4,2,4,2);printf(\"Point 2 = %d Point 4 = %d\\n\",query(tree,lazy,1,0,4,2),query(tree,lazy,1,0,4,4));return 0;","}"],"sampleOutput":"Point 2 = 7 Point 4 = 2"}</script>
+</body>
+</html>

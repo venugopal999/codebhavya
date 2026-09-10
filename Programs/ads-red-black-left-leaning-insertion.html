@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06192c">
+  <meta name="description" content="Learn how to insert into a left-leaning red–black tree using a clear C program.">
+  <link rel="canonical" href="https://codebhavya.com/Programs/ads-red-black-left-leaning-insertion.html">
+  <title>Insert into a Left-Leaning Red–Black Tree | Advanced Data Structures Program | CodeBhavya</title>
+  <link rel="stylesheet" href="programs.css">
+  <script defer src="program-page.js?v=1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#programContent">Skip to program</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="" width="64" height="64"><span>Code<strong>Bhavya</strong></span></a>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a><a class="active" href="index.html" aria-current="page">Programs</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Placement/index.html">Placement</a></nav>
+    <details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="../index.html">Home</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Online Compiler</a><a href="../Placement/index.html">Placement</a></nav></details>
+  </header>
+  <main class="program-main" id="programContent">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>›</span><a href="index.html">Program Library</a><span>›</span><span>Advanced Data Structures</span><span>›</span><span aria-current="page">Insert into a Left-Leaning Red–Black Tree</span></nav>
+    <div class="program-page-layout">
+      <aside class="example-sidebar">
+    <h2 class="sidebar-title">Advanced Data Structures Programs</h2>
+    <div class="example-links">
+      <p class="sidebar-section">CURRENT TOPIC</p>
+      <a class="active" href="index.html">Level 14 — Balanced Binary Search Trees</a>
+      <p class="sidebar-section">PROGRAM NAVIGATION</p>
+      <a href="ads-validate-avl-balance.html">← Validate AVL Height Balance</a>
+<a href="index.html">View all 698 programs</a>
+<a href="../Online-Compiler/index.html">Open online compiler</a>
+<a href="ads-avl-kth-smallest.html">Find the Kth Smallest Key in an AVL Tree →</a>
+    </div>
+  </aside>
+      <article class="program-article">
+        <header class="program-hero">
+          <p class="eyebrow">ADVANCED DATA STRUCTURES PROGRAM • LEVEL 14 — BALANCED BINARY SEARCH TREES</p>
+          <h1>Insert into a Left-Leaning Red–Black Tree</h1>
+          <p>Learn how to insert into a left-leaning red–black tree using a clear C program.</p>
+          <div class="meta-row"><span class="meta-chip">Advanced</span><span class="meta-chip">Self-balancing BST</span><span class="meta-chip">Logarithmic operations</span></div>
+        </header>
+
+        <section class="content-card">
+          <p class="section-kicker">PROBLEM UNDERSTANDING</p>
+          <h2>Input and expected output</h2>
+          <div class="info-grid"><div class="info-box"><strong>Sample input</strong><pre class="io-code">No input required</pre></div><div class="info-box"><strong>Sample output</strong><pre class="io-code">10 15 20 25 30
+Root = 20 Black = Yes</pre></div></div>
+        </section>
+
+        <section class="content-card" id="programCode">
+          <p class="section-kicker">COMPLETE C PROGRAM</p>
+          <h2>Complete C implementation</h2>
+          <div class="code-window"><div class="code-toolbar"><strong>ads-red-black-left-leaning-insertion.c</strong><div class="code-actions"><button id="copyCode" type="button">Copy code</button><button id="downloadCode" type="button">Download .c</button><a id="copyOpenCompiler" href="../Online-Compiler/index.html">Open in compiler</a></div></div><pre class="source-code" id="sourceCode" tabindex="0">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node { int key, red; struct Node *left, *right; };
+int is_red(struct Node *node) { return node &amp;&amp; node-&gt;red; }
+struct Node *make_node(int key) { struct Node *node = malloc(sizeof *node); if (!node) exit(EXIT_FAILURE); node-&gt;key = key; node-&gt;red = 1; node-&gt;left = node-&gt;right = NULL; return node; }
+struct Node *rotate_left_rb(struct Node *root) { struct Node *x = root-&gt;right; root-&gt;right = x-&gt;left; x-&gt;left = root; x-&gt;red = root-&gt;red; root-&gt;red = 1; return x; }
+struct Node *rotate_right_rb(struct Node *root) { struct Node *x = root-&gt;left; root-&gt;left = x-&gt;right; x-&gt;right = root; x-&gt;red = root-&gt;red; root-&gt;red = 1; return x; }
+void flip(struct Node *root) { root-&gt;red = !root-&gt;red; root-&gt;left-&gt;red = !root-&gt;left-&gt;red; root-&gt;right-&gt;red = !root-&gt;right-&gt;red; }
+struct Node *insert_node(struct Node *root, int key) { if (!root) return make_node(key); if (key &lt; root-&gt;key) root-&gt;left = insert_node(root-&gt;left, key); else if (key &gt; root-&gt;key) root-&gt;right = insert_node(root-&gt;right, key); if (is_red(root-&gt;right) &amp;&amp; !is_red(root-&gt;left)) root = rotate_left_rb(root); if (is_red(root-&gt;left) &amp;&amp; is_red(root-&gt;left-&gt;left)) root = rotate_right_rb(root); if (is_red(root-&gt;left) &amp;&amp; is_red(root-&gt;right)) flip(root); return root; }
+void inorder_node(struct Node *root) { if (root) { inorder_node(root-&gt;left); printf(&quot;%d &quot;, root-&gt;key); inorder_node(root-&gt;right); } }
+void free_nodes(struct Node *root) { if (root) { free_nodes(root-&gt;left); free_nodes(root-&gt;right); free(root); } }
+
+int main(void)
+{
+    int keys[] = {10, 20, 30, 15, 25}; struct Node *root = NULL;
+    for (int i = 0; i &lt; 5; i++) { root = insert_node(root, keys[i]); root-&gt;red = 0; }
+    inorder_node(root); printf(&quot;\nRoot = %d Black = %s\n&quot;, root-&gt;key, root-&gt;red ? &quot;No&quot; : &quot;Yes&quot;); free_nodes(root); return 0;
+}</pre></div>
+        </section>
+
+        <section class="debug-lab code-tour" id="codeTour" aria-labelledby="tourTitle">
+    <div class="debug-toolbar">
+      <div class="debug-title"><p class="panel-kicker">GUIDED CODE TOUR • NOT LIVE EXECUTION</p><strong id="tourTitle">Study the program line by line</strong><p>Use the real compiler button above to run and debug with different inputs.</p></div>
+      <div class="debug-controls"><button class="start-debug" id="startTour" type="button">Start</button><button id="previousTourStep" type="button" disabled>Previous</button><button class="next-step" id="nextTourStep" type="button" disabled>Next</button><button id="autoTour" type="button" disabled>Auto</button><button id="pauseTour" type="button" disabled>Pause</button><button id="resetTour" type="button">Reset</button></div>
+    </div>
+    <div class="debug-grid tour-grid">
+      <div class="debug-code" id="tourSource" aria-label="Guided source code"></div>
+      <div class="debug-state tour-state">
+        <section class="state-panel"><h3>CURRENT STEP</h3><p class="step-message" id="tourMessage" aria-live="polite">Select Start to walk through the important lines.</p></section>
+        <section class="state-panel"><h3>SELECTED LINE</h3><p class="step-message tour-selected-line" id="tourLine">No line selected</p></section>
+        <section class="state-panel tour-output-panel"><h3>EXPECTED OUTPUT FOR THE SAMPLE</h3><pre class="terminal" id="tourOutput">10 15 20 25 30
+Root = 20 Black = Yes</pre></section>
+      </div>
+    </div>
+    <div class="progress-row"><progress id="tourProgress" max="1" value="0">0%</progress><span id="tourProgressText">Step 0 of 0</span></div>
+  </section>
+
+        <section class="content-card" id="explanation">
+          <p class="section-kicker">PROGRAM EXPLANATION</p>
+          <h2>Algorithm and explanation</h2>
+          <ol><li>Read the required input values.</li><li>Use rotations and color flips to encode balanced 2–3 tree operations in a binary tree.</li><li>Display the computed result.</li></ol>
+          <p>Use rotations and color flips to encode balanced 2–3 tree operations in a binary tree.</p>
+        </section>
+
+        <section class="content-card" id="complexity">
+          <p class="section-kicker">EFFICIENCY</p>
+          <h2>Time and space complexity</h2>
+          <div class="complexity-grid"><div class="complexity-box"><strong>Time complexity</strong><p><code>O(log n) per insertion</code></p></div><div class="complexity-box"><strong>Auxiliary space</strong><p><code>O(h)</code></p></div></div>
+        </section>
+
+        <section class="content-card" id="commonErrors">
+          <p class="section-kicker">DEBUGGING CHECKLIST</p>
+          <h2>Common mistakes</h2>
+          <div class="mistake-grid"><div class="mistake-box"><strong>Check this</strong><p>Use the correct format specifier for every variable.</p></div><div class="mistake-box"><strong>Check this</strong><p>Initialize variables before using their values.</p></div><div class="mistake-box"><strong>Check this</strong><p>Check braces, semicolons and input order carefully.</p></div></div>
+          <h3>Try it yourself</h3>
+          <div class="challenge-box"><strong>Practice:</strong> Run the program with the sample input, predict its output, and then test one boundary case of your own.</div>
+        </section>
+
+        <nav class="program-navigation" aria-label="Program navigation">
+    <a href="ads-validate-avl-balance.html"><span>← Previous</span><strong>Validate AVL Height Balance</strong></a>
+    <a class="next-program" href="ads-avl-kth-smallest.html"><span>Next →</span><strong>Find the Kth Smallest Key in an AVL Tree</strong></a>
+  </nav>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer"><div><a class="footer-brand" href="../index.html">Code<strong>Bhavya</strong></a><p>From Learning to Limitless Possibilities.</p></div><nav><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a></nav><p>© 2026 CodeBhavya. All Rights Reserved.</p></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script id="programConfig" type="application/json">{"id":"ads-ads-red-black-left-leaning-insertion","fileName":"ads-red-black-left-leaning-insertion.c","language":"c","sourceLines":["#include \u003cstdio.h>","#include \u003cstdlib.h>","","struct Node { int key, red; struct Node *left, *right; };","int is_red(struct Node *node) { return node && node->red; }","struct Node *make_node(int key) { struct Node *node = malloc(sizeof *node); if (!node) exit(EXIT_FAILURE); node->key = key; node->red = 1; node->left = node->right = NULL; return node; }","struct Node *rotate_left_rb(struct Node *root) { struct Node *x = root->right; root->right = x->left; x->left = root; x->red = root->red; root->red = 1; return x; }","struct Node *rotate_right_rb(struct Node *root) { struct Node *x = root->left; root->left = x->right; x->right = root; x->red = root->red; root->red = 1; return x; }","void flip(struct Node *root) { root->red = !root->red; root->left->red = !root->left->red; root->right->red = !root->right->red; }","struct Node *insert_node(struct Node *root, int key) { if (!root) return make_node(key); if (key \u003c root->key) root->left = insert_node(root->left, key); else if (key > root->key) root->right = insert_node(root->right, key); if (is_red(root->right) && !is_red(root->left)) root = rotate_left_rb(root); if (is_red(root->left) && is_red(root->left->left)) root = rotate_right_rb(root); if (is_red(root->left) && is_red(root->right)) flip(root); return root; }","void inorder_node(struct Node *root) { if (root) { inorder_node(root->left); printf(\"%d \", root->key); inorder_node(root->right); } }","void free_nodes(struct Node *root) { if (root) { free_nodes(root->left); free_nodes(root->right); free(root); } }","","int main(void)","{","    int keys[] = {10, 20, 30, 15, 25}; struct Node *root = NULL;","    for (int i = 0; i \u003c 5; i++) { root = insert_node(root, keys[i]); root->red = 0; }","    inorder_node(root); printf(\"\\nRoot = %d Black = %s\\n\", root->key, root->red ? \"No\" : \"Yes\"); free_nodes(root); return 0;","}"],"sampleOutput":"10 15 20 25 30\nRoot = 20 Black = Yes"}</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06192c">
+  <meta name="description" content="Learn how to find an overlap with an interval tree using a clear C program.">
+  <link rel="canonical" href="https://codebhavya.com/Programs/ads-interval-tree-overlap-search.html">
+  <title>Find an Overlap with an Interval Tree | Advanced Data Structures Program | CodeBhavya</title>
+  <link rel="stylesheet" href="programs.css">
+  <script defer src="program-page.js?v=1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#programContent">Skip to program</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="" width="64" height="64"><span>Code<strong>Bhavya</strong></span></a>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a><a class="active" href="index.html" aria-current="page">Programs</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Placement/index.html">Placement</a></nav>
+    <details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="../index.html">Home</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Online Compiler</a><a href="../Placement/index.html">Placement</a></nav></details>
+  </header>
+  <main class="program-main" id="programContent">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>›</span><a href="index.html">Program Library</a><span>›</span><span>Advanced Data Structures</span><span>›</span><span aria-current="page">Find an Overlap with an Interval Tree</span></nav>
+    <div class="program-page-layout">
+      <aside class="example-sidebar">
+    <h2 class="sidebar-title">Advanced Data Structures Programs</h2>
+    <div class="example-links">
+      <p class="sidebar-section">CURRENT TOPIC</p>
+      <a class="active" href="index.html">Level 14 — Balanced Binary Search Trees</a>
+      <p class="sidebar-section">PROGRAM NAVIGATION</p>
+      <a href="ads-avl-kth-smallest.html">← Find the Kth Smallest Key in an AVL Tree</a>
+<a href="index.html">View all 698 programs</a>
+<a href="../Online-Compiler/index.html">Open online compiler</a>
+<a href="ads-trie-insert-search.html">Insert and Search Words in a Trie →</a>
+    </div>
+  </aside>
+      <article class="program-article">
+        <header class="program-hero">
+          <p class="eyebrow">ADVANCED DATA STRUCTURES PROGRAM • LEVEL 14 — BALANCED BINARY SEARCH TREES</p>
+          <h1>Find an Overlap with an Interval Tree</h1>
+          <p>Learn how to find an overlap with an interval tree using a clear C program.</p>
+          <div class="meta-row"><span class="meta-chip">Advanced</span><span class="meta-chip">Self-balancing BST</span><span class="meta-chip">Logarithmic operations</span></div>
+        </header>
+
+        <section class="content-card">
+          <p class="section-kicker">PROBLEM UNDERSTANDING</p>
+          <h2>Input and expected output</h2>
+          <div class="info-grid"><div class="info-box"><strong>Sample input</strong><pre class="io-code">No input required</pre></div><div class="info-box"><strong>Sample output</strong><pre class="io-code">Overlap = [5,20]</pre></div></div>
+        </section>
+
+        <section class="content-card" id="programCode">
+          <p class="section-kicker">COMPLETE C PROGRAM</p>
+          <h2>Complete C implementation</h2>
+          <div class="code-window"><div class="code-toolbar"><strong>ads-interval-tree-overlap-search.c</strong><div class="code-actions"><button id="copyCode" type="button">Copy code</button><button id="downloadCode" type="button">Download .c</button><a id="copyOpenCompiler" href="../Online-Compiler/index.html">Open in compiler</a></div></div><pre class="source-code" id="sourceCode" tabindex="0">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node { int low, high, maximum; struct Node *left, *right; };
+struct Node *insert_interval(struct Node *root, int low, int high) { if (!root) { root = malloc(sizeof *root); if (!root) exit(EXIT_FAILURE); root-&gt;low = low; root-&gt;high = root-&gt;maximum = high; root-&gt;left = root-&gt;right = NULL; return root; } if (low &lt; root-&gt;low) root-&gt;left = insert_interval(root-&gt;left, low, high); else root-&gt;right = insert_interval(root-&gt;right, low, high); if (high &gt; root-&gt;maximum) root-&gt;maximum = high; return root; }
+struct Node *overlap(struct Node *root, int low, int high) { while (root &amp;&amp; (root-&gt;high &lt; low || high &lt; root-&gt;low)) { if (root-&gt;left &amp;&amp; root-&gt;left-&gt;maximum &gt;= low) root = root-&gt;left; else root = root-&gt;right; } return root; }
+void free_intervals(struct Node *root) { if (root) { free_intervals(root-&gt;left); free_intervals(root-&gt;right); free(root); } }
+
+int main(void)
+{
+    int intervals[][2] = {{15,20},{10,30},{17,19},{5,20},{12,15},{30,40}}; struct Node *root = NULL;
+    for (int i = 0; i &lt; 6; i++) root = insert_interval(root, intervals[i][0], intervals[i][1]);
+    struct Node *match = overlap(root, 6, 7); printf(&quot;Overlap = [%d,%d]\n&quot;, match-&gt;low, match-&gt;high); free_intervals(root); return 0;
+}</pre></div>
+        </section>
+
+        <section class="debug-lab code-tour" id="codeTour" aria-labelledby="tourTitle">
+    <div class="debug-toolbar">
+      <div class="debug-title"><p class="panel-kicker">GUIDED CODE TOUR • NOT LIVE EXECUTION</p><strong id="tourTitle">Study the program line by line</strong><p>Use the real compiler button above to run and debug with different inputs.</p></div>
+      <div class="debug-controls"><button class="start-debug" id="startTour" type="button">Start</button><button id="previousTourStep" type="button" disabled>Previous</button><button class="next-step" id="nextTourStep" type="button" disabled>Next</button><button id="autoTour" type="button" disabled>Auto</button><button id="pauseTour" type="button" disabled>Pause</button><button id="resetTour" type="button">Reset</button></div>
+    </div>
+    <div class="debug-grid tour-grid">
+      <div class="debug-code" id="tourSource" aria-label="Guided source code"></div>
+      <div class="debug-state tour-state">
+        <section class="state-panel"><h3>CURRENT STEP</h3><p class="step-message" id="tourMessage" aria-live="polite">Select Start to walk through the important lines.</p></section>
+        <section class="state-panel"><h3>SELECTED LINE</h3><p class="step-message tour-selected-line" id="tourLine">No line selected</p></section>
+        <section class="state-panel tour-output-panel"><h3>EXPECTED OUTPUT FOR THE SAMPLE</h3><pre class="terminal" id="tourOutput">Overlap = [5,20]</pre></section>
+      </div>
+    </div>
+    <div class="progress-row"><progress id="tourProgress" max="1" value="0">0%</progress><span id="tourProgressText">Step 0 of 0</span></div>
+  </section>
+
+        <section class="content-card" id="explanation">
+          <p class="section-kicker">PROGRAM EXPLANATION</p>
+          <h2>Algorithm and explanation</h2>
+          <ol><li>Read the required input values.</li><li>Use each subtree&#39;s maximum high endpoint to discard branches that cannot overlap the query.</li><li>Display the computed result.</li></ol>
+          <p>Use each subtree&#39;s maximum high endpoint to discard branches that cannot overlap the query.</p>
+        </section>
+
+        <section class="content-card" id="complexity">
+          <p class="section-kicker">EFFICIENCY</p>
+          <h2>Time and space complexity</h2>
+          <div class="complexity-grid"><div class="complexity-box"><strong>Time complexity</strong><p><code>O(h)</code></p></div><div class="complexity-box"><strong>Auxiliary space</strong><p><code>O(h)</code></p></div></div>
+        </section>
+
+        <section class="content-card" id="commonErrors">
+          <p class="section-kicker">DEBUGGING CHECKLIST</p>
+          <h2>Common mistakes</h2>
+          <div class="mistake-grid"><div class="mistake-box"><strong>Check this</strong><p>Use the correct format specifier for every variable.</p></div><div class="mistake-box"><strong>Check this</strong><p>Initialize variables before using their values.</p></div><div class="mistake-box"><strong>Check this</strong><p>Check braces, semicolons and input order carefully.</p></div></div>
+          <h3>Try it yourself</h3>
+          <div class="challenge-box"><strong>Practice:</strong> Run the program with the sample input, predict its output, and then test one boundary case of your own.</div>
+        </section>
+
+        <nav class="program-navigation" aria-label="Program navigation">
+    <a href="ads-avl-kth-smallest.html"><span>← Previous</span><strong>Find the Kth Smallest Key in an AVL Tree</strong></a>
+    <a class="next-program" href="ads-trie-insert-search.html"><span>Next →</span><strong>Insert and Search Words in a Trie</strong></a>
+  </nav>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer"><div><a class="footer-brand" href="../index.html">Code<strong>Bhavya</strong></a><p>From Learning to Limitless Possibilities.</p></div><nav><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a></nav><p>© 2026 CodeBhavya. All Rights Reserved.</p></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script id="programConfig" type="application/json">{"id":"ads-ads-interval-tree-overlap-search","fileName":"ads-interval-tree-overlap-search.c","language":"c","sourceLines":["#include \u003cstdio.h>","#include \u003cstdlib.h>","","struct Node { int low, high, maximum; struct Node *left, *right; };","struct Node *insert_interval(struct Node *root, int low, int high) { if (!root) { root = malloc(sizeof *root); if (!root) exit(EXIT_FAILURE); root->low = low; root->high = root->maximum = high; root->left = root->right = NULL; return root; } if (low \u003c root->low) root->left = insert_interval(root->left, low, high); else root->right = insert_interval(root->right, low, high); if (high > root->maximum) root->maximum = high; return root; }","struct Node *overlap(struct Node *root, int low, int high) { while (root && (root->high \u003c low || high \u003c root->low)) { if (root->left && root->left->maximum >= low) root = root->left; else root = root->right; } return root; }","void free_intervals(struct Node *root) { if (root) { free_intervals(root->left); free_intervals(root->right); free(root); } }","","int main(void)","{","    int intervals[][2] = {{15,20},{10,30},{17,19},{5,20},{12,15},{30,40}}; struct Node *root = NULL;","    for (int i = 0; i \u003c 6; i++) root = insert_interval(root, intervals[i][0], intervals[i][1]);","    struct Node *match = overlap(root, 6, 7); printf(\"Overlap = [%d,%d]\\n\", match->low, match->high); free_intervals(root); return 0;","}"],"sampleOutput":"Overlap = [5,20]"}</script>
+</body>
+</html>

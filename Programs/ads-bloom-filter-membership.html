@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06192c">
+  <meta name="description" content="Learn how to test probabilistic membership with a bloom filter using a clear C program.">
+  <link rel="canonical" href="https://codebhavya.com/Programs/ads-bloom-filter-membership.html">
+  <title>Test Probabilistic Membership with a Bloom Filter | Advanced Data Structures Program | CodeBhavya</title>
+  <link rel="stylesheet" href="programs.css">
+  <script defer src="program-page.js?v=1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#programContent">Skip to program</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="" width="64" height="64"><span>Code<strong>Bhavya</strong></span></a>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a><a class="active" href="index.html" aria-current="page">Programs</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Placement/index.html">Placement</a></nav>
+    <details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="../index.html">Home</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Online Compiler</a><a href="../Placement/index.html">Placement</a></nav></details>
+  </header>
+  <main class="program-main" id="programContent">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>›</span><a href="index.html">Program Library</a><span>›</span><span>Advanced Data Structures</span><span>›</span><span aria-current="page">Test Probabilistic Membership with a Bloom Filter</span></nav>
+    <div class="program-page-layout">
+      <aside class="example-sidebar">
+    <h2 class="sidebar-title">Advanced Data Structures Programs</h2>
+    <div class="example-links">
+      <p class="sidebar-section">CURRENT TOPIC</p>
+      <a class="active" href="index.html">Level 18 — Advanced Hashing</a>
+      <p class="sidebar-section">PROGRAM NAVIGATION</p>
+      <a href="ads-robin-hood-hashing.html">← Equalize Probe Distances with Robin Hood Hashing</a>
+<a href="index.html">View all 698 programs</a>
+<a href="../Online-Compiler/index.html">Open online compiler</a>
+<a href="ads-dynamic-hash-table-rehash.html">Rehash a Table When Its Load Factor Grows →</a>
+    </div>
+  </aside>
+      <article class="program-article">
+        <header class="program-hero">
+          <p class="eyebrow">ADVANCED DATA STRUCTURES PROGRAM • LEVEL 18 — ADVANCED HASHING</p>
+          <h1>Test Probabilistic Membership with a Bloom Filter</h1>
+          <p>Learn how to test probabilistic membership with a bloom filter using a clear C program.</p>
+          <div class="meta-row"><span class="meta-chip">Advanced</span><span class="meta-chip">Collision resolution</span><span class="meta-chip">Hash-table design</span></div>
+        </header>
+
+        <section class="content-card">
+          <p class="section-kicker">PROBLEM UNDERSTANDING</p>
+          <h2>Input and expected output</h2>
+          <div class="info-grid"><div class="info-box"><strong>Sample input</strong><pre class="io-code">No input required</pre></div><div class="info-box"><strong>Sample output</strong><pre class="io-code">data:Maybe graph:No</pre></div></div>
+        </section>
+
+        <section class="content-card" id="programCode">
+          <p class="section-kicker">COMPLETE C PROGRAM</p>
+          <h2>Complete C implementation</h2>
+          <div class="code-window"><div class="code-toolbar"><strong>ads-bloom-filter-membership.c</strong><div class="code-actions"><button id="copyCode" type="button">Copy code</button><button id="downloadCode" type="button">Download .c</button><a id="copyOpenCompiler" href="../Online-Compiler/index.html">Open in compiler</a></div></div><pre class="source-code" id="sourceCode" tabindex="0">#include &lt;stdio.h&gt;
+
+unsigned int hash1(const char*s){unsigned int h=5381;while(*s)h=h*33u+(unsigned char)*s++;return h;}unsigned int hash2(const char*s){unsigned int h=0;while(*s)h=h*131u+(unsigned char)*s++;return h;}
+
+int main(void)
+{
+    unsigned int bits=0;const char*words[]={&quot;code&quot;,&quot;data&quot;,&quot;tree&quot;};for(int i=0;i&lt;3;i++){bits|=1u&lt;&lt;(hash1(words[i])%32);bits|=1u&lt;&lt;(hash2(words[i])%32);}const char*queries[]={&quot;data&quot;,&quot;graph&quot;};for(int i=0;i&lt;2;i++){int maybe=(bits&amp;(1u&lt;&lt;(hash1(queries[i])%32)))&amp;&amp;(bits&amp;(1u&lt;&lt;(hash2(queries[i])%32)));printf(&quot;%s:%s%c&quot;,queries[i],maybe?&quot;Maybe&quot;:&quot;No&quot;,i==1?&#39;\n&#39;:&#39; &#39;);}return 0;
+}</pre></div>
+        </section>
+
+        <section class="debug-lab code-tour" id="codeTour" aria-labelledby="tourTitle">
+    <div class="debug-toolbar">
+      <div class="debug-title"><p class="panel-kicker">GUIDED CODE TOUR • NOT LIVE EXECUTION</p><strong id="tourTitle">Study the program line by line</strong><p>Use the real compiler button above to run and debug with different inputs.</p></div>
+      <div class="debug-controls"><button class="start-debug" id="startTour" type="button">Start</button><button id="previousTourStep" type="button" disabled>Previous</button><button class="next-step" id="nextTourStep" type="button" disabled>Next</button><button id="autoTour" type="button" disabled>Auto</button><button id="pauseTour" type="button" disabled>Pause</button><button id="resetTour" type="button">Reset</button></div>
+    </div>
+    <div class="debug-grid tour-grid">
+      <div class="debug-code" id="tourSource" aria-label="Guided source code"></div>
+      <div class="debug-state tour-state">
+        <section class="state-panel"><h3>CURRENT STEP</h3><p class="step-message" id="tourMessage" aria-live="polite">Select Start to walk through the important lines.</p></section>
+        <section class="state-panel"><h3>SELECTED LINE</h3><p class="step-message tour-selected-line" id="tourLine">No line selected</p></section>
+        <section class="state-panel tour-output-panel"><h3>EXPECTED OUTPUT FOR THE SAMPLE</h3><pre class="terminal" id="tourOutput">data:Maybe graph:No</pre></section>
+      </div>
+    </div>
+    <div class="progress-row"><progress id="tourProgress" max="1" value="0">0%</progress><span id="tourProgressText">Step 0 of 0</span></div>
+  </section>
+
+        <section class="content-card" id="explanation">
+          <p class="section-kicker">PROGRAM EXPLANATION</p>
+          <h2>Algorithm and explanation</h2>
+          <ol><li>Read the required input values.</li><li>Set several hashed bit positions; a missing bit proves absence while all set bits mean possible presence.</li><li>Display the computed result.</li></ol>
+          <p>Set several hashed bit positions; a missing bit proves absence while all set bits mean possible presence.</p>
+        </section>
+
+        <section class="content-card" id="complexity">
+          <p class="section-kicker">EFFICIENCY</p>
+          <h2>Time and space complexity</h2>
+          <div class="complexity-grid"><div class="complexity-box"><strong>Time complexity</strong><p><code>O(k) per operation</code></p></div><div class="complexity-box"><strong>Auxiliary space</strong><p><code>O(bit-array size)</code></p></div></div>
+        </section>
+
+        <section class="content-card" id="commonErrors">
+          <p class="section-kicker">DEBUGGING CHECKLIST</p>
+          <h2>Common mistakes</h2>
+          <div class="mistake-grid"><div class="mistake-box"><strong>Check this</strong><p>Use the correct format specifier for every variable.</p></div><div class="mistake-box"><strong>Check this</strong><p>Initialize variables before using their values.</p></div><div class="mistake-box"><strong>Check this</strong><p>Check braces, semicolons and input order carefully.</p></div></div>
+          <h3>Try it yourself</h3>
+          <div class="challenge-box"><strong>Practice:</strong> Run the program with the sample input, predict its output, and then test one boundary case of your own.</div>
+        </section>
+
+        <nav class="program-navigation" aria-label="Program navigation">
+    <a href="ads-robin-hood-hashing.html"><span>← Previous</span><strong>Equalize Probe Distances with Robin Hood Hashing</strong></a>
+    <a class="next-program" href="ads-dynamic-hash-table-rehash.html"><span>Next →</span><strong>Rehash a Table When Its Load Factor Grows</strong></a>
+  </nav>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer"><div><a class="footer-brand" href="../index.html">Code<strong>Bhavya</strong></a><p>From Learning to Limitless Possibilities.</p></div><nav><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a></nav><p>© 2026 CodeBhavya. All Rights Reserved.</p></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script id="programConfig" type="application/json">{"id":"ads-ads-bloom-filter-membership","fileName":"ads-bloom-filter-membership.c","language":"c","sourceLines":["#include \u003cstdio.h>","","unsigned int hash1(const char*s){unsigned int h=5381;while(*s)h=h*33u+(unsigned char)*s++;return h;}unsigned int hash2(const char*s){unsigned int h=0;while(*s)h=h*131u+(unsigned char)*s++;return h;}","","int main(void)","{","    unsigned int bits=0;const char*words[]={\"code\",\"data\",\"tree\"};for(int i=0;i\u003c3;i++){bits|=1u\u003c\u003c(hash1(words[i])%32);bits|=1u\u003c\u003c(hash2(words[i])%32);}const char*queries[]={\"data\",\"graph\"};for(int i=0;i\u003c2;i++){int maybe=(bits&(1u\u003c\u003c(hash1(queries[i])%32)))&&(bits&(1u\u003c\u003c(hash2(queries[i])%32)));printf(\"%s:%s%c\",queries[i],maybe?\"Maybe\":\"No\",i==1?'\\n':' ');}return 0;","}"],"sampleOutput":"data:Maybe graph:No"}</script>
+</body>
+</html>
