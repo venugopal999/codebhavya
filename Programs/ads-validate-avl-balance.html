@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06192c">
+  <meta name="description" content="Learn how to validate avl height balance using a clear C program.">
+  <link rel="canonical" href="https://codebhavya.com/Programs/ads-validate-avl-balance.html">
+  <title>Validate AVL Height Balance | Advanced Data Structures Program | CodeBhavya</title>
+  <link rel="stylesheet" href="programs.css">
+  <script defer src="program-page.js?v=1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#programContent">Skip to program</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="" width="64" height="64"><span>Code<strong>Bhavya</strong></span></a>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a><a class="active" href="index.html" aria-current="page">Programs</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Placement/index.html">Placement</a></nav>
+    <details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="../index.html">Home</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Online Compiler</a><a href="../Placement/index.html">Placement</a></nav></details>
+  </header>
+  <main class="program-main" id="programContent">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>›</span><a href="index.html">Program Library</a><span>›</span><span>Advanced Data Structures</span><span>›</span><span aria-current="page">Validate AVL Height Balance</span></nav>
+    <div class="program-page-layout">
+      <aside class="example-sidebar">
+    <h2 class="sidebar-title">Advanced Data Structures Programs</h2>
+    <div class="example-links">
+      <p class="sidebar-section">CURRENT TOPIC</p>
+      <a class="active" href="index.html">Level 14 — Balanced Binary Search Trees</a>
+      <p class="sidebar-section">PROGRAM NAVIGATION</p>
+      <a href="ads-avl-tree-deletion.html">← Delete a Key from an AVL Tree</a>
+<a href="index.html">View all 698 programs</a>
+<a href="../Online-Compiler/index.html">Open online compiler</a>
+<a href="ads-red-black-left-leaning-insertion.html">Insert into a Left-Leaning Red–Black Tree →</a>
+    </div>
+  </aside>
+      <article class="program-article">
+        <header class="program-hero">
+          <p class="eyebrow">ADVANCED DATA STRUCTURES PROGRAM • LEVEL 14 — BALANCED BINARY SEARCH TREES</p>
+          <h1>Validate AVL Height Balance</h1>
+          <p>Learn how to validate avl height balance using a clear C program.</p>
+          <div class="meta-row"><span class="meta-chip">Advanced</span><span class="meta-chip">Self-balancing BST</span><span class="meta-chip">Logarithmic operations</span></div>
+        </header>
+
+        <section class="content-card">
+          <p class="section-kicker">PROBLEM UNDERSTANDING</p>
+          <h2>Input and expected output</h2>
+          <div class="info-grid"><div class="info-box"><strong>Sample input</strong><pre class="io-code">No input required</pre></div><div class="info-box"><strong>Sample output</strong><pre class="io-code">Balanced = Yes</pre></div></div>
+        </section>
+
+        <section class="content-card" id="programCode">
+          <p class="section-kicker">COMPLETE C PROGRAM</p>
+          <h2>Complete C implementation</h2>
+          <div class="code-window"><div class="code-toolbar"><strong>ads-validate-avl-balance.c</strong><div class="code-actions"><button id="copyCode" type="button">Copy code</button><button id="downloadCode" type="button">Download .c</button><a id="copyOpenCompiler" href="../Online-Compiler/index.html">Open in compiler</a></div></div><pre class="source-code" id="sourceCode" tabindex="0">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node { int key, height; struct Node *left, *right; };
+int height(struct Node *node) { return node ? node-&gt;height : 0; }
+int maximum(int a, int b) { return a &gt; b ? a : b; }
+struct Node *new_node(int key) { struct Node *node = malloc(sizeof *node); if (!node) exit(EXIT_FAILURE); node-&gt;key = key; node-&gt;height = 1; node-&gt;left = node-&gt;right = NULL; return node; }
+void update(struct Node *node) { node-&gt;height = 1 + maximum(height(node-&gt;left), height(node-&gt;right)); }
+struct Node *rotate_right(struct Node *root) { struct Node *pivot = root-&gt;left, *middle = pivot-&gt;right; pivot-&gt;right = root; root-&gt;left = middle; update(root); update(pivot); return pivot; }
+struct Node *rotate_left(struct Node *root) { struct Node *pivot = root-&gt;right, *middle = pivot-&gt;left; pivot-&gt;left = root; root-&gt;right = middle; update(root); update(pivot); return pivot; }
+struct Node *balance_node(struct Node *root)
+{
+    update(root); int balance = height(root-&gt;left) - height(root-&gt;right);
+    if (balance &gt; 1) { if (height(root-&gt;left-&gt;left) &lt; height(root-&gt;left-&gt;right)) root-&gt;left = rotate_left(root-&gt;left); return rotate_right(root); }
+    if (balance &lt; -1) { if (height(root-&gt;right-&gt;right) &lt; height(root-&gt;right-&gt;left)) root-&gt;right = rotate_right(root-&gt;right); return rotate_left(root); }
+    return root;
+}
+struct Node *insert(struct Node *root, int key) { if (!root) return new_node(key); if (key &lt; root-&gt;key) root-&gt;left = insert(root-&gt;left, key); else if (key &gt; root-&gt;key) root-&gt;right = insert(root-&gt;right, key); else return root; return balance_node(root); }
+struct Node *minimum_node(struct Node *root) { while (root-&gt;left) root = root-&gt;left; return root; }
+struct Node *delete_key(struct Node *root, int key)
+{
+    if (!root) return NULL;
+    if (key &lt; root-&gt;key) root-&gt;left = delete_key(root-&gt;left, key);
+    else if (key &gt; root-&gt;key) root-&gt;right = delete_key(root-&gt;right, key);
+    else if (!root-&gt;left || !root-&gt;right) { struct Node *child = root-&gt;left ? root-&gt;left : root-&gt;right; free(root); return child; }
+    else { struct Node *next = minimum_node(root-&gt;right); root-&gt;key = next-&gt;key; root-&gt;right = delete_key(root-&gt;right, next-&gt;key); }
+    return balance_node(root);
+}
+void inorder(struct Node *root) { if (root) { inorder(root-&gt;left); printf(&quot;%d &quot;, root-&gt;key); inorder(root-&gt;right); } }
+void free_tree(struct Node *root) { if (root) { free_tree(root-&gt;left); free_tree(root-&gt;right); free(root); } }
+int check(struct Node *root) { if (!root) return 0; int left = check(root-&gt;left), right = check(root-&gt;right); if (left &lt; 0 || right &lt; 0 || left - right &gt; 1 || right - left &gt; 1) return -1; return 1 + maximum(left, right); }
+
+int main(void)
+{
+    int keys[] = {30, 20, 40, 10, 25, 35, 50}; struct Node *root = NULL;
+    for (int i = 0; i &lt; 7; i++) root = insert(root, keys[i]);
+    printf(&quot;Balanced = %s\n&quot;, check(root) &gt;= 0 ? &quot;Yes&quot; : &quot;No&quot;); free_tree(root); return 0;
+}</pre></div>
+        </section>
+
+        <section class="debug-lab code-tour" id="codeTour" aria-labelledby="tourTitle">
+    <div class="debug-toolbar">
+      <div class="debug-title"><p class="panel-kicker">GUIDED CODE TOUR • NOT LIVE EXECUTION</p><strong id="tourTitle">Study the program line by line</strong><p>Use the real compiler button above to run and debug with different inputs.</p></div>
+      <div class="debug-controls"><button class="start-debug" id="startTour" type="button">Start</button><button id="previousTourStep" type="button" disabled>Previous</button><button class="next-step" id="nextTourStep" type="button" disabled>Next</button><button id="autoTour" type="button" disabled>Auto</button><button id="pauseTour" type="button" disabled>Pause</button><button id="resetTour" type="button">Reset</button></div>
+    </div>
+    <div class="debug-grid tour-grid">
+      <div class="debug-code" id="tourSource" aria-label="Guided source code"></div>
+      <div class="debug-state tour-state">
+        <section class="state-panel"><h3>CURRENT STEP</h3><p class="step-message" id="tourMessage" aria-live="polite">Select Start to walk through the important lines.</p></section>
+        <section class="state-panel"><h3>SELECTED LINE</h3><p class="step-message tour-selected-line" id="tourLine">No line selected</p></section>
+        <section class="state-panel tour-output-panel"><h3>EXPECTED OUTPUT FOR THE SAMPLE</h3><pre class="terminal" id="tourOutput">Balanced = Yes</pre></section>
+      </div>
+    </div>
+    <div class="progress-row"><progress id="tourProgress" max="1" value="0">0%</progress><span id="tourProgressText">Step 0 of 0</span></div>
+  </section>
+
+        <section class="content-card" id="explanation">
+          <p class="section-kicker">PROGRAM EXPLANATION</p>
+          <h2>Algorithm and explanation</h2>
+          <ol><li>Read the required input values.</li><li>Return subtree heights bottom-up and reject any node whose two heights differ by more than one.</li><li>Display the computed result.</li></ol>
+          <p>Return subtree heights bottom-up and reject any node whose two heights differ by more than one.</p>
+        </section>
+
+        <section class="content-card" id="complexity">
+          <p class="section-kicker">EFFICIENCY</p>
+          <h2>Time and space complexity</h2>
+          <div class="complexity-grid"><div class="complexity-box"><strong>Time complexity</strong><p><code>O(n)</code></p></div><div class="complexity-box"><strong>Auxiliary space</strong><p><code>O(h)</code></p></div></div>
+        </section>
+
+        <section class="content-card" id="commonErrors">
+          <p class="section-kicker">DEBUGGING CHECKLIST</p>
+          <h2>Common mistakes</h2>
+          <div class="mistake-grid"><div class="mistake-box"><strong>Check this</strong><p>Use the correct format specifier for every variable.</p></div><div class="mistake-box"><strong>Check this</strong><p>Initialize variables before using their values.</p></div><div class="mistake-box"><strong>Check this</strong><p>Check braces, semicolons and input order carefully.</p></div></div>
+          <h3>Try it yourself</h3>
+          <div class="challenge-box"><strong>Practice:</strong> Run the program with the sample input, predict its output, and then test one boundary case of your own.</div>
+        </section>
+
+        <nav class="program-navigation" aria-label="Program navigation">
+    <a href="ads-avl-tree-deletion.html"><span>← Previous</span><strong>Delete a Key from an AVL Tree</strong></a>
+    <a class="next-program" href="ads-red-black-left-leaning-insertion.html"><span>Next →</span><strong>Insert into a Left-Leaning Red–Black Tree</strong></a>
+  </nav>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer"><div><a class="footer-brand" href="../index.html">Code<strong>Bhavya</strong></a><p>From Learning to Limitless Possibilities.</p></div><nav><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Advanced-Data-Structures/index.html">Learn Advanced Data Structures</a></nav><p>© 2026 CodeBhavya. All Rights Reserved.</p></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script id="programConfig" type="application/json">{"id":"ads-ads-validate-avl-balance","fileName":"ads-validate-avl-balance.c","language":"c","sourceLines":["#include \u003cstdio.h>","#include \u003cstdlib.h>","","struct Node { int key, height; struct Node *left, *right; };","int height(struct Node *node) { return node ? node->height : 0; }","int maximum(int a, int b) { return a > b ? a : b; }","struct Node *new_node(int key) { struct Node *node = malloc(sizeof *node); if (!node) exit(EXIT_FAILURE); node->key = key; node->height = 1; node->left = node->right = NULL; return node; }","void update(struct Node *node) { node->height = 1 + maximum(height(node->left), height(node->right)); }","struct Node *rotate_right(struct Node *root) { struct Node *pivot = root->left, *middle = pivot->right; pivot->right = root; root->left = middle; update(root); update(pivot); return pivot; }","struct Node *rotate_left(struct Node *root) { struct Node *pivot = root->right, *middle = pivot->left; pivot->left = root; root->right = middle; update(root); update(pivot); return pivot; }","struct Node *balance_node(struct Node *root)","{","    update(root); int balance = height(root->left) - height(root->right);","    if (balance > 1) { if (height(root->left->left) \u003c height(root->left->right)) root->left = rotate_left(root->left); return rotate_right(root); }","    if (balance \u003c -1) { if (height(root->right->right) \u003c height(root->right->left)) root->right = rotate_right(root->right); return rotate_left(root); }","    return root;","}","struct Node *insert(struct Node *root, int key) { if (!root) return new_node(key); if (key \u003c root->key) root->left = insert(root->left, key); else if (key > root->key) root->right = insert(root->right, key); else return root; return balance_node(root); }","struct Node *minimum_node(struct Node *root) { while (root->left) root = root->left; return root; }","struct Node *delete_key(struct Node *root, int key)","{","    if (!root) return NULL;","    if (key \u003c root->key) root->left = delete_key(root->left, key);","    else if (key > root->key) root->right = delete_key(root->right, key);","    else if (!root->left || !root->right) { struct Node *child = root->left ? root->left : root->right; free(root); return child; }","    else { struct Node *next = minimum_node(root->right); root->key = next->key; root->right = delete_key(root->right, next->key); }","    return balance_node(root);","}","void inorder(struct Node *root) { if (root) { inorder(root->left); printf(\"%d \", root->key); inorder(root->right); } }","void free_tree(struct Node *root) { if (root) { free_tree(root->left); free_tree(root->right); free(root); } }","int check(struct Node *root) { if (!root) return 0; int left = check(root->left), right = check(root->right); if (left \u003c 0 || right \u003c 0 || left - right > 1 || right - left > 1) return -1; return 1 + maximum(left, right); }","","int main(void)","{","    int keys[] = {30, 20, 40, 10, 25, 35, 50}; struct Node *root = NULL;","    for (int i = 0; i \u003c 7; i++) root = insert(root, keys[i]);","    printf(\"Balanced = %s\\n\", check(root) >= 0 ? \"Yes\" : \"No\"); free_tree(root); return 0;","}"],"sampleOutput":"Balanced = Yes"}</script>
+</body>
+</html>
