@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06192c">
+  <meta name="description" content="Learn how to count strongly connected components with kosaraju&#39;s algorithm using a clear C program.">
+  <link rel="canonical" href="https://codebhavya.com/Programs/dsa-strongly-connected-components.html">
+  <title>Count Strongly Connected Components with Kosaraju&#39;s Algorithm | Data Structures Program | CodeBhavya</title>
+  <link rel="stylesheet" href="programs.css">
+  <script defer src="program-page.js?v=1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#programContent">Skip to program</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="CodeBhavya home"><img src="../images/codebhavya-main-logo.png" alt="" width="64" height="64"><span>Code<strong>Bhavya</strong></span></a>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../Data-Structures/index.html">Learn Data Structures</a><a class="active" href="index.html" aria-current="page">Programs</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Placement/index.html">Placement</a></nav>
+    <details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="../index.html">Home</a><a href="../Data-Structures/index.html">Learn Data Structures</a><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Online Compiler</a><a href="../Placement/index.html">Placement</a></nav></details>
+  </header>
+  <main class="program-main" id="programContent">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>›</span><a href="index.html">Program Library</a><span>›</span><span>Data Structures</span><span>›</span><span aria-current="page">Count Strongly Connected Components with Kosaraju&#39;s Algorithm</span></nav>
+    <div class="program-page-layout">
+      <aside class="example-sidebar">
+    <h2 class="sidebar-title">Data Structures Programs</h2>
+    <div class="example-links">
+      <p class="sidebar-section">CURRENT TOPIC</p>
+      <a class="active" href="index.html">Graphs</a>
+      <p class="sidebar-section">PROGRAM NAVIGATION</p>
+      <a href="dsa-articulation-points.html">← Find Articulation Points with Tarjan&#39;s DFS</a>
+<a href="index.html">View all 698 programs</a>
+<a href="../Online-Compiler/index.html">Open online compiler</a>
+    </div>
+  </aside>
+      <article class="program-article">
+        <header class="program-hero">
+          <p class="eyebrow">DATA STRUCTURES PROGRAM • GRAPHS</p>
+          <h1>Count Strongly Connected Components with Kosaraju&#39;s Algorithm</h1>
+          <p>Learn how to count strongly connected components with kosaraju&#39;s algorithm using a clear C program.</p>
+          <div class="meta-row"><span class="meta-chip">Advanced</span><span class="meta-chip">Kosaraju</span><span class="meta-chip">Transpose graph</span><span class="meta-chip">SCC</span></div>
+        </header>
+
+        <section class="content-card">
+          <p class="section-kicker">PROBLEM UNDERSTANDING</p>
+          <h2>Input and expected output</h2>
+          <div class="info-grid"><div class="info-box"><strong>Sample input</strong><pre class="io-code">No input required</pre></div><div class="info-box"><strong>Sample output</strong><pre class="io-code">Strongly connected components = 3</pre></div></div>
+        </section>
+
+        <section class="content-card" id="programCode">
+          <p class="section-kicker">COMPLETE C PROGRAM</p>
+          <h2>Complete C implementation</h2>
+          <div class="code-window"><div class="code-toolbar"><strong>dsa-strongly-connected-components.c</strong><div class="code-actions"><button id="copyCode" type="button">Copy code</button><button id="downloadCode" type="button">Download .c</button><a id="copyOpenCompiler" href="../Online-Compiler/index.html">Open in compiler</a></div></div><pre class="source-code" id="sourceCode" tabindex="0">#include &lt;stdio.h&gt;
+
+void finish(int vertex, int graph[5][5], int visited[5], int order[5], int *top)
+{
+    visited[vertex] = 1;
+    for (int next = 0; next &lt; 5; next++)
+        if (graph[vertex][next] &amp;&amp; !visited[next]) finish(next, graph, visited, order, top);
+    order[(*top)++] = vertex;
+}
+void mark(int vertex, int graph[5][5], int visited[5])
+{
+    visited[vertex] = 1;
+    for (int next = 0; next &lt; 5; next++)
+        if (graph[vertex][next] &amp;&amp; !visited[next]) mark(next, graph, visited);
+}
+
+int main(void)
+{
+    int graph[5][5] = {{0}}, transpose[5][5] = {{0}};
+    int edges[][2] = {{1,0},{0,2},{2,1},{0,3},{3,4}};
+    for (int index = 0; index &lt; 5; index++) {
+        graph[edges[index][0]][edges[index][1]] = 1;
+        transpose[edges[index][1]][edges[index][0]] = 1;
+    }
+    int visited[5] = {0}, order[5], top = 0;
+    for (int vertex = 0; vertex &lt; 5; vertex++)
+        if (!visited[vertex]) finish(vertex, graph, visited, order, &amp;top);
+    for (int vertex = 0; vertex &lt; 5; vertex++) visited[vertex] = 0;
+    int components = 0;
+    while (top &gt; 0) {
+        int vertex = order[--top];
+        if (!visited[vertex]) { mark(vertex, transpose, visited); components++; }
+    }
+    printf(&quot;Strongly connected components = %d\n&quot;, components);
+    return 0;
+}</pre></div>
+        </section>
+
+        <section class="debug-lab code-tour" id="codeTour" aria-labelledby="tourTitle">
+    <div class="debug-toolbar">
+      <div class="debug-title"><p class="panel-kicker">GUIDED CODE TOUR • NOT LIVE EXECUTION</p><strong id="tourTitle">Study the program line by line</strong><p>Use the real compiler button above to run and debug with different inputs.</p></div>
+      <div class="debug-controls"><button class="start-debug" id="startTour" type="button">Start</button><button id="previousTourStep" type="button" disabled>Previous</button><button class="next-step" id="nextTourStep" type="button" disabled>Next</button><button id="autoTour" type="button" disabled>Auto</button><button id="pauseTour" type="button" disabled>Pause</button><button id="resetTour" type="button">Reset</button></div>
+    </div>
+    <div class="debug-grid tour-grid">
+      <div class="debug-code" id="tourSource" aria-label="Guided source code"></div>
+      <div class="debug-state tour-state">
+        <section class="state-panel"><h3>CURRENT STEP</h3><p class="step-message" id="tourMessage" aria-live="polite">Select Start to walk through the important lines.</p></section>
+        <section class="state-panel"><h3>SELECTED LINE</h3><p class="step-message tour-selected-line" id="tourLine">No line selected</p></section>
+        <section class="state-panel tour-output-panel"><h3>EXPECTED OUTPUT FOR THE SAMPLE</h3><pre class="terminal" id="tourOutput">Strongly connected components = 3</pre></section>
+      </div>
+    </div>
+    <div class="progress-row"><progress id="tourProgress" max="1" value="0">0%</progress><span id="tourProgressText">Step 0 of 0</span></div>
+  </section>
+
+        <section class="content-card" id="explanation">
+          <p class="section-kicker">PROGRAM EXPLANATION</p>
+          <h2>Algorithm and explanation</h2>
+          <ol><li>Read the required input values.</li><li>Process the transposed graph in reverse finish order from the original DFS.</li><li>Display the computed result.</li></ol>
+          <p>Process the transposed graph in reverse finish order from the original DFS.</p>
+        </section>
+
+        <section class="content-card" id="complexity">
+          <p class="section-kicker">EFFICIENCY</p>
+          <h2>Time and space complexity</h2>
+          <div class="complexity-grid"><div class="complexity-box"><strong>Time complexity</strong><p><code>O(V²) with matrix</code></p></div><div class="complexity-box"><strong>Auxiliary space</strong><p><code>O(V)</code></p></div></div>
+        </section>
+
+        <section class="content-card" id="commonErrors">
+          <p class="section-kicker">DEBUGGING CHECKLIST</p>
+          <h2>Common mistakes</h2>
+          <div class="mistake-grid"><div class="mistake-box"><strong>Check this</strong><p>Use the correct format specifier for every variable.</p></div><div class="mistake-box"><strong>Check this</strong><p>Initialize variables before using their values.</p></div><div class="mistake-box"><strong>Check this</strong><p>Check braces, semicolons and input order carefully.</p></div></div>
+          <h3>Try it yourself</h3>
+          <div class="challenge-box"><strong>Practice:</strong> Run the program with the sample input, predict its output, and then test one boundary case of your own.</div>
+        </section>
+
+        <nav class="program-navigation" aria-label="Program navigation">
+    <a href="dsa-articulation-points.html"><span>← Previous</span><strong>Find Articulation Points with Tarjan&#39;s DFS</strong></a>
+    <a class="next-program" href="index.html"><span>Complete</span><strong>Return to the library</strong></a>
+  </nav>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer"><div><a class="footer-brand" href="../index.html">Code<strong>Bhavya</strong></a><p>From Learning to Limitless Possibilities.</p></div><nav><a href="index.html">Program Library</a><a href="../Online-Compiler/index.html">Compiler</a><a href="../Data-Structures/index.html">Learn Data Structures</a></nav><p>© 2026 CodeBhavya. All Rights Reserved.</p></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script id="programConfig" type="application/json">{"id":"dsa-dsa-strongly-connected-components","fileName":"dsa-strongly-connected-components.c","language":"c","sourceLines":["#include \u003cstdio.h>","","void finish(int vertex, int graph[5][5], int visited[5], int order[5], int *top)","{","    visited[vertex] = 1;","    for (int next = 0; next \u003c 5; next++)","        if (graph[vertex][next] && !visited[next]) finish(next, graph, visited, order, top);","    order[(*top)++] = vertex;","}","void mark(int vertex, int graph[5][5], int visited[5])","{","    visited[vertex] = 1;","    for (int next = 0; next \u003c 5; next++)","        if (graph[vertex][next] && !visited[next]) mark(next, graph, visited);","}","","int main(void)","{","    int graph[5][5] = {{0}}, transpose[5][5] = {{0}};","    int edges[][2] = {{1,0},{0,2},{2,1},{0,3},{3,4}};","    for (int index = 0; index \u003c 5; index++) {","        graph[edges[index][0]][edges[index][1]] = 1;","        transpose[edges[index][1]][edges[index][0]] = 1;","    }","    int visited[5] = {0}, order[5], top = 0;","    for (int vertex = 0; vertex \u003c 5; vertex++)","        if (!visited[vertex]) finish(vertex, graph, visited, order, &top);","    for (int vertex = 0; vertex \u003c 5; vertex++) visited[vertex] = 0;","    int components = 0;","    while (top > 0) {","        int vertex = order[--top];","        if (!visited[vertex]) { mark(vertex, transpose, visited); components++; }","    }","    printf(\"Strongly connected components = %d\\n\", components);","    return 0;","}"],"sampleOutput":"Strongly connected components = 3"}</script>
+</body>
+</html>
