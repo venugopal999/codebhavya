@@ -50,6 +50,16 @@ const sessionDrafts = {};
 let inputHistory = [];
 let isRunning = false;
 let finalStatusSeen = false;
+const mobileEditor = window.matchMedia("(max-width: 760px)");
+
+function refreshMobileEditor(revealCursor = false, relayout = false) {
+  if (!editor || !mobileEditor.matches) return;
+  requestAnimationFrame(() => {
+    if (relayout) editor.layout();
+    editor.render(true);
+    if (revealCursor) editor.revealPositionInCenterIfOutsideViewport(editor.getPosition());
+  });
+}
 
 function draftFor(language) { return sessionDrafts[language] ?? languageInfo[language].template; }
 function scheduleSave() {
@@ -57,16 +67,28 @@ function scheduleSave() {
   elements.saveState.textContent = "Session only";
 }
 
-require.config({ paths: { vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs" } });
+require.config({ paths: { vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs" } });
 require(["vs/editor/editor.main"], () => {
   elements.language.value = currentLanguage;
   editor = monaco.editor.create($("editor"), {
     value: draftFor(currentLanguage), language: languageInfo[currentLanguage].monaco, theme: "vs-dark",
     automaticLayout: true, fontSize: 14, lineHeight: 21, minimap: { enabled: false }, padding: { top: 12 },
-    scrollBeyondLastLine: false, smoothScrolling: true, cursorSmoothCaretAnimation: "on", wordWrap: "on", tabSize: 4
+    scrollBeyondLastLine: false, smoothScrolling: !mobileEditor.matches,
+    cursorSmoothCaretAnimation: mobileEditor.matches ? "off" : "on",
+    wordWrap: "on", wrappingIndent: "same", tabSize: 4,
+    glyphMargin: false, overviewRulerLanes: 0,
+    renderLineHighlight: mobileEditor.matches ? "line" : "all"
   });
-  editor.onDidChangeModelContent(scheduleSave);
+  editor.onDidChangeModelContent(() => {
+    scheduleSave();
+    refreshMobileEditor(true);
+  });
+  const editorNode = editor.getDomNode();
+  ["input", "compositionupdate", "compositionend"].forEach((eventName) => {
+    editorNode?.addEventListener(eventName, () => refreshMobileEditor(true), true);
+  });
   updateLanguageMeta();
+  refreshMobileEditor(false, true);
 });
 
 function updateLanguageMeta() {
@@ -115,7 +137,7 @@ function selectPanel(panelName) {
   document.querySelectorAll(".tab").forEach((tab) => { const active = tab.dataset.panel === panelName; tab.classList.toggle("active", active); tab.setAttribute("aria-selected", String(active)); });
   document.querySelectorAll("[data-panel-name]").forEach((panel) => panel.classList.toggle("active", panel.dataset.panelName === panelName));
   if (panelName === "terminal") elements.outputNotice.classList.remove("visible");
-  requestAnimationFrame(() => editor?.layout());
+  requestAnimationFrame(() => { editor?.layout(); editor?.render(true); });
 }
 
 function runCode() {
@@ -310,5 +332,17 @@ loadPanelSizes();
 syncSourceHeaderWidth();
 if ("ResizeObserver" in window) new ResizeObserver(syncSourceHeaderWidth).observe(elements.sourcePanel);
 window.addEventListener("resize", syncSourceHeaderWidth);
+window.visualViewport?.addEventListener("resize", () => {
+  syncSourceHeaderWidth();
+  refreshMobileEditor(true, true);
+});
+mobileEditor.addEventListener?.("change", () => {
+  editor?.updateOptions({
+    smoothScrolling: !mobileEditor.matches,
+    cursorSmoothCaretAnimation: mobileEditor.matches ? "off" : "on",
+    renderLineHighlight: mobileEditor.matches ? "line" : "all"
+  });
+  refreshMobileEditor(true, true);
+});
 setupSplitter(elements.verticalSplitter, "vertical");
 setupSplitter(elements.horizontalSplitter, "horizontal");
