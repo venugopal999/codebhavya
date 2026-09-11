@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en" data-compiler-api="https://ce.judge0.com/submissions?base64_encoded=false&amp;wait=true">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#07182c">
+  <meta name="description" content="Write, compile and run C, C++, Python, Java and JavaScript programs in the CodeBhavya Online Compiler.">
+  <title>Online Compiler | CodeBhavya</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="compiler.css">
+  <style id="codebhavya-header-style">
+    /* Header-only override. The compiler workspace and execution UI are untouched. */
+    .site-header.cb-site-header {
+      position: sticky !important;
+      z-index: 10000 !important;
+      top: 0 !important;
+      display: flex !important;
+      width: 100%;
+      min-height: 90px;
+      padding: 0 clamp(24px, 2.6vw, 48px) !important;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #e2b92f !important;
+      background: #06192c !important;
+      box-shadow: 0 8px 24px rgba(0, 8, 20, 0.24);
+      isolation: isolate;
+    }
+
+    .cb-site-header,
+    .cb-site-header * {
+      box-sizing: border-box;
+    }
+
+    .cb-brand {
+      display: inline-flex;
+      flex: 0 0 auto;
+      gap: 18px;
+      align-items: center;
+      color: #d8eaff;
+      text-decoration: none;
+    }
+
+    .cb-brand-logo {
+      display: block;
+      width: 72px;
+      height: 72px;
+      flex: 0 0 72px;
+      object-fit: contain;
+    }
+
+    .cb-brand-name {
+      color: #c8def5;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.72rem, 2vw, 2.2rem);
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .cb-brand-name span {
+      color: #efc63b;
+    }
+
+    .cb-desktop-nav {
+      display: flex;
+      gap: clamp(6px, 1vw, 18px);
+      align-items: center;
+      justify-content: flex-end;
+      margin-left: 28px;
+    }
+
+    .cb-nav-link,
+    .cb-nav-dropdown > summary {
+      position: relative;
+      display: inline-flex;
+      min-height: 52px;
+      padding: 0 13px;
+      align-items: center;
+      border: 0;
+      border-radius: 8px;
+      color: #e4edf7;
+      background: transparent;
+      font: inherit;
+      font-size: 0.98rem;
+      font-weight: 750;
+      list-style: none;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 160ms ease, background 160ms ease;
+    }
+
+    .cb-nav-dropdown > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .cb-nav-link::after,
+    .cb-nav-dropdown > summary::after {
+      position: absolute;
+      right: 13px;
+      bottom: 3px;
+      left: 13px;
+      height: 3px;
+      border-radius: 2px;
+      background: #efc63b;
+      content: "";
+      opacity: 0;
+      transform: scaleX(0.45);
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .cb-nav-link:hover,
+    .cb-nav-link:focus-visible,
+    .cb-nav-dropdown > summary:hover,
+    .cb-nav-dropdown > summary:focus-visible,
+    .cb-nav-dropdown[open] > summary,
+    .cb-nav-link.is-active {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.075);
+    }
+
+    .cb-nav-link:hover::after,
+    .cb-nav-link:focus-visible::after,
+    .cb-nav-dropdown > summary:hover::after,
+    .cb-nav-dropdown > summary:focus-visible::after,
+    .cb-nav-dropdown[open] > summary::after,
+    .cb-nav-link.is-active::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .cb-nav-dropdown {
+      position: relative;
+    }
+
+    .cb-nav-dropdown > summary {
+      gap: 10px;
+    }
+
+    .cb-chevron {
+      width: 9px;
+      height: 9px;
+      margin-top: -4px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+      transition: transform 160ms ease;
+    }
+
+    .cb-nav-dropdown[open] .cb-chevron {
+      margin-top: 4px;
+      transform: rotate(225deg);
+    }
+
+    .cb-dropdown-menu {
+      position: absolute;
+      z-index: 10010;
+      top: calc(100% + 9px);
+      left: 50%;
+      display: grid;
+      width: max-content;
+      min-width: 235px;
+      padding: 10px;
+      border: 1px solid #31597d;
+      border-radius: 13px;
+      background: #081d32;
+      box-shadow: 0 20px 48px rgba(0, 7, 18, 0.55);
+      transform: translateX(-50%);
+    }
+
+    .cb-dropdown-menu::before {
+      position: absolute;
+      top: -10px;
+      right: 0;
+      left: 0;
+      height: 10px;
+      content: "";
+    }
+
+    .cb-dropdown-menu a {
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #dceafb;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .cb-dropdown-menu a:hover,
+    .cb-dropdown-menu a:focus-visible {
+      color: #ffffff;
+      background: #123657;
+    }
+
+    .cb-progress-link {
+      display: inline-flex;
+      min-height: 52px;
+      padding: 0 18px;
+      align-items: center;
+      border: 1px solid #2d83f4;
+      border-radius: 9px;
+      color: #ffffff;
+      background: #1769df;
+      box-shadow: 0 9px 22px rgba(24, 119, 242, 0.24);
+      font-size: 0.96rem;
+      font-weight: 800;
+      text-decoration: none;
+      transition: background 160ms ease, transform 160ms ease;
+    }
+
+    .cb-progress-link:hover,
+    .cb-progress-link:focus-visible {
+      background: #2580f4;
+      transform: translateY(-1px);
+    }
+
+    .cb-mobile-navigation {
+      position: relative;
+      display: none;
+    }
+
+    .cb-mobile-navigation > summary {
+      display: grid;
+      width: 46px;
+      height: 46px;
+      padding: 11px;
+      align-content: space-between;
+      border: 1px solid #31597d;
+      border-radius: 10px;
+      background: #0c2944;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .cb-mobile-navigation > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .cb-mobile-navigation > summary span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      border-radius: 2px;
+      background: #ffffff;
+    }
+
+    .cb-mobile-navigation[open] > summary {
+      border-color: #e2b92f;
+    }
+
+    .cb-mobile-menu {
+      position: absolute;
+      z-index: 10020;
+      top: calc(100% + 13px);
+      right: 0;
+      display: grid;
+      width: min(320px, calc(100vw - 24px));
+      max-height: min(70vh, 520px);
+      padding: 10px;
+      overflow-y: auto;
+      border: 1px solid #31597d;
+      border-radius: 14px;
+      background: #081d32;
+      box-shadow: 0 20px 48px rgba(0, 7, 18, 0.6);
+    }
+
+    .cb-mobile-menu a {
+      padding: 12px 13px;
+      border-radius: 8px;
+      color: #dceafb;
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .cb-mobile-menu a:hover,
+    .cb-mobile-menu a:focus-visible {
+      color: #ffffff;
+      background: #123657;
+    }
+
+    /* Keep the compiler's save-state DOM node available to its JavaScript. */
+    .cb-site-header > .cb-save-state {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      border: 0 !important;
+      clip: rect(0 0 0 0) !important;
+      clip-path: inset(50%) !important;
+      white-space: nowrap !important;
+    }
+
+    #compilerWorkspace {
+      scroll-margin-top: 104px;
+    }
+
+    @media (max-width: 1120px) {
+      .cb-desktop-nav {
+        display: none;
+      }
+
+      .cb-mobile-navigation {
+        display: block;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .site-header.cb-site-header {
+        min-height: 70px;
+        padding: 0 14px !important;
+      }
+
+      .cb-brand {
+        gap: 10px;
+      }
+
+      .cb-brand-logo {
+        width: 50px;
+        height: 50px;
+        flex-basis: 50px;
+      }
+
+      .cb-brand-name {
+        font-size: 1.55rem;
+      }
+
+      #compilerWorkspace {
+        scroll-margin-top: 82px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .cb-brand-name {
+        font-size: 1.3rem;
+      }
+
+      .cb-brand-logo {
+        width: 44px;
+        height: 44px;
+        flex-basis: 44px;
+      }
+    }
+  </style>
+  <script defer src="https://cdn.jsdelivr.net/npm/ace-builds@1.44.0/src-min-noconflict/ace.js"></script>
+  <script defer src="input-guide.js?v=31"></script>
+  <script defer src="compiler.js?v=31"></script>
+</head>
+<body>
+  <a class="skip-link" href="#compilerWorkspace">Skip to compiler</a>
+
+  <header class="site-header cb-site-header">
+    <a class="cb-brand" href="../index.html" aria-label="CodeBhavya home">
+      <img
+        class="cb-brand-logo"
+        src="../images/codebhavya-main-logo.png"
+        alt=""
+        width="72"
+        height="72"
+      >
+      <span class="cb-brand-name">Code<span>Bhavya</span></span>
+    </a>
+
+    <nav class="cb-desktop-nav" aria-label="Main navigation">
+      <a class="cb-nav-link is-active" href="../index.html">Home</a>
+
+      <details class="cb-nav-dropdown">
+        <summary>Learn <span class="cb-chevron" aria-hidden="true"></span></summary>
+        <div class="cb-dropdown-menu">
+          <a href="../Maths/index.html">Mathematics</a>
+          <a href="../C-Programming/index.html">C Programming</a>
+          <a href="../Data-Structures/index.html">Data Structures</a>
+          <a href="../Advanced-Data-Structures/index.html">Advanced Data Structures</a>
+          <a href="../Python/index.html">Python</a>
+          <a href="../AI-ML/index.html">AI &amp; Machine Learning</a>
+        </div>
+      </details>
+
+      <details class="cb-nav-dropdown">
+        <summary>Practice <span class="cb-chevron" aria-hidden="true"></span></summary>
+        <div class="cb-dropdown-menu">
+          <a href="../C-Programming/practice.html">C Practice</a>
+          <a href="../Data-Structures/practice.html">Data Structures Practice</a>
+          <a href="../Advanced-Data-Structures/practice.html">Advanced DS Practice</a>
+          <a href="../Python/practice.html">Python Practice</a>
+          <a href="../AI-ML/practice.html">AI &amp; ML Practice</a>
+          <a href="../Placement/practice.html">Placement Practice</a>
+        </div>
+      </details>
+
+      <a class="cb-nav-link" href="../Placement/index.html">Placement</a>
+      <a class="cb-progress-link" href="../Placement/index.html">My Progress</a>
+    </nav>
+
+    <details class="cb-mobile-navigation">
+      <summary aria-label="Open navigation menu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </summary>
+      <nav class="cb-mobile-menu" aria-label="Mobile navigation">
+        <a href="../index.html">Home</a>
+        <a href="../Maths/index.html">Mathematics</a>
+        <a href="../C-Programming/index.html">C Programming</a>
+        <a href="../Data-Structures/index.html">Data Structures</a>
+        <a href="../Advanced-Data-Structures/index.html">Advanced Data Structures</a>
+        <a href="../Python/index.html">Python</a>
+        <a href="../AI-ML/index.html">AI &amp; Machine Learning</a>
+        <a href="../Placement/index.html">Placement</a>
+        <a href="../Placement/practice.html">Placement Practice</a>
+      </nav>
+    </details>
+
+    <span class="save-state cb-save-state" id="saveState" role="status">
+      <span class="save-dot" aria-hidden="true"></span>
+      Code saved on this device
+    </span>
+  </header>
+
+  <main class="compiler-page" id="compilerWorkspace">
+    <section class="compiler-intro" aria-labelledby="compilerTitle">
+      <div>
+        <p class="eyebrow">CODEBHAVYA • WRITE · RUN · LEARN</p>
+        <h1 id="compilerTitle">Online Compiler</h1>
+        <p class="intro-copy">Write a program, provide input and inspect the real compiler output.</p>
+      </div>
+      <div class="runtime-note">
+        <span class="runtime-light" id="runtimeLight" aria-hidden="true"></span>
+        <span id="runtimeStatus">Ready to run</span>
+      </div>
+    </section>
+
+    <section class="compiler-toolbar" aria-label="Compiler controls">
+      <div class="field-group language-field">
+        <label for="languageSelect">Language</label>
+        <select id="languageSelect" autocomplete="off">
+          <option value="c">C · GCC 14</option>
+          <option value="cpp">C++ · GCC 14</option>
+          <option value="python">Python · 3.13</option>
+          <option value="java">Java · 17</option>
+          <option value="javascript">JavaScript · Node 22</option>
+        </select>
+      </div>
+
+      <div class="file-identity" aria-live="polite">
+        <span class="file-icon" aria-hidden="true">●</span>
+        <span id="fileName">main.c</span>
+      </div>
+
+      <div class="toolbar-actions">
+        <button class="button button-ghost" type="button" data-action="reset" title="Restore the starter program">
+          <span aria-hidden="true">↻</span> Reset
+        </button>
+        <button class="button button-ghost" type="button" data-action="download">
+          <span aria-hidden="true">↓</span> Download
+        </button>
+        <button class="button button-stop" type="button" data-action="stop" disabled>
+          <span aria-hidden="true">■</span> Stop
+        </button>
+        <button class="button button-run" type="button" data-action="run">
+          <span aria-hidden="true">▶</span> Run code
+          <kbd>Ctrl ↵</kbd>
+        </button>
+      </div>
+    </section>
+
+    <div class="mobile-tabs" role="tablist" aria-label="Compiler panels">
+      <button class="mobile-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="editorPanel" data-panel="editorPanel">Code</button>
+      <button class="mobile-tab" type="button" role="tab" aria-selected="false" aria-controls="inputPanel" data-panel="inputPanel">Input</button>
+      <button class="mobile-tab" type="button" role="tab" aria-selected="false" aria-controls="outputPanel" data-panel="outputPanel">
+        Output <span class="tab-indicator" id="outputIndicator" hidden></span>
+      </button>
+    </div>
+
+    <section class="workspace-grid">
+      <article class="workspace-panel editor-panel mobile-panel is-active" id="editorPanel" role="tabpanel" aria-label="Code editor">
+        <header class="panel-header">
+          <div>
+            <span class="panel-kicker">SOURCE CODE</span>
+            <strong id="editorLanguage">C program</strong>
+          </div>
+          <div class="editor-tools">
+            <span class="shortcut-hint">Ctrl + Enter to run</span>
+            <button class="icon-button" id="copyCode" type="button" aria-label="Copy source code" title="Copy source code">Copy</button>
+          </div>
+        </header>
+        <div class="editor-wrap">
+          <div id="editor" aria-label="Program source code editor"></div>
+          <textarea id="fallbackEditor" class="fallback-editor" aria-label="Program source code" spellcheck="false" hidden></textarea>
+        </div>
+        <footer class="editor-status" aria-label="Editor information">
+          <span id="cursorPosition">Ln 1, Col 1</span>
+          <span>Spaces: 4</span>
+          <span>UTF-8</span>
+        </footer>
+      </article>
+
+      <div
+        class="workspace-resizer"
+        id="workspaceResizer"
+        role="separator"
+        aria-label="Resize code and result panels"
+        aria-orientation="vertical"
+        aria-valuemin="35"
+        aria-valuemax="75"
+        aria-valuenow="67"
+        tabindex="0"
+        title="Drag to resize the coding area; double-click to reset"
+      ></div>
+
+      <aside class="io-column" aria-label="Program input and output">
+        <section class="workspace-panel io-panel mobile-panel" id="inputPanel" role="tabpanel" aria-label="Program input">
+          <header class="panel-header compact-header">
+            <div>
+              <span class="panel-kicker">OPTIONAL • SENT BEFORE RUN</span>
+              <strong>Program input (stdin)</strong>
+            </div>
+            <button class="icon-button" id="clearInput" type="button">Clear</button>
+          </header>
+          <textarea id="stdin" class="io-textarea" aria-label="Standard input sent before execution" placeholder="Example for two inputs:&#10;6&#10;10" spellcheck="false"></textarea>
+          <p class="panel-help"><strong>Use only when your code reads input.</strong> Add every value before Run; Output is read-only, not an interactive terminal.</p>
+        </section>
+
+        <section class="workspace-panel io-panel output-panel mobile-panel" id="outputPanel" role="tabpanel" aria-label="Program output">
+          <header class="panel-header compact-header">
+            <div>
+              <span class="panel-kicker">PROGRAM RESULT</span>
+              <strong>Output</strong>
+            </div>
+            <div class="output-actions">
+              <button class="icon-button" id="clearOutput" type="button">Clear</button>
+              <button class="icon-button" id="copyOutput" type="button">Copy</button>
+            </div>
+          </header>
+
+          <div class="output-body" id="outputBody">
+            <div class="output-empty" id="outputEmpty">
+              <strong>Ready for output</strong>
+              <p>Run the program to see the result here.</p>
+            </div>
+            <pre id="output" class="output-console" tabindex="0" aria-live="polite" hidden></pre>
+          </div>
+
+          <footer class="run-metrics" aria-label="Execution information">
+            <span><b>Status</b> <em id="metricStatus">Not run</em></span>
+            <span><b>Time</b> <em id="metricTime">—</em></span>
+            <span><b>Memory</b> <em id="metricMemory">—</em></span>
+          </footer>
+        </section>
+      </aside>
+    </section>
+
+    <section class="compiler-guidance" aria-labelledby="quickHelpTitle">
+      <div>
+        <span class="guidance-number">01</span>
+        <p><strong>Write</strong><br>Use the editor or start from the language template.</p>
+      </div>
+      <div>
+        <span class="guidance-number">02</span>
+        <p><strong>Provide input only if needed</strong><br>Preload values for scanf, cin, input(), Scanner or stdin.</p>
+      </div>
+      <div>
+        <span class="guidance-number">03</span>
+        <p id="quickHelpTitle"><strong>Run and inspect</strong><br>Read normal output and compiler errors separately.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="mobile-run-dock" aria-label="Mobile execution controls">
+    <button class="button button-stop" type="button" data-action="stop" disabled aria-label="Stop execution">■</button>
+    <button class="button button-run" type="button" data-action="run">▶ Run code</button>
+  </div>
+
+  <dialog class="input-dialog" id="inputDialog" aria-labelledby="inputDialogTitle">
+    <form method="dialog" id="inputDialogForm">
+      <div class="dialog-heading">
+        <span class="dialog-icon" aria-hidden="true">⌨</span>
+        <div>
+          <span class="panel-kicker">INPUT REQUESTED</span>
+          <h2 id="inputDialogTitle">This program reads input</h2>
+        </div>
+      </div>
+      <p>Enter the values in the same order your program reads them. Put separate inputs on separate lines.</p>
+      <aside id="programInputGuide" style="padding:1rem;margin:1rem 0;background:#edf5ff;color:#173451;border:1px solid #b7cce6;border-radius:10px;max-height:240px;overflow:auto;line-height:1.6" aria-live="polite"></aside>
+      <label for="dialogInput">Program input — enter values only, not the prompts</label>
+      <textarea id="dialogInput" rows="6" placeholder="Example:&#10;6&#10;10" spellcheck="false"></textarea>
+      <p class="dialog-note">The values are sent together when you continue. The Output panel displays results and cannot accept typing.</p>
+      <div class="dialog-actions">
+        <button class="button button-ghost" type="button" id="cancelInputDialog">Cancel</button>
+        <button class="button button-run" type="submit">Continue running <span aria-hidden="true">→</span></button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <noscript>
+    <div class="noscript-message">JavaScript must be enabled to use the compiler.</div>
+  </noscript>
+</body>
+</html>
