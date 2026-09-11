@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Master demand paging, page replacement, working sets and thrashing with an interactive simulator.">
+<title>Virtual Memory — OS Level 9 | CodeBhavya</title>
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="os.css?v=2">
+<link rel="stylesheet" href="os-lesson.css?v=1">
+<link rel="stylesheet" href="os-levels-09-15.css?v=1">
+</head>
+<body class="os-page os-lesson-page" data-level="9">
+<header class="top-header">
+<a href="../index.html" class="logo codebhavya-new-logo">
+<img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo">
+<span class="brand-name">
+<span class="logo-code">Code</span>
+<span class="logo-bhavya">Bhavya</span>
+</span>
+</a>
+<nav class="top-nav">
+<a href="../index.html">Home</a>
+<a href="../C-Programming/index.html">C</a>
+<a href="../Data-Structures/index.html">Data Structures</a>
+<a href="../DBMS/index.html">DBMS</a>
+<a href="../Placement/index.html">Placement</a>
+</nav>
+</header>
+<div class="lesson-reading-progress">
+<span id="lessonReadingBar">
+</span>
+</div>
+<button class="os-sidebar-toggle" id="osSidebarToggle" type="button" aria-controls="osSidebar" aria-expanded="false">☰ Level 9 Topics</button>
+<div class="os-sidebar-backdrop" id="osSidebarBackdrop" hidden>
+</div>
+<div class="os-layout">
+<aside class="os-sidebar" id="osSidebar">
+<div class="os-sidebar-title">Level 9 — Virtual Memory</div>
+<a class="os-home-link" href="index.html">← OS Course Home</a>
+<div class="os-sidebar-group">In this lesson</div>
+<a class="active lesson-section-link" href="#overview">1. Outcomes</a>
+<a class="lesson-section-link" href="#demand">2. Demand paging</a>
+<a class="lesson-section-link" href="#fault">3. Page-fault path</a>
+<a class="lesson-section-link" href="#replacement">4. Replacement lab</a>
+<a class="lesson-section-link" href="#thrashing">5. Thrashing</a>
+<a class="lesson-section-link" href="#trace">6. Trace</a>
+<a class="lesson-section-link" href="#checks">7. Checks</a>
+<a class="lesson-section-link" href="#exam-prep">8. Prepare</a>
+<a class="lesson-section-link" href="#summary">9. Summary</a>
+<div class="lesson-sidebar-status">
+<span>LESSON CHECKPOINT</span>
+<strong id="lessonSidebarStatus">Not completed</strong>
+</div>
+</aside>
+<main class="os-main">
+<section class="lesson-hero" id="overview">
+<div>
+<div class="lesson-breadcrumb">
+<a href="index.html">Operating Systems</a>
+<span>›</span>
+<span>Level 9</span>
+</div>
+<span class="os-label">PART 3 • MEMORY &amp; STORAGE</span>
+<h1>Give Every Process a Larger, Protected View of Memory</h1>
+<p>Follow a nonresident page from CPU reference to disk and back, compare replacement decisions, and diagnose when excessive paging destroys useful execution.</p>
+<div class="lesson-meta">
+<span>Level 09 of 15</span>
+<span>Intermediate</span>
+<span>110–140 minutes</span>
+<span>Two interactive traces</span>
+</div>
+</div>
+<div class="lesson-goal-card">
+<span>BY THE END, YOU CAN</span>
+<h2>Reason about residency</h2>
+<ul>
+<li>Explain demand paging and valid bits.</li>
+<li>Trace a page fault safely.</li>
+<li>Run FIFO, LRU and Optimal.</li>
+<li>Identify Belady’s anomaly.</li>
+<li>Explain working sets and thrashing.</li>
+</ul>
+</div>
+</section>
+<nav class="lesson-jump-bar">
+<a href="#demand">Understand</a>
+<a href="#replacement">Simulate</a>
+<a href="#trace">Trace</a>
+<a href="#checks">Check</a>
+<a href="#exam-prep">Prepare</a>
+</nav>
+<section class="lesson-section" id="demand">
+<header class="lesson-heading">
+<span>01 • SEPARATE ADDRESS SPACE FROM RAM</span>
+<h2>Virtual Memory Loads Only the Pages Needed Now</h2>
+<p>A process sees a private virtual address space. Page-table entries map resident pages to frames; a valid/present bit tells hardware whether translation can continue.</p>
+</header>
+<div class="concept-grid">
+<article>
+<span>DEMAND PAGING</span>
+<h3>Load on first use</h3>
+<p>Executable and data pages remain on secondary storage until referenced, reducing initial load and allowing more processes to coexist.</p>
+</article>
+<article>
+<span>COPY-ON-WRITE</span>
+<h3>Delay private copying</h3>
+<p>Processes initially share read-only frames. A write fault creates a private copy, making <code>fork()</code> cheaper.</p>
+</article>
+<article>
+<span>MEMORY-MAPPED FILE</span>
+<h3>File bytes become pages</h3>
+<p>Reads and writes use ordinary memory references while the OS handles caching, loading and eventual persistence.</p>
+</article>
+</div>
+<div class="formula-strip">
+<code>page = ⌊virtual address / page size⌋</code>
+<code>offset = virtual address mod page size</code>
+<code>EAT depends on TLB hit and fault rate</code>
+</div>
+<p>A TLB miss and a page fault are different. On a TLB miss the mapping may already exist in the page table; on a page fault the page is not resident and OS intervention is required.</p>
+</section>
+<section class="lesson-section" id="fault">
+<header class="lesson-heading">
+<span>02 • HANDLE A FAULT WITHOUT CORRUPTING STATE</span>
+<h2>A Page Fault Is a Controlled Exception</h2>
+</header>
+<div class="roadmap-list">
+<article>
+<b>1</b>
+<div>
+<h3>Trap and validate</h3>
+<p>Hardware traps to the kernel. The OS checks whether the address is legal; illegal references terminate or signal the process.</p>
+</div>
+</article>
+<article>
+<b>2</b>
+<div>
+<h3>Obtain a frame</h3>
+<p>Use a free frame or select a victim. If the victim is dirty, schedule its write-back before reuse.</p>
+</div>
+</article>
+<article>
+<b>3</b>
+<div>
+<h3>Read and block</h3>
+<p>Issue storage I/O and block the faulting process so another ready process can run.</p>
+</div>
+</article>
+<article>
+<b>4</b>
+<div>
+<h3>Update translation</h3>
+<p>Record frame number and protection bits; invalidate stale TLB state.</p>
+</div>
+</article>
+<article>
+<b>5</b>
+<div>
+<h3>Restart instruction</h3>
+<p>Return to user mode and repeat the faulting instruction as though the page had been present.</p>
+</div>
+</article>
+</div>
+<aside class="risk-note">
+<strong>Correctness detail:</strong> the instruction must be restartable. Partial visible side effects before the fault require architectural and kernel care.</aside>
+</section>
+<section class="lesson-section" id="replacement">
+<header class="lesson-heading">
+<span>03 • INTERACTIVE PAGE-REPLACEMENT LAB</span>
+<h2>Run Every Reference against the Same Frames</h2>
+<p>FIFO removes the oldest loaded page; LRU removes the least recently used; Optimal removes the page used farthest in the known future and is an offline benchmark.</p>
+</header>
+<div class="advanced-lab">
+<div class="lab-controls">
+<label>REFERENCE STRING<input id="pageRefs" value="7,0,1,2,0,3,0,4,2,3,0,3,2">
+</label>
+<label>FRAMES<input id="frameCount" type="number" min="1" max="8" value="3">
+</label>
+<label>ALGORITHM<select id="pageAlgorithm">
+<option value="fifo">FIFO</option>
+<option value="lru">LRU</option>
+<option value="optimal">Optimal</option>
+</select>
+</label>
+<button id="runPageLab" type="button">Run simulation →</button>
+</div>
+<div class="lab-output" id="pageLabOutput">
+<div class="lab-summary">
+<span>READY</span>
+<h3>Choose policy and run</h3>
+<p>The complete hit/fault and victim trace will appear here.</p>
+</div>
+</div>
+</div>
+<table class="decision-table">
+<thead>
+<tr>
+<th>Policy</th>
+<th>Information</th>
+<th>Strength</th>
+<th>Limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FIFO</td>
+<td>Load order</td>
+<td>Small metadata</td>
+<td>Belady anomaly possible</td>
+</tr>
+<tr>
+<td>LRU</td>
+<td>Past recency</td>
+<td>Uses temporal locality</td>
+<td>Exact tracking costly</td>
+</tr>
+<tr>
+<td>Optimal</td>
+<td>Future references</td>
+<td>Minimum faults for trace</td>
+<td>Not online implementable</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="lesson-section" id="thrashing">
+<header class="lesson-heading">
+<span>04 • CONTROL MEMORY PRESSURE</span>
+<h2>Thrashing Means the System Is Moving Pages More Than Doing Work</h2>
+</header>
+<div class="compare-grid">
+<article>
+<span>LOCALITY</span>
+<h3>Working set</h3>
+<p>The pages referenced in a recent window approximate the process’s active locality. Enough frames keep that locality resident.</p>
+</article>
+<article>
+<span>SYMPTOM</span>
+<h3>High faults, low CPU use</h3>
+<p>Processes block for paging; a naive scheduler may admit more processes and make pressure worse.</p>
+</article>
+<article>
+<span>CONTROL</span>
+<h3>Reduce degree</h3>
+<p>Suspend processes, use working-set or page-fault-frequency control, and allocate frames according to locality.</p>
+</article>
+</div>
+<p>Global replacement may take frames from another process; local replacement restricts victims to the faulting process. Global policies can improve utilization but couple processes and weaken performance isolation.</p>
+</section>
+<section class="lesson-section" id="trace">
+<header class="lesson-heading">
+<span>05 • PROGRAM TRACING</span>
+<h2>Trace One Fault from Instruction to Restart</h2>
+</header>
+<div class="trace-runner">
+<div class="trace-controls">
+<button id="traceNext" type="button">Next step →</button>
+<button class="secondary" id="traceAuto" type="button">▶ Auto trace</button>
+<button class="secondary" id="traceReset" type="button">Reset</button>
+</div>
+<article class="trace-stage">
+<span>FAULT PATH · <b id="traceCounter">0 / 0</b>
+</span>
+<h3 id="traceTitle">Ready to trace</h3>
+<p id="traceText">Press Next step to begin.</p>
+<div class="trace-progress" id="traceProgress">
+</div>
+</article>
+</div>
+</section>
+<section class="lesson-section" id="checks">
+<header class="lesson-heading">
+<span>06 • CHECK YOUR UNDERSTANDING</span>
+<h2>Ten Misconception-Specific Checks</h2>
+</header>
+<div class="concept-check-list" id="conceptChecks">
+</div>
+<div class="check-score" id="conceptScore">Answered correctly: 0 of 10</div>
+</section>
+<section class="lesson-section" id="exam-prep">
+<header class="lesson-heading">
+<span>07 • EXAM &amp; INTERVIEW PREPARATION</span>
+<h2>Explain Mechanism and Trade-off</h2>
+</header>
+<div class="question-bank-grid">
+<article>
+<span>2-MARK</span>
+<ol>
+<li>Define demand paging.</li>
+<li>TLB miss versus page fault?</li>
+<li>What is a dirty bit?</li>
+<li>Define thrashing.</li>
+<li>What is locality?</li>
+</ol>
+</article>
+<article>
+<span>5-MARK</span>
+<ol>
+<li>Trace page-fault service.</li>
+<li>Compare FIFO, LRU and Optimal.</li>
+<li>Explain Belady’s anomaly.</li>
+<li>Explain working-set control.</li>
+<li>Calculate effective access time.</li>
+</ol>
+</article>
+<article>
+<span>INTERVIEW</span>
+<ol>
+<li>Why can more frames hurt FIFO?</li>
+<li>Why is Optimal useful?</li>
+<li>How is LRU approximated?</li>
+<li>Global versus local replacement?</li>
+<li>What triggers copy-on-write?</li>
+</ol>
+</article>
+</div>
+<details class="answer-framework">
+<summary>Strong answer: “Explain a page fault”</summary>
+<div>
+<p>Start with present-bit failure, validate the address, obtain a frame, write dirty victim if necessary, read the page, update page table/TLB, unblock and restart. Mention that disk latency dominates and another process can run meanwhile.</p>
+</div>
+</details>
+</section>
+<section class="lesson-section summary-section" id="summary">
+<div>
+<span class="os-label">LEVEL 9 SUMMARY</span>
+<h2>You Can Explain Why a Page Is Present—or Missing</h2>
+<ul>
+<li>Demand paging separates virtual size from current residency.</li>
+<li>A legal nonresident reference causes a recoverable page fault.</li>
+<li>Replacement policy selects a victim only when no free frame exists.</li>
+<li>Optimal is a benchmark; practical systems approximate locality.</li>
+<li>Working-set pressure can cause thrashing.</li>
+</ul>
+</div>
+<div class="completion-panel">
+<span>COURSE CHECKPOINT</span>
+<p>Mark complete after you can trace one fault and manually run LRU.</p>
+<button type="button" id="completeLessonButton" aria-pressed="false">Mark Level 9 complete</button>
+<small>Saved only in this browser.</small>
+</div>
+</section>
+<nav class="os-topic-navigation">
+<a href="level-08-memory-management.html">← Level 8: Memory</a>
+<a href="level-10-file-systems.html">Next: File Systems →</a>
+</nav>
+</main>
+</div>
+<footer class="footer">
+<div class="footer-container">
+<div class="footer-brand-section">
+<div class="footer-brand">
+<span class="footer-code">Code</span>
+<span class="footer-bhavya">Bhavya</span>
+</div>
+<p class="footer-tagline">From Learning to Limitless Possibilities.</p>
+</div>
+<div class="footer-column">
+<h3>OS Course</h3>
+<a href="index.html">Course Home</a>
+<a href="#overview">Level 9</a>
+</div>
+<div class="footer-column">
+<h3>Practise</h3>
+<a href="#replacement">Replacement lab</a>
+<a href="#checks">Concept checks</a>
+</div>
+<div class="footer-column">
+<h3>Continue</h3>
+<a href="level-10-file-systems.html">File Systems</a>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2026 CodeBhavya. All Rights Reserved.</p>
+</div>
+</footer>
+<script>window.OS_TRACE_STEPS=[{title:'CPU issues virtual address',text:'The MMU separates page number and offset, then checks the TLB and page-table entry.'},{title:'Present bit is zero',text:'Hardware saves precise state and transfers control to the page-fault handler.'},{title:'Kernel validates address',text:'A legal mapping continues; an illegal address becomes a protection fault.'},{title:'Select frame or victim',text:'A free frame is preferred. A dirty victim must be written before reuse.'},{title:'Read page from storage',text:'The process blocks during I/O and the scheduler may run another process.'},{title:'Update mapping',text:'Frame number and flags become valid; stale TLB information is removed.'},{title:'Restart instruction',text:'The original memory instruction executes again and now translates successfully.'}];window.OS_CHECKS=[{q:'A TLB miss always means:',options:['Page fault','Page table lookup','Illegal address','Disk failure'],answer:1,why:'The mapping may be resident but absent from the TLB.'},{q:'Which bit indicates a modified page?',options:['Dirty','Present only','Offset','Quantum'],answer:0,why:'Dirty tells the OS write-back may be needed.'},{q:'Optimal chooses the page:',options:['Loaded first','Used least recently','Used farthest in future','With smallest number'],answer:2,why:'Future distance defines the offline optimum.'},{q:'FIFO can show:',options:['Deadlock','Belady anomaly','Race freedom','Compaction'],answer:1,why:'More frames can increase FIFO faults on some strings.'},{q:'LRU is based on:',options:['Future','Past recency','PID','File size'],answer:1,why:'LRU approximates temporal locality from recent past.'},{q:'Thrashing primarily means:',options:['High useful CPU work','Excessive page movement','No virtual addresses','Only TLB hits'],answer:1,why:'Fault service dominates useful execution.'},{q:'Copy-on-write copies when:',options:['fork begins','A shared page is written','Every read occurs','Process exits'],answer:1,why:'The write fault creates private ownership.'},{q:'Page fault service may block because of:',options:['Disk I/O','Integer addition','Register rename','Ready queue only'],answer:0,why:'Storage access is orders slower than memory.'},{q:'Working set represents:',options:['All disk pages forever','Recent active locality','Only code pages','Free frames'],answer:1,why:'A recent window estimates actively used pages.'},{q:'Global replacement may:',options:['Take another process frame','Never replace','Avoid all faults','Remove page tables'],answer:0,why:'Its victim pool crosses process boundaries.'}];</script>
+<script src="os-levels-09-15.js?v=1">
+</script>
+</body>
+</html>

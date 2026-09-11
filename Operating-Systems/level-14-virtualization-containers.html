@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Learn hypervisors, virtual machines, containers, namespaces, cgroups, images and cloud isolation through an interactive decision lab.">
+<title>Virtualization &amp; Containers — OS Level 14 | CodeBhavya</title>
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="os.css?v=2">
+<link rel="stylesheet" href="os-lesson.css?v=1">
+<link rel="stylesheet" href="os-levels-09-15.css?v=1">
+</head>
+<body class="os-page os-lesson-page" data-level="14">
+<header class="top-header">
+<a href="../index.html" class="logo codebhavya-new-logo">
+<img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo">
+<span class="brand-name">
+<span class="logo-code">Code</span>
+<span class="logo-bhavya">Bhavya</span>
+</span>
+</a>
+<nav class="top-nav">
+<a href="../index.html">Home</a>
+<a href="../C-Programming/index.html">C</a>
+<a href="../Data-Structures/index.html">Data Structures</a>
+<a href="../DBMS/index.html">DBMS</a>
+<a href="../Placement/index.html">Placement</a>
+</nav>
+</header>
+<div class="lesson-reading-progress">
+<span id="lessonReadingBar">
+</span>
+</div>
+<button class="os-sidebar-toggle" id="osSidebarToggle">☰ Level 14 Topics</button>
+<div class="os-sidebar-backdrop" id="osSidebarBackdrop" hidden>
+</div>
+<div class="os-layout">
+<aside class="os-sidebar" id="osSidebar">
+<div class="os-sidebar-title">Level 14 — Virtualization</div>
+<a class="os-home-link" href="index.html">← OS Course Home</a>
+<div class="os-sidebar-group">In this lesson</div>
+<a class="active lesson-section-link" href="#overview">1. Outcomes</a>
+<a class="lesson-section-link" href="#models">2. Models</a>
+<a class="lesson-section-link" href="#containers">3. Containers</a>
+<a class="lesson-section-link" href="#lab">4. Decision lab</a>
+<a class="lesson-section-link" href="#security">5. Isolation</a>
+<a class="lesson-section-link" href="#trace">6. Trace</a>
+<a class="lesson-section-link" href="#checks">7. Checks</a>
+<a class="lesson-section-link" href="#summary">8. Summary</a>
+<div class="lesson-sidebar-status">
+<span>LESSON CHECKPOINT</span>
+<strong id="lessonSidebarStatus">Not completed</strong>
+</div>
+</aside>
+<main class="os-main">
+<section class="lesson-hero" id="overview">
+<div>
+<div class="lesson-breadcrumb">
+<a href="index.html">Operating Systems</a>
+<span>›</span>
+<span>Level 14</span>
+</div>
+<span class="os-label">PART 4 • SYSTEMS &amp; CAREER</span>
+<h1>Isolate Workloads without Wasting the Machine</h1>
+<p>Understand how hypervisors virtualize hardware and how containers isolate processes while sharing one kernel. Compare performance, compatibility, density and security boundaries instead of treating either model as universally better.</p>
+<div class="lesson-meta">
+<span>Level 14 of 15</span>
+<span>Advanced</span>
+<span>120–150 minutes</span>
+<span>Architecture decision lab</span>
+</div>
+</div>
+<div class="lesson-goal-card">
+<span>BY THE END, YOU CAN</span>
+<h2>Defend an isolation choice</h2>
+<ul>
+<li>Explain Type 1 and Type 2 hypervisors.</li>
+<li>Trace privileged guest operations.</li>
+<li>Connect namespaces and cgroups to containers.</li>
+<li>Interpret images and writable layers.</li>
+<li>Choose a suitable boundary for a workload.</li>
+</ul>
+</div>
+</section>
+<nav class="lesson-jump-bar">
+<a href="#models">Compare</a>
+<a href="#containers">Containerize</a>
+<a href="#lab">Decide</a>
+<a href="#trace">Trace</a>
+<a href="#checks">Check</a>
+</nav>
+<section class="lesson-section" id="models">
+<header class="lesson-heading">
+<span>01 • HARDWARE VIRTUALIZATION</span>
+<h2>A Virtual Machine Receives a Hardware-Like Interface</h2>
+</header>
+<div class="compare-grid">
+<article>
+<span>TYPE 1</span>
+<h3>Bare-metal hypervisor</h3>
+<p>Runs directly on hardware and manages guest VMs. Data centres favour this design for control, predictable overhead and strong operational tooling.</p>
+</article>
+<article>
+<span>TYPE 2</span>
+<h3>Hosted hypervisor</h3>
+<p>Runs above a host OS. It is convenient for desktop labs, but guest I/O passes through additional host layers.</p>
+</article>
+<article>
+<span>GUEST</span>
+<h3>Complete operating system</h3>
+<p>Each VM owns a guest kernel, virtual CPUs, virtual memory and virtual devices. Different OS families can share one physical server.</p>
+</article>
+</div>
+<table class="decision-table">
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>What is virtualized?</th>
+<th>Key OS idea</th>
+<th>Main cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trap and emulate</td>
+<td>Privileged operations</td>
+<td>Hypervisor handles sensitive instruction</td>
+<td>Transitions</td>
+</tr>
+<tr>
+<td>Hardware assist</td>
+<td>CPU execution modes</td>
+<td>Guest runs directly until a controlled exit</td>
+<td>VM exits</td>
+</tr>
+<tr>
+<td>Nested paging</td>
+<td>Guest physical memory</td>
+<td>Guest mapping plus host mapping reaches RAM</td>
+<td>Translation/TLB pressure</td>
+</tr>
+<tr>
+<td>Virtual device</td>
+<td>Disk/network interface</td>
+<td>Emulation or paravirtual driver performs I/O</td>
+<td>Copying and exits</td>
+</tr>
+</tbody>
+</table>
+<aside class="risk-note">
+<strong>Terminology check:</strong> virtualization does not create free resources. The host still schedules physical CPUs, backs virtual memory and arbitrates real devices.</aside>
+</section>
+<section class="lesson-section" id="containers">
+<header class="lesson-heading">
+<span>02 • OS-LEVEL VIRTUALIZATION</span>
+<h2>A Container Is an Isolated Process Group, Not a Tiny VM</h2>
+</header>
+<div class="concept-grid">
+<article>
+<span>NAMESPACES</span>
+<h3>Control what processes see</h3>
+<p>PID, mount, network, IPC, UTS, user and cgroup namespaces create separate views of global kernel resources.</p>
+</article>
+<article>
+<span>CGROUPS</span>
+<h3>Control what processes consume</h3>
+<p>Account for and limit CPU, memory, I/O and process counts. A namespace changes visibility; a cgroup changes resource policy.</p>
+</article>
+<article>
+<span>FILESYSTEM</span>
+<h3>Images plus writable layer</h3>
+<p>Read-only image layers are shared. Copy-on-write gives each running container a private writable layer; persistent data belongs in volumes.</p>
+</article>
+</div>
+<div class="formula-strip">
+<code>container = processes + namespaces + cgroups + filesystem view</code>
+<code>image ≠ running container</code>
+<code>shared kernel ≠ no isolation</code>
+</div>
+<div class="roadmap-list">
+<article>
+<b>1</b>
+<div>
+<h3>Build an immutable image</h3>
+<p>Pin dependencies, use a minimal trusted base and avoid embedding secrets.</p>
+</div>
+</article>
+<article>
+<b>2</b>
+<div>
+<h3>Create isolated process state</h3>
+<p>The runtime prepares namespaces, cgroups, mounts, capabilities and security policy.</p>
+</div>
+</article>
+<article>
+<b>3</b>
+<div>
+<h3>Start the declared process</h3>
+<p>The application becomes the container's PID 1 and must handle signals and child reaping correctly.</p>
+</div>
+</article>
+<article>
+<b>4</b>
+<div>
+<h3>Observe and replace</h3>
+<p>Logs, metrics and health checks reveal state; deployments replace failed or outdated instances.</p>
+</div>
+</article>
+</div>
+</section>
+<section class="lesson-section" id="lab">
+<header class="lesson-heading">
+<span>03 • ARCHITECTURE DECISION LAB</span>
+<h2>Choose the Boundary from Workload Requirements</h2>
+</header>
+<div class="advanced-lab">
+<div class="lab-controls">
+<label>WORKLOAD<select id="workload">
+<option value="legacy">Legacy app requiring another OS</option>
+<option value="microservice">Trusted stateless microservice</option>
+<option value="untrusted">Untrusted code execution</option>
+<option value="desktop">Complete desktop environment</option>
+</select>
+</label>
+<button id="compareIsolation">Recommend →</button>
+</div>
+<div class="lab-output">
+<div class="lab-summary" id="isolationOutput">
+<span>READY</span>
+<h3>Select a workload</h3>
+<p>The recommendation will balance boundary strength, compatibility, startup time and density.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="lesson-section" id="security">
+<header class="lesson-heading">
+<span>04 • SECURITY &amp; OPERATIONS</span>
+<h2>Isolation Is a Layered Claim, Not a Checkbox</h2>
+</header>
+<div class="security-grid">
+<article>
+<span>REDUCE PRIVILEGE</span>
+<h3>Drop root and capabilities</h3>
+<p>Run with the smallest identity and capability set, make filesystems read-only where practical and block privilege escalation.</p>
+</article>
+<article>
+<span>REDUCE REACH</span>
+<h3>Segment networks and secrets</h3>
+<p>Default-deny traffic, mount only necessary data and inject short-lived secrets rather than baking credentials into images.</p>
+</article>
+<article>
+<span>REDUCE EXPOSURE</span>
+<h3>Patch every layer</h3>
+<p>Scan dependencies and images, update host kernels/runtimes and verify image origin. A stale base layer remains vulnerable.</p>
+</article>
+</div>
+<table class="decision-table">
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Virtual machine</th>
+<th>Container</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kernel</td>
+<td>Separate guest kernel</td>
+<td>Shares host kernel</td>
+</tr>
+<tr>
+<td>Startup</td>
+<td>Usually seconds or longer</td>
+<td>Usually faster</td>
+</tr>
+<tr>
+<td>Density</td>
+<td>Lower due to guest OS overhead</td>
+<td>Higher for similar services</td>
+</tr>
+<tr>
+<td>OS compatibility</td>
+<td>Can run a different guest OS</td>
+<td>Must use compatible host kernel</td>
+</tr>
+<tr>
+<td>Security boundary</td>
+<td>Typically stronger kernel separation</td>
+<td>Requires careful kernel/runtime hardening</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="lesson-section" id="trace">
+<header class="lesson-heading">
+<span>05 • LIFECYCLE TRACE</span>
+<h2>Trace a Container from Image to Stopped Process</h2>
+</header>
+<div class="trace-runner">
+<div class="trace-controls">
+<button id="traceNext">Next step →</button>
+<button class="secondary" id="traceAuto">▶ Auto trace</button>
+<button class="secondary" id="traceReset">Reset</button>
+</div>
+<article class="trace-stage">
+<span>CONTAINER · <b id="traceCounter">
+</b>
+</span>
+<h3 id="traceTitle">
+</h3>
+<p id="traceText">
+</p>
+<div class="trace-progress" id="traceProgress">
+</div>
+</article>
+</div>
+</section>
+<section class="lesson-section" id="checks">
+<header class="lesson-heading">
+<span>06 • CHECK &amp; PREPARE</span>
+<h2>Ten Virtualization Questions</h2>
+</header>
+<div id="conceptChecks" class="concept-check-list">
+</div>
+<div id="conceptScore" class="check-score">Answered correctly: 0 of 10</div>
+<div class="question-bank-grid">
+<article>
+<span>UNIVERSITY</span>
+<ol>
+<li>Compare hypervisor types.</li>
+<li>Explain trap and emulate.</li>
+<li>Describe nested paging.</li>
+<li>Explain namespaces.</li>
+<li>Explain cgroups.</li>
+</ol>
+</article>
+<article>
+<span>INTERVIEW</span>
+<ol>
+<li>Container versus VM?</li>
+<li>Why is PID 1 special?</li>
+<li>Why are volumes needed?</li>
+<li>Can a container run any OS?</li>
+<li>How do you isolate untrusted code?</li>
+</ol>
+</article>
+<article>
+<span>PRACTICE</span>
+<ol>
+<li>Inspect namespaces.</li>
+<li>Set a memory limit.</li>
+<li>Build a minimal image.</li>
+<li>Handle termination signals.</li>
+<li>Document a threat model.</li>
+</ol>
+</article>
+</div>
+</section>
+<section class="lesson-section summary-section" id="summary">
+<div>
+<span class="os-label">LEVEL 14 SUMMARY</span>
+<h2>You Can Compare Isolation Architectures</h2>
+<ul>
+<li>Hypervisors multiplex hardware among complete guest operating systems.</li>
+<li>Containers isolate process groups while sharing the host kernel.</li>
+<li>Namespaces control views; cgroups account and limit consumption.</li>
+<li>Images are immutable templates; containers add runtime state.</li>
+<li>Real security combines boundaries, least privilege, patching and monitoring.</li>
+</ul>
+</div>
+<div class="completion-panel">
+<span>COURSE CHECKPOINT</span>
+<p>Mark complete after defending a VM/container choice from explicit requirements.</p>
+<button id="completeLessonButton">Mark Level 14 complete</button>
+<small>Saved in this browser.</small>
+</div>
+</section>
+<nav class="os-topic-navigation">
+<a href="level-13-linux-system-programming.html">← Level 13: Linux</a>
+<a href="level-15-projects-placement.html">Next: Projects &amp; Placement →</a>
+</nav>
+</main>
+</div>
+<footer class="footer">
+<div class="footer-bottom">
+<p>© 2026 CodeBhavya · Write · Run · Learn</p>
+</div>
+</footer>
+<script>window.OS_TRACE_STEPS=[{title:'Resolve image',text:'Runtime selects the immutable image manifest and verifies required layers.'},{title:'Prepare filesystem',text:'Read-only layers are mounted with a private writable copy-on-write layer.'},{title:'Create isolation',text:'Namespaces define the process view; cgroups establish accounting and limits.'},{title:'Apply security policy',text:'Runtime drops capabilities, configures identity and enables syscall/filesystem controls.'},{title:'Start PID 1',text:'The declared application begins inside its namespaces and must handle signals correctly.'},{title:'Serve and observe',text:'Network policy, health checks, logs and metrics govern the running workload.'},{title:'Stop and remove',text:'A termination signal allows cleanup; ephemeral writable state disappears when removed.'}];window.OS_CHECKS=[{q:'A Type 1 hypervisor runs:',options:['Directly on hardware','Only inside a browser','Inside every container','As a shell command'],answer:0,why:'It controls hardware without a general-purpose host OS beneath it.'},{q:'Each VM normally has:',options:['Only one process','Its own guest kernel','The host PID namespace only','No virtual memory'],answer:1,why:'A VM contains a complete guest OS environment.'},{q:'Namespaces primarily control:',options:['What processes can see','CPU instruction speed','Disk rotation','Source compilation'],answer:0,why:'They create isolated views of global kernel resources.'},{q:'Cgroups primarily control:',options:['Source syntax','Resource accounting and limits','IP naming only','Guest kernels'],answer:1,why:'They measure and constrain CPU, memory, I/O and related resources.'},{q:'Containers on one host usually:',options:['Share the host kernel','Run separate physical CPUs','Contain a hypervisor each','Ignore kernel security'],answer:0,why:'Process isolation is provided by one shared kernel.'},{q:'An image is:',options:['A running process','An immutable runtime template','A physical disk','A PID namespace'],answer:1,why:'A container instance adds writable runtime state to image layers.'},{q:'Persistent container data belongs in:',options:['Ephemeral layer only','A volume or external store','The CPU cache','PID 1'],answer:1,why:'Instance writable layers can disappear during replacement.'},{q:'For untrusted code, prefer:',options:['No limits','A stronger sandbox plus strict policy','Host root access','Shared credentials'],answer:1,why:'Defence in depth limits breakout and abuse impact.'},{q:'A VM exit occurs when:',options:['Guest needs hypervisor handling','A file is named','HTML loads','Every user instruction executes'],answer:0,why:'Sensitive events transfer control to the hypervisor.'},{q:'Good container hardening includes:',options:['Maximum privilege','Dropping capabilities','Embedding secrets','Disabling patches'],answer:1,why:'Least privilege reduces the damage from compromise.'}];</script>
+<script src="os-levels-09-15.js?v=1">
+</script>
+</body>
+</html>

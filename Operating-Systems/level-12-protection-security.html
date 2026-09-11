@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Learn protection domains, access control, authentication and operating-system security through an interactive policy evaluator.">
+<title>Protection &amp; Security — OS Level 12 | CodeBhavya</title>
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="os.css?v=2">
+<link rel="stylesheet" href="os-lesson.css?v=1">
+<link rel="stylesheet" href="os-levels-09-15.css?v=1">
+</head>
+<body class="os-page os-lesson-page" data-level="12">
+<header class="top-header">
+<a href="../index.html" class="logo codebhavya-new-logo">
+<img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo">
+<span class="brand-name">
+<span class="logo-code">Code</span>
+<span class="logo-bhavya">Bhavya</span>
+</span>
+</a>
+<nav class="top-nav">
+<a href="../index.html">Home</a>
+<a href="../C-Programming/index.html">C</a>
+<a href="../Data-Structures/index.html">Data Structures</a>
+<a href="../DBMS/index.html">DBMS</a>
+<a href="../Placement/index.html">Placement</a>
+</nav>
+</header>
+<div class="lesson-reading-progress">
+<span id="lessonReadingBar">
+</span>
+</div>
+<button class="os-sidebar-toggle" id="osSidebarToggle">☰ Level 12 Topics</button>
+<div class="os-sidebar-backdrop" id="osSidebarBackdrop" hidden>
+</div>
+<div class="os-layout">
+<aside class="os-sidebar" id="osSidebar">
+<div class="os-sidebar-title">Level 12 — Security</div>
+<a class="os-home-link" href="index.html">← OS Course Home</a>
+<div class="os-sidebar-group">In this lesson</div>
+<a class="active lesson-section-link" href="#overview">1. Outcomes</a>
+<a class="lesson-section-link" href="#principles">2. Principles</a>
+<a class="lesson-section-link" href="#models">3. Access models</a>
+<a class="lesson-section-link" href="#lab">4. Policy lab</a>
+<a class="lesson-section-link" href="#threats">5. Threats</a>
+<a class="lesson-section-link" href="#trace">6. Trace</a>
+<a class="lesson-section-link" href="#checks">7. Checks</a>
+<a class="lesson-section-link" href="#summary">8. Summary</a>
+<div class="lesson-sidebar-status">
+<span>LESSON CHECKPOINT</span>
+<strong id="lessonSidebarStatus">Not completed</strong>
+</div>
+</aside>
+<main class="os-main">
+<section class="lesson-hero" id="overview">
+<div>
+<div class="lesson-breadcrumb">
+<a href="index.html">Operating Systems</a>
+<span>›</span>
+<span>Level 12</span>
+</div>
+<span class="os-label">PART 4 • SYSTEMS &amp; CAREER</span>
+<h1>Permit the Required Action—and Nothing More</h1>
+<p>Separate authentication from authorization, model access rights, apply least privilege and trace how the kernel reference monitor protects system objects.</p>
+<div class="lesson-meta">
+<span>Level 12 of 15</span>
+<span>Intermediate</span>
+<span>100–125 minutes</span>
+<span>Policy decision lab</span>
+</div>
+</div>
+<div class="lesson-goal-card">
+<span>BY THE END, YOU CAN</span>
+<h2>Reason about protection</h2>
+<ul>
+<li>Apply CIA and least privilege.</li>
+<li>Compare ACLs and capabilities.</li>
+<li>Separate identity and permission.</li>
+<li>Explain common OS attack classes.</li>
+<li>Design layered controls and audits.</li>
+</ul>
+</div>
+</section>
+<nav class="lesson-jump-bar">
+<a href="#principles">Understand</a>
+<a href="#lab">Decide</a>
+<a href="#trace">Trace</a>
+<a href="#checks">Check</a>
+</nav>
+<section class="lesson-section" id="principles">
+<header class="lesson-heading">
+<span>01 • DEFINE THE SECURITY GOAL</span>
+<h2>Protection Controls Use; Security Resists Misuse</h2>
+</header>
+<div class="concept-grid">
+<article>
+<span>CONFIDENTIALITY</span>
+<h3>Prevent unauthorized disclosure</h3>
+<p>Permissions, isolation and encryption limit who can observe information.</p>
+</article>
+<article>
+<span>INTEGRITY</span>
+<h3>Prevent unauthorized change</h3>
+<p>Access control, signed code, audit logs and safe update paths protect correctness.</p>
+</article>
+<article>
+<span>AVAILABILITY</span>
+<h3>Keep service usable</h3>
+<p>Quotas, rate limits, redundancy and recovery reduce accidental and deliberate disruption.</p>
+</article>
+</div>
+<div class="formula-strip">
+<code>least privilege</code>
+<code>default deny</code>
+<code>complete mediation</code>
+<code>defense in depth</code>
+<code>separation of duty</code>
+</div>
+<p>A trusted reference monitor must mediate every access, resist tampering and remain small enough to analyze. User/kernel mode, page permissions and system calls provide the mechanism; policy decides which accesses should be granted.</p>
+</section>
+<section class="lesson-section" id="models">
+<header class="lesson-heading">
+<span>02 • REPRESENT WHO MAY DO WHAT</span>
+<h2>Access Matrix Rows Are Subjects; Columns Are Objects</h2>
+</header>
+<table class="decision-table">
+<thead>
+<tr>
+<th>Model</th>
+<th>Stored with</th>
+<th>Question answered</th>
+<th>Trade-off</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACL</td>
+<td>Object</td>
+<td>Who may access this object?</td>
+<td>Easy object review; delegation/revocation details matter</td>
+</tr>
+<tr>
+<td>Capability</td>
+<td>Subject/token</td>
+<td>What objects may this holder access?</td>
+<td>Natural delegation; protect unforgeability</td>
+</tr>
+<tr>
+<td>RBAC</td>
+<td>Role assignments</td>
+<td>What may this job role do?</td>
+<td>Scales administration; role explosion possible</td>
+</tr>
+<tr>
+<td>MAC</td>
+<td>Labels and central policy</td>
+<td>Does label flow permit access?</td>
+<td>Strong central control; less discretionary flexibility</td>
+</tr>
+</tbody>
+</table>
+<p>Authentication establishes an identity using evidence. Authorization evaluates that identity, requested operation, target object and context. Auditing records what occurred; it does not itself prevent the action.</p>
+</section>
+<section class="lesson-section" id="lab">
+<header class="lesson-heading">
+<span>03 • INTERACTIVE REFERENCE-MONITOR LAB</span>
+<h2>Evaluate Role, Resource and Action</h2>
+</header>
+<div class="advanced-lab">
+<div class="lab-controls">
+<label>ROLE<select id="accessRole">
+<option value="student">Student</option>
+<option value="faculty">Faculty</option>
+<option value="admin">Administrator</option>
+</select>
+</label>
+<label>RESOURCE<select id="accessResource">
+<option value="own">Own record</option>
+<option value="course">Course records</option>
+<option value="system">System configuration</option>
+</select>
+</label>
+<label>ACTION<select id="accessAction">
+<option value="read">Read</option>
+<option value="write">Write</option>
+<option value="delete">Delete</option>
+</select>
+</label>
+<button id="evaluateAccess">Evaluate →</button>
+</div>
+<div class="lab-output">
+<article class="lab-summary" id="accessOutput">
+<span>READY</span>
+<h3>Default deny</h3>
+<p>Select an access request to see the explicit policy decision.</p>
+</article>
+</div>
+</div>
+<aside class="risk-note">
+<strong>Teaching policy only:</strong> production authorization must be server-side, tested against requirements and resistant to client tampering.</aside>
+</section>
+<section class="lesson-section" id="threats">
+<header class="lesson-heading">
+<span>04 • REDUCE ATTACK SURFACE</span>
+<h2>Different Threats Require Different Controls</h2>
+</header>
+<div class="security-grid">
+<article>
+<span>MEMORY CORRUPTION</span>
+<h3>Overflow/use-after-free</h3>
+<p>Safer languages, bounds checks, ASLR, NX/DEP and control-flow defenses reduce exploitation.</p>
+</article>
+<article>
+<span>PRIVILEGE ESCALATION</span>
+<h3>Gain forbidden authority</h3>
+<p>Patch vulnerable code, minimize privileged services, separate accounts and audit elevation.</p>
+</article>
+<article>
+<span>MALWARE</span>
+<h3>Abuse legitimate execution</h3>
+<p>Signed updates, allow-listing, sandboxing, least privilege and behavioral detection provide layers.</p>
+</article>
+<article>
+<span>TOCTOU</span>
+<h3>Check/use race</h3>
+<p>Use atomic APIs and object handles; a pathname may resolve differently after a separate check.</p>
+</article>
+<article>
+<span>SIDE CHANNEL</span>
+<h3>Infer through shared effects</h3>
+<p>Timing, caches and speculative behavior can leak across boundaries not visible in access checks.</p>
+</article>
+<article>
+<span>DENIAL OF SERVICE</span>
+<h3>Exhaust finite resources</h3>
+<p>Quotas, backpressure, rate limits and isolation protect availability.</p>
+</article>
+</div>
+</section>
+<section class="lesson-section" id="trace">
+<header class="lesson-heading">
+<span>05 • PROGRAM TRACING</span>
+<h2>Trace One Protected File Read</h2>
+</header>
+<div class="trace-runner">
+<div class="trace-controls">
+<button id="traceNext">Next step →</button>
+<button class="secondary" id="traceAuto">▶ Auto trace</button>
+<button class="secondary" id="traceReset">Reset</button>
+</div>
+<article class="trace-stage">
+<span>ACCESS PATH · <b id="traceCounter">
+</b>
+</span>
+<h3 id="traceTitle">
+</h3>
+<p id="traceText">
+</p>
+<div class="trace-progress" id="traceProgress">
+</div>
+</article>
+</div>
+</section>
+<section class="lesson-section" id="checks">
+<header class="lesson-heading">
+<span>06 • CHECK YOUR UNDERSTANDING</span>
+<h2>Ten Security Checks</h2>
+</header>
+<div id="conceptChecks" class="concept-check-list">
+</div>
+<div id="conceptScore" class="check-score">Answered correctly: 0 of 10</div>
+</section>
+<section class="lesson-section" id="exam-prep">
+<header class="lesson-heading">
+<span>07 • EXAM &amp; INTERVIEW</span>
+<h2>Explain Threat, Mechanism and Residual Risk</h2>
+</header>
+<div class="question-bank-grid">
+<article>
+<span>2-MARK</span>
+<ol>
+<li>Protection versus security?</li>
+<li>Define least privilege.</li>
+<li>ACL versus capability?</li>
+<li>Authentication versus authorization?</li>
+<li>What is complete mediation?</li>
+</ol>
+</article>
+<article>
+<span>5-MARK</span>
+<ol>
+<li>Explain access matrix.</li>
+<li>Compare security models.</li>
+<li>Explain defense in depth.</li>
+<li>Analyze TOCTOU.</li>
+<li>Describe malware controls.</li>
+</ol>
+</article>
+<article>
+<span>INTERVIEW</span>
+<ol>
+<li>Why default deny?</li>
+<li>Why hash passwords?</li>
+<li>What does ASLR do?</li>
+<li>Why are logs protected?</li>
+<li>Can containers be a security boundary?</li>
+</ol>
+</article>
+</div>
+</section>
+<section class="lesson-section summary-section" id="summary">
+<div>
+<span class="os-label">LEVEL 12 SUMMARY</span>
+<h2>You Can Explain Why an Access Is Allowed or Denied</h2>
+<ul>
+<li>Security preserves confidentiality, integrity and availability.</li>
+<li>Authentication and authorization solve different problems.</li>
+<li>ACLs, capabilities, roles and labels encode policy differently.</li>
+<li>Least privilege limits blast radius.</li>
+<li>Layered controls reduce but do not eliminate risk.</li>
+</ul>
+</div>
+<div class="completion-panel">
+<span>COURSE CHECKPOINT</span>
+<p>Mark complete after you can justify one policy decision.</p>
+<button id="completeLessonButton">Mark Level 12 complete</button>
+<small>Saved only in this browser.</small>
+</div>
+</section>
+<nav class="os-topic-navigation">
+<a href="level-11-io-disk-scheduling.html">← Level 11: I/O</a>
+<a href="level-13-linux-system-programming.html">Next: Linux &amp; System Programming →</a>
+</nav>
+</main>
+</div>
+<footer class="footer">
+<div class="footer-bottom">
+<p>© 2026 CodeBhavya · From Learning to Limitless Possibilities.</p>
+</div>
+</footer>
+<script>window.OS_TRACE_STEPS=[{title:'Process requests read',text:'The system call crosses from user mode with a descriptor and buffer.'},{title:'Resolve subject and object',text:'Kernel identifies process credentials and the file object referenced by the descriptor.'},{title:'Evaluate policy',text:'Mode bits, ACLs, labels and contextual rules are checked; default is deny.'},{title:'Enforce decision',text:'Denied access returns an error. Allowed access continues with bounded requested authority.'},{title:'Read protected data',text:'Page/cache and device mechanisms obtain bytes without exposing unrelated objects.'},{title:'Audit important event',text:'Security-relevant outcome is recorded with protected timestamp and identity.'}];window.OS_CHECKS=[{q:'Authentication proves:',options:['Identity','Permission','Availability','File size'],answer:0,why:'Authorization decides permission after identity.'},{q:'Least privilege grants:',options:['All rights','Minimum required rights','No audit','Permanent admin'],answer:1,why:'Limit authority to task and time.'},{q:'ACL is attached mainly to:',options:['Object','CPU core','Page offset','Quantum'],answer:0,why:'It lists who may access that object.'},{q:'Capability answers:',options:['What holder may access','Current burst','Disk head','Page victim'],answer:0,why:'The protected token conveys object authority.'},{q:'Default deny means:',options:['Allow unless blocked','Deny unless granted','Never authenticate','Delete logs'],answer:1,why:'Missing rules cannot silently allow.'},{q:'TOCTOU is a:',options:['Check/use race','RAID level','Scheduler','Page table'],answer:0,why:'State changes between separate validation and use.'},{q:'ASLR randomizes:',options:['Memory layout','Passwords directly','Disk queue','File content'],answer:0,why:'It makes useful addresses less predictable.'},{q:'Audit logs mainly provide:',options:['Accountability','Automatic prevention','CPU speed','Encryption key'],answer:0,why:'They preserve evidence for review.'},{q:'CIA availability means:',options:['Service remains usable','Data is secret only','No updates','Every user admin'],answer:0,why:'Resilience and resource controls support access.'},{q:'Defense in depth uses:',options:['Multiple independent controls','One password only','No patches','Public root access'],answer:0,why:'Layers reduce single-control failure.'}];</script>
+<script src="os-levels-09-15.js?v=1">
+</script>
+</body>
+</html>

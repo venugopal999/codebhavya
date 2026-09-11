@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Learn device I/O, interrupts, DMA, disk scheduling and RAID with an interactive head simulator.">
+<title>I/O &amp; Disk Scheduling — OS Level 11 | CodeBhavya</title>
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="os.css?v=2">
+<link rel="stylesheet" href="os-lesson.css?v=1">
+<link rel="stylesheet" href="os-levels-09-15.css?v=1">
+</head>
+<body class="os-page os-lesson-page" data-level="11">
+<header class="top-header">
+<a href="../index.html" class="logo codebhavya-new-logo">
+<img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo">
+<span class="brand-name">
+<span class="logo-code">Code</span>
+<span class="logo-bhavya">Bhavya</span>
+</span>
+</a>
+<nav class="top-nav">
+<a href="../index.html">Home</a>
+<a href="../C-Programming/index.html">C</a>
+<a href="../Data-Structures/index.html">Data Structures</a>
+<a href="../DBMS/index.html">DBMS</a>
+<a href="../Placement/index.html">Placement</a>
+</nav>
+</header>
+<div class="lesson-reading-progress">
+<span id="lessonReadingBar">
+</span>
+</div>
+<button class="os-sidebar-toggle" id="osSidebarToggle">☰ Level 11 Topics</button>
+<div class="os-sidebar-backdrop" id="osSidebarBackdrop" hidden>
+</div>
+<div class="os-layout">
+<aside class="os-sidebar" id="osSidebar">
+<div class="os-sidebar-title">Level 11 — I/O &amp; Disk</div>
+<a class="os-home-link" href="index.html">← OS Course Home</a>
+<div class="os-sidebar-group">In this lesson</div>
+<a class="active lesson-section-link" href="#overview">1. Outcomes</a>
+<a class="lesson-section-link" href="#stack">2. I/O stack</a>
+<a class="lesson-section-link" href="#transfer">3. Interrupts &amp; DMA</a>
+<a class="lesson-section-link" href="#disk">4. Disk lab</a>
+<a class="lesson-section-link" href="#raid">5. RAID</a>
+<a class="lesson-section-link" href="#trace">6. Trace</a>
+<a class="lesson-section-link" href="#checks">7. Checks</a>
+<a class="lesson-section-link" href="#exam-prep">8. Prepare</a>
+<a class="lesson-section-link" href="#summary">9. Summary</a>
+<div class="lesson-sidebar-status">
+<span>LESSON CHECKPOINT</span>
+<strong id="lessonSidebarStatus">Not completed</strong>
+</div>
+</aside>
+<main class="os-main">
+<section class="lesson-hero" id="overview">
+<div>
+<div class="lesson-breadcrumb">
+<a href="index.html">Operating Systems</a>
+<span>›</span>
+<span>Level 11</span>
+</div>
+<span class="os-label">PART 3 • MEMORY &amp; STORAGE</span>
+<h1>Coordinate Devices without Making the CPU Wait</h1>
+<p>Follow an application request through drivers and controllers, compare programmed, interrupt-driven and DMA transfer, then schedule storage requests explicitly.</p>
+<div class="lesson-meta">
+<span>Level 11 of 15</span>
+<span>Intermediate</span>
+<span>110–140 minutes</span>
+<span>Disk scheduling lab</span>
+</div>
+</div>
+<div class="lesson-goal-card">
+<span>BY THE END, YOU CAN</span>
+<h2>Reason about data movement</h2>
+<ul>
+<li>Explain the I/O software stack.</li>
+<li>Compare polling, interrupts and DMA.</li>
+<li>Trace buffering and caching.</li>
+<li>Run FCFS, SSTF, SCAN and C-SCAN.</li>
+<li>Compare foundational RAID levels.</li>
+</ul>
+</div>
+</section>
+<nav class="lesson-jump-bar">
+<a href="#stack">Understand</a>
+<a href="#disk">Schedule</a>
+<a href="#trace">Trace</a>
+<a href="#checks">Check</a>
+<a href="#exam-prep">Prepare</a>
+</nav>
+<section class="lesson-section" id="stack">
+<header class="lesson-heading">
+<span>01 • CROSS THE DEVICE BOUNDARY</span>
+<h2>Drivers Convert Generic Requests into Device Commands</h2>
+</header>
+<div class="roadmap-list">
+<article>
+<b>1</b>
+<div>
+<h3>Application/API</h3>
+<p>A process calls read, write or an asynchronous interface without knowing controller registers.</p>
+</div>
+</article>
+<article>
+<b>2</b>
+<div>
+<h3>Device-independent I/O</h3>
+<p>The kernel checks permissions, names devices, buffers data and applies common error handling.</p>
+</div>
+</article>
+<article>
+<b>3</b>
+<div>
+<h3>Driver</h3>
+<p>Device-specific software builds commands, manages queues and interprets completion status.</p>
+</div>
+</article>
+<article>
+<b>4</b>
+<div>
+<h3>Controller and device</h3>
+<p>Hardware moves bits and reports completion or error through status registers and interrupts.</p>
+</div>
+</article>
+</div>
+<p>Spooling queues complete jobs for a serially shared device such as a printer. Buffering absorbs speed mismatch during transfer. Caching retains reusable data to avoid repeated slow access. The concepts overlap but answer different problems.</p>
+</section>
+<section class="lesson-section" id="transfer">
+<header class="lesson-heading">
+<span>02 • CHOOSE HOW THE CPU PARTICIPATES</span>
+<h2>Polling, Interrupts and DMA Trade Simplicity for Parallelism</h2>
+</header>
+<div class="concept-grid">
+<article>
+<span>PROGRAMMED I/O</span>
+<h3>CPU polls and copies</h3>
+<p>Simple but repeated status checks waste CPU time when devices are slow.</p>
+</article>
+<article>
+<span>INTERRUPT-DRIVEN</span>
+<h3>Device announces readiness</h3>
+<p>The CPU does other work, then saves state and runs a handler on completion.</p>
+</article>
+<article>
+<span>DMA</span>
+<h3>Controller transfers blocks</h3>
+<p>The CPU programs source, destination and length; DMA moves bulk data and interrupts after completion.</p>
+</article>
+</div>
+<aside class="risk-note">
+<strong>DMA is not “no CPU”:</strong> the CPU still sets up the operation, handles completion and maintains memory/cache correctness.</aside>
+</section>
+<section class="lesson-section" id="disk">
+<header class="lesson-heading">
+<span>03 • INTERACTIVE DISK-SCHEDULING LAB</span>
+<h2>Measure Head Movement on One Request Queue</h2>
+<p>For teaching, seek cost is approximated by absolute cylinder movement. SSDs do not have a mechanical head, so these classical policies mainly explain HDD scheduling foundations.</p>
+</header>
+<div class="advanced-lab">
+<div class="lab-controls">
+<label>REQUEST QUEUE<input id="diskQueue" value="98,183,37,122,14,124,65,67">
+</label>
+<label>START HEAD<input id="diskHead" type="number" value="53">
+</label>
+<label>MAX CYLINDER<input id="diskMax" type="number" value="199">
+</label>
+<label>ALGORITHM<select id="diskAlgorithm">
+<option value="fcfs">FCFS</option>
+<option value="sstf">SSTF</option>
+<option value="scan">SCAN upward</option>
+<option value="cscan">C-SCAN upward</option>
+</select>
+</label>
+<button id="runDiskLab" type="button">Schedule →</button>
+</div>
+<div class="lab-output" id="diskLabOutput">
+<div class="lab-summary">
+<span>READY</span>
+<h3>Run one policy</h3>
+<p>The service path and total movement will appear here.</p>
+</div>
+</div>
+</div>
+<table class="decision-table">
+<thead>
+<tr>
+<th>Policy</th>
+<th>Rule</th>
+<th>Benefit</th>
+<th>Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FCFS</td>
+<td>Arrival order</td>
+<td>Fair and simple</td>
+<td>Large movement</td>
+</tr>
+<tr>
+<td>SSTF</td>
+<td>Nearest request</td>
+<td>Lower local seek</td>
+<td>Far requests may starve</td>
+</tr>
+<tr>
+<td>SCAN</td>
+<td>Sweep then reverse</td>
+<td>Bounded directional service</td>
+<td>Middle can wait less than edges</td>
+</tr>
+<tr>
+<td>C-SCAN</td>
+<td>Serve one direction</td>
+<td>More uniform waiting</td>
+<td>Return movement overhead</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="lesson-section" id="raid">
+<header class="lesson-heading">
+<span>04 • COMBINE DISKS FOR PERFORMANCE OR REDUNDANCY</span>
+<h2>RAID Level Numbers Describe Different Layouts</h2>
+</header>
+<div class="compare-grid">
+<article>
+<span>RAID 0</span>
+<h3>Striping</h3>
+<p>High parallel throughput and full capacity, but one disk failure loses the array. It is not redundancy.</p>
+</article>
+<article>
+<span>RAID 1</span>
+<h3>Mirroring</h3>
+<p>Duplicate copies improve read options and tolerate a mirror member failure at roughly half raw capacity.</p>
+</article>
+<article>
+<span>RAID 5/6</span>
+<h3>Distributed parity</h3>
+<p>Capacity-efficient failure tolerance, but small writes need parity work and rebuild risk must be managed.</p>
+</article>
+</div>
+<p>RAID is not a backup: it does not protect against accidental deletion, corruption replicated across members, theft or site loss. Backups need separate versions and tested restoration.</p>
+</section>
+<section class="lesson-section" id="trace">
+<header class="lesson-heading">
+<span>05 • PROGRAM TRACING</span>
+<h2>Trace One DMA Read</h2>
+</header>
+<div class="trace-runner">
+<div class="trace-controls">
+<button id="traceNext">Next step →</button>
+<button class="secondary" id="traceAuto">▶ Auto trace</button>
+<button class="secondary" id="traceReset">Reset</button>
+</div>
+<article class="trace-stage">
+<span>DMA PATH · <b id="traceCounter">
+</b>
+</span>
+<h3 id="traceTitle">
+</h3>
+<p id="traceText">
+</p>
+<div class="trace-progress" id="traceProgress">
+</div>
+</article>
+</div>
+</section>
+<section class="lesson-section" id="checks">
+<header class="lesson-heading">
+<span>06 • CHECK YOUR UNDERSTANDING</span>
+<h2>Ten Concept Checks</h2>
+</header>
+<div class="concept-check-list" id="conceptChecks">
+</div>
+<div class="check-score" id="conceptScore">Answered correctly: 0 of 10</div>
+</section>
+<section class="lesson-section" id="exam-prep">
+<header class="lesson-heading">
+<span>07 • EXAM &amp; INTERVIEW PREPARATION</span>
+<h2>Explain Both Software and Hardware Roles</h2>
+</header>
+<div class="question-bank-grid">
+<article>
+<span>2-MARK</span>
+<ol>
+<li>What is a driver?</li>
+<li>Define DMA.</li>
+<li>Buffer versus cache?</li>
+<li>What is spooling?</li>
+<li>RAID 0 versus 1?</li>
+</ol>
+</article>
+<article>
+<span>5-MARK</span>
+<ol>
+<li>Trace an I/O request.</li>
+<li>Compare transfer modes.</li>
+<li>Run SSTF and SCAN.</li>
+<li>Compare RAID levels.</li>
+<li>Explain interrupt handling.</li>
+</ol>
+</article>
+<article>
+<span>INTERVIEW</span>
+<ol>
+<li>Why are interrupts expensive?</li>
+<li>Can SSTF starve?</li>
+<li>Why is RAID not backup?</li>
+<li>What changes for SSDs?</li>
+<li>What is memory-mapped I/O?</li>
+</ol>
+</article>
+</div>
+</section>
+<section class="lesson-section summary-section" id="summary">
+<div>
+<span class="os-label">LEVEL 11 SUMMARY</span>
+<h2>You Can Trace a Request from Process to Device</h2>
+<ul>
+<li>Drivers translate generic operations into controller commands.</li>
+<li>Interrupts avoid continuous polling.</li>
+<li>DMA moves bulk data with limited CPU involvement.</li>
+<li>Disk scheduling trades seek cost, fairness and starvation.</li>
+<li>RAID improves selected availability/performance goals but is not backup.</li>
+</ul>
+</div>
+<div class="completion-panel">
+<span>COURSE CHECKPOINT</span>
+<p>Mark complete after calculating one full disk schedule.</p>
+<button id="completeLessonButton">Mark Level 11 complete</button>
+<small>Saved only in this browser.</small>
+</div>
+</section>
+<nav class="os-topic-navigation">
+<a href="level-10-file-systems.html">← Level 10: File Systems</a>
+<a href="level-12-protection-security.html">Next: Protection &amp; Security →</a>
+</nav>
+</main>
+</div>
+<footer class="footer">
+<div class="footer-container">
+<div class="footer-brand-section">
+<div class="footer-brand">
+<span class="footer-code">Code</span>
+<span class="footer-bhavya">Bhavya</span>
+</div>
+<p class="footer-tagline">From Learning to Limitless Possibilities.</p>
+</div>
+<div class="footer-column">
+<h3>OS Course</h3>
+<a href="index.html">Course Home</a>
+</div>
+<div class="footer-column">
+<h3>Practise</h3>
+<a href="#disk">Disk lab</a>
+</div>
+<div class="footer-column">
+<h3>Continue</h3>
+<a href="level-12-protection-security.html">Security</a>
+</div>
+</div>
+</footer>
+<script>window.OS_TRACE_STEPS=[{title:'Application calls read',text:'The system call validates the descriptor, buffer and requested byte count.'},{title:'Kernel/driver prepares request',text:'The block layer queues work and the driver programs device-specific commands.'},{title:'Pin/map memory',text:'The transfer buffer must remain valid; an IOMMU may constrain device-visible addresses.'},{title:'Program DMA controller',text:'CPU supplies memory address, device direction and transfer length.'},{title:'DMA moves data',text:'The controller transfers between device and memory while the CPU runs other work.'},{title:'Device interrupts',text:'Completion status causes an interrupt; the handler acknowledges hardware.'},{title:'Wake process',text:'Kernel records result, makes the waiting process ready and eventually returns from read.'}];window.OS_CHECKS=[{q:'Device-specific logic belongs mainly in:',options:['Driver','User document','Scheduler quantum','Page offset'],answer:0,why:'The driver understands controller commands.'},{q:'Polling repeatedly reads:',options:['Device status','File name only','PCB priority','Virtual page'],answer:0,why:'The CPU waits by checking readiness.'},{q:'DMA is best suited to:',options:['Bulk transfer','Choosing passwords','Deadlock prevention','Path lookup'],answer:0,why:'DMA offloads repeated data movement.'},{q:'An interrupt is generally:',options:['Asynchronous to current instruction','Always a system call','A disk block','A filename'],answer:0,why:'External device timing triggers it.'},{q:'SSTF selects:',options:['Nearest request','First arrived only','Largest cylinder','Random request'],answer:0,why:'Shortest seek distance drives selection.'},{q:'SCAN behaves like:',options:['Elevator sweep','FIFO queue only','Stack','Hash table'],answer:0,why:'The head serves in one direction then reverses.'},{q:'C-SCAN aims for:',options:['More uniform waiting','No movement','Only one request','No maximum cylinder'],answer:0,why:'Service proceeds in one direction with wrap.'},{q:'RAID 0 provides:',options:['Striping without redundancy','Mirroring','Double parity','Backup versions'],answer:0,why:'One member failure loses striped data.'},{q:'A buffer primarily handles:',options:['Transfer speed mismatch','Permanent names','CPU starvation','Access identity'],answer:0,why:'It stages data between components.'},{q:'RAID replaces backup:',options:['True','False','Only on SSD','Only with DMA'],answer:1,why:'Logical deletion/corruption can affect the array.'}];</script>
+<script src="os-levels-09-15.js?v=1">
+</script>
+</body>
+</html>

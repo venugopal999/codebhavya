@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Learn files, directories, inodes, allocation, free space and crash consistency.">
+<title>File Systems — OS Level 10 | CodeBhavya</title>
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="os.css?v=2">
+<link rel="stylesheet" href="os-lesson.css?v=1">
+<link rel="stylesheet" href="os-levels-09-15.css?v=1">
+</head>
+<body class="os-page os-lesson-page" data-level="10">
+<header class="top-header">
+<a href="../index.html" class="logo codebhavya-new-logo">
+<img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo">
+<span class="brand-name">
+<span class="logo-code">Code</span>
+<span class="logo-bhavya">Bhavya</span>
+</span>
+</a>
+<nav class="top-nav">
+<a href="../index.html">Home</a>
+<a href="../C-Programming/index.html">C</a>
+<a href="../Data-Structures/index.html">Data Structures</a>
+<a href="../DBMS/index.html">DBMS</a>
+<a href="../Placement/index.html">Placement</a>
+</nav>
+</header>
+<div class="lesson-reading-progress">
+<span id="lessonReadingBar">
+</span>
+</div>
+<button class="os-sidebar-toggle" id="osSidebarToggle" type="button" aria-controls="osSidebar" aria-expanded="false">☰ Level 10 Topics</button>
+<div class="os-sidebar-backdrop" id="osSidebarBackdrop" hidden>
+</div>
+<div class="os-layout">
+<aside class="os-sidebar" id="osSidebar">
+<div class="os-sidebar-title">Level 10 — File Systems</div>
+<a class="os-home-link" href="index.html">← OS Course Home</a>
+<div class="os-sidebar-group">In this lesson</div>
+<a class="active lesson-section-link" href="#overview">1. Outcomes</a>
+<a class="lesson-section-link" href="#abstraction">2. File abstraction</a>
+<a class="lesson-section-link" href="#directories">3. Directories &amp; inodes</a>
+<a class="lesson-section-link" href="#allocation">4. Allocation lab</a>
+<a class="lesson-section-link" href="#reliability">5. Reliability</a>
+<a class="lesson-section-link" href="#trace">6. Trace</a>
+<a class="lesson-section-link" href="#checks">7. Checks</a>
+<a class="lesson-section-link" href="#exam-prep">8. Prepare</a>
+<a class="lesson-section-link" href="#summary">9. Summary</a>
+<div class="lesson-sidebar-status">
+<span>LESSON CHECKPOINT</span>
+<strong id="lessonSidebarStatus">Not completed</strong>
+</div>
+</aside>
+<main class="os-main">
+<section class="lesson-hero" id="overview">
+<div>
+<div class="lesson-breadcrumb">
+<a href="index.html">Operating Systems</a>
+<span>›</span>
+<span>Level 10</span>
+</div>
+<span class="os-label">PART 3 • MEMORY &amp; STORAGE</span>
+<h1>Turn Persistent Blocks into Named, Protected Files</h1>
+<p>Trace pathname lookup, separate names from metadata, compare block allocation and explain how journaling limits damage after a crash.</p>
+<div class="lesson-meta">
+<span>Level 10 of 15</span>
+<span>Intermediate</span>
+<span>100–130 minutes</span>
+<span>Allocation lab</span>
+</div>
+</div>
+<div class="lesson-goal-card">
+<span>BY THE END, YOU CAN</span>
+<h2>Reason from name to block</h2>
+<ul>
+<li>Explain file metadata and operations.</li>
+<li>Trace directories and inodes.</li>
+<li>Compare allocation methods.</li>
+<li>Manage free space.</li>
+<li>Explain consistency and journaling.</li>
+</ul>
+</div>
+</section>
+<nav class="lesson-jump-bar">
+<a href="#abstraction">Understand</a>
+<a href="#allocation">Allocate</a>
+<a href="#trace">Trace</a>
+<a href="#checks">Check</a>
+<a href="#exam-prep">Prepare</a>
+</nav>
+<section class="lesson-section" id="abstraction">
+<header class="lesson-heading">
+<span>01 • DEFINE THE PERSISTENT OBJECT</span>
+<h2>A File Combines Data, Metadata and an Interface</h2>
+</header>
+<div class="concept-grid">
+<article>
+<span>DATA</span>
+<h3>Byte content</h3>
+<p>The file-system API commonly presents a sequence of bytes even when applications interpret records, images or source code.</p>
+</article>
+<article>
+<span>METADATA</span>
+<h3>Facts about content</h3>
+<p>Size, owner, permissions, timestamps, type and block pointers support protection and lookup.</p>
+</article>
+<article>
+<span>OPEN FILE STATE</span>
+<h3>Per-use context</h3>
+<p>A descriptor references a kernel open-file entry containing mode, current offset and object identity.</p>
+</article>
+</div>
+<div class="formula-strip">
+<code>read(fd, buffer, count)</code>
+<code>write(fd, buffer, count)</code>
+<code>seek changes current offset</code>
+<code>close releases descriptor</code>
+</div>
+<p>A filename is not usually stored inside the inode. A directory maps a name to an object number; multiple hard links may map different names to the same inode. A symbolic link stores a pathname and can cross file systems.</p>
+</section>
+<section class="lesson-section" id="directories">
+<header class="lesson-heading">
+<span>02 • RESOLVE A PATH COMPONENT BY COMPONENT</span>
+<h2>Directories Form a Searchable Namespace</h2>
+</header>
+<div class="roadmap-list">
+<article>
+<b>1</b>
+<div>
+<h3>Choose start</h3>
+<p>An absolute path begins at root; a relative path begins at the process’s current directory.</p>
+</div>
+</article>
+<article>
+<b>2</b>
+<div>
+<h3>Check execute/search permission</h3>
+<p>Permission is checked while traversing each directory, not only on the final file.</p>
+</div>
+</article>
+<article>
+<b>3</b>
+<div>
+<h3>Map name to inode</h3>
+<p>Directory entries provide the next object identifier; caches may accelerate lookup.</p>
+</div>
+</article>
+<article>
+<b>4</b>
+<div>
+<h3>Open and return descriptor</h3>
+<p>The kernel validates requested access and installs a descriptor in the process table.</p>
+</div>
+</article>
+</div>
+<table class="decision-table">
+<thead>
+<tr>
+<th>Allocation</th>
+<th>Sequential access</th>
+<th>Random access</th>
+<th>Growth/fragmentation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contiguous</td>
+<td>Excellent</td>
+<td>Direct</td>
+<td>External fragmentation; hard growth</td>
+</tr>
+<tr>
+<td>Linked</td>
+<td>Good</td>
+<td>Slow traversal</td>
+<td>Easy growth; pointer overhead</td>
+</tr>
+<tr>
+<td>Indexed</td>
+<td>Good</td>
+<td>Direct via index</td>
+<td>Index overhead; scalable variants</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="lesson-section" id="allocation">
+<header class="lesson-heading">
+<span>03 • INTERACTIVE BLOCK-ALLOCATION LAB</span>
+<h2>Place One File using Three Strategies</h2>
+</header>
+<div class="advanced-lab">
+<div class="lab-controls">
+<label>TOTAL BLOCKS<input id="blockCount" type="number" min="4" max="30" value="14">
+</label>
+<label>FILE DATA BLOCKS<input id="fileBlocks" type="number" min="1" max="20" value="4">
+</label>
+<label>METHOD<select id="allocationMode">
+<option value="contiguous">Contiguous</option>
+<option value="linked">Linked</option>
+<option value="indexed">Indexed</option>
+</select>
+</label>
+<button id="runFileLab" type="button">Allocate file →</button>
+</div>
+<div class="lab-output" id="fileLabOutput">
+<div class="lab-summary">
+<span>READY</span>
+<h3>Select a method</h3>
+<p>The block map and method trade-off will appear here.</p>
+</div>
+</div>
+</div>
+<h3>Free-space structures</h3>
+<div class="compare-grid">
+<article>
+<span>BITMAP</span>
+<h3>One bit per block</h3>
+<p>Fast to locate runs with word operations; bitmap itself consumes predictable space.</p>
+</article>
+<article>
+<span>FREE LIST</span>
+<h3>Chain free blocks</h3>
+<p>Simple allocation but finding a large contiguous run may require traversal.</p>
+</article>
+<article>
+<span>GROUPING/COUNTING</span>
+<h3>Compress free ranges</h3>
+<p>Store groups or starting block plus run length when free blocks cluster.</p>
+</article>
+</div>
+</section>
+<section class="lesson-section" id="reliability">
+<header class="lesson-heading">
+<span>04 • SURVIVE INTERRUPTED UPDATES</span>
+<h2>Crash Consistency Is about Legal On-Disk States</h2>
+</header>
+<p>Creating a file may update a directory entry, inode allocation bitmap, inode and data blocks. A crash between writes can leak blocks or expose incomplete metadata. Write ordering, journaling, copy-on-write trees and recovery checks address different parts of this problem.</p>
+<div class="compare-grid">
+<article>
+<span>JOURNAL</span>
+<h3>Log intent/metadata</h3>
+<p>Record a transaction before applying home-location updates; replay committed work after a crash.</p>
+</article>
+<article>
+<span>FSCK</span>
+<h3>Scan and repair</h3>
+<p>Reconstruct consistency from on-disk structures, often slower on large file systems.</p>
+</article>
+<article>
+<span>COPY-ON-WRITE</span>
+<h3>Publish new roots</h3>
+<p>Write changed blocks elsewhere, then atomically switch metadata to the new version.</p>
+</article>
+</div>
+<aside class="risk-note">
+<strong>Durability is not automatic:</strong> a successful <code>write()</code> may only reach cache. Applications requiring durable ordering use APIs such as <code>fsync()</code> and must understand rename semantics.</aside>
+</section>
+<section class="lesson-section" id="trace">
+<header class="lesson-heading">
+<span>05 • PROGRAM TRACING</span>
+<h2>Trace <code>open("/home/venu/notes.txt")</code>
+</h2>
+</header>
+<div class="trace-runner">
+<div class="trace-controls">
+<button id="traceNext">Next step →</button>
+<button class="secondary" id="traceAuto">▶ Auto trace</button>
+<button class="secondary" id="traceReset">Reset</button>
+</div>
+<article class="trace-stage">
+<span>PATH LOOKUP · <b id="traceCounter">
+</b>
+</span>
+<h3 id="traceTitle">
+</h3>
+<p id="traceText">
+</p>
+<div class="trace-progress" id="traceProgress">
+</div>
+</article>
+</div>
+</section>
+<section class="lesson-section" id="checks">
+<header class="lesson-heading">
+<span>06 • CHECK YOUR UNDERSTANDING</span>
+<h2>Ten Concept Checks</h2>
+</header>
+<div class="concept-check-list" id="conceptChecks">
+</div>
+<div class="check-score" id="conceptScore">Answered correctly: 0 of 10</div>
+</section>
+<section class="lesson-section" id="exam-prep">
+<header class="lesson-heading">
+<span>07 • EXAM &amp; INTERVIEW PREPARATION</span>
+<h2>Connect Names, Metadata and Blocks</h2>
+</header>
+<div class="question-bank-grid">
+<article>
+<span>2-MARK</span>
+<ol>
+<li>File versus inode?</li>
+<li>Hard versus symbolic link?</li>
+<li>What is a descriptor?</li>
+<li>Define mounting.</li>
+<li>What is journaling?</li>
+</ol>
+</article>
+<article>
+<span>5-MARK</span>
+<ol>
+<li>Trace pathname resolution.</li>
+<li>Compare allocation methods.</li>
+<li>Explain free-space management.</li>
+<li>Explain crash consistency.</li>
+<li>Describe directory structures.</li>
+</ol>
+</article>
+<article>
+<span>INTERVIEW</span>
+<ol>
+<li>Why can deleted files remain open?</li>
+<li>What does fsync promise?</li>
+<li>Why are sparse files useful?</li>
+<li>How does rename help atomic replace?</li>
+<li>What costs random linked access?</li>
+</ol>
+</article>
+</div>
+</section>
+<section class="lesson-section summary-section" id="summary">
+<div>
+<span class="os-label">LEVEL 10 SUMMARY</span>
+<h2>You Can Trace a Name to Persistent Blocks</h2>
+<ul>
+<li>Directories map names; inodes hold metadata and block mapping.</li>
+<li>Descriptors represent per-process access to open objects.</li>
+<li>Allocation trades locality, direct access, growth and metadata.</li>
+<li>Free-space structures make reusable blocks discoverable.</li>
+<li>Journaling and copy-on-write protect update consistency.</li>
+</ul>
+</div>
+<div class="completion-panel">
+<span>COURSE CHECKPOINT</span>
+<p>Mark complete after you can compare all three allocation methods.</p>
+<button id="completeLessonButton">Mark Level 10 complete</button>
+<small>Saved only in this browser.</small>
+</div>
+</section>
+<nav class="os-topic-navigation">
+<a href="level-09-virtual-memory.html">← Level 9: Virtual Memory</a>
+<a href="level-11-io-disk-scheduling.html">Next: I/O &amp; Disk Scheduling →</a>
+</nav>
+</main>
+</div>
+<footer class="footer">
+<div class="footer-container">
+<div class="footer-brand-section">
+<div class="footer-brand">
+<span class="footer-code">Code</span>
+<span class="footer-bhavya">Bhavya</span>
+</div>
+<p class="footer-tagline">From Learning to Limitless Possibilities.</p>
+</div>
+<div class="footer-column">
+<h3>OS Course</h3>
+<a href="index.html">Course Home</a>
+</div>
+<div class="footer-column">
+<h3>Practise</h3>
+<a href="#allocation">Allocation lab</a>
+</div>
+<div class="footer-column">
+<h3>Continue</h3>
+<a href="level-11-io-disk-scheduling.html">I/O &amp; Disk</a>
+</div>
+</div>
+</footer>
+<script>window.OS_TRACE_STEPS=[{title:'Start at root',text:'Absolute pathname lookup begins at the root directory inode.'},{title:'Find home',text:'Search permission is checked and the home entry provides the next inode.'},{title:'Find venu',text:'The next directory is loaded or found in cache; search permission is checked again.'},{title:'Find notes.txt',text:'The final directory entry maps the filename to its inode number.'},{title:'Validate access',text:'Owner/group/mode and other security policy are evaluated for requested open flags.'},{title:'Create open-file entry',text:'Kernel records file offset, access mode and inode reference.'},{title:'Return descriptor',text:'A small process-local integer now refers to the open-file entry.'}];window.OS_CHECKS=[{q:'A directory primarily maps:',options:['Name to inode','Page to frame','PID to CPU','Port to packet'],answer:0,why:'Directory entries resolve names to file objects.'},{q:'An inode normally stores:',options:['Filename only','Metadata and block mapping','Current CPU burst','DNS record'],answer:1,why:'Names live in directories; inode holds object metadata.'},{q:'Best random access among basic methods:',options:['Linked','Indexed','Tape','Free list'],answer:1,why:'Index pointers directly locate data blocks.'},{q:'Hard links share:',options:['Different objects','One inode','Only pathname text','A process ID'],answer:1,why:'Multiple directory entries reference the same inode.'},{q:'A symbolic link stores:',options:['A pathname','A CPU register','Only a bitmap','RAM frame'],answer:0,why:'It is a special file containing a target path.'},{q:'External fragmentation affects:',options:['Contiguous allocation','Every indexed file equally','Only descriptors','Permission bits'],answer:0,why:'Growth requires adjacent free blocks.'},{q:'A bitmap uses:',options:['One bit per block','One process per bit','No metadata','Only names'],answer:0,why:'Each bit marks allocation state.'},{q:'Journaling helps recover:',options:['Update consistency','CPU priority','Page offset','Network address'],answer:0,why:'Committed metadata transactions can be replayed.'},{q:'After open, the application uses:',options:['Descriptor','Inode password','Cylinder only','Page fault'],answer:0,why:'The descriptor indexes process open-file state.'},{q:'fsync is relevant to:',options:['Durability','Scheduling quantum','Deadlock graph','TLB lookup'],answer:0,why:'It requests dirty file state be pushed to stable storage.'}];</script>
+<script src="os-levels-09-15.js?v=1">
+</script>
+</body>
+</html>

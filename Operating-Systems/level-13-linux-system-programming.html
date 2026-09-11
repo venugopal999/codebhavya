@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Connect operating-system theory to Linux tools, processes, file descriptors, pipes, signals and defensive C system programming.">
+<title>Linux &amp; System Programming — OS Level 13 | CodeBhavya</title>
+<link rel="icon" href="../images/codebhavya-icon-32.png">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="os.css?v=2">
+<link rel="stylesheet" href="os-lesson.css?v=1">
+<link rel="stylesheet" href="os-levels-09-15.css?v=1">
+</head>
+<body class="os-page os-lesson-page" data-level="13">
+<header class="top-header">
+<a href="../index.html" class="logo codebhavya-new-logo">
+<img src="../images/codebhavya-main-logo.png" alt="CodeBhavya Logo" class="main-logo">
+<span class="brand-name">
+<span class="logo-code">Code</span>
+<span class="logo-bhavya">Bhavya</span>
+</span>
+</a>
+<nav class="top-nav">
+<a href="../index.html">Home</a>
+<a href="../C-Programming/index.html">C</a>
+<a href="../Data-Structures/index.html">Data Structures</a>
+<a href="../DBMS/index.html">DBMS</a>
+<a href="../Placement/index.html">Placement</a>
+</nav>
+</header>
+<div class="lesson-reading-progress">
+<span id="lessonReadingBar">
+</span>
+</div>
+<button class="os-sidebar-toggle" id="osSidebarToggle">☰ Level 13 Topics</button>
+<div class="os-sidebar-backdrop" id="osSidebarBackdrop" hidden>
+</div>
+<div class="os-layout">
+<aside class="os-sidebar" id="osSidebar">
+<div class="os-sidebar-title">Level 13 — Linux</div>
+<a class="os-home-link" href="index.html">← OS Course Home</a>
+<div class="os-sidebar-group">In this lesson</div>
+<a class="active lesson-section-link" href="#overview">1. Outcomes</a>
+<a class="lesson-section-link" href="#tools">2. Observe Linux</a>
+<a class="lesson-section-link" href="#process">3. Process APIs</a>
+<a class="lesson-section-link" href="#lab">4. System-call lab</a>
+<a class="lesson-section-link" href="#code">5. C program</a>
+<a class="lesson-section-link" href="#trace">6. Trace</a>
+<a class="lesson-section-link" href="#checks">7. Checks</a>
+<a class="lesson-section-link" href="#summary">8. Summary</a>
+<div class="lesson-sidebar-status">
+<span>LESSON CHECKPOINT</span>
+<strong id="lessonSidebarStatus">Not completed</strong>
+</div>
+</aside>
+<main class="os-main">
+<section class="lesson-hero" id="overview">
+<div>
+<div class="lesson-breadcrumb">
+<a href="index.html">Operating Systems</a>
+<span>›</span>
+<span>Level 13</span>
+</div>
+<span class="os-label">PART 4 • SYSTEMS &amp; CAREER</span>
+<h1>Observe OS Concepts through Linux Interfaces</h1>
+<p>Use process tools, file descriptors, fork, exec, wait, pipes and signals to connect textbook state transitions with real system behavior.</p>
+<div class="lesson-meta">
+<span>Level 13 of 15</span>
+<span>Applied</span>
+<span>120–150 minutes</span>
+<span>C system-programming lab</span>
+</div>
+</div>
+<div class="lesson-goal-card">
+<span>BY THE END, YOU CAN</span>
+<h2>Explain a mini shell pipeline</h2>
+<ul>
+<li>Inspect processes and resources.</li>
+<li>Distinguish fork and exec.</li>
+<li>Reap children with wait.</li>
+<li>Redirect and connect descriptors.</li>
+<li>Handle signals and failures safely.</li>
+</ul>
+</div>
+</section>
+<nav class="lesson-jump-bar">
+<a href="#tools">Observe</a>
+<a href="#lab">Simulate</a>
+<a href="#code">Code</a>
+<a href="#trace">Trace</a>
+<a href="#checks">Check</a>
+</nav>
+<section class="lesson-section" id="tools">
+<header class="lesson-heading">
+<span>01 • OBSERVE BEFORE MODIFYING</span>
+<h2>Linux Exposes Kernel State through Commands and Pseudo-Files</h2>
+</header>
+<div class="concept-grid">
+<article>
+<span>PROCESS</span>
+<h3>
+<code>ps</code>, <code>top</code>, <code>pstree</code>
+</h3>
+<p>Inspect PID, parent, state, CPU/memory use and hierarchy. A snapshot and a live monitor answer different questions.</p>
+</article>
+<article>
+<span>FILES</span>
+<h3>
+<code>ls -l</code>, <code>stat</code>, <code>lsof</code>
+</h3>
+<p>View permissions/metadata and discover which process holds an open descriptor.</p>
+</article>
+<article>
+<span>SYSTEM CALLS</span>
+<h3>
+<code>strace</code>
+</h3>
+<p>Observe the kernel interface and error codes; avoid exposing secrets in traced arguments.</p>
+</article>
+</div>
+<div class="formula-strip">
+<code>stdin=0</code>
+<code>stdout=1</code>
+<code>stderr=2</code>
+<code>every call: check return value</code>
+</div>
+</section>
+<section class="lesson-section" id="process">
+<header class="lesson-heading">
+<span>02 • BUILD A PROCESS PIPELINE</span>
+<h2>
+<code>fork()</code> Duplicates; <code>exec()</code> Replaces</h2>
+</header>
+<div class="roadmap-list">
+<article>
+<b>1</b>
+<div>
+<h3>Create a pipe</h3>
+<p>Two descriptors represent read and write ends. Create it before fork so both children inherit them.</p>
+</div>
+</article>
+<article>
+<b>2</b>
+<div>
+<h3>Fork producer and consumer</h3>
+<p>Each fork returns zero in the child and the child PID in the parent; failure returns −1.</p>
+</div>
+</article>
+<article>
+<b>3</b>
+<div>
+<h3>Redirect with dup2</h3>
+<p>Connect producer stdout to pipe write and consumer stdin to pipe read.</p>
+</div>
+</article>
+<article>
+<b>4</b>
+<div>
+<h3>Close unused ends</h3>
+<p>Leaked write descriptors can prevent the reader from ever receiving EOF.</p>
+</div>
+</article>
+<article>
+<b>5</b>
+<div>
+<h3>Exec and wait</h3>
+<p>Children replace their images; parent reaps both and interprets exit status.</p>
+</div>
+</article>
+</div>
+<aside class="risk-note">
+<strong>Never assume success:</strong> fork, pipe, dup2, exec and wait can fail. Print actionable errors and exit through a controlled path.</aside>
+</section>
+<section class="lesson-section" id="lab">
+<header class="lesson-heading">
+<span>03 • INTERACTIVE SYSTEM-CALL LAB</span>
+<h2>Choose an Operation and Follow Its Boundary</h2>
+</header>
+<div class="advanced-lab">
+<div class="lab-controls">
+<label>SCENARIO<select id="linuxScenario">
+<option value="fork">fork process</option>
+<option value="exec">exec replacement</option>
+<option value="pipe">pipe connection</option>
+<option value="signal">signal delivery</option>
+</select>
+</label>
+<button id="runLinuxLab">Show path →</button>
+</div>
+<div class="lab-output" id="linuxLabOutput">
+<div class="lab-summary">
+<span>READY</span>
+<h3>Select an operation</h3>
+<p>The user–kernel transition will appear here.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="lesson-section" id="code">
+<header class="lesson-heading">
+<span>04 • COMPLETE C EXAMPLE</span>
+<h2>Create a Child and Report Its Exit Status</h2>
+</header>
+<pre class="code-example">#include &lt;sys/wait.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void) {
+    pid_t pid = fork();
+    if (pid &lt; 0) { perror("fork"); return EXIT_FAILURE; }
+    if (pid == 0) {
+        execlp("printf", "printf", "Hello from child\\n", NULL);
+        perror("exec"); _exit(127);
+    }
+    int status;
+    if (waitpid(pid, &amp;status, 0) &lt; 0) { perror("waitpid"); return EXIT_FAILURE; }
+    if (WIFEXITED(status)) printf("child exit=%d\\n", WEXITSTATUS(status));
+    return EXIT_SUCCESS;
+}</pre>
+<p>The child uses <code>_exit</code> after failed exec to avoid flushing inherited buffered streams incorrectly. The parent distinguishes normal exit from signal termination in a fuller program.</p>
+</section>
+<section class="lesson-section" id="trace">
+<header class="lesson-heading">
+<span>05 • PROGRAM TRACING</span>
+<h2>Trace <code>ls | wc -l</code>
+</h2>
+</header>
+<div class="trace-runner">
+<div class="trace-controls">
+<button id="traceNext">Next step →</button>
+<button class="secondary" id="traceAuto">▶ Auto trace</button>
+<button class="secondary" id="traceReset">Reset</button>
+</div>
+<article class="trace-stage">
+<span>PIPELINE · <b id="traceCounter">
+</b>
+</span>
+<h3 id="traceTitle">
+</h3>
+<p id="traceText">
+</p>
+<div class="trace-progress" id="traceProgress">
+</div>
+</article>
+</div>
+</section>
+<section class="lesson-section" id="checks">
+<header class="lesson-heading">
+<span>06 • CHECK &amp; PREPARE</span>
+<h2>Ten Linux Questions</h2>
+</header>
+<div id="conceptChecks" class="concept-check-list">
+</div>
+<div id="conceptScore" class="check-score">Answered correctly: 0 of 10</div>
+<div class="question-bank-grid">
+<article>
+<span>UNIVERSITY</span>
+<ol>
+<li>Explain fork and exec.</li>
+<li>Describe pipe communication.</li>
+<li>Explain descriptors.</li>
+<li>Process signal lifecycle.</li>
+<li>Zombie and orphan.</li>
+</ol>
+</article>
+<article>
+<span>INTERVIEW</span>
+<ol>
+<li>Why close pipe ends?</li>
+<li>What survives exec?</li>
+<li>Why wait?</li>
+<li>What is SIGKILL?</li>
+<li>Why async-signal-safe?</li>
+</ol>
+</article>
+<article>
+<span>PRACTICE</span>
+<ol>
+<li>Build two-command shell.</li>
+<li>Add redirection.</li>
+<li>Handle Ctrl+C.</li>
+<li>Report exit status.</li>
+<li>Test failed commands.</li>
+</ol>
+</article>
+</div>
+</section>
+<section class="lesson-section summary-section" id="summary">
+<div>
+<span class="os-label">LEVEL 13 SUMMARY</span>
+<h2>You Can Connect Commands to Kernel Mechanisms</h2>
+<ul>
+<li>Descriptors are process-local handles to open objects.</li>
+<li>fork creates a process; exec replaces its image.</li>
+<li>wait reaps child status and prevents zombies.</li>
+<li>Pipes connect byte streams through inherited descriptors.</li>
+<li>Robust system code checks every return value.</li>
+</ul>
+</div>
+<div class="completion-panel">
+<span>COURSE CHECKPOINT</span>
+<p>Mark complete after explaining a two-process pipeline.</p>
+<button id="completeLessonButton">Mark Level 13 complete</button>
+<small>Saved in this browser.</small>
+</div>
+</section>
+<nav class="os-topic-navigation">
+<a href="level-12-protection-security.html">← Level 12: Security</a>
+<a href="level-14-virtualization-containers.html">Next: Virtualization →</a>
+</nav>
+</main>
+</div>
+<footer class="footer">
+<div class="footer-bottom">
+<p>© 2026 CodeBhavya · Write · Run · Learn</p>
+</div>
+</footer>
+<script>window.OS_TRACE_STEPS=[{title:'Create pipe',text:'Parent receives read and write descriptors before children exist.'},{title:'Fork producer',text:'First child inherits both ends and redirects stdout to the write end.'},{title:'Exec ls',text:'Producer image becomes ls; PID remains, successful exec does not return.'},{title:'Fork consumer',text:'Second child redirects stdin from the read end and execs wc -l.'},{title:'Close unused ends',text:'Parent and each child close descriptors they do not use so EOF works.'},{title:'Transfer bytes',text:'ls writes names; wc reads until every write end is closed.'},{title:'Wait for both',text:'Parent reaps exit status and avoids zombie processes.'}];window.OS_CHECKS=[{q:'fork returns 0 in:',options:['Child','Parent','Kernel only','Shell only'],answer:0,why:'Parent receives child PID.'},{q:'exec normally:',options:['Creates second PID','Replaces current image','Waits for child','Closes all files'],answer:1,why:'The process continues with new program image.'},{q:'wait prevents:',options:['Page faults','Zombies','TLB misses','Disk seeks'],answer:1,why:'It reaps terminated child status.'},{q:'Pipe is primarily:',options:['Byte stream','Shared filename','CPU queue','Page table'],answer:0,why:'It connects writer bytes to reader.'},{q:'stdout descriptor is:',options:['0','1','2','3 always'],answer:1,why:'Standard output is descriptor 1.'},{q:'dup2 is used for:',options:['Descriptor redirection','Process scheduling','Page replacement','Encryption'],answer:0,why:'It duplicates onto a chosen descriptor.'},{q:'Successful exec returns:',options:['Always','Normally never','Only twice','A child PID'],answer:1,why:'Execution continues in the new program.'},{q:'SIGKILL can be:',options:['Caught normally','Ignored always','Neither caught nor ignored','Used as file descriptor'],answer:2,why:'Kernel enforces it.'},{q:'An orphan is:',options:['Child whose parent exited','Unreaped terminated child','Deadlock','Free inode'],answer:0,why:'It is reparented to a system reaper.'},{q:'Robust system calls require:',options:['Ignoring errors','Return-value checks','Root always','Busy waiting'],answer:1,why:'Failures are part of the API contract.'}];</script>
+<script src="os-levels-09-15.js?v=1">
+</script>
+</body>
+</html>
