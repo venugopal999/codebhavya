@@ -1,4 +1,5 @@
 "use strict";
+
 window.FULLSTACK_STAGES=[
 {title:"Part A · Web Foundations",range:"Levels 01–07",description:"Understand browsers, semantic documents, accessible interfaces, CSS systems and professional tooling."},
 {title:"Part B · JavaScript Engineering",range:"Levels 08–13",description:"Use the language, DOM, events, modules and asynchronous APIs with sound mental models."},
@@ -7,7 +8,44 @@ window.FULLSTACK_STAGES=[
 {title:"Part E · MongoDB & Data",range:"Levels 24–26",description:"Model documents, query efficiently and protect consistency with Mongoose and transactions."},
 {title:"Part F · Production MERN",range:"Levels 27–30",description:"Integrate, test, deploy, observe and defend portfolio-grade full-stack systems."}
 ];
+
 const titles=[
-["How the Web Works","HTTP, URLs, DNS and the browser request lifecycle"],["Semantic HTML","Document structure, meaning and maintainable markup"],["Forms & Accessibility","Inclusive input, validation and keyboard-first UX"],["CSS Foundations","Cascade, inheritance, specificity and the box model"],["Responsive Layouts","Flexbox, Grid, fluid sizing and mobile-first design"],["Browser DevTools","Debugging, performance, network inspection and storage"],["Git, npm & Project Workflow","Version control, packages and reproducible projects"],["JavaScript Foundations","Values, types, variables and coercion"],["Control Flow & Functions","Decisions, iteration, scope and reusable behaviour"],["Arrays & Objects","Data modelling and immutable transformations"],["DOM & Events","Rendering, event propagation and interface state"],["Async JavaScript & APIs","Promises, async/await, Fetch and failure handling"],["Modules & Error Design","Boundaries, validation and maintainable browser code"],["React Mental Model","Components, JSX and declarative rendering"],["Props, State & Events","One-way data flow and interactive components"],["Hooks, Forms & Effects","Lifecycle synchronization and controlled data"],["Routing, Context & Data","Multi-page experiences and shared application state"],["React Performance & Testing","Profiling, memoization and confidence"],["Node.js Runtime","Event loop, modules, streams and server foundations"],["Express REST APIs","Routes, resources, status codes and controllers"],["Middleware & Validation","Request pipelines, schemas and centralized errors"],["Authentication & Security","Passwords, sessions, tokens and authorization"],["Files, Email & Real Time","Uploads, background tasks and WebSockets"],["MongoDB Data Modelling","Documents, embedding, references and schema decisions"],["Queries, Aggregation & Indexes","Fast retrieval and analytical pipelines"],["Mongoose & Transactions","Validation, services and consistency"],["MERN Integration","API clients, environment configuration and state boundaries"],["Testing, Quality & CI","Unit, integration, end-to-end checks and automation"],["Deployment & Observability","Hosting, logs, metrics, health and recovery"],["Placement Capstone Studio","Architecture, implementation, defence and portfolio delivery"]
+["How the Web Works","HTTP, URLs, DNS and the browser request lifecycle"],
+["Semantic HTML","Document structure, meaning and maintainable markup"],
+["Forms & Accessibility","Inclusive input, validation and keyboard-first UX"],
+["CSS Foundations","Cascade, inheritance, specificity and the box model"],
+["Responsive Layouts","Flexbox, Grid, fluid sizing and mobile-first design"],
+["Browser DevTools","Debugging, performance, network inspection and storage"],
+["Git, npm & Project Workflow","Version control, packages and reproducible projects"],
+["JavaScript Foundations","Values, types, variables and coercion"],
+["Control Flow & Functions","Decisions, iteration, scope and reusable behaviour"],
+["Arrays & Objects","Data modelling and immutable transformations"],
+["DOM & Events","Rendering, event propagation and interface state"],
+["Async JavaScript & APIs","Promises, async/await, Fetch and failure handling"],
+["Modules & Error Design","Boundaries, validation and maintainable browser code"],
+["React Mental Model","Components, JSX and declarative rendering"],
+["Props, State & Events","One-way data flow and interactive components"],
+["Hooks, Forms & Effects","Lifecycle synchronization and controlled data"],
+["Routing, Context & Data","Multi-page experiences and shared application state"],
+["React Performance & Testing","Profiling, memoization and confidence"],
+["Node.js Runtime","Event loop, modules, streams and server foundations"],
+["Express REST APIs","Routes, resources, status codes and controllers"],
+["Middleware & Validation","Request pipelines, schemas and centralized errors"],
+["Authentication & Security","Passwords, sessions, tokens and authorization"],
+["Files, Email & Real Time","Uploads, background tasks and WebSockets"],
+["MongoDB Data Modelling","Documents, embedding, references and schema decisions"],
+["Queries, Aggregation & Indexes","Fast retrieval and analytical pipelines"],
+["Mongoose & Transactions","Validation, services and consistency"],
+["MERN Integration","API clients, environment configuration and state boundaries"],
+["Testing, Quality & CI","Unit, integration, end-to-end checks and automation"],
+["Deployment & Observability","Hosting, logs, metrics, health and recovery"],
+["Placement Capstone Studio","Architecture, implementation, defence and portfolio delivery"]
 ];
-window.FULLSTACK_LEVELS=titles.map((x,i)=>({n:i+1,title:x[0],summary:x[1],stage:Math.min(5,Math.floor(i<7?0:i<13?1:i<18?2:i<23?3:i<26?4:5)),available:i<6}));
+
+window.FULLSTACK_LEVELS=titles.map((x,i)=>({
+n:i+1,
+title:x[0],
+summary:x[1],
+stage:Math.min(5,Math.floor(i<7?0:i<13?1:i<18?2:i<23?3:i<26?4:5)),
+available:i<7
+}));
