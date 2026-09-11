@@ -321,6 +321,7 @@ function searchTopics() {
             links: [
                 { label: "C Programming", path: "C-Programming/index.html", icon: "C" },
                 { label: "Python", path: "Python/index.html", icon: "Py" },
+                { label: "Java", path: "Java/index.html", icon: "J" },
                 { label: "Programs Library", path: "Programs/index.html", icon: "{}" }
             ]
         },
