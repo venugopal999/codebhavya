@@ -1,509 +1,1390 @@
 "use strict";
 
-const KEY="codebhavya.fullstack.progress.v1";
-const levels=window.FULLSTACK_LEVELS;
-const lessons=window.FULLSTACK_LESSONS||{};
+const KEY = "codebhavya.fullstack.progress.v1";
 
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[c]));
+const levels = window.FULLSTACK_LEVELS || [];
+const lessons = window.FULLSTACK_LESSONS || {};
 
-const n=Math.max(
-1,
-Math.min(
-30,
-Number(new URLSearchParams(location.search).get("level"))||1
-)
+const esc = (s) =>
+    String(s ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[c]);
+
+const n = Math.max(
+    1,
+    Math.min(
+        30,
+        Number(new URLSearchParams(location.search).get("level")) || 1
+    )
 );
 
-const lesson=lessons[n];
-let traceIndex=0;
+const lesson = lessons[n];
 
-function nav(){
-document.getElementById("levelNav").innerHTML=levels.map(l=>`
-<a class="${l.n===n?"active":""} ${l.available?"":"locked"}"
-href="${l.available?`lesson.html?level=${l.n}`:"#"}">
-<b>${String(l.n).padStart(2,"0")}</b>
-${esc(l.title)}
-${l.available?"":" · planned"}
-</a>
-`).join("");
+let traceIndex = 0;
+let timer = null;
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function getProgress() {
+    try {
+        return JSON.parse(localStorage.getItem(KEY) || "[]");
+    } catch {
+        return [];
+    }
 }
 
-function codeBox(c,label="Example"){
-return `
-<div class="code-box">
-<header>
-<span>${esc(label)}</span>
-<button data-copy="${esc(c)}">Copy</button>
-</header>
-<pre><code>${esc(c)}</code></pre>
-</div>`;
+function codeBox(code, label = "Example") {
+    return `
+        <div class="code-box">
+            <header>
+                <span>${esc(label)}</span>
+                <button data-copy="${esc(code)}">Copy</button>
+            </header>
+
+            <pre><code>${esc(code)}</code></pre>
+        </div>
+    `;
 }
 
-function render(){
+function bulletList(items = []) {
+    if (!items.length) return "";
 
-if(!lesson){
-document.getElementById("lessonMain").innerHTML=`
-<section class="lesson-section">
-<p class="section-label">PLANNED LEVEL</p>
-<h2>${esc(levels[n-1].title)}</h2>
-<p>This level is part of the complete roadmap and will be added after the previous JavaScript Engineering levels are completed.</p>
-<a class="button primary" href="lesson.html?level=7">Open latest available lesson</a>
-</section>`;
-return;
+    return `
+        <ul class="detail-list">
+            ${items.map(item => `<li>${esc(item)}</li>`).join("")}
+        </ul>
+    `;
 }
 
-document.title=`Level ${n}: ${lesson.title} | CodeBhavya`;
-
-document.getElementById("lessonMain").innerHTML=`
-
-<section class="lesson-hero">
-<p class="eyebrow">
-LEVEL ${String(n).padStart(2,"0")} · ${esc(lesson.kicker)}
-</p>
-
-<h1>${esc(lesson.title)}</h1>
-
-<p>${esc(lesson.summary)}</p>
-
-<div class="lesson-meta">
-<span>${esc(lesson.duration)}</span>
-<span>${lesson.concepts.length} core concepts</span>
-<span>${lesson.quiz.length} knowledge checks</span>
-</div>
-</section>
-
-<section class="lesson-section">
-<p class="section-label">LEARNING OUTCOMES</p>
-<h2>What you will be able to explain and build</h2>
-
-<div class="objectives">
-${lesson.outcomes.map((x,i)=>`
-<div>
-<b>0${i+1}</b>
-<span>${esc(x)}</span>
-</div>
-`).join("")}
-</div>
-</section>
-
-${lesson.concepts.map((c,i)=>`
-<section class="lesson-section">
-
-<p class="section-label">CONCEPT ${i+1}</p>
-
-<h2>${esc(c.title)}</h2>
-
-<p>${esc(c.text)}</p>
-
-${c.points?`
-<ul>
-${c.points.map(x=>`<li>${esc(x)}</li>`).join("")}
-</ul>`:""}
-
-${c.code?
-codeBox(c.code,c.label||"WORKED EXAMPLE")+
-(c.output?
-`<h3>Expected result</h3>
-<div class="code-box">
-<pre>${esc(c.output)}</pre>
-</div>`:"")
-:""}
-
-</section>
-`).join("")}
-
-<section class="lesson-section">
-
-<p class="section-label">
-INTERACTIVE LEARNING · VISUAL FLOW
-</p>
-
-<h2>${esc(lesson.flowTitle)}</h2>
-
-<div class="visual-flow">
-${lesson.flow.map((x,i)=>`
-<div>
-<b>${i+1}. ${esc(x.name)}</b>
-<span>${esc(x.detail)}</span>
-</div>
-`).join("")}
-</div>
-
-</section>
-
-<section class="lesson-section">
-
-<p class="section-label">PROGRAM TRACING</p>
-
-<h2>Follow the system one step at a time</h2>
-
-<div class="trace">
-
-<div>
-
-<div class="trace-code" id="traceCode">
-${lesson.trace.code.map((x,i)=>`
-<div data-line="${i}">${esc(x)||" "}</div>
-`).join("")}
-</div>
-
-<div class="trace-controls">
-<button id="traceReset">Reset</button>
-<button id="traceNext">Next step</button>
-<button id="traceAuto">Auto run</button>
-</div>
-
-</div>
-
-<div class="trace-state">
-<strong id="traceState">Ready</strong>
-<p id="traceExplain">
-Press Next step to begin.
-</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="lesson-section">
-
-<p class="section-label">QUICK REVISION</p>
-
-<h2>Recall the essential ideas</h2>
-
-<div class="revision-grid">
-${lesson.revision.map(x=>`
-<div>
-<b>${esc(x[0])}</b>
-<span>${esc(x[1])}</span>
-</div>
-`).join("")}
-</div>
-
-</section>
-
-<section class="lesson-section interview">
-
-<p class="section-label">INTERVIEW QUESTIONS</p>
-
-<h2>Explain, do not only define</h2>
-
-${lesson.interview.map(x=>`
-<details>
-<summary>${esc(x.q)}</summary>
-<p>${esc(x.a)}</p>
-</details>
-`).join("")}
-
-</section>
-
-<section class="lesson-section">
-
-<p class="section-label">EXTRA PRACTICE</p>
-
-<h2>Build without copying the example</h2>
-
-<div class="practice-grid">
-
-${lesson.practice.map((x,i)=>`
-<article class="practice-card">
-<span>CHALLENGE ${i+1}</span>
-<h3>${esc(x.title)}</h3>
-<p>${esc(x.prompt)}</p>
-</article>
-`).join("")}
-
-</div>
-
-</section>
-
-<section class="lesson-section quiz">
-
-<p class="section-label">KNOWLEDGE CHECK</p>
-
-<h2>Test the mental model</h2>
-
-${lesson.quiz.map((q,i)=>`
-<article class="quiz-question" data-question="${i}">
-
-<p>${i+1}. ${esc(q.q)}</p>
-
-<div class="quiz-options">
-${q.options.map((o,j)=>`
-<button data-option="${j}">
-${esc(o)}
-</button>
-`).join("")}
-</div>
-
-<div class="quiz-result" hidden></div>
-
-</article>
-`).join("")}
-
-</section>
-
-<section class="lesson-section">
-
-<p class="section-label">KEY TAKEAWAY</p>
-
-<h2>${esc(lesson.takeaway)}</h2>
-
-<button class="complete-button" id="completeLevel">
-Mark Level ${n} complete
-</button>
-
-</section>
-
-<nav class="lesson-nav">
-
-${n>1?
-`<a href="lesson.html?level=${n-1}">← Previous level</a>`
-:"<span></span>"}
-
-<a href="${n<7?`lesson.html?level=${n+1}`:"index.html#roadmap"}">
-${n<7?"Next level →":"Return to roadmap →"}
-</a>
-
-</nav>
-`;
-
-initTrace();
-drawComplete();
+function paragraphList(items = []) {
+    if (!items.length) return "";
+
+    return items
+        .map(item => `<p>${esc(item)}</p>`)
+        .join("");
 }
 
-function drawComplete(){
+function flowBlock(items = []) {
+    if (!items.length) return "";
 
-const done=JSON.parse(
-localStorage.getItem(KEY)||"[]"
-);
-
-const b=document.getElementById("completeLevel");
-
-if(b){
-b.textContent=
-done.includes(n)
-?`✓ Level ${n} completed`
-:`Mark Level ${n} complete`;
-}
-}
-
-let timer;
-
-function traceDraw(){
-
-document
-.querySelectorAll("[data-line]")
-.forEach(x=>x.classList.remove("active"));
-
-const step=lesson.trace.steps[traceIndex];
-
-if(!step){
-
-document.getElementById("traceState").textContent="Trace complete";
-
-document.getElementById("traceExplain").textContent=
-"Reset to follow it again.";
-
-document.getElementById("traceNext").disabled=true;
-document.getElementById("traceAuto").disabled=true;
-
-clearInterval(timer);
-
-return;
+    return `
+        <div class="learning-flow">
+            ${items.map((item, i) => `
+                <div class="flow-item">
+                    <span class="flow-number">${String(i + 1).padStart(2, "0")}</span>
+                    <strong>${esc(item)}</strong>
+                </div>
+            `).join("")}
+        </div>
+    `;
 }
 
-document
-.querySelector(`[data-line="${step.line}"]`)
-?.classList.add("active");
+function comparisonBlock(items = []) {
+    if (!items.length) return "";
 
-document.getElementById("traceState").textContent=
-step.state;
+    return `
+        <div class="comparison-table">
+            ${items.map(item => `
+                <div class="comparison-row">
+                    <div class="comparison-term">
+                        ${esc(item.term)}
+                    </div>
 
-document.getElementById("traceExplain").textContent=
-step.explain;
-
-traceIndex++;
+                    <div class="comparison-definition">
+                        ${esc(item.meaning)}
+                    </div>
+                </div>
+            `).join("")}
+        </div>
+    `;
 }
 
-function initTrace(){
+function methodCards(items = []) {
+    if (!items.length) return "";
 
-document.getElementById("traceNext").onclick=
-traceDraw;
-
-document.getElementById("traceReset").onclick=()=>{
-
-clearInterval(timer);
-
-traceIndex=0;
-
-document
-.querySelectorAll("[data-line]")
-.forEach(x=>x.classList.remove("active"));
-
-document.getElementById("traceState").textContent=
-"Ready";
-
-document.getElementById("traceExplain").textContent=
-"Press Next step to begin.";
-
-document.getElementById("traceNext").disabled=false;
-document.getElementById("traceAuto").disabled=false;
-};
-
-document.getElementById("traceAuto").onclick=()=>{
-
-clearInterval(timer);
-
-timer=setInterval(traceDraw,850);
-
-};
+    return `
+        <div class="method-grid">
+            ${items.map(item => `
+                <article class="method-card">
+                    <strong>${esc(item.name)}</strong>
+                    <p>${esc(item.meaning)}</p>
+                </article>
+            `).join("")}
+        </div>
+    `;
 }
 
-document.addEventListener("click",async e=>{
+function groupCards(items = []) {
+    if (!items.length) return "";
 
-const b=e.target.closest("button");
-
-if(!b)return;
-
-if(b.dataset.copy!==undefined){
-
-try{
-
-await navigator.clipboard.writeText(
-b.dataset.copy
-);
-
-toast("Code copied");
-
-}catch{
-
-toast("Select the code manually");
-
+    return `
+        <div class="status-grid">
+            ${items.map(item => `
+                <article>
+                    <strong>${esc(item.range)}</strong>
+                    <span>${esc(item.meaning)}</span>
+                </article>
+            `).join("")}
+        </div>
+    `;
 }
 
+function urlBreakdown(items = []) {
+    if (!items.length) return "";
+
+    return `
+        <div class="url-breakdown">
+            ${items.map(item => `
+                <div>
+                    <code>${esc(item.part)}</code>
+                    <span>${esc(item.meaning)}</span>
+                </div>
+            `).join("")}
+        </div>
+    `;
 }
 
-if(b.dataset.option!==undefined){
+function architecture(items = []) {
+    if (!items.length) return "";
 
-const box=b.closest(".quiz-question");
-const i=+box.dataset.question;
-const q=lesson.quiz[i];
-const choice=+b.dataset.option;
+    return `
+        <div class="architecture-flow">
+            ${items.map((item, i) => `
+                <div class="architecture-node">
+                    <strong>${esc(item)}</strong>
+                </div>
 
-box.querySelectorAll("[data-option]")
-.forEach((x,j)=>{
+                ${i < items.length - 1
+                    ? `<span class="architecture-arrow">↓</span>`
+                    : ""}
+            `).join("")}
+        </div>
+    `;
+}
 
-x.disabled=true;
 
-if(j===q.answer)
-x.classList.add("correct");
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
-else if(j===choice)
-x.classList.add("wrong");
+function nav() {
+    const nav = document.getElementById("levelNav");
+
+    if (!nav) return;
+
+    nav.innerHTML = levels.map(level => `
+        <a
+            class="${level.n === n ? "active" : ""} ${level.available ? "" : "locked"}"
+            href="${level.available
+                ? `lesson.html?level=${level.n}`
+                : "#"}"
+        >
+            <b>${String(level.n).padStart(2, "0")}</b>
+            ${esc(level.title)}
+            ${level.available ? "" : " · planned"}
+        </a>
+    `).join("");
+}
+
+
+/* =========================================================
+   LESSON HERO
+========================================================= */
+
+function renderHero() {
+    return `
+        <section class="lesson-hero premium-hero">
+
+            <div class="hero-badge">
+                LEVEL ${String(n).padStart(2, "0")}
+            </div>
+
+            <p class="eyebrow">
+                ${esc(lesson.kicker)}
+            </p>
+
+            <h1>${esc(lesson.title)}</h1>
+
+            <p class="hero-description">
+                ${esc(lesson.summary)}
+            </p>
+
+            <div class="lesson-meta">
+
+                <span>
+                    ${esc(lesson.duration)}
+                </span>
+
+                <span>
+                    ${esc(lesson.difficulty || "Foundation")}
+                </span>
+
+                <span>
+                    ${lesson.sections
+                        ? lesson.sections.length + " learning sections"
+                        : (lesson.concepts?.length || 0) + " core concepts"}
+                </span>
+
+            </div>
+
+        </section>
+    `;
+}
+
+
+/* =========================================================
+   LEARNING OUTCOMES
+========================================================= */
+
+function renderOutcomes() {
+    return `
+        <section class="lesson-section outcomes-section">
+
+            <p class="section-label">
+                LEARNING OBJECTIVES
+            </p>
+
+            <h2>
+                What you will understand by the end
+            </h2>
+
+            <p class="section-intro">
+                Don't memorize these topics. By the end of the lesson,
+                you should be able to explain them in your own words,
+                connect them to real websites and use them while debugging.
+            </p>
+
+            <div class="objectives">
+
+                ${lesson.outcomes.map((item, i) => `
+                    <div class="objective-card">
+
+                        <span>
+                            ${String(i + 1).padStart(2, "0")}
+                        </span>
+
+                        <p>
+                            ${esc(item)}
+                        </p>
+
+                    </div>
+                `).join("")}
+
+            </div>
+
+        </section>
+    `;
+}
+
+
+/* =========================================================
+   SECTION RENDERER
+========================================================= */
+
+function renderSection(section, index) {
+
+    let html = `
+        <section class="lesson-section deep-section">
+
+            <div class="section-number">
+                ${String(index + 1).padStart(2, "0")}
+            </div>
+
+            <p class="section-label">
+                CONCEPT ${String(index + 1).padStart(2, "0")}
+            </p>
+
+            <h2>
+                ${esc(section.title)}
+            </h2>
+    `;
+
+    if (section.intro) {
+        html += `
+            <div class="concept-intro">
+                ${esc(section.intro)}
+            </div>
+        `;
+    }
+
+    if (section.explanation) {
+        html += paragraphList(section.explanation);
+    }
+
+    if (section.points) {
+        html += bulletList(section.points);
+    }
+
+    if (section.keyIdea) {
+        html += `
+            <div class="key-idea">
+                <span>KEY IDEA</span>
+                <p>${esc(section.keyIdea)}</p>
+            </div>
+        `;
+    }
+
+    if (section.warning) {
+        html += `
+            <div class="warning-box">
+                <strong>Important</strong>
+                <p>${esc(section.warning)}</p>
+            </div>
+        `;
+    }
+
+    if (section.commonMistake) {
+        html += `
+            <div class="mistake-box">
+                <strong>Common Mistake</strong>
+                <p>${esc(section.commonMistake)}</p>
+            </div>
+        `;
+    }
+
+    if (section.example) {
+        html += `
+            <div class="real-example">
+                <span>REAL-WORLD EXAMPLE</span>
+                <p>${esc(section.example)}</p>
+            </div>
+        `;
+    }
+
+    if (section.code) {
+        html += codeBox(
+            section.code,
+            section.label || "WORKED EXAMPLE"
+        );
+    }
+
+    if (section.output) {
+        html += `
+            <div class="output-box">
+                <span>EXPECTED RESULT</span>
+                <pre>${esc(section.output)}</pre>
+            </div>
+        `;
+    }
+
+    if (section.comparison) {
+        html += comparisonBlock(section.comparison);
+    }
+
+    if (section.flow) {
+        html += flowBlock(section.flow);
+    }
+
+    if (section.methods) {
+        html += methodCards(section.methods);
+    }
+
+    if (section.groups) {
+        html += groupCards(section.groups);
+    }
+
+    if (section.breakdown) {
+        html += urlBreakdown(section.breakdown);
+    }
+
+    if (section.request) {
+        html += `
+            <div class="message-panel request-panel">
+
+                <div class="message-title">
+                    HTTP REQUEST
+                </div>
+
+                ${flowBlock(section.request)}
+
+            </div>
+        `;
+    }
+
+    if (section.response) {
+        html += `
+            <div class="message-panel response-panel">
+
+                <div class="message-title">
+                    HTTP RESPONSE
+                </div>
+
+                ${flowBlock(section.response)}
+
+            </div>
+        `;
+    }
+
+    if (section.serverResponsibilities) {
+        html += `
+            <h3>Typical server responsibilities</h3>
+            ${bulletList(section.serverResponsibilities)}
+        `;
+    }
+
+    if (section.frontend) {
+        html += `
+            <div class="role-panel">
+
+                <div>
+                    <span>FRONTEND</span>
+                    ${bulletList(section.frontend)}
+                </div>
+
+                <div>
+                    <span>BACKEND</span>
+                    ${bulletList(section.backend || [])}
+                </div>
+
+            </div>
+        `;
+    }
+
+    if (section.practice) {
+        html += `
+            <div class="try-it-box">
+                <strong>TRY IT YOURSELF</strong>
+                <p>${esc(section.practice)}</p>
+            </div>
+        `;
+    }
+
+    html += `</section>`;
+
+    return html;
+}
+
+
+/* =========================================================
+   VISUALIZER
+========================================================= */
+
+function renderArchitecture() {
+
+    if (!lesson.sections) return "";
+
+    const finalSection =
+        lesson.sections.find(section => section.architecture);
+
+    if (!finalSection) return "";
+
+    return `
+        <section class="lesson-section visualizer-section">
+
+            <p class="section-label">
+                INTERACTIVE SYSTEM VIEW
+            </p>
+
+            <h2>
+                See how the pieces connect
+            </h2>
+
+            <p class="section-intro">
+                Don't learn these technologies as isolated topics.
+                Follow the direction in which information actually moves.
+            </p>
+
+            ${architecture(finalSection.architecture)}
+
+        </section>
+    `;
+}
+
+
+/* =========================================================
+   TRACE
+========================================================= */
+
+function renderTrace() {
+
+    if (!lesson.trace) return "";
+
+    return `
+        <section class="lesson-section trace-section">
+
+            <p class="section-label">
+                SYSTEM TRACE
+            </p>
+
+            <h2>
+                Follow the process step by step
+            </h2>
+
+            <p class="section-intro">
+                Move through the system one operation at a time.
+                The highlighted step shows what is currently happening.
+            </p>
+
+            <div class="trace">
+
+                <div>
+
+                    <div
+                        class="trace-code"
+                        id="traceCode"
+                    >
+                        ${lesson.trace.code.map((line, i) => `
+                            <div data-line="${i}">
+                                ${esc(line) || " "}
+                            </div>
+                        `).join("")}
+                    </div>
+
+                    <div class="trace-controls">
+
+                        <button id="traceReset">
+                            Reset
+                        </button>
+
+                        <button id="traceNext">
+                            Next step
+                        </button>
+
+                        <button id="traceAuto">
+                            Auto run
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="trace-state">
+
+                    <span class="trace-state-label">
+                        CURRENT STATE
+                    </span>
+
+                    <strong id="traceState">
+                        Ready
+                    </strong>
+
+                    <p id="traceExplain">
+                        Press “Next step” to begin the trace.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+    `;
+}
+
+
+/* =========================================================
+   REVISION
+========================================================= */
+
+function renderRevision() {
+
+    if (!lesson.revision) return "";
+
+    return `
+        <section class="lesson-section">
+
+            <p class="section-label">
+                QUICK REVISION
+            </p>
+
+            <h2>
+                Essential ideas to remember
+            </h2>
+
+            <div class="revision-grid">
+
+                ${lesson.revision.map(item => `
+                    <div>
+                        <b>${esc(item[0])}</b>
+                        <span>${esc(item[1])}</span>
+                    </div>
+                `).join("")}
+
+            </div>
+
+        </section>
+    `;
+}
+
+
+/* =========================================================
+   COMMON MISTAKES
+========================================================= */
+
+function renderMistakes() {
+
+    if (!lesson.commonMistakes?.length) return "";
+
+    return `
+        <section class="lesson-section mistakes-section">
+
+            <p class="section-label">
+                AVOID THESE MISTAKES
+            </p>
+
+            <h2>
+                Common beginner misunderstandings
+            </h2>
+
+            <div class="mistake-list">
+
+                ${lesson.commonMistakes.map((item, i) => `
+                    <div>
+
+                        <span>
+                            ${String(i + 1).padStart(2, "0")}
+                        </span>
+
+                        <p>
+                            ${esc(item)}
+                        </p>
+
+                    </div>
+                `).join("")}
+
+            </div>
+
+        </section>
+    `;
+}
+
+
+/* =========================================================
+   INTERVIEW
+========================================================= */
+
+function renderInterview() {
+
+    if (!lesson.interview) return "";
+
+    return `
+        <section class="lesson-section interview">
+
+            <p class="section-label">
+                PLACEMENT PREPARATION
+            </p>
+
+            <h2>
+                Interview questions
+            </h2>
+
+            <p class="section-intro">
+                A strong developer should be able to explain concepts,
+                not simply remember definitions.
+            </p>
+
+            ${lesson.interview.map((item, i) => `
+                <details>
+
+                    <summary>
+                        <span>
+                            ${String(i + 1).padStart(2, "0")}
+                        </span>
+
+                        ${esc(item.q)}
+                    </summary>
+
+                    <div>
+                        <p>${esc(item.a)}</p>
+                    </div>
+
+                </details>
+            `).join("")}
+
+        </section>
+    `;
+}
+
+
+/* =========================================================
+   PRACTICE
+========================================================= */
+
+function renderPractice() {
+
+    if (!lesson.practice) return "";
+
+    return `
+        <section class="lesson-section practice-section">
+
+            <p class="section-label">
+                PRACTICE ARENA
+            </p>
+
+            <h2>
+                Now use what you learned
+            </h2>
+
+            <p class="section-intro">
+                Try these without copying the examples above.
+                The goal is to make the concept yours.
+            </p>
+
+            <div class="practice-grid">
+
+                ${lesson.practice.map((item, i) => `
+                    <article class="practice-card">
+
+                        <span>
+                            CHALLENGE ${String(i + 1).padStart(2, "0")}
+                        </span>
+
+                        <h3>
+                            ${esc(item.title)}
+                        </h3>
+
+                        <p>
+                            ${esc(item.prompt)}
+                        </p>
+
+                    </article>
+                `).join("")}
+
+            </div>
+
+        </section>
+    `;
+}
+
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+function renderQuiz() {
+
+    if (!lesson.quiz) return "";
+
+    return `
+        <section class="lesson-section quiz">
+
+            <p class="section-label">
+                KNOWLEDGE CHECK
+            </p>
+
+            <h2>
+                Can you reason about it?
+            </h2>
+
+            ${lesson.quiz.map((q, i) => `
+                <article
+                    class="quiz-question"
+                    data-question="${i}"
+                >
+
+                    <p>
+                        ${i + 1}. ${esc(q.q)}
+                    </p>
+
+                    <div class="quiz-options">
+
+                        ${q.options.map((option, j) => `
+                            <button data-option="${j}">
+                                <span>${String.fromCharCode(65 + j)}</span>
+                                ${esc(option)}
+                            </button>
+                        `).join("")}
+
+                    </div>
+
+                    <div
+                        class="quiz-result"
+                        hidden
+                    ></div>
+
+                </article>
+            `).join("")}
+
+        </section>
+    `;
+}
+
+
+/* =========================================================
+   GLOSSARY
+========================================================= */
+
+function renderGlossary() {
+
+    if (!lesson.glossary) return "";
+
+    return `
+        <section class="lesson-section">
+
+            <p class="section-label">
+                GLOSSARY
+            </p>
+
+            <h2>
+                Important terms
+            </h2>
+
+            <div class="glossary-grid">
+
+                ${lesson.glossary.map(item => `
+                    <div>
+                        <strong>${esc(item[0])}</strong>
+                        <span>${esc(item[1])}</span>
+                    </div>
+                `).join("")}
+
+            </div>
+
+        </section>
+    `;
+}
+
+
+/* =========================================================
+   COMPLETE
+========================================================= */
+
+function renderComplete() {
+
+    return `
+        <section class="lesson-section completion-section">
+
+            <p class="section-label">
+                LEVEL COMPLETE
+            </p>
+
+            <h2>
+                ${esc(lesson.takeaway)}
+            </h2>
+
+            <p>
+                Before moving forward, make sure you can explain
+                the major ideas without looking at the lesson.
+            </p>
+
+            <button
+                class="complete-button"
+                id="completeLevel"
+            >
+                Mark Level ${n} complete
+            </button>
+
+        </section>
+    `;
+}
+
+
+/* =========================================================
+   LEGACY CONCEPT SUPPORT
+========================================================= */
+
+function renderLegacyConcepts() {
+
+    if (!lesson.concepts) return "";
+
+    return lesson.concepts.map((concept, i) => `
+        <section class="lesson-section deep-section">
+
+            <p class="section-label">
+                CONCEPT ${i + 1}
+            </p>
+
+            <h2>
+                ${esc(concept.title)}
+            </h2>
+
+            <p>
+                ${esc(concept.text)}
+            </p>
+
+            ${bulletList(concept.points || [])}
+
+            ${concept.code
+                ? codeBox(
+                    concept.code,
+                    concept.label || "WORKED EXAMPLE"
+                )
+                : ""}
+
+            ${concept.output
+                ? `
+                    <div class="output-box">
+                        <span>EXPECTED RESULT</span>
+                        <pre>${esc(concept.output)}</pre>
+                    </div>
+                `
+                : ""}
+
+        </section>
+    `).join("");
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function render() {
+
+    if (!lesson) {
+
+        document.getElementById("lessonMain").innerHTML = `
+            <section class="lesson-section">
+
+                <p class="section-label">
+                    PLANNED LEVEL
+                </p>
+
+                <h2>
+                    ${esc(levels[n - 1]?.title || "Coming Soon")}
+                </h2>
+
+                <p>
+                    This level is part of the complete MERN roadmap
+                    and will be developed after the current stage
+                    is validated.
+                </p>
+
+                <a
+                    class="button primary"
+                    href="lesson.html?level=1"
+                >
+                    Open Level 01
+                </a>
+
+            </section>
+        `;
+
+        return;
+    }
+
+    document.title =
+        `Level ${String(n).padStart(2, "0")}: ${lesson.title} | CodeBhavya`;
+
+    let content = "";
+
+    content += renderHero();
+    content += renderOutcomes();
+
+    if (lesson.sections) {
+
+        content += lesson.sections
+            .map((section, index) =>
+                renderSection(section, index)
+            )
+            .join("");
+
+    } else {
+
+        content += renderLegacyConcepts();
+
+    }
+
+    content += renderArchitecture();
+    content += renderTrace();
+    content += renderMistakes();
+    content += renderRevision();
+    content += renderInterview();
+    content += renderPractice();
+    content += renderQuiz();
+    content += renderGlossary();
+    content += renderComplete();
+
+    content += `
+        <nav class="lesson-nav">
+
+            ${
+                n > 1
+                    ? `<a href="lesson.html?level=${n - 1}">
+                        ← Previous level
+                       </a>`
+                    : "<span></span>"
+            }
+
+            ${
+                n < 30
+                    ? `<a href="lesson.html?level=${n + 1}">
+                        Next level →
+                       </a>`
+                    : `<a href="index.html#roadmap">
+                        Return to roadmap →
+                       </a>`
+            }
+
+        </nav>
+    `;
+
+    document.getElementById("lessonMain").innerHTML = content;
+
+    initTrace();
+    drawComplete();
+}
+
+
+/* =========================================================
+   TRACE ENGINE
+========================================================= */
+
+function traceDraw() {
+
+    if (!lesson?.trace) return;
+
+    document
+        .querySelectorAll("[data-line]")
+        .forEach(line => line.classList.remove("active"));
+
+    const step = lesson.trace.steps[traceIndex];
+
+    if (!step) {
+
+        document.getElementById("traceState").textContent =
+            "Trace complete";
+
+        document.getElementById("traceExplain").textContent =
+            "You reached the end of the process. Reset to trace it again.";
+
+        document.getElementById("traceNext").disabled = true;
+        document.getElementById("traceAuto").disabled = true;
+
+        clearInterval(timer);
+
+        return;
+    }
+
+    const currentLine =
+        document.querySelector(
+            `[data-line="${step.line}"]`
+        );
+
+    if (currentLine) {
+        currentLine.classList.add("active");
+        currentLine.scrollIntoView({
+            block: "nearest",
+            behavior: "smooth"
+        });
+    }
+
+    document.getElementById("traceState").textContent =
+        step.state;
+
+    document.getElementById("traceExplain").textContent =
+        step.explain;
+
+    traceIndex++;
+}
+
+
+function initTrace() {
+
+    const next = document.getElementById("traceNext");
+    const reset = document.getElementById("traceReset");
+    const auto = document.getElementById("traceAuto");
+
+    if (!next || !reset || !auto || !lesson?.trace) return;
+
+    next.onclick = traceDraw;
+
+    reset.onclick = () => {
+
+        clearInterval(timer);
+
+        traceIndex = 0;
+
+        document
+            .querySelectorAll("[data-line]")
+            .forEach(line => line.classList.remove("active"));
+
+        document.getElementById("traceState").textContent =
+            "Ready";
+
+        document.getElementById("traceExplain").textContent =
+            "Press “Next step” to begin.";
+
+        next.disabled = false;
+        auto.disabled = false;
+    };
+
+    auto.onclick = () => {
+
+        clearInterval(timer);
+
+        timer = setInterval(() => {
+
+            traceDraw();
+
+            if (traceIndex >= lesson.trace.steps.length) {
+                clearInterval(timer);
+            }
+
+        }, 1100);
+    };
+}
+
+
+/* =========================================================
+   COMPLETION
+========================================================= */
+
+function drawComplete() {
+
+    const done = getProgress();
+
+    const button =
+        document.getElementById("completeLevel");
+
+    if (!button) return;
+
+    button.textContent =
+        done.includes(n)
+            ? `✓ Level ${n} completed`
+            : `Mark Level ${n} complete`;
+}
+
+
+/* =========================================================
+   CLICK EVENTS
+========================================================= */
+
+document.addEventListener("click", async (event) => {
+
+    const button = event.target.closest("button");
+
+    if (!button) return;
+
+
+    /* COPY */
+
+    if (button.dataset.copy !== undefined) {
+
+        try {
+
+            await navigator.clipboard.writeText(
+                button.dataset.copy
+            );
+
+            toast("Code copied");
+
+        } catch {
+
+            toast("Select the code manually");
+
+        }
+    }
+
+
+    /* QUIZ */
+
+    if (button.dataset.option !== undefined) {
+
+        const questionBox =
+            button.closest(".quiz-question");
+
+        const questionIndex =
+            Number(questionBox.dataset.question);
+
+        const question =
+            lesson.quiz[questionIndex];
+
+        const selected =
+            Number(button.dataset.option);
+
+        questionBox
+            .querySelectorAll("[data-option]")
+            .forEach((optionButton, index) => {
+
+                optionButton.disabled = true;
+
+                if (index === question.answer) {
+                    optionButton.classList.add("correct");
+                }
+
+                if (
+                    index === selected &&
+                    selected !== question.answer
+                ) {
+                    optionButton.classList.add("wrong");
+                }
+
+            });
+
+        const result =
+            questionBox.querySelector(".quiz-result");
+
+        result.hidden = false;
+
+        result.textContent =
+            selected === question.answer
+                ? `Correct. ${question.explanation}`
+                : `Not quite. ${question.explanation}`;
+    }
+
+
+    /* COMPLETE */
+
+    if (button.id === "completeLevel") {
+
+        let done = getProgress();
+
+        if (done.includes(n)) {
+            done = done.filter(x => x !== n);
+        } else {
+            done = [...done, n];
+        }
+
+        localStorage.setItem(
+            KEY,
+            JSON.stringify(done)
+        );
+
+        drawComplete();
+    }
+
+
+    /* MOBILE NAV */
+
+    if (button.id === "navToggle") {
+
+        const navElement =
+            document.getElementById("siteNav");
+
+        navElement.classList.toggle("open");
+    }
 
 });
 
-const r=box.querySelector(".quiz-result");
 
-r.hidden=false;
+/* =========================================================
+   TOAST
+========================================================= */
 
-r.textContent=
-`${choice===q.answer?"Correct.":"Not quite."} ${q.explanation}`;
+function toast(message) {
+
+    const element =
+        document.getElementById("toast");
+
+    if (!element) return;
+
+    element.textContent = message;
+
+    element.classList.add("show");
+
+    setTimeout(() => {
+        element.classList.remove("show");
+    }, 1300);
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+function sidebar(open) {
+
+    const sidebarElement =
+        document.getElementById("sidebar");
+
+    const shade =
+        document.getElementById("shade");
+
+    sidebarElement.classList.toggle(
+        "open",
+        open
+    );
+
+    shade.hidden = !open;
+}
+
+
+const lessonMenu =
+    document.getElementById("lessonMenu");
+
+if (lessonMenu) {
+
+    lessonMenu.onclick = () => {
+
+        sidebar(
+            !document
+                .getElementById("sidebar")
+                .classList.contains("open")
+        );
+
+    };
 
 }
 
-if(b.id==="completeLevel"){
 
-let done=JSON.parse(
-localStorage.getItem(KEY)||"[]"
-);
+const shade =
+    document.getElementById("shade");
 
-done=done.includes(n)
-?done.filter(x=>x!==n)
-:[...done,n];
+if (shade) {
+    shade.onclick = () => sidebar(false);
+}
 
-localStorage.setItem(
-KEY,
-JSON.stringify(done)
-);
 
-drawComplete();
+const levelSearch =
+    document.getElementById("levelSearch");
+
+if (levelSearch) {
+
+    levelSearch.oninput = (event) => {
+
+        const query =
+            event.target.value.toLowerCase();
+
+        document
+            .querySelectorAll("#levelNav a")
+            .forEach(link => {
+
+                link.hidden =
+                    !link.textContent
+                        .toLowerCase()
+                        .includes(query);
+
+            });
+
+    };
 
 }
 
-if(b.id==="navToggle")
-document
-.getElementById("siteNav")
-.classList.toggle("open");
+
+/* =========================================================
+   READING PROGRESS
+========================================================= */
+
+window.addEventListener("scroll", () => {
+
+    const documentElement =
+        document.documentElement;
+
+    const max =
+        documentElement.scrollHeight -
+        window.innerHeight;
+
+    const bar =
+        document.getElementById("readingBar");
+
+    if (!bar) return;
+
+    bar.style.width =
+        (max > 0
+            ? (window.scrollY / max) * 100
+            : 0) + "%";
 
 });
 
-function toast(s){
 
-const t=document.getElementById("toast");
-
-t.textContent=s;
-t.classList.add("show");
-
-setTimeout(
-()=>t.classList.remove("show"),
-1300
-);
-
-}
-
-function sidebar(open){
-
-document
-.getElementById("sidebar")
-.classList.toggle("open",open);
-
-document.getElementById("shade").hidden=!open;
-
-}
-
-document.getElementById("lessonMenu").onclick=()=>
-sidebar(
-!document
-.getElementById("sidebar")
-.classList.contains("open")
-);
-
-document.getElementById("shade").onclick=()=>
-sidebar(false);
-
-document.getElementById("levelSearch").oninput=e=>
-document
-.querySelectorAll("#levelNav a")
-.forEach(a=>
-a.hidden=
-!a.textContent
-.toLowerCase()
-.includes(
-e.target.value.toLowerCase()
-)
-);
-
-window.addEventListener("scroll",()=>{
-
-const d=document.documentElement;
-const max=d.scrollHeight-innerHeight;
-
-document.getElementById("readingBar").style.width=
-(max?scrollY/max*100:0)+"%";
-
-});
+/* =========================================================
+   INITIALIZE
+========================================================= */
 
 nav();
 render();
 
-document.getElementById("year").textContent=
-new Date().getFullYear();
+const year =
+    document.getElementById("year");
+
+if (year) {
+    year.textContent =
+        new Date().getFullYear();
+}
