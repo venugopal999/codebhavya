@@ -340,10 +340,11 @@ function searchTopics() {
             ]
         },
         {
-            title: "Core Computer Science",
+            title: "Core Computer Science & Web Development",
             links: [
                 { label: "DBMS & SQL", path: "DBMS/index.html", icon: "DB" },
                 { label: "Operating Systems", path: "Operating-Systems/index.html", icon: "OS" },
+                { label: "Full Stack MERN", path: "Full-Stack/index.html", icon: "FSM" },
                 { label: "Core CS Practice", path: "Placement/mcq-library.html?topic=core-cs", icon: "CS" },
                 { label: "Scenario Problem Lab", path: "Placement/core-cs-problems.html", icon: "Lab" }
             ]
