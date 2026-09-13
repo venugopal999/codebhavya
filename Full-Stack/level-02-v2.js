@@ -2,2318 +2,1085 @@
 
 /* =========================================================
    CodeBhavya Full Stack MERN
-   Level 02 — Semantic HTML
-   Version 2
+   Level 02 — Detailed / Beginner First
+   Semantic HTML, Document Structure & Accessibility
    ========================================================= */
 
-window.FULLSTACK_LESSONS =
-  window.FULLSTACK_LESSONS || {};
+window.FULLSTACK_LESSONS = window.FULLSTACK_LESSONS || {};
 
 window.FULLSTACK_LESSONS[2] = {
+    n: 2,
 
-  title: "Semantic HTML",
-  kicker: "WEB FOUNDATIONS",
-  duration: "100–130 minutes",
+    kicker: "WEB FOUNDATIONS",
 
-  summary:
-    "Learn how professional HTML describes the meaning and structure of a web page. You will learn semantic elements, headings, links, images, lists, tables, landmarks, accessibility basics and the difference between HTML structure and visual styling.",
+    title: "Semantic HTML & Document Structure",
 
-  difficulty: "Beginner → Intermediate",
+    summary:
+        "Learn how to build meaningful HTML instead of using elements only because they look right. Understand elements, attributes, landmarks, headings, navigation, articles, sections, images, tables, links, buttons, the DOM and accessibility, then apply those ideas to real CodeBhavya-style pages.",
 
-  estimatedTime: "100–130 minutes",
+    duration: "Estimated learning time: 3–4 hours",
 
-  hero: {
-    badge: "LEVEL 02 • HTML FOUNDATIONS",
-    description:
-      "HTML is not simply a collection of tags. It is the structural language that tells the browser, search engines and assistive technologies what each part of a page means.",
-    note:
-      "Before React, CSS frameworks and component libraries, understand the document underneath them."
-  },
+    difficulty: "Beginner",
 
+    concepts: 24,
 
-  /* =======================================================
-     LEARNING OBJECTIVES
-     ======================================================= */
+    outcomes: [
+        "Explain what semantic HTML means and why it matters.",
+        "Distinguish an HTML element, opening tag, closing tag and attribute.",
+        "Choose meaningful structural elements such as header, nav, main, article, section, aside and footer.",
+        "Understand when a generic div is appropriate and when a semantic element is better.",
+        "Build a logical heading hierarchy with h1 through h6.",
+        "Choose correctly between links and buttons.",
+        "Use lists, figures, images, captions and tables appropriately.",
+        "Understand how HTML source becomes a DOM tree in the browser.",
+        "Explain how source order and document structure affect accessibility.",
+        "Write useful alternative text for informative images and empty alt text for decorative images.",
+        "Understand native HTML controls and why they are usually preferable to custom controls.",
+        "Understand the purpose and limits of ARIA.",
+        "Audit a real page for semantic structure and accessibility problems.",
+        "Build an HTML-only foundation that remains understandable before CSS is added."
+    ],
 
-  objectives: [
+    sections: [
 
-    "Explain the difference between HTML, CSS and JavaScript.",
+        {
+            title: "What are we actually learning?",
+            intro:
+                "HTML is not simply a way to make text appear on a page. It describes the structure and meaning of a document.",
+            explanation: [
+                "A browser can display a page even when the HTML is poorly structured, but a page that merely looks correct is not necessarily a well-designed document.",
+                "Semantic HTML means choosing elements according to the meaning and purpose of their content or interaction rather than choosing elements only for visual appearance.",
+                "Good HTML gives the browser, assistive technologies, developers and other tools a clearer model of what the page contains."
+            ],
+            points: [
+                "Structure comes before visual styling.",
+                "Meaningful elements are easier to understand and maintain.",
+                "Accessibility starts with correct native HTML semantics."
+            ],
+            keyIdea:
+                "Do not ask only, 'How can I make this look like a button?' Ask, 'What is this thing supposed to mean or do?'"
+        },
 
-    "Understand what semantic HTML means and why it matters.",
+        {
+            title: "HTML Element, Tag and Attribute",
+            intro:
+                "Before learning semantic elements, you must understand the basic parts of HTML markup.",
+            explanation: [
+                "An element is the complete HTML node. A normal element can contain an opening tag, content and a closing tag.",
+                "An attribute provides additional information about an element. Attributes are written in the opening tag.",
+                "Some HTML elements are void elements and do not have a normal closing tag, such as img and input."
+            ],
+            comparison: [
+                {
+                    term: "Element",
+                    meaning: "Complete HTML node",
+                    example: "<p>Hello</p>"
+                },
+                {
+                    term: "Opening tag",
+                    meaning: "Starts an element",
+                    example: "<p>"
+                },
+                {
+                    term: "Closing tag",
+                    meaning: "Ends a normal element",
+                    example: "</p>"
+                },
+                {
+                    term: "Attribute",
+                    meaning: "Additional element information",
+                    example: 'href="/courses"'
+                }
+            ],
+            code:
+`<a href="/Full-Stack/lesson.html?level=2">
+    Open Level 02
+</a>`,
+            keyIdea:
+                "Tags describe the element; attributes provide additional information about that element."
+        },
 
-    "Build a meaningful page structure using header, nav, main, section, article, aside and footer.",
+        {
+            title: "Semantic HTML",
+            intro:
+                "Semantic HTML uses elements that communicate what a region or piece of content represents.",
+            explanation: [
+                "Elements such as header, nav, main, article, section, aside and footer communicate structural roles more clearly than a page made entirely from div elements.",
+                "Semantic HTML does not mean that every div is bad. A div is useful when a neutral grouping is actually what you need.",
+                "The goal is not to use as many semantic elements as possible. The goal is to choose the element whose meaning matches the content or interaction."
+            ],
+            comparison: [
+                {
+                    term: "Semantic element",
+                    meaning: "Communicates a meaningful role or purpose",
+                    example: "<main>"
+                },
+                {
+                    term: "Generic element",
+                    meaning: "Neutral grouping with no built-in meaning",
+                    example: "<div>"
+                }
+            ],
+            example:
+                "A course lesson's primary content can be placed inside main, while an individual self-contained lesson article can use article."
+        },
 
-    "Create correct heading hierarchies instead of choosing headings only because of their visual size.",
+        {
+            title: "The Main Document Landmarks",
+            intro:
+                "A well-structured page normally has identifiable major regions.",
+            explanation: [
+                "header commonly contains introductory content or navigation for a page or region.",
+                "nav identifies a section whose purpose is navigation.",
+                "main contains the dominant content of the page.",
+                "aside contains content that is complementary to the main content.",
+                "footer contains footer information for the page or a section."
+            ],
+            comparison: [
+                {
+                    term: "header",
+                    meaning: "Introductory or navigational content",
+                    example: "Site branding and course navigation"
+                },
+                {
+                    term: "nav",
+                    meaning: "Important navigation links",
+                    example: "Course levels"
+                },
+                {
+                    term: "main",
+                    meaning: "Primary page content",
+                    example: "Lesson content"
+                },
+                {
+                    term: "aside",
+                    meaning: "Complementary content",
+                    example: "Related topics"
+                },
+                {
+                    term: "footer",
+                    meaning: "Footer information",
+                    example: "Copyright and related links"
+                }
+            ],
+            flow: [
+                { title: "Document", text: "The html element contains the document." },
+                { title: "Site header", text: "Branding and primary navigation appear in the header." },
+                { title: "Main content", text: "The main landmark contains the primary lesson." },
+                { title: "Article", text: "The lesson itself can be represented as a self-contained composition." },
+                { title: "Sections", text: "Major topics are grouped into meaningful sections." },
+                { title: "Aside", text: "Related learning material can be complementary content." },
+                { title: "Footer", text: "The page ends with site-level footer information." }
+            ]
+        },
 
-    "Understand the difference between links and buttons and choose the correct element.",
-
-    "Use lists, images, figures and captions appropriately.",
-
-    "Create accessible tables with meaningful headers.",
-
-    "Understand the relationship between HTML, the DOM and accessibility technologies.",
-
-    "Recognize when a generic div is appropriate and when a semantic element is better.",
-
-    "Inspect and improve an HTML document using browser developer tools.",
-
-    "Build a complete semantic structure for a CodeBhavya learning page.",
-
-    "Avoid common HTML mistakes that create accessibility, SEO and maintenance problems."
-
-  ],
-
-
-  /* =======================================================
-     CONCEPTS
-     ======================================================= */
-
-  concepts: [
-
-    {
-      number: 1,
-      title: "What HTML actually does",
-
-      intro:
-        "HTML stands for HyperText Markup Language. It describes the structure and meaning of content in a web document. HTML does not primarily decide how beautiful the page looks and it does not provide application logic.",
-
-      points: [
-        "<strong>HTML</strong> describes structure and meaning.",
-        "<strong>CSS</strong> controls presentation and visual layout.",
-        "<strong>JavaScript</strong> provides behavior and application logic.",
-        "A professional web application normally uses all three layers together.",
-        "React does not replace HTML concepts; React ultimately produces DOM elements based on HTML semantics."
-      ],
-
-      keyIdea:
-        "Think of HTML as the skeleton and meaning of the page, CSS as presentation, and JavaScript as behavior.",
-
-      example: {
-        title: "CodeBhavya lesson page",
-
-        text:
-          "A lesson page may contain a site header, navigation, main lesson content, practice area, related information and a footer. HTML gives each part a meaningful structure.",
-
-        code:
+        {
+            title: "header — More Than Just a Top Bar",
+            intro:
+                "header represents introductory content for a page or section. It is not simply a CSS instruction meaning 'put this at the top'.",
+            explanation: [
+                "A site header may contain branding and primary navigation.",
+                "An article can also have its own header containing the article title, author or introductory information.",
+                "Therefore, header is about the role of the content, not only its visual position."
+            ],
+            code:
 `<header>
-  <h1>CodeBhavya</h1>
-</header>
+    <a href="/">CodeBhavya</a>
+    <nav aria-label="Primary navigation">
+        <a href="/Full-Stack/">Full Stack</a>
+        <a href="/Placement/">Placement</a>
+    </nav>
+</header>`,
+            commonMistake:
+                "Using header only because a box happens to appear at the top. The element should describe the content's role, not its CSS position."
+        },
 
-<main>
-  <article>
-    <h2>Semantic HTML</h2>
-    <p>Learn how meaningful HTML creates better web pages.</p>
-  </article>
-</main>
+        {
+            title: "nav — Navigation Has Meaning",
+            intro:
+                "Use nav for a section containing important navigation links.",
+            explanation: [
+                "A navigation region can contain links to major pages or important areas of the current site.",
+                "A page can contain more than one nav when there are multiple meaningful navigation regions.",
+                "When several navigation regions exist, accessible labels can help distinguish them."
+            ],
+            code:
+`<nav aria-label="Course navigation">
+    <a href="lesson.html?level=1">Level 01</a>
+    <a href="lesson.html?level=2">Level 02</a>
+    <a href="lesson.html?level=3">Level 03</a>
+</nav>`,
+            keyIdea:
+                "nav describes an important navigation region; it is not required around every individual link."
+        },
 
-<footer>
-  <p>CodeBhavya</p>
-</footer>`
-      },
-
-      commonMistake:
-        "Thinking HTML tags are mainly visual controls. A heading is not important because it looks large; it is important because it identifies a heading in the document structure."
-    },
-
-
-    {
-      number: 2,
-      title: "Elements, tags and attributes",
-
-      intro:
-        "HTML documents are made from elements. Tags are the markup syntax used to create elements, while attributes provide additional information about an element.",
-
-      points: [
-        "An opening tag normally begins an element.",
-        "A closing tag normally ends an element.",
-        "Some elements are void elements and do not have closing tags.",
-        "Attributes provide additional information such as a URL, identifier, language or input purpose.",
-        "Attribute values are normally written inside quotes."
-      ],
-
-      code:
-`<a href="/courses/full-stack" class="course-link">
-  Full Stack MERN
-</a>
-
-<img
-  src="lesson.png"
-  alt="Semantic HTML lesson illustration"
->
-
-<input
-  id="email"
-  type="email"
-  autocomplete="email"
->`,
-      
-      keyIdea:
-        "The tag identifies what the element is; attributes provide additional information about that element.",
-
-      comparison: {
-        headers: [
-          "Term",
-          "Meaning",
-          "Example"
-        ],
-
-        rows: [
-          [
-            "Element",
-            "Complete HTML node",
-            "<p>Hello</p>"
-          ],
-          [
-            "Opening tag",
-            "Starts an element",
-            "<p>"
-          ],
-          [
-            "Closing tag",
-            "Ends a normal element",
-            "</p>"
-          ],
-          [
-            "Attribute",
-            "Additional element information",
-            'href="/courses"'
-          ]
-        ]
-      }
-    },
-
-
-    {
-      number: 3,
-      title: "The HTML document skeleton",
-
-      intro:
-        "Every normal HTML document should have a predictable top-level structure. This gives the browser important information about the document and its language.",
-
-      points: [
-        "<strong>DOCTYPE</strong> tells the browser to use standards mode.",
-        "<strong>html</strong> is the root element.",
-        "<strong>head</strong> contains document metadata and resource references.",
-        "<strong>body</strong> contains the document content shown or used by the page.",
-        "The lang attribute communicates the primary language of the document."
-      ],
-
-      code:
-`<!doctype html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
-
-  <title>Semantic HTML | CodeBhavya</title>
-</head>
-
-<body>
-
-  <header>
-    <h1>CodeBhavya</h1>
-  </header>
-
-  <main>
-    <h2>Semantic HTML</h2>
-  </main>
-
-</body>
-</html>`,
-
-      warning:
-        "Do not copy the document skeleton blindly. Understand what each part is responsible for.",
-
-      tryIt: {
-        title: "Try It Yourself",
-        steps: [
-          "Create a file named index.html.",
-          "Write the document skeleton manually instead of using an editor shortcut.",
-          "Change the lang value and observe what it represents.",
-          "Change the title and open the page in a browser.",
-          "Inspect the document using browser DevTools."
-        ]
-      }
-    },
-
-
-    {
-      number: 4,
-      title: "What semantic HTML means",
-
-      intro:
-        "Semantic HTML means choosing an element because of what the content or interaction means, rather than choosing an element only because of how it looks.",
-
-      points: [
-        "<strong>nav</strong> communicates navigation.",
-        "<strong>main</strong> communicates the primary content of the document.",
-        "<strong>article</strong> communicates a self-contained composition.",
-        "<strong>section</strong> groups related content into a meaningful thematic region.",
-        "<strong>footer</strong> communicates footer information for a page or section.",
-        "<strong>button</strong> communicates an action.",
-        "<strong>a</strong> communicates a link to another location or resource."
-      ],
-
-      keyIdea:
-        "Semantic HTML gives meaning to the structure. CSS can change appearance, but CSS cannot turn a meaningless element into the correct interaction or document semantics.",
-
-      comparison: {
-        headers: [
-          "Generic",
-          "Semantic",
-          "Why semantic is useful"
-        ],
-
-        rows: [
-          [
-            "<div>",
-            "<nav>",
-            "Identifies navigation"
-          ],
-          [
-            "<div>",
-            "<main>",
-            "Identifies primary content"
-          ],
-          [
-            "<div>",
-            "<article>",
-            "Identifies self-contained content"
-          ],
-          [
-            "<div>",
-            "<button>",
-            "Provides native action semantics"
-          ]
-        ]
-      }
-    },
-
-
-    {
-      number: 5,
-      title: "The div element — useful, but neutral",
-
-      intro:
-        "div is a generic block container. It is not a bad element. The problem occurs when developers use div for everything even when a more meaningful element exists.",
-
-      points: [
-        "Use div when you need a neutral grouping container.",
-        "Do not replace meaningful navigation with div elements unnecessarily.",
-        "Do not create fake buttons from div elements.",
-        "Do not use div merely because it is convenient.",
-        "Semantic elements should communicate meaning; div remains available when no semantic meaning fits."
-      ],
-
-      code:
-`<div class="card">
-  <h3>JavaScript</h3>
-  <p>Learn JavaScript fundamentals.</p>
-</div>`,
-
-      commonMistake:
-        "The mistake is not using div. The mistake is using div when the content has a stronger semantic element.",
-
-      example: {
-        title: "Neutral wrapper vs meaningful content",
-
-        text:
-          "A div may be appropriate around several cards for layout. But each individual article may be better represented by article if each card can stand on its own."
-      }
-    },
-
-
-    {
-      number: 6,
-      title: "Page landmarks",
-
-      intro:
-        "Landmark elements describe major regions of a page. They help people and assistive technologies understand the page without reading every piece of content sequentially.",
-
-      points: [
-        "<strong>header</strong> usually contains introductory content or site/section branding.",
-        "<strong>nav</strong> contains major navigation links.",
-        "<strong>main</strong> contains the primary content.",
-        "<strong>aside</strong> contains related or complementary information.",
-        "<strong>footer</strong> contains footer information.",
-        "A page should normally have one primary main landmark."
-      ],
-
-      code:
-`<header>
-  <a href="/">CodeBhavya</a>
-</header>
-
-<nav aria-label="Primary">
-  <a href="/courses">Courses</a>
-  <a href="/practice">Practice</a>
-</nav>
-
-<main>
-  <article>
+        {
+            title: "main — The Primary Content",
+            intro:
+                "main identifies the dominant content of the document.",
+            explanation: [
+                "The lesson material a student came to read is normally part of the main content.",
+                "Using main helps establish a clear landmark structure for users and assistive technologies.",
+                "Navigation, related material and site-level information should not be confused with the primary content simply because they are visible on the same screen."
+            ],
+            code:
+`<main>
     <h1>Semantic HTML</h1>
-  </article>
+    <p>Learn how document structure communicates meaning.</p>
+</main>`,
+            warning:
+                "Do not treat main as a generic wrapper just because it is convenient. It represents the page's dominant content."
+        },
 
-  <aside>
-    Related lessons
-  </aside>
-</main>
+        {
+            title: "section vs article vs div",
+            intro:
+                "These three elements are frequently confused because all can group content visually.",
+            explanation: [
+                "section represents a thematic grouping of content, normally with a heading that identifies the topic.",
+                "article represents a self-contained composition that can potentially stand independently.",
+                "div is a neutral container with no semantic meaning of its own and is appropriate when no more meaningful element fits."
+            ],
+            comparison: [
+                {
+                    term: "Chapter topic inside a lesson",
+                    meaning: "section",
+                    example: "The HTTP Methods section"
+                },
+                {
+                    term: "Independent blog post",
+                    meaning: "article",
+                    example: "A complete article about HTTP"
+                },
+                {
+                    term: "News story card",
+                    meaning: "article",
+                    example: "A self-contained story"
+                },
+                {
+                    term: "Neutral layout wrapper",
+                    meaning: "div",
+                    example: "A CSS-only grouping"
+                }
+            ],
+            keyIdea:
+                "Use section for thematic grouping, article for self-contained content, and div when a neutral container is genuinely needed."
+        },
 
-<footer>
-  CodeBhavya
-</footer>`,
-
-      keyIdea:
-        "Landmarks create a high-level map of the page."
-    },
-
-
-    {
-      number: 7,
-      title: "Header and footer are not only page-level elements",
-
-      intro:
-        "header and footer can describe the beginning and ending information of the whole page or of a meaningful section such as an article.",
-
-      points: [
-        "A page can have a header and footer.",
-        "An article can also have its own header and footer.",
-        "The meaning depends on the element's context.",
-        "Do not assume header always means the website's top bar.",
-        "Do not assume footer always means the final element of the entire body."
-      ],
-
-      code:
-`<article>
-
-  <header>
-    <h2>Understanding DNS</h2>
-    <p>Web Foundations</p>
-  </header>
-
-  <p>
-    DNS translates human-readable domain names
-    into network addressing information.
-  </p>
-
-  <footer>
-    <p>Level 01 — Web Foundations</p>
-  </footer>
-
-</article>`
-    },
-
-
-    {
-      number: 8,
-      title: "Headings create document hierarchy",
-
-      intro:
-        "Headings communicate the structure of content. They should be selected according to hierarchy and meaning, not simply because one heading looks visually attractive.",
-
-      points: [
-        "<strong>h1</strong> identifies the primary page heading.",
-        "<strong>h2</strong> identifies major sections under the page topic.",
-        "<strong>h3</strong> identifies subsections under an h2.",
-        "Continue the hierarchy when the content requires deeper levels.",
-        "Do not choose h4 simply because it looks smaller.",
-        "CSS should control visual size."
-      ],
-
-      code:
+        {
+            title: "Heading Hierarchy",
+            intro:
+                "Headings communicate document structure. Their visual size should not be the reason you choose a heading level.",
+            explanation: [
+                "h1 normally identifies the main subject of the page, while h2, h3 and deeper levels represent nested topics.",
+                "A logical heading hierarchy makes the document easier to scan and helps users understand relationships between sections.",
+                "If a heading needs to look smaller or larger, use CSS for visual presentation instead of selecting a heading only for its size."
+            ],
+            code:
 `<h1>Full Stack MERN</h1>
 
-<h2>HTML Foundations</h2>
-
+<h2>HTML</h2>
 <h3>Semantic HTML</h3>
-
 <h3>Forms</h3>
 
-<h2>CSS Foundations</h2>
+<h2>CSS</h2>
+<h3>Flexbox</h3>
+<h3>Grid</h3>`,
+            points: [
+                "Do not skip heading levels simply to obtain a desired font size.",
+                "Use headings to describe the structure of the content.",
+                "Use CSS to control appearance."
+            ],
+            commonMistake:
+                "Writing h1, h4 and h2 based on visual size rather than document hierarchy."
+        },
 
-<h3>Selectors</h3>
+        {
+            title: "Anchor vs Button",
+            intro:
+                "One of the most important semantic decisions in frontend development is choosing the correct interactive element.",
+            explanation: [
+                "An anchor is normally used for navigation to another URL or resource.",
+                "A button performs an action such as opening a menu, submitting information, toggling a panel or copying code.",
+                "The distinction is about the user's intended action, not how the control looks."
+            ],
+            comparison: [
+                {
+                    term: "Open Level 02",
+                    meaning: "a",
+                    example: '<a href="lesson.html?level=2">'
+                },
+                {
+                    term: "Open mobile menu",
+                    meaning: "button",
+                    example: '<button type="button">'
+                },
+                {
+                    term: "Copy code",
+                    meaning: "button",
+                    example: '<button type="button">Copy</button>'
+                },
+                {
+                    term: "Visit GitHub",
+                    meaning: "a",
+                    example: '<a href="...">'
+                }
+            ],
+            keyIdea:
+                "Navigation changes where the user goes; an action changes something or performs an operation."
+        },
 
-<h3>Responsive Design</h3>`,
+        {
+            title: "Lists — Ordered, Unordered and Description Lists",
+            intro:
+                "Lists communicate relationships between multiple items.",
+            explanation: [
+                "Use ul when the order of the items is not important.",
+                "Use ol when the sequence or ranking is meaningful.",
+                "Use dl when you have terms and corresponding descriptions."
+            ],
+            comparison: [
+                {
+                    term: "ul",
+                    meaning: "Unordered list",
+                    example: "Course features"
+                },
+                {
+                    term: "ol",
+                    meaning: "Ordered list",
+                    example: "Setup steps"
+                },
+                {
+                    term: "dl",
+                    meaning: "Description list",
+                    example: "Term and meaning"
+                }
+            ],
+            code:
+`<ol>
+    <li>Install Node.js</li>
+    <li>Create the project</li>
+    <li>Run the development server</li>
+</ol>`,
+            example:
+                "A list of installation steps is naturally ordered because the sequence matters."
+        },
 
-      warning:
-        "A visually large paragraph is still a paragraph. A heading should identify an actual heading in the content.",
-
-      commonMistake:
-        "Using h1, h2 and h3 as font-size controls instead of document-structure controls."
-    },
-
-
-    {
-      number: 9,
-      title: "Heading hierarchy in a real CodeBhavya lesson",
-
-      intro:
-        "A course lesson is a good example of nested document structure.",
-
-      points: [
-        "The lesson title can be the h1.",
-        "Major lesson sections can use h2.",
-        "Subtopics inside those sections can use h3.",
-        "Practice questions should have a logical relationship to their containing section.",
-        "Do not skip hierarchy only to obtain a preferred visual size."
-      ],
-
-      code:
-`<article>
-
-  <h1>Semantic HTML</h1>
-
-  <section>
-    <h2>Semantic Elements</h2>
-
-    <h3>Navigation</h3>
-    <p>...</p>
-
-    <h3>Articles</h3>
-    <p>...</p>
-  </section>
-
-  <section>
-    <h2>Accessibility</h2>
-
-    <h3>Keyboard Navigation</h3>
-    <p>...</p>
-  </section>
-
-</article>`
-    },
-
-
-    {
-      number: 10,
-      title: "section vs article",
-
-      intro:
-        "section and article are often confused because both group content. Their purposes are different.",
-
-      points: [
-        "<strong>section</strong> represents a thematic grouping within a larger document.",
-        "<strong>article</strong> represents a self-contained composition that could potentially stand on its own.",
-        "A section normally benefits from a heading.",
-        "Articles can contain their own headings and internal structure.",
-        "A course lesson can contain sections, while an individual blog post can be an article."
-      ],
-
-      comparison: {
-        headers: [
-          "Situation",
-          "Better choice",
-          "Reason"
-        ],
-
-        rows: [
-          [
-            "Chapter topic inside a lesson",
-            "section",
-            "Thematic grouping"
-          ],
-          [
-            "Independent blog post",
-            "article",
-            "Self-contained composition"
-          ],
-          [
-            "News story card",
-            "article",
-            "Can stand as its own content"
-          ],
-          [
-            "Neutral layout wrapper",
-            "div",
-            "No semantic meaning required"
-          ]
-        ]
-      },
-
-      keyIdea:
-        "Ask: Can this content be understood as its own composition? If yes, article may be appropriate. If it is a thematic part of a larger document, section is often more suitable."
-    },
-
-
-    {
-      number: 11,
-      title: "Navigation with nav",
-
-      intro:
-        "The nav element identifies a major collection of navigation links.",
-
-      points: [
-        "Use nav for important navigation blocks.",
-        "Not every group of links needs nav.",
-        "A page can contain more than one nav when the navigation purposes are different.",
-        "aria-label can distinguish multiple navigation regions when necessary.",
-        "The links inside nav should normally be real anchors."
-      ],
-
-      code:
-`<nav aria-label="Course navigation">
-
-  <a href="/Full-Stack/">Course Home</a>
-
-  <a href="/Full-Stack/lesson.html?level=1">
-    Level 1
-  </a>
-
-  <a href="/Full-Stack/lesson.html?level=2">
-    Level 2
-  </a>
-
-</nav>`,
-
-      commonMistake:
-        "Putting every random collection of links inside nav. Use it for meaningful navigation regions."
-    },
-
-
-    {
-      number: 12,
-      title: "Links vs buttons",
-
-      intro:
-        "One of the most important HTML decisions is choosing between an anchor and a button.",
-
-      points: [
-        "Use <strong>a</strong> when the user is going somewhere or opening a resource.",
-        "Use <strong>button</strong> when the user is performing an action.",
-        "A link should normally have an href.",
-        "A button should be keyboard accessible by default.",
-        "Do not create fake buttons using clickable div elements."
-      ],
-
-      comparison: {
-        headers: [
-          "User intention",
-          "Element",
-          "Example"
-        ],
-
-        rows: [
-          [
-            "Open Level 02",
-            "a",
-            '<a href="lesson.html?level=2">'
-          ],
-          [
-            "Open mobile menu",
-            "button",
-            '<button type="button">'
-          ],
-          [
-            "Copy code",
-            "button",
-            '<button type="button">Copy</button>'
-          ],
-          [
-            "Visit GitHub",
-            "a",
-            '<a href="...">'
-          ]
-        ]
-      },
-
-      keyIdea:
-        "Destination → link. Action → button."
-    },
-
-
-    {
-      number: 13,
-      title: "Lists communicate collections",
-
-      intro:
-        "HTML has dedicated elements for ordered and unordered collections. Choosing the correct list helps communicate the relationship between items.",
-
-      points: [
-        "<strong>ul</strong> represents an unordered list.",
-        "<strong>ol</strong> represents an ordered list.",
-        "<strong>li</strong> represents an item inside a list.",
-        "Navigation menus are often naturally represented using lists.",
-        "Use ordered lists when sequence or ranking matters."
-      ],
-
-      code:
-`<h2>Learning Path</h2>
-
-<ol>
-  <li>HTML</li>
-  <li>CSS</li>
-  <li>JavaScript</li>
-  <li>React</li>
-  <li>Node.js</li>
-</ol>
-
-<h2>Topics in Level 02</h2>
-
-<ul>
-  <li>Semantic elements</li>
-  <li>Headings</li>
-  <li>Links</li>
-  <li>Accessibility</li>
-</ul>`
-    },
-
-
-    {
-      number: 14,
-      title: "Images and alternative text",
-
-      intro:
-        "Images are content. The alt attribute tells assistive technology what an image means when the image itself cannot be perceived.",
-
-      points: [
-        "Meaningful images should have useful alternative text.",
-        "Decorative images can use an empty alt attribute.",
-        "Do not put the image filename into alt unless that is actually meaningful.",
-        "Do not repeat surrounding text unnecessarily.",
-        "Alt text should describe the purpose or meaning of the image in context."
-      ],
-
-      code:
+        {
+            title: "Images and Alternative Text",
+            intro:
+                "An image can carry useful information, decorative meaning or no meaningful information at all.",
+            explanation: [
+                "Informative images need alternative text that communicates their useful meaning.",
+                "Decorative images can generally use an empty alt attribute so they do not add unnecessary information for assistive technology users.",
+                "Alt text should describe the image's purpose in the context of the page rather than simply listing visible objects."
+            ],
+            comparison: [
+                {
+                    term: "Informative diagram",
+                    meaning: "Describe the useful information",
+                    example: 'alt="Browser to server request flow"'
+                },
+                {
+                    term: "Decorative icon",
+                    meaning: "Use empty alternative text when appropriate",
+                    example: 'alt=""'
+                },
+                {
+                    term: "Course thumbnail",
+                    meaning: "Describe the useful course context",
+                    example: 'alt="Full Stack MERN course"'
+                }
+            ],
+            code:
 `<img
-  src="dns-flow.png"
-  alt="Browser resolves codebhavya.com through DNS before connecting to the server."
+    src="web-flow.png"
+    alt="Browser sends a request to a web server"
 >`,
+            commonMistake:
+                "Writing alt text such as 'image' or 'picture' without communicating what the image is useful for."
+        },
 
-      example: {
-        title: "Decorative vs informative",
-
-        steps: [
-          "A diagram explaining DNS is informative, so its alt text should communicate the relevant meaning.",
-          "A purely decorative background shape adds no information, so assistive technology should generally ignore it.",
-          "Do not describe every visual detail when the surrounding text already communicates the same information."
-        ]
-      },
-
-      warning:
-        "Never use alt text as a place to insert keywords for SEO. Write it for meaning and users."
-    },
-
-
-    {
-      number: 15,
-      title: "figure and figcaption",
-
-      intro:
-        "When an image, diagram, code illustration or other content has a caption or belongs together as one unit, figure and figcaption can express that relationship.",
-
-      code:
+        {
+            title: "figure and figcaption",
+            intro:
+                "Use figure when content such as an image, diagram or code example is treated as a referenced or self-contained unit.",
+            explanation: [
+                "figcaption provides a caption associated with the figure.",
+                "This is useful for diagrams, screenshots, illustrations and other content that benefits from a visible explanation.",
+                "The caption should add useful context rather than repeat meaningless labels."
+            ],
+            code:
 `<figure>
+    <img
+        src="dom-tree.png"
+        alt="DOM tree showing html, body and main"
+    >
+    <figcaption>
+        A simplified DOM tree for a lesson page.
+    </figcaption>
+</figure>`
+        },
 
-  <img
-    src="request-flow.png"
-    alt="Diagram showing browser request and server response."
-  >
-
-  <figcaption>
-    Figure 1: Basic browser-to-server request flow.
-  </figcaption>
-
-</figure>`,
-
-      points: [
-        "figure represents a self-contained piece of content.",
-        "figcaption provides its caption.",
-        "The figure does not have to be an image; it can contain other self-contained content."
-      ]
-    },
-
-
-    {
-      number: 16,
-      title: "Strong, emphasis and ordinary text",
-
-      intro:
-        "HTML provides elements that communicate meaning, not merely font appearance.",
-
-      points: [
-        "<strong> communicates strong importance.",
-        "<em> communicates emphasis.",
-        "<p> represents a paragraph.",
-        "<span> is an inline generic container when no more meaningful element fits.",
-        "Visual boldness or italics can be controlled separately with CSS."
-      ],
-
-      code:
-`<p>
-  <strong>Important:</strong>
-  Never trust user input on the server.
-</p>
-
-<p>
-  This point is <em>especially important</em>
-  for authentication.
-</p>`,
-
-      commonMistake:
-        "Using strong simply because you want bold text everywhere. Choose it when the content has stronger importance."
-    },
-
-
-    {
-      number: 17,
-      title: "Tables are for relationships between data",
-
-      intro:
-        "Tables should represent tabular data where rows and columns have meaningful relationships. They should not be used to create page layouts.",
-
-      points: [
-        "<strong>table</strong> contains the table.",
-        "<strong>caption</strong> gives the table a title or description.",
-        "<strong>thead</strong> groups header rows.",
-        "<strong>tbody</strong> groups body rows.",
-        "<strong>th</strong> represents a header cell.",
-        "<strong>td</strong> represents a data cell.",
-        "<strong>scope</strong> can communicate whether a header applies to a column or row."
-      ],
-
-      code:
+        {
+            title: "Tables Are for Tabular Data",
+            intro:
+                "Tables should represent relationships between rows and columns of data, not be used as a general page-layout mechanism.",
+            explanation: [
+                "A table is useful when a reader needs to compare related values across rows and columns.",
+                "A caption can identify what the table represents.",
+                "Header cells should identify the meaning of their corresponding data cells."
+            ],
+            comparison: [
+                {
+                    term: "Placement results",
+                    meaning: "Good table use",
+                    example: "Student, CGPA, Company, Status"
+                },
+                {
+                    term: "Page columns",
+                    meaning: "Not a table's purpose",
+                    example: "Use CSS layout"
+                }
+            ],
+            code:
 `<table>
-
-  <caption>
-    Student Placement Results
-  </caption>
-
-  <thead>
-    <tr>
-      <th scope="col">Student</th>
-      <th scope="col">CGPA</th>
-      <th scope="col">Status</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr>
-      <th scope="row">Student A</th>
-      <td>8.7</td>
-      <td>Placed</td>
-    </tr>
-
-    <tr>
-      <th scope="row">Student B</th>
-      <td>8.2</td>
-      <td>Preparing</td>
-    </tr>
-  </tbody>
-
+    <caption>Placement Results</caption>
+    <thead>
+        <tr>
+            <th scope="col">Student</th>
+            <th scope="col">CGPA</th>
+            <th scope="col">Company</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Student A</td>
+            <td>8.7</td>
+            <td>Company X</td>
+            <td>Placed</td>
+        </tr>
+    </tbody>
 </table>`,
+            warning:
+                "Do not build the visual layout of a website with table cells. CSS layout systems are designed for that purpose."
+        },
 
-      keyIdea:
-        "Tables describe data relationships. CSS grid and flexbox describe layout."
-    },
-
-
-    {
-      number: 18,
-      title: "HTML forms begin with semantics",
-
-      intro:
-        "Forms will be covered deeply in the next level, but semantic HTML requires understanding the basic relationship between labels and controls.",
-
-      points: [
-        "Every important form control should have a meaningful label.",
-        "The label should remain understandable when the user starts typing.",
-        "The name attribute matters for form submission.",
-        "Buttons should have clear action names.",
-        "Native controls provide keyboard and browser behavior that custom controls must recreate."
-      ],
-
-      code:
-`<label for="studentName">
-  Student name
-</label>
-
-<input
-  id="studentName"
-  name="studentName"
-  type="text"
->
-
-<button type="submit">
-  Save student
-</button>`,
-
-      warning:
-        "We will study validation, error handling, autocomplete and advanced accessibility for forms in Level 03."
-    },
-
-
-    {
-      number: 19,
-      title: "HTML and accessibility",
-
-      intro:
-        "Accessibility means designing interfaces that can be used by people with different abilities and different ways of interacting with technology.",
-
-      points: [
-        "Semantic HTML provides useful information to assistive technologies.",
-        "Keyboard users depend on proper focusable controls.",
-        "Screen readers can use headings and landmarks to navigate.",
-        "Native buttons and links provide expected interaction behavior.",
-        "Good HTML improves accessibility before additional ARIA is considered."
-      ],
-
-      keyIdea:
-        "The first accessibility tool you should learn is correct HTML.",
-
-      commonMistake:
-        "Adding ARIA attributes to repair an element that should have been a native semantic element in the first place."
-    },
-
-
-    {
-      number: 20,
-      title: "What ARIA is — and what it is not",
-
-      intro:
-        "ARIA stands for Accessible Rich Internet Applications. It provides additional semantic information for situations where native HTML semantics alone are insufficient.",
-
-      points: [
-        "ARIA can communicate roles, names and states.",
-        "ARIA should not automatically replace native HTML.",
-        "A native button is normally preferable to a div with role=button.",
-        "ARIA does not magically provide all keyboard behavior.",
-        "When building custom widgets, ARIA and keyboard behavior must be implemented correctly."
-      ],
-
-      code:
-`<!-- Prefer this -->
-
-<button type="button">
-  Open menu
-</button>
-
-<!-- Rather than creating a fake button -->
-
-<div role="button">
-  Open menu
-</div>`,
-
-      warning:
-        "A role tells assistive technology what something is; it does not automatically implement the behavior expected from that control."
-    },
-
-
-    {
-      number: 21,
-      title: "The DOM — HTML becomes a tree",
-
-      intro:
-        "When the browser parses HTML, it creates an in-memory representation called the Document Object Model, or DOM.",
-
-      points: [
-        "HTML source is text.",
-        "The browser parses that text.",
-        "The result becomes a tree of nodes.",
-        "JavaScript can read and modify the DOM.",
-        "CSS can select elements in the DOM.",
-        "Developer Tools can show the resulting DOM structure."
-      ],
-
-      code:
+        {
+            title: "The DOM — What the Browser Builds",
+            intro:
+                "The HTML source file is text, but the browser turns that markup into a structured document model.",
+            explanation: [
+                "The DOM, or Document Object Model, is the browser's structured in-memory representation of the parsed document.",
+                "Elements become nodes in a tree, and parent-child relationships represent the document structure.",
+                "JavaScript can later use DOM APIs to read, modify, create and remove nodes."
+            ],
+            architecture: [
+                { title: "HTML Source", items: ["Developer-written markup", "Elements and attributes"] },
+                { title: "HTML Parser", items: ["Reads markup", "Creates nodes", "Builds relationships"] },
+                { title: "DOM Tree", items: ["Document", "Elements", "Text nodes", "Attributes"] },
+                { title: "Browser", items: ["CSS styles the DOM", "JavaScript interacts with it", "Users interact with the result"] }
+            ],
+            code:
 `<main>
-  <h1>Semantic HTML</h1>
-
-  <p>
-    Meaningful structure improves the page.
-  </p>
+    <h1>Semantic HTML</h1>
+    <p>Meaningful structure matters.</p>
 </main>`,
+            keyIdea:
+                "Think of the DOM as the browser's structured model of your document, not as the raw HTML text itself."
+        },
 
-      architecture: [
         {
-          title: "HTML Source",
-          items: [
-            "Text written by the developer",
-            "Elements and attributes",
-            "Downloaded by the browser"
-          ]
+            title: "Parent, Child and Sibling Relationships",
+            intro:
+                "The DOM is a tree, so every element can participate in parent-child and sibling relationships.",
+            explanation: [
+                "An element containing another element is its parent.",
+                "An element directly contained by another element is its child.",
+                "Elements that share the same parent are siblings.",
+                "Understanding these relationships becomes essential when JavaScript later queries and modifies the DOM."
+            ],
+            code:
+`<main>
+    <h1>Semantic HTML</h1>
+    <p>Learn meaningful structure.</p>
+</main>`,
+            comparison: [
+                {
+                    term: "main",
+                    meaning: "Parent of h1 and p",
+                    example: "main → h1"
+                },
+                {
+                    term: "h1 and p",
+                    meaning: "Sibling elements",
+                    example: "h1 ↔ p"
+                }
+            ]
         },
+
         {
-          title: "HTML Parser",
-          items: [
-            "Reads markup",
-            "Creates nodes",
-            "Builds relationships"
-          ]
+            title: "Source Order Matters",
+            intro:
+                "The order of elements in the HTML document is not merely a coding preference.",
+            explanation: [
+                "Before CSS changes the visual arrangement, the document already has a logical sequence.",
+                "Keyboard navigation, screen readers and other technologies can rely on the underlying structure and source order.",
+                "A page should remain understandable when CSS is disabled. This is a useful test of whether the HTML structure itself makes sense."
+            ],
+            flow: [
+                { title: "Write HTML", text: "Describe the content and its meaning." },
+                { title: "Browser parses", text: "The browser reads the markup." },
+                { title: "DOM is created", text: "Elements become nodes in a document tree." },
+                { title: "CSS is applied", text: "Presentation rules style the structure." },
+                { title: "JavaScript runs", text: "Behavior can read and modify the DOM." },
+                { title: "Users interact", text: "Keyboard, mouse, touch and assistive technologies consume the result." }
+            ],
+            keyIdea:
+                "Good HTML should make sense before CSS turns it into a visual design."
         },
+
         {
-          title: "DOM Tree",
-          items: [
-            "Document",
-            "Elements",
-            "Text nodes",
-            "Attributes"
-          ]
+            title: "Accessibility Starts with Native HTML",
+            intro:
+                "Accessibility is not a separate layer added only at the end of development.",
+            explanation: [
+                "Native HTML elements already provide semantics and browser behavior that assistive technologies can understand.",
+                "Correct headings, landmarks, links, buttons, labels and form controls give users meaningful structure and interaction.",
+                "The earlier you choose the correct native element, the less custom accessibility behavior you have to recreate later."
+            ],
+            comparison: [
+                {
+                    term: "Native button",
+                    meaning: "Built-in button semantics and interaction",
+                    example: "<button>Copy</button>"
+                },
+                {
+                    term: "div role=button",
+                    meaning: "Custom semantics requiring additional interaction work",
+                    example: '<div role="button">Copy</div>'
+                }
+            ],
+            warning:
+                "A role attribute does not automatically recreate all browser behavior expected from the native element."
         },
+
         {
-          title: "Browser",
-          items: [
-            "CSS styles the DOM",
-            "JavaScript interacts with it",
-            "User interacts with the resulting page"
-          ]
+            title: "ARIA — Useful, but Not a Replacement for HTML",
+            intro:
+                "ARIA provides accessibility semantics for dynamic or custom interfaces, but it should not be the first solution when a native HTML element already provides the needed behavior.",
+            explanation: [
+                "ARIA can communicate roles, states and properties when native HTML alone cannot express the required interface behavior.",
+                "A native button is usually preferable to a div with role=button when the interaction is simply a button.",
+                "Using ARIA incorrectly can make an interface harder rather than easier to understand."
+            ],
+            points: [
+                "Prefer native HTML when it already provides the required semantics.",
+                "Use ARIA to fill genuine semantic gaps in custom interfaces.",
+                "Do not add ARIA attributes just because they look professional."
+            ],
+            commonMistake:
+                "Thinking that adding role=button automatically turns a div into a fully equivalent native button."
+        },
+
+        {
+            title: "A Complete Semantic CodeBhavya Lesson Structure",
+            intro:
+                "Now combine the individual semantic elements into a realistic page structure.",
+            explanation: [
+                "A course lesson can have a site header, course navigation, main lesson content, self-contained article content, thematic sections, a complementary sidebar and a site footer.",
+                "The exact nesting depends on the page, but every element should have a reason for being there.",
+                "This structure is useful because it can remain understandable before CSS is added."
+            ],
+            architecture: [
+                { title: "header", items: ["CodeBhavya branding", "Primary navigation"] },
+                { title: "nav", items: ["Course levels", "Learning navigation"] },
+                { title: "main", items: ["Primary lesson"] },
+                { title: "article", items: ["Self-contained lesson composition"] },
+                { title: "section", items: ["Concept groups", "Practice", "Knowledge check"] },
+                { title: "aside", items: ["Related learning material"] },
+                { title: "footer", items: ["Site-level information"] }
+            ],
+            code:
+`<body>
+    <header>...</header>
+
+    <nav aria-label="Course navigation">...</nav>
+
+    <main>
+        <article>
+            <header>...</header>
+
+            <section>
+                <h2>Semantic HTML</h2>
+                <p>...</p>
+            </section>
+
+            <section>
+                <h2>Accessibility</h2>
+                <p>...</p>
+            </section>
+        </article>
+
+        <aside>...</aside>
+    </main>
+
+    <footer>...</footer>
+</body>`
+        },
+
+        {
+            title: "A Practical Semantic Decision Process",
+            intro:
+                "When you are unsure which element to use, do not guess from appearance. Ask what the content or interaction actually represents.",
+            explanation: [
+                "First identify whether you are describing content, navigation or an action.",
+                "Then ask whether a native semantic element already exists.",
+                "If the content is a thematic grouping, consider section. If it is self-contained, consider article. If it is simply a neutral wrapper, div may be appropriate.",
+                "For interactions, decide whether the user is navigating somewhere or performing an action."
+            ],
+            flow: [
+                { title: "What is this?", text: "Content, navigation, action or neutral grouping?" },
+                { title: "Does a native element exist?", text: "Prefer the element whose built-in meaning matches the purpose." },
+                { title: "Does it have a clear role?", text: "Choose the element according to meaning, not appearance." },
+                { title: "Will the structure make sense without CSS?", text: "If yes, the HTML foundation is becoming stronger." }
+            ]
+        },
+
+        {
+            title: "Semantic HTML and SEO",
+            intro:
+                "Semantic HTML can help machines understand document structure, but semantic HTML by itself is not a complete SEO strategy.",
+            explanation: [
+                "Meaningful document structure can make the content easier for tools to interpret.",
+                "However, SEO depends on many factors, including content quality, links, performance and technical implementation.",
+                "Therefore, do not promise that replacing every div with a semantic element will automatically produce better rankings."
+            ],
+            keyIdea:
+                "Semantic HTML supports understandable structure; it is one part of a larger web-development and SEO system."
+        },
+
+        {
+            title: "Why div Is Not the Enemy",
+            intro:
+                "Beginners sometimes learn that semantic HTML means 'never use div'. That is not the goal.",
+            explanation: [
+                "div is a generic neutral container and is useful when no more specific semantic element matches the purpose.",
+                "For example, a wrapper used only to create a CSS grid may have no additional semantic meaning.",
+                "The problem is not using div. The problem is using div for everything even when the content clearly has another semantic role."
+            ],
+            code:
+`<div class="course-grid">
+    <article>...</article>
+    <article>...</article>
+    <article>...</article>
+</div>`,
+            commonMistake:
+                "Replacing every div mechanically without understanding whether the replacement actually communicates a more useful meaning."
+        },
+
+        {
+            title: "HTML Validation and Structural Thinking",
+            intro:
+                "Semantic thinking also means checking whether the document is logically structured rather than only checking whether it renders.",
+            explanation: [
+                "A browser may recover from many markup mistakes, so visual success is not proof that the source is correct.",
+                "Look for logical nesting, appropriate elements, meaningful headings, useful link text and valid relationships between table headers and data.",
+                "Validation and accessibility checks are most useful when combined with human review of the actual document meaning."
+            ],
+            points: [
+                "Does every major region have a clear purpose?",
+                "Can the page be understood from source order?",
+                "Are links and buttons chosen according to their purpose?",
+                "Do images communicate useful alternative information when required?",
+                "Do tables represent data rather than layout?"
+            ]
+        },
+
+        {
+            title: "Build Without CSS",
+            intro:
+                "One of the strongest beginner exercises is to build a page using HTML only and temporarily ignore visual styling.",
+            explanation: [
+                "If the page still has a sensible title, headings, navigation, content order, lists and meaningful regions without CSS, the document structure is doing real work.",
+                "CSS should then improve presentation rather than rescue a meaningless structure.",
+                "This exercise prepares you for the next level, where CSS will control visual presentation without changing the meaning of the document."
+            ],
+            tryIt: {
+                title: "HTML-only test",
+                steps: [
+                    "Create a CodeBhavya-style lesson page using HTML only.",
+                    "Add header, nav, main, article, sections, aside and footer where appropriate.",
+                    "Add a logical heading hierarchy.",
+                    "Add links, buttons, lists, an image and a small data table.",
+                    "Disable CSS and read the page from top to bottom.",
+                    "Ask whether another developer could understand the page structure from the HTML alone."
+                ]
+            },
+            keyIdea:
+                "Good HTML should provide the document's meaning; CSS should provide the visual presentation."
         }
-      ],
+    ],
 
-      keyIdea:
-        "The DOM is not simply the original HTML file. It is the browser's structured representation of the document."
-    },
-
-
-    {
-      number: 22,
-      title: "HTML structure vs visual appearance",
-
-      intro:
-        "A major professional habit is separating meaning from presentation.",
-
-      points: [
-        "HTML answers: What is this?",
-        "CSS answers: How should this look?",
-        "JavaScript answers: What should happen when something changes?",
-        "A heading can be visually small.",
-        "A paragraph can be visually large.",
-        "A button can be styled like a card, but it remains a button semantically."
-      ],
-
-      comparison: {
-        headers: [
-          "Question",
-          "Technology",
-          "Example"
+    trace: {
+        title: "Follow the HTML-to-DOM process step by step",
+        code: [
+            "<!doctype html>",
+            "<html>",
+            "  <body>",
+            "    <main>",
+            "      <h1>Semantic HTML</h1>",
+            "      <p>Meaningful structure matters.</p>",
+            "    </main>",
+            "  </body>",
+            "</html>"
         ],
-
-        rows: [
-          [
-            "What is this content?",
-            "HTML",
-            "article"
-          ],
-          [
-            "How should it look?",
-            "CSS",
-            "display: grid"
-          ],
-          [
-            "What happens when clicked?",
-            "JavaScript",
-            "event listener"
-          ]
-        ]
-      }
-    },
-
-
-    {
-      number: 23,
-      title: "Semantic HTML and SEO",
-
-      intro:
-        "Search engines need to understand the structure and meaning of a page. Semantic HTML can make that structure clearer, although SEO depends on many factors beyond HTML.",
-
-      points: [
-        "Meaningful headings communicate content hierarchy.",
-        "Descriptive titles help identify pages.",
-        "Descriptive links communicate destinations.",
-        "Semantic structure can improve machine understanding.",
-        "Good SEO is not achieved by inserting keywords everywhere.",
-        "Useful content, accessibility, performance and technical quality also matter."
-      ],
-
-      warning:
-        "Semantic HTML supports discoverability and understanding, but there is no single HTML tag that guarantees a high search ranking."
-    },
-
-
-    {
-      number: 24,
-      title: "Readable link text",
-
-      intro:
-        "A link should tell the user where it goes or what resource it represents.",
-
-      points: [
-        "Prefer descriptive link text.",
-        "Avoid large numbers of links saying only 'Click here'.",
-        "The destination should make sense when the link is read independently.",
-        "Use href for actual navigation.",
-        "If an action does not have a destination, it is probably a button."
-      ],
-
-      code:
-`<!-- Weak -->
-
-<a href="/Full-Stack/lesson.html?level=2">
-  Click here
-</a>
-
-<!-- Better -->
-
-<a href="/Full-Stack/lesson.html?level=2">
-  Learn Semantic HTML
-</a>`,
-
-      keyIdea:
-        "A user should be able to understand the purpose of a link without needing to inspect surrounding paragraphs."
-    },
-
-
-    {
-      number: 25,
-      title: "A complete semantic CodeBhavya page",
-
-      intro:
-        "Now combine the major concepts into one realistic page structure.",
-
-      code:
-`<!doctype html>
-<html lang="en">
-
-<head>
-
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1"
-  >
-
-  <title>
-    Semantic HTML | CodeBhavya
-  </title>
-
-</head>
-
-<body>
-
-  <header>
-
-    <a href="/">
-      CodeBhavya
-    </a>
-
-    <nav aria-label="Primary navigation">
-
-      <a href="/courses">
-        Courses
-      </a>
-
-      <a href="/practice">
-        Practice
-      </a>
-
-    </nav>
-
-  </header>
-
-
-  <main>
-
-    <article>
-
-      <header>
-
-        <p>WEB FOUNDATIONS</p>
-
-        <h1>
-          Semantic HTML
-        </h1>
-
-        <p>
-          Learn how meaningful HTML
-          creates better web pages.
-        </p>
-
-      </header>
-
-
-      <section>
-
-        <h2>
-          What is Semantic HTML?
-        </h2>
-
-        <p>
-          Semantic HTML describes
-          the meaning of content.
-        </p>
-
-      </section>
-
-
-      <section>
-
-        <h2>
-          Practice
-        </h2>
-
-        <ol>
-          <li>Create a semantic page.</li>
-          <li>Check the heading hierarchy.</li>
-          <li>Test the page with keyboard navigation.</li>
-        </ol>
-
-      </section>
-
-
-      <footer>
-
-        <p>
-          Continue to Level 03.
-        </p>
-
-      </footer>
-
-    </article>
-
-
-    <aside>
-
-      <h2>
-        Related Lessons
-      </h2>
-
-      <ul>
-
-        <li>
-          <a href="?level=1">
-            How the Web Works
-          </a>
-        </li>
-
-        <li>
-          <a href="?level=3">
-            Forms & Accessibility
-          </a>
-        </li>
-
-      </ul>
-
-    </aside>
-
-  </main>
-
-
-  <footer>
-
-    <p>
-      CodeBhavya
-    </p>
-
-  </footer>
-
-</body>
-
-</html>`,
-
-      flow: [
-        {
-          name: "Document",
-          detail: "The html element contains the document."
-        },
-        {
-          name: "Site header",
-          detail: "Branding and primary navigation appear in the header."
-        },
-        {
-          name: "Main content",
-          detail: "The main landmark contains the primary lesson."
-        },
-        {
-          name: "Article",
-          detail: "The lesson itself is represented as a self-contained composition."
-        },
-        {
-          name: "Sections",
-          detail: "Major topics are grouped into meaningful sections."
-        },
-        {
-          name: "Aside",
-          detail: "Related learning material is complementary content."
-        },
-        {
-          name: "Footer",
-          detail: "The page ends with site-level footer information."
-        }
-      ],
-
-      keyIdea:
-        "Good semantic HTML makes the page understandable as a document before CSS and JavaScript are added."
-    },
-
-
-    {
-      number: 26,
-      title: "Inspect semantic structure with DevTools",
-
-      intro:
-        "Browser Developer Tools are not only for debugging JavaScript. They are also excellent for understanding the actual DOM structure produced by the browser.",
-
-      points: [
-        "Open Developer Tools with F12 or the browser's developer-tools command.",
-        "Open the Elements panel.",
-        "Inspect the html, head and body hierarchy.",
-        "Expand main, article, section and footer elements.",
-        "Check whether the actual DOM structure matches your intended document structure.",
-        "Use the accessibility information provided by browser tools when available."
-      ],
-
-      tryIt: {
-        title: "DevTools Investigation",
         steps: [
-          "Open any CodeBhavya lesson page.",
-          "Open DevTools → Elements.",
-          "Find the main element.",
-          "Find the lesson heading.",
-          "Expand one section.",
-          "Identify its heading and content.",
-          "Inspect the navigation.",
-          "Ask yourself whether the DOM structure communicates the page correctly."
+            { state: "Document type", explain: "The browser recognizes the document as HTML." },
+            { state: "html element", explain: "The root element represents the HTML document." },
+            { state: "body", explain: "The visible document content is placed inside body." },
+            { state: "main", explain: "The browser creates a main element node representing the primary content region." },
+            { state: "h1", explain: "The heading becomes a child node inside main." },
+            { state: "Text node", explain: "The heading's text becomes a text node associated with the h1 element." },
+            { state: "p", explain: "The paragraph becomes another child of main." },
+            { state: "DOM relationships", explain: "Parent-child and sibling relationships are established in the document tree." },
+            { state: "CSS and JavaScript later", explain: "CSS can style the structure and JavaScript can interact with the DOM." }
         ]
-      }
     },
 
+    revision: [
+        ["Semantic HTML", "Choose elements according to meaning and purpose."],
+        ["Element", "Complete HTML node."],
+        ["Attribute", "Additional information supplied on an element."],
+        ["header", "Introductory or navigational content for a page or section."],
+        ["nav", "Important navigation region."],
+        ["main", "Dominant primary content of the page."],
+        ["article", "Self-contained composition."],
+        ["section", "Thematic grouping of related content."],
+        ["aside", "Complementary content."],
+        ["footer", "Footer information for a page or section."],
+        ["div", "Neutral generic container."],
+        ["DOM", "Browser's structured in-memory representation of the parsed document."],
+        ["Alt text", "Alternative representation of useful image meaning."],
+        ["Native control", "Built-in HTML control with standard browser semantics and behavior."],
+        ["ARIA", "Accessibility semantics for custom or dynamic interfaces when needed."],
+        ["Tabular data", "Data organized into meaningful rows and columns."]
+    ],
 
-    {
-      number: 27,
-      title: "Putting everything together",
-
-      intro:
-        "Now connect the concepts into one mental model.",
-
-      points: [
-        "<strong>HTML</strong> describes the document.",
-        "<strong>Semantic elements</strong> communicate meaning.",
-        "<strong>Headings</strong> communicate hierarchy.",
-        "<strong>Landmarks</strong> communicate major page regions.",
-        "<strong>Links</strong> communicate destinations.",
-        "<strong>Buttons</strong> communicate actions.",
-        "<strong>Lists</strong> communicate collections.",
-        "<strong>Images and figures</strong> communicate visual content and context.",
-        "<strong>Tables</strong> communicate relationships between data.",
-        "<strong>DOM</strong> represents the parsed document in the browser.",
-        "<strong>Accessibility</strong> benefits from correct native semantics.",
-        "<strong>CSS</strong> controls presentation without changing the underlying meaning."
-      ],
-
-      flow: [
+    interview: [
         {
-          name: "Write HTML",
-          detail: "Describe the content and its meaning."
+            q: "What is semantic HTML?",
+            a: "Semantic HTML means choosing HTML elements according to the meaning and purpose of their content or interaction rather than choosing elements only for visual appearance. Examples include main, nav, article, section, button and footer."
         },
         {
-          name: "Browser parses",
-          detail: "The browser reads the markup."
+            q: "Why is semantic HTML important?",
+            a: "It improves document structure, accessibility, maintainability and machine understanding. Assistive technologies can use native semantics to help users navigate the page."
         },
         {
-          name: "DOM is created",
-          detail: "Elements become nodes in a document tree."
+            q: "What is the difference between div and section?",
+            a: "div is a neutral generic container. section represents a meaningful thematic grouping of content, normally associated with a heading."
         },
         {
-          name: "CSS is applied",
-          detail: "Presentation rules style the structure."
+            q: "What is the difference between section and article?",
+            a: "section groups related content within a larger document, while article represents a self-contained composition that can potentially stand independently."
         },
         {
-          name: "JavaScript runs",
-          detail: "Behavior can read and modify the DOM."
+            q: "What is the difference between an anchor and a button?",
+            a: "An anchor is normally used for navigation to a URL or resource. A button performs an action such as opening a menu, submitting a form or copying content."
         },
         {
-          name: "Users interact",
-          detail: "Keyboard, mouse, touch and assistive technologies consume the result."
+            q: "Why should we not use headings only for their visual size?",
+            a: "Heading levels communicate document hierarchy. Visual appearance should be controlled with CSS."
+        },
+        {
+            q: "What is the DOM?",
+            a: "The DOM, or Document Object Model, is the browser's structured in-memory representation of the parsed document. JavaScript and browser APIs can interact with it."
+        },
+        {
+            q: "What is the purpose of alt text?",
+            a: "Alt text provides an alternative representation of an image's useful meaning when the image cannot be perceived. Decorative images can generally use an empty alt attribute."
+        },
+        {
+            q: "Why is a div with role=button usually inferior to a native button?",
+            a: "The native button already provides appropriate semantics and browser interaction behavior. A custom role does not automatically recreate all expected keyboard and interaction behavior."
+        },
+        {
+            q: "Can a page contain more than one nav element?",
+            a: "Yes. A page may contain multiple meaningful navigation regions, such as primary navigation and course navigation. Appropriate labels can distinguish them when necessary."
+        },
+        {
+            q: "Does semantic HTML guarantee good SEO?",
+            a: "No. Semantic HTML helps search engines understand document structure, but SEO depends on many factors including content quality, accessibility, performance, links and technical implementation."
+        },
+        {
+            q: "Why should tables not be used for page layout?",
+            a: "Tables are designed to represent relationships among tabular data. Page layout should normally be handled with CSS layout systems rather than table markup."
         }
-      ],
+    ],
 
-      keyIdea:
-        "Semantic HTML is the foundation on which accessible, maintainable and professional frontend applications are built."
+    practice: [
+        {
+            title: "Build a CodeBhavya Lesson",
+            difficulty: "Easy",
+            prompt: "Create an HTML page for a CodeBhavya lesson using header, nav, main, article, section and footer. Do not use CSS initially.",
+            hints: [
+                "Start with html, head and body.",
+                "Create the primary site region with header and navigation.",
+                "Place the lesson inside main and article.",
+                "Use sections for major lesson topics."
+            ]
+        },
+        {
+            title: "Semantic Refactoring",
+            difficulty: "Easy",
+            prompt: "Take a page containing only div elements and replace appropriate containers with header, nav, main, article, section, aside and footer.",
+            hints: [
+                "Do not replace every div automatically.",
+                "Ask what each container means.",
+                "Keep div where a neutral wrapper is actually appropriate."
+            ]
+        },
+        {
+            title: "Heading Hierarchy",
+            difficulty: "Easy",
+            prompt: "Create the heading hierarchy for a Full Stack MERN course page containing HTML, CSS, JavaScript, React and Node.js sections.",
+            hints: [
+                "Start with one clear page subject.",
+                "Use h2 for major course areas.",
+                "Use h3 for topics nested inside those areas."
+            ]
+        },
+        {
+            title: "Link or Button?",
+            difficulty: "Medium",
+            prompt: "For each action, decide whether it should use an anchor or button: Open Level 3, Copy Code, Open Menu, Visit GitHub, Submit Answer, Go to Practice.",
+            hints: [
+                "Ask whether the user is navigating to a resource or performing an action.",
+                "Navigation normally uses an anchor with href.",
+                "Actions normally use button."
+            ]
+        },
+        {
+            title: "Accessible Image",
+            difficulty: "Medium",
+            prompt: "Create three image examples: an informative diagram, a decorative icon and a course thumbnail. Write appropriate alt text for each.",
+            hints: [
+                "Describe useful meaning, not just visual appearance.",
+                "Decorative imagery may use alt=\"\".",
+                "Consider the image's purpose in the surrounding content."
+            ]
+        },
+        {
+            title: "Placement Results Table",
+            difficulty: "Medium",
+            prompt: "Create an accessible table containing Student Name, CGPA, Company and Placement Status. Add a caption and appropriate headers.",
+            hints: [
+                "Use caption to identify the table.",
+                "Use thead for column headings.",
+                "Use th for headers and td for data."
+            ]
+        },
+        {
+            title: "Semantic Blog Article",
+            difficulty: "Medium",
+            prompt: "Build a blog article about 'How HTTP Works' using article, header, sections, headings, paragraphs, figure, figcaption and footer.",
+            hints: [
+                "Make the article independently understandable.",
+                "Use sections for major topics.",
+                "Use figure and figcaption for the explanatory diagram."
+            ]
+        },
+        {
+            title: "Keyboard-First Audit",
+            difficulty: "Medium",
+            prompt: "Open a website and navigate through its interactive controls using only the keyboard. Record every place where focus becomes confusing or an interaction cannot be performed.",
+            hints: [
+                "Pay attention to links, buttons and menus.",
+                "Check whether the focus order makes sense.",
+                "Look for controls that can be seen but cannot be reached."
+            ]
+        },
+        {
+            title: "DOM Structure Investigation",
+            difficulty: "Hard",
+            prompt: "Open a CodeBhavya lesson in DevTools and draw the DOM hierarchy from html to main content. Identify the parent-child relationship of at least ten elements.",
+            hints: [
+                "Start at html and follow child nodes.",
+                "Identify siblings that share the same parent.",
+                "Compare the DOM tree with the page's visible regions."
+            ]
+        },
+        {
+            title: "Semantic CodeBhavya Homepage",
+            difficulty: "Hard",
+            prompt: "Build the HTML-only structure of a CodeBhavya homepage containing branding, navigation, course categories, featured course cards, practice links, an aside and footer.",
+            hints: [
+                "Use article for self-contained course cards when appropriate.",
+                "Use nav for important navigation.",
+                "Keep the page understandable without CSS."
+            ]
+        },
+        {
+            title: "Refactor a Real Page",
+            difficulty: "Placement",
+            prompt: "Choose any page you previously created and perform a semantic audit. List every div, heading, link, button, image and table. Explain whether each element is semantically appropriate.",
+            hints: [
+                "Do not judge elements only by appearance.",
+                "Explain the intended meaning or interaction of each element.",
+                "Record specific replacements only when they improve semantic clarity."
+            ]
+        },
+        {
+            title: "Build Without CSS",
+            difficulty: "Placement",
+            prompt: "Create a complete Full Stack course lesson using HTML only. Then disable CSS and ask whether the page is still understandable from top to bottom.",
+            hints: [
+                "Check heading hierarchy.",
+                "Check navigation and source order.",
+                "Check landmarks, lists, links, buttons, images and tables.",
+                "If the page becomes meaningless without CSS, revisit the HTML structure."
+            ]
+        }
+    ],
+
+    quiz: [
+        {
+            q: "What is the primary purpose of HTML?",
+            options: [
+                "Database management",
+                "Document structure and meaning",
+                "Image editing",
+                "Server deployment"
+            ],
+            answer: 1,
+            explanation: "HTML primarily describes the structure and meaning of web documents."
+        },
+        {
+            q: "Which element represents the primary content of a page?",
+            options: ["aside", "main", "footer", "span"],
+            answer: 1,
+            explanation: "main identifies the dominant content of the document."
+        },
+        {
+            q: "Which element is normally used for important navigation links?",
+            options: ["nav", "section", "div", "figure"],
+            answer: 0,
+            explanation: "nav identifies a navigation region."
+        },
+        {
+            q: "Which element is best for an action such as opening a menu?",
+            options: ["a", "button", "p", "article"],
+            answer: 1,
+            explanation: "Opening a menu is an action, so button is normally the appropriate native control."
+        },
+        {
+            q: "Which element is normally used to navigate to another page?",
+            options: ["button", "a", "span", "strong"],
+            answer: 1,
+            explanation: "An anchor is normally used to navigate to another URL or resource."
+        },
+        {
+            q: "What is div?",
+            options: ["A database element", "A generic neutral container", "A heading", "A navigation control"],
+            answer: 1,
+            explanation: "div is a neutral generic container without a specific semantic role."
+        },
+        {
+            q: "What does article generally represent?",
+            options: ["Only images", "A self-contained composition", "A CSS file", "A database record"],
+            answer: 1,
+            explanation: "article represents a self-contained composition that can potentially stand independently."
+        },
+        {
+            q: "Why should headings be chosen according to hierarchy?",
+            options: ["Only to change colors", "To communicate document structure", "To reduce JavaScript", "To create databases"],
+            answer: 1,
+            explanation: "Heading levels communicate the structural hierarchy of the document."
+        },
+        {
+            q: "What is the purpose of alt text?",
+            options: ["To change image color", "To provide alternative meaning for an image", "To create CSS", "To make an image larger"],
+            answer: 1,
+            explanation: "Alt text communicates useful image meaning when the image itself cannot be perceived."
+        },
+        {
+            q: "What should tables normally represent?",
+            options: ["Page layout", "Tabular data relationships", "Navigation buttons", "CSS animations"],
+            answer: 1,
+            explanation: "Tables are designed for meaningful relationships among rows and columns of data."
+        },
+        {
+            q: "What does DOM stand for?",
+            options: ["Data Object Machine", "Document Object Model", "Dynamic Output Method", "Document Order Manager"],
+            answer: 1,
+            explanation: "DOM stands for Document Object Model."
+        },
+        {
+            q: "Which is usually preferable for a normal button interaction?",
+            options: ["div role=button", "Native button", "Clickable paragraph", "Clickable heading"],
+            answer: 1,
+            explanation: "A native button already provides standard semantics and browser interaction behavior."
+        },
+        {
+            q: "Which element represents a thematic grouping?",
+            options: ["section", "button", "img", "a"],
+            answer: 0,
+            explanation: "section represents a thematic grouping of related content."
+        },
+        {
+            q: "What should CSS primarily control?",
+            options: ["Document meaning", "Visual presentation", "Database records", "DNS"],
+            answer: 1,
+            explanation: "CSS primarily controls visual presentation, while HTML communicates document structure and meaning."
+        },
+        {
+            q: "What should you normally use for an action?",
+            options: ["button", "a without href", "div", "span"],
+            answer: 0,
+            explanation: "A native button is normally appropriate for an action."
+        }
+    ],
+
+    commonMistakes: [
+        "Using div for every region even when a semantic element clearly matches the purpose.",
+        "Choosing heading levels based only on visual size.",
+        "Using an anchor for an action that should be a button.",
+        "Using a button for simple navigation when an anchor is appropriate.",
+        "Writing useless alt text such as 'image' or 'picture'.",
+        "Using tables to create page layout instead of representing tabular data.",
+        "Assuming semantic HTML automatically guarantees good SEO.",
+        "Assuming role=button makes a div fully equivalent to a native button.",
+        "Adding ARIA everywhere without understanding whether native HTML already provides the required semantics.",
+        "Building a page that only makes sense after CSS is applied.",
+        "Ignoring source order because CSS can visually rearrange the page.",
+        "Treating visual rendering as proof that the HTML structure is correct."
+    ],
+
+    glossary: [
+        ["HTML", "HyperText Markup Language; the structural language used to describe web documents."],
+        ["Semantic HTML", "HTML that communicates the meaning and purpose of content through appropriate elements."],
+        ["Element", "A complete HTML node consisting of markup and its content where applicable."],
+        ["Tag", "Markup syntax used to identify an HTML element."],
+        ["Attribute", "Additional information supplied on an HTML element."],
+        ["Landmark", "A major region of a page that helps users and assistive technologies navigate."],
+        ["DOM", "The browser's structured in-memory representation of the parsed HTML document."],
+        ["Accessibility", "Designing interfaces so people with different abilities and interaction methods can use them."],
+        ["ARIA", "Accessible Rich Internet Applications; a set of accessibility semantics for dynamic or custom interfaces."],
+        ["Heading hierarchy", "The structural relationship between h1, h2, h3 and deeper heading levels."],
+        ["Alternative text", "Text that communicates the useful meaning of an image when the image itself cannot be perceived."],
+        ["Tabular data", "Data organized into rows and columns with meaningful relationships."],
+        ["Native control", "A built-in HTML control such as button, input or select that already provides standard browser behavior."],
+        ["Source order", "The order in which elements appear in the document source and underlying structure."],
+        ["Self-contained composition", "Content that can potentially stand independently, such as an article."],
+        ["Thematic grouping", "Related content organized around a meaningful topic, commonly represented by section."]
+    ],
+
+    completion: {
+        title: "You now understand the structure beneath the interface",
+        message:
+            "Before moving to CSS and advanced frontend development, you should be able to look at an HTML page and explain what every major region means, why each element was selected and how the browser turns the document into a DOM tree.",
+        challenge:
+            "Build one complete CodeBhavya-style lesson using HTML only. Before adding CSS, check the document hierarchy, heading structure, navigation, links, buttons, images, lists and landmarks. If the page is understandable without styling, your HTML foundation is becoming strong."
     }
-
-  ],
-
-
-  /* =======================================================
-     PREMIUM VISUALIZER
-     ======================================================= */
-
-  visualizer: {
-
-    title: "Build a Semantic Web Page",
-
-    description:
-      "Follow how a simple HTML document becomes a structured page in the browser.",
-
-    steps: [
-
-      {
-        title: "HTML source arrives",
-
-        operation:
-          "<code>&lt;main&gt;...&lt;/main&gt;</code>",
-
-        detail:
-          "The browser receives HTML text from the server."
-      },
-
-      {
-        title: "Parser reads the markup",
-
-        operation:
-          "Read → identify elements → build relationships",
-
-        detail:
-          "The HTML parser identifies elements, attributes and text."
-      },
-
-      {
-        title: "DOM tree is created",
-
-        operation:
-          "Document → main → article → section → h2",
-
-        detail:
-          "The browser creates an in-memory tree representing the document."
-      },
-
-      {
-        title: "CSS finds elements",
-
-        operation:
-          "main { ... }  section { ... }",
-
-        detail:
-          "CSS selectors match elements in the DOM and provide presentation."
-      },
-
-      {
-        title: "JavaScript can interact",
-
-        operation:
-          "document.querySelector(...)",
-
-        detail:
-          "JavaScript can read, modify and respond to events involving the DOM."
-      },
-
-      {
-        title: "User receives the interface",
-
-        operation:
-          "Visual UI + semantic structure + interaction",
-
-        detail:
-          "The browser presents the page to the user and exposes its semantics to relevant technologies."
-      }
-
-    ]
-  },
-
-
-  /* =======================================================
-     PROGRAM TRACING
-     ======================================================= */
-
-  trace: {
-
-    title: "Trace how HTML becomes a DOM tree",
-
-    lines: [
-
-      {
-        line: 1,
-        code: "<main>",
-        explanation:
-          "The browser encounters the main element and creates a main node."
-      },
-
-      {
-        line: 2,
-        code: "  <article>",
-        explanation:
-          "The article becomes a child of the main element."
-      },
-
-      {
-        line: 3,
-        code: "    <h1>Semantic HTML</h1>",
-        explanation:
-          "An h1 element is created inside the article and its text becomes a child text node."
-      },
-
-      {
-        line: 4,
-        code: "    <section>",
-        explanation:
-          "A section node is created as another child of the article."
-      },
-
-      {
-        line: 5,
-        code: "      <h2>Landmarks</h2>",
-        explanation:
-          "The h2 becomes a child of the section and represents the section's heading."
-      },
-
-      {
-        line: 6,
-        code: "      <p>Meaningful structure</p>",
-        explanation:
-          "The paragraph becomes another child of the section."
-      },
-
-      {
-        line: 7,
-        code: "    </section>",
-        explanation:
-          "The section subtree is complete."
-      },
-
-      {
-        line: 8,
-        code: "  </article>",
-        explanation:
-          "The article subtree is complete."
-      },
-
-      {
-        line: 9,
-        code: "</main>",
-        explanation:
-          "The main subtree is now complete and forms part of the document tree."
-      }
-
-    ]
-  },
-
-
-  /* =======================================================
-     QUICK REVISION
-     ======================================================= */
-
-  revision: [
-
-    [
-      "HTML",
-      "Describes the structure and meaning of web content."
-    ],
-
-    [
-      "Semantic HTML",
-      "Uses elements according to their meaning and purpose."
-    ],
-
-    [
-      "div",
-      "A neutral generic container."
-    ],
-
-    [
-      "main",
-      "Contains the primary content of the page."
-    ],
-
-    [
-      "nav",
-      "Represents an important navigation region."
-    ],
-
-    [
-      "article",
-      "Represents a self-contained composition."
-    ],
-
-    [
-      "section",
-      "Groups related content into a thematic region."
-    ],
-
-    [
-      "Heading",
-      "Communicates document hierarchy."
-    ],
-
-    [
-      "Anchor",
-      "Represents navigation to another resource or location."
-    ],
-
-    [
-      "Button",
-      "Represents an action."
-    ],
-
-    [
-      "alt",
-      "Provides alternative text for an image."
-    ],
-
-    [
-      "DOM",
-      "The browser's structured in-memory representation of the document."
-    ],
-
-    [
-      "ARIA",
-      "Additional accessibility semantics used when native HTML is insufficient."
-    ]
-
-  ],
-
-
-  /* =======================================================
-     COMMON MISTAKES
-     ======================================================= */
-
-  mistakes: [
-
-    {
-      wrong:
-        "Using div for every part of the page.",
-
-      correct:
-        "Use semantic elements when they communicate the actual purpose of the content. Keep div for neutral grouping."
-    },
-
-    {
-      wrong:
-        "Using headings because they look large or small.",
-
-      correct:
-        "Choose heading levels according to document hierarchy and use CSS for visual sizing."
-    },
-
-    {
-      wrong:
-        "Using a clickable div instead of a button.",
-
-      correct:
-        "Use a native button for actions because it provides appropriate semantics and keyboard behavior."
-    },
-
-    {
-      wrong:
-        "Using an anchor without href for an action.",
-
-      correct:
-        "Use a button when the interaction performs an action instead of navigating to a destination."
-    },
-
-    {
-      wrong:
-        "Writing alt=\"image.png\".",
-
-      correct:
-        "Describe the useful meaning of the image, or use empty alt when the image is purely decorative."
-    },
-
-    {
-      wrong:
-        "Using tables for page layout.",
-
-      correct:
-        "Use tables for tabular data. Use CSS layout systems such as grid and flexbox for page layout."
-    },
-
-    {
-      wrong:
-        "Adding ARIA everywhere.",
-
-      correct:
-        "Prefer correct native HTML semantics first. Add ARIA only when it provides necessary additional semantics."
-    },
-
-    {
-      wrong:
-        "Creating links that all say 'Click here'.",
-
-      correct:
-        "Use descriptive link text that communicates the destination or resource."
-    }
-
-  ],
-
-
-  /* =======================================================
-     INTERVIEW QUESTIONS
-     ======================================================= */
-
-  interview: [
-
-    {
-      q:
-        "What is semantic HTML?",
-
-      a:
-        "Semantic HTML means choosing HTML elements according to the meaning and purpose of their content or interaction rather than choosing elements only for visual appearance. Examples include main, nav, article, section, button and footer."
-    },
-
-    {
-      q:
-        "Why is semantic HTML important?",
-
-      a:
-        "It improves document structure, accessibility, maintainability and machine understanding. Assistive technologies can use native semantics to help users navigate the page."
-    },
-
-    {
-      q:
-        "What is the difference between div and section?",
-
-      a:
-        "div is a neutral generic container. section represents a meaningful thematic grouping of content, normally associated with a heading."
-    },
-
-    {
-      q:
-        "What is the difference between section and article?",
-
-      a:
-        "section groups related content within a larger document, while article represents a self-contained composition that can potentially stand independently."
-    },
-
-    {
-      q:
-        "What is the difference between an anchor and a button?",
-
-      a:
-        "An anchor is normally used for navigation to a URL or resource. A button performs an action such as opening a menu, submitting a form or copying content."
-    },
-
-    {
-      q:
-        "Why should we not use headings only for their visual size?",
-
-      a:
-        "Heading levels communicate document hierarchy. Visual appearance should be controlled with CSS."
-    },
-
-    {
-      q:
-        "What is the DOM?",
-
-      a:
-        "The DOM, or Document Object Model, is the browser's structured in-memory representation of the parsed document. JavaScript and browser APIs can interact with it."
-    },
-
-    {
-      q:
-        "What is the purpose of alt text?",
-
-      a:
-        "Alt text provides an alternative representation of an image's useful meaning when the image cannot be perceived. Decorative images can generally use an empty alt attribute."
-    },
-
-    {
-      q:
-        "Why is a div with role=button usually inferior to a native button?",
-
-      a:
-        "The native button already provides appropriate semantics and browser interaction behavior. A custom role does not automatically recreate all expected keyboard and interaction behavior."
-    },
-
-    {
-      q:
-        "Can a page contain more than one nav element?",
-
-      a:
-        "Yes. A page may contain multiple meaningful navigation regions, such as primary navigation and course navigation. Appropriate labels can distinguish them when necessary."
-    },
-
-    {
-      q:
-        "Does semantic HTML guarantee good SEO?",
-
-      a:
-        "No. Semantic HTML helps search engines understand document structure, but SEO depends on many factors including content quality, accessibility, performance, links and technical implementation."
-    },
-
-    {
-      q:
-        "Why should tables not be used for page layout?",
-
-      a:
-        "Tables communicate relationships between rows and columns of data. Using them for layout gives the document incorrect semantics and makes responsive and accessible design harder."
-    }
-
-  ],
-
-
-  /* =======================================================
-     PRACTICE ARENA
-     ======================================================= */
-
-  practice: [
-
-    {
-      title:
-        "Build a CodeBhavya Lesson",
-
-      difficulty:
-        "Easy",
-
-      task:
-        "Create an HTML page for a CodeBhavya lesson using header, nav, main, article, section and footer. Do not use CSS initially.",
-
-      hints: [
-        "Start with the document skeleton.",
-        "Create one clear h1.",
-        "Use h2 for major lesson sections.",
-        "Use nav only for meaningful navigation."
-      ]
-    },
-
-    {
-      title:
-        "Semantic Refactoring",
-
-      difficulty:
-        "Easy",
-
-      task:
-        "Take a page containing only div elements and replace appropriate containers with header, nav, main, article, section, aside and footer.",
-
-      hints: [
-        "First identify what each region means.",
-        "Do not replace every div automatically.",
-        "Keep div where no semantic element is appropriate."
-      ]
-    },
-
-    {
-      title:
-        "Heading Hierarchy",
-
-      difficulty:
-        "Easy",
-
-      task:
-        "Create the heading hierarchy for a Full Stack MERN course page containing HTML, CSS, JavaScript, React and Node.js sections.",
-
-      hints: [
-        "Start with one primary page topic.",
-        "Use h2 for major topics.",
-        "Use h3 for topics inside an h2 section."
-      ]
-    },
-
-    {
-      title:
-        "Link or Button?",
-
-      difficulty:
-        "Medium",
-
-      task:
-        "For each action, decide whether it should use an anchor or button: Open Level 3, Copy Code, Open Menu, Visit GitHub, Submit Answer, Go to Practice.",
-
-      hints: [
-        "Ask whether the user is navigating somewhere.",
-        "If the user is performing an action on the current interface, a button is usually appropriate."
-      ]
-    },
-
-    {
-      title:
-        "Accessible Image",
-
-      difficulty:
-        "Medium",
-
-      task:
-        "Create three image examples: an informative diagram, a decorative icon and a course thumbnail. Write appropriate alt text for each.",
-
-      hints: [
-        "Think about what information would be lost if the image disappeared.",
-        "Do not describe decorative details unnecessarily."
-      ]
-    },
-
-    {
-      title:
-        "Placement Results Table",
-
-      difficulty:
-        "Medium",
-
-      task:
-        "Create an accessible table containing Student Name, CGPA, Company and Placement Status. Add a caption and appropriate headers.",
-
-      hints: [
-        "Use caption.",
-        "Use th for headers.",
-        "Think about whether each header describes a row or column."
-      ]
-    },
-
-    {
-      title:
-        "Semantic Blog Article",
-
-      difficulty:
-        "Medium",
-
-      task:
-        "Build a blog article about 'How HTTP Works' using article, header, sections, headings, paragraphs, figure, figcaption and footer.",
-
-      hints: [
-        "The article should make sense independently.",
-        "Each major topic should have its own heading."
-      ]
-    },
-
-    {
-      title:
-        "Keyboard-First Audit",
-
-      difficulty:
-        "Medium",
-
-      task:
-        "Open a website and navigate through its interactive controls using only the keyboard. Record every place where focus becomes confusing or an interaction cannot be performed.",
-
-      hints: [
-        "Use Tab and Shift+Tab.",
-        "Watch the visible focus indicator.",
-        "Try Enter and Space on interactive controls."
-      ]
-    },
-
-    {
-      title:
-        "DOM Structure Investigation",
-
-      difficulty:
-        "Hard",
-
-      task:
-        "Open a CodeBhavya lesson in DevTools and draw the DOM hierarchy from html to main content. Identify the parent-child relationship of at least ten elements.",
-
-      hints: [
-        "Start at html.",
-        "Move through body.",
-        "Identify header, nav, main, article and footer.",
-        "Inspect nested headings and sections."
-      ]
-    },
-
-    {
-      title:
-        "Semantic CodeBhavya Homepage",
-
-      difficulty:
-        "Hard",
-
-      task:
-        "Build the HTML-only structure of a CodeBhavya homepage containing branding, navigation, course categories, featured course cards, practice links, an aside and footer.",
-
-      hints: [
-        "Do not think about colors yet.",
-        "First make the document understandable without CSS.",
-        "Use links for destinations and buttons only for actions."
-      ]
-    },
-
-    {
-      title:
-        "Refactor a Real Page",
-
-      difficulty:
-        "Placement",
-
-      task:
-        "Choose any page you previously created and perform a semantic audit. List every div, heading, link, button, image and table. Explain whether each element is semantically appropriate.",
-
-      hints: [
-        "Do not change an element just to make the code look different.",
-        "Every change should have a reason."
-      ]
-    },
-
-    {
-      title:
-        "Build Without CSS",
-
-      difficulty:
-        "Placement",
-
-      task:
-        "Create a complete Full Stack course lesson using HTML only. Then disable CSS and ask whether the page is still understandable from top to bottom.",
-
-      hints: [
-        "Correct document order matters.",
-        "Headings should still communicate hierarchy.",
-        "Navigation should still be understandable.",
-        "The page should remain usable before styling."
-      ]
-    }
-
-  ],
-
-
-  /* =======================================================
-     KNOWLEDGE CHECK
-     ======================================================= */
-
-  quiz: [
-
-    {
-      q:
-        "What is the primary purpose of HTML?",
-
-      options: [
-        "Database management",
-        "Document structure and meaning",
-        "Image editing",
-        "Server deployment"
-      ],
-
-      answer: 1,
-
-      explanation:
-        "HTML describes the structure and meaning of web content."
-    },
-
-    {
-      q:
-        "Which element represents the primary content of a page?",
-
-      options: [
-        "aside",
-        "main",
-        "footer",
-        "span"
-      ],
-
-      answer: 1,
-
-      explanation:
-        "The main element identifies the primary content of the document."
-    },
-
-    {
-      q:
-        "Which element is normally used for important navigation links?",
-
-      options: [
-        "nav",
-        "section",
-        "div",
-        "figure"
-      ],
-
-      answer: 0,
-
-      explanation:
-        "nav identifies a major navigation region."
-    },
-
-    {
-      q:
-        "Which element is best for an action such as opening a menu?",
-
-      options: [
-        "a",
-        "button",
-        "p",
-        "article"
-      ],
-
-      answer: 1,
-
-      explanation:
-        "Opening a menu is an action, so a button is the appropriate native control."
-    },
-
-    {
-      q:
-        "Which element is normally used to navigate to another page?",
-
-      options: [
-        "button",
-        "a",
-        "span",
-        "strong"
-      ],
-
-      answer: 1,
-
-      explanation:
-        "An anchor represents navigation to another URL or resource."
-    },
-
-    {
-      q:
-        "What is div?",
-
-      options: [
-        "A database element",
-        "A generic neutral container",
-        "A heading",
-        "A navigation control"
-      ],
-
-      answer: 1,
-
-      explanation:
-        "div is a generic container with no specific semantic meaning."
-    },
-
-    {
-      q:
-        "What does article generally represent?",
-
-      options: [
-        "Only images",
-        "A self-contained composition",
-        "A CSS file",
-        "A database record"
-      ],
-
-      answer: 1,
-
-      explanation:
-        "article represents a self-contained composition that can potentially stand independently."
-    },
-
-    {
-      q:
-        "Why should headings be chosen according to hierarchy?",
-
-      options: [
-        "Only to change colors",
-        "To communicate document structure",
-        "To reduce JavaScript",
-        "To create databases"
-      ],
-
-      answer: 1,
-
-      explanation:
-        "Heading levels communicate the hierarchy of the document."
-    },
-
-    {
-      q:
-        "What is the purpose of alt text?",
-
-      options: [
-        "To change image color",
-        "To provide alternative meaning for an image",
-        "To create CSS",
-        "To make an image larger"
-      ],
-
-      answer: 1,
-
-      explanation:
-        "Alternative text communicates useful image meaning when the image cannot be perceived."
-    },
-
-    {
-      q:
-        "What should tables normally represent?",
-
-      options: [
-        "Page layout",
-        "Tabular data relationships",
-        "Navigation buttons",
-        "CSS animations"
-      ],
-
-      answer: 1,
-
-      explanation:
-        "Tables are intended for data organized into meaningful rows and columns."
-    },
-
-    {
-      q:
-        "What does DOM stand for?",
-
-      options: [
-        "Data Object Machine",
-        "Document Object Model",
-        "Dynamic Output Method",
-        "Document Order Manager"
-      ],
-
-      answer: 1,
-
-      explanation:
-        "DOM stands for Document Object Model."
-    },
-
-    {
-      q:
-        "Which is usually preferable?",
-
-      options: [
-        "div role=button",
-        "Native button",
-        "Clickable paragraph",
-        "Clickable heading"
-      ],
-
-      answer: 1,
-
-      explanation:
-        "Native controls provide appropriate semantics and expected interaction behavior."
-    },
-
-    {
-      q:
-        "Which element represents a thematic grouping?",
-
-      options: [
-        "section",
-        "button",
-        "img",
-        "a"
-      ],
-
-      answer: 0,
-
-      explanation:
-        "section represents a thematic grouping of content."
-    },
-
-    {
-      q:
-        "What should CSS primarily control?",
-
-      options: [
-        "Document meaning",
-        "Visual presentation",
-        "Database records",
-        "DNS"
-      ],
-
-      answer: 1,
-
-      explanation:
-        "CSS primarily controls presentation and layout."
-    },
-
-    {
-      q:
-        "What should you normally use for an action?",
-
-      options: [
-        "button",
-        "a without href",
-        "div",
-        "span"
-      ],
-
-      answer: 0,
-
-      explanation:
-        "Use a native button for an action."
-    }
-
-  ],
-
-
-  /* =======================================================
-     GLOSSARY
-     ======================================================= */
-
-  glossary: [
-
-    {
-      term: "HTML",
-      definition:
-        "HyperText Markup Language; the structural language used to describe web documents."
-    },
-
-    {
-      term: "Semantic HTML",
-      definition:
-        "HTML that communicates the meaning and purpose of content through appropriate elements."
-    },
-
-    {
-      term: "Element",
-      definition:
-        "A complete HTML node consisting of markup and its content where applicable."
-    },
-
-    {
-      term: "Attribute",
-      definition:
-        "Additional information supplied on an HTML element."
-    },
-
-    {
-      term: "Landmark",
-      definition:
-        "A major region of a page that helps users and assistive technologies navigate."
-    },
-
-    {
-      term: "DOM",
-      definition:
-        "The browser's structured in-memory representation of the parsed HTML document."
-    },
-
-    {
-      term: "Accessibility",
-      definition:
-        "Designing interfaces so people with different abilities and interaction methods can use them."
-    },
-
-    {
-      term: "ARIA",
-      definition:
-        "Accessible Rich Internet Applications; a set of accessibility semantics for dynamic or custom interfaces."
-    },
-
-    {
-      term: "Heading hierarchy",
-      definition:
-        "The structural relationship between h1, h2, h3 and deeper heading levels."
-    },
-
-    {
-      term: "Alternative text",
-      definition:
-        "Text that communicates the useful meaning of an image when the image itself cannot be perceived."
-    },
-
-    {
-      term: "Tabular data",
-      definition:
-        "Data organized into rows and columns with meaningful relationships."
-    },
-
-    {
-      term: "Native control",
-      definition:
-        "A built-in HTML control such as button, input or select that already provides standard browser behavior."
-    }
-
-  ],
-
-
-  /* =======================================================
-     COMPLETION
-     ======================================================= */
-
-  completion: {
-
-    title:
-      "You now understand the structure beneath the interface.",
-
-    message:
-      "Before moving to advanced frontend development, you should be able to look at an HTML page and explain what every major region means, why each element was selected and how the browser turns the document into a DOM tree.",
-
-    challenge:
-      "Build one complete CodeBhavya-style lesson using HTML only. Before adding CSS, check the document hierarchy, heading structure, navigation, links, buttons, images, lists and landmarks. If the page is understandable without styling, your HTML foundation is becoming strong."
-
-  }
-
 };
