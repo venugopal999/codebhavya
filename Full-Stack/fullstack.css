@@ -44,11 +44,14 @@
 
 html{
   scroll-behavior:smooth;
+  overflow-x:hidden;
 }
 
 body{
   margin:0;
   min-width:320px;
+  max-width:100%;
+  overflow-x:hidden;
   background:var(--bg);
   color:var(--text);
   font-family:Inter,Arial,sans-serif;
@@ -57,10 +60,19 @@ body{
 button,
 input{
   font:inherit;
+  max-width:100%;
+}
+
+img,
+svg,
+video,
+canvas{
+  max-width:100%;
 }
 
 a{
   color:inherit;
+  overflow-wrap:anywhere;
 }
 
 
@@ -88,6 +100,7 @@ a{
   gap:11px;
   margin-right:auto;
   text-decoration:none;
+  min-width:0;
 }
 
 .brand img{
@@ -96,11 +109,13 @@ a{
   object-fit:contain;
   background:#fff;
   border-radius:4px;
+  flex:0 0 auto;
 }
 
 .brand span{
   font:700 29px Georgia,serif;
   color:#dce3e7;
+  white-space:nowrap;
 }
 
 .brand b{
@@ -141,6 +156,7 @@ a{
   padding:7px 10px;
   font-size:21px;
   cursor:pointer;
+  flex:0 0 auto;
 }
 
 
@@ -171,14 +187,17 @@ a{
 .lesson-layout{
   display:grid;
   grid-template-columns:275px minmax(0,1fr);
+  width:100%;
   max-width:1550px;
   margin:auto;
+  min-width:0;
 }
 
 .lesson-layout>aside{
   position:sticky;
   top:73px;
   height:calc(100vh - 73px);
+  min-width:0;
   overflow:auto;
   padding:19px 13px;
   background:#1a1f23;
@@ -195,6 +214,7 @@ a{
 
 .lesson-layout aside label{
   display:block;
+  min-width:0;
 }
 
 .lesson-layout aside label span{
@@ -227,6 +247,7 @@ a{
   display:grid;
   gap:4px;
   margin-top:14px;
+  min-width:0;
 }
 
 .lesson-layout aside nav a{
@@ -234,6 +255,7 @@ a{
   grid-template-columns:30px minmax(0,1fr);
   gap:8px;
   align-items:center;
+  min-width:0;
   padding:9px 8px;
   border:1px solid transparent;
   border-radius:7px;
@@ -272,11 +294,13 @@ a{
 .lesson-layout aside nav a small{
   grid-column:2;
   color:#78848c;
+  overflow-wrap:anywhere;
 }
 
 .lesson-layout>main{
   width:100%;
   max-width:1160px;
+  min-width:0;
   padding:28px clamp(16px,3.5vw,48px) 60px;
 }
 
@@ -289,12 +313,21 @@ a{
   display:grid;
   grid-template-columns:75px minmax(0,1fr);
   gap:20px;
+  width:100%;
+  max-width:100%;
+  min-width:0;
   padding:clamp(25px,4vw,42px);
   border:1px solid #4b555c;
   border-radius:14px;
   background:
     linear-gradient(135deg,#292f35,#20252a);
   box-shadow:0 8px 25px #0002;
+  overflow:hidden;
+}
+
+.lesson-hero>div{
+  min-width:0;
+  max-width:100%;
 }
 
 .hero-level-number{
@@ -321,12 +354,14 @@ a{
   color:var(--text-strong);
   font:700 clamp(34px,5vw,58px)/1.05 Georgia,serif;
   letter-spacing:-.025em;
+  overflow-wrap:anywhere;
 }
 
 .lesson-hero>div:last-child>p:not(.eyebrow){
   max-width:900px;
   color:#c2cbd1;
   line-height:1.75;
+  overflow-wrap:anywhere;
 }
 
 .lesson-meta{
@@ -334,9 +369,11 @@ a{
   flex-wrap:wrap;
   gap:7px;
   margin-top:18px;
+  max-width:100%;
 }
 
 .lesson-meta span{
+  max-width:100%;
   padding:7px 10px;
   border:1px solid #4d5961;
   border-radius:99px;
@@ -344,6 +381,7 @@ a{
   color:#bfd0d7;
   font-size:10px;
   font-weight:800;
+  overflow-wrap:anywhere;
 }
 
 
@@ -352,18 +390,23 @@ a{
    ========================================================= */
 
 .lesson-section{
+  width:100%;
+  max-width:100%;
+  min-width:0;
   margin-top:18px;
   padding:clamp(21px,3vw,30px);
   border:1px solid var(--line);
   border-radius:12px;
   background:var(--panel);
   box-shadow:0 5px 18px #00015;
+  overflow:hidden;
 }
 
 .lesson-section h2{
   margin:6px 0 15px;
   color:var(--gold);
   font:700 clamp(27px,3vw,38px)/1.15 Georgia,serif;
+  overflow-wrap:anywhere;
 }
 
 .lesson-section h3{
@@ -371,16 +414,19 @@ a{
   color:var(--cyan);
   font-size:18px;
   line-height:1.3;
+  overflow-wrap:anywhere;
 }
 
 .lesson-section h4{
   color:var(--gold-soft);
+  overflow-wrap:anywhere;
 }
 
 .lesson-section p,
 .lesson-section li{
   color:#c0c9cf;
   line-height:1.72;
+  overflow-wrap:anywhere;
 }
 
 .section-description{
@@ -392,25 +438,26 @@ a{
   display:flex;
   align-items:center;
   gap:13px;
+  max-width:100%;
   padding-bottom:13px;
   border-bottom:1px solid #3b444b;
+}
+
+.concept-heading h2{
+  min-width:0;
 }
 
 .concept-number{
   display:grid;
   place-items:center;
   flex:0 0 43px;
+  width:43px;
   height:43px;
   border:1px solid #74622f;
   border-radius:8px;
   background:#332f23;
   color:var(--gold);
   font-weight:900;
-}
-
-.concept-heading h2{
-  margin:3px 0 0;
-  color:var(--gold);
 }
 
 .concept-intro{
@@ -421,6 +468,7 @@ a{
 .explanation-list{
   display:grid;
   gap:7px;
+  min-width:0;
 }
 
 .explanation-list p{
@@ -460,11 +508,15 @@ a{
   display:grid;
   grid-template-columns:auto minmax(0,1fr);
   gap:12px;
+  width:100%;
+  max-width:100%;
+  min-width:0;
   margin-top:15px;
   padding:15px;
   border:1px solid #465159;
   border-radius:9px;
   background:#2a3035;
+  overflow:hidden;
 }
 
 .key-idea{
@@ -542,6 +594,7 @@ a{
   background:#181d21;
   color:var(--cyan-soft);
   font:12px Consolas,monospace;
+  overflow-wrap:anywhere;
 }
 
 .lesson-section strong{
@@ -558,6 +611,9 @@ a{
    ========================================================= */
 
 .output-box{
+  width:100%;
+  max-width:100%;
+  min-width:0;
   margin-top:12px;
   overflow:hidden;
   border:1px solid #465159;
@@ -576,14 +632,20 @@ a{
 }
 
 .output-box pre{
+  max-width:100%;
   margin:0;
   padding:12px;
-  overflow:auto;
+  overflow-x:auto;
+  overflow-y:hidden;
   color:#d8e4e8;
   font:12px/1.65 Consolas,monospace;
+  white-space:pre;
 }
 
 .code-box{
+  width:100%;
+  max-width:100%;
+  min-width:0;
   margin-top:15px;
   overflow:hidden;
   border:1px solid #414b52;
@@ -596,6 +658,8 @@ a{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:8px;
+  min-width:0;
   padding:9px 12px;
   border-bottom:1px solid #30383e;
   background:#1a2024;
@@ -606,6 +670,7 @@ a{
 }
 
 .code-box header button{
+  flex:0 0 auto;
   padding:5px 9px;
   border:1px solid #71612f;
   border-radius:6px;
@@ -622,11 +687,14 @@ a{
 }
 
 .code-box pre{
+  max-width:100%;
   margin:0;
   padding:14px;
-  overflow:auto;
+  overflow-x:auto;
+  overflow-y:hidden;
   color:#dbe7eb;
   font:12px/1.7 Consolas,"Courier New",monospace;
+  white-space:pre;
 }
 
 
@@ -635,8 +703,12 @@ a{
    ========================================================= */
 
 .comparison-table{
+  width:100%;
+  max-width:100%;
+  min-width:0;
   margin-top:15px;
   overflow-x:auto;
+  overflow-y:hidden;
   border:1px solid #404a51;
   border-radius:9px;
 }
@@ -660,6 +732,7 @@ a{
   border-top:1px solid #3b454b;
   color:#c0c9cf;
   vertical-align:top;
+  overflow-wrap:anywhere;
 }
 
 .comparison-table tr:nth-child(even) td{
@@ -677,7 +750,10 @@ a{
 
 .learning-flow{
   width:100%;
+  max-width:100%;
+  min-width:0;
   margin-top:16px;
+  overflow:hidden;
 }
 
 .learning-flow h3{
@@ -686,6 +762,7 @@ a{
 
 .learning-flow .flow-track{
   width:min(100%,620px);
+  max-width:100%;
   margin:14px auto 0;
   display:flex;
   flex-direction:column;
@@ -694,6 +771,7 @@ a{
 
 .learning-flow .flow-item{
   width:100%;
+  min-width:0;
   display:grid;
   grid-template-columns:42px minmax(0,1fr);
   gap:10px;
@@ -702,6 +780,7 @@ a{
   border:1px solid #414b52;
   border-radius:8px;
   background:#282e34;
+  overflow:hidden;
 }
 
 .flow-number{
@@ -709,9 +788,14 @@ a{
   font:900 11px Consolas,monospace;
 }
 
+.flow-content{
+  min-width:0;
+}
+
 .flow-content strong{
   display:block;
   color:#e5ebee;
+  overflow-wrap:anywhere;
 }
 
 .flow-content span{
@@ -720,6 +804,7 @@ a{
   color:#a4afb6;
   font-size:12px;
   line-height:1.5;
+  overflow-wrap:anywhere;
 }
 
 .flow-arrow{
@@ -745,6 +830,7 @@ a{
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:10px;
   margin-top:13px;
+  min-width:0;
 }
 
 .method-card,
@@ -759,6 +845,7 @@ a{
   border:1px solid #424c53;
   border-radius:8px;
   background:#282e34;
+  overflow:hidden;
 }
 
 .method-card>b{
@@ -768,9 +855,11 @@ a{
 
 .method-card code{
   display:inline-block;
+  max-width:100%;
   margin-top:8px;
   color:var(--gold-soft);
   font:11px Consolas,monospace;
+  overflow-wrap:anywhere;
 }
 
 .status-card>b{
@@ -796,18 +885,22 @@ a{
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:9px;
   margin-top:14px;
+  min-width:0;
 }
 
 .url-breakdown article{
+  min-width:0;
   padding:12px;
   border:1px solid #414b52;
   border-radius:8px;
   background:#272d32;
+  overflow:hidden;
 }
 
 .url-breakdown code{
   color:var(--cyan);
   font:900 12px Consolas,monospace;
+  overflow-wrap:anywhere;
 }
 
 .url-breakdown p{
@@ -825,13 +918,16 @@ a{
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:10px;
   margin-top:15px;
+  min-width:0;
 }
 
 .architecture-flow article{
+  min-width:0;
   padding:14px;
   border:1px solid #414b52;
   border-radius:8px;
   background:#282e34;
+  overflow:hidden;
 }
 
 .architecture-flow article>span{
@@ -855,11 +951,15 @@ a{
    ========================================================= */
 
 .message-panel{
+  width:100%;
+  max-width:100%;
+  min-width:0;
   margin-top:14px;
   padding:14px;
   border:1px solid #404a51;
   border-radius:8px;
   background:#1e2428;
+  overflow:hidden;
 }
 
 .message-panel h3{
@@ -871,21 +971,26 @@ a{
   display:flex;
   justify-content:space-between;
   gap:20px;
+  min-width:0;
   padding:8px 0;
   border-bottom:1px solid #353e44;
 }
 
 .message-line span{
+  min-width:0;
   color:#909ca4;
   font-size:11px;
+  overflow-wrap:anywhere;
 }
 
 .message-panel pre{
+  max-width:100%;
   padding:12px;
   overflow:auto;
   background:#101418;
   color:#d8e3e7;
   font:12px/1.6 Consolas,monospace;
+  white-space:pre;
 }
 
 .role-panel h3{
@@ -900,7 +1005,7 @@ a{
 
 .objective-grid article{
   display:grid;
-  grid-template-columns:34px 1fr;
+  grid-template-columns:34px minmax(0,1fr);
   gap:10px;
 }
 
@@ -915,7 +1020,7 @@ a{
 
 .revision-grid article{
   display:grid;
-  grid-template-columns:32px 1fr;
+  grid-template-columns:32px minmax(0,1fr);
   gap:10px;
 }
 
@@ -940,9 +1045,12 @@ a{
 .interview-list{
   display:grid;
   gap:8px;
+  min-width:0;
 }
 
 .interview-item{
+  width:100%;
+  min-width:0;
   overflow:hidden;
   border:1px solid #404a51;
   border-radius:8px;
@@ -951,8 +1059,9 @@ a{
 
 .interview-item summary{
   display:grid;
-  grid-template-columns:34px 1fr;
+  grid-template-columns:34px minmax(0,1fr);
   gap:8px;
+  min-width:0;
   padding:13px;
   cursor:pointer;
   color:#e5eaed;
@@ -970,6 +1079,7 @@ a{
 }
 
 .interview-answer{
+  min-width:0;
   padding:0 13px 13px 55px;
   border-top:1px solid #394249;
 }
@@ -987,6 +1097,7 @@ a{
   display:flex;
   justify-content:space-between;
   gap:8px;
+  min-width:0;
   color:#909ba3;
   font-size:9px;
   font-weight:900;
@@ -1025,11 +1136,14 @@ a{
    ========================================================= */
 
 .quiz-question{
+  width:100%;
+  min-width:0;
   margin-top:12px;
   padding:15px;
   border:1px solid #404a51;
   border-radius:9px;
   background:#282e34;
+  overflow:hidden;
 }
 
 .quiz-number{
@@ -1046,9 +1160,11 @@ a{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:7px;
+  min-width:0;
 }
 
 .quiz-options button{
+  min-width:0;
   padding:10px;
   border:1px solid #4b565e;
   border-radius:7px;
@@ -1056,6 +1172,7 @@ a{
   color:#d0d8dd;
   cursor:pointer;
   text-align:left;
+  overflow-wrap:anywhere;
 }
 
 .quiz-options button:hover{
@@ -1129,6 +1246,7 @@ a{
   display:inline-flex;
   align-items:center;
   justify-content:center;
+  max-width:100%;
   padding:10px 14px;
   border:1px solid #4e5960;
   border-radius:7px;
@@ -1137,6 +1255,7 @@ a{
   text-decoration:none;
   font-weight:900;
   cursor:pointer;
+  overflow-wrap:anywhere;
 }
 
 .complete-button{
@@ -1155,6 +1274,7 @@ a{
   justify-content:space-between;
   gap:10px;
   margin-top:18px;
+  min-width:0;
 }
 
 .lesson-nav a:hover,
@@ -1179,14 +1299,18 @@ a{
   grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);
   gap:12px;
   align-items:start;
+  min-width:0;
 }
 
 .trace-left{
   align-self:start;
   min-width:0;
+  max-width:100%;
 }
 
 .trace-code{
+  width:100%;
+  max-width:100%;
   height:auto!important;
   max-height:300px;
   overflow:auto;
@@ -1200,6 +1324,7 @@ a{
   display:grid;
   grid-template-columns:34px minmax(0,1fr);
   gap:8px;
+  min-width:0;
   padding:4px 7px;
   border-left:3px solid transparent;
 }
@@ -1255,13 +1380,16 @@ a{
 .premium-trace>.trace-state{
   align-self:start;
   width:100%;
+  max-width:100%;
   height:auto!important;
   min-height:0!important;
   max-height:none!important;
+  min-width:0;
   padding:16px;
   border:1px solid #444e55;
   border-radius:9px;
   background:#292f35;
+  overflow:hidden;
 }
 
 .trace-state-label{
@@ -1277,11 +1405,13 @@ a{
   margin-top:6px;
   color:var(--cyan);
   font-size:19px;
+  overflow-wrap:anywhere;
 }
 
 .trace-state p{
   margin:8px 0 0;
   color:#b4bec4;
+  overflow-wrap:anywhere;
 }
 
 
@@ -1305,6 +1435,7 @@ a{
   right:18px;
   bottom:18px;
   z-index:200;
+  max-width:calc(100vw - 36px);
   padding:10px 14px;
   border:1px solid #4b555c;
   border-radius:7px;
@@ -1335,10 +1466,12 @@ a{
   display:grid;
   grid-template-columns:1fr auto;
   gap:10px 25px;
+  width:100%;
   padding:25px clamp(18px,4vw,50px);
   border-top:1px solid #3d474e;
   background:#15191d;
   color:#929da5;
+  min-width:0;
 }
 
 .site-footer strong{
@@ -1348,6 +1481,7 @@ a{
 
 .site-footer p{
   margin:5px 0;
+  overflow-wrap:anywhere;
 }
 
 .site-footer nav{
@@ -1444,6 +1578,9 @@ a{
 
   .lesson-layout{
     display:block;
+    width:100%;
+    max-width:100%;
+    min-width:0;
   }
 
   .lesson-layout>aside{
@@ -1453,6 +1590,7 @@ a{
     bottom:0;
     z-index:120;
     width:min(88vw,320px);
+    max-width:100vw;
     height:auto;
     transform:translateX(-105%);
     transition:transform .18s;
@@ -1467,7 +1605,11 @@ a{
   }
 
   .lesson-layout>main{
+    width:100%;
+    max-width:100%;
+    min-width:0;
     padding:16px 12px 40px;
+    overflow:hidden;
   }
 
   .site-footer{
@@ -1482,6 +1624,16 @@ a{
 
 @media(max-width:560px){
 
+  .site-header{
+    gap:8px;
+    padding-left:10px;
+    padding-right:10px;
+  }
+
+  .brand{
+    gap:8px;
+  }
+
   .brand img{
     width:47px;
     height:45px;
@@ -1491,9 +1643,17 @@ a{
     font-size:23px;
   }
 
+  .lesson-layout>main{
+    padding:12px 8px 35px;
+  }
+
   .lesson-hero{
     grid-template-columns:1fr;
     gap:8px;
+    width:100%;
+    max-width:100%;
+    padding:22px 16px;
+    border-radius:11px;
   }
 
   .hero-level-number{
@@ -1506,7 +1666,18 @@ a{
   }
 
   .lesson-section{
+    width:100%;
+    max-width:100%;
     padding:18px 14px;
+    border-radius:10px;
+  }
+
+  .concept-heading{
+    align-items:flex-start;
+  }
+
+  .concept-heading h2{
+    min-width:0;
   }
 
   .objective-grid,
@@ -1537,8 +1708,18 @@ a{
     max-height:260px;
   }
 
+  .trace-controls{
+    width:100%;
+  }
+
   .trace-controls button{
-    flex:1;
+    flex:1 1 calc(50% - 7px);
+    min-width:0;
+  }
+
+  .comparison-table{
+    width:100%;
+    max-width:100%;
   }
 
   .comparison-table table{
@@ -1547,6 +1728,54 @@ a{
 
   .learning-flow .flow-track{
     width:100%;
+  }
+
+  .message-line{
+    flex-direction:column;
+    gap:4px;
+  }
+
+  .key-idea,
+  .warning-box,
+  .mistake-box,
+  .real-example,
+  .try-it-box{
+    grid-template-columns:1fr;
+    gap:7px;
+  }
+
+  .key-idea>span,
+  .warning-box>span,
+  .mistake-box>span{
+    display:block;
+  }
+
+  .code-box header{
+    flex-wrap:wrap;
+  }
+}
+
+
+@media(max-width:380px){
+
+  .brand span{
+    font-size:21px;
+  }
+
+  .lesson-hero{
+    padding:20px 13px;
+  }
+
+  .lesson-section{
+    padding:16px 12px;
+  }
+
+  .lesson-hero h1{
+    font-size:32px;
+  }
+
+  .trace-controls button{
+    flex:1 1 100%;
   }
 }
 
@@ -1561,9 +1790,7 @@ a{
 
 
 /* =========================================================
-   =========================================================
    CODEBHAVYA FULL STACK COURSE INDEX
-   =========================================================
    ========================================================= */
 
 
@@ -1574,6 +1801,7 @@ a{
 body:has(> main > .hero) main{
   width:100%;
   max-width:none;
+  min-width:0;
   padding:0 18px 50px;
 }
 
@@ -1584,6 +1812,7 @@ body:has(> main > .hero) main{
 
 main > .hero{
   width:min(100%,1320px);
+  max-width:100%;
   margin:0 auto;
   display:grid;
   grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);
@@ -1594,10 +1823,12 @@ main > .hero{
   border-radius:0 0 14px 14px;
   background:linear-gradient(135deg,#292f35,#1c2125);
   box-shadow:0 10px 30px #0003;
+  overflow:hidden;
 }
 
 main > .hero > div:first-child{
   min-width:0;
+  max-width:100%;
 }
 
 .hero .eyebrow{
@@ -1614,6 +1845,7 @@ main > .hero > div:first-child{
   color:var(--text-strong);
   font:700 clamp(38px,5.5vw,68px)/1.02 Georgia,serif;
   letter-spacing:-.025em;
+  overflow-wrap:anywhere;
 }
 
 .hero > div:first-child > p:not(.eyebrow){
@@ -1622,6 +1854,7 @@ main > .hero > div:first-child{
   color:#c0c9cf;
   font-size:16px;
   line-height:1.75;
+  overflow-wrap:anywhere;
 }
 
 .hero-actions{
@@ -1686,12 +1919,14 @@ main > .hero > div:first-child{
   flex-direction:column;
   justify-content:center;
   min-height:330px;
+  min-width:0;
   padding:24px;
   border:1px solid #444f56;
   border-radius:12px;
   background:#171c20;
   box-shadow:inset 0 0 0 1px #111417;
   text-align:center;
+  overflow:hidden;
 }
 
 .stack-map span{
@@ -1710,6 +1945,7 @@ main > .hero > div:first-child{
   color:#e0e6e9;
   font-size:12px;
   line-height:1.5;
+  overflow-wrap:anywhere;
 }
 
 .stack-map i{
@@ -1726,6 +1962,8 @@ main > .hero > div:first-child{
 
 main > .progress-card{
   width:min(100%,1320px);
+  max-width:100%;
+  min-width:0;
   margin:20px auto 0;
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(300px,.75fr);
@@ -1734,6 +1972,7 @@ main > .progress-card{
   border:1px solid #414b52;
   border-radius:11px;
   background:#252b30;
+  overflow:hidden;
 }
 
 .progress-card h2,
@@ -1747,6 +1986,10 @@ main > .progress-card{
 .roadmap header>p:not(.section-label){
   color:#aeb9c0;
   line-height:1.65;
+}
+
+.progress-card>div{
+  min-width:0;
 }
 
 .progress-card>div:last-child{
@@ -1811,15 +2054,19 @@ main > .progress-card{
 
 main > .roadmap{
   width:min(100%,1320px);
+  max-width:100%;
+  min-width:0;
   margin:20px auto 0;
   padding:27px;
   border:1px solid #414b52;
   border-radius:11px;
   background:#23292e;
+  overflow:hidden;
 }
 
 .roadmap header{
   max-width:950px;
+  min-width:0;
 }
 
 .roadmap header label{
@@ -1839,6 +2086,7 @@ main > .roadmap{
 
 .roadmap header input{
   width:min(100%,600px);
+  max-width:100%;
   min-height:43px;
   padding:9px 12px;
   border:1px solid #4b555c;
@@ -1864,6 +2112,8 @@ main > .roadmap{
 
 #roadmapContent{
   width:100%;
+  max-width:100%;
+  min-width:0;
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:12px;
@@ -1873,27 +2123,32 @@ main > .roadmap{
 
 #roadmapContent>*{
   min-width:0;
+  max-width:100%;
 }
 
 
 /* ---------------------------------------------------------
-   GENERIC ROADMAP CARD SUPPORT
+   ROADMAP CARDS
+   Strong selectors for dynamically generated cards
    --------------------------------------------------------- */
 
-.roadmap-card,
-.level-card,
-.course-level-card,
-.roadmap-item,
-.level-item,
-.course-card{
+#roadmapContent .roadmap-card,
+#roadmapContent .level-card,
+#roadmapContent .course-level-card,
+#roadmapContent .roadmap-item,
+#roadmapContent .level-item,
+#roadmapContent .course-card{
   position:relative;
+  width:100%;
+  max-width:100%;
   min-width:0;
   min-height:190px;
   padding:17px;
   overflow:hidden;
-  border:1px solid #414b52;
+  border:1px solid #4b565e !important;
   border-radius:9px;
-  background:#292f35;
+  background:#292f35 !important;
+  color:#e8edf0;
   transition:
     transform .15s ease,
     border-color .15s ease,
@@ -1901,16 +2156,16 @@ main > .roadmap{
     box-shadow .15s ease;
 }
 
-.roadmap-card:hover,
-.level-card:hover,
-.course-level-card:hover,
-.roadmap-item:hover,
-.level-item:hover,
-.course-card:hover{
+#roadmapContent .roadmap-card:hover,
+#roadmapContent .level-card:hover,
+#roadmapContent .course-level-card:hover,
+#roadmapContent .roadmap-item:hover,
+#roadmapContent .level-item:hover,
+#roadmapContent .course-card:hover{
   transform:translateY(-2px);
-  border-color:#68737b;
-  background:#2e353b;
-  box-shadow:0 8px 20px #0002;
+  border-color:#707c84 !important;
+  background:#30373d !important;
+  box-shadow:0 10px 24px #0003;
 }
 
 
@@ -1918,14 +2173,14 @@ main > .roadmap{
    ROADMAP LEVEL NUMBER
    --------------------------------------------------------- */
 
-.level-number,
-.roadmap-number,
-.level-badge,
-.course-level-number{
+#roadmapContent .level-number,
+#roadmapContent .roadmap-number,
+#roadmapContent .level-badge,
+#roadmapContent .course-level-number{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  color:var(--gold);
+  color:var(--gold) !important;
   font:900 10px Consolas,monospace;
   letter-spacing:.08em;
 }
@@ -1935,63 +2190,67 @@ main > .roadmap{
    ROADMAP CARD HEADINGS
    --------------------------------------------------------- */
 
-.roadmap-card h3,
-.level-card h3,
-.course-level-card h3,
-.roadmap-item h3,
-.level-item h3,
-.course-card h3{
+#roadmapContent .roadmap-card h3,
+#roadmapContent .level-card h3,
+#roadmapContent .course-level-card h3,
+#roadmapContent .roadmap-item h3,
+#roadmapContent .level-item h3,
+#roadmapContent .course-card h3{
   margin:8px 0 7px;
-  color:#edf1f3;
+  color:#f0f4f6 !important;
   font-size:18px;
   line-height:1.25;
+  overflow-wrap:anywhere;
 }
 
-.roadmap-card p,
-.level-card p,
-.course-level-card p,
-.roadmap-item p,
-.level-item p,
-.course-card p{
+#roadmapContent .roadmap-card p,
+#roadmapContent .level-card p,
+#roadmapContent .course-level-card p,
+#roadmapContent .roadmap-item p,
+#roadmapContent .level-item p,
+#roadmapContent .course-card p{
   margin:0;
-  color:#b4bec5;
+  color:#bdc7cd !important;
   font-size:12px;
   line-height:1.65;
+  overflow-wrap:anywhere;
 }
 
 
 /* ---------------------------------------------------------
-   ROADMAP LINKS
+   ROADMAP CARD LINKS
    --------------------------------------------------------- */
 
-.roadmap-card a,
-.level-card a,
-.course-level-card a,
-.roadmap-item a,
-.level-item a,
-.course-card a{
+#roadmapContent .roadmap-card a,
+#roadmapContent .level-card a,
+#roadmapContent .course-level-card a,
+#roadmapContent .roadmap-item a,
+#roadmapContent .level-item a,
+#roadmapContent .course-card a{
   display:inline-flex;
   align-items:center;
+  max-width:100%;
   margin-top:14px;
   padding:7px 10px;
-  border:1px solid #665a32;
+  border:1px solid #756331 !important;
   border-radius:6px;
-  background:#302c23;
-  color:var(--gold);
+  background:#332e22 !important;
+  color:var(--gold-soft) !important;
   font-size:10px;
   font-weight:900;
   text-decoration:none;
+  overflow-wrap:anywhere;
 }
 
-.roadmap-card a:hover,
-.level-card a:hover,
-.course-level-card a:hover,
-.roadmap-item a:hover,
-.level-item a:hover,
-.course-card a:hover{
-  border-color:#8a7638;
-  background:#3a3425;
-  color:#ffe38a;
+#roadmapContent .roadmap-card a:hover,
+#roadmapContent .level-card a:hover,
+#roadmapContent .course-level-card a:hover,
+#roadmapContent .roadmap-item a:hover,
+#roadmapContent .level-item a:hover,
+#roadmapContent .course-card a:hover{
+  border-color:#a0873d !important;
+  background:#403723 !important;
+  color:#fff0ae !important;
 }
 
 
@@ -1999,10 +2258,11 @@ main > .roadmap{
    STATUS
    --------------------------------------------------------- */
 
-.level-status,
-.status,
-.card-status{
+#roadmapContent .level-status,
+#roadmapContent .status,
+#roadmapContent .card-status{
   float:right;
+  max-width:100%;
   padding:4px 7px;
   border:1px solid #424b51;
   border-radius:99px;
@@ -2014,54 +2274,69 @@ main > .roadmap{
   text-transform:uppercase;
 }
 
-.level-status.complete,
-.status.complete,
-.card-status.complete,
-.roadmap-card.complete .level-status{
-  border-color:#42634f;
-  background:#24332b;
-  color:var(--green);
-}
 
-.level-status.planned,
-.status.planned,
-.card-status.planned{
-  border-color:#4a4f53;
-  color:#879198;
+/* ---------------------------------------------------------
+   COMPLETED STATUS
+   --------------------------------------------------------- */
+
+#roadmapContent .level-status.complete,
+#roadmapContent .status.complete,
+#roadmapContent .card-status.complete,
+#roadmapContent .roadmap-card.complete .level-status,
+#roadmapContent .level-card.complete .level-status,
+#roadmapContent .course-level-card.complete .level-status{
+  border-color:#4f8063 !important;
+  background:#21362c !important;
+  color:var(--green) !important;
 }
 
 
 /* ---------------------------------------------------------
-   PLANNED LEVELS
+   PLANNED STATUS
    --------------------------------------------------------- */
 
-.roadmap-card.planned,
-.level-card.planned,
-.course-level-card.planned,
-.roadmap-item.planned,
-.level-item.planned,
-.course-card.planned{
-  background:#252a2f;
+#roadmapContent .level-status.planned,
+#roadmapContent .status.planned,
+#roadmapContent .card-status.planned{
+  border-color:#505960 !important;
+  background:#20262b !important;
+  color:#9aa6ad !important;
 }
 
-.roadmap-card.planned:hover,
-.level-card.planned:hover,
-.course-level-card.planned:hover,
-.roadmap-item.planned:hover,
-.level-item.planned:hover,
-.course-card.planned:hover{
-  background:#292f35;
+
+/* ---------------------------------------------------------
+   PLANNED LEVEL CARDS
+   --------------------------------------------------------- */
+
+#roadmapContent .roadmap-card.planned,
+#roadmapContent .level-card.planned,
+#roadmapContent .course-level-card.planned,
+#roadmapContent .roadmap-item.planned,
+#roadmapContent .level-item.planned,
+#roadmapContent .course-card.planned{
+  background:#252a2f !important;
+  border-color:#444d54 !important;
 }
 
-.roadmap-card.planned a,
-.level-card.planned a,
-.course-level-card.planned a,
-.roadmap-item.planned a,
-.level-item.planned a,
-.course-card.planned a{
-  border-color:#414950;
-  background:#22272b;
-  color:#87939b;
+#roadmapContent .roadmap-card.planned:hover,
+#roadmapContent .level-card.planned:hover,
+#roadmapContent .course-level-card.planned:hover,
+#roadmapContent .roadmap-item.planned:hover,
+#roadmapContent .level-item.planned:hover,
+#roadmapContent .course-card.planned:hover{
+  background:#292f35 !important;
+  border-color:#606b73 !important;
+}
+
+#roadmapContent .roadmap-card.planned a,
+#roadmapContent .level-card.planned a,
+#roadmapContent .course-level-card.planned a,
+#roadmapContent .roadmap-item.planned a,
+#roadmapContent .level-item.planned a,
+#roadmapContent .course-card.planned a{
+  border-color:#414950 !important;
+  background:#22272b !important;
+  color:#9aa6ad !important;
   cursor:default;
 }
 
@@ -2071,13 +2346,16 @@ main > .roadmap{
    --------------------------------------------------------- */
 
 #emptySearch{
+  width:100%;
+  max-width:100%;
   margin:25px 0 0;
   padding:18px;
-  border:1px dashed #485158;
+  border:1px dashed #59656d;
   border-radius:8px;
-  background:#1c2125;
-  color:#a6b1b8;
+  background:#181e22;
+  color:#b3bec5;
   text-align:center;
+  overflow-wrap:anywhere;
 }
 
 
@@ -2094,142 +2372,8 @@ main > .roadmap{
 
 
 /* =========================================================
-   INDEX RESPONSIVE
+   FINAL INDEX VISUAL HIERARCHY
    ========================================================= */
-
-@media(max-width:1100px){
-
-  #roadmapContent{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-
-  main > .hero{
-    grid-template-columns:minmax(0,1fr) minmax(260px,.7fr);
-  }
-}
-
-
-@media(max-width:980px){
-
-  main > .hero{
-    grid-template-columns:1fr;
-  }
-
-  .stack-map{
-    min-height:0;
-  }
-
-  main > .progress-card{
-    grid-template-columns:1fr;
-  }
-
-  #roadmapContent{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-}
-
-
-@media(max-width:700px){
-
-  body:has(> main > .hero) main{
-    padding:0 10px 35px;
-  }
-
-  main > .hero{
-    padding:27px 18px;
-    border-radius:0 0 10px 10px;
-  }
-
-  .hero h1{
-    font-size:42px;
-  }
-
-  .hero > div:first-child > p:not(.eyebrow){
-    font-size:14px;
-  }
-
-  .stats{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-
-  main > .progress-card,
-  main > .roadmap{
-    padding:18px 14px;
-  }
-
-  #roadmapContent{
-    grid-template-columns:1fr;
-  }
-
-  .roadmap-card,
-  .level-card,
-  .course-level-card,
-  .roadmap-item,
-  .level-item,
-  .course-card{
-    min-height:0;
-  }
-}
-
-
-@media(max-width:480px){
-
-  .hero h1{
-    font-size:36px;
-  }
-
-  .hero-actions{
-    flex-direction:column;
-  }
-
-  .hero-actions .button{
-    width:100%;
-  }
-
-  .stack-map{
-    padding:16px;
-  }
-
-  .stats{
-    gap:7px;
-  }
-
-  .stats>div{
-    padding:10px;
-  }
-
-  .roadmap-card,
-  .level-card,
-  .course-level-card,
-  .roadmap-item,
-  .level-item,
-  .course-card{
-    padding:14px;
-  }
-
-  .roadmap-card h3,
-  .level-card h3,
-  .course-level-card h3,
-  .roadmap-item h3,
-  .level-item h3,
-  .course-card h3{
-    font-size:17px;
-  }
-}
-
-
-/* =========================================================
-   END CODEBHAVYA FULL STACK CSS
-   ========================================================= */
-
-/* =========================================================
-   CODEBHAVYA — FINAL VISUAL HIERARCHY
-   Index page color refinement
-   ========================================================= */
-
-/* ---------------------------------------------------------
-   INDEX HERO
-   --------------------------------------------------------- */
 
 main > .hero{
   background:
@@ -2286,7 +2430,7 @@ main > .hero > div:first-child > p:not(.eyebrow){
 
 
 /* ---------------------------------------------------------
-   STATISTICS
+   STATISTICS COLORS
    --------------------------------------------------------- */
 
 .stats>div{
@@ -2316,7 +2460,7 @@ main > .hero > div:first-child > p:not(.eyebrow){
 
 
 /* ---------------------------------------------------------
-   STACK MAP
+   STACK MAP COLORS
    --------------------------------------------------------- */
 
 .stack-map{
@@ -2455,139 +2599,212 @@ main > .roadmap{
 }
 
 
-/* ---------------------------------------------------------
-   ROADMAP CARDS
-   --------------------------------------------------------- */
+/* =========================================================
+   MOBILE INDEX
+   ========================================================= */
 
-#roadmapContent > *{
-  background:#292f35;
-  border-color:#4b565e;
-}
+@media(max-width:1100px){
 
-#roadmapContent > *:hover{
-  background:#30373d;
-  border-color:#707c84;
-  box-shadow:0 10px 24px #0003;
-}
+  #roadmapContent{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
 
-#roadmapContent h3{
-  color:#f0f4f6;
-}
-
-#roadmapContent p{
-  color:#bdc7cd;
-}
-
-#roadmapContent .level-number,
-#roadmapContent .roadmap-number,
-#roadmapContent .level-badge,
-#roadmapContent .course-level-number{
-  color:var(--gold);
+  main > .hero{
+    grid-template-columns:minmax(0,1fr) minmax(260px,.7fr);
+  }
 }
 
 
-/* ---------------------------------------------------------
-   ROADMAP LINKS
-   --------------------------------------------------------- */
+@media(max-width:980px){
 
-#roadmapContent a{
-  background:#332e22;
-  border-color:#756331;
-  color:var(--gold-soft);
-}
+  main > .hero{
+    grid-template-columns:1fr;
+  }
 
-#roadmapContent a:hover{
-  background:#403723;
-  border-color:#a0873d;
-  color:#fff0ae;
-}
+  .stack-map{
+    min-height:0;
+  }
 
+  main > .progress-card{
+    grid-template-columns:1fr;
+  }
 
-/* ---------------------------------------------------------
-   COMPLETED STATUS
-   --------------------------------------------------------- */
-
-#roadmapContent .level-status.complete,
-#roadmapContent .status.complete,
-#roadmapContent .card-status.complete{
-  background:#21362c;
-  border-color:#4f8063;
-  color:var(--green);
+  #roadmapContent{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
 }
 
 
-/* ---------------------------------------------------------
-   PLANNED STATUS
-   --------------------------------------------------------- */
+@media(max-width:700px){
 
-#roadmapContent .level-status.planned,
-#roadmapContent .status.planned,
-#roadmapContent .card-status.planned{
-  background:#20262b;
-  border-color:#505960;
-  color:#9aa6ad;
+  body:has(> main > .hero) main{
+    width:100%;
+    max-width:100%;
+    padding:0 10px 35px;
+    overflow:hidden;
+  }
+
+  main > .hero{
+    width:100%;
+    max-width:100%;
+    padding:27px 18px;
+    border-radius:0 0 10px 10px;
+  }
+
+  .hero h1{
+    font-size:42px;
+  }
+
+  .hero > div:first-child > p:not(.eyebrow){
+    font-size:14px;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  main > .progress-card,
+  main > .roadmap{
+    width:100%;
+    max-width:100%;
+    padding:18px 14px;
+  }
+
+  #roadmapContent{
+    grid-template-columns:1fr;
+  }
+
+  #roadmapContent .roadmap-card,
+  #roadmapContent .level-card,
+  #roadmapContent .course-level-card,
+  #roadmapContent .roadmap-item,
+  #roadmapContent .level-item,
+  #roadmapContent .course-card{
+    min-height:0;
+  }
 }
 
 
-/* ---------------------------------------------------------
-   SEARCH EMPTY STATE
-   --------------------------------------------------------- */
+@media(max-width:480px){
 
-#emptySearch{
-  background:#181e22;
-  border-color:#59656d;
-  color:#b3bec5;
-}
+  .hero h1{
+    font-size:36px;
+  }
 
+  .hero-actions{
+    flex-direction:column;
+  }
 
-/* ---------------------------------------------------------
-   GENERAL CONTENT HIERARCHY
-   --------------------------------------------------------- */
+  .hero-actions .button{
+    width:100%;
+  }
 
-.lesson-section h2{
-  color:var(--gold);
-}
+  .stack-map{
+    padding:16px;
+  }
 
-.lesson-section h3{
-  color:var(--cyan);
-}
+  .stats{
+    gap:7px;
+  }
 
-.lesson-section h4{
-  color:var(--gold-soft);
-}
+  .stats>div{
+    padding:10px;
+  }
 
-.lesson-section strong{
-  color:#edf2f4;
-}
+  #roadmapContent .roadmap-card,
+  #roadmapContent .level-card,
+  #roadmapContent .course-level-card,
+  #roadmapContent .roadmap-item,
+  #roadmapContent .level-item,
+  #roadmapContent .course-card{
+    padding:14px;
+  }
 
-.lesson-section p,
-.lesson-section li{
-  color:#c4cdd2;
-}
-
-
-/* ---------------------------------------------------------
-   FOOTER
-   --------------------------------------------------------- */
-
-.site-footer{
-  background:#14181c;
-  border-top-color:#465159;
-}
-
-.site-footer strong{
-  color:var(--gold);
-}
-
-.site-footer nav a{
-  color:#c3ccd1;
-}
-
-.site-footer nav a:hover{
-  color:var(--cyan);
+  #roadmapContent .roadmap-card h3,
+  #roadmapContent .level-card h3,
+  #roadmapContent .course-level-card h3,
+  #roadmapContent .roadmap-item h3,
+  #roadmapContent .level-item h3,
+  #roadmapContent .course-card h3{
+    font-size:17px;
+  }
 }
 
 
 /* =========================================================
-   END FINAL VISUAL HIERARCHY
+   FINAL MOBILE OVERFLOW SAFETY
+   ========================================================= */
+
+@media(max-width:560px){
+
+  html,
+  body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden!important;
+  }
+
+  .lesson-layout,
+  .lesson-layout>main,
+  .lesson-section,
+  .lesson-hero,
+  .code-box,
+  .output-box,
+  .comparison-table,
+  .message-panel,
+  .learning-flow,
+  .premium-trace,
+  .trace-left,
+  .trace-state{
+    max-width:100%;
+    min-width:0;
+  }
+
+  .lesson-section *,
+  .lesson-hero *,
+  .message-panel *,
+  .premium-trace *{
+    max-width:100%;
+  }
+
+  .lesson-section pre,
+  .lesson-section code,
+  .code-box pre,
+  .output-box pre,
+  .message-panel pre,
+  .trace-code{
+    max-width:100%;
+  }
+
+  .lesson-section pre,
+  .code-box pre,
+  .output-box pre,
+  .message-panel pre{
+    overflow-x:auto;
+    overflow-y:hidden;
+  }
+
+  .lesson-section table{
+    max-width:none;
+  }
+
+  .lesson-section img,
+  .lesson-section video,
+  .lesson-section iframe{
+    max-width:100%!important;
+  }
+
+  .lesson-section iframe{
+    width:100%;
+  }
+
+  .lesson-section a{
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+}
+
+
+/* =========================================================
+   END CODEBHAVYA FULL STACK CSS
    ========================================================= */
