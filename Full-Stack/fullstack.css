@@ -1781,3 +1781,393 @@ body.lesson-page {
     min-width: 520px;
   }
 }
+
+/* =========================================================
+   CodeBhavya Full Stack — TRACE HEIGHT FIX V4
+   ========================================================= */
+
+/*
+   IMPORTANT:
+   CSS Grid normally stretches both columns to the height
+   of the tallest column.
+
+   In the Program/System Trace section this caused the
+   "CURRENT STEP" panel to become extremely tall.
+
+   This block intentionally comes LAST so it overrides
+   every previous trace rule.
+*/
+
+
+/* ---------------------------------------------------------
+   TRACE LAYOUT
+   --------------------------------------------------------- */
+
+.premium-trace {
+  display: grid !important;
+
+  grid-template-columns:
+    minmax(0, 1.35fr)
+    minmax(260px, 0.65fr);
+
+  gap: 12px;
+
+  /* CRITICAL FIX */
+  align-items: start !important;
+}
+
+
+/* ---------------------------------------------------------
+   LEFT TRACE COLUMN
+   --------------------------------------------------------- */
+
+.premium-trace > .trace-left {
+  align-self: start !important;
+
+  min-width: 0;
+
+  height: auto !important;
+}
+
+
+/* ---------------------------------------------------------
+   TRACE CODE WINDOW
+   --------------------------------------------------------- */
+
+.premium-trace .trace-code {
+  width: 100%;
+
+  /*
+     Previously 420px.
+     300px is enough for normal traces and prevents
+     unnecessarily tall lesson sections.
+  */
+  max-height: 300px !important;
+
+  height: auto !important;
+
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+
+  padding: 10px;
+
+  border: 1px solid #30363d;
+  border-radius: 9px;
+
+  background: #101216 !important;
+}
+
+
+/* ---------------------------------------------------------
+   TRACE CODE LINES
+   --------------------------------------------------------- */
+
+.premium-trace .trace-code > div {
+  display: grid;
+
+  grid-template-columns:
+    34px
+    minmax(0, 1fr);
+
+  gap: 8px;
+
+  padding: 4px 8px;
+
+  border-left:
+    3px solid transparent;
+
+  color: #d7e1e8;
+}
+
+
+/* Active line */
+
+.premium-trace .trace-code > div.active {
+  background: #302d22 !important;
+
+  border-left-color: #e7b93f;
+}
+
+
+/* Completed lines */
+
+.premium-trace .trace-code > div.completed {
+  opacity: .55;
+}
+
+
+/* Line number */
+
+.premium-trace .trace-line-number {
+  color: #69747e;
+
+  user-select: none;
+}
+
+
+/* Code text */
+
+.premium-trace .trace-code code {
+  white-space: pre;
+
+  color: #dce6ee;
+
+  font:
+    12px/1.7
+    Consolas,
+    "Courier New",
+    monospace;
+}
+
+
+/* ---------------------------------------------------------
+   TRACE BUTTONS
+   --------------------------------------------------------- */
+
+.premium-trace .trace-controls {
+  display: flex;
+
+  align-items: flex-start;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-top: 9px;
+}
+
+
+.premium-trace .trace-controls button {
+  border: 1px solid #4a535c;
+
+  border-radius: 7px;
+
+  padding: 8px 12px;
+
+  background: #292e34;
+
+  color: #dce2e7;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.premium-trace .trace-controls button:hover {
+  border-color: #6e7a84;
+
+  background: #30363d;
+}
+
+
+.premium-trace .trace-controls button.primary {
+  background: #3a3321;
+
+  border-color: #78652f;
+
+  color: #efc85a;
+}
+
+
+.premium-trace .trace-controls button:disabled {
+  opacity: .42;
+
+  cursor: not-allowed;
+}
+
+
+/* ---------------------------------------------------------
+   CURRENT STEP PANEL
+   --------------------------------------------------------- */
+
+/*
+   CRITICAL FIX:
+
+   Do NOT allow CSS Grid to stretch this panel.
+
+   It must remain only as tall as its own content.
+*/
+
+.premium-trace > .trace-state {
+
+  align-self: start !important;
+
+  height: auto !important;
+
+  min-height: 0 !important;
+
+  max-height: none !important;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 17px;
+
+  border:
+    1px solid #444c54;
+
+  border-radius: 10px;
+
+  background:
+    #292e34 !important;
+}
+
+
+/* Current Step label */
+
+.premium-trace .trace-state-label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #8095a5;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: .08em;
+}
+
+
+/* Current Step title */
+
+.premium-trace .trace-state strong {
+  display: block;
+
+  color: #6bcbd1 !important;
+
+  font-size: 20px;
+
+  line-height: 1.3;
+}
+
+
+/* Current Step explanation */
+
+.premium-trace .trace-state p {
+  margin:
+    9px 0 0;
+
+  color: #b9c1c8 !important;
+
+  line-height: 1.6;
+}
+
+
+/* ---------------------------------------------------------
+   EXTRA PROTECTION AGAINST STRETCHING
+   --------------------------------------------------------- */
+
+.premium-trace,
+.premium-trace > .trace-left,
+.premium-trace > .trace-state {
+  min-height: 0 !important;
+}
+
+
+/*
+   The trace section itself should grow according to content,
+   not according to viewport height.
+*/
+
+.trace-section {
+  height: auto !important;
+
+  min-height: 0 !important;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+
+  .premium-trace {
+    grid-template-columns: 1fr !important;
+
+    align-items: start !important;
+  }
+
+
+  .premium-trace > .trace-left,
+  .premium-trace > .trace-state {
+    width: 100%;
+
+    align-self: start !important;
+  }
+
+
+  .premium-trace .trace-state {
+    height: auto !important;
+
+    min-height: 0 !important;
+  }
+
+
+  .premium-trace .trace-code {
+    max-height: 300px !important;
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   SMALL MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 560px) {
+
+  .premium-trace {
+    gap: 10px;
+  }
+
+
+  .premium-trace .trace-code {
+    max-height: 260px !important;
+
+    padding: 8px;
+  }
+
+
+  .premium-trace .trace-code > div {
+    grid-template-columns:
+      30px
+      minmax(0, 1fr);
+
+    gap: 6px;
+
+    padding: 4px 6px;
+  }
+
+
+  .premium-trace .trace-code code {
+    font-size: 11px;
+
+    line-height: 1.65;
+  }
+
+
+  .premium-trace .trace-state {
+    padding: 14px;
+  }
+
+
+  .premium-trace .trace-controls {
+    gap: 6px;
+  }
+
+
+  .premium-trace .trace-controls button {
+    padding: 8px 10px;
+  }
+
+}
+
+
+/* =========================================================
+   END TRACE HEIGHT FIX V4
+   ========================================================= */
