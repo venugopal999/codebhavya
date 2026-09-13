@@ -1718,3 +1718,8 @@ window.FULLSTACK_LESSONS = window.FULLSTACK_LESSONS || {};
 
 window.FULLSTACK_LESSONS["01"] =
   window.FULLSTACK_LEVEL_01_V2;
+
+
+/* Register Version 2 content with the lesson engine */
+window.FULLSTACK_LESSONS = window.FULLSTACK_LESSONS || {};
+window.FULLSTACK_LESSONS[1] = window.FULLSTACK_LEVEL_01_V2;
