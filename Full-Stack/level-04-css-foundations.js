@@ -610,57 +610,56 @@ margin`
         ]
     },
 
-    revision: [
-        {
-            q: "What does CSS control?",
-            a: "CSS controls presentation such as colors, typography, spacing, borders and layout."
-        },
-        {
-            q: "What is a selector?",
-            a: "A selector identifies which HTML elements a CSS rule should target."
-        },
-        {
-            q: "Why are classes useful?",
-            a: "Classes provide reusable styling hooks and are well suited to component-based interfaces."
-        },
-        {
-            q: "What is the cascade?",
-            a: "The cascade is the browser's system for resolving competing CSS declarations."
-        },
-        {
-            q: "What is specificity?",
-            a: "Specificity determines the relative priority of selectors when their declarations compete."
-        },
-        {
-            q: "What is inheritance?",
-            a: "Inheritance allows certain properties from a parent element to be passed to descendants."
-        },
-        {
-            q: "What does rem represent?",
-            a: "rem is relative to the root element's font size."
-        },
-        {
-            q: "What are the four parts of the box model?",
-            a: "Content, padding, border and margin."
-        },
-        {
-            q: "What is padding?",
-            a: "Padding creates space between an element's content and its border."
-        },
-        {
-            q: "What is margin?",
-            a: "Margin creates space outside an element's border."
-        },
-        {
-            q: "Why use box-sizing: border-box?",
-            a: "It makes declared width and height include padding and border, making sizing more predictable."
-        },
-        {
-            q: "How should CSS normally be debugged?",
-            a: "Use browser DevTools to inspect matched rules, computed styles, box dimensions and overridden declarations."
-        }
+   revision: [
+    [
+        "CSS",
+        "Cascading Style Sheets controls the visual presentation of HTML, including colors, typography, spacing, borders and layout."
     ],
-
+    [
+        "Selector",
+        "A selector identifies the HTML elements that a CSS rule should target."
+    ],
+    [
+        "Class Selector",
+        "A reusable selector beginning with a dot, such as .card."
+    ],
+    [
+        "Cascade",
+        "The browser's system for resolving competing CSS declarations."
+    ],
+    [
+        "Specificity",
+        "The relative priority of selectors when multiple rules compete for the same property."
+    ],
+    [
+        "Inheritance",
+        "The mechanism through which certain CSS properties pass from a parent element to its descendants."
+    ],
+    [
+        "Source Order",
+        "When competing declarations have otherwise equal priority and specificity, the later declaration can win."
+    ],
+    [
+        "rem",
+        "A relative CSS unit based on the root element's font size."
+    ],
+    [
+        "Box Model",
+        "Every normal element can be understood as content surrounded by padding, border and margin."
+    ],
+    [
+        "Padding",
+        "Space between an element's content and its border."
+    ],
+    [
+        "Margin",
+        "Space outside an element's border."
+    ],
+    [
+        "box-sizing: border-box",
+        "Makes the declared width and height include the element's padding and border."
+    ]
+],
     interview: [
         {
             q: "Explain the CSS cascade.",
@@ -712,80 +711,175 @@ margin`
         }
     ],
 
-    practice: [
-        {
-            title: "Practice 01 — Selector Laboratory",
-            task:
-                "Create a page containing headings, paragraphs, cards and buttons. Style them using element, class, ID and attribute selectors. Identify which selector wins when multiple rules target the same element.",
-            skills: ["Selectors", "Specificity", "Cascade"]
-        },
-        {
-            title: "Practice 02 — Cascade Challenge",
-            task:
-                "Create three competing rules for the same button. Change selector specificity and source order and predict which background color the browser will display before testing it.",
-            skills: ["Cascade", "Specificity", "Source order"]
-        },
-        {
-            title: "Practice 03 — Typography Card",
-            task:
-                "Build a course card with a heading, description, metadata and button. Create a consistent typography hierarchy using font-family, font-size, font-weight and line-height.",
-            skills: ["Typography", "Spacing", "Hierarchy"]
-        },
-        {
-            title: "Practice 04 — Box Model Calculator",
-            task:
-                "Create an element with width, padding and border. Calculate its final rendered width using content-box and then repeat using border-box. Verify both results in DevTools.",
-            skills: ["Box model", "box-sizing", "DevTools"]
-        },
-        {
-            title: "Practice 05 — Spacing System",
-            task:
-                "Build three cards using a consistent spacing scale. Use padding inside cards and margin or gap between cards. Explain why each type of spacing was selected.",
-            skills: ["Padding", "Margin", "Spacing"]
-        },
-        {
-            title: "Practice 06 — Overflow Debugger",
-            task:
-                "Create a fixed-height content panel containing more text than the panel can display. Experiment with visible, hidden, scroll and auto overflow.",
-            skills: ["Overflow", "Dimensions", "Debugging"]
-        },
-        {
-            title: "Practice 07 — Form Styling",
-            task:
-                "Style a registration form using attribute selectors for email, password and required inputs. Provide clear focus and disabled states.",
-            skills: ["Forms", "Attribute selectors", "States"]
-        },
-        {
-            title: "Practice 08 — DevTools Investigation",
-            task:
-                "Create an intentionally broken card layout. Use DevTools to identify the overridden rule, inspect computed styles and correct the issue without using !important.",
-            skills: ["DevTools", "Cascade", "Debugging"]
-        },
-        {
-            title: "Practice 09 — Course Component",
-            task:
-                "Build a reusable course card containing title, level, description and action button. Keep the selectors simple enough to reuse the component multiple times.",
-            skills: ["Reusable CSS", "Components", "Selectors"]
-        },
-        {
-            title: "Practice 10 — CSS Cleanup",
-            task:
-                "Take a stylesheet containing deeply nested selectors and repeated declarations. Refactor it into simple reusable classes while keeping the same visual output.",
-            skills: ["Maintainability", "Refactoring", "Specificity"]
-        },
-        {
-            title: "Practice 11 — CSS Inspection Challenge",
-            task:
-                "Create an element whose width is unexpectedly larger than expected. Use DevTools to determine whether padding, border, box-sizing or another rule caused the issue.",
-            skills: ["Box model", "DevTools", "Debugging"]
-        },
-        {
-            title: "Practice 12 — Foundation Component",
-            task:
-                "Create a polished CodeBhavya-style learning card using only the CSS concepts learned in this level. Document the selector, typography, spacing and box-model decisions.",
-            skills: ["Complete CSS foundation", "Design systems", "Component thinking"]
-        }
-    ],
+practice: [
+    {
+        title: "Practice 01 — Selector Laboratory",
+        task:
+            "Create a page containing headings, paragraphs, cards and buttons. Style them using element, class, ID and attribute selectors. Identify which selector wins when multiple rules target the same element.",
+        difficulty: "Easy",
+        hints: [
+            "Start with an element selector such as p or h2.",
+            "Create a reusable class such as .card and apply it to multiple elements.",
+            "Add an ID and compare its specificity with the class selector.",
+            "Use input[type=\"email\"] to practice attribute selection."
+        ],
+        skills: ["Selectors", "Specificity", "Cascade"]
+    },
+
+    {
+        title: "Practice 02 — Cascade Challenge",
+        task:
+            "Create three competing rules for the same button. Change selector specificity and source order and predict which background color the browser will display before testing it.",
+        difficulty: "Easy",
+        hints: [
+            "Start with button { } and then create a class selector.",
+            "Add an ID selector and compare the three rules.",
+            "After that, create two selectors with equal specificity.",
+            "Move the later rule below the earlier rule and observe what changes."
+        ],
+        skills: ["Cascade", "Specificity", "Source order"]
+    },
+
+    {
+        title: "Practice 03 — Typography Card",
+        task:
+            "Build a course card with a heading, description, metadata and button. Create a consistent typography hierarchy using font-family, font-size, font-weight and line-height.",
+        difficulty: "Easy",
+        hints: [
+            "Give the entire card a readable font-family first.",
+            "Make the course title larger and heavier than the description.",
+            "Use line-height to improve paragraph readability.",
+            "Keep the typography hierarchy consistent rather than styling every element differently."
+        ],
+        skills: ["Typography", "Spacing", "Hierarchy"]
+    },
+
+    {
+        title: "Practice 04 — Box Model Calculator",
+        task:
+            "Create an element with width, padding and border. Calculate its final rendered width using content-box and then repeat using border-box. Verify both results in DevTools.",
+        difficulty: "Medium",
+        hints: [
+            "With content-box, start with the declared content width.",
+            "Add left and right padding to the content width.",
+            "Then add the left and right border widths.",
+            "With border-box, the declared width already contains padding and border."
+        ],
+        skills: ["Box model", "box-sizing", "DevTools"]
+    },
+
+    {
+        title: "Practice 05 — Spacing System",
+        task:
+            "Build three cards using a consistent spacing scale. Use padding inside cards and margin or gap between cards. Explain why each type of spacing was selected.",
+        difficulty: "Medium",
+        hints: [
+            "Use padding when the space should appear between the card content and its border.",
+            "Use margin or gap when the space should separate different cards.",
+            "Choose a small set of spacing values instead of unrelated numbers everywhere.",
+            "Inspect the result using the DevTools box model panel."
+        ],
+        skills: ["Padding", "Margin", "Spacing"]
+    },
+
+    {
+        title: "Practice 06 — Overflow Debugger",
+        task:
+            "Create a fixed-height content panel containing more text than the panel can display. Experiment with visible, hidden, scroll and auto overflow.",
+        difficulty: "Medium",
+        hints: [
+            "Give the panel a fixed or maximum height.",
+            "Add enough content to exceed that height.",
+            "Test overflow: hidden and observe what disappears.",
+            "Then try overflow: auto and overflow: scroll."
+        ],
+        skills: ["Overflow", "Dimensions", "Debugging"]
+    },
+
+    {
+        title: "Practice 07 — Form Styling",
+        task:
+            "Style a registration form using attribute selectors for email, password and required inputs. Provide clear focus and disabled states.",
+        difficulty: "Medium",
+        hints: [
+            "Use input[type=\"email\"] and input[type=\"password\"] for different controls.",
+            "Use input[required] to identify required fields.",
+            "Use :focus to create a visible keyboard-focus style.",
+            "Use :disabled to style disabled controls."
+        ],
+        skills: ["Forms", "Attribute selectors", "States"]
+    },
+
+    {
+        title: "Practice 08 — DevTools Investigation",
+        task:
+            "Create an intentionally broken card layout. Use DevTools to identify the overridden rule, inspect computed styles and correct the issue without using !important.",
+        difficulty: "Medium",
+        hints: [
+            "Open DevTools and inspect the affected element.",
+            "Look for CSS declarations that appear crossed out.",
+            "Check whether another selector has greater specificity.",
+            "If specificity is equal, inspect the source order."
+        ],
+        skills: ["DevTools", "Cascade", "Debugging"]
+    },
+
+    {
+        title: "Practice 09 — Course Component",
+        task:
+            "Build a reusable course card containing title, level, description and action button. Keep the selectors simple enough to reuse the component multiple times.",
+        difficulty: "Medium",
+        hints: [
+            "Create one reusable class such as .course-card.",
+            "Use child classes such as .course-title and .course-action.",
+            "Avoid using an ID for the reusable card.",
+            "Create multiple cards and confirm that the same CSS works for all of them."
+        ],
+        skills: ["Reusable CSS", "Components", "Selectors"]
+    },
+
+    {
+        title: "Practice 10 — CSS Cleanup",
+        task:
+            "Take a stylesheet containing deeply nested selectors and repeated declarations. Refactor it into simple reusable classes while keeping the same visual output.",
+        difficulty: "Hard",
+        hints: [
+            "Identify selectors that are unnecessarily long.",
+            "Extract repeated visual responsibilities into reusable classes.",
+            "Reduce dependence on IDs and deeply nested selectors.",
+            "Do not solve the problem by adding !important."
+        ],
+        skills: ["Maintainability", "Refactoring", "Specificity"]
+    },
+
+    {
+        title: "Practice 11 — CSS Inspection Challenge",
+        task:
+            "Create an element whose width is unexpectedly larger than expected. Use DevTools to determine whether padding, border, box-sizing or another rule caused the issue.",
+        difficulty: "Hard",
+        hints: [
+            "Inspect the element and open the box model diagram.",
+            "Check the declared width first.",
+            "Look separately at padding and border values.",
+            "Compare content-box and border-box behavior."
+        ],
+        skills: ["Box model", "DevTools", "Debugging"]
+    },
+
+    {
+        title: "Practice 12 — Foundation Component",
+        task:
+            "Create a polished CodeBhavya-style learning card using only the CSS concepts learned in this level. Document the selector, typography, spacing and box-model decisions.",
+        difficulty: "Hard",
+        hints: [
+            "Start with semantic HTML and one reusable card class.",
+            "Build typography before adding decorative details.",
+            "Use padding for internal spacing and gap or margin for external separation.",
+            "Inspect the final component in DevTools and explain why each major CSS rule exists."
+        ],
+        skills: ["Complete CSS foundation", "Design systems", "Component thinking"]
+    }
+],
 
     quiz: [
         {
