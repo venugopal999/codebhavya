@@ -1,1239 +1,147 @@
-/* =========================================================
-   CodeBhavya Full Stack MERN — Lesson Engine
-   V3 — Gray Dark / Structured Content Renderer
-   ========================================================= */
-
 "use strict";
 
-const STORAGE_KEY = "codebhavya.fullstack.progress.v1";
-const levels = Array.isArray(window.FULLSTACK_LEVELS) ? window.FULLSTACK_LEVELS : [];
-const lessons = window.FULLSTACK_LESSONS || {};
+/* =========================================================
+   CodeBhavya Full Stack MERN — Lesson Engine V4
+   Detailed / beginner-first / dark-theme compatible
+   Supports both the new `sections` lessons and legacy
+   `concepts` lessons used by Levels 1–6.
+   ========================================================= */
 
-const params = new URLSearchParams(window.location.search);
+const STORAGE_KEY = "codebhavya.fullstack.progress.v1";
+const levels = window.FULLSTACK_LEVELS || [];
+const lessons = window.FULLSTACK_LESSONS || {};
+const params = new URLSearchParams(location.search);
 const levelNumber = Math.max(1, Math.min(30, Number(params.get("level")) || 1));
 const lesson = lessons[levelNumber] || null;
-
-let visualIndex = 0;
-let visualTimer = null;
 let traceIndex = 0;
 let traceTimer = null;
 
-/* ------------------------- helpers ------------------------- */
+const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const rich = value => esc(value).replace(/&lt;strong&gt;/gi,"<strong>").replace(/&lt;\/strong&gt;/gi,"</strong>").replace(/&lt;em&gt;/gi,"<em>").replace(/&lt;\/em&gt;/gi,"</em>").replace(/&lt;code&gt;/gi,"<code>").replace(/&lt;\/code&gt;/gi,"</code>");
+const arr = value => Array.isArray(value) ? value : [];
+const asText = value => typeof value === "string" ? value : (value?.text || value?.description || value?.meaning || "");
 
-function esc(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  })[char]);
+function progressGet(){try{const x=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");return Array.isArray(x)?x:[]}catch{return[]}}
+function progressSet(x){localStorage.setItem(STORAGE_KEY,JSON.stringify(x))}
+function showToast(message){const t=document.getElementById("toast");if(!t)return;t.textContent=message;t.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove("show"),1600)}
+
+function renderSidebar(){
+  const nav=document.getElementById("levelNav"); if(!nav)return;
+  nav.innerHTML=levels.map(l=>{const n=Number(l.n),ok=l.available!==false;return `<a class="${n===levelNumber?"active":""} ${ok?"":"locked"}" href="${ok?`lesson.html?level=${n}`:"#"}" ${ok?"":'aria-disabled="true"'}><b>${String(n).padStart(2,"0")}</b><span>${esc(l.title||`Level ${n}`)}</span>${ok?"":"<small>planned</small>"}</a>`}).join("");
 }
 
-function rich(value) {
-  let text = String(value ?? "");
+function renderCode(code,label="WORKED EXAMPLE"){
+  if(!code)return "";
+  return `<div class="code-box premium-code-box"><header><span>${esc(label)}</span><button type="button" data-copy="${esc(code)}">Copy</button></header><pre><code>${esc(code)}</code></pre></div>`;
+}
+function renderPoints(items){return arr(items).length?`<ul class="content-points">${arr(items).map(x=>`<li>${rich(asText(x))}</li>`).join("")}</ul>`:""}
+function renderKeyIdea(x){return x?`<div class="key-idea"><span>💡</span><div><strong>Key Idea</strong><p>${rich(x)}</p></div></div>`:""}
+function renderWarning(x){return x?`<div class="warning-box"><span>⚠️</span><div><strong>Important</strong><p>${rich(x)}</p></div></div>`:""}
+function renderMistake(x){return x?`<div class="mistake-box"><span>❌</span><div><strong>Common Mistake</strong><p>${rich(x)}</p></div></div>`:""}
 
-  /* Preserve only the small, intentional inline vocabulary
-     used by CodeBhavya lesson data. */
-  text = text
-    .replace(/<strong>/gi, "%%STRONG_OPEN%%")
-    .replace(/<\/strong>/gi, "%%STRONG_CLOSE%%")
-    .replace(/<em>/gi, "%%EM_OPEN%%")
-    .replace(/<\/em>/gi, "%%EM_CLOSE%%")
-    .replace(/<code>/gi, "%%CODE_OPEN%%")
-    .replace(/<\/code>/gi, "%%CODE_CLOSE%%");
-
-  text = esc(text);
-
-  return text
-    .replace(/%%STRONG_OPEN%%/g, "<strong>")
-    .replace(/%%STRONG_CLOSE%%/g, "</strong>")
-    .replace(/%%EM_OPEN%%/g, "<em>")
-    .replace(/%%EM_CLOSE%%/g, "</em>")
-    .replace(/%%CODE_OPEN%%/g, "<code>")
-    .replace(/%%CODE_CLOSE%%/g, "</code>");
+function renderSimpleList(title,items,cls="info-list"){
+  if(!arr(items).length)return "";
+  return `<div class="${cls}">${title?`<h3>${esc(title)}</h3>`:""}<ul>${arr(items).map(x=>`<li>${rich(asText(x))}</li>`).join("")}</ul></div>`;
 }
 
-function arr(value) {
-  return Array.isArray(value) ? value : [];
+function renderFlow(flow,title="Step-by-Step Flow"){
+  if(!arr(flow).length)return "";
+  return `<div class="learning-flow"><h3>${esc(title)}</h3><div class="flow-track">${arr(flow).map((x,i)=>{const name=typeof x==="string"?x:(x.name||x.title||"");const detail=typeof x==="string"?"":(x.detail||x.description||"");return `<div class="flow-item"><div class="flow-number">${String(i+1).padStart(2,"0")}</div><div class="flow-content"><strong>${rich(name)}</strong>${detail?`<span>${rich(detail)}</span>`:""}</div></div>${i<flow.length-1?'<div class="flow-arrow">↓</div>':""}`}).join("")}</div></div>`;
 }
 
-function textOf(value) {
-  if (typeof value === "string") return value;
-  if (!value || typeof value !== "object") return "";
-  return value.text || value.description || value.detail || value.content || "";
+function renderComparison(data){
+  if(!arr(data).length)return "";
+  let rows=data;
+  if(data.headers&&data.rows){return `<div class="comparison-table"><table><thead><tr>${arr(data.headers).map(h=>`<th>${rich(h)}</th>`).join("")}</tr></thead><tbody>${arr(data.rows).map(r=>`<tr>${arr(r).map(c=>`<td>${rich(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`}
+  const headers=data.some(x=>x?.term!==undefined)?["Term","Meaning"]:["Item","Meaning"];
+  return `<div class="comparison-table"><table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${data.map(x=>`<tr><td><strong>${rich(x.term??x.name??x.range??"")}</strong></td><td>${rich(x.meaning??x.description??"")}</td></tr>`).join("")}</tbody></table></div>`;
 }
 
-function getProgress() {
-  try {
-    const value = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    return Array.isArray(value) ? value : [];
-  } catch {
-    return [];
-  }
+function renderMethods(items){if(!arr(items).length)return "";return `<div class="method-grid">${items.map(x=>`<article class="method-card"><b>${esc(x.name||"")}</b><p>${rich(x.meaning||x.purpose||"")}</p>${x.example?`<code>${esc(x.example)}</code>`:""}</article>`).join("")}</div>`}
+function renderGroups(items){if(!arr(items).length)return "";return `<div class="status-grid">${items.map(x=>`<article class="status-card"><b>${esc(x.range||x.code||"")}</b><h3>${esc(x.title||x.meaning||"")}</h3>${x.description?`<p>${rich(x.description)}</p>`:""}</article>`).join("")}</div>`}
+function renderBreakdown(items){if(!arr(items).length)return "";return `<div class="url-breakdown">${items.map(x=>`<article><code>${esc(x.part||x.label||"")}</code><p>${rich(x.meaning||x.description||x.value||"")}</p></article>`).join("")}</div>`}
+function renderArchitecture(items){if(!arr(items).length)return "";return `<div class="architecture-flow">${items.map((x,i)=>{const name=typeof x==="string"?x:(x.title||x.name||"");const list=typeof x==="string"?[]:arr(x.items);return `<article><span>${String(i+1).padStart(2,"0")}</span><h3>${esc(name)}</h3>${list.length?`<ul>${list.map(v=>`<li>${rich(v)}</li>`).join("")}</ul>`:""}</article>`}).join("")}</div>`}
+function renderRole(title,items,icon){return arr(items).length?`<article class="role-panel"><h3>${icon} ${esc(title)}</h3><ul>${items.map(x=>`<li>${rich(asText(x))}</li>`).join("")}</ul></article>`:""}
+
+function renderMessage(value,title){
+  if(!value)return "";
+  if(Array.isArray(value))return `<div class="message-panel"><h3>${esc(title)}</h3>${renderSimpleList("",value)}</div>`;
+  if(typeof value==="string")return `<div class="message-panel"><h3>${esc(title)}</h3><p>${rich(value)}</p></div>`;
+  return `<div class="message-panel"><h3>${esc(value.title||title)}</h3>${value.method?`<div class="message-line"><span>Method</span><strong>${esc(value.method)}</strong></div>`:""}${value.path?`<div class="message-line"><span>Path</span><code>${esc(value.path)}</code></div>`:""}${value.status?`<div class="message-line"><span>Status</span><strong>${esc(value.status)}</strong></div>`:""}${renderSimpleList("Headers",value.headers)}${value.body?`<pre>${esc(typeof value.body==="string"?value.body:JSON.stringify(value.body,null,2))}</pre>`:""}</div>`;
 }
 
-function setProgress(list) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+function renderExample(value,label="REAL-WORLD EXAMPLE"){
+  if(!value)return "";
+  if(typeof value==="string")return `<div class="real-example"><strong>🌍 ${esc(label)}</strong><p>${rich(value)}</p></div>`;
+  return `<div class="real-example"><strong>🌍 ${esc(value.title||label)}</strong>${value.text?`<p>${rich(value.text)}</p>`:""}${arr(value.steps).length?`<ol>${value.steps.map(s=>`<li>${rich(s)}</li>`).join("")}</ol>`:""}${value.code?renderCode(value.code,"EXAMPLE CODE"):""}${value.output?`<div class="output-box"><strong>Expected Result</strong><pre>${esc(value.output)}</pre></div>`:""}</div>`;
 }
 
-/* ------------------------- sidebar ------------------------- */
-
-function renderSidebar() {
-  const nav = document.getElementById("levelNav");
-  if (!nav) return;
-
-  nav.innerHTML = levels.map(level => {
-    const n = Number(level.n);
-    const available = level.available !== false;
-
-    return `
-      <a class="${n === levelNumber ? "active" : ""} ${available ? "" : "locked"}"
-         href="${available ? `lesson.html?level=${n}` : "#"}"
-         ${available ? "" : 'aria-disabled="true" tabindex="-1"'}>
-        <b>${String(n).padStart(2, "0")}</b>
-        <span>${esc(level.title || `Level ${n}`)}</span>
-        ${available ? "" : "<small>planned</small>"}
-      </a>
-    `;
-  }).join("");
+function renderConcept(c,i){
+  const intro=c.intro||c.text||"";
+  const explanation=arr(c.explanation);
+  return `<section class="lesson-section concept-section"><div class="concept-heading"><div class="concept-number">${String(c.number||i+1).padStart(2,"0")}</div><div><p class="section-label">CONCEPT ${String(c.number||i+1).padStart(2,"0")}</p><h2>${esc(c.title||"Concept")}</h2></div></div>${intro?`<p class="concept-intro">${rich(intro)}</p>`:""}${renderPoints(c.points)}${explanation.length?`<div class="explanation-list">${explanation.map(x=>`<p>${rich(asText(x))}</p>`).join("")}</div>`:""}${renderKeyIdea(c.keyIdea)}${renderWarning(c.warning)}${renderMistake(c.commonMistake)}${renderExample(c.example)}${c.realWorld?`<div class="real-example"><strong>🌍 Real-World Connection</strong><p>${rich(c.realWorld)}</p></div>`:""}${c.code?renderCode(c.code,c.label||"WORKED EXAMPLE"):""}${c.output?`<div class="output-box"><strong>Expected Result</strong><pre>${esc(c.output)}</pre></div>`:""}${renderComparison(c.comparison)}${renderMethods(c.methods)}${renderGroups(c.groups)}${renderBreakdown(c.breakdown)}${renderFlow(c.flow)}${renderMessage(c.request,"HTTP Request")}${renderMessage(c.response,"HTTP Response")}${c.exampleRequest?renderCode(c.exampleRequest,"EXAMPLE REQUEST"):""}${c.exampleResponse?renderCode(c.exampleResponse,"EXAMPLE RESPONSE"):""}${c.frontend||c.backend?`<div class="role-grid">${renderRole("Frontend",c.frontend,"🖥️")}${renderRole("Backend",c.backend,"⚙️")}</div>`:""}${renderSimpleList("Server Responsibilities",c.serverResponsibilities)}${renderArchitecture(c.architecture)}${c.tryIt?`<div class="try-it-box"><strong>🧪 ${esc(c.tryIt.title||"Try It Yourself")}</strong>${renderSimpleList("",c.tryIt.steps)}</div>`:""}</section>`;
 }
 
-/* ------------------------- reusable blocks ------------------------- */
+function renderObjectives(items){return arr(items).length?`<section class="lesson-section objectives-section"><p class="section-label">LEARNING OBJECTIVES</p><h2>What you will learn</h2><div class="objective-grid">${items.map((x,i)=>`<article><b>${String(i+1).padStart(2,"0")}</b><p>${rich(asText(x))}</p></article>`).join("")}</div></section>`:""}
 
-function renderCode(code, label = "WORKED EXAMPLE") {
-  if (!code) return "";
-
-  return `
-    <div class="code-box premium-code-box">
-      <header>
-        <span>${esc(label)}</span>
-        <button type="button" data-copy="${esc(code)}">Copy</button>
-      </header>
-      <pre><code>${esc(code)}</code></pre>
-    </div>
-  `;
-}
-
-function renderPoints(points) {
-  const items = arr(points);
-  if (!items.length) return "";
-
-  return `
-    <div class="content-list-wrap">
-      <ul class="content-points">
-        ${items.map(point => `<li>${rich(textOf(point) || point)}</li>`).join("")}
-      </ul>
-    </div>
-  `;
-}
-
-function renderKeyIdea(text) {
-  if (!text) return "";
-  return `
-    <aside class="key-idea">
-      <div class="callout-icon">!</div>
-      <div>
-        <span class="callout-label">KEY IDEA</span>
-        <p>${rich(text)}</p>
-      </div>
-    </aside>
-  `;
-}
-
-function renderWarning(text) {
-  if (!text) return "";
-  return `
-    <aside class="warning-box">
-      <div class="callout-icon">!</div>
-      <div>
-        <span class="callout-label">IMPORTANT</span>
-        <p>${rich(text)}</p>
-      </div>
-    </aside>
-  `;
-}
-
-function renderCommonMistake(text) {
-  if (!text) return "";
-  return `
-    <aside class="mistake-box">
-      <div class="callout-icon">×</div>
-      <div>
-        <span class="callout-label">COMMON MISTAKE</span>
-        <p>${rich(text)}</p>
-      </div>
-    </aside>
-  `;
-}
-
-function renderExample(example) {
-  if (!example) return "";
-
-  return `
-    <div class="real-example">
-      <div class="block-heading">
-        <span>REAL-WORLD EXAMPLE</span>
-        <strong>${esc(example.title || "Example")}</strong>
-      </div>
-      ${example.text ? `<p>${rich(example.text)}</p>` : ""}
-      ${arr(example.steps).length ? `
-        <ol class="numbered-list">
-          ${example.steps.map(step => `<li>${rich(step)}</li>`).join("")}
-        </ol>
-      ` : ""}
-      ${example.code ? renderCode(example.code, "EXAMPLE CODE") : ""}
-      ${example.output ? `
-        <div class="output-box">
-          <span>EXPECTED RESULT</span>
-          <pre>${esc(example.output)}</pre>
-        </div>
-      ` : ""}
-    </div>
-  `;
-}
-
-/* ------------------------- tables ------------------------- */
-
-function renderComparison(data) {
-  if (!data) return "";
-
-  const headers = arr(data.headers);
-  const rows = arr(data.rows);
-  if (!headers.length || !rows.length) return "";
-
-  return `
-    <div class="structured-table-wrap">
-      ${data.title ? `<h3 class="sub-block-title">${esc(data.title)}</h3>` : ""}
-      <div class="table-scroll">
-        <table class="structured-table">
-          <thead>
-            <tr>
-              ${headers.map(h => `<th scope="col">${rich(h)}</th>`).join("")}
-            </tr>
-          </thead>
-          <tbody>
-            ${rows.map(row => {
-              const cells = Array.isArray(row) ? row : [];
-              return `
-                <tr>
-                  ${cells.map((cell, i) =>
-                    `<td ${i === 0 ? 'data-label=""' : ""}>${rich(cell)}</td>`
-                  ).join("")}
-                </tr>
-              `;
-            }).join("")}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  `;
-}
-
-/* ------------------------- flows ------------------------- */
-
-function normalizeFlowItem(item) {
-  if (typeof item === "string") return { title: item, detail: "" };
-  return {
-    title: item?.title || item?.name || item?.label || "",
-    detail: item?.detail || item?.description || item?.explain || ""
-  };
-}
-
-function renderFlow(flow, title = "Step-by-Step Flow") {
-  const items = arr(flow).map(normalizeFlowItem).filter(item => item.title);
-  if (!items.length) return "";
-
-  return `
-    <div class="learning-flow">
-      <h3 class="sub-block-title">${esc(title)}</h3>
-      <div class="flow-list">
-        ${items.map((item, index) => `
-          <div class="flow-stage">
-            <article class="flow-card">
-              <div class="flow-number">${String(index + 1).padStart(2, "0")}</div>
-              <div class="flow-card-body">
-                <h4>${rich(item.title)}</h4>
-                ${item.detail ? `<p>${rich(item.detail)}</p>` : ""}
-              </div>
-            </article>
-            ${index < items.length - 1 ? `<div class="flow-connector" aria-hidden="true">↓</div>` : ""}
-          </div>
-        `).join("")}
-      </div>
-    </div>
-  `;
-}
-
-/* ------------------------- methods / grouped content ------------------------- */
-
-function renderMethods(methods) {
-  const items = arr(methods);
-  if (!items.length) return "";
-
-  return `
-    <div class="method-grid">
-      ${items.map(method => `
-        <article class="method-card">
-          <span class="card-kicker">${esc(method.category || "CONCEPT")}</span>
-          <h3>${esc(method.name || method.title || "")}</h3>
-          ${method.purpose ? `<p>${rich(method.purpose)}</p>` : ""}
-          ${method.example ? `<code class="inline-code-block">${esc(method.example)}</code>` : ""}
-        </article>
-      `).join("")}
-    </div>
-  `;
-}
-
-function renderGroups(groups) {
-  const items = arr(groups);
-  if (!items.length) return "";
-
-  return `
-    <div class="status-grid">
-      ${items.map(group => `
-        <article class="status-card">
-          ${group.code ? `<div class="status-code">${esc(group.code)}</div>` : ""}
-          <h3>${esc(group.title || group.name || "")}</h3>
-          ${group.description ? `<p>${rich(group.description)}</p>` : ""}
-          ${arr(group.examples).length ? `
-            <ul>
-              ${group.examples.map(example => `<li>${rich(example)}</li>`).join("")}
-            </ul>
-          ` : ""}
-        </article>
-      `).join("")}
-    </div>
-  `;
-}
-
-function renderBreakdown(items) {
-  const rows = arr(items);
-  if (!rows.length) return "";
-
-  return `
-    <div class="url-breakdown">
-      ${rows.map(item => `
-        <article>
-          <div class="url-part">${esc(item.label || item.part || "")}</div>
-          <div>
-            ${item.value ? `<code>${esc(item.value)}</code>` : ""}
-            <p>${rich(item.description || item.detail || "")}</p>
-          </div>
-        </article>
-      `).join("")}
-    </div>
-  `;
-}
-
-function renderArchitecture(items) {
-  const rows = arr(items);
-  if (!rows.length) return "";
-
-  return `
-    <div class="architecture-flow">
-      ${rows.map((item, index) => `
-        <article class="architecture-card">
-          <div class="architecture-number">${String(index + 1).padStart(2, "0")}</div>
-          <div>
-            <h3>${esc(item.title || item.name || "")}</h3>
-            ${arr(item.items).length ? `
-              <ul>${item.items.map(v => `<li>${rich(v)}</li>`).join("")}</ul>
-            ` : ""}
-            ${item.description ? `<p>${rich(item.description)}</p>` : ""}
-          </div>
-        </article>
-        ${index < rows.length - 1 ? `<div class="architecture-arrow">↓</div>` : ""}
-      `).join("")}
-    </div>
-  `;
-}
-
-function renderMessage(message, type) {
-  if (!message) return "";
-
-  return `
-    <div class="message-panel ${esc(type || "")}">
-      <span class="message-title">${type === "request-message" ? "REQUEST" : "RESPONSE"}</span>
-      ${message.title ? `<h3>${esc(message.title)}</h3>` : ""}
-      <div class="message-grid">
-        ${message.method ? `<div><span>METHOD</span><strong>${esc(message.method)}</strong></div>` : ""}
-        ${message.path ? `<div><span>PATH</span><code>${esc(message.path)}</code></div>` : ""}
-        ${message.status ? `<div><span>STATUS</span><strong>${esc(message.status)}</strong></div>` : ""}
-      </div>
-      ${arr(message.headers).length ? `
-        <div class="message-section">
-          <strong>Headers</strong>
-          <ul>${message.headers.map(h => `<li><code>${esc(h)}</code></li>`).join("")}</ul>
-        </div>
-      ` : ""}
-      ${message.body ? `
-        <div class="message-section">
-          <strong>Body</strong>
-          <pre>${esc(typeof message.body === "string" ? message.body : JSON.stringify(message.body, null, 2))}</pre>
-        </div>
-      ` : ""}
-      ${arr(message.steps).length ? `
-        <ol class="numbered-list">${message.steps.map(step => `<li>${rich(step)}</li>`).join("")}</ol>
-      ` : ""}
-    </div>
-  `;
-}
-
-function renderRolePanel(title, items, icon) {
-  const values = arr(items);
-  if (!values.length) return "";
-
-  return `
-    <article class="role-card">
-      <div class="role-heading">
-        <span>${icon}</span>
-        <h3>${esc(title)}</h3>
-      </div>
-      <ul>${values.map(item => `<li>${rich(item)}</li>`).join("")}</ul>
-    </article>
-  `;
-}
-
-function renderTryIt(data) {
-  if (!data) return "";
-
-  return `
-    <div class="try-it-box">
-      <span class="callout-label">TRY IT YOURSELF</span>
-      <h3>${esc(data.title || "Try It Yourself")}</h3>
-      ${arr(data.steps).length ? `
-        <ol class="numbered-list">${data.steps.map(step => `<li>${rich(step)}</li>`).join("")}</ol>
-      ` : ""}
-    </div>
-  `;
-}
-
-function renderMistakes(mistakes) {
-  const items = arr(mistakes);
-  if (!items.length) return "";
-
-  return `
-    <div class="mistake-list">
-      ${items.map((mistake, index) => `
-        <article>
-          <div class="mistake-index">${String(index + 1).padStart(2, "0")}</div>
-          <div>
-            ${mistake.wrong ? `<div class="wrong-answer"><span>×</span><strong>${rich(mistake.wrong)}</strong></div>` : ""}
-            ${mistake.correct ? `<div class="correct-answer"><span>✓</span><p>${rich(mistake.correct)}</p></div>` : ""}
-          </div>
-        </article>
-      `).join("")}
-    </div>
-  `;
-}
-
-/* ------------------------- concept ------------------------- */
-
-function renderConcept(concept, index) {
-  const number = concept.number || index + 1;
-  const intro = concept.intro || concept.text || concept.explanation || "";
-
-  return `
-    <section class="lesson-section concept-section deep-section">
-      <div class="concept-heading">
-        <div class="concept-number">${String(number).padStart(2, "0")}</div>
-        <div>
-          <p class="section-label">CONCEPT ${String(number).padStart(2, "0")}</p>
-          <h2>${esc(concept.title || "Concept")}</h2>
-        </div>
-      </div>
-
-      ${intro ? `<div class="concept-intro">${rich(intro)}</div>` : ""}
-      ${renderPoints(concept.points)}
-      ${renderKeyIdea(concept.keyIdea)}
-      ${renderWarning(concept.warning)}
-      ${renderCommonMistake(concept.commonMistake)}
-      ${renderExample(concept.example)}
-
-      ${concept.code ? renderCode(concept.code, concept.label || "WORKED EXAMPLE") : ""}
-      ${concept.output ? `
-        <div class="output-box">
-          <span>EXPECTED RESULT</span>
-          <pre>${esc(concept.output)}</pre>
-        </div>
-      ` : ""}
-
-      ${renderComparison(concept.comparison)}
-      ${renderMethods(concept.methods)}
-      ${renderGroups(concept.groups)}
-      ${renderBreakdown(concept.breakdown)}
-      ${renderFlow(concept.flow, concept.flowTitle || "Step-by-Step Flow")}
-      ${renderMessage(concept.request, "request-message")}
-      ${renderMessage(concept.response, "response-message")}
-
-      ${
-        concept.frontend || concept.backend
-          ? `<div class="role-grid">
-               ${renderRolePanel("Frontend", concept.frontend, "01")}
-               ${renderRolePanel("Backend", concept.backend, "02")}
-             </div>`
-          : ""
-      }
-
-      ${renderExample(concept.backendExample)}
-      ${renderArchitecture(concept.architecture)}
-      ${renderTryIt(concept.tryIt)}
-      ${renderMistakes(concept.mistakes)}
-    </section>
-  `;
-}
-
-/* ------------------------- sections ------------------------- */
-
-function renderObjectives(items) {
-  const values = arr(items);
-  if (!values.length) return "";
-
-  return `
-    <section class="lesson-section objectives-section">
-      <p class="section-label">LEARNING OBJECTIVES</p>
-      <h2>What you will learn</h2>
-      <div class="objective-card-grid">
-        ${values.map((item, index) => `
-          <article class="objective-card">
-            <div class="objective-number">${String(index + 1).padStart(2, "0")}</div>
-            <p>${rich(item)}</p>
-          </article>
-        `).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function renderVisualizer(data) {
-  if (!data || !arr(data.steps).length) return "";
-
-  return `
-    <section class="lesson-section visualizer-section">
-      <p class="section-label">PREMIUM VISUALIZER</p>
-      <h2>${esc(data.title || "Interactive Visualizer")}</h2>
-      ${data.description ? `<p class="section-description">${rich(data.description)}</p>` : ""}
-
-      <div class="visualizer-premium">
-        <div class="visualizer-steps">
-          ${data.steps.map((step, index) => `
-            <article class="visualizer-step" data-visual-step="${index}">
-              <div class="visual-step-number">${String(index + 1).padStart(2, "0")}</div>
-              <div>
-                <h3>${esc(step.title || `Step ${index + 1}`)}</h3>
-                ${step.operation ? `<div class="visual-operation">${rich(step.operation)}</div>` : ""}
-                ${step.detail ? `<p>${rich(step.detail)}</p>` : ""}
-              </div>
-            </article>
-          `).join("")}
-        </div>
-        <div class="visualizer-state">
-          <div>
-            <span class="trace-state-label">CURRENT STEP</span>
-            <strong id="visualState">Ready</strong>
-            <p id="visualExplain">Press Next step to begin.</p>
-          </div>
-          <div class="visualizer-controls">
-            <button type="button" id="visualReset">Reset</button>
-            <button type="button" id="visualNext" class="primary">Next step</button>
-            <button type="button" id="visualAuto">Auto Run</button>
-          </div>
-        </div>
-      </div>
-    </section>
-  `;
-}
-
-function normalizeTrace(trace) {
-  if (!trace) return null;
-
-  if (Array.isArray(trace.lines) && trace.lines.length) {
-    return {
-      lines: trace.lines.map((line, index) => ({
-        line: Number.isInteger(line?.line) ? line.line : index + 1,
-        code: line?.code || "",
-        explanation: line?.explanation || line?.explain || line?.detail || ""
-      })),
-      title: trace.title || "Follow the execution step by step"
-    };
-  }
-
-  /* Legacy trace:
-     { code: [...], steps: [{line, state, explain}] } */
-  if (Array.isArray(trace.code) && trace.code.length) {
-    const steps = arr(trace.steps);
-    return {
-      title: trace.title || "Follow the execution step by step",
-      lines: steps.length
-        ? steps.map((step, index) => ({
-            line: Number.isInteger(step.line) ? step.line + 1 : index + 1,
-            code: trace.code[Number.isInteger(step.line) ? step.line : index] || "",
-            explanation: step.explain || step.explanation || step.detail || step.state || ""
-          }))
-        : trace.code.map((code, index) => ({
-            line: index + 1,
-            code,
-            explanation: ""
-          }))
-    };
-  }
-
+function normalizeTrace(trace){
+  if(!trace)return null;
+  if(arr(trace.lines).length)return {title:trace.title||"Follow the execution step by step",lines:trace.lines.map((x,i)=>({line:Number.isInteger(x.line)?x.line:i+1,code:x.code||"",explain:x.explanation||x.explain||""}))};
+  if(arr(trace.code).length)return {title:trace.title||"Follow the execution step by step",lines:trace.code.map((code,i)=>({line:i+1,code,explain:trace.steps?.[i]?.explain||trace.steps?.[i]?.explanation||trace.steps?.[i]?.state||""}))};
   return null;
 }
-
-function renderTrace(trace) {
-  const normalized = normalizeTrace(trace);
-  if (!normalized || !normalized.lines.length) return "";
-
-  return `
-    <section class="lesson-section trace-section">
-      <p class="section-label">PROGRAM / SYSTEM TRACING</p>
-      <h2>${esc(normalized.title)}</h2>
-
-      <div class="premium-trace">
-        <div class="trace-left">
-          <div class="trace-code" id="traceCode">
-            ${normalized.lines.map((line, index) => `
-              <div data-trace-line="${index}">
-                <span class="trace-line-number">${String(line.line).padStart(2, "0")}</span>
-                <code>${esc(line.code)}</code>
-              </div>
-            `).join("")}
-          </div>
-
-          <div class="trace-controls">
-            <button type="button" id="traceReset">Reset</button>
-            <button type="button" id="traceNext" class="primary">Next step</button>
-            <button type="button" id="traceAuto">Auto Run</button>
-          </div>
-        </div>
-
-        <aside class="trace-state">
-          <span class="trace-state-label">CURRENT STEP</span>
-          <strong id="traceState">Ready</strong>
-          <p id="traceExplain">Press Next step to begin.</p>
-        </aside>
-      </div>
-    </section>
-  `;
+function renderTrace(trace){
+  const t=normalizeTrace(trace); if(!t)return "";
+  return `<section class="lesson-section trace-section"><p class="section-label">PROGRAM / SYSTEM TRACING</p><h2>${esc(t.title)}</h2><div class="premium-trace"><div class="trace-left"><div class="trace-code" id="traceCode">${t.lines.map((x,i)=>`<div data-trace-line="${i}"><span class="trace-line-number">${String(x.line).padStart(2,"0")}</span><code>${esc(x.code)}</code></div>`).join("")}</div><div class="trace-controls"><button id="traceReset" type="button">Reset</button><button id="traceNext" type="button" class="primary">Next step</button><button id="traceAuto" type="button">Auto Run</button></div></div><aside class="trace-state"><span class="trace-state-label">CURRENT STEP</span><strong id="traceState">Ready</strong><p id="traceExplain">Press Next step to begin.</p></aside></div></section>`;
 }
 
-function renderRevision(items) {
-  const values = arr(items);
-  if (!values.length) return "";
+function renderRevision(items){if(!arr(items).length)return "";return `<section class="lesson-section revision-section"><p class="section-label">QUICK REVISION</p><h2>Remember these essential ideas</h2><div class="revision-grid">${items.map((x,i)=>{const pair=Array.isArray(x);return `<article><b>${String(i+1).padStart(2,"0")}</b><div>${pair?`<strong>${rich(x[0])}</strong><p>${rich(x[1])}</p>`:`<p>${rich(x)}</p>`}</div></article>`}).join("")}</div></section>`}
 
-  return `
-    <section class="lesson-section revision-section">
-      <p class="section-label">QUICK REVISION</p>
-      <h2>Remember these essential ideas</h2>
-      <div class="revision-grid">
-        ${values.map((item, index) => {
-          if (Array.isArray(item)) {
-            return `
-              <article>
-                <div class="revision-number">${String(index + 1).padStart(2, "0")}</div>
-                <div>
-                  <strong>${rich(item[0])}</strong>
-                  <p>${rich(item[1])}</p>
-                </div>
-              </article>
-            `;
-          }
-          return `
-            <article>
-              <div class="revision-number">${String(index + 1).padStart(2, "0")}</div>
-              <p>${rich(item)}</p>
-            </article>
-          `;
-        }).join("")}
-      </div>
-    </section>
-  `;
+function renderInterview(items){if(!arr(items).length)return "";return `<section class="lesson-section interview-section"><p class="section-label">PLACEMENT & INTERVIEW</p><h2>Explain the concept, don't just memorize it</h2><div class="interview-list">${items.map((x,i)=>`<details class="interview-item"><summary><span>${String(i+1).padStart(2,"0")}</span>${esc(x.question||x.q||"")}</summary><div class="interview-answer"><p>${rich(x.answer||x.a||"")}</p></div></details>`).join("")}</div></section>`}
+
+function renderPractice(items){if(!arr(items).length)return "";return `<section class="lesson-section practice-section"><p class="section-label">PRACTICE ARENA</p><h2>Now apply what you learned</h2><p class="section-description">Try these problems without immediately looking at the solution. The goal is to build understanding, not just finish questions.</p><div class="practice-grid">${items.map((x,i)=>`<article class="practice-card"><header><span>CHALLENGE ${String(i+1).padStart(2,"0")}</span>${x.difficulty?`<b>${esc(x.difficulty)}</b>`:""}</header><h3>${esc(x.title||"Practice Challenge")}</h3><p>${rich(x.prompt||x.task||"")}</p>${arr(x.hints).length?`<details><summary>Need a hint?</summary><ul>${x.hints.map(h=>`<li>${rich(h)}</li>`).join("")}</ul></details>`:""}</article>`).join("")}</div></section>`}
+
+function renderQuiz(items){if(!arr(items).length)return "";return `<section class="lesson-section quiz-section"><p class="section-label">KNOWLEDGE CHECK</p><h2>Test your understanding</h2>${items.map((x,i)=>`<article class="quiz-question" data-question="${i}"><span class="quiz-number">QUESTION ${String(i+1).padStart(2,"0")}</span><h3>${esc(x.question||x.q||"")}</h3><div class="quiz-options">${arr(x.options).map((o,j)=>`<button type="button" data-option="${j}">${String.fromCharCode(65+j)}. ${esc(o)}</button>`).join("")}</div><div class="quiz-result" hidden></div></article>`).join("")}</section>`}
+
+function renderGlossary(items){if(!arr(items).length)return "";return `<section class="lesson-section glossary-section"><p class="section-label">GLOSSARY</p><h2>Terms to remember</h2><div class="glossary-grid">${items.map(x=>`<article><strong>${esc(Array.isArray(x)?x[0]:x.term||"")}</strong><p>${rich(Array.isArray(x)?x[1]:x.meaning||"")}</p></article>`).join("")}</div></section>`}
+function renderCompletion(x,takeaway){const message=x?.message||x?.text||takeaway;if(!message)return "";return `<section class="lesson-section completion-section"><p class="section-label">LEVEL COMPLETE</p><h2>${esc(x?.title||"You now have the foundation")}</h2><p>${rich(message)}</p><button class="complete-button" id="completeLevel" type="button">Mark Level ${levelNumber} complete</button></section>`}
+
+function legacyData(l){return {objectives:l.objectives||l.outcomes||[],concepts:l.sections||l.concepts||[],visualizer:l.visualizer||null,trace:l.trace||null,revision:l.revision||[],interview:l.interview||[],practice:l.practice||[],quiz:l.quiz||[],glossary:l.glossary||[],completion:l.completion||null,takeaway:l.takeaway||""}}
+
+function renderLesson(){
+  const main=document.getElementById("lessonMain"); if(!main)return;
+  if(!lesson){main.innerHTML=`<section class="lesson-section"><p class="section-label">PLANNED LEVEL</p><h2>Level ${levelNumber}</h2><p>This level is part of the CodeBhavya Full Stack MERN roadmap and is not released yet.</p><a class="button primary" href="lesson.html?level=1">Open Level 01</a></section>`;return;}
+  const d=legacyData(lesson), concepts=arr(d.concepts), quiz=arr(d.quiz);
+  document.title=`Level ${levelNumber}: ${lesson.title||""} | CodeBhavya`;
+  const hero=`<section class="lesson-hero premium-hero"><div class="hero-level-number">${String(levelNumber).padStart(2,"0")}</div><div><p class="eyebrow">${esc(lesson.kicker||lesson.hero?.badge||`LEVEL ${String(levelNumber).padStart(2,"0")}`)}</p><h1>${esc(lesson.title||"")}</h1><p>${rich(lesson.hero?.description||lesson.summary||"")}</p><div class="lesson-meta">${lesson.duration?`<span>⏱ ${esc(lesson.duration)}</span>`:""}${lesson.difficulty?`<span>◈ ${esc(lesson.difficulty)}</span>`:""}<span>▣ ${concepts.length} concepts</span><span>✓ ${quiz.length} checks</span></div></div></section>`;
+  const content=concepts.map(renderConcept).join("");
+  const prev=levelNumber>1?`<a href="lesson.html?level=${levelNumber-1}">← Previous level</a>`:`<span></span>`;
+  const next=levels.some(x=>Number(x.n)===levelNumber+1&&x.available!==false)?`<a href="lesson.html?level=${levelNumber+1}">Next level →</a>`:`<a href="index.html#roadmap">Return to roadmap →</a>`;
+  main.innerHTML=hero+renderObjectives(d.objectives)+content+renderTrace(d.trace)+renderRevision(d.revision)+renderInterview(d.interview)+renderPractice(d.practice)+renderQuiz(d.quiz)+renderGlossary(d.glossary)+renderCompletion(d.completion,d.takeaway)+`<nav class="lesson-nav">${prev}${next}</nav>`;
+  initTrace(); initQuiz(); initCompletion();
 }
 
-function renderInterview(items) {
-  const values = arr(items);
-  if (!values.length) return "";
-
-  return `
-    <section class="lesson-section interview-section">
-      <p class="section-label">PLACEMENT & INTERVIEW</p>
-      <h2>Explain the concept, don't just memorize it</h2>
-      <div class="interview-list">
-        ${values.map((item, index) => {
-          const question = item.question || item.q || "";
-          const answer = item.answer || item.a || "";
-          return `
-            <details class="interview-item">
-              <summary>
-                <span class="interview-number">${String(index + 1).padStart(2, "0")}</span>
-                <span>${esc(question)}</span>
-                <span class="interview-chevron">+</span>
-              </summary>
-              <div class="interview-answer">${rich(answer)}</div>
-            </details>
-          `;
-        }).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function renderPractice(items) {
-  const values = arr(items);
-  if (!values.length) return "";
-
-  return `
-    <section class="lesson-section practice-section">
-      <p class="section-label">PRACTICE ARENA</p>
-      <h2>Now apply what you learned</h2>
-      <p class="section-description">
-        Try these problems without immediately looking at the solution.
-        The goal is to build understanding, not just finish questions.
-      </p>
-
-      <div class="practice-grid">
-        ${values.map((item, index) => `
-          <article class="practice-card">
-            <div class="practice-top">
-              <span>CHALLENGE ${String(index + 1).padStart(2, "0")}</span>
-              ${item.difficulty ? `<b>${esc(item.difficulty)}</b>` : ""}
-            </div>
-            <h3>${esc(item.title || "Practice Challenge")}</h3>
-            <p>${rich(item.task || item.prompt || "")}</p>
-            ${arr(item.hints).length ? `
-              <details class="hint-box">
-                <summary>Need a hint?</summary>
-                <ul>${item.hints.map(h => `<li>${rich(h)}</li>`).join("")}</ul>
-              </details>
-            ` : ""}
-          </article>
-        `).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function renderQuiz(items) {
-  const values = arr(items);
-  if (!values.length) return "";
-
-  return `
-    <section class="lesson-section quiz-section">
-      <p class="section-label">KNOWLEDGE CHECK</p>
-      <h2>Test your understanding</h2>
-      <div class="quiz">
-        ${values.map((question, index) => `
-          <article class="quiz-question" data-question="${index}">
-            <div class="quiz-question-number">QUESTION ${String(index + 1).padStart(2, "0")}</div>
-            <h3>${esc(question.question || question.q || "")}</h3>
-            <div class="quiz-options">
-              ${arr(question.options).map((option, optionIndex) => `
-                <button type="button" data-option="${optionIndex}">
-                  <span>${String.fromCharCode(65 + optionIndex)}</span>
-                  ${esc(option)}
-                </button>
-              `).join("")}
-            </div>
-            <div class="quiz-result" hidden></div>
-          </article>
-        `).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function renderGlossary(items) {
-  const values = arr(items);
-  if (!values.length) return "";
-
-  return `
-    <section class="lesson-section glossary-section">
-      <p class="section-label">GLOSSARY</p>
-      <h2>Important terms from this level</h2>
-      <div class="glossary-grid">
-        ${values.map(item => `
-          <article class="glossary-card">
-            <h3>${esc(item.term || "")}</h3>
-            <p>${rich(item.definition || "")}</p>
-          </article>
-        `).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function renderCompletion(data) {
-  if (!data) return "";
-
-  return `
-    <section class="lesson-section completion-section">
-      <div class="completion-icon">✓</div>
-      <p class="section-label">LEVEL COMPLETE</p>
-      <h2>${esc(data.title || `Level ${levelNumber} Complete`)}</h2>
-      ${data.message ? `<p class="completion-message">${rich(data.message)}</p>` : ""}
-      ${data.challenge ? `
-        <div class="completion-challenge">
-          <span>FINAL CHALLENGE</span>
-          <p>${rich(data.challenge)}</p>
-        </div>
-      ` : ""}
-      <button type="button" class="complete-button" id="completeLevel">
-        Mark Level ${levelNumber} complete
-      </button>
-    </section>
-  `;
-}
-
-/* ------------------------- data normalization ------------------------- */
-
-function normalizeLesson(data) {
-  if (!data) return null;
-
-  return {
-    objectives: data.objectives || data.outcomes || [],
-    concepts: Array.isArray(data.sections) ? data.sections : (data.concepts || []),
-    visualizer: data.visualizer || null,
-    trace: data.trace || null,
-    flow: data.flow || null,
-    flowTitle: data.flowTitle || "Step-by-Step Flow",
-    architecture: data.architecture || null,
-    revision: data.revision || [],
-    interview: data.interview || [],
-    practice: data.practice || [],
-    quiz: data.quiz || [],
-    glossary: data.glossary || [],
-    completion: data.completion || (data.takeaway ? {
-      title: "Key Takeaway",
-      message: data.takeaway
-    } : null)
-  };
-}
-
-/* ------------------------- main render ------------------------- */
-
-function renderLesson() {
-  const main = document.getElementById("lessonMain");
-  if (!main) return;
-
-  if (!lesson) {
-    const level = levels.find(item => Number(item.n) === levelNumber);
-    main.innerHTML = `
-      <section class="lesson-section">
-        <p class="section-label">PLANNED LEVEL</p>
-        <h2>${esc(level?.title || `Level ${levelNumber}`)}</h2>
-        <p>This level is part of the CodeBhavya Full Stack MERN roadmap and will be released after the required foundation stages are completed.</p>
-        <a class="button primary" href="lesson.html?level=1">Open Level 01</a>
-      </section>
-    `;
-    return;
-  }
-
-  const data = normalizeLesson(lesson);
-  document.title = `Level ${levelNumber}: ${lesson.title || ""} | CodeBhavya`;
-
-  const conceptCount = arr(data.concepts).length;
-  const quizCount = arr(data.quiz).length;
-
-  const hero = `
-    <section class="lesson-hero premium-hero">
-      <div class="hero-level-number">${String(levelNumber).padStart(2, "0")}</div>
-      <div class="hero-content">
-        <p class="eyebrow">${esc(
-          lesson.hero?.badge || lesson.kicker || `LEVEL ${String(levelNumber).padStart(2, "0")}`
-        )}</p>
-        <h1>${esc(lesson.title || "")}</h1>
-        <p class="hero-description">${rich(
-          lesson.hero?.description || lesson.subtitle || lesson.summary || ""
-        )}</p>
-        ${lesson.hero?.note ? `<div class="hero-note">! ${rich(lesson.hero.note)}</div>` : ""}
-        <div class="lesson-meta">
-          ${(lesson.estimatedTime || lesson.duration) ? `<span>TIME · ${esc(lesson.estimatedTime || lesson.duration)}</span>` : ""}
-          ${lesson.difficulty ? `<span>LEVEL · ${esc(lesson.difficulty)}</span>` : ""}
-          <span>${conceptCount} CONCEPTS</span>
-          <span>${quizCount} CHECKS</span>
-        </div>
-      </div>
-    </section>
-  `;
-
-  const concepts = arr(data.concepts).map(renderConcept).join("");
-
-  const lessonFlow = data.flow ? `
-    <section class="lesson-section flow-section">
-      <p class="section-label">SYSTEM / LEARNING FLOW</p>
-      ${renderFlow(data.flow, data.flowTitle)}
-    </section>
-  ` : "";
-
-  const architecture = data.architecture ? `
-    <section class="lesson-section architecture-section">
-      <p class="section-label">ARCHITECTURE</p>
-      <h2>See how the pieces connect</h2>
-      ${renderArchitecture(data.architecture)}
-    </section>
-  ` : "";
-
-  const previous = levelNumber > 1
-    ? `<a href="lesson.html?level=${levelNumber - 1}">← Previous level</a>`
-    : `<span></span>`;
-
-  const nextAvailable = levelNumber < 30 &&
-    levels.some(item => Number(item.n) === levelNumber + 1 && item.available !== false);
-
-  const next = nextAvailable
-    ? `<a href="lesson.html?level=${levelNumber + 1}">Next level →</a>`
-    : `<a href="index.html#roadmap">Return to roadmap →</a>`;
-
-  main.innerHTML = `
-    ${hero}
-    ${renderObjectives(data.objectives)}
-    ${concepts}
-    ${data.visualizer ? renderVisualizer(data.visualizer) : ""}
-    ${data.trace ? renderTrace(data.trace) : ""}
-    ${lessonFlow}
-    ${architecture}
-    ${renderRevision(data.revision)}
-    ${renderInterview(data.interview)}
-    ${renderPractice(data.practice)}
-    ${renderQuiz(data.quiz)}
-    ${renderGlossary(data.glossary)}
-    ${renderCompletion(data.completion)}
-    <nav class="lesson-nav">${previous}${next}</nav>
-  `;
-
-  resetVisualizer();
-  resetTrace();
-  updateCompletionButton();
-}
-
-/* ------------------------- visualizer ------------------------- */
-
-function drawVisualizer() {
-  const steps = arr(lesson?.visualizer?.steps);
-  const next = document.getElementById("visualNext");
-  const auto = document.getElementById("visualAuto");
-  const state = document.getElementById("visualState");
-  const explain = document.getElementById("visualExplain");
-
-  if (!steps.length) return;
-
-  document.querySelectorAll("[data-visual-step]").forEach(el => {
-    el.classList.remove("active", "completed");
-  });
-
-  if (visualIndex >= steps.length) {
-    document.querySelectorAll("[data-visual-step]").forEach(el => el.classList.add("completed"));
-    if (state) state.textContent = "Visualizer complete";
-    if (explain) explain.textContent = "Reset to follow the process again.";
-    if (next) next.disabled = true;
-    if (auto) auto.disabled = true;
-    clearInterval(visualTimer);
-    return;
-  }
-
-  const current = steps[visualIndex];
-  const element = document.querySelector(`[data-visual-step="${visualIndex}"]`);
-
-  if (element) {
-    element.classList.add("active");
-    element.scrollIntoView({behavior:"smooth", block:"nearest"});
-  }
-
-  if (state) state.textContent = current.title || `Step ${visualIndex + 1}`;
-  if (explain) explain.textContent = current.detail || current.operation || "";
-  visualIndex++;
-}
-
-function resetVisualizer() {
-  clearInterval(visualTimer);
-  visualIndex = 0;
-  document.querySelectorAll("[data-visual-step]").forEach(el => el.classList.remove("active","completed"));
-
-  const state = document.getElementById("visualState");
-  const explain = document.getElementById("visualExplain");
-  const next = document.getElementById("visualNext");
-  const auto = document.getElementById("visualAuto");
-
-  if (state) state.textContent = "Ready";
-  if (explain) explain.textContent = "Press Next step to begin.";
-  if (next) next.disabled = false;
-  if (auto) auto.disabled = false;
-}
-
-function initVisualizer() {
-  const next = document.getElementById("visualNext");
-  const reset = document.getElementById("visualReset");
-  const auto = document.getElementById("visualAuto");
-  if (!next) return;
-
-  next.onclick = drawVisualizer;
-  if (reset) reset.onclick = resetVisualizer;
-  if (auto) {
-    auto.onclick = () => {
-      clearInterval(visualTimer);
-      visualTimer = setInterval(() => {
-        drawVisualizer();
-        if (visualIndex >= arr(lesson?.visualizer?.steps).length) clearInterval(visualTimer);
-      }, 900);
-    };
-  }
-}
-
-/* ------------------------- trace ------------------------- */
-
-function getTraceLines() {
-  return normalizeTrace(lesson?.trace)?.lines || [];
-}
-
-function drawTrace() {
-  const lines = getTraceLines();
-  const next = document.getElementById("traceNext");
-  const auto = document.getElementById("traceAuto");
-  const state = document.getElementById("traceState");
-  const explain = document.getElementById("traceExplain");
-
-  document.querySelectorAll("[data-trace-line]").forEach(el => el.classList.remove("active","completed"));
-
-  if (!lines.length || traceIndex >= lines.length) {
-    document.querySelectorAll("[data-trace-line]").forEach(el => el.classList.add("completed"));
-    if (state) state.textContent = "Trace complete";
-    if (explain) explain.textContent = "Reset to follow the execution again.";
-    if (next) next.disabled = true;
-    if (auto) auto.disabled = true;
+function initTrace(){
+  const next=document.getElementById("traceNext"),reset=document.getElementById("traceReset"),auto=document.getElementById("traceAuto");if(!next)return;
+  const t=normalizeTrace(lesson?.trace); if(!t)return;
+  const step=()=>{
     clearInterval(traceTimer);
-    return;
-  }
-
-  const step = lines[traceIndex];
-  const lineIndex = Math.max(0, Math.min(lines.length - 1, Number(step.line) - 1));
-  const current = document.querySelector(`[data-trace-line="${lineIndex}"]`);
-
-  if (current) {
-    current.classList.add("active");
-    current.scrollIntoView({behavior:"smooth", block:"center"});
-  }
-
-  if (state) state.textContent = `Step ${traceIndex + 1}`;
-  if (explain) explain.textContent = step.explanation || "";
-  traceIndex++;
-}
-
-function resetTrace() {
-  clearInterval(traceTimer);
-  traceIndex = 0;
-  document.querySelectorAll("[data-trace-line]").forEach(el => el.classList.remove("active","completed"));
-
-  const state = document.getElementById("traceState");
-  const explain = document.getElementById("traceExplain");
-  const next = document.getElementById("traceNext");
-  const auto = document.getElementById("traceAuto");
-
-  if (state) state.textContent = "Ready";
-  if (explain) explain.textContent = "Press Next step to begin.";
-  if (next) next.disabled = false;
-  if (auto) auto.disabled = false;
-}
-
-function initTrace() {
-  const next = document.getElementById("traceNext");
-  const reset = document.getElementById("traceReset");
-  const auto = document.getElementById("traceAuto");
-  if (!next) return;
-
-  next.onclick = drawTrace;
-  if (reset) reset.onclick = resetTrace;
-  if (auto) {
-    auto.onclick = () => {
-      clearInterval(traceTimer);
-      traceTimer = setInterval(() => {
-        drawTrace();
-        if (traceIndex >= getTraceLines().length) clearInterval(traceTimer);
-      }, 900);
-    };
-  }
-}
-
-/* ------------------------- interactions ------------------------- */
-
-async function copyCode(code) {
-  try {
-    await navigator.clipboard.writeText(code);
-    showToast("Code copied successfully");
-  } catch {
-    showToast("Copy failed — select the code manually");
-  }
-}
-
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  if (!toast) return;
-  toast.textContent = message;
-  toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 1500);
-}
-
-function handleQuiz(button) {
-  const question = button.closest(".quiz-question");
-  if (!question) return;
-
-  const index = Number(question.dataset.question);
-  const selected = Number(button.dataset.option);
-  const current = arr(lesson?.quiz)[index];
-  if (!current) return;
-
-  const correct = Number(current.answer);
-
-  question.querySelectorAll("[data-option]").forEach(option => {
-    option.disabled = true;
-    const n = Number(option.dataset.option);
-    if (n === correct) option.classList.add("correct");
-    if (n === selected && n !== correct) option.classList.add("wrong");
-  });
-
-  const result = question.querySelector(".quiz-result");
-  if (!result) return;
-
-  result.hidden = false;
-  result.innerHTML = selected === correct
-    ? `<strong>✓ Correct!</strong> ${rich(current.explanation || "Good work.")}`
-    : `<strong>✗ Not quite.</strong> ${rich(current.explanation || "Review the concept and try again.")}`;
-  result.classList.toggle("success", selected === correct);
-  result.classList.toggle("failure", selected !== correct);
-}
-
-function updateCompletionButton() {
-  const button = document.getElementById("completeLevel");
-  if (!button) return;
-
-  const completed = getProgress().includes(levelNumber);
-  button.textContent = completed
-    ? `✓ Level ${levelNumber} completed`
-    : `Mark Level ${levelNumber} complete`;
-  button.classList.toggle("completed", completed);
-}
-
-function toggleCompletion() {
-  let progress = getProgress();
-
-  if (progress.includes(levelNumber)) {
-    progress = progress.filter(value => value !== levelNumber);
-    showToast("Completion removed");
-  } else {
-    progress = [...progress, levelNumber];
-    showToast("Level completed 🎉");
-  }
-
-  setProgress(progress);
-  updateCompletionButton();
-}
-
-/* ------------------------- page shell ------------------------- */
-
-function openSidebar() {
-  const sidebar = document.getElementById("sidebar");
-  const shade = document.getElementById("shade");
-  if (!sidebar) return;
-  sidebar.classList.add("open");
-  if (shade) shade.hidden = false;
-}
-
-function closeSidebar() {
-  const sidebar = document.getElementById("sidebar");
-  const shade = document.getElementById("shade");
-  if (!sidebar) return;
-  sidebar.classList.remove("open");
-  if (shade) shade.hidden = true;
-}
-
-function initSidebar() {
-  const menu = document.getElementById("lessonMenu");
-  const shade = document.getElementById("shade");
-  const search = document.getElementById("levelSearch");
-
-  if (menu) {
-    menu.addEventListener("click", () => {
-      const sidebar = document.getElementById("sidebar");
-      sidebar?.classList.contains("open") ? closeSidebar() : openSidebar();
-    });
-  }
-
-  if (shade) shade.addEventListener("click", closeSidebar);
-
-  if (search) {
-    search.addEventListener("input", event => {
-      const query = event.target.value.trim().toLowerCase();
-      document.querySelectorAll("#levelNav a").forEach(link => {
-        link.hidden = !link.textContent.toLowerCase().includes(query);
-      });
-    });
-  }
-
-  document.addEventListener("click", event => {
-    if (event.target.closest("#levelNav a") && window.innerWidth <= 900) {
-      closeSidebar();
-    }
-  });
-}
-
-function initTopNavigation() {
-  const button = document.getElementById("navToggle");
-  const nav = document.getElementById("siteNav");
-  if (!button || !nav) return;
-
-  button.addEventListener("click", () => {
-    const open = nav.classList.toggle("open");
-    button.setAttribute("aria-expanded", String(open));
-  });
-}
-
-function initGlobalClicks() {
-  document.addEventListener("click", event => {
-    const copyButton = event.target.closest("[data-copy]");
-    if (copyButton) {
-      copyCode(copyButton.dataset.copy);
-      return;
-    }
-
-    const quizButton = event.target.closest("[data-option]");
-    if (quizButton) {
-      handleQuiz(quizButton);
-      return;
-    }
-
-    if (event.target.closest("#completeLevel")) {
-      toggleCompletion();
-    }
-  });
-}
-
-function initReadingProgress() {
-  const bar = document.getElementById("readingBar");
-  if (!bar) return;
-
-  const update = () => {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    const value = max > 0 ? (window.scrollY / max) * 100 : 0;
-    bar.style.width = `${Math.max(0, Math.min(100, value))}%`;
+    const lines=document.querySelectorAll("[data-trace-line]"),state=document.getElementById("traceState"),explain=document.getElementById("traceExplain");
+    if(traceIndex>=t.lines.length){lines.forEach(x=>x.classList.add("completed"));if(state)state.textContent="Trace complete";if(explain)explain.textContent="Reset to follow the execution again.";next.disabled=true;if(auto)auto.disabled=true;return;}
+    lines.forEach((x,i)=>{x.classList.toggle("active",i===traceIndex);if(i<traceIndex)x.classList.add("completed")});
+    const current=lines[traceIndex];current?.scrollIntoView({behavior:"smooth",block:"nearest"});
+    if(state)state.textContent=`Step ${traceIndex+1}`;if(explain)explain.textContent=t.lines[traceIndex].explain||"";traceIndex++;
+    if(traceIndex>=t.lines.length){setTimeout(()=>{next.disabled=true;if(auto)auto.disabled=true},20)}
   };
-
-  window.addEventListener("scroll", update, {passive:true});
-  window.addEventListener("resize", update);
-  update();
+  next.onclick=step;reset.onclick=()=>{clearInterval(traceTimer);traceIndex=0;document.querySelectorAll("[data-trace-line]").forEach(x=>x.classList.remove("active","completed"));document.getElementById("traceState").textContent="Ready";document.getElementById("traceExplain").textContent="Press Next step to begin.";next.disabled=false;if(auto)auto.disabled=false};
+  auto.onclick=()=>{clearInterval(traceTimer);step();traceTimer=setInterval(()=>{if(traceIndex>=t.lines.length){clearInterval(traceTimer);return}step()},900)};
 }
 
-function setYear() {
-  const year = document.getElementById("year");
-  if (year) year.textContent = new Date().getFullYear();
-}
+function initQuiz(){document.querySelectorAll(".quiz-question").forEach(q=>q.querySelectorAll("[data-option]").forEach(btn=>btn.onclick=()=>{const i=Number(q.dataset.question),selected=Number(btn.dataset.option),item=lesson?.quiz?.[i];if(!item)return;const correct=Number(item.answer);q.querySelectorAll("[data-option]").forEach(b=>{b.disabled=true;const n=Number(b.dataset.option);if(n===correct)b.classList.add("correct");if(n===selected&&n!==correct)b.classList.add("wrong")});const r=q.querySelector(".quiz-result");r.hidden=false;r.classList.toggle("success",selected===correct);r.classList.toggle("failure",selected!==correct);r.innerHTML=selected===correct?`<strong>✓ Correct!</strong> ${rich(item.explanation||"")}`:`<strong>✗ Not quite.</strong> ${rich(item.explanation||"")}`}))}
+function initCompletion(){const b=document.getElementById("completeLevel");if(!b)return;const update=()=>{const done=progressGet().includes(levelNumber);b.textContent=done?`✓ Level ${levelNumber} completed`:`Mark Level ${levelNumber} complete`;b.classList.toggle("completed",done)};b.onclick=()=>{let p=progressGet();p=p.includes(levelNumber)?p.filter(x=>x!==levelNumber):[...p,levelNumber];progressSet(p);update();showToast(p.includes(levelNumber)?"Level completed 🎉":"Completion removed")};update()}
+function initCopy(){document.addEventListener("click",e=>{const b=e.target.closest("[data-copy]");if(!b)return;navigator.clipboard?.writeText(b.dataset.copy).then(()=>showToast("Code copied successfully")).catch(()=>showToast("Copy failed — select the code manually"))})}
+function initSidebar(){const menu=document.getElementById("lessonMenu"),side=document.getElementById("sidebar"),shade=document.getElementById("shade");const close=()=>{side?.classList.remove("open");if(shade)shade.hidden=true};menu?.addEventListener("click",()=>{side?.classList.toggle("open");if(shade)shade.hidden=!side?.classList.contains("open")});shade?.addEventListener("click",close);document.getElementById("levelSearch")?.addEventListener("input",e=>{const q=e.target.value.toLowerCase();document.querySelectorAll("#levelNav a").forEach(a=>a.hidden=!a.textContent.toLowerCase().includes(q))})}
+function initTopNav(){document.getElementById("navToggle")?.addEventListener("click",()=>document.getElementById("siteNav")?.classList.toggle("open"))}
+function initReading(){const bar=document.getElementById("readingBar");if(!bar)return;const f=()=>{const max=document.documentElement.scrollHeight-innerHeight;bar.style.width=`${max?Math.max(0,Math.min(100,scrollY/max*100)):0}%`};addEventListener("scroll",f,{passive:true});addEventListener("resize",f);f()}
 
-function initializeLessonPage() {
-  renderSidebar();
-  renderLesson();
-  initVisualizer();
-  initTrace();
-  initSidebar();
-  initTopNavigation();
-  initGlobalClicks();
-  initReadingProgress();
-  setYear();
-}
-
-initializeLessonPage();
+document.addEventListener("DOMContentLoaded",()=>{document.getElementById("year").textContent=new Date().getFullYear();renderSidebar();renderLesson();initCopy();initSidebar();initTopNav();initReading()});
