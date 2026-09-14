@@ -1,198 +1,383 @@
-
 /* =========================================================
-   CODEBHAVYA COMMON COMPONENTS
-   Header + Footer Loader
+   CODEBHAVYA
+   COMMON HEADER & FOOTER COMPONENT LOADER
+   js/components.js
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
 
-    loadComponent(
-        "/components/header.html",
-        "site-header"
-    );
-
-    loadComponent(
-        "/components/footer.html",
-        "site-footer"
-    );
-
-});
+    "use strict";
 
 
-/* =========================================================
-   LOAD COMPONENT
-   ========================================================= */
+    /* =====================================================
+       1. FIND CODEBHAVYA ROOT
+       ===================================================== */
 
-function loadComponent(file, targetId) {
+    /*
+       components.js may be loaded from:
 
-    const target = document.getElementById(targetId);
+       /js/components.js
 
-    if (!target) {
-        return;
-    }
+       or from pages such as:
 
-    fetch(file)
-        .then(function (response) {
+       /C-Programming/
+       /Python/
+       /AI-ML/
+       /Placement/
+       /Full-Stack/
+
+       Therefore, never build component paths relative
+       to the current HTML page.
+
+       Always use the website root.
+    */
+
+    const siteRoot = new URL("/", window.location.origin);
+
+
+    /* =====================================================
+       2. COMPONENT PATHS
+       ===================================================== */
+
+    const COMPONENTS = {
+
+        header:
+            new URL("components/header.html", siteRoot).href,
+
+        footer:
+            new URL("components/footer.html", siteRoot).href
+
+    };
+
+
+    /* =====================================================
+       3. LOAD HTML COMPONENT
+       ===================================================== */
+
+    async function loadComponent(url, selector) {
+
+        const container = document.querySelector(selector);
+
+        if (!container) {
+            return false;
+        }
+
+        try {
+
+            const response = await fetch(url, {
+                method: "GET",
+                cache: "no-cache"
+            });
 
             if (!response.ok) {
                 throw new Error(
-                    "Unable to load component: " + file
+                    "HTTP " +
+                    response.status +
+                    " while loading " +
+                    url
                 );
             }
 
-            return response.text();
-        })
-        .then(function (html) {
+            const html = await response.text();
 
-            target.innerHTML = html;
-
-            if (targetId === "site-header") {
-                initializeHeader();
+            if (!html.trim()) {
+                throw new Error(
+                    "Empty component received from " + url
+                );
             }
 
-            if (targetId === "site-footer") {
-                initializeFooter();
-            }
+            container.innerHTML = html;
 
-        })
-        .catch(function (error) {
+            return true;
+
+        } catch (error) {
 
             console.error(
-                "CodeBhavya component error:",
+                "CodeBhavya component loading error:",
                 error
             );
 
-        });
-
-}
-
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-
-function initializeHeader() {
-
-    const menuButton =
-        document.getElementById("cb-menu-toggle");
-
-    const navigation =
-        document.getElementById("cb-navigation");
-
-    if (!menuButton || !navigation) {
-        return;
+            return false;
+        }
     }
 
 
-    /* ---------- Mobile Menu ---------- */
+    /* =====================================================
+       4. CREATE COMPONENT CONTAINERS
+       ===================================================== */
 
-    menuButton.addEventListener("click", function () {
+    function createComponentContainers() {
 
-        const isOpen =
-            navigation.classList.toggle("cb-menu-open");
+        /*
+           Header
+           ------
+           If a page already contains:
 
-        menuButton.setAttribute(
-            "aria-expanded",
-            isOpen ? "true" : "false"
-        );
+               <div id="codebhavya-header"></div>
 
-    });
+           we use it.
+
+           Otherwise we create the container automatically
+           at the beginning of <body>.
+        */
+
+        let headerContainer =
+            document.getElementById("codebhavya-header-container");
+
+        if (!headerContainer) {
+
+            headerContainer =
+                document.createElement("div");
+
+            headerContainer.id =
+                "codebhavya-header-container";
+
+            document.body.insertBefore(
+                headerContainer,
+                document.body.firstChild
+            );
+        }
 
 
-    /* ---------- Close Menu After Link Click ---------- */
+        /*
+           Footer
+           ------
+           If a page already contains:
 
-    const navLinks =
-        navigation.querySelectorAll(".cb-nav-link");
+               <div id="codebhavya-footer"></div>
 
-    navLinks.forEach(function (link) {
+           we use it.
 
-        link.addEventListener("click", function () {
+           Otherwise we create it automatically
+           at the end of <body>.
+        */
 
-            navigation.classList.remove("cb-menu-open");
+        let footerContainer =
+            document.getElementById("codebhavya-footer-container");
 
-            menuButton.setAttribute(
-                "aria-expanded",
-                "false"
+        if (!footerContainer) {
+
+            footerContainer =
+                document.createElement("div");
+
+            footerContainer.id =
+                "codebhavya-footer-container";
+
+            document.body.appendChild(
+                footerContainer
+            );
+        }
+
+
+        return {
+            header: headerContainer,
+            footer: footerContainer
+        };
+    }
+
+
+    /* =====================================================
+       5. LOAD HEADER
+       ===================================================== */
+
+    async function loadHeader(container) {
+
+        const loaded =
+            await loadComponent(
+                COMPONENTS.header,
+                "#codebhavya-header-container"
             );
 
-        });
-
-    });
-
-
-    /* ---------- Active Page ---------- */
-
-    setActiveNavigation();
-
-}
-
-
-/* =========================================================
-   ACTIVE NAVIGATION
-   ========================================================= */
-
-function setActiveNavigation() {
-
-    const currentPath =
-        window.location.pathname
-            .replace(/\/+$/, "")
-            .toLowerCase();
-
-    const links =
-        document.querySelectorAll(
-            "#cb-navigation .cb-nav-link"
-        );
-
-    links.forEach(function (link) {
-
-        const href =
-            link.getAttribute("href");
-
-        if (!href) {
-            return;
+        if (!loaded) {
+            return false;
         }
 
-        const linkPath =
-            new URL(
-                href,
-                window.location.origin
-            ).pathname
-                .replace(/\/+$/, "")
-                .toLowerCase();
+
+        /*
+           Header is now actually present in the DOM.
+
+           This event is important because the mega
+           navigation must NOT initialize before the
+           dynamically loaded header exists.
+        */
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "codebhavya:headerLoaded"
+            )
+        );
+
+
+        return true;
+    }
+
+
+    /* =====================================================
+       6. LOAD FOOTER
+       ===================================================== */
+
+    async function loadFooter(container) {
+
+        const loaded =
+            await loadComponent(
+                COMPONENTS.footer,
+                "#codebhavya-footer-container"
+            );
+
+        if (!loaded) {
+            return false;
+        }
+
+
+        /*
+           Notify other CodeBhavya scripts that the
+           footer is available.
+        */
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "codebhavya:footerLoaded"
+            )
+        );
+
+
+        return true;
+    }
+
+
+    /* =====================================================
+       7. INITIALIZE CODEBHAVYA NAVIGATION
+       ===================================================== */
+
+    function initializeNavigation() {
+
+        /*
+           The actual mega-navigation implementation
+           will be provided by script.js.
+
+           This keeps:
+
+               components.js
+                   ↓
+               component loading
+
+           separate from:
+
+               script.js
+                   ↓
+               global CodeBhavya functionality
+               mega navigation
+               sidebar behavior
+               solution toggles
+               search
+        */
 
         if (
-            linkPath === currentPath ||
-            (
-                linkPath !== "/" &&
-                currentPath.startsWith(linkPath)
-            )
+            window.CodeBhavyaNavigation &&
+            typeof window.CodeBhavyaNavigation.init === "function"
         ) {
 
-            link.classList.add("active");
+            window.CodeBhavyaNavigation.init();
 
+        } else {
+
+            /*
+               script.js may be loaded after components.js.
+
+               In that situation, notify it when it becomes
+               available instead of producing an error.
+            */
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "codebhavya:navigationReady"
+                )
+            );
         }
-
-    });
-
-}
+    }
 
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
+    /* =====================================================
+       8. COMPLETE COMPONENT INITIALIZATION
+       ===================================================== */
 
-function initializeFooter() {
+    async function initializeComponents() {
 
-    const yearElement =
-        document.getElementById(
-            "cb-current-year"
+        const containers =
+            createComponentContainers();
+
+
+        /*
+           Load header first.
+
+           Navigation depends on the header, so header
+           must finish before navigation initialization.
+        */
+
+        await loadHeader(containers.header);
+
+
+        /*
+           Initialize navigation immediately after the
+           header becomes available.
+        */
+
+        initializeNavigation();
+
+
+        /*
+           Footer does not depend on navigation.
+        */
+
+        await loadFooter(containers.footer);
+
+
+        /*
+           Final event — all common components are ready.
+        */
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "codebhavya:componentsLoaded"
+            )
         );
-
-    if (yearElement) {
-
-        yearElement.textContent =
-            new Date().getFullYear();
 
     }
 
-}
+
+    /* =====================================================
+       9. PUBLIC API
+       ===================================================== */
+
+    window.CodeBhavyaComponents = {
+
+        root: siteRoot,
+
+        paths: COMPONENTS,
+
+        load: initializeComponents
+
+    };
+
+
+    /* =====================================================
+       10. START
+       ===================================================== */
+
+    if (document.readyState === "loading") {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeComponents,
+            {
+                once: true
+            }
+        );
+
+    } else {
+
+        initializeComponents();
+
+    }
+
+})();
