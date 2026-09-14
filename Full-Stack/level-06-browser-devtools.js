@@ -1,4 +1,4 @@
-```javascript
+
 "use strict";
 
 window.FULLSTACK_LESSONS = window.FULLSTACK_LESSONS || {};
@@ -1328,4 +1328,3 @@ No broken cards`
             "You have completed Level 06 when you can reproduce, investigate, explain and fix layout, JavaScript and network problems using DevTools without relying on random trial-and-error changes."
     }
 };
-```
