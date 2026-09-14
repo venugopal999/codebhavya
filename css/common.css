@@ -1,425 +1,932 @@
-
 /* =========================================================
-   CODEBHAVYA COMMON HEADER + FOOTER
+   CODEBHAVYA — COMMON HEADER & FOOTER
+   common.css
    ========================================================= */
 
-/* ---------- Global ---------- */
 
-.cb-header *,
-.cb-footer * {
+/* =========================================================
+   1. GLOBAL VARIABLES
+   ========================================================= */
+
+:root {
+    --codebhavya-code-blue: #B8D8F0;
+    --codebhavya-gold: #D4AF37;
+    --codebhavya-gold-light: #F5D76E;
+
+    --header-height: 72px;
+
+    --footer-bg: #08131F;
+    --footer-text: #94A3B8;
+    --footer-heading: #FFFFFF;
+
+    --border-light: #E2E8F0;
+}
+
+
+/* =========================================================
+   2. BASIC RESET FOR COMMON COMPONENTS
+   ========================================================= */
+
+.top-header,
+.top-header *,
+.footer,
+.footer * {
     box-sizing: border-box;
 }
 
 
 /* =========================================================
-   HEADER
+   3. BODY — DESKTOP HEADER SPACE
    ========================================================= */
 
-.cb-header {
-    width: 100%;
-    position: relative;
-    z-index: 1000;
-    background: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.cb-header-container {
-    width: min(1400px, 94%);
-    margin: 0 auto;
-
-    min-height: 70px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 25px;
-}
-
-
-/* ---------- Logo ---------- */
-
-.cb-logo {
-    flex-shrink: 0;
-
-    display: inline-flex;
-    align-items: center;
-
-    text-decoration: none;
-
-    font-size: 1.55rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-
-    white-space: nowrap;
-}
-
-.cb-logo-main {
-    color: #111827;
-}
-
-.cb-logo-highlight {
-    color: #2563eb;
-}
-
-
-/* ---------- Navigation ---------- */
-
-.cb-navigation {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    gap: 4px;
-
-    flex-wrap: wrap;
-}
-
-.cb-nav-link {
-    display: inline-flex;
-    align-items: center;
-
-    padding: 9px 11px;
-
-    color: #374151;
-    text-decoration: none;
-
-    font-size: 0.92rem;
-    font-weight: 600;
-
-    border-radius: 8px;
-
-    transition:
-        color 0.2s ease,
-        background 0.2s ease;
-}
-
-.cb-nav-link:hover {
-    color: #2563eb;
-    background: #eff6ff;
-}
-
-.cb-nav-link.active {
-    color: #2563eb;
-    background: #eff6ff;
-}
-
-
-/* ---------- Mobile Menu ---------- */
-
-.cb-menu-toggle {
-    display: none;
-
-    width: 42px;
-    height: 42px;
-
-    padding: 8px;
-
-    border: 0;
-    border-radius: 8px;
-
-    background: transparent;
-
-    cursor: pointer;
-}
-
-.cb-menu-toggle span {
-    display: block;
-
-    width: 100%;
-    height: 2px;
-
-    margin: 5px 0;
-
-    background: #111827;
-
-    transition:
-        transform 0.2s ease,
-        opacity 0.2s ease;
+body {
+    padding-top: var(--header-height);
 }
 
 
 /* =========================================================
-   FOOTER
+   4. CODEBHAVYA HEADER
    ========================================================= */
 
-.cb-footer {
+.top-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+
     width: 100%;
+    height: var(--header-height);
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 24px;
+
+    background: #FFFFFF;
+
+    border-bottom: 1px solid var(--border-light);
+
+    z-index: 2000;
+
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+}
+
+
+/* =========================================================
+   5. HEADER LOGO
+   ========================================================= */
+
+.top-header .logo {
+    display: flex;
+    align-items: center;
+
+    height: 58px;
+
+    flex-shrink: 0;
+
+    text-decoration: none;
+}
+
+
+.codebhavya-new-logo {
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: flex-start !important;
+
+    width: fit-content !important;
+
+    gap: 0 !important;
+
+    text-decoration: none;
+}
+
+
+.codebhavya-new-logo .main-logo {
+    width: 72px !important;
+    height: 72px !important;
+
+    object-fit: contain;
+
+    display: block;
+
+    margin: 0 10px 0 0 !important;
+
+    flex-shrink: 0;
+}
+
+
+.codebhavya-new-logo .logo-code,
+.codebhavya-new-logo .logo-bhavya {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    line-height: 1;
+}
+
+
+.codebhavya-new-logo .logo-code {
+    color: var(--codebhavya-code-blue) !important;
+
+    -webkit-text-fill-color: var(--codebhavya-code-blue) !important;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 27px;
+
+    font-weight: 700;
+}
+
+
+.codebhavya-new-logo .logo-bhavya {
+    color: #111827 !important;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 27px;
+
+    font-weight: 700;
+}
+
+
+.codebhavya-new-logo .logo-code + .logo-bhavya {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+
+
+/* =========================================================
+   6. ORIGINAL NAVIGATION HOOK
+   ========================================================= */
+
+.top-header .top-nav {
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.top-header .top-nav > a {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 10px;
+
+    color: #334155;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    border-radius: 6px;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.top-header .top-nav > a:hover {
+    color: #0F172A;
+
+    background: #F1F5F9;
+}
+
+
+/* =========================================================
+   7. MEGA NAVIGATION
+   These rules support the navigation created
+   by the CodeBhavya global navigation script.
+   ========================================================= */
+
+.cb-site-nav {
+    display: flex;
+    align-items: center;
+
+    margin-left: auto;
+
+    gap: 6px;
+
+    position: relative;
+}
+
+
+.cb-site-nav .cb-nav-links {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+.cb-site-nav a {
+    text-decoration: none;
+}
+
+
+.cb-site-nav .cb-nav-item,
+.cb-site-nav .cb-nav-link {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+
+    padding: 8px 11px;
+
+    color: #334155;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    border-radius: 7px;
+
+    white-space: nowrap;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.cb-site-nav .cb-nav-item:hover,
+.cb-site-nav .cb-nav-link:hover {
+    color: #0F172A;
+
+    background: #F1F5F9;
+}
+
+
+/* =========================================================
+   8. MOBILE MENU TOGGLE
+   ========================================================= */
+
+.cb-menu-toggle {
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    margin-left: auto;
+
+    padding: 0;
+
+    border: 1px solid #CBD5E1;
+
+    border-radius: 8px;
+
+    background: #FFFFFF;
+
+    color: #0F172A;
+
+    cursor: pointer;
+}
+
+
+.cb-menu-toggle:hover {
+    background: #F8FAFC;
+}
+
+
+/* =========================================================
+   9. COMMON DROPDOWN / MEGA MENU SUPPORT
+   ========================================================= */
+
+.cb-dropdown,
+.cb-mega-menu,
+.cb-nav-dropdown {
+    position: absolute;
+
+    top: calc(100% + 8px);
+
+    left: 0;
+
+    background: #FFFFFF;
+
+    border: 1px solid #E2E8F0;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 15px 35px rgba(15, 23, 42, 0.12),
+        0 4px 12px rgba(15, 23, 42, 0.06);
+
+    z-index: 3000;
+}
+
+
+.cb-dropdown a,
+.cb-mega-menu a,
+.cb-nav-dropdown a {
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   10. HIDDEN NAVIGATION COMPATIBILITY HOOKS
+   ========================================================= */
+
+.cb-navigation-hooks {
+    display: none !important;
+}
+
+
+/* =========================================================
+   11. FOOTER
+   ========================================================= */
+
+.footer {
+    width: 100%;
+
+    background: var(--footer-bg);
+
+    color: #FFFFFF;
 
     margin-top: 0;
 
-    background: #111827;
-    color: #ffffff;
+    padding: 40px 30px 0;
+
+    box-sizing: border-box;
 }
 
-.cb-footer-container {
-    width: min(1400px, 94%);
-    margin: 0 auto;
 
-    padding: 50px 0 40px;
+/* =========================================================
+   12. FOOTER CONTAINER
+   ========================================================= */
+
+.footer-container {
+    width: 100%;
+
+    max-width: 1150px;
+
+    margin: 0 auto;
 
     display: grid;
 
     grid-template-columns:
-        1.5fr
+        1.8fr
         1fr
-        1.3fr
-        1.3fr
-        1.3fr;
+        1fr
+        1fr
+        1fr;
 
-    gap: 35px;
+    gap: 40px;
+
+    align-items: start;
+
+    padding-bottom: 30px;
 }
 
 
-/* ---------- Footer Brand ---------- */
+/* =========================================================
+   13. FOOTER BRAND
+   ========================================================= */
 
-.cb-footer-brand h2 {
+.footer-brand-section {
+    text-align: left;
+}
+
+
+.footer-brand {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    margin-bottom: 8px;
+}
+
+
+.footer-code {
+    color: var(--codebhavya-code-blue) !important;
+}
+
+
+.footer-bhavya {
+    background:
+        linear-gradient(
+            90deg,
+            var(--codebhavya-gold),
+            var(--codebhavya-gold-light),
+            var(--codebhavya-gold)
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    color: transparent;
+}
+
+
+.footer-tagline {
+    color: #CBD5E1;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+
     margin: 0 0 12px;
-
-    font-size: 1.5rem;
-    font-weight: 800;
-
-    color: #ffffff;
 }
 
-.cb-footer-tagline {
-    margin: 0 0 12px;
 
-    color: #dbeafe;
+.footer-description {
+    color: #94A3B8;
 
-    font-size: 0.98rem;
-    line-height: 1.6;
-}
+    font-size: 14px;
 
-.cb-footer-description {
-    max-width: 280px;
+    line-height: 1.7;
+
+    max-width: 300px;
 
     margin: 0;
-
-    color: #9ca3af;
-
-    font-size: 0.9rem;
-    line-height: 1.7;
 }
 
 
-/* ---------- Footer Columns ---------- */
+/* =========================================================
+   14. FOOTER COLUMNS
+   ========================================================= */
 
-.cb-footer-column {
+.footer-column {
     display: flex;
+
     flex-direction: column;
 
     align-items: flex-start;
 }
 
-.cb-footer-column h3 {
-    margin: 0 0 15px;
 
-    color: #ffffff;
+.footer-column h3 {
+    color: #FFFFFF;
 
-    font-size: 1rem;
+    font-size: 16px;
+
     font-weight: 700;
+
+    line-height: 1.3;
+
+    margin: 0 0 16px;
 }
 
-.cb-footer-column a {
-    display: block;
 
-    margin: 0 0 9px;
-
-    color: #9ca3af;
+.footer-column a {
+    color: #94A3B8;
 
     text-decoration: none;
 
-    font-size: 0.88rem;
+    font-size: 14px;
+
     line-height: 1.5;
+
+    margin-bottom: 10px;
 
     transition:
         color 0.2s ease,
         transform 0.2s ease;
 }
 
-.cb-footer-column a:hover {
-    color: #ffffff;
+
+.footer-column a:hover {
+    color: var(--codebhavya-code-blue);
+
     transform: translateX(2px);
 }
 
 
-/* ---------- Footer Bottom ---------- */
+/* =========================================================
+   15. FOOTER BOTTOM
+   ========================================================= */
 
-.cb-footer-bottom {
-    width: min(1400px, 94%);
+.footer-bottom {
+    width: 100%;
+
+    max-width: 1150px;
+
     margin: 0 auto;
 
-    padding: 18px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
 
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 14px 0 16px;
 
     display: flex;
-    align-items: center;
+
     justify-content: space-between;
+
+    align-items: center;
 
     gap: 20px;
 }
 
-.cb-footer-bottom p {
+
+.footer-bottom p {
     margin: 0;
 
-    color: #9ca3af;
+    color: #94A3B8;
 
-    font-size: 0.82rem;
+    font-size: 13px;
+
     line-height: 1.5;
 }
 
 
 /* =========================================================
-   TABLET
+   16. TABLET HEADER
    ========================================================= */
 
 @media (max-width: 1100px) {
 
-    .cb-header-container {
-        min-height: 65px;
+    .top-header {
+        padding: 0 16px;
     }
 
-    .cb-navigation {
-        gap: 1px;
+    .codebhavya-new-logo .main-logo {
+        width: 62px !important;
+        height: 62px !important;
     }
 
-    .cb-nav-link {
-        padding: 8px 7px;
-        font-size: 0.84rem;
+    .codebhavya-new-logo .logo-code,
+    .codebhavya-new-logo .logo-bhavya {
+        font-size: 24px;
     }
 
-    .cb-footer-container {
-        grid-template-columns:
-            repeat(3, 1fr);
+    .top-header .top-nav {
+        gap: 3px;
     }
 
+    .top-header .top-nav > a {
+        padding: 7px 7px;
+
+        font-size: 13px;
+    }
+
+    .cb-site-nav {
+        gap: 3px;
+    }
+
+    .cb-site-nav .cb-nav-item,
+    .cb-site-nav .cb-nav-link {
+        padding-left: 8px;
+        padding-right: 8px;
+
+        font-size: 13px;
+    }
+
+    .footer-container {
+        gap: 30px;
+    }
 }
 
 
 /* =========================================================
-   MOBILE
+   17. FOOTER — TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .footer-container {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 30px 25px;
+    }
+
+    .footer-brand-section {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* =========================================================
+   18. MOBILE HEADER
    ========================================================= */
 
 @media (max-width: 768px) {
 
-    .cb-header {
+    body {
+        padding-top: 0;
+    }
+
+
+    .top-header {
         position: relative;
-    }
 
-    .cb-header-container {
-        min-height: 62px;
-
-        width: 94%;
-
-        position: relative;
-    }
-
-    .cb-logo {
-        font-size: 1.35rem;
-    }
-
-    /* Mobile menu button */
-
-    .cb-menu-toggle {
-        display: block;
-    }
-
-    /* Navigation */
-
-    .cb-navigation {
-        display: none;
-
-        position: absolute;
-
-        top: 100%;
-        left: 0;
-        right: 0;
+        top: auto;
+        left: auto;
 
         width: 100%;
 
-        padding: 10px;
+        height: auto;
 
-        background: #ffffff;
+        min-height: 0;
 
-        border: 1px solid #e5e7eb;
-        border-top: 0;
+        padding: 8px 12px;
 
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        display: flex;
+
+        align-items: center;
+
+        flex-wrap: wrap;
+
+        box-shadow:
+            0 2px 8px rgba(15, 23, 42, 0.06);
+    }
+
+
+    .top-header .logo {
+        height: 54px;
+    }
+
+
+    .codebhavya-new-logo .main-logo {
+        width: 54px !important;
+        height: 54px !important;
+
+        margin-right: 7px !important;
+    }
+
+
+    .codebhavya-new-logo .logo-code,
+    .codebhavya-new-logo .logo-bhavya {
+        font-size: 22px;
+    }
+
+
+    /* Original navigation fallback */
+    .top-header .top-nav {
+        width: 100%;
+
+        margin-left: 0;
+
+        margin-top: 8px;
+
+        display: flex;
 
         flex-direction: column;
+
         align-items: stretch;
 
         gap: 2px;
     }
 
-    .cb-navigation.cb-menu-open {
-        display: flex;
-    }
 
-    .cb-nav-link {
+    .top-header .top-nav > a {
         width: 100%;
 
-        padding: 11px 13px;
+        justify-content: flex-start;
 
-        border-radius: 7px;
-
-        font-size: 0.92rem;
+        padding: 10px 12px;
     }
 
-    /* Footer */
 
-    .cb-footer-container {
-        width: 92%;
+    /* Mega navigation */
+    .cb-site-nav {
+        width: auto;
 
-        grid-template-columns: 1fr 1fr;
-
-        gap: 30px;
-
-        padding: 40px 0 30px;
+        margin-left: auto;
     }
 
-    .cb-footer-brand {
-        grid-column: 1 / -1;
+
+    .cb-menu-toggle {
+        display: inline-flex;
     }
 
-    .cb-footer-bottom {
-        width: 92%;
+
+    .cb-site-nav .cb-nav-links {
+        position: absolute;
+
+        top: calc(100% + 8px);
+
+        right: 0;
+
+        width: min(340px, calc(100vw - 24px));
+
+        max-height: calc(100vh - 90px);
+
+        overflow-y: auto;
+
+        display: none;
 
         flex-direction: column;
 
-        text-align: center;
+        align-items: stretch;
 
-        padding: 17px 0;
+        gap: 4px;
+
+        padding: 10px;
+
+        background: #FFFFFF;
+
+        border: 1px solid #E2E8F0;
+
+        border-radius: 12px;
+
+        box-shadow:
+            0 15px 35px rgba(15, 23, 42, 0.14),
+            0 4px 12px rgba(15, 23, 42, 0.07);
+
+        z-index: 3000;
     }
 
-}
+
+    .cb-site-nav.cb-mobile-open .cb-nav-links,
+    .cb-site-nav.mobile-open .cb-nav-links,
+    .cb-site-nav[data-open="true"] .cb-nav-links {
+        display: flex;
+    }
 
 
-/* =========================================================
-   SMALL MOBILE
-   ========================================================= */
+    .cb-site-nav .cb-nav-item,
+    .cb-site-nav .cb-nav-link {
+        width: 100%;
 
-@media (max-width: 480px) {
+        justify-content: space-between;
 
-    .cb-footer-container {
+        min-height: 42px;
+
+        padding: 10px 12px;
+
+        font-size: 14px;
+    }
+
+
+    /* Prevent desktop mega menus from overflowing mobile */
+    .cb-dropdown,
+    .cb-mega-menu,
+    .cb-nav-dropdown {
+        position: static;
+
+        width: 100%;
+
+        max-width: none;
+
+        margin-top: 4px;
+
+        box-shadow: none;
+    }
+
+
+    /* =====================================================
+       MOBILE FOOTER
+       ===================================================== */
+
+    .footer {
+        width: 100%;
+
+        padding: 40px 20px 0;
+    }
+
+
+    .footer-container {
         grid-template-columns: 1fr;
 
         gap: 25px;
     }
 
-    .cb-footer-brand {
-        grid-column: auto;
-    }
 
-    .cb-footer-column {
+    .footer-brand-section {
+        grid-column: auto;
+
         width: 100%;
     }
 
-    .cb-footer-bottom {
-        gap: 8px;
+
+    .footer-column {
+        width: 100%;
+
+        align-items: flex-start;
     }
 
+
+    .footer-bottom {
+        flex-direction: column;
+
+        justify-content: center;
+
+        text-align: center;
+
+        gap: 6px;
+
+        padding-top: 14px;
+        padding-bottom: 16px;
+    }
 }
 
+
+/* =========================================================
+   19. SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .top-header {
+        padding: 7px 10px;
+    }
+
+
+    .codebhavya-new-logo .main-logo {
+        width: 48px !important;
+        height: 48px !important;
+
+        margin-right: 6px !important;
+    }
+
+
+    .codebhavya-new-logo .logo-code,
+    .codebhavya-new-logo .logo-bhavya {
+        font-size: 20px;
+    }
+
+
+    .cb-menu-toggle {
+        width: 40px;
+        height: 40px;
+    }
+
+
+    .cb-site-nav .cb-nav-links {
+        width: calc(100vw - 20px);
+
+        right: -1px;
+    }
+
+
+    .footer {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+
+    .footer-brand {
+        font-size: 27px;
+    }
+
+
+    .footer-tagline {
+        font-size: 14px;
+    }
+
+
+    .footer-description {
+        font-size: 13px;
+    }
+
+
+    .footer-column h3 {
+        font-size: 15px;
+    }
+
+
+    .footer-column a {
+        font-size: 13px;
+    }
+
+
+    .footer-bottom p {
+        font-size: 12px;
+    }
+}
+
+
+/* =========================================================
+   20. ACCESSIBILITY
+   ========================================================= */
+
+.top-header a:focus-visible,
+.top-header button:focus-visible,
+.footer a:focus-visible {
+    outline: 3px solid rgba(184, 216, 240, 0.8);
+
+    outline-offset: 2px;
+
+    border-radius: 5px;
+}
+
+
+/* =========================================================
+   21. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .top-header *,
+    .footer * {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+    }
+}
