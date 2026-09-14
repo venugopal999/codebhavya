@@ -1,27 +1,12 @@
+
 "use strict";
 
 /*
-  CodeBhavya — Full Stack / MERN
-  Level 08 — JavaScript Foundations
-
-  Covers:
-  - JavaScript and ECMAScript
-  - Runtime and JavaScript engine
-  - Values and data types
-  - Primitive vs reference values
-  - let, const, var
-  - Operators and expressions
-  - Strings and template literals
-  - Numbers, NaN and Infinity
-  - null and undefined
-  - Truthy / falsy
-  - == vs === and type coercion
-  - Console debugging
-  - JavaScript execution visualizer
-  - Value and type tracer
-  - Practice
-  - Quiz
-  - Placement / interview preparation
+=========================================================
+CodeBhavya Full Stack MERN
+LEVEL 08 — JavaScript Foundations
+Part B · JavaScript Engineering
+=========================================================
 */
 
 window.FULLSTACK_LESSONS = window.FULLSTACK_LESSONS || {};
@@ -32,163 +17,111 @@ window.FULLSTACK_LESSONS[8] = {
 
   title: "JavaScript Foundations",
 
-  kicker: "LEVEL 08 · JAVASCRIPT ENGINEERING",
+  kicker: "PART B · LEVEL 08",
 
   subtitle:
-    "Build a strong mental model of JavaScript values, types, variables, expressions, coercion and runtime execution before moving into control flow and functions.",
+    "Build a strong mental model of JavaScript values, types, variables, expressions, coercion and runtime execution.",
 
   estimatedTime: "5–7 hours",
-
-  duration: "5–7 hours",
 
   difficulty: "Beginner → Intermediate",
 
   hero: {
-    eyebrow: "PART B · JAVASCRIPT ENGINEERING",
-
-    title: "JavaScript Foundations",
+    badge: "PART B · JAVASCRIPT ENGINEERING",
 
     description:
-      "JavaScript is more than syntax. Learn how values are represented, how variables hold them, how expressions are evaluated, and why JavaScript sometimes behaves differently from what you expect.",
-
-    actions: [
-      {
-        label: "Start Learning",
-        target: "concepts"
-      },
-      {
-        label: "Try Practice",
-        target: "practice"
-      }
-    ]
+      "Before learning advanced JavaScript, understand what values are, how variables work, how expressions are evaluated and why JavaScript sometimes behaves differently from what you expect."
   },
 
   objectives: [
-    "Understand what JavaScript is and how it fits into modern web applications.",
-    "Distinguish the JavaScript language, ECMAScript specification, runtime and JavaScript engine.",
-    "Identify JavaScript primitive values and understand the role of objects.",
+    "Understand the role of JavaScript in modern web applications.",
+    "Distinguish JavaScript, ECMAScript, a JavaScript engine and a runtime environment.",
+    "Identify primitive values and understand how objects differ from primitives.",
     "Use let, const and var correctly in modern JavaScript.",
-    "Understand expressions, operators and evaluation order.",
+    "Understand expressions, operators and basic evaluation order.",
     "Work confidently with strings, template literals and numbers.",
-    "Understand NaN, Infinity, null and undefined without memorizing confusing rules.",
+    "Understand NaN, Infinity, null and undefined.",
     "Predict truthy and falsy behaviour.",
     "Understand type coercion and the difference between == and ===.",
-    "Use the browser console and DevTools for basic JavaScript debugging.",
-    "Read simple JavaScript execution traces and predict program output."
+    "Use the browser console and DevTools for basic debugging.",
+    "Trace simple JavaScript programs step by step."
   ],
 
   concepts: [
 
     {
-      id: "js-role",
+      number: 1,
 
-      title: "1. What JavaScript Actually Is",
+      title: "What JavaScript Actually Is",
 
-      summary:
-        "JavaScript is the programming language that adds behaviour and computation to web applications.",
+      intro:
+        "JavaScript is a programming language used to add behaviour, computation and interaction to applications. On the web, JavaScript works together with HTML and CSS to create interactive experiences.",
 
-      theory: [
-        {
-          heading: "JavaScript is a programming language",
-
-          text:
-            "HTML describes structure. CSS describes presentation. JavaScript provides programmable behaviour. It can respond to user actions, calculate values, update the DOM, communicate with servers and coordinate asynchronous work."
-        },
-
-        {
-          heading: "JavaScript is not only a browser language",
-
-          text:
-            "JavaScript was originally created for web browsers, but modern runtimes also execute JavaScript outside the browser. Node.js is a major example and is widely used for backend development."
-        },
-
-        {
-          heading: "JavaScript and ECMAScript",
-
-          text:
-            "ECMAScript is the language specification standardized by Ecma International. JavaScript is an implementation of that language specification together with the surrounding runtime environment."
-        },
-
-        {
-          heading: "Why this distinction matters",
-
-          text:
-            "The language defines features such as variables, objects, functions and operators. A runtime provides additional capabilities such as browser APIs, timers, networking APIs or filesystem access."
-        }
+      points: [
+        "HTML describes the structure and meaning of a page.",
+        "CSS controls presentation and layout.",
+        "JavaScript provides programmable behaviour.",
+        "JavaScript can run in browsers, servers and other environments.",
+        "ECMAScript is the standardized specification behind the JavaScript language.",
+        "The runtime environment provides additional APIs around the JavaScript engine."
       ],
 
+      keyIdea:
+        "JavaScript is the language. The browser or Node.js provides a runtime environment around the JavaScript engine.",
+
       example: {
-        language: "javascript",
+        title: "A simple JavaScript program",
+
+        text:
+          "The JavaScript engine evaluates the declarations and expressions. The console API is supplied by the surrounding runtime.",
 
         code:
-`const name = "Bhavya";
+`const name = "CodeBhavya";
 const score = 92;
 
 console.log(name);
 console.log(score);`,
 
-        explanation:
-          "The JavaScript engine evaluates the declarations and expressions, while console.log is provided by the surrounding runtime environment."
+        output:
+`CodeBhavya
+92`
       },
 
-      keyPoints: [
-        "JavaScript is a programming language.",
-        "ECMAScript defines the standardized language.",
-        "A JavaScript engine executes JavaScript.",
-        "A runtime provides additional environment-specific APIs.",
-        "Browsers and Node.js provide different runtime capabilities."
-      ]
+      commonMistake:
+        "Thinking that every API available in a browser is part of the JavaScript language itself. The DOM, fetch, localStorage and many browser APIs are runtime-provided capabilities."
     },
 
     {
-      id: "runtime-engine",
+      number: 2,
 
-      title: "2. Runtime, Engine and Execution Basics",
+      title: "Runtime, Engine and Execution Basics",
 
-      summary:
-        "Understand the basic path from JavaScript source code to observable behaviour.",
+      intro:
+        "When JavaScript code runs, several layers cooperate. Understanding these layers gives you a better mental model than simply memorizing syntax.",
 
-      theory: [
-        {
-          heading: "Source code",
-
-          text:
-            "You write JavaScript as source code. The runtime passes that code to a JavaScript engine."
-        },
-
-        {
-          heading: "JavaScript engine",
-
-          text:
-            "The engine is responsible for understanding and executing JavaScript. Modern engines perform parsing, compilation and optimization internally."
-        },
-
-        {
-          heading: "Runtime environment",
-
-          text:
-            "The runtime surrounds the engine with additional capabilities. In a browser, these include APIs related to the DOM, events, timers, storage and networking."
-        },
-
-        {
-          heading: "Do not confuse the engine with the browser",
-
-          text:
-            "The browser is a much larger application. Its JavaScript engine is one component inside it. For example, a browser can provide the DOM while the JavaScript engine executes the language itself."
-        }
+      points: [
+        "Your source code is given to a JavaScript engine.",
+        "The engine parses and evaluates JavaScript.",
+        "Modern engines may compile and optimize code internally.",
+        "The runtime provides environment-specific capabilities.",
+        "A browser provides APIs such as the DOM and browser storage.",
+        "Node.js provides server-side capabilities such as filesystem and networking APIs."
       ],
 
       flow: [
         "JavaScript source code",
-        "Parse and understand the program",
-        "Create internal execution structures",
-        "Evaluate expressions and statements",
-        "Interact with runtime APIs when required",
-        "Produce values or observable effects"
+        "Engine parses the program",
+        "Declarations and expressions are evaluated",
+        "Values are produced",
+        "Runtime APIs are used when required",
+        "Observable output or behaviour is produced"
       ],
 
+      keyIdea:
+        "The engine executes JavaScript; the runtime gives that JavaScript access to its environment.",
+
       example: {
-        language: "javascript",
+        title: "Expression evaluation",
 
         code:
 `const price = 100;
@@ -198,90 +131,66 @@ const total = price + tax;
 
 console.log(total);`,
 
-        explanation:
-          "The engine evaluates the expressions step by step. The final expression produces 118, which is passed to console.log."
-      },
-
-      keyPoints: [
-        "The engine executes JavaScript.",
-        "The runtime supplies environment-specific APIs.",
-        "Not every API you call is part of the JavaScript language itself.",
-        "A browser runtime and Node.js runtime expose different capabilities."
-      ]
+        output:
+`118`
+      }
     },
 
     {
-      id: "values-types",
+      number: 3,
 
-      title: "3. Values and Data Types",
+      title: "Values and Data Types",
 
-      summary:
-        "Everything your JavaScript program works with is represented through values.",
+      intro:
+        "JavaScript programs continuously create, store, compare and transform values. Every value has a type.",
 
-      theory: [
-        {
-          heading: "A value is data",
-
-          text:
-            "Examples include 25, true, 'CodeBhavya', undefined and objects. JavaScript operations work by producing, transforming and consuming values."
-        },
-
-        {
-          heading: "Primitive values",
-
-          text:
-            "JavaScript has seven primitive data types: string, number, bigint, boolean, undefined, symbol and null."
-        },
-
-        {
-          heading: "Objects",
-
-          text:
-            "Objects are non-primitive values. Arrays, functions, dates and many other structures are objects in JavaScript."
-        },
-
-        {
-          heading: "typeof",
-
-          text:
-            "The typeof operator can help inspect a value's type, but it has historical quirks. Most importantly, typeof null returns 'object'."
-        }
+      points: [
+        "The seven primitive types are string, number, bigint, boolean, undefined, symbol and null.",
+        "Objects are non-primitive values.",
+        "Arrays are objects.",
+        "Functions are callable objects.",
+        "typeof can be used to inspect many JavaScript values.",
+        "typeof null returns object because of a historical JavaScript quirk."
       ],
 
       comparison: {
-        title: "Primitive vs object",
+        headers: [
+          "Category",
+          "Examples",
+          "Nature"
+        ],
 
-        columns: [
-          {
-            heading: "Primitive",
-
-            points: [
-              "string",
-              "number",
-              "bigint",
-              "boolean",
-              "undefined",
-              "symbol",
-              "null"
-            ]
-          },
-          {
-            heading: "Non-primitive",
-
-            points: [
-              "object",
-              "array",
-              "function",
-              "date",
-              "map",
-              "set"
-            ]
-          }
+        rows: [
+          [
+            "Primitive",
+            "string, number, boolean",
+            "Individual primitive value"
+          ],
+          [
+            "Primitive",
+            "undefined, null",
+            "Absence-related values"
+          ],
+          [
+            "Primitive",
+            "bigint, symbol",
+            "Special primitive values"
+          ],
+          [
+            "Object",
+            "object, array",
+            "Non-primitive structure"
+          ],
+          [
+            "Object",
+            "function, Date, Map",
+            "Specialized object values"
+          ]
         ]
       },
 
       example: {
-        language: "javascript",
+        title: "Inspecting types",
 
         code:
 `console.log(typeof "Hello");
@@ -289,340 +198,218 @@ console.log(typeof 42);
 console.log(typeof true);
 console.log(typeof undefined);
 console.log(typeof null);
-
-console.log(typeof {});
 console.log(typeof []);
-console.log(typeof function () {});`,
+console.log(typeof {});`,
 
-        expected:
+        output:
 `string
 number
 boolean
 undefined
 object
 object
-object
-function`,
-
-        explanation:
-          "Arrays are objects, functions have their own typeof result, and typeof null === 'object' is a historical JavaScript quirk."
+object`
       },
 
-      keyPoints: [
-        "JavaScript has seven primitive types.",
-        "Objects are non-primitive values.",
-        "Arrays are objects.",
-        "Functions are callable objects.",
-        "typeof null is 'object' because of a historical language quirk."
-      ]
+      warning:
+        "Do not use typeof as a complete type system. In particular, typeof null is object and typeof [] is also object."
     },
 
     {
-      id: "variables",
+      number: 4,
 
-      title: "4. Variables: let, const and var",
+      title: "Variables: let, const and var",
 
-      summary:
-        "Variables provide names through which your program can work with values.",
+      intro:
+        "Variables give names to values so that programs can work with those values repeatedly.",
 
-      theory: [
-        {
-          heading: "const",
-
-          text:
-            "Use const when the variable binding should not be reassigned. const does not make an object or array immutable; it prevents reassignment of the variable itself."
-        },
-
-        {
-          heading: "let",
-
-          text:
-            "Use let when a variable needs to be reassigned later."
-        },
-
-        {
-          heading: "var",
-
-          text:
-            "var is an older declaration mechanism. Modern JavaScript normally prefers let and const because they have block scope and clearer declaration behaviour."
-        },
-
-        {
-          heading: "Temporal Dead Zone",
-
-          text:
-            "Variables declared with let and const exist in their block but cannot be accessed before their declaration is evaluated. Accessing them during this period produces a ReferenceError."
-        }
+      points: [
+        "const creates a binding that cannot be reassigned.",
+        "let creates a binding that can be reassigned.",
+        "Both let and const are block scoped.",
+        "var is function scoped and belongs mainly to older JavaScript code.",
+        "Modern application code normally prefers const and let.",
+        "let and const cannot be accessed before their declaration is evaluated."
       ],
 
+      comparison: {
+        headers: [
+          "Feature",
+          "const",
+          "let",
+          "var"
+        ],
+
+        rows: [
+          [
+            "Block scoped",
+            "Yes",
+            "Yes",
+            "No"
+          ],
+          [
+            "Can reassign",
+            "No",
+            "Yes",
+            "Yes"
+          ],
+          [
+            "Modern default",
+            "Yes",
+            "When needed",
+            "Usually no"
+          ],
+          [
+            "Legacy usage",
+            "No",
+            "No",
+            "Common"
+          ]
+        ]
+      },
+
       example: {
-        language: "javascript",
+        title: "Choosing const and let",
 
         code:
 `const college = "CodeBhavya";
-let score = 80;
 
+let score = 80;
 score = 92;
 
 console.log(college);
 console.log(score);`,
 
-        explanation:
-          "college cannot be reassigned, while score can be updated."
+        output:
+`CodeBhavya
+92`
       },
 
-      comparison: {
-        title: "let vs const vs var",
-
-        columns: [
-          {
-            heading: "const",
-
-            points: [
-              "Block scoped",
-              "Cannot be reassigned",
-              "Preferred default"
-            ]
-          },
-          {
-            heading: "let",
-
-            points: [
-              "Block scoped",
-              "Can be reassigned",
-              "Use when state changes"
-            ]
-          },
-          {
-            heading: "var",
-
-            points: [
-              "Function scoped",
-              "Can be reassigned",
-              "Legacy code compatibility"
-            ]
-          }
-        ]
-      },
-
-      example2: {
-        language: "javascript",
-
-        code:
-`const student = {
-  name: "Ravi"
-};
-
-student.name = "Kiran";
-
-console.log(student.name);`,
-
-        explanation:
-          "The object can be changed even though the variable is declared with const. The binding remains fixed; the object itself is not automatically frozen."
-      },
-
-      keyPoints: [
-        "Prefer const by default.",
-        "Use let when reassignment is necessary.",
-        "Avoid var in modern application code unless there is a specific reason.",
-        "const does not mean deeply immutable.",
-        "let and const have block scope."
-      ]
+      commonMistake:
+        "const does not make an object or array immutable. It only prevents reassignment of the variable binding."
     },
 
     {
-      id: "operators-expressions",
+      number: 5,
 
-      title: "5. Operators and Expressions",
+      title: "Operators and Expressions",
 
-      summary:
-        "Expressions produce values. Operators tell JavaScript how values should be combined or transformed.",
+      intro:
+        "An expression is code that can be evaluated to produce a value. Operators describe how values should be combined or transformed.",
 
-      theory: [
-        {
-          heading: "Expression",
-
-          text:
-            "An expression is code that can be evaluated to produce a value. For example, 10 + 5 is an expression whose result is 15."
-        },
-
-        {
-          heading: "Arithmetic operators",
-
-          text:
-            "Common arithmetic operators include +, -, *, /, %, ** and unary + or -."
-        },
-
-        {
-          heading: "Comparison operators",
-
-          text:
-            "Comparison operators such as >, <, >= and <= compare values and produce a boolean result."
-        },
-
-        {
-          heading: "Logical operators",
-
-          text:
-            "&&, || and ! are commonly used to combine or transform conditions. They can also return operand values rather than simply true or false."
-        },
-
-        {
-          heading: "Assignment",
-
-          text:
-            "Operators such as =, +=, -=, *= and /= assign or update variable values."
-        }
+      points: [
+        "Arithmetic operators include +, -, *, /, %, and **.",
+        "Comparison operators include >, <, >= and <=.",
+        "Equality operators include == and ===.",
+        "Logical operators include &&, || and !.",
+        "Assignment operators include =, +=, -=, *= and /=.",
+        "Operator precedence affects the order in which combined expressions are evaluated."
       ],
 
       example: {
-        language: "javascript",
+        title: "Expressions produce values",
 
         code:
 `const a = 10;
 const b = 3;
 
 console.log(a + b);
-console.log(a - b);
 console.log(a * b);
-console.log(a / b);
 console.log(a % b);
-console.log(a ** b);
-
 console.log(a > b);
 console.log(a === b);`,
 
-        explanation:
-          "Arithmetic expressions produce numbers while comparison expressions produce booleans."
+        output:
+`13
+30
+1
+true
+false`
       },
 
-      keyPoints: [
-        "Expressions produce values.",
-        "Arithmetic operators work with numbers and can interact with strings.",
-        "Comparison operators produce boolean results.",
-        "Logical operators can return one of their operands.",
-        "Operator precedence determines how combined expressions are evaluated."
-      ]
+      keyIdea:
+        "When reading JavaScript, ask: what value does this expression produce?"
     },
 
     {
-      id: "strings",
+      number: 6,
 
-      title: "6. Strings and Template Literals",
+      title: "Strings and Template Literals",
 
-      summary:
-        "Strings represent text and are one of the most frequently used JavaScript values.",
+      intro:
+        "Strings represent text. JavaScript supports single quotes, double quotes and template literals.",
 
-      theory: [
-        {
-          heading: "Creating strings",
-
-          text:
-            "Strings can be written using single quotes, double quotes or backticks."
-        },
-
-        {
-          heading: "Template literals",
-
-          text:
-            "Backticks create template literals. They allow embedded expressions using ${...} and make multiline strings easier to write."
-        },
-
-        {
-          heading: "Strings are primitive",
-
-          text:
-            "A string is a primitive value. String methods create new values rather than directly changing the original primitive."
-        },
-
-        {
-          heading: "Useful operations",
-
-          text:
-            "Common operations include length, toUpperCase(), toLowerCase(), includes(), startsWith(), endsWith(), slice() and trim()."
-        }
+      points: [
+        "Strings can use single quotes or double quotes.",
+        "Template literals use backticks.",
+        "Template literals support embedded expressions.",
+        "String interpolation uses ${expression}.",
+        "Strings are primitive values.",
+        "String methods return values rather than changing the original primitive string."
       ],
 
       example: {
-        language: "javascript",
+        title: "Template literal",
 
         code:
-`const name = "Bhavya";
+`const name = "Ravi";
 const course = "Full Stack";
+const level = 8;
 
-const message = \`Welcome ${name}!
-You are learning ${course}.\`;
+const message = \`Student: \${name}
+Course: \${course}
+Level: \${level}\`;
 
 console.log(message);`,
 
-        explanation:
-          "Template literals allow expressions to be embedded directly into a string."
+        output:
+`Student: Ravi
+Course: Full Stack
+Level: 8`
       },
 
       example2: {
-        language: "javascript",
+        title: "Useful string operations",
 
         code:
 `const text = "  JavaScript  ";
 
-console.log(text.length);
 console.log(text.trim());
 console.log(text.toUpperCase());
-console.log(text.includes("Script"));`,
+console.log(text.includes("Script"));
+console.log(text.length);`,
 
-        explanation:
-          "String methods return new values. They do not mutate the original primitive string."
+        output:
+`JavaScript
+  JAVASCRIPT  
+true
+14`
       },
 
-      keyPoints: [
-        "Strings are primitive values.",
-        "Template literals use backticks.",
-        "Use ${expression} for interpolation.",
-        "String methods return useful results.",
-        "trim(), includes(), slice() and case-conversion methods are common."
-      ]
+      commonMistake:
+        "Confusing the string value '10' with the number 10. They look similar when printed but have different types."
     },
 
     {
-      id: "numbers",
+      number: 7,
 
-      title: "7. Numbers, NaN and Infinity",
+      title: "Numbers, NaN and Infinity",
 
-      summary:
-        "JavaScript's number type handles ordinary numbers as well as special numeric values.",
+      intro:
+        "JavaScript uses the number type for ordinary numeric values and also represents special numeric states such as NaN and Infinity.",
 
-      theory: [
-        {
-          heading: "One number type",
-
-          text:
-            "JavaScript uses the number type for ordinary numeric values such as integers and floating-point numbers."
-        },
-
-        {
-          heading: "NaN",
-
-          text:
-            "NaN means Not-a-Number. It represents an invalid or unrepresentable numeric result. Despite its name, NaN itself has the JavaScript type number."
-        },
-
-        {
-          heading: "Infinity",
-
-          text:
-            "Infinity represents a mathematical value larger than finite JavaScript numbers. -Infinity represents negative infinity."
-        },
-
-        {
-          heading: "Number.isNaN",
-
-          text:
-            "Number.isNaN(value) is a reliable way to check whether a value is actually NaN without performing broad type coercion."
-        }
+      points: [
+        "The JavaScript number type represents both integer and floating-point values.",
+        "NaN means Not-a-Number.",
+        "NaN has the type number.",
+        "NaN is not equal to itself.",
+        "Infinity represents positive infinity.",
+        "-Infinity represents negative infinity.",
+        "Number.isNaN(value) is useful for checking whether a value is actually NaN."
       ],
 
       example: {
-        language: "javascript",
+        title: "Special numeric values",
 
         code:
 `console.log(10 / 2);
@@ -633,99 +420,62 @@ console.log(Number("hello"));
 console.log(typeof NaN);
 console.log(Number.isNaN(NaN));`,
 
-        expected:
+        output:
 `5
 Infinity
 -Infinity
 NaN
 number
-true`,
-
-        explanation:
-          "NaN is still a number according to JavaScript's type system."
+true`
       },
 
-      example2: {
-        language: "javascript",
+      keyIdea:
+        "NaN is a special numeric value, not a separate JavaScript data type.",
 
-        code:
-`const result = Number("CodeBhavya");
-
-if (Number.isNaN(result)) {
-  console.log("Conversion failed");
-}`,
-
-        explanation:
-          "Number.isNaN is useful when validating a numeric conversion."
-      },
-
-      keyPoints: [
-        "JavaScript has a number type for ordinary numeric values.",
-        "NaN has typeof 'number'.",
-        "NaN !== NaN.",
-        "Use Number.isNaN(value) to detect actual NaN.",
-        "Division by zero can produce Infinity."
-      ]
+      warning:
+        "Do not test NaN using value === NaN. That comparison is always false. Use Number.isNaN(value)."
     },
 
     {
-      id: "null-undefined",
+      number: 8,
 
-      title: "8. null vs undefined",
+      title: "null vs undefined",
 
-      summary:
-        "These values both represent absence, but they communicate different ideas.",
+      intro:
+        "Both null and undefined represent absence, but they communicate different ideas.",
 
-      theory: [
-        {
-          heading: "undefined",
-
-          text:
-            "undefined commonly means that a value has not been provided or a variable/property does not currently contain a value."
-        },
-
-        {
-          heading: "null",
-
-          text:
-            "null is an intentional empty value. A programmer can explicitly assign null when they want to represent the absence of an object or value."
-        },
-
-        {
-          heading: "Example",
-
-          text:
-            "A missing function argument may be undefined, while an application may deliberately set selectedUser = null to represent that no user is currently selected."
-        }
+      points: [
+        "undefined commonly means that a value is missing or has not been assigned.",
+        "null usually represents intentional absence.",
+        "A variable declared without an initial value starts as undefined.",
+        "A programmer can explicitly assign null.",
+        "typeof undefined is undefined.",
+        "typeof null is object because of a historical quirk."
       ],
 
       comparison: {
-        title: "null and undefined",
+        headers: [
+          "Value",
+          "Common meaning",
+          "typeof"
+        ],
 
-        columns: [
-          {
-            heading: "undefined",
-
-            points: [
-              "Value is missing or not assigned",
-              "Often produced automatically",
-              "typeof → undefined"
-            ]
-          },
-          {
-            heading: "null",
-
-            points: [
-              "Intentional empty value",
-              "Explicitly assigned",
-              "typeof → object (historical quirk)"
-            ]
-          }
+        rows: [
+          [
+            "undefined",
+            "Missing or not assigned",
+            "undefined"
+          ],
+          [
+            "null",
+            "Intentional empty value",
+            "object"
+          ]
         ]
       },
 
       example: {
-        language: "javascript",
+        title: "Comparing null and undefined",
 
         code:
 `let username;
@@ -738,68 +488,38 @@ console.log(selectedUser);
 console.log(typeof username);
 console.log(typeof selectedUser);`,
 
-        expected:
+        output:
 `undefined
 null
 undefined
-object`,
-
-        explanation:
-          "The final result demonstrates the historical typeof null quirk."
-      },
-
-      keyPoints: [
-        "undefined often means a value is missing or not initialized.",
-        "null is usually an intentional empty value.",
-        "typeof null is 'object'.",
-        "Do not treat null and undefined as identical concepts."
-      ]
+object`
+      }
     },
 
     {
-      id: "truthy-falsy",
+      number: 9,
 
-      title: "9. Truthy, Falsy and Equality",
+      title: "Truthy, Falsy and Equality",
 
-      summary:
-        "JavaScript converts values to boolean contexts, and this is a major source of both power and confusion.",
+      intro:
+        "JavaScript frequently evaluates values in boolean contexts. Understanding truthy and falsy values is essential for writing predictable conditions.",
 
-      theory: [
-        {
-          heading: "Falsy values",
-
-          text:
-            "The main falsy values are false, 0, -0, 0n, an empty string, null, undefined and NaN."
-        },
-
-        {
-          heading: "Truthy values",
-
-          text:
-            "Most other values are truthy. Importantly, empty arrays [] and empty objects {} are truthy."
-        },
-
-        {
-          heading: "Strict equality",
-
-          text:
-            "=== compares values without performing the type coercion used by ==. It is generally the preferred equality operator in application code."
-        },
-
-        {
-          heading: "Loose equality",
-
-          text:
-            "== can convert operands before comparing them. This can produce surprising results if you do not know the coercion rules."
-        }
+      points: [
+        "false, 0, -0, 0n, empty string, null, undefined and NaN are falsy.",
+        "Most other values are truthy.",
+        "Empty arrays are truthy.",
+        "Empty objects are truthy.",
+        "=== performs strict equality without the coercion performed by ==.",
+        "== performs equality comparison with coercion."
       ],
 
       example: {
-        language: "javascript",
+        title: "Truthy and falsy values",
 
         code:
 `console.log(Boolean(0));
 console.log(Boolean(""));
+console.log(Boolean(false));
 console.log(Boolean(null));
 console.log(Boolean(undefined));
 console.log(Boolean(NaN));
@@ -807,21 +527,19 @@ console.log(Boolean(NaN));
 console.log(Boolean([]));
 console.log(Boolean({}));`,
 
-        expected:
+        output:
 `false
 false
 false
 false
 false
+false
 true
-true`,
-
-        explanation:
-          "Empty arrays and empty objects are objects and are truthy."
+true`
       },
 
       example2: {
-        language: "javascript",
+        title: "Strict vs loose equality",
 
         code:
 `console.log(5 === "5");
@@ -830,58 +548,37 @@ console.log(5 == "5");
 console.log(false === 0);
 console.log(false == 0);`,
 
-        expected:
+        output:
 `false
 true
 false
-true`,
-
-        explanation:
-          "Loose equality can perform type coercion. Strict equality does not."
+true`
       },
 
-      keyPoints: [
-        "0, '', false, null, undefined and NaN are falsy.",
-        "[] and {} are truthy.",
-        "=== avoids equality coercion.",
-        "== performs coercion according to JavaScript's equality rules.",
-        "Prefer === unless you deliberately need loose equality."
-      ]
+      keyIdea:
+        "Prefer === in normal application code because it avoids implicit equality coercion."
     },
 
     {
-      id: "coercion",
+      number: 10,
 
-      title: "10. Type Coercion",
+      title: "Type Coercion",
 
-      summary:
-        "JavaScript sometimes converts one type into another during an operation.",
+      intro:
+        "Type coercion happens when JavaScript converts a value from one type to another during an operation.",
 
-      theory: [
-        {
-          heading: "Explicit coercion",
-
-          text:
-            "You explicitly request a conversion using functions such as Number(), String() and Boolean()."
-        },
-
-        {
-          heading: "Implicit coercion",
-
-          text:
-            "JavaScript may automatically convert values during certain operations, especially with operators and loose equality."
-        },
-
-        {
-          heading: "The + operator",
-
-          text:
-            "The + operator can perform numeric addition or string concatenation. When strings are involved, the result can become a string."
-        }
+      points: [
+        "Explicit coercion is requested by the programmer.",
+        "Number('42') explicitly converts a string to a number.",
+        "String(42) explicitly converts a number to a string.",
+        "Boolean(value) explicitly converts a value to boolean.",
+        "Some operators perform implicit coercion.",
+        "The + operator has both numeric addition and string concatenation behaviour.",
+        "Operators such as - and * commonly trigger numeric conversion."
       ],
 
       example: {
-        language: "javascript",
+        title: "Explicit and implicit conversion",
 
         code:
 `console.log(Number("42"));
@@ -892,88 +589,38 @@ console.log("10" + 5);
 console.log("10" - 5);
 console.log("10" * 2);`,
 
-        expected:
+        output:
 `42
 42
 true
 105
 5
-20`,
-
-        explanation:
-          "The + operator concatenates when string conversion is involved, while - and * require numeric conversion."
+20`
       },
 
-      example2: {
-        language: "javascript",
-
-        code:
-`console.log("5" + 2);
-console.log("5" - 2);
-
-console.log(0 == false);
-console.log(0 === false);`,
-
-        explanation:
-          "These examples show why coercion must be understood rather than guessed."
-      },
-
-      keyPoints: [
-        "Explicit conversion is easier to reason about.",
-        "String + number can produce a string.",
-        "Arithmetic operators such as - and * commonly trigger numeric conversion.",
-        "Loose equality performs coercion.",
-        "Use === for predictable equality checks."
-      ]
+      warning:
+        "Never guess the result of a coercion-heavy expression. Inspect the operand types and, when appropriate, convert values explicitly."
     },
 
     {
-      id: "debugging",
+      number: 11,
 
-      title: "11. Debugging with the Console and DevTools",
+      title: "Debugging with Console and DevTools",
 
-      summary:
-        "Professional JavaScript development requires inspecting values instead of guessing.",
+      intro:
+        "Professional JavaScript development depends on observing program state instead of guessing what the code is doing.",
 
-      theory: [
-        {
-          heading: "console.log",
-
-          text:
-            "Use console.log to inspect values and understand program behaviour."
-        },
-
-        {
-          heading: "console.table",
-
-          text:
-            "console.table is especially useful for arrays and collections of objects."
-        },
-
-        {
-          heading: "typeof and value inspection",
-
-          text:
-            "When debugging unexpected behaviour, inspect both the value and its type."
-        },
-
-        {
-          heading: "Breakpoints",
-
-          text:
-            "Browser DevTools can pause JavaScript execution at selected lines. You can then inspect variables and follow execution interactively."
-        },
-
-        {
-          heading: "A professional debugging habit",
-
-          text:
-            "Do not randomly change code until it works. First reproduce the problem, inspect relevant values, identify the incorrect assumption, make one focused change and test again."
-        }
+      points: [
+        "console.log() is useful for inspecting values.",
+        "typeof can reveal unexpected types.",
+        "console.table() is useful for arrays and collections of objects.",
+        "Browser DevTools can pause code using breakpoints.",
+        "Breakpoints allow you to inspect variables while execution is paused.",
+        "Good debugging starts by reproducing the problem and observing the relevant state."
       ],
 
       example: {
-        language: "javascript",
+        title: "Inspect both value and type",
 
         code:
 `const quantity = "5";
@@ -987,143 +634,87 @@ const total = quantity * price;
 console.log("total:", total);
 console.log("total type:", typeof total);`,
 
-        explanation:
-          "Inspecting both value and type makes coercion visible instead of mysterious."
+        output:
+`quantity: 5
+quantity type: string
+total: 500
+total type: number`
       },
 
-      keyPoints: [
-        "Inspect values before changing code.",
-        "Use typeof when a type-related bug is suspected.",
-        "Use breakpoints for step-by-step inspection.",
-        "console.table is useful for structured collections.",
-        "Debugging is a reasoning process, not trial and error."
-      ]
+      tryIt: {
+        title: "Debugging habit",
+
+        steps: [
+          "Reproduce the unexpected behaviour.",
+          "Inspect the relevant value.",
+          "Inspect its type.",
+          "Check the expression producing the value.",
+          "Identify the incorrect assumption.",
+          "Make one focused change.",
+          "Run the test again."
+        ]
+      },
+
+      keyIdea:
+        "Debugging is a reasoning process. Observe first, change second."
     }
 
   ],
-
-  executionVisualizer: {
-
-    title: "JavaScript Execution Visualizer",
-
-    description:
-      "Follow a small JavaScript program from source code to evaluated values.",
-
-    code:
-`const price = 100;
-const quantity = 3;
-
-const total = price * quantity;
-
-console.log(total);`,
-
-    steps: [
-      {
-        line: 1,
-        title: "Read the declaration",
-
-        operation: "const price = 100",
-
-        explanation:
-          "JavaScript evaluates the initializer 100 and associates the resulting value with the variable binding price."
-      },
-
-      {
-        line: 2,
-        title: "Read the next declaration",
-
-        operation: "const quantity = 3",
-
-        explanation:
-          "The value 3 is evaluated and associated with quantity."
-      },
-
-      {
-        line: 4,
-        title: "Evaluate the expression",
-
-        operation: "price * quantity",
-
-        explanation:
-          "JavaScript retrieves the values stored under price and quantity, multiplies 100 by 3 and produces 300."
-      },
-
-      {
-        line: 4,
-        title: "Store the result",
-
-        operation: "const total = 300",
-
-        explanation:
-          "The resulting value 300 becomes the value associated with total."
-      },
-
-      {
-        line: 6,
-        title: "Call console.log",
-
-        operation: "console.log(total)",
-
-        explanation:
-          "The runtime's console API receives the value 300 and displays it."
-      }
-    ]
-  },
 
   visualizer: {
 
     title: "JavaScript Execution Visualizer",
 
     description:
-      "Step through declarations and expressions to understand where values come from.",
-
-    code:
-`const price = 100;
-const quantity = 3;
-const discount = 20;
-
-const subtotal = price * quantity;
-const finalPrice = subtotal - discount;
-
-console.log(finalPrice);`,
+      "Step through a small JavaScript program and watch how values are created and transformed.",
 
     steps: [
+
       {
-        line: 1,
-        label: "Create price",
-        value: "price → 100",
-        explanation: "The numeric value 100 is assigned to price."
+        title: "Read the first declaration",
+
+        operation: "const price = 100",
+
+        detail:
+          "JavaScript evaluates the initializer and associates the number 100 with the price binding."
       },
+
       {
-        line: 2,
-        label: "Create quantity",
-        value: "quantity → 3",
-        explanation: "The numeric value 3 is assigned to quantity."
+        title: "Read the second declaration",
+
+        operation: "const quantity = 3",
+
+        detail:
+          "The number 3 becomes the value associated with quantity."
       },
+
       {
-        line: 3,
-        label: "Create discount",
-        value: "discount → 20",
-        explanation: "The numeric value 20 is assigned to discount."
+        title: "Evaluate the multiplication",
+
+        operation: "price * quantity",
+
+        detail:
+          "JavaScript retrieves 100 and 3, multiplies them and produces the number 300."
       },
+
       {
-        line: 5,
-        label: "Calculate subtotal",
-        value: "100 × 3 → 300",
-        explanation: "price and quantity are read and multiplied."
+        title: "Create total",
+
+        operation: "const total = 300",
+
+        detail:
+          "The result of the expression becomes the value associated with total."
       },
+
       {
-        line: 6,
-        label: "Calculate final price",
-        value: "300 − 20 → 280",
-        explanation: "The discount is subtracted from the subtotal."
-      },
-      {
-        line: 8,
-        label: "Display result",
-        value: "280",
-        explanation: "console.log receives the final value."
+        title: "Call the console API",
+
+        operation: "console.log(total)",
+
+        detail:
+          "The value 300 is passed to the runtime's console API and displayed."
       }
+
     ]
   },
 
@@ -1131,822 +722,627 @@ console.log(finalPrice);`,
 
     title: "Value & Type Tracer",
 
-    description:
-      "Track the value and type of expressions that commonly confuse JavaScript beginners.",
+    lines: [
 
-    code:
-`const a = "10";
-const b = 5;
-
-const x = a + b;
-const y = a - b;
-
-console.log(x);
-console.log(y);`,
-
-    steps: [
       {
         line: 1,
-        operation: 'const a = "10"',
-        value: '"10"',
-        type: "string",
-        explanation:
-          "The variable a contains the string value 10."
+        code: 'const a = "10";'
       },
+
       {
         line: 2,
-        operation: "const b = 5",
-        value: "5",
-        type: "number",
-        explanation:
-          "The variable b contains the numeric value 5."
+        code: "const b = 5;"
       },
+
       {
         line: 4,
-        operation: "a + b",
-        value: '"105"',
-        type: "string",
-        explanation:
-          "Because a is a string, + performs string concatenation in this expression."
+        code: "const x = a + b;"
       },
+
       {
         line: 5,
-        operation: "a - b",
-        value: "5",
-        type: "number",
-        explanation:
-          "The - operator requires numeric behaviour, so the string '10' is converted to the number 10."
+        code: "const y = a - b;"
       },
+
       {
         line: 7,
-        operation: "console.log(x)",
-        value: '"105"',
-        type: "string",
-        explanation:
-          "The first output is the string 105."
+        code: "console.log(x);"
       },
+
       {
         line: 8,
-        operation: "console.log(y)",
-        value: "5",
-        type: "number",
-        explanation:
-          "The second output is the number 5."
+        code: "console.log(y);"
       }
+
+    ],
+
+    steps: [
+
+      {
+        line: 1,
+        title: "Create a",
+
+        detail:
+          'a receives the value "10". Its type is string.'
+      },
+
+      {
+        line: 2,
+        title: "Create b",
+
+        detail:
+          "b receives the value 5. Its type is number."
+      },
+
+      {
+        line: 4,
+        title: "Evaluate a + b",
+
+        detail:
+          'a is a string, so + performs string concatenation. The result is "105".'
+      },
+
+      {
+        line: 5,
+        title: "Evaluate a - b",
+
+        detail:
+          'The - operator requires numeric behaviour, so "10" is converted to 10. The result is 5.'
+      },
+
+      {
+        line: 7,
+        title: "Print x",
+
+        detail:
+          'x contains the string "105", so the console displays 105.'
+      },
+
+      {
+        line: 8,
+        title: "Print y",
+
+        detail:
+          "y contains the number 5, so the console displays 5."
+      }
+
     ]
   },
 
-  examples: [
+  revision: [
+
+    [
+      "JavaScript",
+      "A programming language used for application behaviour, computation and interaction."
+    ],
+
+    [
+      "ECMAScript",
+      "The standardized specification defining the JavaScript language."
+    ],
+
+    [
+      "JavaScript engine",
+      "Software responsible for parsing and executing JavaScript."
+    ],
+
+    [
+      "Runtime",
+      "The surrounding environment that provides additional APIs and capabilities."
+    ],
+
+    [
+      "Primitive",
+      "A non-object JavaScript value such as a string, number or boolean."
+    ],
+
+    [
+      "Object",
+      "A non-primitive JavaScript value used to represent structures and behaviour."
+    ],
+
+    [
+      "const",
+      "Use when the variable binding should not be reassigned."
+    ],
+
+    [
+      "let",
+      "Use when a variable needs to be reassigned."
+    ],
+
+    [
+      "NaN",
+      "A special numeric value representing an invalid or unrepresentable numeric result."
+    ],
+
+    [
+      "null",
+      "Usually represents intentional absence of a value."
+    ],
+
+    [
+      "undefined",
+      "Commonly represents a missing or unassigned value."
+    ],
+
+    [
+      "Truthy",
+      "A value that behaves like true in a boolean context."
+    ],
+
+    [
+      "Falsy",
+      "A value that behaves like false in a boolean context."
+    ],
+
+    [
+      "Type coercion",
+      "Conversion of a value from one type to another."
+    ],
+
+    [
+      "===",
+      "Strict equality that does not perform the coercion associated with ==."
+    ]
+
+  ],
+
+  interview: [
 
     {
-      title: "Value and type inspection",
+      question: "What is JavaScript?",
 
-      language: "javascript",
-
-      code:
-`const age = 21;
-const name = "Bhavya";
-const active = true;
-
-console.log(age, typeof age);
-console.log(name, typeof name);
-console.log(active, typeof active);`,
-
-      explanation:
-        "Always remember that a value and its type are separate pieces of information."
+      answer:
+        "JavaScript is a high-level programming language standardized through ECMAScript. It is widely used for browser applications, servers and other environments."
     },
 
     {
-      title: "const does not freeze objects",
+      question: "What is ECMAScript?",
 
-      language: "javascript",
-
-      code:
-`const student = {
-  name: "Anil",
-  score: 80
-};
-
-student.score = 95;
-
-console.log(student);`,
-
-      explanation:
-        "The student binding cannot point to another object, but properties inside the object can still change."
+      answer:
+        "ECMAScript is the standardized specification that defines the JavaScript language."
     },
 
     {
-      title: "Truthy and falsy",
+      question: "What is a JavaScript engine?",
 
-      language: "javascript",
-
-      code:
-`const username = "";
-
-if (username) {
-  console.log("Username available");
-} else {
-  console.log("Username missing");
-}`,
-
-      explanation:
-        "An empty string is falsy, so the else branch executes."
+      answer:
+        "A JavaScript engine is software that parses, compiles and executes JavaScript code."
     },
 
     {
-      title: "Strict equality",
+      question: "What is a runtime environment?",
 
-      language: "javascript",
+      answer:
+        "A runtime environment surrounds the JavaScript engine with additional APIs and capabilities provided by the host environment."
+    },
 
-      code:
-`const input = "100";
+    {
+      question: "Name the seven primitive data types in JavaScript.",
 
-console.log(input === 100);
-console.log(Number(input) === 100);`,
+      answer:
+        "string, number, bigint, boolean, undefined, symbol and null."
+    },
 
-      explanation:
-        "The first comparison is false because the types differ. Explicit conversion makes the second comparison true."
+    {
+      question: "Are arrays primitive values?",
+
+      answer:
+        "No. Arrays are objects and therefore non-primitive values."
+    },
+
+    {
+      question: "What is typeof null?",
+
+      answer:
+        "typeof null returns object. This is a historical JavaScript quirk retained for compatibility."
+    },
+
+    {
+      question: "What is the difference between let and const?",
+
+      answer:
+        "Both are block scoped. let allows reassignment, while const does not allow reassignment of its binding."
+    },
+
+    {
+      question: "Does const make an object immutable?",
+
+      answer:
+        "No. const prevents reassignment of the variable binding. Properties of the referenced object can still be changed."
+    },
+
+    {
+      question: "Why is var generally avoided in modern JavaScript?",
+
+      answer:
+        "var is function scoped and has older declaration semantics. let and const provide clearer block-scoped behaviour."
+    },
+
+    {
+      question: "What is NaN?",
+
+      answer:
+        "NaN means Not-a-Number. It represents an invalid or unrepresentable numeric result and has the JavaScript type number."
+    },
+
+    {
+      question: "Why does NaN !== NaN return true?",
+
+      answer:
+        "NaN is defined as not being equal to any value, including itself."
+    },
+
+    {
+      question: "How should you check for NaN?",
+
+      answer:
+        "Use Number.isNaN(value) when you want to determine whether a value is actually NaN."
+    },
+
+    {
+      question: "What is the difference between null and undefined?",
+
+      answer:
+        "undefined commonly indicates that a value is missing or unassigned, while null is generally used to represent intentional absence."
+    },
+
+    {
+      question: "What is type coercion?",
+
+      answer:
+        "Type coercion is the conversion of a value from one type to another. It can be explicit or implicit."
+    },
+
+    {
+      question: "What is the difference between == and ===?",
+
+      answer:
+        "== performs equality comparison with coercion, while === performs strict equality without that coercion."
+    },
+
+    {
+      question: "Why does '10' + 5 produce '105'?",
+
+      answer:
+        "The + operator can perform string concatenation. Because one operand is a string, the number participates in string concatenation."
+    },
+
+    {
+      question: "Why does '10' - 5 produce 5?",
+
+      answer:
+        "The - operator performs numeric subtraction, so the string '10' is converted to the number 10."
+    },
+
+    {
+      question: "Are [] and {} falsy?",
+
+      answer:
+        "No. Empty arrays and empty objects are truthy."
+    },
+
+    {
+      question: "What is a good first step when debugging JavaScript?",
+
+      answer:
+        "Reproduce the problem and inspect the relevant values and types before changing the code."
     }
 
   ],
 
-  practice: {
+  practice: [
 
-    title: "JavaScript Foundations Practice Arena",
+    {
+      title: "Type Detective",
 
-    description:
-      "Solve these problems without looking at the answer first. Use the browser console or CodeBhavya Compiler where appropriate.",
+      difficulty: "Easy",
 
-    levels: [
+      task:
+        "Predict the typeof result for each value before running the code.",
 
-      {
-        id: "type-detective",
+      hints: [
+        "Remember that arrays are objects.",
+        "Remember the historical typeof null behaviour.",
+        "Functions have a special typeof result."
+      ]
+    },
 
-        title: "Type Detective",
+    {
+      title: "Variable State Lab",
 
-        difficulty: "Easy",
+      difficulty: "Easy",
 
-        story:
-          "A student receives values from different parts of an application. Your job is to identify the value and its JavaScript type.",
+      task:
+        "Create a program with const studentName and let score. Update score twice and print the final value.",
 
-        task:
-`const values = [
-  "CodeBhavya",
-  42,
-  true,
-  null,
-  undefined,
-  [],
-  {}
-];
+      hints: [
+        "Use const for a value that does not change.",
+        "Use let for the changing score."
+      ]
+    },
 
-for (const value of values) {
-  console.log(value, typeof value);
-}`,
+    {
+      title: "Coercion Lab",
 
-        questions: [
-          "Which values are primitives?",
-          "Why does typeof null return object?",
-          "What does typeof [] return?"
-        ]
-      },
+      difficulty: "Easy",
 
-      {
-        id: "variable-state",
+      task:
+        "Predict the results of '10' + 5, '10' - 5 and Number('10') + 5. Then explain why the results differ.",
 
-        title: "Variable State Lab",
+      hints: [
+        "Check the type of the first operand.",
+        "The + operator can concatenate strings.",
+        "Explicit conversion makes numeric intent clearer."
+      ]
+    },
 
-        difficulty: "Easy",
+    {
+      title: "Student Profile",
 
-        story:
-          "Track the changing marks of a student.",
+      difficulty: "Easy",
 
-        task:
-`let marks = 70;
+      task:
+        "Create a formatted student profile using a template literal containing name, branch, year and CGPA.",
 
-marks = marks + 10;
-marks += 5;
+      hints: [
+        "Use backticks.",
+        "Embed variables using ${expression}."
+      ]
+    },
 
-console.log(marks);`,
+    {
+      title: "NaN Detector",
 
-        questions: [
-          "What is the final value?",
-          "Why is let required here?",
-          "Could the declaration use const?"
-        ]
-      },
+      difficulty: "Medium",
 
-      {
-        id: "coercion-lab",
+      task:
+        "Convert several strings to numbers and use Number.isNaN() to detect invalid numeric input.",
 
-        title: "Coercion Lab",
+      hints: [
+        "Number('hello') produces NaN.",
+        "Do not use value === NaN."
+      ]
+    },
 
-        difficulty: "Easy",
+    {
+      title: "Truthy/Falsy Checker",
 
-        story:
-          "An online form sends numeric input as strings. Predict what JavaScript does with the values.",
+      difficulty: "Medium",
 
-        task:
-`const quantity = "4";
-const price = 250;
+      task:
+        "Create a list containing 0, 1, '', 'hello', null, undefined, [], and {}. Print Boolean(value) for each.",
 
-console.log(quantity + price);
-console.log(quantity * price);
-console.log(Number(quantity) + price);`,
+      hints: [
+        "Empty arrays are truthy.",
+        "Empty objects are truthy.",
+        "0 and empty strings are falsy."
+      ]
+    },
 
-        questions: [
-          "Predict all three outputs.",
-          "Which operation performs string concatenation?",
-          "How would you make the intended numeric behaviour explicit?"
-        ]
-      },
+    {
+      title: "Debug the Cart",
 
-      {
-        id: "profile-card",
+      difficulty: "Medium",
 
-        title: "Template Literal Profile Card",
+      task:
+        "A shopping cart receives quantity as the string '2' and price as the number 500. Fix the calculation so the total is numeric.",
 
-        difficulty: "Easy",
-
-        story:
-          "Create a small student profile message using template literals.",
-
-        task:
-`const name = "Ravi";
-const branch = "CSE-AI&ML";
-const year = 3;
-
-const profile = \`
-Name: ${name}
-Branch: ${branch}
-Year: ${year}
-\`;
-
-console.log(profile);`,
-
-        questions: [
-          "Why are backticks used?",
-          "What does ${name} do?",
-          "How would you add CGPA?"
-        ]
-      },
-
-      {
-        id: "nan-detector",
-
-        title: "NaN Detector",
-
-        difficulty: "Medium",
-
-        story:
-          "An application converts user input into numbers. Detect failed conversions safely.",
-
-        task:
-`const inputs = ["42", "100", "hello", "25"];
-
-for (const input of inputs) {
-  const value = Number(input);
-
-  if (Number.isNaN(value)) {
-    console.log(input, "is invalid");
-  } else {
-    console.log(input, value);
-  }
-}`,
-
-        questions: [
-          "Why does Number('hello') produce NaN?",
-          "Why is Number.isNaN preferable here?",
-          "What is typeof NaN?"
-        ]
-      },
-
-      {
-        id: "truthy-checker",
-
-        title: "Truthy / Falsy Checker",
-
-        difficulty: "Medium",
-
-        story:
-          "Build a utility that reports whether a value behaves as truthy or falsy.",
-
-        task:
-`const values = [
-  0,
-  1,
-  "",
-  "hello",
-  null,
-  undefined,
-  [],
-  {}
-];
-
-for (const value of values) {
-  console.log(value, Boolean(value));
-}`,
-
-        questions: [
-          "Which values are falsy?",
-          "Why is [] truthy?",
-          "Why is {} truthy?"
-        ]
-      },
-
-      {
-        id: "debugging-lab",
-
-        title: "Debugging Lab",
-
-        difficulty: "Medium",
-
-        story:
-          "A shopping cart calculates a strange total. Find the reason.",
-
-        task:
-`const quantity = "2";
-const price = 500;
-
-const total = quantity + price;
-
-console.log("Total:", total);`,
-
-        questions: [
-          "What output does this produce?",
-          "What is the type of quantity?",
-          "How would you fix the calculation?"
-        ]
-      },
-
-      {
-        id: "foundation-challenge",
-
-        title: "Foundation Challenge",
-
-        difficulty: "Hard",
-
-        story:
-          "Create a student result summary that demonstrates variables, numbers, strings, booleans, conversion and template literals.",
-
-        task:
-`const studentName = "Bhavya";
-const maths = "85";
-const programming = 92;
-const active = true;
-
-const mathsMarks = Number(maths);
-const total = mathsMarks + programming;
-const average = total / 2;
-
-const result = average >= 40;
-
-console.log(\`
-Student: ${studentName}
-Total: ${total}
-Average: ${average}
-Active: ${active}
-Pass: ${result}
-\`);`,
-
-        questions: [
-          "Which variable requires explicit conversion?",
-          "What is the final average?",
-          "Which values are strings?",
-          "Which values are numbers?",
-          "What would happen if maths contained 'hello'?"
-        ]
-      }
-
-    ]
-  },
-
-  quiz: {
-
-    title: "Level 08 Knowledge Check",
-
-    description:
-      "Test whether you understand the concepts rather than simply remembering syntax.",
-
-    questions: [
-
-      {
-        question: "Which language specification standardizes JavaScript?",
-
-        options: [
-          "HTML",
-          "ECMAScript",
-          "CSS",
-          "HTTP"
-        ],
-
-        answer: 1,
-
-        explanation:
-          "ECMAScript is the standardized language specification implemented by JavaScript engines."
-      },
-
-      {
-        question: "What is the primary role of a JavaScript engine?",
-
-        options: [
-          "Style HTML",
-          "Store browser cookies",
-          "Execute JavaScript",
-          "Create database tables"
-        ],
-
-        answer: 2,
-
-        explanation:
-          "A JavaScript engine parses and executes JavaScript code."
-      },
-
-      {
-        question: "Which declaration is normally preferred when a variable should not be reassigned?",
-
-        options: [
-          "var",
-          "let",
-          "const",
-          "static"
-        ],
-
-        answer: 2,
-
-        explanation:
-          "const communicates that the variable binding should not be reassigned."
-      },
-
-      {
-        question: "What is typeof null?",
-
-        options: [
-          "null",
-          "undefined",
-          "object",
-          "boolean"
-        ],
-
-        answer: 2,
-
-        explanation:
-          "typeof null returns object because of a historical JavaScript language quirk."
-      },
-
-      {
-        question: "Which value is falsy?",
-
-        options: [
-          "[]",
-          "{}",
-          "\"hello\"",
-          "0"
-        ],
-
-        answer: 3,
-
-        explanation:
-          "0 is falsy. Empty arrays and empty objects are truthy."
-      },
-
-      {
-        question: "What does NaN represent?",
-
-        options: [
-          "A string",
-          "An invalid numeric result",
-          "An empty object",
-          "A boolean"
-        ],
-
-        answer: 1,
-
-        explanation:
-          "NaN represents an invalid or unrepresentable numeric result and has type number."
-      },
-
-      {
-        question: "What is the result of 5 === \"5\"?",
-
-        options: [
-          "true",
-          "false",
-          "5",
-          "undefined"
-        ],
-
-        answer: 1,
-
-        explanation:
-          "Strict equality requires both compatible value and type, so number 5 and string '5' are not strictly equal."
-      },
-
-      {
-        question: "What is the result of \"10\" + 5?",
-
-        options: [
-          "15",
-          "\"105\"",
-          "NaN",
-          "Error"
-        ],
-
-        answer: 1,
-
-        explanation:
-          "The + operator performs string concatenation when string conversion is involved."
-      },
-
-      {
-        question: "Which is the safest common way to check whether a value is actually NaN?",
-
-        options: [
-          "value === NaN",
-          "value == NaN",
-          "Number.isNaN(value)",
-          "typeof value === NaN"
-        ],
-
-        answer: 2,
-
-        explanation:
-          "NaN is not equal to itself, so Number.isNaN is the appropriate check."
-      },
-
-      {
-        question: "Which value is truthy?",
-
-        options: [
-          "0",
-          "\"\"",
-          "null",
-          "[]"
-        ],
-
-        answer: 3,
-
-        explanation:
-          "Arrays, including empty arrays, are objects and are truthy."
-      },
-
-      {
-        question: "What does const prevent?",
-
-        options: [
-          "All object changes",
-          "All mutations",
-          "Reassignment of the variable binding",
-          "Reading the variable"
-        ],
-
-        answer: 2,
-
-        explanation:
-          "const prevents reassignment of the binding; it does not automatically freeze referenced objects."
-      },
-
-      {
-        question: "Which operator generally avoids type coercion during equality comparison?",
-
-        options: [
-          "==",
-          "===",
-          "=",
-          "+="
-        ],
-
-        answer: 1,
-
-        explanation:
-          "=== performs strict equality without the coercion performed by ==."
-      }
-
-    ]
-  },
-
-  interview: {
-
-    title: "Placement & Interview Preparation",
-
-    questions: [
-
-      {
-        question: "What is JavaScript?",
-
-        answer:
-          "JavaScript is a high-level programming language standardized through ECMAScript and widely used for web applications as well as server-side and other environments."
-      },
-
-      {
-        question: "What is ECMAScript?",
-
-        answer:
-          "ECMAScript is the standardized specification that defines the JavaScript language."
-      },
-
-      {
-        question: "What is a JavaScript engine?",
-
-        answer:
-          "A JavaScript engine is software that parses, compiles and executes JavaScript code."
-      },
-
-      {
-        question: "What is a runtime environment?",
-
-        answer:
-          "A runtime provides the environment in which JavaScript executes, including APIs and capabilities surrounding the JavaScript engine."
-      },
-
-      {
-        question: "Name the seven primitive data types.",
-
-        answer:
-          "string, number, bigint, boolean, undefined, symbol and null."
-      },
-
-      {
-        question: "Are arrays primitive values?",
-
-        answer:
-          "No. Arrays are objects and therefore non-primitive values."
-      },
-
-      {
-        question: "Why does typeof null return object?",
-
-        answer:
-          "It is a historical quirk of JavaScript that has been retained for compatibility."
-      },
-
-      {
-        question: "What is the difference between let and const?",
-
-        answer:
-          "Both are block scoped. let permits reassignment, while const does not permit reassignment of its binding."
-      },
-
-      {
-        question: "Does const make an object immutable?",
-
-        answer:
-          "No. const prevents reassignment of the variable binding. Properties of the referenced object can still be changed unless the object is separately made immutable."
-      },
-
-      {
-        question: "Why should modern code generally prefer let and const over var?",
-
-        answer:
-          "let and const provide block scope and clearer declaration semantics, making modern code easier to reason about."
-      },
-
-      {
-        question: "What is NaN?",
-
-        answer:
-          "NaN means Not-a-Number and represents an invalid or unrepresentable numeric result. Its JavaScript type is number."
-      },
-
-      {
-        question: "Why does NaN !== NaN evaluate to true?",
-
-        answer:
-          "NaN is defined as not being equal to any value, including itself."
-      },
-
-      {
-        question: "How should NaN normally be checked?",
-
-        answer:
-          "Use Number.isNaN(value) when you want to determine whether a value is actually NaN."
-      },
-
-      {
-        question: "What is the difference between null and undefined?",
-
-        answer:
-          "undefined commonly indicates that a value is missing or has not been assigned, while null is usually an intentional representation of an empty value."
-      },
-
-      {
-        question: "What is type coercion?",
-
-        answer:
-          "Type coercion is the conversion of a value from one type to another. It can be explicit, such as Number('10'), or implicit, such as conversions performed during some operators."
-      },
-
-      {
-        question: "What is the difference between == and ===?",
-
-        answer:
-          "== allows equality coercion, while === performs strict equality without that coercion."
-      },
-
-      {
-        question: "Why is '10' + 5 equal to '105'?",
-
-        answer:
-          "Because + can perform string concatenation and the presence of a string causes the other operand to participate in string concatenation."
-      },
-
-      {
-        question: "Are empty arrays and empty objects falsy?",
-
-        answer:
-          "No. Both [] and {} are truthy."
-      },
-
-      {
-        question: "What are the main falsy values?",
-
-        answer:
-          "false, 0, -0, 0n, empty string, null, undefined and NaN."
-      },
-
-      {
-        question: "How would you debug an unexpected JavaScript value?",
-
-        answer:
-          "First reproduce the issue, then inspect the value and its type using tools such as console.log and typeof, use breakpoints when useful, identify the incorrect assumption and make a focused correction."
-      }
-
-    ]
-  },
-
-  revision: {
-
-    title: "Level 08 Revision",
-
-    summary:
-      "The most important ideas from JavaScript Foundations.",
-
-    points: [
-      "JavaScript is a programming language standardized through ECMAScript.",
-      "A JavaScript engine executes JavaScript.",
-      "A runtime provides additional environment-specific APIs.",
-      "Primitive types are string, number, bigint, boolean, undefined, symbol and null.",
-      "Objects are non-primitive values.",
-      "Arrays and functions are objects.",
-      "typeof null is object because of a historical quirk.",
-      "Prefer const by default and let when reassignment is required.",
-      "var is mainly encountered in legacy code.",
-      "Expressions evaluate to values.",
-      "Template literals use backticks and support interpolation.",
-      "NaN is a number type representing an invalid numeric result.",
-      "Number.isNaN is useful for detecting actual NaN.",
-      "null usually represents intentional absence.",
-      "undefined commonly represents missing or unassigned data.",
-      "0, empty string, false, null, undefined and NaN are falsy.",
-      "Empty arrays and empty objects are truthy.",
-      "=== is generally preferred over == for predictable equality.",
-      "Type coercion can be explicit or implicit.",
-      "Debugging should begin with observation rather than guessing."
-    ]
-  },
+      hints: [
+        "Inspect typeof quantity.",
+        "Explicitly convert the quantity before multiplication or addition."
+      ]
+    },
+
+    {
+      title: "Foundation Challenge",
+
+      difficulty: "Hard",
+
+      task:
+        "Build a Student Result Analyzer using variables, explicit number conversion, total, average, pass/fail logic, template literals and basic validation.",
+
+      hints: [
+        "Use const for fixed information.",
+        "Use Number() for numeric input stored as text.",
+        "Use Number.isNaN() before calculating.",
+        "Use === for predictable comparisons."
+      ]
+    }
+
+  ],
+
+  quiz: [
+
+    {
+      question: "Which specification standardizes the JavaScript language?",
+
+      options: [
+        "HTML",
+        "ECMAScript",
+        "CSS",
+        "HTTP"
+      ],
+
+      answer: 1
+    },
+
+    {
+      question: "What is the primary job of a JavaScript engine?",
+
+      options: [
+        "Style HTML",
+        "Execute JavaScript",
+        "Store cookies",
+        "Create databases"
+      ],
+
+      answer: 1
+    },
+
+    {
+      question: "Which declaration is normally preferred when a binding should not be reassigned?",
+
+      options: [
+        "var",
+        "let",
+        "const",
+        "static"
+      ],
+
+      answer: 2
+    },
+
+    {
+      question: "Which of these is a primitive value?",
+
+      options: [
+        "[]",
+        "{}",
+        "42",
+        "function() {}"
+      ],
+
+      answer: 2
+    },
+
+    {
+      question: "What is typeof null?",
+
+      options: [
+        "null",
+        "undefined",
+        "object",
+        "boolean"
+      ],
+
+      answer: 2
+    },
+
+    {
+      question: "Which value is falsy?",
+
+      options: [
+        "[]",
+        "{}",
+        "\"hello\"",
+        "0"
+      ],
+
+      answer: 3
+    },
+
+    {
+      question: "What is the type of NaN?",
+
+      options: [
+        "NaN",
+        "undefined",
+        "number",
+        "object"
+      ],
+
+      answer: 2
+    },
+
+    {
+      question: "What is the result of 5 === \"5\"?",
+
+      options: [
+        "true",
+        "false",
+        "5",
+        "undefined"
+      ],
+
+      answer: 1
+    },
+
+    {
+      question: "What is the result of \"10\" + 5?",
+
+      options: [
+        "15",
+        "\"105\"",
+        "NaN",
+        "Error"
+      ],
+
+      answer: 1
+    },
+
+    {
+      question: "What is the recommended way to check whether a value is NaN?",
+
+      options: [
+        "value === NaN",
+        "value == NaN",
+        "Number.isNaN(value)",
+        "typeof value === NaN"
+      ],
+
+      answer: 2
+    },
+
+    {
+      question: "Which value is truthy?",
+
+      options: [
+        "0",
+        "\"\"",
+        "null",
+        "[]"
+      ],
+
+      answer: 3
+    },
+
+    {
+      question: "What does const prevent?",
+
+      options: [
+        "All object mutations",
+        "All property changes",
+        "Reassignment of the variable binding",
+        "Reading the variable"
+      ],
+
+      answer: 2
+    }
+
+  ],
 
   glossary: [
 
     {
       term: "JavaScript",
       definition:
-        "A programming language widely used for interactive web applications and many other environments."
+        "A programming language used for application behaviour and computation."
     },
 
     {
       term: "ECMAScript",
       definition:
-        "The standardized specification that defines the JavaScript language."
-    },
-
-    {
-      term: "JavaScript engine",
-      definition:
-        "Software responsible for parsing, compiling and executing JavaScript."
+        "The standardized specification defining the JavaScript language."
     },
 
     {
       term: "Runtime",
       definition:
-        "The environment surrounding the JavaScript engine that provides additional APIs and capabilities."
+        "The environment that surrounds the JavaScript engine and provides additional capabilities."
     },
 
     {
       term: "Primitive",
       definition:
-        "A non-object value such as a string, number or boolean."
+        "A non-object JavaScript value."
     },
 
     {
       term: "Object",
       definition:
-        "A non-primitive JavaScript value that can represent collections, structures and behaviour."
-    },
-
-    {
-      term: "Variable binding",
-      definition:
-        "A named association through which JavaScript code accesses a value."
+        "A non-primitive JavaScript value."
     },
 
     {
@@ -1964,7 +1360,7 @@ Pass: ${result}
     {
       term: "Truthy",
       definition:
-        "A value that behaves as true when JavaScript expects a boolean context."
+        "A value that behaves as true in a boolean context."
     },
 
     {
@@ -1988,64 +1384,26 @@ Pass: ${result}
     {
       term: "Template literal",
       definition:
-        "A string written with backticks that supports interpolation and multiline text."
+        "A backtick-delimited string that supports interpolation and multiline text."
     },
 
     {
       term: "Strict equality",
       definition:
-        "Equality comparison using === without the type coercion performed by ==."
+        "Equality comparison using === without the coercion associated with ==."
     }
+
   ],
 
   completion: {
 
     title: "Level 08 Final Challenge",
 
-    description:
-      "Build a small Student Result Analyzer using only the foundations learned in this level.",
+    message:
+      "You are ready to move from JavaScript values and types into control flow, functions and program logic.",
 
-    requirements: [
-      "Create constants for student name, branch and roll number.",
-      "Store at least three marks.",
-      "Include at least one mark supplied as a string and explicitly convert it to a number.",
-      "Calculate total and average.",
-      "Determine whether the student passed using a boolean expression.",
-      "Create a formatted result using a template literal.",
-      "Display both the result and at least one value's type using typeof.",
-      "Handle invalid numeric input using Number.isNaN.",
-      "Use const and let appropriately.",
-      "Avoid unnecessary use of ==."
-    ],
-
-    starterCode:
-`const studentName = "Bhavya";
-const branch = "CSE-AI&ML";
-
-const maths = "85";
-const programming = 92;
-const dataStructures = 88;
-
-// Convert and validate marks here.
-
-// Calculate total and average.
-
-// Decide pass/fail.
-
-// Create a formatted result.
-
-// Display the result.
-`,
-
-    successCriteria: [
-      "The program produces the correct total.",
-      "The average is calculated correctly.",
-      "The program correctly identifies pass/fail.",
-      "String input is converted safely.",
-      "Invalid numeric input does not silently produce a misleading result.",
-      "The output is formatted using a template literal.",
-      "The solution demonstrates clear JavaScript fundamentals."
-    ]
+    challenge:
+      "Build a Student Result Analyzer. Store student information, convert at least one mark from string to number, validate the conversion with Number.isNaN(), calculate total and average, determine pass/fail, and display the complete result using a template literal. Use const and let appropriately and prefer === for equality checks."
   }
 
 };
