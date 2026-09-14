@@ -1,2304 +1,1421 @@
-/* =========================================================
-   CODEBHAVYA · FULL STACK · MERN
-   LEVEL 10 — JAVASCRIPT ARRAYS & OBJECTS
-   ========================================================= */
+"use strict";
+
+/*
+  CodeBhavya Full Stack
+  LEVEL 10 — Arrays & Objects
+  Data modelling and immutable transformations
+*/
 
 window.FULLSTACK_LESSONS = window.FULLSTACK_LESSONS || {};
 
 window.FULLSTACK_LESSONS[10] = {
-
-  id: 10,
-
-  title: "JavaScript Arrays & Objects",
-
-  kicker: "LEVEL 10 · JAVASCRIPT ENGINEERING",
-
-  summary:
-    "Learn how JavaScript stores, organizes, transforms and processes collections of data using arrays and objects.",
+  number: 10,
+  title: "Arrays & Objects",
+  kicker: "JavaScript Engineering · Level 10",
+  subtitle: "Model real-world data, transform collections and work safely with objects.",
+  estimatedTime: "3–4 hours",
+  difficulty: "Intermediate",
 
   hero: {
-    title: "Arrays & Objects",
-    subtitle:
-      "Move from individual values to real-world data structures used in applications, APIs and MERN projects."
+    badge: "LEVEL 10 · DATA MODELLING",
+    description:
+      "Arrays and objects are the main data structures used by JavaScript applications. " +
+      "This level teaches you how to create, inspect, search, transform and model data, " +
+      "while building the mental model needed for modern frontend and backend development."
   },
 
   objectives: [
-    "Create, access and modify JavaScript arrays.",
-    "Understand indexing, length and array mutation.",
-    "Add and remove array elements safely.",
-    "Iterate through arrays using modern JavaScript techniques.",
-    "Use forEach(), for...of and traditional loops appropriately.",
-    "Search and filter collections of data.",
-    "Transform data using map().",
-    "Aggregate data using reduce().",
-    "Understand JavaScript objects and key-value data.",
-    "Use dot notation and bracket notation.",
-    "Work with nested objects.",
-    "Create and use object methods.",
-    "Use destructuring with arrays and objects.",
-    "Understand spread and rest syntax.",
-    "Process arrays of objects like real application data.",
-    "Choose appropriate data structures for practical problems."
+    "Understand how arrays store ordered collections of values.",
+    "Create, access, update and transform array data.",
+    "Use important array methods such as map, filter, find and reduce.",
+    "Understand JavaScript objects and property access.",
+    "Model real application data using objects and arrays of objects.",
+    "Use destructuring, spread and rest syntax confidently.",
+    "Understand references, shallow copies and mutation.",
+    "Write immutable transformations suitable for modern JavaScript applications."
   ],
 
-  outcomes: [
-    "Build programs that process collections of values.",
-    "Transform raw data into useful application data.",
-    "Work confidently with arrays of objects.",
-    "Understand common data-processing patterns used in frontend and backend JavaScript.",
-    "Be ready for common placement questions involving arrays, objects and higher-order methods."
-  ],
-
-  concepts: [
-
-    /* =====================================================
-       CONCEPT 01
-       ===================================================== */
+  sections: [
 
     {
-      id: 1,
+      number: 1,
+      title: "What Arrays and Objects Represent",
+      intro:
+        "JavaScript applications rarely work with isolated values. They usually work with collections " +
+        "of related data such as students, products, courses, employees and orders.",
 
-      title: "Why Arrays & Objects Matter",
+      explanation:
+        "An array represents an ordered collection. An object represents a collection of named properties. " +
+        "Together they form the foundation of application data modelling.",
 
-      explanation: `
-        Real applications rarely work with only one value.
+      points: [
+        "Arrays are ordered collections.",
+        "Array positions are identified using indexes starting from 0.",
+        "Objects store data using property names.",
+        "Arrays can contain objects.",
+        "Objects can contain arrays.",
+        "Real applications commonly combine both structures."
+      ],
 
-        A placement portal may contain hundreds of students.
-        An e-commerce application may contain thousands of products.
-        A college management system may contain students, marks,
-        departments and courses.
-
-        JavaScript mainly uses two structures to organize such data:
-
-        1. Arrays
-        2. Objects
-
-        An array is useful when we have an ordered collection.
-
-        An object is useful when we want to describe an entity
-        using named properties.
-
-        Example:
-
-        const marks = [78, 85, 91];
-
-        const student = {
-          name: "Ravi",
-          branch: "CSE",
-          cgpa: 8.7
-        };
-
-        Arrays answer:
-        "What values are in this collection?"
-
-        Objects answer:
-        "What properties describe this entity?"
-      `,
-
-      example: `const students = ["Ravi", "Anita", "Kiran"];
-
-const student = {
-  name: "Ravi",
-  branch: "CSE",
-  cgpa: 8.7
+      example: {
+        label: "Basic data model",
+        code:
+`const student = {
+  name: "Bhavya",
+  age: 20,
+  skills: ["C", "JavaScript", "Python"]
 };
 
-console.log(students);
-console.log(student);`,
-
-      keyPoints: [
-        "Arrays represent collections.",
-        "Objects represent entities or structured records.",
-        "Real applications commonly combine arrays and objects.",
-        "Arrays and objects are fundamental to JSON and API data."
-      ]
-    },
-
-    /* =====================================================
-       CONCEPT 02
-       ===================================================== */
-
-    {
-      id: 2,
-
-      title: "Creating Arrays & Indexing",
-
-      explanation: `
-        An array is created using square brackets.
-
-        const languages = ["C", "Python", "JavaScript"];
-
-        JavaScript arrays use zero-based indexing.
-
-        languages[0] → "C"
-        languages[1] → "Python"
-        languages[2] → "JavaScript"
-
-        The first element is always at index 0.
-
-        The last element can be accessed using:
-
-        array[array.length - 1]
-
-        Example:
-
-        const scores = [70, 82, 95];
-
-        scores.length is 3.
-
-        Therefore:
-
-        scores[scores.length - 1]
-
-        gives 95.
-      `,
-
-      example: `const languages = ["C", "Python", "JavaScript"];
-
-console.log(languages[0]);
-console.log(languages[1]);
-console.log(languages[2]);
-
-console.log("Total:", languages.length);
-console.log("Last:", languages[languages.length - 1]);`,
-
-      visualizer: {
-        type: "array",
-        title: "Array Index Visualizer",
-        steps: [
-          {
-            array: ["C", "Python", "JavaScript"],
-            active: 0,
-            message: "Index 0 contains C."
-          },
-          {
-            array: ["C", "Python", "JavaScript"],
-            active: 1,
-            message: "Index 1 contains Python."
-          },
-          {
-            array: ["C", "Python", "JavaScript"],
-            active: 2,
-            message: "Index 2 contains JavaScript."
-          }
-        ]
-      },
-
-      keyPoints: [
-        "Arrays start at index 0.",
-        "length gives the number of elements.",
-        "The last index is length - 1.",
-        "Accessing an invalid index normally gives undefined."
-      ]
-    },
-
-    /* =====================================================
-       CONCEPT 03
-       ===================================================== */
-
-    {
-      id: 3,
-
-      title: "Updating Array Elements",
-
-      explanation: `
-        Array elements can be changed using their indexes.
-
-        Example:
-
-        const marks = [70, 80, 90];
-
-        marks[1] = 85;
-
-        The array becomes:
-
-        [70, 85, 90]
-
-        Arrays declared using const can still have their
-        individual elements changed.
-
-        const values = [10, 20];
-
-        values[0] = 50;
-
-        This is valid.
-
-        const prevents reassignment of the array variable itself,
-        not mutation of the array contents.
-      `,
-
-      example: `const marks = [70, 80, 90];
-
-marks[1] = 85;
-
-console.log(marks);`,
-
-      keyPoints: [
-        "Array elements can be changed through indexes.",
-        "const does not make an array immutable.",
-        "Use careful mutation when sharing data across application components."
-      ]
-    },
-
-    /* =====================================================
-       CONCEPT 04
-       ===================================================== */
-
-    {
-      id: 4,
-
-      title: "Adding & Removing Elements",
-
-      explanation: `
-        JavaScript provides methods for changing array size.
-
-        push()
-        Adds an element to the end.
-
-        pop()
-        Removes the last element.
-
-        unshift()
-        Adds an element to the beginning.
-
-        shift()
-        Removes the first element.
-
-        Example:
-
-        const queue = ["A", "B"];
-
-        queue.push("C");
-
-        ["A", "B", "C"]
-
-        queue.pop();
-
-        ["A", "B"]
-
-        These methods mutate the original array.
-      `,
-
-      example: `const queue = ["A", "B"];
-
-queue.push("C");
-console.log(queue);
-
-queue.pop();
-console.log(queue);
-
-queue.unshift("X");
-console.log(queue);
-
-queue.shift();
-console.log(queue);`,
-
-      keyPoints: [
-        "push adds at the end.",
-        "pop removes from the end.",
-        "unshift adds at the beginning.",
-        "shift removes from the beginning.",
-        "These operations mutate the original array."
-      ]
-    },
-
-    /* =====================================================
-       CONCEPT 05
-       ===================================================== */
-
-    {
-      id: 5,
-
-      title: "Looping Through Arrays",
-
-      explanation: `
-        Arrays can be processed using different looping techniques.
-
-        Traditional for loop:
-
-        for (let i = 0; i < numbers.length; i++) {
-          console.log(numbers[i]);
-        }
-
-        for...of:
-
-        for (const number of numbers) {
-          console.log(number);
-        }
-
-        for...of is usually easier when we only need the values.
-
-        Traditional for loops are useful when we need the index
-        or more precise control over execution.
-      `,
-
-      example: `const numbers = [10, 20, 30];
-
-for (let i = 0; i < numbers.length; i++) {
-  console.log("Index:", i, "Value:", numbers[i]);
-}
-
-for (const number of numbers) {
-  console.log("Value:", number);
-}`,
-
-      tracer: {
-        title: "Array Loop Trace",
-        steps: [
-          {
-            line: 1,
-            message: "numbers contains three values."
-          },
-          {
-            line: 3,
-            message: "i starts at 0."
-          },
-          {
-            line: 4,
-            message: "numbers[0] is 10."
-          },
-          {
-            line: 3,
-            message: "i becomes 1."
-          },
-          {
-            line: 4,
-            message: "numbers[1] is 20."
-          },
-          {
-            line: 3,
-            message: "i becomes 2."
-          },
-          {
-            line: 4,
-            message: "numbers[2] is 30."
-          }
-        ]
-      },
-
-      keyPoints: [
-        "Use for when index/control is important.",
-        "Use for...of when you mainly need values.",
-        "Avoid unnecessary index management when for...of is enough."
-      ]
-    },
-
-    /* =====================================================
-       CONCEPT 06
-       ===================================================== */
-
-    {
-      id: 6,
-
-      title: "forEach()",
-
-      explanation: `
-        forEach() executes a function once for every array element.
-
-        Example:
-
-        const marks = [70, 80, 90];
-
-        marks.forEach(mark => {
-          console.log(mark);
-        });
-
-        The callback receives the current value.
-
-        It can also receive:
-
-        value
-        index
-        array
-
-        Example:
-
-        marks.forEach((mark, index) => {
-          console.log(index, mark);
-        });
-
-        forEach() is useful when we want to perform an action
-        for every element.
-      `,
-
-      example: `const marks = [70, 80, 90];
-
-marks.forEach((mark, index) => {
-  console.log("Index:", index);
-  console.log("Mark:", mark);
-});`,
-
-      keyPoints: [
-        "forEach processes every element.",
-        "It receives a callback function.",
-        "The callback can receive value and index.",
-        "forEach does not create a new transformed array."
-      ]
-    },
-
-    /* =====================================================
-       CONCEPT 07
-       ===================================================== */
-
-    {
-      id: 7,
-
-      title: "Searching with includes(), indexOf() & find()",
-
-      explanation: `
-        Applications frequently need to search data.
-
-        includes()
-        Checks whether a value exists.
-
-        indexOf()
-        Returns the position of a value.
-
-        find()
-        Returns the first element satisfying a condition.
-
-        Example:
-
-        const numbers = [10, 20, 30];
-
-        numbers.includes(20)
-        → true
-
-        numbers.indexOf(30)
-        → 2
-
-        For objects, find() is more useful.
-
-        const students = [
-          { name: "Ravi", cgpa: 8.5 },
-          { name: "Anita", cgpa: 9.1 }
-        ];
-
-        students.find(student => student.cgpa > 9);
-      `,
-
-      example: `const numbers = [10, 20, 30];
-
-console.log(numbers.includes(20));
-console.log(numbers.indexOf(30));
-
 const students = [
-  { name: "Ravi", cgpa: 8.5 },
-  { name: "Anita", cgpa: 9.1 }
+  { name: "Bhavya", marks: 88 },
+  { name: "Ravi", marks: 76 }
 ];
 
-const topper = students.find(student => student.cgpa > 9);
-
-console.log(topper);`,
-
-      keyPoints: [
-        "includes checks for existence.",
-        "indexOf returns an index.",
-        "find returns the first matching element.",
-        "find is especially useful with arrays of objects."
-      ]
-    },
-
-    /* =====================================================
-       CONCEPT 08
-       ===================================================== */
-
-    {
-      id: 8,
-
-      title: "filter() — Selecting Data",
-
-      explanation: `
-        filter() creates a new array containing elements
-        that satisfy a condition.
-
-        Example:
-
-        const marks = [45, 72, 88, 31, 95];
-
-        const passed = marks.filter(mark => mark >= 40);
-
-        Result:
-
-        [45, 72, 88, 95]
-
-        filter() is extremely common in real applications.
-
-        Examples:
-
-        Active users
-        Products below a price
-        Students above a CGPA
-        Jobs matching a location
-        Employees belonging to a department
-      `,
-
-      example: `const marks = [45, 72, 88, 31, 95];
-
-const passed = marks.filter(mark => mark >= 40);
-
-console.log(passed);`,
-
-      visualizer: {
-        type: "filter",
-        title: "Filter Visualizer",
-        steps: [
-          {
-            input: [45, 72, 88, 31, 95],
-            active: 0,
-            accepted: false,
-            output: [],
-            message: "45 is checked."
-          },
-          {
-            input: [45, 72, 88, 31, 95],
-            active: 1,
-            accepted: true,
-            output: [72],
-            message: "72 satisfies mark >= 40."
-          },
-          {
-            input: [45, 72, 88, 31, 95],
-            active: 2,
-            accepted: true,
-            output: [72, 88],
-            message: "88 is accepted."
-          },
-          {
-            input: [45, 72, 88, 31, 95],
-            active: 3,
-            accepted: false,
-            output: [72, 88],
-            message: "31 is rejected."
-          },
-          {
-            input: [45, 72, 88, 31, 95],
-            active: 4,
-            accepted: true,
-            output: [72, 88, 95],
-            message: "95 is accepted."
-          }
-        ]
+console.log(student.skills);
+console.log(students[0].name);`,
+        output:
+`["C", "JavaScript", "Python"]
+Bhavya`
       },
 
-      keyPoints: [
-        "filter returns a new array.",
-        "The original array remains unchanged.",
-        "The callback must produce a truthy/falsy result.",
-        "Use filter when selecting multiple matching items."
-      ]
+      realWorld:
+        "A placement application might represent one student as an object and all students as an array of objects.",
+
+      keyIdea:
+        "Think of arrays as collections and objects as structured records."
     },
 
-    /* =====================================================
-       CONCEPT 09
-       ===================================================== */
+    {
+      number: 2,
+      title: "Creating and Accessing Arrays",
+      intro:
+        "Arrays are created using square brackets. Every element receives a zero-based index.",
+
+      explanation:
+        "The first element is at index 0, the second at index 1, and so on. " +
+        "The length property tells you how many elements currently exist.",
+
+      code:
+`const courses = ["C", "DSA", "Python", "JavaScript"];
+
+console.log(courses[0]);
+console.log(courses[2]);
+console.log(courses.length);`,
+
+      output:
+`C
+Python
+4`,
+
+      points: [
+        "Indexing starts at 0.",
+        "The last valid index is length - 1.",
+        "Accessing a missing index normally returns undefined.",
+        "Arrays can contain mixed JavaScript values, although consistent data is usually better."
+      ],
+
+      warning:
+        "Do not confuse an array index with the number of an element. The first element has index 0, not 1.",
+
+      commonMistake:
+        "Using courses[courses.length] to access the final element. The correct index is courses.length - 1.",
+
+      keyIdea:
+        "For an array of length n, valid indexes range from 0 through n - 1."
+    },
 
     {
-      id: 9,
+      number: 3,
+      title: "Updating, Adding and Removing Elements",
+      intro:
+        "Arrays can be changed using methods such as push, pop, shift and unshift.",
 
-      title: "map() — Transforming Data",
+      explanation:
+        "These methods mutate the original array. Understanding which operations mutate data becomes important later when working with React and predictable application state.",
 
-      explanation: `
-        map() creates a new array by transforming every element.
+      code:
+`const tasks = ["Learn HTML", "Learn CSS"];
 
-        Example:
+tasks.push("Learn JavaScript");
+console.log(tasks);
 
-        const prices = [100, 200, 300];
+tasks.pop();
+console.log(tasks);
 
-        const discounted = prices.map(price => price * 0.9);
+tasks.unshift("Open CodeBhavya");
+console.log(tasks);
 
-        Result:
+tasks.shift();
+console.log(tasks);`,
 
-        [90, 180, 270]
+      output:
+`["Learn HTML", "Learn CSS", "Learn JavaScript"]
+["Learn HTML", "Learn CSS"]
+["Open CodeBhavya", "Learn HTML", "Learn CSS"]
+["Learn HTML", "Learn CSS"]`,
 
-        map() is one of the most important methods in React
-        because React interfaces frequently render arrays
-        of data.
+      methods: [
+        ["push()", "Adds one or more elements to the end."],
+        ["pop()", "Removes and returns the last element."],
+        ["unshift()", "Adds one or more elements to the beginning."],
+        ["shift()", "Removes and returns the first element."]
+      ],
 
-        Example:
+      warning:
+        "push, pop, shift and unshift modify the original array.",
 
-        students.map(student => student.name)
+      keyIdea:
+        "Know whether an array method mutates the original collection."
+    },
 
-        converts student objects into student names.
-      `,
+    {
+      number: 4,
+      title: "slice() and splice()",
+      intro:
+        "These two methods have similar names but very different behaviour.",
 
-      example: `const prices = [100, 200, 300];
+      explanation:
+        "slice creates a new portion of an array without modifying the original array. " +
+        "splice changes the original array by removing, replacing or inserting elements.",
+
+      comparison: [
+        ["slice()", "Does not mutate", "Creates a portion/copy"],
+        ["splice()", "Mutates", "Adds, removes or replaces elements"]
+      ],
+
+      code:
+`const numbers = [10, 20, 30, 40, 50];
+
+const part = numbers.slice(1, 4);
+
+console.log(part);
+console.log(numbers);
+
+numbers.splice(2, 1);
+
+console.log(numbers);`,
+
+      output:
+`[20, 30, 40]
+[10, 20, 30, 40, 50]
+[10, 20, 40, 50]`,
+
+      commonMistake:
+        "Assuming the second argument of slice is a count. It is an ending index and is excluded.",
+
+      keyIdea:
+        "slice is commonly useful for non-mutating operations; splice changes the original array."
+    },
+
+    {
+      number: 5,
+      title: "Searching Arrays",
+      intro:
+        "Applications frequently need to determine whether data exists or locate a particular item.",
+
+      explanation:
+        "JavaScript provides several methods for searching arrays. The correct method depends on whether you need a boolean, an index or the actual element.",
+
+      methods: [
+        ["includes()", "Checks whether a value exists and returns true or false."],
+        ["indexOf()", "Returns the first matching index or -1."],
+        ["find()", "Returns the first element matching a condition."],
+        ["findIndex()", "Returns the index of the first matching element."]
+      ],
+
+      code:
+`const scores = [45, 72, 88, 91];
+
+console.log(scores.includes(88));
+console.log(scores.indexOf(72));
+
+const firstHighScore = scores.find(score => score > 80);
+const highScoreIndex = scores.findIndex(score => score > 80);
+
+console.log(firstHighScore);
+console.log(highScoreIndex);`,
+
+      output:
+`true
+1
+88
+2`,
+
+      keyIdea:
+        "Choose the search method based on what information your application needs."
+    },
+
+    {
+      number: 6,
+      title: "map() — Transform Every Element",
+      intro:
+        "map is one of the most important array methods in modern JavaScript.",
+
+      explanation:
+        "map visits every element and creates a new array containing the returned result for each element.",
+
+      code:
+`const prices = [100, 200, 300];
 
 const discounted = prices.map(price => price * 0.9);
 
+console.log(prices);
 console.log(discounted);`,
 
-      visualizer: {
-        type: "map",
-        title: "Map Transformation",
-        steps: [
-          {
-            input: [100, 200, 300],
-            active: 0,
-            output: [90],
-            message: "100 becomes 90."
-          },
-          {
-            input: [100, 200, 300],
-            active: 1,
-            output: [90, 180],
-            message: "200 becomes 180."
-          },
-          {
-            input: [100, 200, 300],
-            active: 2,
-            output: [90, 180, 270],
-            message: "300 becomes 270."
-          }
-        ]
-      },
+      output:
+`[100, 200, 300]
+[90, 180, 270]`,
 
-      keyPoints: [
-        "map transforms every element.",
+      points: [
         "map returns a new array.",
-        "The output array normally has the same length.",
-        "map is heavily used in React rendering."
-      ]
+        "The number of output elements normally matches the input.",
+        "The callback decides what each output element becomes.",
+        "map is ideal for transformation."
+      ],
+
+      commonMistake:
+        "Using map when you actually want to remove elements. Use filter for selection.",
+
+      keyIdea:
+        "map answers: 'What should each element become?'"
     },
 
-    /* =====================================================
-       CONCEPT 10
-       ===================================================== */
+    {
+      number: 7,
+      title: "filter() — Select Matching Elements",
+      intro:
+        "filter creates a new array containing only elements that satisfy a condition.",
+
+      explanation:
+        "The callback should return a truthy or falsy result. Elements producing a truthy result are kept.",
+
+      code:
+`const marks = [42, 67, 81, 55, 93];
+
+const passed = marks.filter(mark => mark >= 60);
+
+console.log(passed);`,
+
+      output:
+`[67, 81, 93]`,
+
+      points: [
+        "filter returns a new array.",
+        "The result can contain fewer elements than the input.",
+        "The original array is not changed.",
+        "The callback represents the selection rule."
+      ],
+
+      keyIdea:
+        "filter answers: 'Which elements should remain?'"
+    },
 
     {
-      id: 10,
+      number: 8,
+      title: "find() and findIndex()",
+      intro:
+        "When you only need the first matching item, find is often more appropriate than filter.",
 
-      title: "reduce() — Producing One Result",
+      explanation:
+        "find stops after locating the first matching element. findIndex similarly returns the position of that element.",
 
-      explanation: `
-        reduce() processes an array and builds one final result.
+      code:
+`const users = [
+  { id: 101, name: "Anu" },
+  { id: 102, name: "Ravi" },
+  { id: 103, name: "Bhavya" }
+];
 
-        Example:
+const user = users.find(user => user.id === 103);
+const index = users.findIndex(user => user.id === 103);
 
-        const numbers = [10, 20, 30];
+console.log(user);
+console.log(index);`,
 
-        const total = numbers.reduce(
-          (sum, number) => sum + number,
-          0
-        );
+      output:
+`{ id: 103, name: "Bhavya" }
+2`,
 
-        Result:
+      realWorld:
+        "Finding a logged-in user, product by ID or student by roll number is a common use case.",
 
-        60
+      keyIdea:
+        "Use find when you need the first matching object rather than a collection of matches."
+    },
 
-        The second argument, 0, is the initial accumulator value.
+    {
+      number: 9,
+      title: "reduce() — Build One Result",
+      intro:
+        "reduce processes an array and combines its elements into one final result.",
 
-        reduce() can calculate:
+      explanation:
+        "The result can be a number, string, object, array or another structure. " +
+        "The accumulator stores the result built during the iteration.",
 
-        totals
-        averages
-        counts
-        maximum values
-        grouped information
-        summaries
-
-        It is one of the most powerful array methods,
-        but it should be used only when aggregation is actually
-        required.
-      `,
-
-      example: `const marks = [70, 80, 90];
+      code:
+`const marks = [70, 80, 90];
 
 const total = marks.reduce(
   (sum, mark) => sum + mark,
   0
 );
 
-console.log("Total:", total);`,
+console.log(total);`,
 
-      tracer: {
-        title: "Reduce Accumulator Trace",
-        steps: [
-          {
-            accumulator: 0,
-            current: 70,
-            result: 70,
-            message: "0 + 70 = 70"
-          },
-          {
-            accumulator: 70,
-            current: 80,
-            result: 150,
-            message: "70 + 80 = 150"
-          },
-          {
-            accumulator: 150,
-            current: 90,
-            result: 240,
-            message: "150 + 90 = 240"
-          }
-        ]
-      },
+      output:
+`240`,
 
-      keyPoints: [
-        "reduce combines many values into a result.",
-        "The accumulator stores the running result.",
-        "Always choose a meaningful initial value.",
-        "Do not use reduce when map or filter communicates the intent better."
-      ]
+      breakdown: [
+        ["Start", "sum = 0"],
+        ["1st element", "0 + 70 = 70"],
+        ["2nd element", "70 + 80 = 150"],
+        ["3rd element", "150 + 90 = 240"]
+      ],
+
+      commonMistake:
+        "Using reduce without understanding what the accumulator represents.",
+
+      keyIdea:
+        "reduce answers: 'How can I combine this collection into one result?'"
     },
 
-    /* =====================================================
-       CONCEPT 11
-       ===================================================== */
-
     {
-      id: 11,
+      number: 10,
+      title: "forEach() and Iteration",
+      intro:
+        "forEach is useful when you want to perform an action for every element without creating a transformed array.",
 
-      title: "some() & every()",
+      explanation:
+        "Unlike map, forEach does not produce a useful transformed array. It is commonly used for side effects such as logging or updating an external system.",
 
-      explanation: `
-        some() checks whether at least one element satisfies
-        a condition.
+      code:
+`const names = ["Anu", "Ravi", "Bhavya"];
 
-        every() checks whether all elements satisfy a condition.
+names.forEach((name, index) => {
+  console.log(index, name);
+});`,
 
-        Example:
+      output:
+`0 Anu
+1 Ravi
+2 Bhavya`,
 
-        const marks = [70, 80, 90];
+      comparison: [
+        ["forEach()", "Perform an action for each item"],
+        ["map()", "Create a transformed array"],
+        ["filter()", "Create a selected subset"],
+        ["find()", "Return the first matching item"],
+        ["reduce()", "Build one accumulated result"]
+      ],
 
-        marks.some(mark => mark < 40)
-        → false
-
-        marks.every(mark => mark >= 40)
-        → true
-
-        These methods are useful for validation and business rules.
-
-        Example:
-
-        Are there any failed students?
-
-        Has every student submitted the assignment?
-      `,
-
-      example: `const marks = [70, 80, 90];
-
-const hasFailure = marks.some(mark => mark < 40);
-const allPassed = marks.every(mark => mark >= 40);
-
-console.log("Has failure:", hasFailure);
-console.log("All passed:", allPassed);`,
-
-      keyPoints: [
-        "some means at least one.",
-        "every means all.",
-        "Both return boolean values.",
-        "They are useful for validation."
-      ]
+      keyIdea:
+        "The array method should describe the intention of your operation."
     },
 
-    /* =====================================================
-       CONCEPT 12
-       ===================================================== */
-
     {
-      id: 12,
+      number: 11,
+      title: "Sorting and Reversing Arrays",
+      intro:
+        "Sorting and reversing are common collection operations, but they have important mutation behaviour.",
 
-      title: "Creating JavaScript Objects",
+      explanation:
+        "sort and reverse mutate the original array. Also, sort compares values as strings by default, which can surprise beginners when sorting numbers.",
 
-      explanation: `
-        Objects store data using key-value pairs.
+      code:
+`const numbers = [10, 2, 30, 4];
 
-        Example:
+numbers.sort();
 
-        const student = {
-          name: "Ravi",
-          branch: "CSE",
-          cgpa: 8.7
-        };
+console.log(numbers);
 
-        Here:
+numbers.sort((a, b) => a - b);
 
-        name → key
-        "Ravi" → value
+console.log(numbers);`,
 
-        Objects can store strings, numbers, booleans,
-        arrays, nested objects and functions.
+      output:
+`[10, 2, 30, 4]
+[2, 4, 10, 30]`,
 
-        Objects are ideal for representing real-world entities.
-      `,
+      warning:
+        "Array.prototype.sort() uses string-style comparison by default.",
 
-      example: `const student = {
-  name: "Ravi",
-  branch: "CSE",
-  cgpa: 8.7,
-  placed: true
-};
+      points: [
+        "sort() mutates the array.",
+        "For ascending numbers use (a, b) => a - b.",
+        "For descending numbers use (a, b) => b - a.",
+        "reverse() also mutates the original array."
+      ],
 
-console.log(student);`,
-
-      visualizer: {
-        type: "object",
-        title: "Object Property Visualizer",
-        steps: [
-          {
-            object: {
-              name: "Ravi",
-              branch: "CSE",
-              cgpa: 8.7
-            },
-            active: "name",
-            message: "The name property stores Ravi."
-          },
-          {
-            object: {
-              name: "Ravi",
-              branch: "CSE",
-              cgpa: 8.7
-            },
-            active: "branch",
-            message: "The branch property stores CSE."
-          },
-          {
-            object: {
-              name: "Ravi",
-              branch: "CSE",
-              cgpa: 8.7
-            },
-            active: "cgpa",
-            message: "The cgpa property stores 8.7."
-          }
-        ]
-      },
-
-      keyPoints: [
-        "Objects use key-value pairs.",
-        "Keys identify properties.",
-        "Values can have different data types.",
-        "Objects are used to represent structured entities."
-      ]
+      keyIdea:
+        "Always provide a numeric comparator when sorting numbers."
     },
 
-    /* =====================================================
-       CONCEPT 13
-       ===================================================== */
-
     {
-      id: 13,
+      number: 12,
+      title: "Objects and Properties",
+      intro:
+        "Objects allow related information to be represented using meaningful property names.",
 
-      title: "Dot Notation & Bracket Notation",
+      explanation:
+        "Instead of remembering that index 0 means a student's name and index 1 means marks, an object explicitly names each value.",
 
-      explanation: `
-        Object properties can be accessed in two major ways.
-
-        Dot notation:
-
-        student.name
-
-        Bracket notation:
-
-        student["name"]
-
-        Bracket notation becomes especially useful when
-        the property name is stored in a variable.
-
-        Example:
-
-        const property = "cgpa";
-
-        student[property]
-
-        This dynamically accesses the cgpa property.
-      `,
-
-      example: `const student = {
-  name: "Ravi",
+      code:
+`const student = {
+  name: "Bhavya",
+  rollNo: 101,
+  branch: "CSE-AI",
   cgpa: 8.7
 };
 
 console.log(student.name);
-console.log(student["name"]);
+console.log(student.cgpa);`,
 
-const property = "cgpa";
+      output:
+`Bhavya
+8.7`,
+
+      points: [
+        "Properties are key-value pairs.",
+        "Property names identify the stored values.",
+        "Values can be primitives, arrays, functions or other objects.",
+        "Objects can model real-world entities."
+      ],
+
+      keyIdea:
+        "An object describes an entity through named properties."
+    },
+
+    {
+      number: 13,
+      title: "Dot Notation vs Bracket Notation",
+      intro:
+        "JavaScript provides two main ways to access object properties.",
+
+      explanation:
+        "Dot notation is convenient when the property name is known directly. Bracket notation is useful when the property name comes from a variable or contains characters that make dot notation unsuitable.",
+
+      code:
+`const student = {
+  name: "Bhavya",
+  cgpa: 8.7
+};
+
+console.log(student.name);
+console.log(student["cgpa"]);
+
+const property = "name";
 
 console.log(student[property]);`,
 
-      keyPoints: [
-        "Dot notation is concise.",
-        "Bracket notation supports dynamic property access.",
-        "Bracket notation is required for many unusual property names."
-      ]
+      output:
+`Bhavya
+8.7
+Bhavya`,
+
+      comparison: [
+        ["student.name", "Direct property access"],
+        ["student[property]", "Dynamic property access"]
+      ],
+
+      commonMistake:
+        "Writing student.property when property is a variable. That looks for a property literally named 'property'.",
+
+      keyIdea:
+        "Bracket notation allows property names to be selected dynamically."
     },
 
-    /* =====================================================
-       CONCEPT 14
-       ===================================================== */
-
     {
-      id: 14,
+      number: 14,
+      title: "Adding, Updating and Deleting Properties",
+      intro:
+        "Objects are flexible structures whose properties can be added or changed.",
 
-      title: "Nested Objects & Nested Data",
-
-      explanation: `
-        Objects can contain other objects.
-
-        This allows applications to represent complex information.
-
-        Example:
-
-        const student = {
-          name: "Ravi",
-          contact: {
-            city: "Hyderabad",
-            phone: "9999999999"
-          }
-        };
-
-        Access:
-
-        student.contact.city
-
-        Arrays can also exist inside objects.
-
-        Example:
-
-        const student = {
-          name: "Ravi",
-          skills: ["C", "Python", "JavaScript"]
-        };
-
-        Real API responses often contain deeply nested
-        combinations of arrays and objects.
-      `,
-
-      example: `const student = {
-  name: "Ravi",
-  contact: {
-    city: "Hyderabad",
-    phone: "9999999999"
-  },
-  skills: ["C", "Python", "JavaScript"]
+      code:
+`const user = {
+  name: "Ravi"
 };
 
-console.log(student.contact.city);
-console.log(student.skills[1]);`,
+user.age = 21;
+user.name = "Rahul";
 
-      keyPoints: [
-        "Objects can contain objects.",
-        "Objects can contain arrays.",
-        "Nested data is common in APIs.",
-        "Read nested structures carefully to avoid undefined errors."
-      ]
+delete user.age;
+
+console.log(user);`,
+
+      output:
+`{ name: "Rahul" }`,
+
+      points: [
+        "Assignment can create a new property.",
+        "Assignment can update an existing property.",
+        "delete removes an object property.",
+        "In application code, unnecessary mutation should be avoided when predictable state matters."
+      ],
+
+      warning:
+        "Deleting or changing shared objects can create difficult-to-track side effects.",
+
+      keyIdea:
+        "Objects are mutable by default, but application design can choose safer immutable patterns."
     },
 
-    /* =====================================================
-       CONCEPT 15
-       ===================================================== */
-
     {
-      id: 15,
+      number: 15,
+      title: "Nested Objects and Arrays",
+      intro:
+        "Real application data is rarely flat. Objects often contain arrays and other objects.",
 
-      title: "Object Methods",
-
-      explanation: `
-        An object can contain functions.
-
-        A function stored inside an object is commonly called
-        a method.
-
-        Example:
-
-        const student = {
-          name: "Ravi",
-
-          introduce() {
-            return "Hello, I am " + this.name;
-          }
-        };
-
-        student.introduce();
-
-        The keyword this refers to the object that invokes
-        the method in this context.
-
-        Object methods are useful when behavior belongs naturally
-        to an object.
-      `,
-
-      example: `const student = {
-  name: "Ravi",
-
-  introduce() {
-    return "Hello, I am " + this.name;
+      code:
+`const student = {
+  name: "Bhavya",
+  contact: {
+    city: "Hyderabad",
+    email: "student@example.com"
+  },
+  skills: ["C", "DSA", "JavaScript"],
+  placement: {
+    company: "CodeTech",
+    package: 8
   }
 };
 
-console.log(student.introduce());`,
+console.log(student.contact.city);
+console.log(student.skills[2]);
+console.log(student.placement.package);`,
 
-      keyPoints: [
-        "Methods are functions stored on objects.",
-        "this commonly refers to the object calling the method.",
-        "Use methods when behavior belongs to an object."
-      ]
+      output:
+`Hyderabad
+JavaScript
+8`,
+
+      points: [
+        "Nested objects model related sub-information.",
+        "Arrays can appear inside objects.",
+        "Objects can appear inside arrays.",
+        "Deeply nested data should be designed carefully for maintainability."
+      ],
+
+      keyIdea:
+        "Use nesting when the data has a genuine hierarchical relationship."
     },
 
-    /* =====================================================
-       CONCEPT 16
-       ===================================================== */
+    {
+      number: 16,
+      title: "Arrays of Objects",
+      intro:
+        "Arrays of objects are among the most important structures in frontend development.",
+
+      explanation:
+        "APIs frequently return collections of records in this form. Learning to transform arrays of objects prepares you for React, REST APIs, databases and MERN applications.",
+
+      code:
+`const students = [
+  { name: "Anu", marks: 72 },
+  { name: "Ravi", marks: 58 },
+  { name: "Bhavya", marks: 91 }
+];
+
+const toppers = students
+  .filter(student => student.marks >= 80)
+  .map(student => student.name);
+
+console.log(toppers);`,
+
+      output:
+`["Bhavya"]`,
+
+      flow: [
+        "Start with all student objects.",
+        "filter keeps students with marks >= 80.",
+        "map converts the remaining objects into names.",
+        "The final result is a new array of names."
+      ],
+
+      realWorld:
+        "This pattern appears constantly when displaying products, students, employees, posts or API records in a user interface.",
+
+      keyIdea:
+        "Learn to combine array methods with object property access."
+    },
 
     {
-      id: 16,
+      number: 17,
+      title: "Destructuring",
+      intro:
+        "Destructuring provides a concise way to extract values from arrays and objects.",
 
-      title: "Destructuring Arrays & Objects",
-
-      explanation: `
-        Destructuring provides a concise way to extract values.
-
-        Array destructuring:
-
-        const colors = ["red", "blue"];
-
-        const [first, second] = colors;
-
-        Object destructuring:
-
-        const student = {
-          name: "Ravi",
-          cgpa: 8.7
-        };
-
-        const { name, cgpa } = student;
-
-        Destructuring is heavily used in modern JavaScript
-        and React.
-
-        It improves readability when we need selected properties.
-      `,
-
-      example: `const colors = ["red", "blue"];
-
-const [first, second] = colors;
-
-console.log(first);
-console.log(second);
-
-const student = {
-  name: "Ravi",
-  cgpa: 8.7
+      code:
+`const student = {
+  name: "Bhavya",
+  cgpa: 8.7,
+  branch: "CSE-AI"
 };
 
 const { name, cgpa } = student;
 
 console.log(name);
-console.log(cgpa);`,
+console.log(cgpa);
 
-      keyPoints: [
-        "Array destructuring extracts by position.",
-        "Object destructuring extracts by property name.",
-        "Destructuring is common in React and modern JavaScript."
-      ]
+const marks = [88, 91, 84];
+
+const [first, second] = marks;
+
+console.log(first);
+console.log(second);`,
+
+      output:
+`Bhavya
+8.7
+88
+91`,
+
+      points: [
+        "Object destructuring uses property names.",
+        "Array destructuring uses positions.",
+        "Destructuring can make code easier to read.",
+        "It is widely used in modern JavaScript and React."
+      ],
+
+      keyIdea:
+        "Destructuring extracts the values you need from a larger structure."
     },
 
-    /* =====================================================
-       CONCEPT 17
-       ===================================================== */
-
     {
-      id: 17,
+      number: 18,
+      title: "Spread and Rest Syntax",
+      intro:
+        "The same ... syntax can be used in two related but different ways.",
 
-      title: "Spread Syntax",
+      explanation:
+        "Spread expands values from an existing array or object. Rest collects remaining values into a new array or object.",
 
-      explanation: `
-        Spread syntax (...) expands the contents of an array
-        or object.
+      code:
+`const oldSkills = ["C", "DSA"];
+const newSkills = [...oldSkills, "JavaScript"];
 
-        Array example:
-
-        const first = [1, 2];
-        const second = [3, 4];
-
-        const combined = [...first, ...second];
-
-        Result:
-
-        [1, 2, 3, 4]
-
-        Object example:
-
-        const student = {
-          name: "Ravi",
-          cgpa: 8.5
-        };
-
-        const updated = {
-          ...student,
-          cgpa: 9.0
-        };
-
-        Spread is frequently used to create updated copies
-        without directly mutating the original structure.
-      `,
-
-      example: `const first = [1, 2];
-const second = [3, 4];
-
-const combined = [...first, ...second];
-
-console.log(combined);
+console.log(newSkills);
 
 const student = {
-  name: "Ravi",
-  cgpa: 8.5
+  name: "Bhavya",
+  cgpa: 8.7
 };
 
-const updated = {
+const updatedStudent = {
   ...student,
   cgpa: 9.0
 };
 
-console.log(updated);`,
+console.log(updatedStudent);`,
 
-      keyPoints: [
-        "Spread expands values.",
-        "It is useful for copying arrays and objects.",
-        "Later properties can override earlier object properties.",
-        "Spread is fundamental to React state updates."
-      ]
+      output:
+`["C", "DSA", "JavaScript"]
+{ name: "Bhavya", cgpa: 9 }`,
+
+      comparison: [
+        ["Spread", "Expands an existing collection into another collection."],
+        ["Rest", "Collects remaining values into a collection."]
+      ],
+
+      keyIdea:
+        "Spread is especially important for creating updated arrays and objects without mutating the original."
     },
 
-    /* =====================================================
-       CONCEPT 18
-       ===================================================== */
-
     {
-      id: 18,
+      number: 19,
+      title: "Reference Behaviour and Shallow Copies",
+      intro:
+        "One of the most important JavaScript concepts is that objects and arrays are reference values.",
 
-      title: "Rest Syntax",
+      explanation:
+        "When two variables refer to the same object, changing the object through one reference can be observed through the other.",
 
-      explanation: `
-        Rest syntax also uses ...
+      code:
+`const original = {
+  name: "Bhavya"
+};
 
-        Its meaning depends on position.
+const alias = original;
 
-        Spread expands a structure.
+alias.name = "Ravi";
 
-        Rest collects remaining values.
+console.log(original.name);
+console.log(alias.name);`,
 
-        Example:
+      output:
+`Ravi
+Ravi`,
 
-        function total(...numbers) {
-          return numbers.reduce(
-            (sum, number) => sum + number,
-            0
-          );
-        }
+      explanation2:
+        "The variables do not contain two independent objects. Both references point to the same object.",
 
-        total(10, 20, 30);
+      warning:
+        "Assigning an object to another variable does not automatically create an independent copy.",
 
-        The rest parameter collects all arguments into an array.
-
-        Rest can also be used during destructuring.
-      `,
-
-      example: `function total(...numbers) {
-  return numbers.reduce(
-    (sum, number) => sum + number,
-    0
-  );
-}
-
-console.log(total(10, 20, 30));`,
-
-      keyPoints: [
-        "Rest collects remaining values.",
-        "Rest parameters are arrays.",
-        "Spread expands values.",
-        "Remember: same syntax, different purpose."
-      ]
+      keyIdea:
+        "For objects and arrays, assignment copies the reference, not the complete structure."
     },
 
-    /* =====================================================
-       CONCEPT 19
-       ===================================================== */
-
     {
-      id: 19,
+      number: 20,
+      title: "Immutable Array Transformations",
+      intro:
+        "Modern frontend applications often prefer creating new data instead of changing existing data directly.",
 
-      title: "Arrays of Objects",
+      explanation:
+        "Immutable transformation means producing a new array or object while leaving the original value unchanged.",
 
-      explanation: `
-        This is one of the most important structures in
-        frontend and backend development.
-
-        Example:
-
-        const students = [
-          {
-            name: "Ravi",
-            branch: "CSE",
-            cgpa: 8.7
-          },
-          {
-            name: "Anita",
-            branch: "CSE",
-            cgpa: 9.2
-          }
-        ];
-
-        We can combine array methods with object properties.
-
-        students.filter(student => student.cgpa >= 9)
-
-        students.map(student => student.name)
-
-        students.find(student => student.name === "Ravi")
-
-        This pattern appears everywhere in MERN applications.
-      `,
-
-      example: `const students = [
-  { name: "Ravi", branch: "CSE", cgpa: 8.7 },
-  { name: "Anita", branch: "CSE", cgpa: 9.2 },
-  { name: "Kiran", branch: "ECE", cgpa: 8.1 }
+      code:
+`const students = [
+  { name: "Anu", marks: 70 },
+  { name: "Bhavya", marks: 85 }
 ];
 
-const toppers = students.filter(
-  student => student.cgpa >= 9
-);
+const updatedStudents = students.map(student => ({
+  ...student,
+  marks: student.marks + 5
+}));
 
-const names = students.map(
-  student => student.name
-);
+console.log(students);
+console.log(updatedStudents);`,
 
-console.log(toppers);
-console.log(names);`,
+      output:
+`[
+  { name: "Anu", marks: 70 },
+  { name: "Bhavya", marks: 85 }
+]
 
-      visualizer: {
-        type: "array-object",
-        title: "Array of Objects Visualizer",
-        steps: [
-          {
-            active: 0,
-            message: "Read Ravi's record.",
-            output: "Ravi · CSE · 8.7"
-          },
-          {
-            active: 1,
-            message: "Read Anita's record.",
-            output: "Anita · CSE · 9.2"
-          },
-          {
-            active: 2,
-            message: "Read Kiran's record.",
-            output: "Kiran · ECE · 8.1"
-          },
-          {
-            active: 1,
-            message: "Anita satisfies cgpa >= 9.",
-            output: "Selected: Anita"
-          }
-        ]
-      },
+[
+  { name: "Anu", marks: 75 },
+  { name: "Bhavya", marks: 90 }
+]`,
 
-      keyPoints: [
-        "Arrays can contain objects.",
-        "This is common in API responses.",
-        "map/filter/find work naturally with arrays of objects.",
-        "Mastering this structure is essential for MERN development."
-      ]
+      points: [
+        "map creates a new array.",
+        "The spread operator creates a new object for each student.",
+        "The original students array remains unchanged.",
+        "This approach is especially useful when managing UI state."
+      ],
+
+      commonMistake:
+        "Changing student.marks directly inside a shared data structure when the goal is to create updated state.",
+
+      keyIdea:
+        "Immutable code makes changes explicit and reduces unexpected side effects."
     },
 
-    /* =====================================================
-       CONCEPT 20
-       ===================================================== */
-
     {
-      id: 20,
+      number: 21,
+      title: "Combining Array Methods",
+      intro:
+        "Professional JavaScript frequently combines filter, map, sort and reduce to express data-processing pipelines.",
 
-      title: "Practical Data Processing Pipeline",
-
-      explanation: `
-        Real applications often combine several array operations.
-
-        Example requirement:
-
-        From a list of students:
-
-        1. Select CSE students.
-        2. Keep students with CGPA >= 8.5.
-        3. Extract their names.
-        4. Sort the resulting names.
-
-        A clean solution can use a pipeline:
-
-        filter()
-        filter()
-        map()
-        sort()
-
-        This is much closer to the type of JavaScript
-        data processing used in real applications.
-
-        Important:
-
-        Do not blindly chain methods.
-
-        First understand the data and desired result.
-        Then choose the smallest set of operations that clearly
-        expresses the requirement.
-      `,
-
-      example: `const students = [
-  { name: "Ravi", branch: "CSE", cgpa: 8.7 },
-  { name: "Anita", branch: "CSE", cgpa: 9.2 },
-  { name: "Kiran", branch: "ECE", cgpa: 8.9 },
-  { name: "Meena", branch: "CSE", cgpa: 8.2 }
+      code:
+`const students = [
+  { name: "Anu", marks: 72 },
+  { name: "Ravi", marks: 88 },
+  { name: "Bhavya", marks: 95 },
+  { name: "Kiran", marks: 64 }
 ];
 
 const result = students
-  .filter(student => student.branch === "CSE")
-  .filter(student => student.cgpa >= 8.5)
-  .map(student => student.name)
-  .sort();
+  .filter(student => student.marks >= 70)
+  .map(student => ({
+    name: student.name,
+    marks: student.marks
+  }))
+  .sort((a, b) => b.marks - a.marks);
 
 console.log(result);`,
 
-      tracer: {
-        title: "Student Data Processing Pipeline",
-        steps: [
-          {
-            stage: "Input",
-            data: 4,
-            message: "Four student records are available."
-          },
-          {
-            stage: "Filter Branch",
-            data: 3,
-            message: "Three students belong to CSE."
-          },
-          {
-            stage: "Filter CGPA",
-            data: 2,
-            message: "Two CSE students have CGPA >= 8.5."
-          },
-          {
-            stage: "Map",
-            data: ["Anita", "Ravi"],
-            message: "Only student names are extracted."
-          },
-          {
-            stage: "Sort",
-            data: ["Anita", "Ravi"],
-            message: "Names are sorted alphabetically."
-          }
-        ]
-      },
+      output:
+`[
+  { name: "Bhavya", marks: 95 },
+  { name: "Ravi", marks: 88 },
+  { name: "Anu", marks: 72 }
+]`,
 
-      keyPoints: [
-        "Real applications process collections in stages.",
-        "filter selects data.",
-        "map transforms data.",
-        "reduce aggregates data.",
-        "Combining methods creates readable data pipelines."
-      ]
+      breakdown: [
+        ["filter", "Remove students below 70."],
+        ["map", "Create the output object structure."],
+        ["sort", "Order the remaining students by marks."]
+      ],
+
+      keyIdea:
+        "Readable data pipelines can express complex transformations without manual index management."
+    },
+
+    {
+      number: 22,
+      title: "Choosing the Right Array Method",
+      intro:
+        "Knowing syntax is not enough. Good JavaScript developers choose methods according to intent.",
+
+      comparison: [
+        ["Need to transform every item", "map()"],
+        ["Need only matching items", "filter()"],
+        ["Need first matching item", "find()"],
+        ["Need first matching index", "findIndex()"],
+        ["Need to check existence", "includes()"],
+        ["Need one accumulated result", "reduce()"],
+        ["Need to perform an action", "forEach()"],
+        ["Need a portion without mutation", "slice()"]
+      ],
+
+      warning:
+        "Do not choose a method only because you remember its syntax. Start by identifying the desired result.",
+
+      keyIdea:
+        "Good array code communicates intent."
+    },
+
+    {
+      number: 23,
+      title: "Real-World Data Modelling",
+      intro:
+        "A full-stack developer constantly converts real-world entities into structured data.",
+
+      architecture: [
+        ["Student", "Object representing one student"],
+        ["Students", "Array containing many student objects"],
+        ["Course", "Object representing one course"],
+        ["Courses", "Array containing many course objects"],
+        ["Enrollment", "Object connecting a student and course"]
+      ],
+
+      code:
+`const course = {
+  id: 101,
+  title: "JavaScript",
+  instructor: {
+    name: "Bhavya",
+    experience: 8
+  },
+  topics: [
+    "Variables",
+    "Functions",
+    "Arrays",
+    "Objects"
+  ],
+  students: [
+    { id: 1, name: "Anu" },
+    { id: 2, name: "Ravi" }
+  ]
+};
+
+console.log(course.title);
+console.log(course.topics.length);
+console.log(course.students[1].name);`,
+
+      output:
+`JavaScript
+4
+Ravi`,
+
+      realWorld:
+        "This mental model becomes directly useful when consuming JSON APIs and working with MongoDB documents in later MERN levels.",
+
+      keyIdea:
+        "Good data modelling makes later frontend, API and database work easier."
+    },
+
+    {
+      number: 24,
+      title: "Safe Transformation Patterns",
+      intro:
+        "The most useful Level 10 skill is not memorising methods. It is learning to transform data predictably.",
+
+      points: [
+        "Prefer map for transformation.",
+        "Prefer filter for selection.",
+        "Prefer find for one matching item.",
+        "Prefer reduce for accumulation.",
+        "Use spread when creating updated arrays or objects.",
+        "Be conscious of methods that mutate data.",
+        "Keep transformation steps readable.",
+        "Avoid unnecessary deeply nested data."
+      ],
+
+      warning:
+        "Do not create complicated one-line pipelines just to make code shorter. Readability is more important than cleverness.",
+
+      keyIdea:
+        "Professional JavaScript balances concise syntax with clear intent."
     }
 
   ],
-
-  /* =======================================================
-     PREMIUM VISUALIZER
-     ======================================================= */
 
   visualizer: {
-
-    title: "Premium Array & Object Visualizer",
-
+    title: "Array Transformation Visualizer",
     description:
-      "Explore how JavaScript processes arrays, objects and collections step by step.",
-
-    type: "data-structures",
-
-    examples: [
-
+      "Follow a collection as it moves through filter, map and sort operations.",
+    steps: [
       {
-        title: "Array Indexing",
-
-        code: `const numbers = [10, 20, 30];
-
-console.log(numbers[1]);`,
-
-        steps: [
-          {
-            operation: "Create array",
-            state: ["10", "20", "30"],
-            active: -1,
-            message: "Array is created with three elements."
-          },
-          {
-            operation: "Access index 1",
-            state: ["10", "20", "30"],
-            active: 1,
-            message: "Index 1 contains 20."
-          }
-        ]
+        title: "Original data",
+        operation: "students",
+        detail:
+          '[Anu:72, Ravi:88, Bhavya:95, Kiran:64]'
       },
-
       {
-        title: "Map Transformation",
-
-        code: `const numbers = [1, 2, 3];
-
-const doubled = numbers.map(
-  number => number * 2
-);`,
-
-        steps: [
-          {
-            operation: "Read 1",
-            input: 1,
-            output: [2],
-            message: "1 becomes 2."
-          },
-          {
-            operation: "Read 2",
-            input: 2,
-            output: [2, 4],
-            message: "2 becomes 4."
-          },
-          {
-            operation: "Read 3",
-            input: 3,
-            output: [2, 4, 6],
-            message: "3 becomes 6."
-          }
-        ]
+        title: "Filter",
+        operation: "marks >= 70",
+        detail:
+          'Kiran is removed because 64 does not satisfy the condition.'
       },
-
       {
-        title: "Filter Students",
-
-        code: `const students = [
-  { name: "Ravi", cgpa: 8.7 },
-  { name: "Anita", cgpa: 9.2 },
-  { name: "Kiran", cgpa: 8.1 }
-];
-
-const toppers = students.filter(
-  student => student.cgpa >= 9
-);`,
-
-        steps: [
-          {
-            operation: "Check Ravi",
-            active: 0,
-            output: [],
-            message: "8.7 is below 9."
-          },
-          {
-            operation: "Check Anita",
-            active: 1,
-            output: ["Anita"],
-            message: "9.2 satisfies the condition."
-          },
-          {
-            operation: "Check Kiran",
-            active: 2,
-            output: ["Anita"],
-            message: "8.1 is below 9."
-          }
-        ]
+        title: "Remaining collection",
+        operation: "filter result",
+        detail:
+          '[Anu:72, Ravi:88, Bhavya:95]'
       },
-
       {
-        title: "Reduce Total",
-
-        code: `const marks = [70, 80, 90];
-
-const total = marks.reduce(
-  (sum, mark) => sum + mark,
-  0
-);`,
-
-        steps: [
-          {
-            active: 0,
-            accumulator: 0,
-            current: 70,
-            result: 70,
-            message: "Initial accumulator 0 + 70."
-          },
-          {
-            active: 1,
-            accumulator: 70,
-            current: 80,
-            result: 150,
-            message: "70 + 80."
-          },
-          {
-            active: 2,
-            accumulator: 150,
-            current: 90,
-            result: 240,
-            message: "150 + 90."
-          }
-        ]
+        title: "Map",
+        operation: "select name and marks",
+        detail:
+          'Each student object is transformed into the required output shape.'
+      },
+      {
+        title: "Sort",
+        operation: "marks descending",
+        detail:
+          '[Bhavya:95, Ravi:88, Anu:72]'
       }
-
     ]
   },
-
-  /* =======================================================
-     PROGRAM TRACE
-     ======================================================= */
 
   trace: {
-
-    title: "Program Trace · Student Data Processing",
-
-    code: `const students = [
-  { name: "Ravi", cgpa: 8.7 },
-  { name: "Anita", cgpa: 9.2 },
-  { name: "Kiran", cgpa: 8.1 }
-];
-
-const toppers = students
-  .filter(student => student.cgpa >= 9)
-  .map(student => student.name);
-
-console.log(toppers);`,
-
-    steps: [
-
+    title: "Array & Object Transformation Tracer",
+    lines: [
       {
         line: 1,
-        operation: "Create students array.",
-        variables: {
-          students: "3 records"
-        },
-        message: "The collection contains three student objects."
+        code: 'const students = ['
       },
-
+      {
+        line: 2,
+        code: '  { name: "Anu", marks: 72 },'
+      },
+      {
+        line: 3,
+        code: '  { name: "Ravi", marks: 88 },'
+      },
+      {
+        line: 4,
+        code: '  { name: "Bhavya", marks: 95 }'
+      },
+      {
+        line: 5,
+        code: '];'
+      },
+      {
+        line: 6,
+        code: 'const toppers = students'
+      },
       {
         line: 7,
-        operation: "Start filter().",
-        variables: {
-          students: "3 records"
-        },
-        message: "Each student will be checked."
+        code: '  .filter(s => s.marks >= 80)'
       },
-
-      {
-        line: 7,
-        operation: "Check Ravi.",
-        variables: {
-          student: "Ravi",
-          cgpa: 8.7
-        },
-        message: "8.7 >= 9 is false. Ravi is rejected."
-      },
-
-      {
-        line: 7,
-        operation: "Check Anita.",
-        variables: {
-          student: "Anita",
-          cgpa: 9.2
-        },
-        message: "9.2 >= 9 is true. Anita is selected."
-      },
-
-      {
-        line: 7,
-        operation: "Check Kiran.",
-        variables: {
-          student: "Kiran",
-          cgpa: 8.1
-        },
-        message: "8.1 >= 9 is false. Kiran is rejected."
-      },
-
       {
         line: 8,
-        operation: "Run map().",
-        variables: {
-          student: "Anita"
-        },
-        message: "The selected object is transformed into its name."
+        code: '  .map(s => s.name);'
       },
-
       {
-        line: 8,
-        operation: "Create final array.",
-        variables: {
-          toppers: ["Anita"]
-        },
-        message: "The final array contains Anita."
-      },
-
-      {
-        line: 10,
-        operation: "Print result.",
-        variables: {
-          output: ["Anita"]
-        },
-        message: "The result is displayed."
+        line: 9,
+        code: 'console.log(toppers);'
       }
+    ],
 
+    steps: [
+      {
+        line: 1,
+        title: "Create the array",
+        detail:
+          "students is created as an array containing three student objects."
+      },
+      {
+        line: 6,
+        title: "Begin transformation",
+        detail:
+          "The students collection becomes the input to a transformation pipeline."
+      },
+      {
+        line: 7,
+        title: "Run filter",
+        detail:
+          "Only students whose marks are at least 80 are retained."
+      },
+      {
+        line: 7,
+        title: "Evaluate Anu",
+        detail:
+          "72 >= 80 is false, so Anu is excluded."
+      },
+      {
+        line: 7,
+        title: "Evaluate Ravi",
+        detail:
+          "88 >= 80 is true, so Ravi remains."
+      },
+      {
+        line: 7,
+        title: "Evaluate Bhavya",
+        detail:
+          "95 >= 80 is true, so Bhavya remains."
+      },
+      {
+        line: 8,
+        title: "Run map",
+        detail:
+          "The remaining student objects are transformed into their names."
+      },
+      {
+        line: 9,
+        title: "Final result",
+        detail:
+          'The result is ["Ravi", "Bhavya"].'
+      }
     ]
   },
 
-  /* =======================================================
-     REVISION
-     ======================================================= */
-
   revision: [
-
-    {
-      question: "What is the first index of a JavaScript array?",
-      answer: "0"
-    },
-
-    {
-      question: "How do you access the last array element?",
-      answer: "array[array.length - 1]"
-    },
-
-    {
-      question: "Which method adds an element to the end?",
-      answer: "push()"
-    },
-
-    {
-      question: "Which method removes the last element?",
-      answer: "pop()"
-    },
-
-    {
-      question: "Which method creates a new array by selecting matching elements?",
-      answer: "filter()"
-    },
-
-    {
-      question: "Which method transforms every element?",
-      answer: "map()"
-    },
-
-    {
-      question: "Which method is commonly used to aggregate an array into one result?",
-      answer: "reduce()"
-    },
-
-    {
-      question: "What does find() return?",
-      answer: "The first element that satisfies the supplied condition."
-    },
-
-    {
-      question: "What does some() return?",
-      answer: "true if at least one element satisfies the condition."
-    },
-
-    {
-      question: "What does every() return?",
-      answer: "true if every element satisfies the condition."
-    },
-
-    {
-      question: "How are object properties accessed?",
-      answer: "Using dot notation or bracket notation."
-    },
-
-    {
-      question: "What does object destructuring do?",
-      answer: "It extracts selected properties into variables."
-    },
-
-    {
-      question: "What does spread syntax do?",
-      answer: "It expands elements or properties from an iterable/object."
-    },
-
-    {
-      question: "What does rest syntax do?",
-      answer: "It collects remaining values into a structure."
-    },
-
-    {
-      question: "Why are arrays of objects important?",
-      answer:
-        "They represent collections of real-world records and are extremely common in APIs and MERN applications."
-    }
-
+    ["Array", "An ordered collection of values."],
+    ["Index", "Zero-based position of an array element."],
+    ["Object", "A collection of named properties."],
+    ["map()", "Creates a new array by transforming every element."],
+    ["filter()", "Creates a new array containing matching elements."],
+    ["find()", "Returns the first element satisfying a condition."],
+    ["findIndex()", "Returns the index of the first matching element."],
+    ["reduce()", "Combines array elements into one accumulated result."],
+    ["forEach()", "Runs a function for every array element."],
+    ["Destructuring", "Extracts values from arrays or objects."],
+    ["Spread", "Expands values from an existing collection."],
+    ["Rest", "Collects remaining values into a collection."],
+    ["Mutation", "Changing an existing array or object."],
+    ["Immutable transformation", "Creating updated data without changing the original."],
+    ["Reference", "A value pointing to an object or array in memory."]
   ],
 
-  /* =======================================================
-     INTERVIEW QUESTIONS
-     ======================================================= */
-
   interview: [
-
     {
       question: "What is the difference between an array and an object?",
       answer:
-        "Arrays represent ordered collections accessed mainly by index, while objects represent named properties using key-value pairs."
+        "An array is an ordered collection accessed primarily through numeric indexes, while an object stores named properties."
     },
-
     {
-      question: "Are JavaScript arrays zero-based?",
+      question: "Why does array indexing start at zero?",
       answer:
-        "Yes. The first element is at index 0."
+        "JavaScript arrays use zero-based indexing, so the first element is at position 0 and the last element is at length - 1."
     },
-
     {
-      question: "What is the difference between map() and forEach()?",
+      question: "What does map() return?",
       answer:
-        "map() returns a new transformed array, while forEach() performs an action for each element and does not produce a transformed array."
+        "map returns a new array containing the transformed result for each input element."
     },
-
     {
       question: "What is the difference between map() and filter()?",
       answer:
-        "map transforms every element, while filter selects elements that satisfy a condition."
+        "map transforms every element, while filter selects only elements satisfying a condition."
     },
-
-    {
-      question: "What is reduce() used for?",
-      answer:
-        "reduce() processes an array and builds a single accumulated result such as a sum, count, maximum or grouped structure."
-    },
-
     {
       question: "What is the difference between find() and filter()?",
       answer:
-        "find() returns the first matching element, while filter() returns an array containing all matching elements."
+        "find returns the first matching element, while filter returns a new array containing all matching elements."
     },
-
     {
-      question: "What is the difference between some() and every()?",
+      question: "What does reduce() do?",
       answer:
-        "some() checks whether at least one element satisfies a condition; every() checks whether all elements satisfy it."
+        "reduce processes a collection and builds one accumulated result."
     },
-
     {
-      question: "What is bracket notation useful for?",
+      question: "Does forEach() return a new array?",
       answer:
-        "It allows dynamic property access using expressions or variables."
+        "No. forEach is intended for performing an action for each element."
     },
-
+    {
+      question: "Why can sort() produce unexpected numeric results?",
+      answer:
+        "sort compares values as strings by default. A numeric comparator such as (a, b) => a - b should be used for numeric sorting."
+    },
+    {
+      question: "Does slice() mutate the original array?",
+      answer:
+        "No. slice creates a new array containing the requested portion."
+    },
+    {
+      question: "Does splice() mutate the original array?",
+      answer:
+        "Yes. splice modifies the original array."
+    },
     {
       question: "What is object destructuring?",
       answer:
-        "It extracts object properties into variables using concise syntax."
+        "It is syntax for extracting named properties from an object into variables."
     },
-
+    {
+      question: "What is array destructuring?",
+      answer:
+        "It extracts values from an array according to their positions."
+    },
+    {
+      question: "What does the spread operator do with objects?",
+      answer:
+        "It expands an object's enumerable properties into another object."
+    },
     {
       question: "What is the difference between spread and rest?",
       answer:
         "Spread expands values, while rest collects remaining values."
     },
-
     {
-      question: "Why are arrays of objects common in web applications?",
+      question: "Why does const not make an object immutable?",
       answer:
-        "They naturally represent collections of records returned from databases and APIs."
+        "const prevents reassignment of the binding, but properties of the referenced object can still be changed."
     },
-
     {
-      question: "Why is map() important in React?",
+      question: "What happens when one object is assigned to another variable?",
       answer:
-        "React commonly uses map() to transform arrays of application data into lists of UI elements."
+        "The reference is copied, so both variables can refer to the same object."
     },
-
     {
-      question: "Does filter() mutate the original array?",
+      question: "What is an immutable transformation?",
       answer:
-        "No. filter() creates and returns a new array."
+        "It creates a new data structure instead of modifying the existing one."
     },
-
     {
-      question: "Does map() mutate the original array?",
+      question: "Why are arrays of objects common in frontend applications?",
       answer:
-        "map() itself does not mutate the original array."
+        "They naturally represent collections of entities such as students, products, posts and users."
     },
-
     {
-      question: "What does this refer to inside an object method?",
+      question: "How would you find a student by ID?",
       answer:
-        "In a normal method call such as object.method(), this generally refers to the object that invoked the method."
+        "Use find(), for example students.find(student => student.id === targetId)."
+    },
+    {
+      question: "How would you get only the names of students scoring above 80?",
+      answer:
+        "Use filter() followed by map(), for example students.filter(s => s.marks > 80).map(s => s.name)."
     }
-
   ],
-
-  /* =======================================================
-     PRACTICE
-     ======================================================= */
 
   practice: [
-
     {
-      id: 1,
-      title: "Student Marks Filter",
-      difficulty: "Easy",
-      problem:
-        "Given an array of marks, create a new array containing only marks greater than or equal to 60.",
-      hint:
-        "Use filter().",
-      expected:
-        "A new array containing only marks >= 60."
+      title: "Array Explorer",
+      description:
+        "Create an array of five course names. Display the first item, last item, length and every item using iteration."
     },
-
     {
-      id: 2,
-      title: "Double the Values",
-      difficulty: "Easy",
-      problem:
-        "Given an array of numbers, create another array containing twice each number.",
-      hint:
-        "Use map().",
-      expected:
-        "A new array with every value multiplied by 2."
+      title: "Marks Filter",
+      description:
+        "Create an array of student marks and use filter() to create a new array containing only marks of 60 or above."
     },
-
     {
-      id: 3,
-      title: "Calculate Total",
-      difficulty: "Easy",
-      problem:
-        "Calculate the total of all values in an array.",
-      hint:
-        "Use reduce().",
-      expected:
-        "The sum of all array elements."
+      title: "Price Transformer",
+      description:
+        "Create an array of product prices and use map() to apply a 10% discount without changing the original array."
     },
-
     {
-      id: 4,
-      title: "Find a Student",
-      difficulty: "Easy",
-      problem:
-        "Given an array of student objects, find the student whose name is 'Anita'.",
-      hint:
-        "Use find().",
-      expected:
-        "The first matching student object."
+      title: "Student Search",
+      description:
+        "Create an array of student objects and use find() to locate a student using a unique ID."
     },
-
     {
-      id: 5,
-      title: "Placement Eligible Students",
-      difficulty: "Medium",
-      problem:
-        "Given student objects containing name, branch and CGPA, find students whose CGPA is at least 7.5.",
-      hint:
-        "Use filter().",
-      expected:
-        "An array containing all eligible students."
+      title: "Topper List",
+      description:
+        "Given an array of student objects, use filter() and map() to produce the names of students scoring at least 80."
     },
-
     {
-      id: 6,
-      title: "Student Names",
-      difficulty: "Easy",
-      problem:
-        "Convert an array of student objects into an array containing only their names.",
-      hint:
-        "Use map().",
-      expected:
-        "An array of names."
+      title: "Marks Calculator",
+      description:
+        "Use reduce() to calculate the total and average marks of an array."
     },
-
     {
-      id: 7,
-      title: "Highest Mark",
-      difficulty: "Medium",
-      problem:
-        "Find the highest value in an array of marks.",
-      hint:
-        "You can use reduce().",
-      expected:
-        "The highest mark."
+      title: "Object Destructuring",
+      description:
+        "Create a student object containing name, branch, CGPA and skills. Extract selected properties using destructuring."
     },
-
     {
-      id: 8,
-      title: "Department Filter",
-      difficulty: "Medium",
-      problem:
-        "From an array of employee objects, select only employees belonging to the CSE department.",
-      hint:
-        "Use filter() and compare the department property.",
-      expected:
-        "An array containing only CSE employees."
+      title: "Immutable Update",
+      description:
+        "Create an array of student objects and produce a new array where every student's marks increase by 5 without changing the original array."
     },
-
     {
-      id: 9,
-      title: "Average CGPA",
-      difficulty: "Medium",
-      problem:
-        "Calculate the average CGPA of a collection of students.",
-      hint:
-        "Use reduce() to calculate the total, then divide by length.",
-      expected:
-        "The average CGPA."
+      title: "Placement Shortlist",
+      description:
+        "Create student records containing CGPA and skills. Filter eligible students and map them into a shortlist containing only their names and CGPA."
     },
-
     {
-      id: 10,
-      title: "Active Users",
-      difficulty: "Medium",
-      problem:
-        "Given users with an active property, create an array containing only active users.",
-      hint:
-        "Use filter().",
-      expected:
-        "Only users whose active property is true."
-    },
-
-    {
-      id: 11,
-      title: "Salary Increment",
-      difficulty: "Medium",
-      problem:
-        "Given employee objects, create a new array where each employee receives a 10% salary increase.",
-      hint:
-        "Use map() and object spread.",
-      expected:
-        "New employee objects with updated salary values."
-    },
-
-    {
-      id: 12,
-      title: "Placement Data Pipeline",
-      difficulty: "Hard",
-      problem:
-        "From a student array, select CSE students with CGPA >= 8, extract their names and sort the names alphabetically.",
-      hint:
-        "Use filter(), filter(), map() and sort().",
-      expected:
-        "A sorted array of eligible CSE student names."
-    },
-
-    {
-      id: 13,
-      title: "Course Skill Analyzer",
-      difficulty: "Hard",
-      problem:
-        "Given students with skills arrays, determine whether at least one student knows JavaScript.",
-      hint:
-        "Combine some() with includes().",
-      expected:
-        "true or false."
-    },
-
-    {
-      id: 14,
-      title: "Complete Assignment Check",
-      difficulty: "Medium",
-      problem:
-        "Given assignment objects with a submitted property, determine whether every student has submitted the assignment.",
-      hint:
-        "Use every().",
-      expected:
-        "A boolean value."
-    },
-
-    {
-      id: 15,
-      title: "Mini Placement Report",
-      difficulty: "Hard",
-      problem:
-        "Create a report from student data showing eligible students, their names, total eligible count and average CGPA.",
-      hint:
-        "Combine filter(), map() and reduce().",
-      expected:
-        "A structured placement report object."
+      title: "Course Data Model",
+      description:
+        "Design an object representing a course with instructor details, topics and enrolled students. Access at least five nested values."
     }
-
   ],
 
-  /* =======================================================
-     QUIZ
-     ======================================================= */
-
   quiz: [
-
     {
-      question: "What is the index of the first array element?",
-      options: ["0", "1", "-1", "undefined"],
-      answer: 0,
-      explanation:
-        "JavaScript arrays use zero-based indexing."
+      question: "What is the index of the first element in a JavaScript array?",
+      options: ["0", "1", "-1", "first"],
+      answer: 0
     },
-
     {
-      question: "Which method adds an element to the end of an array?",
-      options: ["shift()", "push()", "add()", "append()"],
-      answer: 1,
-      explanation:
-        "push() adds one or more elements to the end."
+      question: "Which method creates a new array by transforming every element?",
+      options: ["filter()", "map()", "find()", "forEach()"],
+      answer: 1
     },
-
     {
-      question: "Which method removes the last element?",
-      options: ["pop()", "remove()", "delete()", "shift()"],
-      answer: 0,
-      explanation:
-        "pop() removes the final array element."
+      question: "Which method selects elements that satisfy a condition?",
+      options: ["map()", "reduce()", "filter()", "sort()"],
+      answer: 2
     },
-
     {
-      question: "Which method returns a new array containing matching elements?",
-      options: ["find()", "filter()", "some()", "every()"],
-      answer: 1,
-      explanation:
-        "filter() creates a new array from elements satisfying a condition."
+      question: "Which method returns the first matching element?",
+      options: ["find()", "filter()", "includes()", "map()"],
+      answer: 0
     },
-
     {
-      question: "Which method transforms every array element?",
-      options: ["filter()", "map()", "find()", "includes()"],
-      answer: 1,
-      explanation:
-        "map() transforms each element and returns a new array."
+      question: "Which method is designed to build an accumulated result?",
+      options: ["forEach()", "reduce()", "find()", "slice()"],
+      answer: 1
     },
-
     {
-      question: "Which method is commonly used to calculate a total?",
-      options: ["map()", "filter()", "reduce()", "find()"],
-      answer: 2,
-      explanation:
-        "reduce() is commonly used for accumulation."
+      question: "Which operation mutates the original array?",
+      options: ["slice()", "map()", "filter()", "splice()"],
+      answer: 3
     },
-
-    {
-      question: "What does find() return?",
-      options: [
-        "All matching elements",
-        "The first matching element",
-        "A boolean",
-        "The array length"
-      ],
-      answer: 1,
-      explanation:
-        "find() returns the first element that satisfies the condition."
-    },
-
-    {
-      question: "What does every() return?",
-      options: [
-        "An array",
-        "The first match",
-        "A boolean",
-        "An object"
-      ],
-      answer: 2,
-      explanation:
-        "every() returns true only when all elements satisfy the condition."
-    },
-
-    {
-      question: "Which syntax accesses an object property dynamically?",
-      options: [
-        "object.property",
-        "object[property]",
-        "object->property",
-        "object::property"
-      ],
-      answer: 1,
-      explanation:
-        "Bracket notation allows expressions or variables to determine the property name."
-    },
-
     {
       question: "What does object destructuring do?",
       options: [
-        "Deletes an object",
-        "Extracts properties into variables",
+        "Deletes object properties",
+        "Extracts object properties into variables",
         "Sorts an object",
-        "Converts an object into JSON"
+        "Converts an object into an array"
       ],
-      answer: 1,
-      explanation:
-        "Destructuring extracts selected properties into variables."
+      answer: 1
     },
-
     {
-      question: "What does spread syntax generally do?",
+      question: "What does the spread operator commonly help with?",
       options: [
-        "Deletes values",
-        "Expands values",
-        "Sorts values",
-        "Encrypts values"
+        "Creating updated arrays and objects",
+        "Deleting variables",
+        "Stopping loops",
+        "Declaring functions"
       ],
-      answer: 1,
-      explanation:
-        "Spread expands iterable elements or object properties."
+      answer: 0
     },
-
     {
-      question: "What does rest syntax generally do?",
+      question: "What does assignment of an object to another variable copy?",
       options: [
-        "Collects remaining values",
-        "Deletes remaining values",
-        "Sorts values",
-        "Freezes values"
+        "The complete object",
+        "Only primitive properties",
+        "The reference",
+        "Nothing"
       ],
-      answer: 0,
-      explanation:
-        "Rest collects remaining values into an array or object structure."
+      answer: 2
     },
-
     {
-      question: "Which structure is commonly used for API collections?",
+      question: "What is the default comparison behaviour of sort()?",
       options: [
-        "Only strings",
-        "Only numbers",
-        "Array of objects",
-        "Single boolean"
+        "Numeric ascending",
+        "Numeric descending",
+        "String-style comparison",
+        "Random ordering"
       ],
-      answer: 2,
-      explanation:
-        "Arrays of objects naturally represent collections of records."
+      answer: 2
     },
-
     {
-      question: "Which method checks whether at least one element satisfies a condition?",
-      options: ["every()", "some()", "findAll()", "check()"],
-      answer: 1,
-      explanation:
-        "some() returns true when at least one element passes the test."
+      question: "Which method checks whether an array contains a value?",
+      options: ["includes()", "contains()", "hasValue()", "exists()"],
+      answer: 0
     },
-
     {
-      question: "Which method is commonly used to render a list in React?",
-      options: ["reduce()", "map()", "shift()", "indexOf()"],
-      answer: 1,
-      explanation:
-        "React commonly uses map() to transform data into UI elements."
+      question: "Which structure is best for representing one student with named fields?",
+      options: ["Object", "String", "Number", "Boolean"],
+      answer: 0
     }
-
   ],
 
-  /* =======================================================
-     GLOSSARY
-     ======================================================= */
-
   glossary: [
-
     {
       term: "Array",
       definition:
-        "An ordered collection of values accessed primarily using numeric indexes."
+        "An ordered collection of values."
     },
-
-    {
-      term: "Index",
-      definition:
-        "The numeric position of an element inside an array."
-    },
-
     {
       term: "Object",
       definition:
-        "A collection of named key-value properties."
+        "A collection of named properties representing structured data."
     },
-
     {
-      term: "Property",
+      term: "Index",
       definition:
-        "A named value stored inside an object."
+        "The numeric position of an element in an array."
     },
-
-    {
-      term: "Method",
-      definition:
-        "A function stored as an object property."
-    },
-
-    {
-      term: "Callback",
-      definition:
-        "A function passed to another function to be executed later or during processing."
-    },
-
     {
       term: "Mutation",
       definition:
-        "Changing the existing contents of an array or object."
+        "A change made directly to an existing array or object."
     },
-
     {
-      term: "map()",
+      term: "map",
       definition:
-        "Creates a new array by transforming each element."
+        "An array method that creates a transformed array."
     },
-
     {
-      term: "filter()",
+      term: "filter",
       definition:
-        "Creates a new array containing elements that satisfy a condition."
+        "An array method that keeps elements satisfying a condition."
     },
-
     {
-      term: "reduce()",
+      term: "reduce",
       definition:
-        "Processes an array and accumulates its values into a final result."
+        "An array method that combines elements into an accumulated result."
     },
-
     {
       term: "Destructuring",
       definition:
-        "A syntax for extracting values from arrays or properties from objects."
+        "Syntax used to extract values from arrays or objects."
     },
-
     {
       term: "Spread",
       definition:
-        "Syntax that expands elements or properties from an existing structure."
+        "Syntax that expands values from an existing iterable or object."
     },
-
     {
-      term: "Rest",
+      term: "Reference",
       definition:
-        "Syntax that collects remaining values."
+        "A value that identifies an object or array rather than containing an independent copy."
     },
-
     {
-      term: "Array of Objects",
+      term: "Immutable",
       definition:
-        "An array whose elements are objects, commonly used for collections of records."
+        "A programming approach where existing data is not directly modified."
     },
-
     {
-      term: "Accumulator",
+      term: "Data model",
       definition:
-        "The running value maintained by reduce() while processing an array."
+        "A structured representation of information used by an application."
     }
-
   ],
 
-  /* =======================================================
-     COMPLETION
-     ======================================================= */
-
   completion: {
-
-    title: "Level 10 Complete",
-
+    title: "Level 10 Complete — Think in Data",
     message:
-      "You can now model real-world data using arrays and objects, search and transform collections, process arrays of objects and build practical JavaScript data pipelines.",
+      "You can now model application data using arrays and objects, search and transform collections, " +
+      "and create immutable updates. These skills are essential for React interfaces, REST APIs and MERN applications.",
 
-    takeaway: [
-      "Arrays organize ordered collections.",
-      "Objects represent structured entities.",
-      "map() transforms data.",
-      "filter() selects data.",
-      "reduce() aggregates data.",
-      "find(), some() and every() support powerful data checks.",
-      "Destructuring makes modern JavaScript cleaner.",
-      "Spread and rest are essential for modern application development.",
-      "Arrays of objects are fundamental to API and MERN development."
-    ],
+    challenge:
+      "Build a Student Placement Dashboard data model. Store at least 8 students as objects inside an array. " +
+      "Each student should contain an ID, name, branch, CGPA, skills and placement status. " +
+      "Then create separate derived collections for eligible students, placed students, top CGPA students " +
+      "and a list containing only student names. Do not mutate the original collection."
+  },
 
-    nextLevel:
-      "Level 11 — DOM & Browser Interaction"
-  }
-
+  takeaway:
+    "Arrays manage collections. Objects model entities. " +
+    "map transforms, filter selects, find locates, reduce accumulates, " +
+    "and spread helps create immutable updates. " +
+    "Mastering these patterns gives you the data-handling foundation required for React and MERN."
 };
+
+console.log(
+  "CodeBhavya Full Stack Level 10 loaded: Arrays & Objects"
+);
