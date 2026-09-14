@@ -1,4 +1,4 @@
-```javascript
+
 "use strict";
 
 /*
@@ -1304,4 +1304,4 @@ Practice Events`
 console.log(
   "CodeBhavya Full Stack Level 11 loaded: DOM & Events"
 );
-```
+
