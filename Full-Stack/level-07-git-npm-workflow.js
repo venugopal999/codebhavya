@@ -1,4 +1,4 @@
-```javascript
+
 "use strict";
 
 window.FULLSTACK_LESSONS = window.FULLSTACK_LESSONS || {};
@@ -1391,4 +1391,4 @@ npm ci`,
             "You have completed Level 07 when another developer can clone the project, install its dependencies, run its npm scripts and understand the Git history without depending on your personal computer."
     }
 };
-```
+
