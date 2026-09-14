@@ -1,9 +1,8 @@
-
 "use strict";
 
 /*
   CodeBhavya Full Stack
-  LEVEL 11 — DOM & Events
+  LEVEL 11 — DOM & EVENTS
   Rendering, event propagation and interface state
 */
 
@@ -13,29 +12,39 @@ window.FULLSTACK_LESSONS[11] = {
   number: 11,
   title: "DOM & Events",
   kicker: "JavaScript Engineering · Level 11",
-  subtitle: "Control browser content, respond to user actions and understand event propagation.",
+  subtitle:
+    "Connect JavaScript with the browser, manipulate the DOM and build responsive interfaces with events.",
   estimatedTime: "3–4 hours",
   difficulty: "Intermediate",
 
   hero: {
     badge: "LEVEL 11 · BROWSER INTERACTION",
     description:
-      "The DOM connects JavaScript with the web page. In this level, you will learn how browsers " +
-      "represent HTML as a tree, how JavaScript reads and changes that tree, and how events move " +
-      "through the page. These concepts form the foundation of interactive web applications."
+      "The DOM is the bridge between JavaScript and the webpage. " +
+      "In this level, you will learn how browsers represent HTML as a tree, " +
+      "how JavaScript finds and changes elements, and how events travel through " +
+      "nested elements to create interactive interfaces."
   },
 
   objectives: [
-    "Understand the relationship between HTML, the DOM and JavaScript.",
-    "Select and inspect DOM elements safely.",
-    "Change text, attributes, classes and styles.",
-    "Create, insert and remove elements dynamically.",
-    "Respond to user interactions with event listeners.",
-    "Understand event objects and common browser events.",
-    "Explain preventDefault and event propagation.",
-    "Understand bubbling, capturing and event delegation.",
-    "Build dynamic interfaces using DOM state and application state.",
-    "Debug browser interactions using DevTools."
+    "Understand the DOM and DOM tree.",
+    "Understand elements, nodes and relationships.",
+    "Select DOM elements safely.",
+    "Use querySelector() and querySelectorAll().",
+    "Read and update text content.",
+    "Work with attributes and data attributes.",
+    "Add and remove CSS classes.",
+    "Create, insert and remove DOM elements.",
+    "Register event listeners with addEventListener().",
+    "Understand the event object.",
+    "Distinguish target from currentTarget.",
+    "Prevent default browser behaviour.",
+    "Understand event bubbling and capturing.",
+    "Control propagation when necessary.",
+    "Use event delegation for dynamic collections.",
+    "Handle keyboard and form events.",
+    "Build interactive UI state with DOM events.",
+    "Avoid common DOM performance and event-handling mistakes."
   ],
 
   sections: [
@@ -44,303 +53,456 @@ window.FULLSTACK_LESSONS[11] = {
       number: 1,
       title: "What Is the DOM?",
       intro:
-        "The DOM, or Document Object Model, is the browser's structured representation of an HTML document.",
+        "The DOM is the browser's programming representation of an HTML document.",
 
       explanation:
-        "When the browser loads HTML, it parses the document and creates a tree of objects. " +
-        "JavaScript can use this tree to inspect and change the page.",
-
-      flow: [
-        "HTML source",
-        "Browser parses HTML",
-        "DOM tree is created",
-        "JavaScript accesses DOM objects",
-        "JavaScript changes DOM",
-        "Browser updates the rendered page"
-      ],
+        "When the browser loads HTML, it creates a structured document tree. " +
+        "JavaScript can access that tree through browser APIs and can read, modify, " +
+        "create or remove nodes.",
 
       code:
-`<h1 id="title">Welcome</h1>
+`<main>
+  <h1>CodeBhavya</h1>
+  <p>Learn Full Stack Development</p>
+</main>`,
 
-<script>
-  const title = document.getElementById("title");
-  title.textContent = "Welcome to CodeBhavya";
-</script>`,
-
-      output:
-`The visible heading changes from:
-
-Welcome
-
-to:
-
-Welcome to CodeBhavya`,
-
-      realWorld:
-        "Every interactive website uses this basic relationship between document structure and browser APIs.",
+      architecture: [
+        {
+          title: "Document",
+          items: [
+            "The complete webpage document.",
+            "Available through the document object."
+          ]
+        },
+        {
+          title: "Element",
+          items: [
+            "Represents an HTML element such as main, h1 or p.",
+            "Elements can contain other elements."
+          ]
+        },
+        {
+          title: "Text",
+          items: [
+            "Text inside elements is represented in the DOM.",
+            "JavaScript can read and update text."
+          ]
+        },
+        {
+          title: "Relationship",
+          items: [
+            "Elements can have parent, child and sibling relationships.",
+            "These relationships form the DOM tree."
+          ]
+        }
+      ],
 
       keyIdea:
-        "HTML describes the document, while the DOM is the browser's live object representation of that document."
+        "The DOM turns a static HTML document into a structure that JavaScript can program."
     },
 
     {
       number: 2,
-      title: "DOM Tree and Nodes",
+      title: "The DOM Tree",
       intro:
-        "The DOM represents a document as a hierarchy of nodes.",
-
-      explanation:
-        "Elements, text and other document components become nodes in the DOM tree. Parent-child relationships allow JavaScript to navigate the document.",
+        "HTML becomes a hierarchical tree of nodes.",
 
       code:
-`<main>
-  <section>
-    <h1>CodeBhavya</h1>
-    <p>Learn JavaScript</p>
-  </section>
-</main>`,
+`<body>
+  <main>
+    <h1>Welcome</h1>
+    <p>Hello JavaScript</p>
+  </main>
+</body>`,
 
-      breakdown: [
-        ["main", "Parent element"],
-        ["section", "Child of main"],
-        ["h1", "Child of section"],
-        ["p", "Child of section"],
-        ["text", "Text contained inside h1 and p"]
+      flow: [
+        "document",
+        "body",
+        "main",
+        "h1 → Welcome",
+        "p → Hello JavaScript"
       ],
 
-      architecture: [
-        ["Document", "Root of the DOM"],
-        ["main", "Application area"],
-        ["section", "Content group"],
-        ["h1 / p", "Content elements"],
-        ["Text nodes", "Actual textual content"]
+      breakdown: [
+        {
+          label: "Parent",
+          description:
+            "An element that contains another element."
+        },
+        {
+          label: "Child",
+          description:
+            "An element directly contained inside another element."
+        },
+        {
+          label: "Sibling",
+          description:
+            "Elements that share the same parent."
+        },
+        {
+          label: "Descendant",
+          description:
+            "Any element nested somewhere inside another element."
+        }
       ],
 
       keyIdea:
-        "DOM relationships are hierarchical: parent, child and sibling."
+        "Thinking in parent-child relationships makes DOM traversal much easier."
     },
 
     {
       number: 3,
       title: "Selecting Elements",
       intro:
-        "Before JavaScript can change a page, it normally needs to obtain a reference to the required element.",
-
-      explanation:
-        "Modern JavaScript commonly uses getElementById, querySelector and querySelectorAll.",
+        "Before JavaScript can modify a webpage, it normally needs a reference to the relevant DOM element.",
 
       code:
-`const title = document.getElementById("title");
+`const title =
+  document.querySelector("h1");
 
-const button = document.querySelector(".save-button");
-
-const cards = document.querySelectorAll(".card");
+const button =
+  document.querySelector("#saveButton");
 
 console.log(title);
-console.log(button);
-console.log(cards);`,
+console.log(button);`,
 
       methods: [
-        ["getElementById()", "Selects one element using its id."],
-        ["querySelector()", "Returns the first element matching a CSS selector."],
-        ["querySelectorAll()", "Returns all elements matching a CSS selector."]
+        {
+          name: "querySelector()",
+          purpose:
+            "Returns the first element matching a CSS selector.",
+          example:
+            'document.querySelector(".card")'
+        },
+        {
+          name: "querySelectorAll()",
+          purpose:
+            "Returns all elements matching a CSS selector.",
+          example:
+            'document.querySelectorAll(".card")'
+        },
+        {
+          name: "getElementById()",
+          purpose:
+            "Finds an element using its id.",
+          example:
+            'document.getElementById("saveButton")'
+        }
       ],
 
-      commonMistake:
-        "Using querySelector when you actually need all matching elements.",
+      comparison: {
+        headers: [
+          "Method",
+          "Returns",
+          "Typical use"
+        ],
+        rows: [
+          [
+            "querySelector()",
+            "First matching element",
+            "Select one element"
+          ],
+          [
+            "querySelectorAll()",
+            "All matching elements",
+            "Select a collection"
+          ],
+          [
+            "getElementById()",
+            "Element with matching id",
+            "Select by unique id"
+          ]
+        ]
+      },
 
       keyIdea:
-        "DOM selection converts a document element into a JavaScript reference you can work with."
+        "querySelector() uses CSS selector syntax, making it flexible and familiar."
     },
 
     {
       number: 4,
-      title: "Changing Text and Content",
+      title: "querySelector() and querySelectorAll()",
       intro:
-        "JavaScript can update what the user sees without reloading the page.",
-
-      explanation:
-        "textContent is generally the safest choice when you want to insert plain text.",
+        "CSS selectors can be reused when selecting DOM elements.",
 
       code:
-`const message = document.querySelector("#message");
+`const card =
+  document.querySelector(".card");
 
-message.textContent = "Registration successful!";`,
+const buttons =
+  document.querySelectorAll(".button");
 
-      output:
-`Registration successful!`,
+console.log(card);
+console.log(buttons.length);`,
 
-      comparison: [
-        ["textContent", "Sets or reads text content."],
-        ["innerHTML", "Parses and inserts HTML markup."]
+      points: [
+        "Use #id for an id.",
+        "Use .class for a class.",
+        "Use tag names such as button or p.",
+        "Use attribute selectors when needed.",
+        "querySelector() returns the first match.",
+        "querySelectorAll() returns all matching elements."
       ],
 
-      warning:
-        "Do not use innerHTML with untrusted user input. Inserting untrusted HTML can create security vulnerabilities.",
+      code:
+`const input =
+  document.querySelector('input[name="email"]');
+
+const cards =
+  document.querySelectorAll(".course-card");`,
 
       keyIdea:
-        "Use textContent when you need text rather than HTML markup."
+        "Good selectors make DOM code readable and maintainable."
     },
 
     {
       number: 5,
-      title: "Attributes and Properties",
+      title: "Reading and Changing Text",
       intro:
-        "HTML elements expose attributes and JavaScript properties that can be inspected or changed.",
+        "JavaScript can update the visible text of an element.",
 
       code:
-`const link = document.querySelector("#profile");
+`const heading =
+  document.querySelector("h1");
 
-console.log(link.getAttribute("href"));
+console.log(heading.textContent);
 
-link.setAttribute("href", "/profile.html");
+heading.textContent =
+  "Learn JavaScript";`,
 
-console.log(link.href);`,
+      comparison: {
+        headers: [
+          "Property",
+          "Purpose",
+          "Important point"
+        ],
+        rows: [
+          [
+            "textContent",
+            "Reads or writes text",
+            "Treats content as text"
+          ],
+          [
+            "innerHTML",
+            "Reads or writes HTML",
+            "Parses inserted HTML"
+          ],
+          [
+            "innerText",
+            "Works with rendered text",
+            "Affected by visual rendering"
+          ]
+        ]
+      },
 
-      methods: [
-        ["getAttribute()", "Reads an HTML attribute."],
-        ["setAttribute()", "Creates or updates an HTML attribute."],
-        ["removeAttribute()", "Removes an attribute."],
-        ["hasAttribute()", "Checks whether an attribute exists."]
-      ],
-
-      points: [
-        "HTML attributes are part of the document markup.",
-        "DOM properties provide JavaScript access to element state.",
-        "Some properties reflect or correspond to HTML attributes."
-      ],
+      warning:
+        "Do not use innerHTML with untrusted user input because inserting untrusted HTML can create security problems.",
 
       keyIdea:
-        "Attributes describe markup; DOM properties expose programmable element behaviour and state."
+        "Use textContent when you simply need to display text."
     },
 
     {
       number: 6,
-      title: "Classes and Styles",
+      title: "Attributes and Data Attributes",
       intro:
-        "Changing classes is usually preferable to manually changing many individual CSS properties.",
+        "DOM elements contain attributes that provide additional information.",
 
       code:
-`const card = document.querySelector(".card");
+`const image =
+  document.querySelector("img");
+
+console.log(image.getAttribute("src"));
+
+image.setAttribute(
+  "alt",
+  "CodeBhavya logo"
+);`,
+
+      methods: [
+        {
+          name: "getAttribute()",
+          purpose:
+            "Reads the value of an attribute.",
+          example:
+            'button.getAttribute("data-id")'
+        },
+        {
+          name: "setAttribute()",
+          purpose:
+            "Creates or updates an attribute.",
+          example:
+            'button.setAttribute("disabled", "")'
+        },
+        {
+          name: "removeAttribute()",
+          purpose:
+            "Removes an attribute.",
+          example:
+            'input.removeAttribute("disabled")'
+        }
+      ],
+
+      code:
+`<button
+  class="course"
+  data-level="11">
+  Open Level
+</button>`,
+
+      keyIdea:
+        "data-* attributes are useful for attaching small pieces of application metadata to DOM elements."
+    },
+
+    {
+      number: 7,
+      title: "Classes and Styles",
+      intro:
+        "JavaScript can change the appearance of elements by modifying classes.",
+
+      code:
+`const card =
+  document.querySelector(".card");
 
 card.classList.add("active");
 
 card.classList.remove("hidden");
 
-card.classList.toggle("selected");
-
-console.log(card.classList.contains("active"));`,
+card.classList.toggle("selected");`,
 
       methods: [
-        ["classList.add()", "Adds one or more classes."],
-        ["classList.remove()", "Removes classes."],
-        ["classList.toggle()", "Adds a class if absent or removes it if present."],
-        ["classList.contains()", "Checks whether a class exists."]
-      ],
-
-      realWorld:
-        "Menus, modals, tabs, alerts, dark mode controls and validation messages commonly use class changes.",
-
-      keyIdea:
-        "Let CSS handle presentation while JavaScript controls which state classes are active."
-    },
-
-    {
-      number: 7,
-      title: "Creating DOM Elements",
-      intro:
-        "JavaScript can create entirely new elements while the application is running.",
-
-      code:
-`const item = document.createElement("li");
-
-item.textContent = "Learn DOM";
-
-document.querySelector("#tasks").append(item);`,
-
-      flow: [
-        "Create element",
-        "Set its content",
-        "Configure attributes/classes",
-        "Insert it into the document"
-      ],
-
-      methods: [
-        ["createElement()", "Creates a new element object."],
-        ["append()", "Adds nodes or text at the end."],
-        ["prepend()", "Adds nodes or text at the beginning."],
-        ["remove()", "Removes an element from its parent."]
+        {
+          name: "classList.add()",
+          purpose:
+            "Adds one or more CSS classes.",
+          example:
+            'card.classList.add("active")'
+        },
+        {
+          name: "classList.remove()",
+          purpose:
+            "Removes CSS classes.",
+          example:
+            'card.classList.remove("hidden")'
+        },
+        {
+          name: "classList.toggle()",
+          purpose:
+            "Adds a class if missing or removes it if present.",
+          example:
+            'menu.classList.toggle("open")'
+        },
+        {
+          name: "classList.contains()",
+          purpose:
+            "Checks whether an element contains a class.",
+          example:
+            'menu.classList.contains("open")'
+        }
       ],
 
       keyIdea:
-        "Dynamic interfaces can construct and modify DOM nodes while the page is running."
+        "Changing classes is usually cleaner than repeatedly setting individual inline styles."
     },
 
     {
       number: 8,
-      title: "Rendering Dynamic Lists",
+      title: "Creating DOM Elements",
       intro:
-        "A common application task is converting an array of data into visible DOM elements.",
+        "JavaScript can create new elements and add them to the document.",
 
       code:
-`const courses = ["C", "DSA", "Python"];
+`const item =
+  document.createElement("li");
 
-const list = document.querySelector("#courses");
+item.textContent =
+  "JavaScript";
 
-courses.forEach(course => {
-  const item = document.createElement("li");
-  item.textContent = course;
-  list.append(item);
-});`,
+const list =
+  document.querySelector("ul");
 
-      output:
-`• C
-• DSA
-• Python`,
+list.append(item);`,
 
-      breakdown: [
-        ["Data", "courses array contains the source data."],
-        ["Iteration", "forEach visits every course."],
-        ["Creation", "A new li is created for each item."],
-        ["Content", "textContent receives the course name."],
-        ["Rendering", "The item is appended to the list."]
+      flow: [
+        "Create an element",
+        "Configure its content",
+        "Configure classes or attributes",
+        "Insert it into the DOM",
+        "Browser renders the updated interface"
       ],
 
-      realWorld:
-        "Product lists, student lists, course cards and search results can all be rendered using this pattern.",
+      methods: [
+        {
+          name: "createElement()",
+          purpose:
+            "Creates a new DOM element.",
+          example:
+            'document.createElement("li")'
+        },
+        {
+          name: "append()",
+          purpose:
+            "Adds nodes or text at the end of an element.",
+          example:
+            "list.append(item)"
+        },
+        {
+          name: "prepend()",
+          purpose:
+            "Adds nodes or text at the beginning.",
+          example:
+            "list.prepend(item)"
+        },
+        {
+          name: "remove()",
+          purpose:
+            "Removes an element from the DOM.",
+          example:
+            "item.remove()"
+        }
+      ],
 
       keyIdea:
-        "A UI list is often a visual representation of an underlying data collection."
+        "Dynamic interfaces are often built by creating, configuring and inserting DOM elements."
     },
 
     {
       number: 9,
       title: "Event Listeners",
       intro:
-        "Events allow JavaScript to respond when users interact with the browser.",
-
-      explanation:
-        "addEventListener registers a function that the browser can execute when a specified event occurs.",
+        "Events allow JavaScript to react when something happens in the browser.",
 
       code:
-`const button = document.querySelector("#save");
+`const button =
+  document.querySelector("#save");
 
-button.addEventListener("click", () => {
-  console.log("Save button clicked");
-});`,
+button.addEventListener(
+  "click",
+  () => {
+    console.log("Saved");
+  }
+);`,
+
+      explanation:
+        "addEventListener() registers a function that runs when the specified event occurs. " +
+        "It is the recommended general mechanism for registering DOM event handlers and supports multiple listeners and capture options. ",
 
       methods: [
-        ["click", "Mouse or pointer activation of a clickable element."],
-        ["input", "Value changes while the user is entering text."],
-        ["change", "A control's committed value changes."],
-        ["submit", "A form is submitted."],
-        ["keydown", "A keyboard key is pressed."],
-        ["focus", "An element receives focus."],
-        ["blur", "An element loses focus."]
+        {
+          name: "addEventListener()",
+          purpose:
+            "Registers a function for an event.",
+          example:
+            'button.addEventListener("click", save)'
+        },
+        {
+          name: "removeEventListener()",
+          purpose:
+            "Removes a previously registered listener.",
+          example:
+            'button.removeEventListener("click", save)'
+        }
       ],
-
-      warning:
-        "Avoid placing large amounts of application logic directly inside event handlers. Keep handlers focused and delegate reusable work to functions.",
 
       keyIdea:
         "An event listener connects a browser event to JavaScript behaviour."
@@ -350,518 +512,587 @@ button.addEventListener("click", () => {
       number: 10,
       title: "The Event Object",
       intro:
-        "Browser event handlers receive an event object containing information about what happened.",
+        "When an event occurs, the browser provides information about that event.",
 
       code:
-`const input = document.querySelector("#name");
+`button.addEventListener(
+  "click",
+  event => {
+    console.log(event.type);
+    console.log(event.target);
+  }
+);`,
 
-input.addEventListener("input", event => {
-  console.log(event.target.value);
-});`,
-
-      points: [
-        "event describes the event.",
-        "event.target is the element that initiated the event.",
-        "event.currentTarget is the element whose listener is currently running.",
-        "Keyboard events provide information such as the pressed key.",
-        "Mouse events provide pointer-related information."
-      ],
+      comparison: {
+        headers: [
+          "Property",
+          "Meaning"
+        ],
+        rows: [
+          [
+            "event.type",
+            "Type of event such as click or keydown"
+          ],
+          [
+            "event.target",
+            "Element where the event originated"
+          ],
+          [
+            "event.currentTarget",
+            "Element whose listener is currently running"
+          ],
+          [
+            "event.defaultPrevented",
+            "Whether default behaviour has been prevented"
+          ]
+        ]
+      },
 
       keyIdea:
-        "The event object gives your handler context about the interaction."
+        "The event object gives the handler context about what happened."
     },
 
     {
       number: 11,
-      title: "Forms and preventDefault()",
+      title: "target vs currentTarget",
       intro:
-        "Forms have built-in browser behaviour. JavaScript can intercept that behaviour when an application needs custom handling.",
+        "These two properties are easy to confuse but become important with nested elements and event delegation.",
 
       code:
-`const form = document.querySelector("#loginForm");
+`const card =
+  document.querySelector(".card");
 
-form.addEventListener("submit", event => {
-  event.preventDefault();
-
-  console.log("Form handled by JavaScript");
-});`,
+card.addEventListener(
+  "click",
+  event => {
+    console.log(event.target);
+    console.log(event.currentTarget);
+  }
+);`,
 
       explanation:
-        "Calling preventDefault stops the browser's default action for that event. " +
-        "It does not stop the event from propagating through the DOM.",
+        "target is the element where the event originated. currentTarget is the element whose listener is currently executing.",
 
-      commonMistake:
-        "Thinking preventDefault stops event bubbling. It does not. Use stopPropagation only when controlling propagation is genuinely necessary.",
-
-      realWorld:
-        "Client-side form validation commonly prevents the default submission, validates data and then sends it through an API.",
+      comparison: {
+        headers: [
+          "Property",
+          "Question answered",
+          "Can change during bubbling?"
+        ],
+        rows: [
+          [
+            "target",
+            "Where did the event start?",
+            "No"
+          ],
+          [
+            "currentTarget",
+            "Which listener is running?",
+            "Yes, as propagation reaches other listeners"
+          ]
+        ]
+      },
 
       keyIdea:
-        "preventDefault controls the browser's default action; it is different from controlling propagation."
+        "When debugging delegated events, always ask whether you need target or currentTarget."
     },
 
     {
       number: 12,
-      title: "Event Bubbling",
+      title: "Preventing Default Behaviour",
       intro:
-        "When an event occurs on a nested element, it can propagate from the target toward its ancestors.",
+        "Some browser events have built-in behaviour that JavaScript can prevent.",
 
       code:
-`<div id="card">
-  <button id="buy">Buy</button>
-</div>
+`const form =
+  document.querySelector("form");
 
-<script>
-  card.addEventListener("click", () => {
-    console.log("Card clicked");
-  });
+form.addEventListener(
+  "submit",
+  event => {
+    event.preventDefault();
 
-  buy.addEventListener("click", () => {
-    console.log("Button clicked");
-  });
-</script>`,
+    console.log("Custom submit handling");
+  }
+);`,
 
-      output:
-`Button clicked
-Card clicked`,
+      comparison: {
+        headers: [
+          "Method",
+          "Purpose"
+        ],
+        rows: [
+          [
+            "preventDefault()",
+            "Stops the browser's default action"
+          ],
+          [
+            "stopPropagation()",
+            "Stops the event from continuing through the propagation path"
+          ]
+        ]
+      },
 
-      explanation:
-        "The click begins at the button. After the target handler runs, the event bubbles toward the parent card.",
-
-      flow: [
-        "User clicks button",
-        "Button becomes event target",
-        "Button listener runs",
-        "Event bubbles upward",
-        "Card listener runs"
-      ],
+      warning:
+        "preventDefault() does not stop event propagation. These are two different concepts.",
 
       keyIdea:
-        "Bubbling allows an event that occurs on a child to be observed by ancestors."
+        "Use preventDefault() when your application intentionally replaces a browser default action."
     },
 
     {
       number: 13,
-      title: "Capturing Phase",
+      title: "Event Bubbling",
       intro:
-        "Event propagation can also travel downward toward the target during the capturing phase.",
-
-      explanation:
-        "The complete propagation model is commonly described as capturing, target and bubbling.",
-
-      flow: [
-        "Capturing: window → document → ancestors",
-        "Target: event reaches the target",
-        "Bubbling: target → ancestors → document → window"
-      ],
+        "Most DOM events propagate from the target upward through ancestor elements.",
 
       code:
-`parent.addEventListener(
+`const card =
+  document.querySelector(".card");
+
+const button =
+  document.querySelector(".card button");
+
+card.addEventListener(
   "click",
-  () => console.log("Parent capture"),
-  true
+  () => console.log("card")
 );
 
-button.addEventListener("click", () => {
-  console.log("Button target");
-});`,
+button.addEventListener(
+  "click",
+  () => console.log("button")
+);`,
 
       output:
-`Parent capture
-Button target`,
+`button
+card`,
 
-      points: [
-        "The third addEventListener argument can enable capture.",
-        "Most everyday event handlers use the default bubbling phase.",
-        "Understanding capture helps with advanced event handling and debugging."
+      flow: [
+        "User clicks the button",
+        "Button listener runs",
+        "Event continues upward",
+        "Card listener runs",
+        "Further ancestors can receive the event"
       ],
 
       keyIdea:
-        "Capture travels toward the target; bubbling travels away from it."
+        "Bubbling allows parent elements to observe events originating from their descendants."
     },
 
     {
       number: 14,
-      title: "Event Propagation",
+      title: "Event Capturing",
       intro:
-        "Event propagation describes how an event travels through the DOM.",
+        "Capturing is the phase where the event travels from ancestors toward the target.",
 
-      explanation:
-        "The browser determines the propagation path before invoking relevant listeners. " +
-        "Understanding that path makes nested interactive components easier to reason about.",
+      code:
+`document.addEventListener(
+  "click",
+  () => console.log("document"),
+  { capture: true }
+);
 
-      architecture: [
-        ["window", "Top-level browser context"],
-        ["document", "Document root"],
-        ["body", "Document body"],
-        ["parent", "Ancestor element"],
-        ["button", "Event target"]
-      ],
+button.addEventListener(
+  "click",
+  () => console.log("button")
+);`,
 
       flow: [
-        "Capture phase moves downward.",
-        "Target phase reaches the clicked element.",
-        "Bubble phase moves upward."
+        "Event starts at the browser",
+        "Capture phase travels down ancestors",
+        "Target is reached",
+        "Target listener runs",
+        "Bubbling can then travel upward"
       ],
 
-      warning:
-        "Do not use stopPropagation everywhere. It can make components difficult to compose and debug.",
+      comparison: {
+        headers: [
+          "Phase",
+          "Direction",
+          "Default?"
+        ],
+        rows: [
+          [
+            "Capture",
+            "Ancestor → target",
+            "No"
+          ],
+          [
+            "Target",
+            "At event target",
+            "Yes when target reached"
+          ],
+          [
+            "Bubble",
+            "Target → ancestor",
+            "Yes"
+          ]
+        ]
+      },
 
       keyIdea:
-        "Event propagation is a predictable journey through the DOM tree."
+        "Capture and bubble describe the direction in which event listeners are processed."
     },
 
     {
       number: 15,
       title: "stopPropagation()",
       intro:
-        "Sometimes an application needs to prevent an event from reaching another listener in the propagation path.",
+        "Sometimes an event should not continue through the propagation path.",
 
       code:
-`card.addEventListener("click", () => {
-  console.log("Card clicked");
-});
+`button.addEventListener(
+  "click",
+  event => {
+    event.stopPropagation();
 
-button.addEventListener("click", event => {
-  event.stopPropagation();
-
-  console.log("Button clicked");
-});`,
-
-      output:
-`Button clicked`,
+    console.log("button only");
+  }
+);`,
 
       explanation:
-        "stopPropagation prevents the event from continuing through the propagation path.",
+        "stopPropagation() prevents the event from continuing to other elements in the capture or bubble path. " +
+        "It does not prevent other listeners attached to the same element from running.",
 
       warning:
-        "Use it carefully. Stopping propagation can interfere with parent components, accessibility behaviours or application-level event handling.",
+        "Do not use stopPropagation() everywhere. It can make event behaviour harder to understand and can interfere with parent components.",
 
       keyIdea:
-        "stopPropagation controls propagation; preventDefault controls the default browser action."
+        "Stop propagation only when there is a clear reason to prevent ancestor listeners from receiving the event."
     },
 
     {
       number: 16,
       title: "Event Delegation",
       intro:
-        "Event delegation uses bubbling to handle events from many child elements through one parent listener.",
+        "Event delegation uses bubbling to handle events from many child elements with one parent listener.",
 
       code:
-`const list = document.querySelector("#courses");
+`const list =
+  document.querySelector("#courses");
 
-list.addEventListener("click", event => {
-  const button = event.target.closest("button");
+list.addEventListener(
+  "click",
+  event => {
+    const item =
+      event.target.closest("[data-course]");
 
-  if (!button) return;
+    if (!item) return;
 
-  console.log("Selected:", button.dataset.course);
-});`,
+    console.log(
+      item.dataset.course
+    );
+  }
+);`,
 
-      explanation:
-        "Instead of adding separate listeners to every button, the parent handles clicks and determines which child initiated the event.",
-
-      points: [
-        "Uses event bubbling.",
-        "Can reduce the number of event listeners.",
-        "Works well for dynamic lists.",
-        "New child elements can automatically participate.",
-        "closest() can help locate the relevant ancestor."
+      architecture: [
+        {
+          title: "Parent listener",
+          items: [
+            "One listener is attached to the container.",
+            "It observes bubbled events from descendants."
+          ]
+        },
+        {
+          title: "Event target",
+          items: [
+            "The clicked child becomes event.target.",
+            "closest() can locate the intended ancestor."
+          ]
+        },
+        {
+          title: "Dynamic content",
+          items: [
+            "New children can often work without adding new listeners.",
+            "This is useful for lists that change over time."
+          ]
+        },
+        {
+          title: "Result",
+          items: [
+            "Fewer listeners can simplify large interactive collections."
+          ]
+        }
       ],
 
-      realWorld:
-        "Shopping carts, task lists, tables and dynamically generated menus frequently benefit from event delegation.",
-
       keyIdea:
-        "Delegate events when many similar dynamic elements share behaviour."
+        "Event delegation is especially useful when a container manages many similar or dynamic children."
     },
 
     {
       number: 17,
-      title: "Dynamic Elements and Delegation",
+      title: "Keyboard Events",
       intro:
-        "A listener attached directly to an element does not automatically appear on elements created later.",
+        "Keyboard events allow interfaces to respond to user keyboard actions.",
 
       code:
-`const list = document.querySelector("#tasks");
+`document.addEventListener(
+  "keydown",
+  event => {
+    console.log(event.key);
 
-list.addEventListener("click", event => {
-  if (!event.target.matches(".delete")) return;
+    if (event.key === "Enter") {
+      console.log("Enter pressed");
+    }
+  }
+);`,
 
-  event.target.closest("li").remove();
-});`,
+      methods: [
+        {
+          name: "keydown",
+          purpose:
+            "Fires when a key is pressed down.",
+          example:
+            'input.addEventListener("keydown", handler)'
+        },
+        {
+          name: "keyup",
+          purpose:
+            "Fires when a key is released.",
+          example:
+            'input.addEventListener("keyup", handler)'
+        }
+      ],
 
-      explanation:
-        "Because the listener belongs to the list, newly created delete buttons can still be handled through bubbling.",
-
-      comparison: [
-        ["Direct listener", "Best when a small number of stable elements need independent behaviour."],
-        ["Delegated listener", "Useful for many or dynamically created child elements."]
+      points: [
+        "event.key gives the key value.",
+        "Keyboard events can support shortcuts.",
+        "Keyboard interaction is important for accessibility.",
+        "Do not make mouse-only interfaces when keyboard interaction is expected."
       ],
 
       keyIdea:
-        "Delegation is especially powerful when the DOM changes after initial page load."
+        "Good interactive interfaces should consider both pointer and keyboard users."
     },
 
     {
       number: 18,
-      title: "DOM State vs Application State",
+      title: "Forms and Validation",
       intro:
-        "A page can contain visual state in the DOM and logical state in JavaScript data.",
-
-      explanation:
-        "For simple interfaces, DOM state may be enough. Larger applications benefit from keeping a clear source of truth in application data.",
+        "Forms are one of the most important sources of DOM events in real applications.",
 
       code:
-`const state = {
-  count: 0
-};
+`const form =
+  document.querySelector("#loginForm");
 
-function render() {
-  document.querySelector("#count").textContent =
-    state.count;
-}
+form.addEventListener(
+  "submit",
+  event => {
+    event.preventDefault();
 
-state.count++;
-render();`,
+    const email =
+      document.querySelector("#email").value;
 
-      points: [
-        "State represents current application information.",
-        "Rendering converts state into visible UI.",
-        "Events can update state.",
-        "A render step can synchronize the DOM with state."
-      ],
+    if (!email) {
+      console.log("Email is required");
+      return;
+    }
+
+    console.log("Form is valid");
+  }
+);`,
 
       flow: [
-        "User interaction",
-        "Event handler",
-        "Update state",
-        "Render UI",
-        "User sees new state"
+        "User submits the form",
+        "submit event fires",
+        "Prevent default navigation when required",
+        "Read form values",
+        "Validate input",
+        "Show errors or continue",
+        "Send data to an API when appropriate"
       ],
 
       keyIdea:
-        "A predictable interface separates what the application knows from how that information is displayed."
+        "Form handling is a complete pipeline: capture → validate → provide feedback → submit."
     },
 
     {
       number: 19,
-      title: "DOM Performance Basics",
+      title: "Building Interactive UI State",
       intro:
-        "DOM operations can be more expensive than ordinary JavaScript calculations, especially when large amounts of UI are changed repeatedly.",
-
-      points: [
-        "Avoid unnecessary repeated DOM queries.",
-        "Cache frequently used element references.",
-        "Avoid rebuilding large sections when only a small part changed.",
-        "Batch related DOM changes when practical.",
-        "Use browser DevTools to investigate actual performance problems.",
-        "Do not optimise blindly before measuring."
-      ],
+        "Many interfaces are simply different visual states controlled by JavaScript.",
 
       code:
-`const output = document.querySelector("#output");
+`const button =
+  document.querySelector("#menuButton");
 
-for (let i = 1; i <= 3; i++) {
-  const item = document.createElement("p");
-  item.textContent = "Item " + i;
-  output.append(item);
-}`,
+const menu =
+  document.querySelector("#menu");
 
-      realWorld:
-        "Large tables, dashboards and frequently updated interfaces require careful DOM work.",
+button.addEventListener(
+  "click",
+  () => {
+    menu.classList.toggle("open");
+  }
+);`,
+
+      architecture: [
+        {
+          title: "State",
+          items: [
+            "Menu is either open or closed."
+          ]
+        },
+        {
+          title: "Event",
+          items: [
+            "User clicks the menu button."
+          ]
+        },
+        {
+          title: "Logic",
+          items: [
+            "JavaScript toggles the relevant class."
+          ]
+        },
+        {
+          title: "Rendering",
+          items: [
+            "CSS displays the corresponding visual state."
+          ]
+        }
+      ],
 
       keyIdea:
-        "Measure real bottlenecks instead of assuming every DOM operation is slow."
+        "Interactive UI can often be understood as state + event + transition + rendering."
     },
 
     {
       number: 20,
-      title: "Debugging DOM and Events",
+      title: "DOM Performance and Clean Event Handling",
       intro:
-        "Browser DevTools provides powerful tools for understanding DOM and event behaviour.",
+        "DOM code should be predictable, efficient and easy to maintain.",
 
       points: [
-        "Inspect the Elements panel.",
-        "Use the Console to inspect selected values.",
-        "Set breakpoints inside event handlers.",
-        "Inspect event objects.",
-        "Check listeners attached to elements.",
-        "Use the Network panel when events trigger API calls.",
-        "Verify that the correct element is selected."
+        "Cache frequently used DOM references when appropriate.",
+        "Avoid unnecessary repeated DOM queries inside tight loops.",
+        "Prefer class changes over large amounts of inline styling.",
+        "Use event delegation for suitable large or dynamic collections.",
+        "Remove listeners when components or long-lived objects no longer need them.",
+        "Keep event handlers focused on one responsibility.",
+        "Avoid unnecessary DOM updates.",
+        "Separate data processing from rendering logic."
       ],
 
-      code:
-`const button = document.querySelector("#save");
-
-console.log("Button:", button);
-
-button.addEventListener("click", event => {
-  console.log("Event:", event);
-  console.log("Target:", event.target);
-});`,
-
-      commonMistake:
-        "Debugging only the final visible result instead of checking whether the event fired, which element was selected and what state was available.",
-
-      keyIdea:
-        "Debug the complete chain: selection → event → handler → state → DOM update."
-    },
-
-    {
-      number: 21,
-      title: "Building Interactive Components",
-      intro:
-        "The concepts in this level combine into reusable interface patterns.",
-
-      example:
-        {
-          label: "Simple task component",
-          code:
-`const state = {
-  tasks: ["Learn DOM", "Practice Events"]
-};
-
-function renderTasks() {
-  const list = document.querySelector("#tasks");
-
-  list.textContent = "";
-
-  state.tasks.forEach(task => {
-    const item = document.createElement("li");
-    item.textContent = task;
-    list.append(item);
-  });
-}
-
-renderTasks();`,
-          output:
-`Learn DOM
-Practice Events`
-        },
-
-      flow: [
-        "Keep application data in state.",
-        "Render state into DOM elements.",
-        "Listen for user events.",
-        "Update state.",
-        "Render the new state."
-      ],
-
-      realWorld:
-        "This pattern is a small version of the state-driven UI model that becomes much more powerful when you learn React.",
+      comparison: {
+        headers: [
+          "Less maintainable",
+          "Better approach"
+        ],
+        rows: [
+          [
+            "Large anonymous event handlers",
+            "Small named or focused handlers"
+          ],
+          [
+            "Repeated DOM queries",
+            "Reuse references when appropriate"
+          ],
+          [
+            "Many identical child listeners",
+            "Consider delegation"
+          ],
+          [
+            "Direct style manipulation everywhere",
+            "Use semantic CSS classes"
+          ]
+        ]
+      },
 
       keyIdea:
-        "DOM programming teaches the fundamental ideas that modern UI libraries build upon."
-    },
-
-    {
-      number: 22,
-      title: "Choosing the Right Event Strategy",
-      intro:
-        "Professional browser code benefits from deliberate event design.",
-
-      comparison: [
-        ["One stable button", "Direct click listener"],
-        ["Many dynamic buttons", "Consider event delegation"],
-        ["Form submission", "Listen to submit and validate"],
-        ["Live text input", "Use input"],
-        ["Committed control value", "Use change"],
-        ["Need to stop browser default", "preventDefault()"],
-        ["Need to stop propagation", "stopPropagation() — use carefully"]
-      ],
-
-      warning:
-        "Do not automatically use stopPropagation or preventDefault. Use them only when the application behaviour requires it.",
-
-      keyIdea:
-        "Event handling should be driven by application behaviour, not by memorised snippets."
+        "Good DOM code is not just code that works; it should remain understandable as the interface grows."
     }
 
   ],
 
   visualizer: {
-    title: "DOM Rendering Visualizer",
+    title: "DOM Event Flow Visualizer",
     description:
-      "Follow how HTML becomes a DOM tree and how JavaScript changes what the user sees.",
+      "Follow a click on a nested button and observe how the event moves through capture, target and bubble phases.",
+
     steps: [
       {
-        title: "HTML source",
-        operation: "Browser receives document",
+        title: "DOM hierarchy",
+        operation: "document → main → card → button",
         detail:
-          '<button id="save">Save</button> exists in the HTML.'
+          "The button is nested inside the card, which is inside main."
       },
       {
-        title: "DOM creation",
-        operation: "Browser parses HTML",
+        title: "Capture begins",
+        operation: "document → main → card",
         detail:
-          "The browser creates a document tree containing a button element."
+          "When capture listeners are registered, the event travels downward toward the target."
       },
       {
-        title: "JavaScript selection",
-        operation: 'document.querySelector("#save")',
+        title: "Target reached",
+        operation: "button",
         detail:
-          "JavaScript receives a reference to the button DOM element."
+          "The button is the element where the click originated."
       },
       {
-        title: "Event registration",
-        operation: 'addEventListener("click", handler)',
+        title: "Bubble begins",
+        operation: "button → card → main",
         detail:
-          "The browser is instructed to run the handler when the button is clicked."
+          "The event can travel upward through ancestor elements."
       },
       {
-        title: "User interaction",
-        operation: "click",
+        title: "Parent handlers run",
+        operation: "card → main",
         detail:
-          "The browser creates a click event and starts event propagation."
+          "Ancestor listeners can respond to the bubbled event."
       },
       {
-        title: "DOM update",
-        operation: "element.textContent = ...",
+        title: "Propagation can be controlled",
+        operation: "stopPropagation()",
         detail:
-          "JavaScript changes the DOM, and the browser updates the rendered interface."
+          "A handler can prevent the event from continuing through the propagation path."
       }
     ]
   },
 
   trace: {
-    title: "Event Propagation Tracer",
+    title: "DOM Event Propagation Tracer",
+
     lines: [
       {
         line: 1,
-        code: 'const card = document.querySelector("#card");'
+        code: 'const card = document.querySelector(".card");'
       },
       {
         line: 2,
-        code: 'const button = document.querySelector("#buy");'
+        code: 'const button = document.querySelector(".card button");'
       },
       {
         line: 3,
-        code: 'card.addEventListener("click", () => {'
+        code: 'card.addEventListener("click", cardHandler);'
       },
       {
         line: 4,
-        code: '  console.log("Card clicked");'
+        code: 'button.addEventListener("click", buttonHandler);'
       },
       {
         line: 5,
-        code: '});'
+        code: 'function cardHandler(event) {'
       },
       {
         line: 6,
-        code: 'button.addEventListener("click", () => {'
+        code: '  console.log("card", event.target);'
       },
       {
         line: 7,
-        code: '  console.log("Button clicked");'
+        code: '}'
       },
       {
         line: 8,
-        code: '});'
+        code: 'function buttonHandler(event) {'
       },
       {
         line: 9,
-        code: '// User clicks button'
+        code: '  console.log("button", event.target);'
+      },
+      {
+        line: 10,
+        code: '}'
       }
     ],
 
@@ -870,7 +1101,7 @@ Practice Events`
         line: 1,
         title: "Select card",
         detail:
-          "JavaScript stores a reference to the parent card element."
+          "JavaScript stores a reference to the card element."
       },
       {
         line: 2,
@@ -882,99 +1113,143 @@ Practice Events`
         line: 3,
         title: "Register card listener",
         detail:
-          "The card is prepared to respond to click events."
-      },
-      {
-        line: 6,
-        title: "Register button listener",
-        detail:
-          "The button receives its own click listener."
-      },
-      {
-        line: 9,
-        title: "User clicks button",
-        detail:
-          "The button becomes the event target."
-      },
-      {
-        line: 7,
-        title: "Target handler",
-        detail:
-          'The button handler runs and prints "Button clicked".'
+          "The card listens for click events."
       },
       {
         line: 4,
-        title: "Bubble to card",
+        title: "Register button listener",
         detail:
-          'The click bubbles upward and the card handler prints "Card clicked".'
+          "The button also listens for click events."
+      },
+      {
+        line: 9,
+        title: "Button listener",
+        detail:
+          "The user clicks the button, so the button listener runs at the target."
+      },
+      {
+        line: 6,
+        title: "Card listener",
+        detail:
+          "The click bubbles to the card, so its listener runs."
+      },
+      {
+        line: 6,
+        title: "Inspect target",
+        detail:
+          "event.target remains the button because that is where the click originated."
       }
     ]
   },
 
   revision: [
-    ["DOM", "The browser's object representation of an HTML document."],
-    ["Node", "A unit in the DOM tree such as an element or text node."],
-    ["querySelector()", "Returns the first element matching a CSS selector."],
-    ["querySelectorAll()", "Returns all elements matching a CSS selector."],
-    ["textContent", "Reads or sets plain text content."],
-    ["classList", "Provides methods for managing an element's CSS classes."],
-    ["Event", "A browser notification that something happened."],
-    ["Event listener", "A function registered to respond to an event."],
-    ["event.target", "The element where the event originated."],
-    ["event.currentTarget", "The element whose listener is currently executing."],
-    ["preventDefault()", "Prevents an event's default browser action."],
-    ["stopPropagation()", "Stops an event from continuing through its propagation path."],
-    ["Bubbling", "Event propagation from target toward ancestors."],
-    ["Capturing", "Event propagation from ancestors toward the target."],
-    ["Event delegation", "Handling child events through a common ancestor listener."],
-    ["State", "Information representing the current condition of an application."]
+    [
+      "DOM",
+      "The browser's object representation of an HTML document."
+    ],
+    [
+      "Node",
+      "A unit in the DOM tree, such as an element or text node."
+    ],
+    [
+      "querySelector()",
+      "Returns the first element matching a CSS selector."
+    ],
+    [
+      "querySelectorAll()",
+      "Returns all elements matching a CSS selector."
+    ],
+    [
+      "textContent",
+      "Reads or writes text content."
+    ],
+    [
+      "classList",
+      "Provides methods for adding, removing and toggling CSS classes."
+    ],
+    [
+      "addEventListener()",
+      "Registers an event listener."
+    ],
+    [
+      "Event object",
+      "Contains information about an event."
+    ],
+    [
+      "target",
+      "The element where an event originated."
+    ],
+    [
+      "currentTarget",
+      "The element whose listener is currently running."
+    ],
+    [
+      "preventDefault()",
+      "Prevents the browser's default action."
+    ],
+    [
+      "Bubbling",
+      "Event propagation from the target toward ancestors."
+    ],
+    [
+      "Capturing",
+      "Event propagation from ancestors toward the target."
+    ],
+    [
+      "stopPropagation()",
+      "Prevents further propagation through the event path."
+    ],
+    [
+      "Event delegation",
+      "Using an ancestor listener to handle events from descendants."
+    ]
   ],
 
   interview: [
     {
       question: "What is the DOM?",
       answer:
-        "The DOM is the browser's object representation of an HTML document, arranged as a tree that JavaScript can access and modify."
+        "The DOM is the browser's object-based representation of an HTML document that JavaScript can read and modify."
     },
     {
-      question: "Is the DOM the same thing as HTML?",
+      question: "What is the difference between HTML and the DOM?",
       answer:
-        "No. HTML is the document markup, while the DOM is the live object model created by the browser from that markup."
+        "HTML is the document markup, while the DOM is the browser-created object structure representing that document."
     },
     {
       question: "What does querySelector() return?",
       answer:
-        "It returns the first element matching the supplied CSS selector, or null if no matching element exists."
+        "It returns the first element matching the supplied CSS selector, or null if there is no match."
     },
     {
-      question: "What is the difference between querySelector() and querySelectorAll()?",
+      question: "What does querySelectorAll() return?",
       answer:
-        "querySelector returns the first matching element, while querySelectorAll returns all matching elements."
+        "It returns a collection of all elements matching the selector."
     },
     {
-      question: "What is textContent used for?",
+      question: "What is the difference between textContent and innerHTML?",
       answer:
-        "It reads or sets the plain text content of a DOM element."
+        "textContent works with text, while innerHTML parses and inserts HTML markup."
     },
     {
-      question: "Why can innerHTML be dangerous?",
+      question: "Why should untrusted data not be inserted using innerHTML?",
       answer:
-        "Using innerHTML with untrusted content can allow malicious HTML or script injection, creating security vulnerabilities."
+        "Untrusted HTML can create security vulnerabilities such as cross-site scripting."
     },
     {
-      question: "What does addEventListener() do?",
+      question: "What is addEventListener()?",
       answer:
-        "It registers a function that the browser should execute when a specified event occurs."
+        "It registers a function that runs when a specified event occurs on an EventTarget."
     },
     {
       question: "What is an event object?",
       answer:
-        "It contains information about the event, including its target and other event-specific details."
+        "It is an object supplied to the event handler containing information about the event."
     },
     {
       question: "What is event.target?",
       answer:
-        "It identifies the element on which the event originated."
+        "It identifies the element where the event originally occurred."
     },
     {
       question: "What is event.currentTarget?",
@@ -982,107 +1257,171 @@ Practice Events`
         "It identifies the element whose event listener is currently executing."
     },
     {
-      question: "What does preventDefault() do?",
-      answer:
-        "It prevents the browser's default action for an event."
-    },
-    {
-      question: "Does preventDefault() stop event bubbling?",
-      answer:
-        "No. preventDefault controls default browser behaviour; it does not stop event propagation."
-    },
-    {
       question: "What is event bubbling?",
       answer:
-        "It is propagation of an event from the target element toward its ancestors."
+        "It is the propagation phase in which an event travels from the target toward ancestor elements."
     },
     {
       question: "What is event capturing?",
       answer:
-        "It is the propagation phase where an event travels from ancestors toward the target."
+        "It is the propagation phase in which the event travels from ancestors toward the target."
+    },
+    {
+      question: "Does bubbling happen by default?",
+      answer:
+        "For events that bubble, listeners registered normally with addEventListener() participate in the bubbling phase by default."
+    },
+    {
+      question: "What does preventDefault() do?",
+      answer:
+        "It prevents the browser's default action associated with an event."
     },
     {
       question: "What does stopPropagation() do?",
       answer:
-        "It prevents an event from continuing through the propagation path."
+        "It prevents the event from continuing through the capture or bubble propagation path."
     },
     {
       question: "What is event delegation?",
       answer:
-        "It is a technique where a parent listener handles events originating from its child elements."
+        "It is a technique where an ancestor handles events from its descendants, usually using event bubbling."
     },
     {
-      question: "Why is event delegation useful for dynamic lists?",
+      question: "Why is event delegation useful?",
       answer:
-        "A listener on the stable parent can handle events from child elements created later."
+        "It can reduce the number of listeners and works well for dynamic collections of elements."
     },
     {
-      question: "What is the difference between DOM state and application state?",
+      question: "How do you create a DOM element?",
       answer:
-        "DOM state describes what is currently represented in the page, while application state represents the logical data and conditions of the application."
+        "Use document.createElement() and then configure and insert the resulting element."
     },
     {
-      question: "Why should JavaScript often change classes instead of many inline styles?",
+      question: "How can JavaScript toggle a CSS class?",
       answer:
-        "Classes keep presentation in CSS and allow JavaScript to control state without mixing large amounts of styling logic into JavaScript."
+        "Use element.classList.toggle('className')."
     },
     {
-      question: "How would you handle a form without allowing the browser to reload the page?",
+      question: "Why are keyboard events important?",
       answer:
-        "Listen for the submit event and call event.preventDefault(), then perform validation and application-specific processing."
+        "They allow interfaces to support keyboard users and accessibility requirements rather than depending only on mouse interaction."
     }
   ],
 
   practice: [
     {
-      title: "DOM Selector Lab",
-      description:
-        "Create a page containing headings, paragraphs, buttons and cards. Use getElementById, querySelector and querySelectorAll to select different elements."
+      title: "Change a Heading",
+      difficulty: "Basic",
+      task:
+        "Select an h1 element and change its text to 'Welcome to CodeBhavya' when the page loads.",
+      hints: [
+        "Use document.querySelector().",
+        "Store the element in a variable.",
+        "Assign the new value to textContent."
+      ]
     },
     {
-      title: "Message Changer",
-      description:
-        "Create a button that changes a paragraph's textContent every time it is clicked."
+      title: "Button Counter",
+      difficulty: "Basic",
+      task:
+        "Create a button and a counter. Each click should increase the displayed counter by one.",
+      hints: [
+        "Store the current count in a variable.",
+        "Use addEventListener('click', ...).",
+        "Update the DOM after changing the count."
+      ]
     },
     {
-      title: "Theme Toggle",
-      description:
-        "Create a button that toggles a dark-mode class on the document body using classList.toggle()."
+      title: "Toggle Menu",
+      difficulty: "Basic",
+      task:
+        "Create a menu button that toggles an 'open' CSS class on a navigation panel.",
+      hints: [
+        "Select both the button and menu.",
+        "Listen for click.",
+        "Use classList.toggle()."
+      ]
     },
     {
-      title: "Dynamic List",
-      description:
-        "Store five course names in an array and dynamically create li elements for every course."
+      title: "Dynamic Course",
+      difficulty: "Basic",
+      task:
+        "Create a new li element using JavaScript, set its text to 'JavaScript', and append it to an existing ul.",
+      hints: [
+        "Use document.createElement('li').",
+        "Set textContent.",
+        "Use append() to insert the element."
+      ]
     },
     {
-      title: "Counter App",
-      description:
-        "Build a counter with Increment, Decrement and Reset buttons. Keep the count in JavaScript state and render it into the DOM."
+      title: "Form Validation",
+      difficulty: "Intermediate",
+      task:
+        "Handle a form submission and prevent the default action when the email field is empty.",
+      hints: [
+        "Listen for the submit event.",
+        "Use event.preventDefault().",
+        "Read the input value.",
+        "Only prevent normal submission when your validation requires it."
+      ]
     },
     {
-      title: "Form Validator",
-      description:
-        "Create a registration form. Prevent default submission, validate required fields and display validation messages in the page."
+      title: "Keyboard Shortcut",
+      difficulty: "Intermediate",
+      task:
+        "Listen for keydown and print 'Search opened' when the user presses the '/' key.",
+      hints: [
+        "Listen on document.",
+        "Inspect event.key.",
+        "Compare it with '/'."
+      ]
     },
     {
-      title: "Event Propagation Lab",
-      description:
-        "Create nested parent, child and button elements. Attach listeners and observe the order in which bubbling and capturing handlers execute."
+      title: "Event Bubbling Demo",
+      difficulty: "Intermediate",
+      task:
+        "Create a button inside a div. Add click listeners to both and observe the order in which the handlers run.",
+      hints: [
+        "Add one listener to the button.",
+        "Add another listener to the parent div.",
+        "Click the button and observe bubbling."
+      ]
+    },
+    {
+      title: "Stop Propagation",
+      difficulty: "Intermediate",
+      task:
+        "Modify the previous example so the button handler prevents the parent click handler from running.",
+      hints: [
+        "Receive the event object.",
+        "Call event.stopPropagation().",
+        "Do not use preventDefault() for this task."
+      ]
     },
     {
       title: "Event Delegation",
-      description:
-        "Create a dynamic task list with delete buttons. Use one listener on the list to handle deletion for all current and future tasks."
+      difficulty: "Advanced",
+      task:
+        "Create a list of courses using data-course attributes. Attach one click listener to the list and print the selected course.",
+      hints: [
+        "Use one listener on the parent list.",
+        "Read event.target.",
+        "closest('[data-course]') can help when the clicked element is nested.",
+        "Use dataset.course to read the value."
+      ]
     },
     {
-      title: "Live Search",
-      description:
-        "Create a list of courses and a search input. Use the input event to filter visible courses as the user types."
-    },
-    {
-      title: "Student Dashboard",
-      description:
-        "Store student objects in an array and render student cards dynamically. Add a button to filter the display to students above a selected CGPA."
+      title: "Interactive Course List",
+      difficulty: "Advanced",
+      task:
+        "Build a small course list where clicking a course selects it, adds an active class, and displays its name in a status area. Use event delegation rather than one listener per course.",
+      hints: [
+        "Attach one click listener to the list.",
+        "Find the clicked course using closest().",
+        "Remove active from the previous selection.",
+        "Add active to the new selection.",
+        "Update the status element using textContent."
+      ]
     }
   ],
 
@@ -1091,87 +1430,87 @@ Practice Events`
       question: "What does DOM stand for?",
       options: [
         "Document Object Model",
-        "Data Object Method",
-        "Document Order Manager",
-        "Dynamic Object Model"
+        "Data Object Manager",
+        "Document Oriented Model",
+        "Dynamic Object Method"
       ],
       answer: 0
     },
     {
-      question: "Which method returns the first element matching a CSS selector?",
+      question: "Which method returns the first matching element?",
       options: [
         "querySelector()",
         "querySelectorAll()",
         "getElements()",
-        "select()"
+        "findAll()"
       ],
       answer: 0
     },
     {
-      question: "Which property is commonly used to safely set plain text?",
+      question: "Which property is suitable for safely setting plain text?",
       options: [
         "innerHTML",
         "textContent",
         "htmlText",
-        "writeText"
+        "outerHTML"
       ],
       answer: 1
     },
     {
-      question: "Which method adds an event listener?",
+      question: "Which method registers an event listener?",
       options: [
-        "addEventListener()",
         "listen()",
         "onEvent()",
-        "attachEventListenerNow()"
-      ],
-      answer: 0
-    },
-    {
-      question: "What is event.target?",
-      options: [
-        "The document",
-        "The element where the event originated",
-        "The browser window",
-        "The event handler function"
-      ],
-      answer: 1
-    },
-    {
-      question: "What does preventDefault() do?",
-      options: [
-        "Stops JavaScript execution",
-        "Removes the event",
-        "Prevents the default browser action",
-        "Stops all event propagation"
+        "addEventListener()",
+        "registerEvent()"
       ],
       answer: 2
     },
     {
-      question: "Which direction does bubbling travel?",
+      question: "Where did the event originally occur?",
       options: [
-        "Ancestor to target",
-        "Target toward ancestors",
-        "Window to browser",
-        "Document to window only"
+        "currentTarget",
+        "target",
+        "sourceTarget",
+        "origin"
       ],
       answer: 1
     },
     {
-      question: "Which phase travels toward the target?",
+      question: "Which method prevents default browser behaviour?",
       options: [
-        "Bubbling",
-        "Capturing",
-        "Rendering",
-        "Delegation"
+        "stopPropagation()",
+        "preventDefault()",
+        "cancelEvent()",
+        "stopDefault()"
+      ],
+      answer: 1
+    },
+    {
+      question: "Which direction describes bubbling?",
+      options: [
+        "Ancestor to target",
+        "Target to ancestor",
+        "Document to browser",
+        "Browser to document"
+      ],
+      answer: 1
+    },
+    {
+      question: "Which option enables capture for addEventListener()?",
+      options: [
+        "{ bubble: true }",
+        "{ capture: true }",
+        "{ target: true }",
+        "{ phase: 'capture' }"
       ],
       answer: 1
     },
     {
       question: "What does stopPropagation() control?",
       options: [
-        "Default form submission",
         "CSS rendering",
+        "Default browser actions",
         "Event propagation",
         "DOM creation"
       ],
@@ -1180,30 +1519,30 @@ Practice Events`
     {
       question: "What is event delegation?",
       options: [
-        "Deleting events",
-        "Handling child events through a parent listener",
-        "Preventing every event",
-        "Creating browser events manually"
+        "Removing all listeners",
+        "Using a parent listener for descendant events",
+        "Disabling bubbling",
+        "Creating custom events only"
       ],
       answer: 1
     },
     {
-      question: "Which method adds a CSS class?",
+      question: "Which property toggles a CSS class?",
       options: [
-        "classList.add()",
-        "class.add()",
-        "addClassName()",
-        "style.add()"
+        "classList.toggle()",
+        "class.toggle()",
+        "style.toggle()",
+        "css.toggle()"
       ],
       answer: 0
     },
     {
-      question: "Which event is generally suitable for a form submission?",
+      question: "Which method creates a new DOM element?",
       options: [
-        "click",
-        "input",
-        "submit",
-        "load"
+        "newElement()",
+        "createNode()",
+        "document.createElement()",
+        "document.newElement()"
       ],
       answer: 2
     }
@@ -1213,7 +1552,12 @@ Practice Events`
     {
       term: "DOM",
       definition:
-        "The browser's live object representation of an HTML document."
+        "The browser's object representation of an HTML document."
+    },
+    {
+      term: "Node",
+      definition:
+        "A unit in the DOM tree."
     },
     {
       term: "Element",
@@ -1221,87 +1565,82 @@ Practice Events`
         "A DOM node representing an HTML element."
     },
     {
-      term: "Node",
-      definition:
-        "A unit in the DOM tree, such as an element or text node."
-    },
-    {
-      term: "Selector",
-      definition:
-        "A CSS-style expression used to identify DOM elements."
-    },
-    {
       term: "Event",
       definition:
-        "A notification that something happened in the browser."
+        "A browser notification that something has happened."
     },
     {
-      term: "Listener",
+      term: "Event listener",
       definition:
-        "A function registered to respond to an event."
+        "A function registered to respond to a particular event."
     },
     {
-      term: "Target",
+      term: "target",
       definition:
-        "The element where an event originated."
+        "The element where the event originated."
+    },
+    {
+      term: "currentTarget",
+      definition:
+        "The element whose listener is currently executing."
     },
     {
       term: "Bubbling",
       definition:
-        "Propagation from the event target toward ancestor elements."
+        "Propagation from an event target toward ancestor elements."
     },
     {
       term: "Capturing",
       definition:
-        "Propagation from ancestors toward the event target."
+        "Propagation from ancestor elements toward the event target."
     },
     {
-      term: "Delegation",
+      term: "Event delegation",
       definition:
-        "Handling events for child elements through a parent listener."
+        "Handling descendant events using a listener attached to an ancestor."
     },
     {
-      term: "preventDefault",
+      term: "preventDefault()",
       definition:
-        "A method that prevents an event's default browser behaviour."
+        "Prevents an event's default browser action."
     },
     {
-      term: "stopPropagation",
+      term: "stopPropagation()",
       definition:
-        "A method that stops an event from continuing through its propagation path."
+        "Stops an event from continuing through the propagation path."
     },
     {
-      term: "State",
+      term: "classList",
       definition:
-        "Information describing the current condition of an application."
+        "An API for managing CSS classes on an element."
     },
     {
-      term: "Rendering",
+      term: "dataset",
       definition:
-        "The process of turning application data or DOM changes into visible interface output."
+        "An API for accessing data-* attributes."
     }
   ],
 
   completion: {
-    title: "Level 11 Complete — Make the Browser Respond",
+    title: "Level 11 Complete — Control the Browser",
     message:
-      "You can now connect JavaScript with the browser DOM, create dynamic interfaces, handle user events " +
-      "and reason about event propagation. These concepts prepare you directly for asynchronous APIs and modern UI frameworks.",
+      "You can now connect JavaScript to the DOM, respond to user events, " +
+      "control event propagation and build interactive browser interfaces.",
 
     challenge:
-      "Build a Student Management Interface. Store at least 8 students as JavaScript objects. " +
-      "Render them dynamically into cards or a table. Add a search box, a branch filter, a CGPA filter, " +
-      "and a delete action using event delegation. Add a form for creating a new student, prevent the default " +
-      "submission, validate the input and update the displayed list without reloading the page."
+      "Build a CodeBhavya Course Explorer. Display at least six courses as " +
+      "interactive cards using data attributes. Use event delegation to handle " +
+      "course selection, highlight the selected card, show its description in a " +
+      "details panel, support keyboard interaction, and include a small form " +
+      "that validates user input before displaying a success message."
   },
 
   takeaway:
-    "The DOM connects JavaScript to the browser interface. Events connect user actions to application behaviour. " +
-    "Master selection, rendering, event handling, propagation and delegation now, because these same mental models " +
-    "will make React and asynchronous browser programming much easier in the next levels."
+    "Level 11 is the bridge between JavaScript language fundamentals and real browser applications. " +
+    "Once you understand the DOM and event system, you can build interactive interfaces instead of " +
+    "just running JavaScript in the console."
 };
 
 console.log(
   "CodeBhavya Full Stack Level 11 loaded: DOM & Events"
 );
-
