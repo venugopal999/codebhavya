@@ -1,64 +1,37 @@
+"use strict";
+
 /* =========================================================
-   CODEBHAVYA
-   COMMON HEADER & FOOTER COMPONENT LOADER
-   js/components.js
+   CODEBHAVYA SHARED COMPONENT LOADER
+   Loads:
+   - components/header.html
+   - components/footer.html
+
+   This file does NOT build or modify navigation.
+   The navigation is already contained inside header.html.
    ========================================================= */
 
 (function () {
 
-    "use strict";
+    const HEADER_CONTAINER_ID = "codebhavya-header-container";
+    const FOOTER_CONTAINER_ID = "codebhavya-footer-container";
+
+    const HEADER_URL = "/components/header.html";
+    const FOOTER_URL = "/components/footer.html";
 
 
-    /* =====================================================
-       1. FIND CODEBHAVYA ROOT
-       ===================================================== */
+    /* ---------------------------------------------------------
+       Load HTML component
+       --------------------------------------------------------- */
 
-    /*
-       components.js may be loaded from:
+    async function loadComponent(url, containerId, loadedEventName) {
 
-       /js/components.js
-
-       or from pages such as:
-
-       /C-Programming/
-       /Python/
-       /AI-ML/
-       /Placement/
-       /Full-Stack/
-
-       Therefore, never build component paths relative
-       to the current HTML page.
-
-       Always use the website root.
-    */
-
-    const siteRoot = new URL("/", window.location.origin);
-
-
-    /* =====================================================
-       2. COMPONENT PATHS
-       ===================================================== */
-
-    const COMPONENTS = {
-
-        header:
-            new URL("components/header.html", siteRoot).href,
-
-        footer:
-            new URL("components/footer.html", siteRoot).href
-
-    };
-
-
-    /* =====================================================
-       3. LOAD HTML COMPONENT
-       ===================================================== */
-
-    async function loadComponent(url, selector) {
-
-        const container = document.querySelector(selector);
+        const container = document.getElementById(containerId);
 
         if (!container) {
+            console.warn(
+                "CodeBhavya component container not found:",
+                containerId
+            );
             return false;
         }
 
@@ -71,10 +44,7 @@
 
             if (!response.ok) {
                 throw new Error(
-                    "HTTP " +
-                    response.status +
-                    " while loading " +
-                    url
+                    `HTTP ${response.status} while loading ${url}`
                 );
             }
 
@@ -82,18 +52,23 @@
 
             if (!html.trim()) {
                 throw new Error(
-                    "Empty component received from " + url
+                    `Empty component received from ${url}`
                 );
             }
 
             container.innerHTML = html;
+
+            document.dispatchEvent(
+                new CustomEvent(loadedEventName)
+            );
 
             return true;
 
         } catch (error) {
 
             console.error(
-                "CodeBhavya component loading error:",
+                "CodeBhavya component loading failed:",
+                url,
                 error
             );
 
@@ -102,282 +77,83 @@
     }
 
 
-    /* =====================================================
-       4. CREATE COMPONENT CONTAINERS
-       ===================================================== */
+    /* ---------------------------------------------------------
+       Load header
+       --------------------------------------------------------- */
 
-    function createComponentContainers() {
+    async function loadHeader() {
 
-        /*
-           Header
-           ------
-           If a page already contains:
-
-               <div id="codebhavya-header"></div>
-
-           we use it.
-
-           Otherwise we create the container automatically
-           at the beginning of <body>.
-        */
-
-        let headerContainer =
-            document.getElementById("codebhavya-header-container");
-
-        if (!headerContainer) {
-
-            headerContainer =
-                document.createElement("div");
-
-            headerContainer.id =
-                "codebhavya-header-container";
-
-            document.body.insertBefore(
-                headerContainer,
-                document.body.firstChild
-            );
-        }
-
-
-        /*
-           Footer
-           ------
-           If a page already contains:
-
-               <div id="codebhavya-footer"></div>
-
-           we use it.
-
-           Otherwise we create it automatically
-           at the end of <body>.
-        */
-
-        let footerContainer =
-            document.getElementById("codebhavya-footer-container");
-
-        if (!footerContainer) {
-
-            footerContainer =
-                document.createElement("div");
-
-            footerContainer.id =
-                "codebhavya-footer-container";
-
-            document.body.appendChild(
-                footerContainer
-            );
-        }
-
-
-        return {
-            header: headerContainer,
-            footer: footerContainer
-        };
+        return await loadComponent(
+            HEADER_URL,
+            HEADER_CONTAINER_ID,
+            "codebhavya:headerLoaded"
+        );
     }
 
 
-    /* =====================================================
-       5. LOAD HEADER
-       ===================================================== */
+    /* ---------------------------------------------------------
+       Load footer
+       --------------------------------------------------------- */
 
-    async function loadHeader(container) {
+    async function loadFooter() {
 
-        const loaded =
-            await loadComponent(
-                COMPONENTS.header,
-                "#codebhavya-header-container"
-            );
-
-        if (!loaded) {
-            return false;
-        }
+        return await loadComponent(
+            FOOTER_URL,
+            FOOTER_CONTAINER_ID,
+            "codebhavya:footerLoaded"
+        );
+    }
 
 
-        /*
-           Header is now actually present in the DOM.
+    /* ---------------------------------------------------------
+       Load all components
+       --------------------------------------------------------- */
 
-           This event is important because the mega
-           navigation must NOT initialize before the
-           dynamically loaded header exists.
-        */
+    async function loadAllComponents() {
+
+        const headerLoaded = await loadHeader();
+
+        const footerLoaded = await loadFooter();
 
         document.dispatchEvent(
-            new CustomEvent(
-                "codebhavya:headerLoaded"
-            )
+            new CustomEvent("codebhavya:componentsLoaded", {
+                detail: {
+                    headerLoaded: headerLoaded,
+                    footerLoaded: footerLoaded
+                }
+            })
         );
-
-
-        return true;
     }
 
 
-    /* =====================================================
-       6. LOAD FOOTER
-       ===================================================== */
-
-    async function loadFooter(container) {
-
-        const loaded =
-            await loadComponent(
-                COMPONENTS.footer,
-                "#codebhavya-footer-container"
-            );
-
-        if (!loaded) {
-            return false;
-        }
-
-
-        /*
-           Notify other CodeBhavya scripts that the
-           footer is available.
-        */
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "codebhavya:footerLoaded"
-            )
-        );
-
-
-        return true;
-    }
-
-
-    /* =====================================================
-       7. INITIALIZE CODEBHAVYA NAVIGATION
-       ===================================================== */
-
-    function initializeNavigation() {
-
-        /*
-           The actual mega-navigation implementation
-           will be provided by script.js.
-
-           This keeps:
-
-               components.js
-                   ↓
-               component loading
-
-           separate from:
-
-               script.js
-                   ↓
-               global CodeBhavya functionality
-               mega navigation
-               sidebar behavior
-               solution toggles
-               search
-        */
-
-        if (
-            window.CodeBhavyaNavigation &&
-            typeof window.CodeBhavyaNavigation.init === "function"
-        ) {
-
-            window.CodeBhavyaNavigation.init();
-
-        } else {
-
-            /*
-               script.js may be loaded after components.js.
-
-               In that situation, notify it when it becomes
-               available instead of producing an error.
-            */
-
-            document.dispatchEvent(
-                new CustomEvent(
-                    "codebhavya:navigationReady"
-                )
-            );
-        }
-    }
-
-
-    /* =====================================================
-       8. COMPLETE COMPONENT INITIALIZATION
-       ===================================================== */
-
-    async function initializeComponents() {
-
-        const containers =
-            createComponentContainers();
-
-
-        /*
-           Load header first.
-
-           Navigation depends on the header, so header
-           must finish before navigation initialization.
-        */
-
-        await loadHeader(containers.header);
-
-
-        /*
-           Initialize navigation immediately after the
-           header becomes available.
-        */
-
-        initializeNavigation();
-
-
-        /*
-           Footer does not depend on navigation.
-        */
-
-        await loadFooter(containers.footer);
-
-
-        /*
-           Final event — all common components are ready.
-        */
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "codebhavya:componentsLoaded"
-            )
-        );
-
-    }
-
-
-    /* =====================================================
-       9. PUBLIC API
-       ===================================================== */
-
-    window.CodeBhavyaComponents = {
-
-        root: siteRoot,
-
-        paths: COMPONENTS,
-
-        load: initializeComponents
-
-    };
-
-
-    /* =====================================================
-       10. START
-       ===================================================== */
+    /* ---------------------------------------------------------
+       Start after DOM is ready
+       --------------------------------------------------------- */
 
     if (document.readyState === "loading") {
 
         document.addEventListener(
             "DOMContentLoaded",
-            initializeComponents,
-            {
-                once: true
-            }
+            loadAllComponents,
+            { once: true }
         );
 
     } else {
 
-        initializeComponents();
-
+        loadAllComponents();
     }
+
+
+    /* ---------------------------------------------------------
+       Optional public API
+       Useful if another CodeBhavya page needs to reload
+       the shared components.
+       --------------------------------------------------------- */
+
+    window.CodeBhavyaComponents = {
+        loadHeader,
+        loadFooter,
+        loadAllComponents
+    };
 
 })();
