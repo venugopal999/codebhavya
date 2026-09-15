@@ -1,0 +1,1 @@
+import java.util.*;class Main{static void sort(int[] a,int low,int high){if(low>=high)return;int pivot=a[high],i=low;for(int j=low;j<high;j++)if(a[j]<=pivot){int t=a[i];a[i]=a[j];a[j]=t;i++;}int t=a[i];a[i]=a[high];a[high]=t;sort(a,low,i-1);sort(a,i+1,high);}public static void main(String[] args){int[] a={7,2,9,4};sort(a,0,a.length-1);System.out.println(Arrays.toString(a));}}

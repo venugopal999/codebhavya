@@ -1,0 +1,1 @@
+record Student(String name,int[] marks){double average(){return java.util.Arrays.stream(marks).average().orElse(0);}String grade(){double a=average();return a>=90?"A+":a>=75?"A":a>=60?"B":"C";}}class Main{public static void main(String[] args){Student s=new Student("Asha",new int[]{88,92,90});System.out.printf("%s %.2f %s%n",s.name(),s.average(),s.grade());}}

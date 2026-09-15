@@ -1,0 +1,1 @@
+class Main{static String describe(Object value){if(value instanceof Integer number)return "Integer "+number;if(value instanceof String text)return "String "+text;return "Other";}public static void main(String[] args){System.out.println(describe(42));System.out.println(describe("Java"));}}

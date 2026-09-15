@@ -1,0 +1,1 @@
+class Main{public static void main(String[] args)throws Exception{StringBuilder result=new StringBuilder();Thread worker=new Thread(()->result.append("Completed"));worker.start();worker.join();System.out.println(result);}}

@@ -1,0 +1,1 @@
+class Main { static void validate(int mark){if(mark<0||mark>100)throw new IllegalArgumentException("Mark must be 0 to 100");} public static void main(String[] args){try{validate(-1);}catch(IllegalArgumentException error){System.out.println(error.getMessage());}} }

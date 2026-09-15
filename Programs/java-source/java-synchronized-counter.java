@@ -1,0 +1,2 @@
+class Counter{private int value; synchronized void increment(){value++;}int value(){return value;}}
+class Main{public static void main(String[] args)throws Exception{Counter counter=new Counter();Thread a=new Thread(()->{for(int i=0;i<1000;i++)counter.increment();});Thread b=new Thread(()->{for(int i=0;i<1000;i++)counter.increment();});a.start();b.start();a.join();b.join();System.out.println(counter.value());}}

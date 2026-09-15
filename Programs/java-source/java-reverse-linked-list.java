@@ -1,0 +1,1 @@
+class Node{int v;Node next;Node(int v){this.v=v;}}class Main{public static void main(String[] args){Node head=new Node(1);head.next=new Node(2);head.next.next=new Node(3);Node previous=null,current=head;while(current!=null){Node next=current.next;current.next=previous;previous=current;current=next;}for(Node n=previous;n!=null;n=n.next)System.out.print(n.v+" ");}}
