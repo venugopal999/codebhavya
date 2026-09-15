@@ -1,0 +1,1 @@
+import java.util.*;class Main{static void dfs(int u,List<List<Integer>> g,boolean[] seen){seen[u]=true;System.out.print(u+" ");for(int v:g.get(u))if(!seen[v])dfs(v,g,seen);}public static void main(String[] args){List<List<Integer>> g=List.of(List.of(1,2),List.of(0,3),List.of(0,3),List.of(1,2));dfs(0,g,new boolean[4]);}}

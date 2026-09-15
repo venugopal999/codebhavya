@@ -1,0 +1,1 @@
+import java.util.*;class Main{public static void main(String[] args){int[] values={7,2,9,4,8};int k=3;PriorityQueue<Integer> heap=new PriorityQueue<>();for(int value:values){heap.offer(value);if(heap.size()>k)heap.poll();}List<Integer> result=new ArrayList<>(heap);result.sort(Comparator.reverseOrder());System.out.println(result);}}

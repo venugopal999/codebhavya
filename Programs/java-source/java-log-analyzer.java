@@ -1,0 +1,1 @@
+import java.util.*;class Main{public static void main(String[] args){List<String> logs=List.of("INFO Started","ERROR Database","INFO Retrying","ERROR Timeout");Map<String,Long> counts=new TreeMap<>();for(String log:logs){String level=log.split(" ")[0];counts.merge(level,1L,Long::sum);}System.out.println(counts);}}

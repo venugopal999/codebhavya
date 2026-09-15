@@ -1,0 +1,1 @@
+class Main { static void third(){throw new IllegalStateException("Stopped");} static void second(){third();} static void first(){second();} public static void main(String[] args){try{first();}catch(IllegalStateException error){System.out.println(error.getMessage());}} }

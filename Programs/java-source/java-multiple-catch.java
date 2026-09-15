@@ -1,0 +1,1 @@
+class Main { public static void main(String[] args){String value="abc";try{System.out.println(Integer.parseInt(value));}catch(NumberFormatException error){System.out.println("Invalid number");}catch(RuntimeException error){System.out.println("Runtime error");}} }

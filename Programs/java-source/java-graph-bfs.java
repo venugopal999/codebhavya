@@ -1,0 +1,1 @@
+import java.util.*;class Main{public static void main(String[] args){List<List<Integer>> g=List.of(List.of(1,2),List.of(0,3),List.of(0,3),List.of(1,2));boolean[] seen=new boolean[4];Queue<Integer> q=new ArrayDeque<>();q.offer(0);seen[0]=true;while(!q.isEmpty()){int u=q.poll();System.out.print(u+" ");for(int v:g.get(u))if(!seen[v]){seen[v]=true;q.offer(v);}}}}

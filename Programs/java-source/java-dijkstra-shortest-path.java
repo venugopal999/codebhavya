@@ -1,0 +1,1 @@
+import java.util.*;class Main{public static void main(String[] args){int[][] w={{0,4,1},{4,0,2},{1,2,0}};int[] d={0,999,999};boolean[] used=new boolean[3];for(int step=0;step<3;step++){int u=-1;for(int i=0;i<3;i++)if(!used[i]&&(u==-1||d[i]<d[u]))u=i;used[u]=true;for(int v=0;v<3;v++)if(w[u][v]>0)d[v]=Math.min(d[v],d[u]+w[u][v]);}System.out.println(Arrays.toString(d));}}
