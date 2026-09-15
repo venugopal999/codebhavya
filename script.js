@@ -322,7 +322,6 @@ function searchTopics() {
                 { label: "C Programming", path: "C-Programming/index.html", icon: "C" },
                 { label: "Python", path: "Python/index.html", icon: "Py" },
                 { label: "Java", path: "Java/index.html", icon: "J" },
-                { label: "Java Practice", path: "Java/practice.html", icon: "JP" },
                 { label: "Programs Library", path: "Programs/index.html", icon: "{}" }
             ]
         },
@@ -464,7 +463,7 @@ function searchTopics() {
 
         const link = document.createElement("link");
         link.rel = "stylesheet";
-        link.href = siteUrl("site-navigation.css?v=4");
+        link.href = siteUrl("site-navigation.css?v=5");
         link.dataset.codebhavyaNavigation = "true";
         document.head.append(link);
     }
