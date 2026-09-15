@@ -379,6 +379,50 @@ function searchTopics() {
         }
     ];
 
+    const footerGroups = [
+        {
+            title: "Quick Links",
+            links: [
+                { label: "Home", path: "index.html" },
+                { label: "Placement", path: "Placement/index.html" },
+                { label: "Overall Progress", path: "Placement/progress.html" }
+            ]
+        },
+        {
+            title: "Learning",
+            links: [
+                { label: "Mathematics", path: "Maths/index.html" },
+                { label: "C Programming", path: "C-Programming/index.html" },
+                { label: "Python", path: "Python/index.html" },
+                { label: "Java", path: "Java/index.html" },
+                { label: "Data Structures", path: "Data-Structures/index.html" },
+                { label: "AI & Machine Learning", path: "AI-ML/index.html" }
+            ]
+        },
+        {
+            title: "Core CS & Web",
+            links: [
+                { label: "Advanced Data Structures", path: "Advanced-Data-Structures/index.html" },
+                { label: "DBMS & SQL", path: "DBMS/index.html" },
+                { label: "Operating Systems", path: "Operating-Systems/index.html" },
+                { label: "Full Stack MERN", path: "Full-Stack/index.html" }
+            ]
+        },
+        {
+            title: "Practice",
+            links: [
+                { label: "Online Compiler", path: "Online-Compiler/" },
+                { label: "Programs Library", path: "Programs/index.html" },
+                { label: "Practice Hub", path: "Placement/practice.html" },
+                { label: "MCQ Library", path: "Placement/mcq-library.html" },
+                { label: "Coding Arena", path: "Placement/coding.html" },
+                { label: "Mock Drive", path: "Placement/mock-drive.html" },
+                { label: "Interview Coach", path: "Placement/interview.html" },
+                { label: "Evidence Lab", path: "Placement/evidence-lab.html" }
+            ]
+        }
+    ];
+
     function siteUrl(path) {
         return new URL(path, siteRoot).href;
     }
@@ -394,6 +438,24 @@ function searchTopics() {
         return element;
     }
 
+    function buildBrand() {
+        const brand = createElement("a", "logo codebhavya-new-logo");
+        brand.href = siteUrl("index.html");
+        brand.setAttribute("aria-label", "CodeBhavya home");
+
+        const image = createElement("img", "main-logo");
+        image.src = siteUrl("images/codebhavya-main-logo.png");
+        image.alt = "CodeBhavya Logo";
+
+        const name = createElement("span", "brand-name");
+        name.append(
+            createElement("span", "logo-code", "Code"),
+            createElement("span", "logo-bhavya", "Bhavya")
+        );
+        brand.append(image, name);
+        return brand;
+    }
+
     function addNavigationStyles() {
         if (document.querySelector("link[data-codebhavya-navigation]")) {
             return;
@@ -401,7 +463,7 @@ function searchTopics() {
 
         const link = document.createElement("link");
         link.rel = "stylesheet";
-        link.href = siteUrl("site-navigation.css?v=3");
+        link.href = siteUrl("site-navigation.css?v=4");
         link.dataset.codebhavyaNavigation = "true";
         document.head.append(link);
     }
@@ -467,10 +529,25 @@ function searchTopics() {
     }
 
     function enhanceNavigation() {
-        const header = document.querySelector(".top-header");
-        const existingNav = header && header.querySelector(".top-nav");
+        let header = document.querySelector(".top-header");
 
-        if (!header || !existingNav || existingNav.dataset.codebhavyaNavigation === "true") {
+        if (!header) {
+            header = createElement("header", "top-header");
+            document.body.insertBefore(header, document.body.firstChild);
+        }
+
+        const existingBrand = header.querySelector(".logo");
+        const brand = buildBrand();
+        if (existingBrand) {
+            existingBrand.replaceWith(brand);
+        } else {
+            header.prepend(brand);
+        }
+
+        const existingNav = header.querySelector(".top-nav");
+
+        if (existingNav && existingNav.dataset.codebhavyaNavigation === "true") {
+            header.classList.add("cb-nav-ready");
             return;
         }
 
@@ -629,16 +706,70 @@ function searchTopics() {
         navigationHooks.setAttribute("inert", "");
         navigationHooks.style.setProperty("display", "none", "important");
         navigationHooks.className = "cb-navigation-hooks";
-        while (existingNav.firstChild) navigationHooks.append(existingNav.firstChild);
-        existingNav.replaceWith(nav);
-        header.append(navigationHooks);
+        if (existingNav) {
+            while (existingNav.firstChild) navigationHooks.append(existingNav.firstChild);
+            existingNav.replaceWith(nav);
+            header.append(navigationHooks);
+        } else {
+            header.append(nav);
+        }
         header.classList.add("cb-nav-ready");
     }
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", enhanceNavigation, { once: true });
-    } else {
+    function enhanceFooter() {
+        const footer = createElement("footer", "footer cb-global-footer");
+        footer.setAttribute("aria-label", "CodeBhavya footer");
+
+        const container = createElement("div", "footer-container cb-footer-container");
+        const brandSection = createElement("div", "footer-brand-section");
+        const footerBrand = createElement("div", "footer-brand");
+        footerBrand.append(
+            createElement("span", "footer-code", "Code"),
+            createElement("span", "footer-bhavya", "Bhavya")
+        );
+        brandSection.append(
+            footerBrand,
+            createElement("p", "footer-tagline", "From Learning to Limitless Possibilities."),
+            createElement("p", "footer-description", "Learn, practise, build and grow with structured learning resources.")
+        );
+        container.append(brandSection);
+
+        footerGroups.forEach(function (group) {
+            const column = createElement("section", "footer-column");
+            column.append(createElement("h2", "", group.title));
+            group.links.forEach(function (item) {
+                const link = createElement("a", "", item.label);
+                link.href = siteUrl(item.path);
+                column.append(link);
+            });
+            container.append(column);
+        });
+
+        const bottom = createElement("div", "footer-bottom");
+        bottom.append(
+            createElement("p", "", "© 2026 CodeBhavya. All Rights Reserved."),
+            createElement("p", "", "From Learning to Limitless Possibilities.")
+        );
+        footer.append(container, bottom);
+
+        const existingFooter = document.querySelector(".footer");
+        if (existingFooter) {
+            existingFooter.remove();
+        }
+        document.body.append(footer);
+        document.body.classList.add("cb-global-shell");
+    }
+
+    function enhanceSiteShell() {
+        addNavigationStyles();
         enhanceNavigation();
+        enhanceFooter();
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", enhanceSiteShell, { once: true });
+    } else {
+        enhanceSiteShell();
     }
 
 })();
