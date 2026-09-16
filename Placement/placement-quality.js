@@ -18,11 +18,11 @@
     };
     const main=document.querySelector('main');
     if(main&&notes[page]){const box=document.createElement('aside');box.className='placement-access';const title=document.createElement('strong');title.textContent=notes[page][0];box.append(title,document.createTextNode(notes[page][1]));main.prepend(box);}
-    if(!document.querySelector('body > footer, footer.footer')){
+  /*  if(!document.querySelector('body > footer, footer.footer')){
         const footer=document.createElement('footer');footer.className='placement-global-footer';
         footer.innerHTML='<div class="pf-columns"><div class="pf-brand"><div><span>Code</span><b>Bhavya</b></div><p class="pf-tagline">From Learning to Limitless Possibilities.</p><p>Learn, practice, build and grow with structured learning resources.</p></div></div>';
         const groups=[['Quick Links',[['Home','../index.html'],['Placement','index.html'],['Overall Progress','dashboard.html']]],['Learning',[['C Programming','../C-Programming/'],['Python','../Python/'],['Data Structures','../Data-Structures/'],['Advanced Data Structures','../Advanced-Data-Structures/'],['Maths','../Maths/'],['AI & Machine Learning','../AI-ML/']]],['Practice',[['Practice Hub','practice.html'],['MCQ Library','mcq-library.html'],['Coding Arena','coding.html'],['Mock Drive','mock-drive.html'],['Interview Coach','interview.html'],['Evidence Lab','evidence-lab.html']]]];
         groups.forEach(([heading,links])=>{const nav=document.createElement('nav');nav.setAttribute('aria-label',heading+' footer links');const h=document.createElement('h2');h.textContent=heading;nav.append(h);links.forEach(([name,url])=>{const a=document.createElement('a');a.textContent=name;a.href=url;nav.append(a);});footer.querySelector('.pf-columns').append(nav);});
         const bottom=document.createElement('div');bottom.className='pf-bottom';bottom.textContent=`© ${new Date().getFullYear()} CodeBhavya. All Rights Reserved.`;footer.append(bottom);document.body.append(footer);
-    }
+    }  */
 })();
