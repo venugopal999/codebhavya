@@ -1,0 +1,1923 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C Programming | CodeBhavya</title>
+
+ <link rel="icon" type="image/png" sizes="32x32"
+      href="../images/codebhavya-icon-32.png">
+
+<link rel="icon" type="image/png" sizes="128x128"
+      href="../images/codebhavya-icon-128.png">
+
+<link rel="icon" type="image/png" sizes="512x512"
+      href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="c-programming.css">
+</head>
+
+<body class="cb-c-topic-page cb-start-here-page">
+
+<header class="top-header">
+
+<!-- <a href="../index.html" class="logo">
+    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+</a> -->
+    
+<a href="../index.html" class="logo codebhavya-new-logo">
+
+    <img
+        src="../images/codebhavya-main-logo.png"
+        alt="CodeBhavya Logo"
+        class="main-logo"
+    >
+
+    <span class="brand-name">
+        <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+    </span>
+
+</a>
+
+    <nav class="top-nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="../Maths/">
+            Maths
+        </a>
+
+        <a href="index.html" class="active">
+            C
+        </a>
+
+<a href="../Data-Structures/index.html">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/index.html">
+    Advanced Data Structures
+</a>
+
+        <a href="../Python/">
+            Python
+        </a>
+
+        <a href="../AI-ML/">
+            AI & ML
+        </a>
+
+        <a href="../Placement/">
+            Placement
+        </a>
+
+    </nav>
+
+</header>
+
+<div class="docs-layout">
+
+<aside class="sidebar cb-c-topic-sidebar">
+    <div class="sidebar-title">💻 C Programming</div>
+
+    <input
+        type="text"
+        id="topicSearch"
+        class="search-box"
+        placeholder="🔍 Search topics..."
+        onkeyup="searchTopics()"
+    >
+
+    <div class="sidebar-title">Fundamentals</div>
+    <a class="cb-topic-link active" data-topic-link="1" href="start-here.html">🚀 Start Here — Programming from Zero</a>
+    <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
+    <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
+    <a class="cb-topic-link" data-topic-link="1" href="data-types.html">📦 Data Types</a>
+    <a class="cb-topic-link" data-topic-link="1" href="input-output.html">⌨️ Input &amp; Output</a>
+
+    <div class="sidebar-title">Operators &amp; Control</div>
+    <a class="cb-topic-link" data-topic-link="1" href="operators.html">➕ Operators</a>
+    <a class="cb-topic-link" data-topic-link="1" href="expressions.html">🧮 Expressions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="decision-making.html">🔀 Decision Making</a>
+    <a class="cb-topic-link" data-topic-link="1" href="loops.html">🔁 Loops</a>
+
+    <div class="sidebar-title">Programming Concepts</div>
+    <a class="cb-topic-link" data-topic-link="1" href="arrays.html">📊 Arrays</a>
+    <a class="cb-topic-link" data-topic-link="1" href="strings.html">🔤 Strings</a>
+    <a class="cb-topic-link" data-topic-link="1" href="functions.html">🧩 Functions</a>
+    <a class="cb-topic-link" data-topic-link="1" href="pointers.html">👉 Pointers</a>
+    <a class="cb-topic-link" data-topic-link="1" href="structures-unions.html">🏗️ Structures &amp; Unions</a>
+
+    <div class="sidebar-title">Advanced C</div>
+    <a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">⚙️ Preprocessor &amp; Header Files</a>
+    <a class="cb-topic-link" data-topic-link="1" href="file-handling.html">📁 File Handling</a>
+    <a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">🧠 Dynamic Memory Allocation</a>
+    <a class="cb-topic-link" data-topic-link="1" href="command-line.html">💻 Command Line Arguments</a>
+    <a class="cb-topic-link" data-topic-link="1" href="bitwise.html">🔢 Bitwise Programming</a>
+    <a class="cb-topic-link" data-topic-link="1" href="enum-typedef.html">🔤 Enumerations &amp; typedef</a>
+    <a class="cb-topic-link" data-topic-link="1" href="precedence.html">🧮 Operator Precedence &amp; Associativity</a>
+    <a class="cb-topic-link" data-topic-link="1" href="storage-classes.html">💾 Storage Classes</a>
+    <a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">🛠️ Advanced C Preprocessor</a>
+
+    <div class="sidebar-title">Practice</div>
+    <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
+</aside>
+
+<main class="main-content">
+
+
+
+<style>
+/* ============================================================
+   CODEBHAVYA — START HERE: PROGRAMMING FROM ZERO
+   Page-only styles. Common CSS remains unchanged.
+   ============================================================ */
+
+.cb-zero-hero {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #dbeafe;
+    background:
+        radial-gradient(circle at 92% 12%, rgba(37, 99, 235, .11), transparent 28%),
+        radial-gradient(circle at 8% 90%, rgba(212, 175, 55, .10), transparent 26%),
+        #ffffff;
+}
+
+.cb-zero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.cb-zero-hero h2 {
+    margin-top: 14px;
+    margin-bottom: 8px;
+    color: #0d1b2a;
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.15;
+}
+
+.cb-zero-hero .cb-zero-subtitle {
+    max-width: 900px;
+    color: #475569;
+    font-size: 16px;
+    line-height: 1.75;
+}
+
+.cb-zero-principle {
+    margin-top: 18px;
+    padding: 16px 18px;
+    border-left: 5px solid #d4af37;
+    border-radius: 10px;
+    background: #fffdf5;
+    color: #334155;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.cb-zero-principle strong {
+    color: #0d1b2a;
+}
+
+.cb-zero-roadmap {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    margin: 18px 0 4px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.cb-zero-roadmap-step {
+    min-width: 132px;
+    flex: 1 0 132px;
+    padding: 13px 10px;
+    border: 1px solid #dbe4f0;
+    border-radius: 12px;
+    background: #f8fafc;
+    text-align: center;
+}
+
+.cb-zero-roadmap-step strong {
+    display: block;
+    color: #153b6f;
+    font-size: 13px;
+}
+
+.cb-zero-roadmap-step span {
+    display: block;
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+.cb-zero-roadmap-arrow {
+    display: grid;
+    place-items: center;
+    flex: 0 0 18px;
+    color: #2563eb;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.cb-zero-two-col,
+.cb-zero-three-col {
+    display: grid;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.cb-zero-two-col {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cb-zero-three-col {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.cb-zero-card {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.cb-zero-card-blue {
+    background: #f8fbff;
+    border-color: #dbeafe;
+}
+
+.cb-zero-card-gold {
+    background: #fffdf5;
+    border-color: #f1e3ac;
+}
+
+.cb-zero-card-green {
+    background: #f7fef9;
+    border-color: #d1fae5;
+}
+
+.cb-zero-card-purple {
+    background: #faf8ff;
+    border-color: #e9d5ff;
+}
+
+.cb-zero-card h4 {
+    margin: 0 0 8px;
+    color: #153b6f;
+    font-size: 16px;
+}
+
+.cb-zero-card p,
+.cb-zero-card li {
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.cb-zero-card ul,
+.cb-zero-card ol {
+    margin-bottom: 0;
+}
+
+.cb-zero-human-computer {
+    display: grid;
+    grid-template-columns: 1fr 42px 1fr;
+    gap: 10px;
+    align-items: stretch;
+    margin-top: 14px;
+}
+
+.cb-zero-human-computer .cb-zero-middle {
+    display: grid;
+    place-items: center;
+    color: #2563eb;
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.cb-zero-definition {
+    margin: 12px 0;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.cb-zero-definition strong {
+    color: #0d1b2a;
+}
+
+.cb-zero-definition p {
+    margin: 5px 0 0;
+    color: #475569;
+    line-height: 1.65;
+}
+
+.cb-zero-ipo {
+    display: grid;
+    grid-template-columns: 1fr 36px 1fr 36px 1fr;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0;
+}
+
+.cb-zero-ipo-box {
+    padding: 16px 12px;
+    border-radius: 13px;
+    text-align: center;
+    border: 1px solid #dbe4f0;
+    background: #fff;
+}
+
+.cb-zero-ipo-box strong {
+    display: block;
+    color: #153b6f;
+}
+
+.cb-zero-ipo-box span {
+    display: block;
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 11px;
+}
+
+.cb-zero-ipo-arrow {
+    text-align: center;
+    color: #2563eb;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.cb-flow-symbol-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.cb-flow-symbol {
+    min-width: 0;
+    padding: 14px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 13px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.cb-flow-shape {
+    display: grid;
+    width: 104px;
+    height: 54px;
+    place-items: center;
+    margin: 0 auto 10px;
+    border: 2px solid #2563eb;
+    background: #eff6ff;
+    color: #153b6f;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.cb-flow-shape.cb-flow-oval {
+    border-radius: 999px;
+}
+
+.cb-flow-shape.cb-flow-rect {
+    border-radius: 7px;
+}
+
+.cb-flow-shape.cb-flow-io {
+    transform: skew(-14deg);
+    border-radius: 5px;
+}
+
+.cb-flow-shape.cb-flow-io span {
+    transform: skew(14deg);
+}
+
+.cb-flow-shape.cb-flow-diamond {
+    width: 58px;
+    height: 58px;
+    transform: rotate(45deg);
+    border-radius: 5px;
+}
+
+.cb-flow-shape.cb-flow-diamond span {
+    transform: rotate(-45deg);
+}
+
+.cb-flow-arrow-icon {
+    color: #2563eb;
+    font-size: 34px;
+    line-height: 54px;
+}
+
+.cb-flow-symbol strong {
+    display: block;
+    color: #0d1b2a;
+    font-size: 12px;
+}
+
+.cb-flow-symbol p {
+    margin: 4px 0 0;
+    color: #64748b;
+    font-size: 10px;
+    line-height: 1.45;
+}
+
+.cb-worked-example {
+    margin-top: 16px;
+    border: 1px solid #dbe4f0;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.cb-worked-example-head {
+    padding: 15px 17px;
+    background: linear-gradient(90deg, #eff6ff, #ffffff);
+    border-bottom: 1px solid #dbeafe;
+}
+
+.cb-worked-example-head span {
+    display: inline-flex;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .07em;
+}
+
+.cb-worked-example-head h4 {
+    margin: 8px 0 0;
+    color: #0d1b2a;
+    font-size: 19px;
+}
+
+.cb-worked-example-body {
+    padding: 16px;
+}
+
+.cb-worked-section {
+    margin-top: 14px;
+}
+
+.cb-worked-section:first-child {
+    margin-top: 0;
+}
+
+.cb-worked-section h5 {
+    margin: 0 0 8px;
+    color: #153b6f;
+    font-size: 14px;
+}
+
+.cb-algorithm-steps {
+    display: grid;
+    gap: 8px;
+    counter-reset: algo;
+}
+
+.cb-algorithm-step {
+    counter-increment: algo;
+    position: relative;
+    padding: 10px 12px 10px 44px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.cb-algorithm-step::before {
+    content: counter(algo);
+    position: absolute;
+    left: 10px;
+    top: 9px;
+    display: grid;
+    width: 24px;
+    height: 24px;
+    place-items: center;
+    border-radius: 50%;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.cb-static-flow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 14px;
+    overflow-x: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.cb-static-flow-node {
+    min-width: 120px;
+    padding: 11px 10px;
+    border: 2px solid #2563eb;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #153b6f;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.cb-static-flow-node.cb-static-start {
+    border-radius: 999px;
+}
+
+.cb-static-flow-node.cb-static-io {
+    transform: skew(-10deg);
+}
+
+.cb-static-flow-node.cb-static-io span {
+    display: block;
+    transform: skew(10deg);
+}
+
+.cb-static-flow-node.cb-static-decision {
+    min-width: 108px;
+    border-color: #d4af37;
+    background: #fffdf5;
+}
+
+.cb-static-flow-arrow {
+    flex: 0 0 auto;
+    color: #2563eb;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.cb-branch-flow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.cb-branch-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.cb-branch-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.cb-branch-option {
+    padding: 10px;
+    border: 1px solid #dbe4f0;
+    border-radius: 10px;
+    background: #ffffff;
+    text-align: center;
+    color: #475569;
+    font-size: 12px;
+}
+
+.cb-branch-option strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #153b6f;
+}
+
+.cb-code-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.cb-code-panel {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #0f172a;
+}
+
+.cb-code-panel strong {
+    display: block;
+    padding: 9px 12px;
+    background: #1e293b;
+    color: #e2e8f0;
+    font-size: 11px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.cb-code-panel pre {
+    margin: 0;
+    max-height: 360px;
+    overflow: auto;
+    padding: 13px;
+    color: #f8fafc;
+    white-space: pre-wrap;
+}
+
+.cb-dry-run-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.cb-dry-run-table th,
+.cb-dry-run-table td {
+    padding: 9px 10px;
+    border: 1px solid #dbe4f0;
+    text-align: left;
+    font-size: 12px;
+}
+
+.cb-dry-run-table th {
+    background: #eff6ff;
+    color: #153b6f;
+}
+
+.cb-dry-run-table td {
+    color: #475569;
+}
+
+.cb-thinking-checklist {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    counter-reset: think;
+    margin-top: 14px;
+}
+
+.cb-thinking-item {
+    counter-increment: think;
+    position: relative;
+    min-height: 62px;
+    padding: 12px 12px 12px 46px;
+    border: 1px solid #e2e8f0;
+    border-radius: 11px;
+    background: #ffffff;
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.cb-thinking-item::before {
+    content: counter(think);
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    display: grid;
+    width: 25px;
+    height: 25px;
+    place-items: center;
+    border-radius: 7px;
+    background: #0d1b2a;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.cb-beginner-mistakes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.cb-mistake {
+    padding: 12px;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    background: #fffafa;
+    color: #475569;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.cb-mistake strong {
+    color: #991b1b;
+}
+
+.cb-mindset {
+    margin-top: 16px;
+    padding: 18px;
+    border-radius: 14px;
+    background: #0d1b2a;
+    color: #f8fafc;
+    text-align: center;
+}
+
+.cb-mindset .cb-mindset-small {
+    color: #cbd5e1;
+    font-size: 12px;
+}
+
+.cb-mindset strong {
+    display: block;
+    margin-top: 7px;
+    color: #f5d76e;
+    font-size: 19px;
+    line-height: 1.45;
+}
+
+.cb-zero-practice-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.cb-zero-practice-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.cb-zero-practice-question {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+}
+
+.cb-zero-practice-number {
+    display: grid;
+    width: 27px;
+    height: 27px;
+    place-items: center;
+    flex: 0 0 auto;
+    border-radius: 8px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.cb-zero-practice-question strong {
+    flex: 1;
+    color: #0d1b2a;
+    font-size: 13px;
+}
+
+.cb-zero-answer {
+    padding: 12px 14px;
+    border-top: 1px solid #e2e8f0;
+    background: #f8fafc;
+    color: #475569;
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+.cb-readiness {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    margin-top: 14px;
+}
+
+.cb-readiness-item {
+    padding: 11px 12px;
+    border: 1px solid #d1fae5;
+    border-radius: 10px;
+    background: #f7fef9;
+    color: #166534;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+@media screen and (max-width: 1000px) {
+    .cb-zero-three-col {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .cb-flow-symbol-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .cb-zero-two-col,
+    .cb-zero-three-col,
+    .cb-code-pair,
+    .cb-thinking-checklist,
+    .cb-beginner-mistakes,
+    .cb-readiness,
+    .cb-branch-options {
+        grid-template-columns: 1fr;
+    }
+
+    .cb-zero-human-computer {
+        grid-template-columns: 1fr;
+    }
+
+    .cb-zero-human-computer .cb-zero-middle {
+        transform: rotate(90deg);
+        min-height: 34px;
+    }
+
+    .cb-zero-ipo {
+        grid-template-columns: 1fr;
+    }
+
+    .cb-zero-ipo-arrow {
+        transform: rotate(90deg);
+    }
+
+    .cb-flow-symbol-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cb-static-flow {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cb-static-flow-node {
+        width: auto;
+        min-width: 0;
+    }
+
+    .cb-static-flow-arrow {
+        transform: rotate(90deg);
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .cb-flow-symbol-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+<section id="start-here" class="content-card cb-zero-hero">
+
+    <span class="cb-zero-label">🚀 START HERE • ABSOLUTE BEGINNER</span>
+
+    <h2>0. Programming from Zero</h2>
+
+    <p class="cb-zero-subtitle">
+        You do not need any previous programming knowledge to start this page.
+        Before learning C syntax, first understand what a problem is, how humans solve it,
+        how a computer needs the same solution written as exact steps, and how those steps
+        become an algorithm, flowchart, pseudocode, and finally a C program.
+    </p>
+
+    <div class="cb-zero-principle">
+        <strong>Most important idea:</strong>
+        Programming is not memorizing programs.
+        Programming is learning how to understand a problem, break it into small steps,
+        and express those steps clearly enough for a computer to follow.
+    </div>
+
+    <div class="cb-zero-roadmap">
+        <div class="cb-zero-roadmap-step"><strong>Problem</strong><span>What must be solved?</span></div>
+        <div class="cb-zero-roadmap-arrow">→</div>
+        <div class="cb-zero-roadmap-step"><strong>Understand</strong><span>What is given and required?</span></div>
+        <div class="cb-zero-roadmap-arrow">→</div>
+        <div class="cb-zero-roadmap-step"><strong>Algorithm</strong><span>Exact solution steps</span></div>
+        <div class="cb-zero-roadmap-arrow">→</div>
+        <div class="cb-zero-roadmap-step"><strong>Flowchart</strong><span>Visual form of the logic</span></div>
+        <div class="cb-zero-roadmap-arrow">→</div>
+        <div class="cb-zero-roadmap-step"><strong>Pseudocode</strong><span>Programming-like plain language</span></div>
+        <div class="cb-zero-roadmap-arrow">→</div>
+        <div class="cb-zero-roadmap-step"><strong>C Program</strong><span>Actual executable code</span></div>
+        <div class="cb-zero-roadmap-arrow">→</div>
+        <div class="cb-zero-roadmap-step"><strong>Test</strong><span>Check whether it works</span></div>
+    </div>
+
+</section>
+
+<section class="content-card">
+
+    <h3>0.1 What is a Problem?</h3>
+
+    <p>
+        A <strong>problem</strong> is a situation where we know some information,
+        need a particular result, and must find a method to reach that result.
+    </p>
+
+    <div class="cb-zero-three-col">
+        <div class="cb-zero-card cb-zero-card-blue">
+            <h4>🎓 Example: Student Marks</h4>
+            <p>You have marks of five students and want to find the highest mark.</p>
+        </div>
+
+        <div class="cb-zero-card cb-zero-card-gold">
+            <h4>🛒 Example: Shop Bill</h4>
+            <p>You know the price and quantity of items and want to calculate the total bill.</p>
+        </div>
+
+        <div class="cb-zero-card cb-zero-card-green">
+            <h4>🚍 Example: Bus Capacity</h4>
+            <p>You know the number of passengers and seats and want to know whether more passengers can enter.</p>
+        </div>
+    </div>
+
+    <h3>0.2 How Do We Normally Solve a Problem?</h3>
+
+    <p>
+        Humans often solve simple problems without writing down every step.
+        We understand the situation, compare information, make decisions, and produce an answer.
+        A computer cannot depend on this hidden human understanding.
+    </p>
+
+    <div class="cb-zero-human-computer">
+        <div class="cb-zero-card cb-zero-card-blue">
+            <h4>🧠 Human Thinking</h4>
+            <p><strong>Problem:</strong> Find the highest mark among 72, 85, 61, 94 and 78.</p>
+            <ol>
+                <li>Look at the first mark.</li>
+                <li>Compare it with the next mark.</li>
+                <li>Keep the larger one.</li>
+                <li>Repeat until all marks are checked.</li>
+                <li>Answer: 94.</li>
+            </ol>
+        </div>
+
+        <div class="cb-zero-middle">→</div>
+
+        <div class="cb-zero-card cb-zero-card-gold">
+            <h4>💻 Computer Thinking</h4>
+            <p>The computer needs the same idea written as exact instructions:</p>
+            <ol>
+                <li>Read all marks.</li>
+                <li>Assume the first mark is the maximum.</li>
+                <li>Compare each remaining mark with the maximum.</li>
+                <li>If a larger mark is found, update the maximum.</li>
+                <li>Print the final maximum.</li>
+            </ol>
+        </div>
+    </div>
+
+    <h3>0.3 What is Programming?</h3>
+
+    <div class="cb-zero-definition">
+        <strong>Simple Meaning</strong>
+        <p>
+            Programming is the process of giving a computer a clear and ordered set of instructions
+            so that it can perform a task or solve a problem.
+        </p>
+    </div>
+
+    <div class="cb-zero-two-col">
+        <div class="cb-zero-card">
+            <h4>📄 Program</h4>
+            <p>
+                A <strong>program</strong> is the actual set of instructions written in a programming language.
+            </p>
+        </div>
+
+        <div class="cb-zero-card">
+            <h4>🗣️ Programming Language</h4>
+            <p>
+                A <strong>programming language</strong> provides rules and vocabulary for writing instructions
+                that can be translated into operations a computer can execute.
+            </p>
+        </div>
+    </div>
+
+    <h3>0.4 Why Do We Need a Programming Language?</h3>
+
+    <p>
+        We communicate with people using languages such as English or Telugu.
+        Computers ultimately operate using machine-level instructions.
+        Programming languages such as C give humans a practical way to describe logic precisely.
+    </p>
+
+    <div class="cb-zero-ipo">
+        <div class="cb-zero-ipo-box">
+            <strong>Human Idea</strong>
+            <span>Add two numbers</span>
+        </div>
+        <div class="cb-zero-ipo-arrow">→</div>
+        <div class="cb-zero-ipo-box">
+            <strong>C Program</strong>
+            <span>sum = a + b;</span>
+        </div>
+        <div class="cb-zero-ipo-arrow">→</div>
+        <div class="cb-zero-ipo-box">
+            <strong>Computer Result</strong>
+            <span>Example: 10 + 20 = 30</span>
+        </div>
+    </div>
+
+    <h3>0.5 The Basic Input–Process–Output Idea</h3>
+
+    <p>
+        Many programming problems become easier when you first identify three things:
+        <strong>Input, Process, and Output.</strong>
+    </p>
+
+    <div class="cb-zero-ipo">
+        <div class="cb-zero-ipo-box">
+            <strong>INPUT</strong>
+            <span>What information is given?</span>
+        </div>
+        <div class="cb-zero-ipo-arrow">→</div>
+        <div class="cb-zero-ipo-box">
+            <strong>PROCESS</strong>
+            <span>What calculation or logic is needed?</span>
+        </div>
+        <div class="cb-zero-ipo-arrow">→</div>
+        <div class="cb-zero-ipo-box">
+            <strong>OUTPUT</strong>
+            <span>What result must be produced?</span>
+        </div>
+    </div>
+
+</section>
+
+<section class="content-card">
+
+    <h3>0.6 What is an Algorithm?</h3>
+
+    <div class="cb-zero-definition">
+        <strong>Simple Meaning</strong>
+        <p>
+            An <strong>algorithm</strong> is a clear, finite, step-by-step method for solving a problem.
+            It describes <em>what to do</em> before we worry about the exact syntax of a programming language.
+        </p>
+    </div>
+
+    <div class="cb-zero-two-col">
+        <div class="cb-zero-card cb-zero-card-blue">
+            <h4>☕ Everyday Algorithm — Make Tea</h4>
+            <div class="cb-algorithm-steps">
+                <div class="cb-algorithm-step">Take water.</div>
+                <div class="cb-algorithm-step">Boil the water.</div>
+                <div class="cb-algorithm-step">Add tea and other required ingredients.</div>
+                <div class="cb-algorithm-step">Boil for the required time.</div>
+                <div class="cb-algorithm-step">Pour and serve.</div>
+            </div>
+        </div>
+
+        <div class="cb-zero-card cb-zero-card-gold">
+            <h4>🧮 Programming Algorithm — Add Two Numbers</h4>
+            <div class="cb-algorithm-steps">
+                <div class="cb-algorithm-step">Start.</div>
+                <div class="cb-algorithm-step">Read A and B.</div>
+                <div class="cb-algorithm-step">Compute SUM = A + B.</div>
+                <div class="cb-algorithm-step">Display SUM.</div>
+                <div class="cb-algorithm-step">Stop.</div>
+            </div>
+        </div>
+    </div>
+
+    <h3>0.7 Characteristics of a Good Algorithm</h3>
+
+    <div class="cb-zero-three-col">
+        <div class="cb-zero-card">
+            <h4>✅ Clear</h4>
+            <p>Every step should have one understandable meaning.</p>
+        </div>
+        <div class="cb-zero-card">
+            <h4>✅ Ordered</h4>
+            <p>Steps should appear in the correct sequence.</p>
+        </div>
+        <div class="cb-zero-card">
+            <h4>✅ Finite</h4>
+            <p>The solution should finish after a limited number of steps.</p>
+        </div>
+        <div class="cb-zero-card">
+            <h4>✅ Correct</h4>
+            <p>It should produce the required result for valid input.</p>
+        </div>
+        <div class="cb-zero-card">
+            <h4>✅ Practical</h4>
+            <p>Each step should be possible to perform.</p>
+        </div>
+        <div class="cb-zero-card">
+            <h4>✅ Testable</h4>
+            <p>You should be able to check the steps using sample values.</p>
+        </div>
+    </div>
+
+    <h3>0.8 What is a Flowchart?</h3>
+
+    <div class="cb-zero-definition">
+        <strong>Simple Meaning</strong>
+        <p>
+            A <strong>flowchart</strong> is a graphical representation of an algorithm.
+            Different shapes represent different types of steps, and arrows show the direction of execution.
+        </p>
+    </div>
+
+    <div class="cb-flow-symbol-grid">
+        <div class="cb-flow-symbol">
+            <div class="cb-flow-shape cb-flow-oval">Start / Stop</div>
+            <strong>Oval</strong>
+            <p>Beginning or end of the logic</p>
+        </div>
+
+        <div class="cb-flow-symbol">
+            <div class="cb-flow-shape cb-flow-io"><span>Input / Output</span></div>
+            <strong>Parallelogram</strong>
+            <p>Read input or display output</p>
+        </div>
+
+        <div class="cb-flow-symbol">
+            <div class="cb-flow-shape cb-flow-rect">Process</div>
+            <strong>Rectangle</strong>
+            <p>Calculation or processing step</p>
+        </div>
+
+        <div class="cb-flow-symbol">
+            <div class="cb-flow-shape cb-flow-diamond"><span>Decision</span></div>
+            <strong>Diamond</strong>
+            <p>A condition with branches such as Yes / No</p>
+        </div>
+
+        <div class="cb-flow-symbol">
+            <div class="cb-flow-arrow-icon">→</div>
+            <strong>Arrow</strong>
+            <p>Direction in which control moves</p>
+        </div>
+    </div>
+
+    <h3>0.9 What is Pseudocode?</h3>
+
+    <div class="cb-zero-definition">
+        <strong>Simple Meaning</strong>
+        <p>
+            <strong>Pseudocode</strong> is an informal way to write program logic using simple,
+            programming-like English. It is meant for people to understand and plan;
+            it is not compiled or executed by the computer.
+        </p>
+    </div>
+
+    <div class="cb-zero-two-col">
+        <div class="cb-zero-card cb-zero-card-purple">
+            <h4>Common Pseudocode Words</h4>
+            <ul>
+                <li><code>BEGIN</code> / <code>END</code></li>
+                <li><code>READ</code></li>
+                <li><code>PRINT</code></li>
+                <li><code>IF</code> / <code>ELSE</code></li>
+                <li><code>FOR</code> / <code>WHILE</code></li>
+                <li><code>SET</code> or assignment such as <code>SUM ← A + B</code></li>
+            </ul>
+        </div>
+
+        <div class="cb-zero-card cb-zero-card-green">
+            <h4>Important</h4>
+            <p>
+                There is no single universal pseudocode syntax.
+                The goal is to express the logic clearly and consistently
+                before translating it into real C syntax.
+            </p>
+        </div>
+    </div>
+
+</section>
+
+<section class="content-card">
+
+    <span class="cb-zero-label">WORKED EXAMPLE 1 • SEQUENCE</span>
+    <h3>0.10 From Problem to C Program — Add Two Numbers</h3>
+
+    <div class="cb-worked-example">
+        <div class="cb-worked-example-head">
+            <span>BEGINNER EXAMPLE</span>
+            <h4>🧮 Add Two Numbers</h4>
+        </div>
+
+        <div class="cb-worked-example-body">
+
+            <div class="cb-worked-section">
+                <h5>1. Problem Statement</h5>
+                <p>Read two integers and display their sum.</p>
+            </div>
+
+            <div class="cb-worked-section">
+                <h5>2. Identify Input, Process and Output</h5>
+                <div class="cb-zero-ipo">
+                    <div class="cb-zero-ipo-box"><strong>Input</strong><span>A, B</span></div>
+                    <div class="cb-zero-ipo-arrow">→</div>
+                    <div class="cb-zero-ipo-box"><strong>Process</strong><span>SUM = A + B</span></div>
+                    <div class="cb-zero-ipo-arrow">→</div>
+                    <div class="cb-zero-ipo-box"><strong>Output</strong><span>SUM</span></div>
+                </div>
+            </div>
+
+            <div class="cb-worked-section">
+                <h5>3. Algorithm</h5>
+                <div class="cb-algorithm-steps">
+                    <div class="cb-algorithm-step">Start.</div>
+                    <div class="cb-algorithm-step">Read A and B.</div>
+                    <div class="cb-algorithm-step">Calculate SUM = A + B.</div>
+                    <div class="cb-algorithm-step">Display SUM.</div>
+                    <div class="cb-algorithm-step">Stop.</div>
+                </div>
+            </div>
+
+            <div class="cb-worked-section">
+                <h5>4. Flowchart</h5>
+                <div class="cb-static-flow">
+                    <div class="cb-static-flow-node cb-static-start">Start</div>
+                    <div class="cb-static-flow-arrow">→</div>
+                    <div class="cb-static-flow-node cb-static-io"><span>Read A, B</span></div>
+                    <div class="cb-static-flow-arrow">→</div>
+                    <div class="cb-static-flow-node">SUM = A + B</div>
+                    <div class="cb-static-flow-arrow">→</div>
+                    <div class="cb-static-flow-node cb-static-io"><span>Print SUM</span></div>
+                    <div class="cb-static-flow-arrow">→</div>
+                    <div class="cb-static-flow-node cb-static-start">Stop</div>
+                </div>
+            </div>
+
+            <div class="cb-worked-section">
+                <h5>5. Pseudocode and C Program</h5>
+                <div class="cb-code-pair">
+                    <div class="cb-code-panel">
+                        <strong>Pseudocode</strong>
+                        <pre>BEGIN
+    READ A, B
+    SUM ← A + B
+    PRINT SUM
+END</pre>
+                    </div>
+
+                    <div class="cb-code-panel">
+                        <strong>C Program</strong>
+                        <pre>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a, b, sum;
+
+    scanf(&quot;%d %d&quot;, &amp;a, &amp;b);
+
+    sum = a + b;
+
+    printf(&quot;%d&quot;, sum);
+
+    return 0;
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cb-worked-section">
+                <h5>6. Dry Run</h5>
+                <table class="cb-dry-run-table">
+                    <thead>
+                        <tr>
+                            <th>Step</th>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>SUM</th>
+                            <th>Output</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Read input</td><td>10</td><td>20</td><td>—</td><td>—</td></tr>
+                        <tr><td>SUM = A + B</td><td>10</td><td>20</td><td>30</td><td>—</td></tr>
+                        <tr><td>Print SUM</td><td>10</td><td>20</td><td>30</td><td>30</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<section class="content-card">
+
+    <span class="cb-zero-label">WORKED EXAMPLE 2 • DECISION</span>
+    <h3>0.11 Decision Making — Certificate Eligibility</h3>
+
+    <div class="cb-worked-example">
+        <div class="cb-worked-example-head">
+            <span>DECISION EXAMPLE</span>
+            <h4>🎓 Is the Student Eligible?</h4>
+        </div>
+
+        <div class="cb-worked-example-body">
+            <p>
+                A student is eligible for a certificate when the mark is at least 40.
+                Otherwise, the student is not eligible.
+            </p>
+
+            <div class="cb-worked-section">
+                <h5>Algorithm</h5>
+                <div class="cb-algorithm-steps">
+                    <div class="cb-algorithm-step">Start.</div>
+                    <div class="cb-algorithm-step">Read MARKS.</div>
+                    <div class="cb-algorithm-step">Check whether MARKS ≥ 40.</div>
+                    <div class="cb-algorithm-step">If Yes, print Eligible; otherwise print Not Eligible.</div>
+                    <div class="cb-algorithm-step">Stop.</div>
+                </div>
+            </div>
+
+            <div class="cb-worked-section">
+                <h5>Flowchart Idea</h5>
+                <div class="cb-branch-flow">
+                    <div class="cb-branch-main">
+                        <div class="cb-static-flow-node cb-static-start">Start</div>
+                        <div class="cb-static-flow-arrow">→</div>
+                        <div class="cb-static-flow-node cb-static-io"><span>Read MARKS</span></div>
+                        <div class="cb-static-flow-arrow">→</div>
+                        <div class="cb-static-flow-node cb-static-decision">MARKS ≥ 40?</div>
+                    </div>
+
+                    <div class="cb-branch-options">
+                        <div class="cb-branch-option">
+                            <strong>YES</strong>
+                            Print <code>Eligible</code>
+                        </div>
+
+                        <div class="cb-branch-option">
+                            <strong>NO</strong>
+                            Print <code>Not Eligible</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cb-worked-section">
+                <h5>Pseudocode and C Program</h5>
+                <div class="cb-code-pair">
+                    <div class="cb-code-panel">
+                        <strong>Pseudocode</strong>
+                        <pre>BEGIN
+    READ MARKS
+
+    IF MARKS >= 40
+        PRINT "Eligible"
+    ELSE
+        PRINT "Not Eligible"
+    END IF
+END</pre>
+                    </div>
+
+                    <div class="cb-code-panel">
+                        <strong>C Program</strong>
+                        <pre>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int marks;
+
+    scanf(&quot;%d&quot;, &amp;marks);
+
+    if(marks &gt;= 40)
+        printf(&quot;Eligible&quot;);
+    else
+        printf(&quot;Not Eligible&quot;);
+
+    return 0;
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<section class="content-card">
+
+    <span class="cb-zero-label">WORKED EXAMPLE 3 • REPETITION</span>
+    <h3>0.12 Repetition — Print Numbers from 1 to 5</h3>
+
+    <p>
+        Suppose you need to print the numbers 1 to 5.
+        You could write five separate print statements, but the action is repetitive.
+        Programming gives us a better idea: <strong>repeat the same type of instruction using a loop.</strong>
+    </p>
+
+    <div class="cb-zero-two-col">
+        <div class="cb-zero-card cb-zero-card-gold">
+            <h4>Without Thinking About Repetition</h4>
+            <pre><code>print 1
+print 2
+print 3
+print 4
+print 5</code></pre>
+        </div>
+
+        <div class="cb-zero-card cb-zero-card-green">
+            <h4>Better Logical Idea</h4>
+            <pre><code>SET i ← 1
+WHILE i ≤ 5
+    PRINT i
+    i ← i + 1
+END WHILE</code></pre>
+        </div>
+    </div>
+
+    <div class="cb-worked-example">
+        <div class="cb-worked-example-body">
+
+            <div class="cb-worked-section">
+                <h5>Algorithm</h5>
+                <div class="cb-algorithm-steps">
+                    <div class="cb-algorithm-step">Start.</div>
+                    <div class="cb-algorithm-step">Set i = 1.</div>
+                    <div class="cb-algorithm-step">If i ≤ 5, print i.</div>
+                    <div class="cb-algorithm-step">Increase i by 1 and repeat the check.</div>
+                    <div class="cb-algorithm-step">When i becomes greater than 5, stop.</div>
+                </div>
+            </div>
+
+            <div class="cb-worked-section">
+                <h5>Pseudocode and C Program</h5>
+                <div class="cb-code-pair">
+                    <div class="cb-code-panel">
+                        <strong>Pseudocode</strong>
+                        <pre>BEGIN
+    FOR i ← 1 TO 5
+        PRINT i
+    END FOR
+END</pre>
+                    </div>
+
+                    <div class="cb-code-panel">
+                        <strong>C Program</strong>
+                        <pre>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for(int i = 1; i &lt;= 5; i++)
+        printf(&quot;%d &quot;, i);
+
+    return 0;
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<section class="content-card">
+
+    <h3>0.13 Algorithm vs Flowchart vs Pseudocode vs Program</h3>
+
+    <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Representation</th>
+                    <th>Main Purpose</th>
+                    <th>Can Computer Execute It Directly?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Problem</strong></td>
+                    <td>States what must be solved.</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td><strong>Algorithm</strong></td>
+                    <td>Describes the solution as ordered steps.</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td><strong>Flowchart</strong></td>
+                    <td>Shows the algorithm visually using symbols and arrows.</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td><strong>Pseudocode</strong></td>
+                    <td>Expresses the logic in simple programming-like language.</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td><strong>C Program</strong></td>
+                    <td>Implements the solution using valid C syntax.</td>
+                    <td>After translation/compilation</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>0.14 How to Think Before Writing Code</h3>
+
+    <p>
+        Whenever you see a new programming problem, do not immediately start typing C.
+        First answer these questions.
+    </p>
+
+    <div class="cb-thinking-checklist">
+        <div class="cb-thinking-item">What exactly is the problem asking me to find or produce?</div>
+        <div class="cb-thinking-item">What input information is given?</div>
+        <div class="cb-thinking-item">What should the final output look like?</div>
+        <div class="cb-thinking-item">Can I solve one small example manually?</div>
+        <div class="cb-thinking-item">What steps did I follow while solving it manually?</div>
+        <div class="cb-thinking-item">Can I write those steps as an algorithm?</div>
+        <div class="cb-thinking-item">Do I need a sequence, decision, repetition, array, function, or another concept?</div>
+        <div class="cb-thinking-item">After writing the program, what test cases should I use?</div>
+    </div>
+
+    <h3>0.15 What is a Dry Run or Program Tracing?</h3>
+
+    <p>
+        A <strong>dry run</strong> means executing the logic manually using sample values.
+        You track how variables change one step at a time before or while checking the program.
+    </p>
+
+    <div class="cb-zero-card cb-zero-card-blue">
+        <h4>Example</h4>
+        <pre><code>A = 10
+B = 20
+
+SUM = A + B
+SUM = 10 + 20
+SUM = 30
+
+Output = 30</code></pre>
+        <p>
+            This habit is extremely useful for understanding loops, arrays, functions,
+            pointers, recursion and many other topics you will learn later.
+        </p>
+    </div>
+
+    <h3>0.16 What if the Program Does Not Work?</h3>
+
+    <div class="cb-zero-three-col">
+        <div class="cb-zero-card">
+            <h4>🔧 Syntax Error</h4>
+            <p>The code does not follow the rules of C, such as a missing semicolon or incorrect statement.</p>
+        </div>
+
+        <div class="cb-zero-card">
+            <h4>⚠️ Runtime Problem</h4>
+            <p>The program starts but fails while running because of an invalid operation or environment condition.</p>
+        </div>
+
+        <div class="cb-zero-card">
+            <h4>🧠 Logic Error</h4>
+            <p>The program runs, but the answer is wrong because the solution steps are wrong.</p>
+        </div>
+    </div>
+
+    <p>
+        Finding and correcting such problems is called <strong>debugging</strong>.
+        Errors are a normal part of programming practice.
+    </p>
+
+</section>
+
+<section class="content-card">
+
+    <h3>0.17 A Simple Problem-Solving Strategy</h3>
+
+    <div class="cb-mini-step-flow">
+
+        <div class="cb-mini-step-card cb-mini-step-card-blue">
+            <div class="cb-mini-step-badge">1</div>
+            <div class="cb-mini-step-text">Understand</div>
+            <div class="cb-mini-step-subtext">Read the problem slowly and identify the actual goal.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-gold">
+            <div class="cb-mini-step-badge">2</div>
+            <div class="cb-mini-step-text">Solve Manually</div>
+            <div class="cb-mini-step-subtext">Try a small example using normal human thinking.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-purple">
+            <div class="cb-mini-step-badge">3</div>
+            <div class="cb-mini-step-text">Write the Logic</div>
+            <div class="cb-mini-step-subtext">Convert your manual steps into an algorithm or pseudocode.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-green">
+            <div class="cb-mini-step-badge">4</div>
+            <div class="cb-mini-step-text">Code</div>
+            <div class="cb-mini-step-subtext">Translate the logic into valid C statements.</div>
+        </div>
+
+        <div class="cb-mini-step-arrow">↓</div>
+
+        <div class="cb-mini-step-card cb-mini-step-card-pink">
+            <div class="cb-mini-step-badge">5</div>
+            <div class="cb-mini-step-text">Test & Improve</div>
+            <div class="cb-mini-step-subtext">Try normal, boundary and unusual test values.</div>
+        </div>
+
+    </div>
+
+    <h3>0.18 Common Beginner Mistakes</h3>
+
+    <div class="cb-beginner-mistakes">
+        <div class="cb-mistake"><strong>✗ Starting code immediately</strong><br>First understand input, output and logic.</div>
+        <div class="cb-mistake"><strong>✗ Memorizing complete programs</strong><br>Remember the idea and steps, not only the final code.</div>
+        <div class="cb-mistake"><strong>✗ Copying without tracing</strong><br>If you use an example, execute it manually and understand every important step.</div>
+        <div class="cb-mistake"><strong>✗ Ignoring sample input/output</strong><br>Examples often reveal what the problem really expects.</div>
+        <div class="cb-mistake"><strong>✗ Trying to solve everything at once</strong><br>Break a large problem into smaller subproblems.</div>
+        <div class="cb-mistake"><strong>✗ Being afraid of errors</strong><br>Compile, test, inspect the error, correct it, and try again.</div>
+    </div>
+
+    <div class="cb-mindset">
+        <span class="cb-mindset-small">CODEBHAVYA PROGRAMMING MINDSET</span>
+        <strong>
+            Do not ask, “Which program should I memorize?”<br>
+            Ask, “What steps are required to solve this problem?”
+        </strong>
+    </div>
+
+</section>
+
+<section class="content-card">
+
+    <span class="cb-zero-label">NO C CODE REQUIRED YET</span>
+    <h3>0.19 Mini Problem-Solving Practice</h3>
+
+    <p>
+        For each problem, first identify the <strong>Input</strong>,
+        <strong>Output</strong>, and the main <strong>logic</strong>.
+        Try it yourself before opening the answer.
+    </p>
+
+    <div class="cb-zero-practice-list">
+
+        
+<div class="cb-zero-practice-item">
+    <div class="cb-zero-practice-question">
+        <span class="cb-zero-practice-number">1</span>
+        <strong>Find the greater of two numbers.</strong>
+        <button type="button"
+                class="cb-show-answer-btn"
+                onclick="CBShowAnswer.toggle('zeroPracticeAnswer1', this)">Show Answer</button>
+    </div>
+    <div class="cb-zero-answer" id="zeroPracticeAnswer1" hidden>
+        <strong>Input:</strong> A, B<br><strong>Output:</strong> Greater value<br><strong>Logic:</strong> If A &gt; B, output A; otherwise output B.
+    </div>
+</div>
+
+
+        
+<div class="cb-zero-practice-item">
+    <div class="cb-zero-practice-question">
+        <span class="cb-zero-practice-number">2</span>
+        <strong>Check whether a number is even or odd.</strong>
+        <button type="button"
+                class="cb-show-answer-btn"
+                onclick="CBShowAnswer.toggle('zeroPracticeAnswer2', this)">Show Answer</button>
+    </div>
+    <div class="cb-zero-answer" id="zeroPracticeAnswer2" hidden>
+        <strong>Input:</strong> N<br><strong>Output:</strong> Even or Odd<br><strong>Logic:</strong> If the remainder when N is divided by 2 is 0, it is Even; otherwise it is Odd.
+    </div>
+</div>
+
+
+        
+<div class="cb-zero-practice-item">
+    <div class="cb-zero-practice-question">
+        <span class="cb-zero-practice-number">3</span>
+        <strong>Calculate the average of three marks.</strong>
+        <button type="button"
+                class="cb-show-answer-btn"
+                onclick="CBShowAnswer.toggle('zeroPracticeAnswer3', this)">Show Answer</button>
+    </div>
+    <div class="cb-zero-answer" id="zeroPracticeAnswer3" hidden>
+        <strong>Input:</strong> M1, M2, M3<br><strong>Output:</strong> Average<br><strong>Logic:</strong> SUM = M1 + M2 + M3, then AVERAGE = SUM / 3.
+    </div>
+</div>
+
+
+        
+<div class="cb-zero-practice-item">
+    <div class="cb-zero-practice-question">
+        <span class="cb-zero-practice-number">4</span>
+        <strong>Calculate a shop bill when price and quantity are given.</strong>
+        <button type="button"
+                class="cb-show-answer-btn"
+                onclick="CBShowAnswer.toggle('zeroPracticeAnswer4', this)">Show Answer</button>
+    </div>
+    <div class="cb-zero-answer" id="zeroPracticeAnswer4" hidden>
+        <strong>Input:</strong> PRICE, QUANTITY<br><strong>Output:</strong> BILL<br><strong>Logic:</strong> BILL = PRICE × QUANTITY.
+    </div>
+</div>
+
+
+        
+<div class="cb-zero-practice-item">
+    <div class="cb-zero-practice-question">
+        <span class="cb-zero-practice-number">5</span>
+        <strong>Display numbers from 1 to 10.</strong>
+        <button type="button"
+                class="cb-show-answer-btn"
+                onclick="CBShowAnswer.toggle('zeroPracticeAnswer5', this)">Show Answer</button>
+    </div>
+    <div class="cb-zero-answer" id="zeroPracticeAnswer5" hidden>
+        <strong>Input:</strong> No special input is required.<br><strong>Output:</strong> 1 through 10<br><strong>Logic:</strong> Start at 1, print the current number, increase it by 1, and repeat until 10.
+    </div>
+</div>
+
+
+        
+<div class="cb-zero-practice-item">
+    <div class="cb-zero-practice-question">
+        <span class="cb-zero-practice-number">6</span>
+        <strong>Find the largest among three numbers.</strong>
+        <button type="button"
+                class="cb-show-answer-btn"
+                onclick="CBShowAnswer.toggle('zeroPracticeAnswer6', this)">Show Answer</button>
+    </div>
+    <div class="cb-zero-answer" id="zeroPracticeAnswer6" hidden>
+        <strong>Input:</strong> A, B, C<br><strong>Output:</strong> Largest value<br><strong>Logic:</strong> Keep a current largest value and compare the other values with it, updating whenever a larger value is found.
+    </div>
+</div>
+
+
+    </div>
+
+    <h3>0.20 Are You Ready to Start C?</h3>
+
+    <p>
+        You are ready for the next page when these ideas feel understandable.
+        You do not need to be perfect yet.
+    </p>
+
+    <div class="cb-readiness">
+        <div class="cb-readiness-item">✓ I know that programming is problem solving using precise instructions.</div>
+        <div class="cb-readiness-item">✓ I can identify Input, Process and Output.</div>
+        <div class="cb-readiness-item">✓ I understand what an algorithm is.</div>
+        <div class="cb-readiness-item">✓ I know the purpose of a flowchart.</div>
+        <div class="cb-readiness-item">✓ I understand what pseudocode is.</div>
+        <div class="cb-readiness-item">✓ I know that C code is the implementation of the logic.</div>
+        <div class="cb-readiness-item">✓ I understand the purpose of a dry run.</div>
+        <div class="cb-readiness-item">✓ I know that errors are part of learning and can be debugged.</div>
+    </div>
+
+    <h3>0.21 Key Takeaway</h3>
+
+    <div class="cb-zero-principle">
+        <strong>The complete journey is:</strong><br><br>
+        Problem → Understand → Input/Output → Manual Solution → Algorithm →
+        Flowchart/Pseudocode → C Program → Test → Debug → Improve.
+        <br><br>
+        In the next topic, you will begin learning the C programming language itself.
+    </div>
+
+</section>
+
+
+
+<section class="cb-topic-navigation" aria-label="C Programming topic navigation">
+
+    <a class="cb-topic-nav-btn cb-topic-nav-next" href="introduction.html">
+        Next Topic: Introduction to C Programming →
+    </a>
+
+</section>
+
+
+</main>
+
+</div>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
+                From Learning to Limitless Possibilities.
+            </p>
+
+            <p class="footer-description">
+                Learn, practice, build and grow with
+                structured learning resources.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../Maths/index.html">
+                Maths
+            </a>
+
+            <a href="index.html">
+                C Programming
+            </a>
+
+        </div>
+
+
+        <!-- LEARNING -->
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+<a href="../Data-Structures/">
+    Data Structures
+</a>
+
+<a href="../Advanced-Data-Structures/">
+    Advanced Data Structures
+</a>
+
+            <a href="#">
+                Python
+            </a>
+
+            <a href="#">
+                AI & Machine Learning
+            </a>
+
+        </div>
+
+
+        <!-- PRACTICE -->
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="#practice">
+                Practice Problems
+            </a>
+
+            <a href="#practice">
+                Problem Solving
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
+
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="c-programming.js"></script>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
