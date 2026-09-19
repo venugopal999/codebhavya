@@ -1120,6 +1120,22 @@ printf("%d", x &gt;&gt; 1);</code></pre>
         examples above use positive integers.
     </p>
 
+    <!-- CONTENT DEPTH ENHANCEMENT V1: Bitwise complement and operator side effects -->
+    <div class="tip-box">
+        <strong>🔍 Deeper understanding: Bitwise complement and operator side effects</strong>
+        <p>Bitwise complement <code>~</code> flips every bit after the operand undergoes integer promotion. Using an eight-bit teaching view, 5 is <code>00000101</code> and its complemented pattern is <code>11111010</code>, which is 250 when interpreted as an unsigned eight-bit value. A real <code>int</code> commonly has 32 bits, so the full promoted value is complemented—not only the eight bits drawn in the diagram.</p>
+    </div>
+
+    <pre><code>unsigned char x = 5;
+unsigned char y = (unsigned char)~x; /* y is 250 when CHAR_BIT is 8 */
+
+int n = 5;
+printf("%d\\n", ~n);                /* -6 on two's-complement systems */</code></pre>
+    <div class="formula-box">On two’s-complement systems: ~x = -(x + 1), therefore ~5 = -6.</div>
+    <p>The cast in the first example matters because <code>x</code> is promoted before <code>~</code>. Prefer unsigned types for masks and shifts. Logical operators <code>&amp;&amp;</code>, <code>||</code> and <code>!</code> work with truth values and may short-circuit; bitwise operators <code>&amp;</code>, <code>|</code>, <code>^</code> and <code>~</code> transform integer bit patterns and do not short-circuit.</p>
+    <p><strong>Side-effect rule:</strong> do not modify an object more than once without a sequencing guarantee. Expressions such as <code>i = i++;</code> and <code>printf("%d %d", i++, i++);</code> have undefined behaviour. Split them into separate statements.</p>
+
+
 
     <!-- OPERATOR SUMMARY -->
 
@@ -1268,21 +1284,7 @@ printf("%d", x &gt;&gt; 1);</code></pre>
         = 12
 
     </div>
-    <!-- CONTENT DEPTH ENHANCEMENT V1: Bitwise complement and operator side effects -->
-    <div class="tip-box">
-        <strong>🔍 Deeper understanding: Bitwise complement and operator side effects</strong>
-        <p>Bitwise complement <code>~</code> flips every bit after the operand undergoes integer promotion. Using an eight-bit teaching view, 5 is <code>00000101</code> and its complemented pattern is <code>11111010</code>, which is 250 when interpreted as an unsigned eight-bit value. A real <code>int</code> commonly has 32 bits, so the full promoted value is complemented—not only the eight bits drawn in the diagram.</p>
-    </div>
-
-    <pre><code>unsigned char x = 5;
-unsigned char y = (unsigned char)~x; /* y is 250 when CHAR_BIT is 8 */
-
-int n = 5;
-printf("%d\\n", ~n);                /* -6 on two's-complement systems */</code></pre>
-    <div class="formula-box">On two’s-complement systems: ~x = -(x + 1), therefore ~5 = -6.</div>
-    <p>The cast in the first example matters because <code>x</code> is promoted before <code>~</code>. Prefer unsigned types for masks and shifts. Logical operators <code>&amp;&amp;</code>, <code>||</code> and <code>!</code> work with truth values and may short-circuit; bitwise operators <code>&amp;</code>, <code>|</code>, <code>^</code> and <code>~</code> transform integer bit patterns and do not short-circuit.</p>
-    <p><strong>Side-effect rule:</strong> do not modify an object more than once without a sequencing guarantee. Expressions such as <code>i = i++;</code> and <code>printf("%d %d", i++, i++);</code> have undefined behaviour. Split them into separate statements.</p>
-
+    
 
 
 
