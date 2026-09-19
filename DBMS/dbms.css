@@ -298,7 +298,35 @@ body.dbms-page { margin: 0; background: var(--db-background); color: var(--db-te
     .dbms-page .top-header .logo { font-size: 23px; }
 
     .dbms-page .dbms-sidebar-toggle { top: 64px; }
-    .dbms-page .docs-layout > .sidebar { top: 108px !important; }
+    .dbms-page .docs-layout > .sidebar {
+    position: fixed !important;
+
+    top: 108px !important;
+    bottom: auto !important;
+
+    height: calc(100dvh - 108px) !important;
+    max-height: calc(100dvh - 108px) !important;
+
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+
+    padding-bottom: 50px !important;
+}
+    @supports not (height: 100dvh) {
+
+    @media (max-width: 680px) {
+
+        .dbms-page .docs-layout > .sidebar {
+            height: calc(100vh - 108px) !important;
+            max-height: calc(100vh - 108px) !important;
+        }
+
+    }
+}
     .dbms-page .dbms-sidebar-backdrop { inset: 108px 0 0; }
 
     .dbms-page .main-content { padding: 14px 12px 36px !important; }
