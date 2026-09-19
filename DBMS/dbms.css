@@ -160,144 +160,203 @@ body.dbms-page { margin: 0; background: var(--db-background); color: var(--db-te
 .dbms-page :focus-visible { outline: 3px solid rgba(31, 111, 235, .4); outline-offset: 3px; }
 
 @media (max-width: 1180px) {
-    .dbms-hero { grid-template-columns: 1fr; }
-    .schema-window { max-width: 700px; }
-    .dbms-level-grid { grid-template-columns: repeat(2, 1fr); }
-    .learning-loop { grid-template-columns: repeat(2, 1fr); }
-    .stage-grid, .practice-grid { grid-template-columns: repeat(2, 1fr); }
+    .dbms-page .dbms-hero { grid-template-columns: 1fr; }
+    .dbms-page .schema-window { width: 100%; max-width: 700px; min-width: 0; }
+    .dbms-page .dbms-level-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .dbms-page .learning-loop { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .dbms-page .stage-grid,
+    .dbms-page .practice-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* @media (max-width: 900px) {
-    .dbms-sidebar-toggle { position: sticky; top: 72px; z-index: 900; display: block; width: 100%; padding: 11px 18px; border: 0; border-bottom: 1px solid var(--db-border); color: #fff; background: #0c385b; text-align: left; font: inherit; font-weight: 800; }
-    .dbms-page .sidebar { position: fixed; top: 112px; bottom: 0; left: 0; z-index: 950; width: min(330px, 86vw); height: auto; transform: translateX(-105%); transition: transform .22s ease; box-shadow: 16px 0 30px rgba(0,0,0,.2); }
-    .dbms-page .sidebar.is-open { transform: translateX(0); }
-    .dbms-sidebar-backdrop { position: fixed; inset: 112px 0 0; z-index: 940; background: rgba(4, 18, 31, .56); }
-    body.dbms-drawer-open { overflow: hidden; }  */
-
 @media (max-width: 900px) {
-
-    .dbms-sidebar-toggle {
+    .dbms-page .dbms-sidebar-toggle {
         position: sticky;
         top: 72px;
         z-index: 900;
-
         display: block;
-
         width: 100%;
         min-height: 44px;
-
         padding: 11px 18px;
-
         border: 0;
         border-bottom: 1px solid var(--db-border);
-
         color: #fff;
         background: #0c385b;
-
         text-align: left;
         font: inherit;
         font-weight: 800;
     }
 
-
     .dbms-page .docs-layout {
-        display: block;
-        width: 100%;
-        min-height: 0;
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
     }
-
 
     .dbms-page .docs-layout > .sidebar {
         position: fixed !important;
-
         top: 116px !important;
         bottom: 0 !important;
         left: 0 !important;
-
         z-index: 950;
-
-        width: min(330px, 86vw) !important;
+        width: min(340px, calc(100vw - 44px)) !important;
+        max-width: calc(100vw - 44px) !important;
         height: auto !important;
         max-height: none !important;
-
         margin: 0 !important;
-
+        padding-bottom: 32px !important;
         overflow-x: hidden !important;
         overflow-y: auto !important;
-
         transform: translateX(-105%);
         transition: transform .22s ease;
-
         background: #fff;
-
-        box-shadow:
-            16px 0 30px rgba(0, 0, 0, .20);
+        box-shadow: 16px 0 30px rgba(0,0,0,.20);
     }
 
+    .dbms-page .docs-layout > .sidebar.is-open { transform: translateX(0); }
 
-    .dbms-page .docs-layout > .sidebar.is-open {
-        transform: translateX(0);
-    }
-
-
-    .dbms-sidebar-backdrop {
+    .dbms-page .dbms-sidebar-backdrop {
         position: fixed;
-
         inset: 116px 0 0;
-
         z-index: 940;
-
-        background: rgba(4, 18, 31, .56);
+        background: rgba(4,18,31,.56);
     }
 
-
-    body.dbms-drawer-open {
-        overflow: hidden;
-    }
-
+    body.dbms-drawer-open { overflow: hidden; }
 
     .dbms-page .main-content {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 18px 15px 42px !important;
+        overflow: visible !important;
+    }
+
+    /* Critical fix: this card was still behaving like a two-column grid
+       on phones, leaving the heading in an extremely narrow first column. */
+    .dbms-page .content-card.dbms-progress-card,
+    .dbms-page .dbms-progress-card {
+        display: block !important;
+        grid-template-columns: none !important;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .dbms-page .dbms-progress-card > * {
+        display: block;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .dbms-page .dbms-progress-card > div:first-child {
+        margin-bottom: 22px;
+    }
+
+    .dbms-page .dbms-progress-card h2,
+    .dbms-page .section-heading h2,
+    .dbms-page .content-card h2 {
+        width: auto !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+    }
+
+    .dbms-page .dataset-section { grid-template-columns: minmax(0,1fr) !important; }
+    .dbms-page .lab-grid,
+    .dbms-page .project-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+
+    .dbms-page .dbms-hero,
+    .dbms-page .dbms-hero > *,
+    .dbms-page .schema-window,
+    .dbms-page .schema-grid,
+    .dbms-page .schema-table {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .dbms-page .schema-window pre {
+        display: block;
         width: 100%;
-
-        margin: 0;
-
-        padding: 18px 15px 42px;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: pre;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
-
-
-  /*  .dbms-page .main-content { width: 100%; padding: 18px 15px 42px; } */
-    .dbms-progress-card, .dataset-section { grid-template-columns: 1fr; }
-    .lab-grid, .project-grid { grid-template-columns: repeat(2, 1fr); }
-}     
-
-
 @media (max-width: 680px) {
     .dbms-page .top-header { min-height: 64px; padding: 0 13px; }
-    .dbms-page .top-header .logo, .dbms-page .main-logo { height: 64px; }
+    .dbms-page .top-header .logo,
+    .dbms-page .main-logo { height: 64px; }
     .dbms-page .main-logo { width: 58px; margin-right: 5px; }
     .dbms-page .top-header .logo { font-size: 23px; }
-    .dbms-sidebar-toggle { top: 64px; }
-      .dbms-page .docs-layout > .sidebar {
-        top: 108px !important;
+
+    .dbms-page .dbms-sidebar-toggle { top: 64px; }
+    .dbms-page .docs-layout > .sidebar { top: 108px !important; }
+    .dbms-page .dbms-sidebar-backdrop { inset: 108px 0 0; }
+
+    .dbms-page .main-content { padding: 14px 12px 36px !important; }
+    .dbms-page .content-card { padding: 20px 16px !important; }
+
+    .dbms-page .dbms-hero {
+        min-height: 0;
+        padding: 24px 17px;
+        border-radius: 14px;
     }
-    /* .dbms-page .sidebar { top: 104px; }  */
-    .dbms-sidebar-backdrop { inset: 108px 0 0; }
-    .dbms-hero { min-height: 0; padding: 26px 19px; border-radius: 14px; }
-    .dbms-hero h1 { font-size: 38px; }
-    .dbms-hero-stats { grid-template-columns: repeat(2, 1fr); }
-    .schema-grid { grid-template-columns: 1fr; }
-    .schema-table.students, .schema-table.enrolments, .schema-table.courses { grid-column: 1; }
-    .schema-table.students { grid-row: 1; }
-    .schema-table.enrolments { grid-row: 3; }
-    .schema-table.courses { grid-row: 5; }
-    .schema-link { justify-self: center; transform: rotate(90deg); }
-    .link-one { grid-column: 1; grid-row: 2; }
-    .link-two { grid-column: 1; grid-row: 4; }
-    .dbms-level-grid, .stage-grid, .lab-grid, .project-grid, .practice-grid, .learning-loop { grid-template-columns: 1fr; }
-    .dbms-level-card { min-height: 0; }
-    .dbms-topic-navigation { flex-direction: column; }
+
+    .dbms-page .dbms-hero h1 {
+        font-size: clamp(34px, 10vw, 42px);
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+    }
+
+    .dbms-page .dbms-hero-stats { grid-template-columns: repeat(2, minmax(0,1fr)); }
+
+    .dbms-page .schema-grid {
+        grid-template-columns: minmax(0,1fr);
+        padding: 14px;
+    }
+
+    .dbms-page .schema-table.students,
+    .dbms-page .schema-table.enrolments,
+    .dbms-page .schema-table.courses { grid-column: 1; }
+
+    .dbms-page .schema-table.students { grid-row: 1; }
+    .dbms-page .schema-table.enrolments { grid-row: 3; }
+    .dbms-page .schema-table.courses { grid-row: 5; }
+    .dbms-page .schema-link { justify-self: center; transform: rotate(90deg); }
+    .dbms-page .link-one { grid-column: 1; grid-row: 2; }
+    .dbms-page .link-two { grid-column: 1; grid-row: 4; }
+
+    .dbms-page .dbms-level-grid,
+    .dbms-page .stage-grid,
+    .dbms-page .lab-grid,
+    .dbms-page .project-grid,
+    .dbms-page .practice-grid,
+    .dbms-page .learning-loop {
+        grid-template-columns: minmax(0,1fr) !important;
+    }
+
+    .dbms-page .dbms-level-card { min-height: 0; }
+    .dbms-page .dbms-topic-navigation { flex-direction: column; }
+
+    .dbms-page .dbms-progress-card h2 {
+        font-size: clamp(28px, 8vw, 36px) !important;
+        line-height: 1.12 !important;
+    }
+}
+
+@media (max-width: 420px) {
+    .dbms-page .main-content { padding-left: 10px !important; padding-right: 10px !important; }
+    .dbms-page .content-card { padding-left: 14px !important; padding-right: 14px !important; }
+    .dbms-page .dbms-hero { padding-left: 15px; padding-right: 15px; }
+    .dbms-page .dbms-hero-stats { grid-template-columns: 1fr 1fr; gap: 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
