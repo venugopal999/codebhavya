@@ -751,16 +751,45 @@ $("historyButton").addEventListener("click", () => toggleHistory(true));
 $("closeHistory").addEventListener("click", () => toggleHistory(false));
 $("drawerBackdrop").addEventListener("click", () => toggleHistory(false));
 $("clearHistory").addEventListener("click", () => { inputHistory = []; renderHistory(); });
-elements.menuButton.addEventListener("click", () => { const open = elements.siteNav.classList.toggle("open"); elements.menuButton.setAttribute("aria-expanded", String(open)); elements.menuButton.textContent = open ? "×" : "☰"; });
+// Header/navigation is optional on this compiler page.
+// The site header is currently commented out in index.html, so these elements
+// can be null. Guard them so the rest of the compiler initialization
+// (especially the panel splitters) always continues.
+if (elements.menuButton && elements.siteNav) {
+  elements.menuButton.addEventListener("click", () => {
+    const open = elements.siteNav.classList.toggle("open");
+    elements.menuButton.setAttribute("aria-expanded", String(open));
+    elements.menuButton.textContent = open ? "×" : "☰";
+  });
+
+  elements.siteNav.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => {
+    elements.siteNav.classList.remove("open");
+    elements.menuButton.setAttribute("aria-expanded", "false");
+    elements.menuButton.textContent = "☰";
+  }));
+}
+
 document.querySelectorAll(".dropdown-toggle").forEach((button) => button.addEventListener("click", (event) => {
   event.stopPropagation();
   const dropdown = button.closest(".nav-dropdown");
+  if (!dropdown) return;
   const willOpen = !dropdown.classList.contains("open");
-  document.querySelectorAll(".nav-dropdown.open").forEach((item) => { item.classList.remove("open"); item.querySelector(".dropdown-toggle").setAttribute("aria-expanded", "false"); });
-  dropdown.classList.toggle("open", willOpen); button.setAttribute("aria-expanded", String(willOpen));
+  document.querySelectorAll(".nav-dropdown.open").forEach((item) => {
+    item.classList.remove("open");
+    item.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
+  });
+  dropdown.classList.toggle("open", willOpen);
+  button.setAttribute("aria-expanded", String(willOpen));
 }));
-document.addEventListener("click", (event) => { if (!event.target.closest(".nav-dropdown")) document.querySelectorAll(".nav-dropdown.open").forEach((item) => { item.classList.remove("open"); item.querySelector(".dropdown-toggle").setAttribute("aria-expanded", "false"); }); });
-elements.siteNav.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => { elements.siteNav.classList.remove("open"); elements.menuButton.setAttribute("aria-expanded", "false"); elements.menuButton.textContent = "☰"; }));
+
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".nav-dropdown")) {
+    document.querySelectorAll(".nav-dropdown.open").forEach((item) => {
+      item.classList.remove("open");
+      item.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
+    });
+  }
+});
 document.addEventListener("keydown", (event) => {
   if ((event.ctrlKey || event.metaKey) && event.key === "Enter") { event.preventDefault(); runCode(); }
   if (event.key === "Escape") { toggleHistory(false); document.querySelectorAll(".nav-dropdown.open").forEach((item) => item.classList.remove("open")); }
