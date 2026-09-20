@@ -47,6 +47,7 @@ const elements = {
 };
 
 let editor, socket, wakeTimer, inputAssistTimer;
+let runSerial = 0;
 let currentLanguage = languageInfo[localStorage.getItem(LANGUAGE_KEY)] ? localStorage.getItem(LANGUAGE_KEY) : "c";
 const sessionDrafts = {};
 let inputHistory = [];
@@ -406,7 +407,16 @@ function selectPanel(panelName) {
 
 function runCode() {
   if (!editor || isRunning) return;
-  if (socket && socket.readyState < WebSocket.CLOSING) socket.close();
+
+  // Every execution gets its own run id and socket reference.
+  // This prevents a late "close" event from the previous WebSocket
+  // from being mistaken for a failure of the new run.
+  const runId = ++runSerial;
+  const previousSocket = socket;
+  if (previousSocket && previousSocket.readyState < WebSocket.CLOSING) {
+    try { previousSocket.close(); } catch (_error) { /* already closing */ }
+  }
+
   clearInputAssist();
   clearTerminal(); inputHistory = []; renderHistory(); finalStatusSeen = false;
   const source = getSource();
@@ -415,16 +425,31 @@ function runCode() {
   inputsSent = 0;
   setStatus("connecting", "Preparing compiler…");
   if (isMobileCompiler()) selectPanel("terminal");
+
+  const runSocket = new WebSocket(WS_URL);
+  socket = runSocket;
+
+  const isCurrentRun = () => runId === runSerial && socket === runSocket;
+
   wakeTimer = setTimeout(() => {
-    if (socket?.readyState === WebSocket.CONNECTING) elements.serverText.textContent = "Preparing compiler… First start may take a little longer.";
+    if (isCurrentRun() && runSocket.readyState === WebSocket.CONNECTING) {
+      elements.serverText.textContent = "Preparing compiler… First start may take a little longer.";
+    }
   }, 2500);
-  socket = new WebSocket(WS_URL);
-  socket.addEventListener("open", () => {
+
+  runSocket.addEventListener("open", () => {
+    if (!isCurrentRun()) {
+      try { runSocket.close(); } catch (_error) { /* stale socket */ }
+      return;
+    }
     clearTimeout(wakeTimer);
     elements.serverText.textContent = "Compiler ready";
-    socket.send(JSON.stringify({ type: "run", language: currentLanguage, code: source }));
+    runSocket.send(JSON.stringify({ type: "run", language: currentLanguage, code: source }));
   });
-  socket.addEventListener("message", (event) => {
+
+  runSocket.addEventListener("message", (event) => {
+    if (!isCurrentRun()) return;
+
     let data;
     try { data = JSON.parse(event.data); } catch (_error) { appendOutput(String(event.data)); return; }
 
@@ -439,7 +464,18 @@ function runCode() {
     }
 
     if (data.type === "error") appendOutput(`\n${data.message}\n`, "error");
-    if (data.type === "exit" && data.phase !== "compile") appendOutput(`\n[Process finished${data.code === null ? "" : ` with exit code ${data.code}`} in ${(data.durationMs / 1000).toFixed(2)}s]\n`, data.code === 0 ? "success" : "error");
+
+    if (data.type === "exit" && data.phase !== "compile") {
+      // Receiving the process-exit event means the run DID finish.
+      // Mark it final before the server closes the WebSocket so the
+      // close handler cannot incorrectly print a connection error.
+      finalStatusSeen = true;
+      const exitCode = data.code;
+      const duration = Number.isFinite(data.durationMs) ? ` in ${(data.durationMs / 1000).toFixed(2)}s` : "";
+      appendOutput(`\n[Process finished${exitCode === null || exitCode === undefined ? "" : ` with exit code ${exitCode}`}${duration}]\n`, exitCode === 0 ? "success" : "error");
+      setStatus(exitCode === 0 || exitCode === null || exitCode === undefined ? "success" : "runtime-error", exitCode === 0 ? "Program finished successfully" : `Program finished with exit code ${exitCode}`);
+    }
+
     if (data.type === "status") {
       const normalizedStatus = ["waiting-input", "waiting_input"].includes(data.status) ? "input" : data.status;
       setStatus(normalizedStatus, data.message);
@@ -448,17 +484,25 @@ function runCode() {
       if (["success", "compile-error", "runtime-error", "stopped", "timeout", "error"].includes(normalizedStatus)) finalStatusSeen = true;
     }
   });
-  socket.addEventListener("error", () => {
+
+  runSocket.addEventListener("error", () => {
+    if (!isCurrentRun()) return;
     clearTimeout(wakeTimer);
     clearInputAssist();
     appendOutput("\nUnable to start the compiler right now. Please try again.\n", "error");
     finalStatusSeen = true;
     setStatus("error", "Compiler temporarily unavailable");
   });
-  socket.addEventListener("close", () => {
+
+  runSocket.addEventListener("close", () => {
+    // Ignore close events from a socket belonging to an older run.
+    if (!isCurrentRun()) return;
     clearTimeout(wakeTimer);
     clearInputAssist();
-    if (isRunning && !finalStatusSeen) { appendOutput("\n[Connection closed before the program finished]\n", "error"); setStatus("error", "Connection closed"); }
+    if (isRunning && !finalStatusSeen) {
+      appendOutput("\n[Connection closed before the program finished]\n", "error");
+      setStatus("error", "Connection closed");
+    }
   });
 }
 function stopCode() {
