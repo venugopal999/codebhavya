@@ -570,8 +570,10 @@ async function copyText(text, button, normalLabel) {
   catch (_error) { appendOutput("\nCopy failed. Select the text manually.\n", "error"); }
 }
 
-const SPLIT_STORAGE_KEY = "codebhavya.compiler.v3.panel-sizes";
+const SPLIT_STORAGE_KEY = "codebhavya.compiler.v4.panel-sizes";
 const DEFAULT_SPLITS = { editor: 64, output: 58 };
+const sourcePanel = document.querySelector(".source-panel");
+const outputPanel = document.querySelector(".output-panel");
 
 function clamp(value, minimum, maximum) {
   return Math.min(Math.max(value, minimum), maximum);
@@ -582,74 +584,105 @@ function syncSourceHeaderWidth() {
   elements.sourceHeader.style.width = `${elements.sourcePanel.clientWidth}px`;
 }
 
+function setEditorSplit(percent) {
+  if (!sourcePanel) return;
+  const next = clamp(Number(percent) || DEFAULT_SPLITS.editor, 36, 78);
+  sourcePanel.style.flexBasis = `${next}%`;
+  elements.verticalSplitter?.setAttribute("aria-valuenow", String(Math.round(next)));
+  elements.verticalSplitter?.setAttribute("aria-valuetext", `${Math.round(next)}%`);
+  requestAnimationFrame(() => {
+    syncSourceHeaderWidth();
+    editor?.layout();
+  });
+}
+
+function setOutputSplit(percent) {
+  if (!outputPanel) return;
+  const next = clamp(Number(percent) || DEFAULT_SPLITS.output, 28, 76);
+  outputPanel.style.flexBasis = `${next}%`;
+  elements.horizontalSplitter?.setAttribute("aria-valuenow", String(Math.round(next)));
+  elements.horizontalSplitter?.setAttribute("aria-valuetext", `${Math.round(next)}%`);
+}
+
 function loadPanelSizes() {
-  let sizes;
-  try { sizes = JSON.parse(localStorage.getItem(SPLIT_STORAGE_KEY)); } catch (_error) { sizes = null; }
-  if (!sizes) return;
-  elements.workspace.style.setProperty("--editor-size", `${clamp(Number(sizes.editor) || DEFAULT_SPLITS.editor, 42, 74)}%`);
-  elements.sideStack.style.setProperty("--output-size", `${clamp(Number(sizes.output) || DEFAULT_SPLITS.output, 33, 72)}%`);
+  let sizes = null;
+  try { sizes = JSON.parse(localStorage.getItem(SPLIT_STORAGE_KEY)); } catch (_error) {}
+  setEditorSplit(sizes?.editor ?? DEFAULT_SPLITS.editor);
+  setOutputSplit(sizes?.output ?? DEFAULT_SPLITS.output);
+}
+
+function getPanelSizes() {
+  const workspaceRect = elements.workspace.getBoundingClientRect();
+  const sideRect = elements.sideStack.getBoundingClientRect();
+  const sourceRect = sourcePanel.getBoundingClientRect();
+  const outputRect = outputPanel.getBoundingClientRect();
+  const v = elements.verticalSplitter?.getBoundingClientRect().width || 14;
+  const h = elements.horizontalSplitter?.getBoundingClientRect().height || 14;
+  return {
+    editor: (sourceRect.width / Math.max(workspaceRect.width - v, 1)) * 100,
+    output: (outputRect.height / Math.max(sideRect.height - h, 1)) * 100
+  };
 }
 
 function savePanelSizes() {
-  const workspaceRect = elements.workspace.getBoundingClientRect();
-  const editorRect = document.querySelector(".source-panel").getBoundingClientRect();
-  const sideRect = elements.sideStack.getBoundingClientRect();
-  const outputRect = document.querySelector(".output-panel").getBoundingClientRect();
-  const verticalSize = elements.verticalSplitter?.getBoundingClientRect().width || 12;
-  const horizontalSize = elements.horizontalSplitter?.getBoundingClientRect().height || 12;
+  const sizes = getPanelSizes();
   localStorage.setItem(SPLIT_STORAGE_KEY, JSON.stringify({
-    editor: Math.round((editorRect.width / Math.max(workspaceRect.width - verticalSize, 1)) * 1000) / 10,
-    output: Math.round((outputRect.height / Math.max(sideRect.height - horizontalSize, 1)) * 1000) / 10
+    editor: Math.round(sizes.editor * 10) / 10,
+    output: Math.round(sizes.output * 10) / 10
   }));
 }
 
 function resetPanelSizes() {
   localStorage.removeItem(SPLIT_STORAGE_KEY);
-  elements.workspace.style.removeProperty("--editor-size");
-  elements.sideStack.style.removeProperty("--output-size");
-  requestAnimationFrame(() => { syncSourceHeaderWidth(); editor?.layout(); });
+  setEditorSplit(DEFAULT_SPLITS.editor);
+  setOutputSplit(DEFAULT_SPLITS.output);
 }
 
 function setupSplitter(splitter, orientation) {
+  if (!splitter) return;
   const isVertical = orientation === "vertical";
-  const minPercent = isVertical ? 42 : 33;
-  const maxPercent = isVertical ? 74 : 72;
-  let dragging = false;
-
+  const minPercent = isVertical ? 36 : 28;
+  const maxPercent = isVertical ? 78 : 76;
   splitter.setAttribute("aria-valuemin", String(minPercent));
   splitter.setAttribute("aria-valuemax", String(maxPercent));
 
-  function updateAria(percent) {
-    splitter.setAttribute("aria-valuenow", String(Math.round(percent)));
-    splitter.setAttribute("aria-valuetext", `${Math.round(percent)}%`);
+  let dragging = false;
+  let activeTouchId = null;
+
+  function beginDrag() {
+    if (window.matchMedia("(max-width: 760px)").matches) return false;
+    dragging = true;
+    splitter.classList.add("dragging");
+    document.documentElement.classList.add("resizing");
+    document.documentElement.style.cursor = isVertical ? "col-resize" : "row-resize";
+    return true;
   }
 
-  function currentPercent() {
-    const target = isVertical ? elements.workspace : elements.sideStack;
-    const property = isVertical ? "--editor-size" : "--output-size";
-    return parseFloat(getComputedStyle(target).getPropertyValue(property)) || (isVertical ? DEFAULT_SPLITS.editor : DEFAULT_SPLITS.output);
+  function resizeAt(clientX, clientY) {
+    if (!dragging) return;
+    if (isVertical) {
+      const rect = elements.workspace.getBoundingClientRect();
+      const divider = splitter.getBoundingClientRect().width || 14;
+      const usable = Math.max(1, rect.width - divider);
+      const minPx = Math.min(320, usable * .48);
+      const rightMin = Math.min(300, usable * .45);
+      const px = clamp(clientX - rect.left, minPx, Math.max(minPx, usable - rightMin));
+      setEditorSplit((px / usable) * 100);
+    } else {
+      const rect = elements.sideStack.getBoundingClientRect();
+      const divider = splitter.getBoundingClientRect().height || 14;
+      const usable = Math.max(1, rect.height - divider);
+      const minPx = Math.min(180, usable * .48);
+      const bottomMin = Math.min(170, usable * .45);
+      const px = clamp(clientY - rect.top, minPx, Math.max(minPx, usable - bottomMin));
+      setOutputSplit((px / usable) * 100);
+    }
   }
 
-  function move(clientPosition) {
-    if (window.matchMedia("(max-width: 760px)").matches) return;
-    const host = isVertical ? elements.workspace : elements.sideStack;
-    const container = host.getBoundingClientRect();
-    const splitterSize = isVertical ? splitter.getBoundingClientRect().width : splitter.getBoundingClientRect().height;
-    const total = Math.max(1, (isVertical ? container.width : container.height) - splitterSize);
-    const raw = clientPosition - (isVertical ? container.left : container.top);
-    const minimum = isVertical ? 320 : 180;
-    const trailingMinimum = isVertical ? 300 : 170;
-    const pixels = clamp(raw, minimum, Math.max(minimum, total - trailingMinimum));
-    const percent = clamp((pixels / total) * 100, minPercent, maxPercent);
-    host.style.setProperty(isVertical ? "--editor-size" : "--output-size", `${percent}%`);
-    updateAria(percent);
-    if (isVertical) syncSourceHeaderWidth();
-    editor?.layout();
-  }
-
-  function endDrag() {
+  function finishDrag() {
     if (!dragging) return;
     dragging = false;
+    activeTouchId = null;
     splitter.classList.remove("dragging");
     document.documentElement.classList.remove("resizing");
     document.documentElement.style.cursor = "";
@@ -657,47 +690,49 @@ function setupSplitter(splitter, orientation) {
     editor?.layout();
   }
 
-  splitter.addEventListener("pointerdown", (event) => {
-    if (window.matchMedia("(max-width: 760px)").matches || event.button !== 0) return;
+  // Mouse: simple and reliable on desktop Chrome/Edge/Firefox.
+  splitter.addEventListener("mousedown", (event) => {
+    if (event.button !== 0 || !beginDrag()) return;
     event.preventDefault();
-    dragging = true;
-    splitter.classList.add("dragging");
-    document.documentElement.classList.add("resizing");
-    document.documentElement.style.cursor = isVertical ? "col-resize" : "row-resize";
-    move(isVertical ? event.clientX : event.clientY);
+    resizeAt(event.clientX, event.clientY);
   });
-
-  // Listen on the document while dragging. This keeps resizing reliable even
-  // when the pointer moves over Monaco, Output, or outside the narrow handle.
-  document.addEventListener("pointermove", (event) => {
+  document.addEventListener("mousemove", (event) => {
     if (!dragging) return;
     event.preventDefault();
-    move(isVertical ? event.clientX : event.clientY);
+    resizeAt(event.clientX, event.clientY);
   }, { passive: false });
-  document.addEventListener("pointerup", endDrag);
-  document.addEventListener("pointercancel", endDrag);
-  window.addEventListener("blur", endDrag);
+  document.addEventListener("mouseup", finishDrag);
 
-  splitter.addEventListener("dblclick", () => {
-    resetPanelSizes();
-    updateAria(isVertical ? DEFAULT_SPLITS.editor : DEFAULT_SPLITS.output);
-  });
+  // Touch fallback for tablets wider than the mobile tab layout.
+  splitter.addEventListener("touchstart", (event) => {
+    if (!event.changedTouches.length || !beginDrag()) return;
+    const touch = event.changedTouches[0];
+    activeTouchId = touch.identifier;
+    event.preventDefault();
+    resizeAt(touch.clientX, touch.clientY);
+  }, { passive: false });
+  document.addEventListener("touchmove", (event) => {
+    if (!dragging) return;
+    const touch = Array.from(event.changedTouches).find((item) => item.identifier === activeTouchId) || event.changedTouches[0];
+    if (!touch) return;
+    event.preventDefault();
+    resizeAt(touch.clientX, touch.clientY);
+  }, { passive: false });
+  document.addEventListener("touchend", finishDrag);
+  document.addEventListener("touchcancel", finishDrag);
+  window.addEventListener("blur", finishDrag);
+
+  splitter.addEventListener("dblclick", resetPanelSizes);
   splitter.addEventListener("keydown", (event) => {
-    const validKeys = isVertical ? ["ArrowLeft", "ArrowRight"] : ["ArrowUp", "ArrowDown"];
-    if (!validKeys.includes(event.key)) return;
+    const allowed = isVertical ? ["ArrowLeft", "ArrowRight"] : ["ArrowUp", "ArrowDown"];
+    if (!allowed.includes(event.key)) return;
     event.preventDefault();
     const direction = ["ArrowRight", "ArrowDown"].includes(event.key) ? 1 : -1;
-    const target = isVertical ? elements.workspace : elements.sideStack;
-    const property = isVertical ? "--editor-size" : "--output-size";
-    const next = clamp(currentPercent() + direction * 2, minPercent, maxPercent);
-    target.style.setProperty(property, `${next}%`);
-    updateAria(next);
-    if (isVertical) syncSourceHeaderWidth();
+    const sizes = getPanelSizes();
+    if (isVertical) setEditorSplit(clamp(sizes.editor + direction * 2, minPercent, maxPercent));
+    else setOutputSplit(clamp(sizes.output + direction * 2, minPercent, maxPercent));
     savePanelSizes();
-    editor?.layout();
   });
-
-  updateAria(currentPercent());
 }
 
 elements.language.addEventListener("change", changeLanguage);
