@@ -1,3 +1,3 @@
-# CodeBhavya improved images
-
-These files keep the original filenames so you can directly replace the old images in your GitHub project.
+CodeBhavya improved images pack with the same original filenames.
+Updated slogan: From Learning to Limitless Possibilities.
+Replace the files in your existing images folder in GitHub with these files.
