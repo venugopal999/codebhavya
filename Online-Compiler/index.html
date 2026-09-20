@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Source+Code+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260911-9">
+  <link rel="stylesheet" href="style.css?v=20260920-1">
 </head>
 <body>
  <!-- <header class="site-header">
@@ -62,7 +62,7 @@
       <div class="mobile-tabs" role="tablist" aria-label="Compiler panels">
         <button class="tab active" data-panel="code" role="tab" aria-selected="true">Code</button>
         <button class="tab" id="terminalTab" data-panel="terminal" role="tab" aria-selected="false">Output <span id="outputNotice"></span></button>
-        <button class="tab" data-panel="input" role="tab" aria-selected="false">Input</button>
+        <button class="tab" id="inputTab" data-panel="input" role="tab" aria-selected="false">Input <span id="inputNotice" aria-hidden="true"></span></button>
       </div>
 
       <div class="workspace" id="workspace">
@@ -86,8 +86,12 @@
           <div class="splitter splitter-horizontal" id="horizontalSplitter" role="separator" tabindex="0" aria-label="Resize output and input panels" aria-orientation="horizontal" title="Drag to resize · Double-click to reset"><span></span></div>
           <section class="panel input-panel" data-panel-name="input">
             <header class="panel-header"><div><span class="panel-kicker">Interactive · sent while running</span><h2>Program input (stdin)</h2></div><button class="small-button" id="historyButton" type="button">History</button></header>
-            <div class="console-entry"><span aria-hidden="true">›</span><input id="consoleInput" type="text" placeholder="Run a program to enable input" autocomplete="off" spellcheck="false" disabled><small>Enter ↵</small></div>
-            <div class="input-content"><p class="input-help"><strong>Use this only when your program asks for input.</strong> Run the program first, type one response, then press Enter.</p><ol class="input-preview" id="inputPreview"><li>No input submitted yet.</li></ol></div>
+            <div class="input-waiting" id="inputWaiting" hidden aria-live="polite">
+              <span class="input-waiting-dot" aria-hidden="true"></span>
+              <div><strong>Program is waiting for input</strong><p id="inputPrompt">Enter the value requested by your program, then press Enter.</p></div>
+            </div>
+            <div class="console-entry"><span aria-hidden="true">›</span><input id="consoleInput" type="text" placeholder="Run a program to enable input" autocomplete="off" spellcheck="false" disabled><small>Enter ↵</small><button class="send-input-button" id="sendInputButton" type="button" disabled>Send</button></div>
+            <div class="input-content"><p class="input-help"><strong>Use this only when your program asks for input.</strong> On mobile, CodeBhavya opens this panel automatically when input is expected.</p><ol class="input-preview" id="inputPreview"><li>No input submitted yet.</li></ol></div>
           </section>
         </div>
       </div>
@@ -254,7 +258,8 @@ Evidence Lab
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js"></script>
   <script src="config.js?v=20260911-9"></script>
-  <script src="script.js?v=20260911-9"></script>
+  <script src="input-guide.js?v=20260920-1"></script>
+  <script src="script.js?v=20260920-1"></script>
   <script src="/script.js?v=4"></script>
 </body>
 </html>

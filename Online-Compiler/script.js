@@ -42,16 +42,20 @@ const elements = {
   workspace: $("workspace"), sideStack: $("sideStack"), verticalSplitter: $("verticalSplitter"),
   horizontalSplitter: $("horizontalSplitter"), sourcePanel: document.querySelector(".source-panel"),
   sourceHeader: document.querySelector(".source-panel .panel-header"), mobileEditorShell: $("mobileEditorShell"),
-  mobileSource: $("mobileSource"), mobileLineNumbers: $("mobileLineNumbers"), mobileHighlight: $("mobileHighlight")
+  mobileSource: $("mobileSource"), mobileLineNumbers: $("mobileLineNumbers"), mobileHighlight: $("mobileHighlight"),
+  inputTab: $("inputTab"), inputNotice: $("inputNotice"), inputWaiting: $("inputWaiting"), inputPrompt: $("inputPrompt"), sendInputButton: $("sendInputButton")
 };
 
-let editor, socket, wakeTimer;
+let editor, socket, wakeTimer, inputAssistTimer;
 let currentLanguage = languageInfo[localStorage.getItem(LANGUAGE_KEY)] ? localStorage.getItem(LANGUAGE_KEY) : "c";
 const sessionDrafts = {};
 let inputHistory = [];
 let isRunning = false;
 let finalStatusSeen = false;
 let editorIsComposing = false;
+let expectsInputThisRun = false;
+let expectedInputReads = 0;
+let inputsSent = 0;
 const mobileEditor = window.matchMedia("(max-width: 760px)");
 let syncingEditors = false;
 
@@ -272,6 +276,84 @@ function changeLanguage() {
   updateLanguageMeta();
   elements.saveState.textContent = "Session only";
 }
+function isMobileCompiler() {
+  return window.matchMedia("(max-width: 760px)").matches;
+}
+
+function sourceReadsInput(source, language) {
+  const patterns = {
+    c: /\bscanf\s*\(|\bfscanf\s*\(\s*stdin\b|\b(?:getchar|gets)\s*\(|\bfgets\s*\([^;]*\bstdin\b/,
+    cpp: /\bcin\s*>>|\bgetline\s*\(\s*cin\b|\bcin\.get\s*\(/,
+    python: /\binput\s*\(|\bsys\.stdin\b|\bopen\s*\(\s*0\s*[,)]/,
+    java: /\b(?:Scanner|BufferedReader)\b|\.next(?:Line|Int|Long|Double|Float|Boolean)?\s*\(|\.readLine\s*\(/,
+    javascript: /\bprocess\.stdin\b|\breadFileSync\s*\(\s*0\s*[,)]|\bcreateInterface\s*\(|\bquestion\s*\(/
+  };
+  return (patterns[language] || /$^/).test(source);
+}
+
+function estimateInputReadCount(source, language) {
+  const patterns = {
+    c: /\bscanf\s*\(|\bfscanf\s*\(\s*stdin\b|\b(?:getchar|gets)\s*\(|\bfgets\s*\([^;]*\bstdin\b/g,
+    cpp: /\bcin\s*>>|\bgetline\s*\(\s*cin\b|\bcin\.get\s*\(/g,
+    python: /\binput\s*\(|\bsys\.stdin\.(?:read|readline)\s*\(/g,
+    java: /\.next(?:Line|Int|Long|Double|Float|Boolean)?\s*\(|\.readLine\s*\(/g,
+    javascript: /\breadFileSync\s*\(\s*0\s*[,)]|\bquestion\s*\(/g
+  };
+  return (source.match(patterns[language] || /$^/g) || []).length;
+}
+
+function inputGuidePrompt() {
+  try {
+    const hints = window.CodeBhavyaInputGuide?.inspect?.(getSource(), currentLanguage);
+    if (hints?.prompts?.length) return hints.prompts[Math.min(inputsSent, hints.prompts.length - 1)];
+    if (hints?.reads?.length) return `Enter value for: ${hints.reads[Math.min(inputsSent, hints.reads.length - 1)]}`;
+  } catch (_error) {}
+  return "Enter the value requested by your program, then press Enter.";
+}
+
+function latestTerminalPrompt() {
+  const text = elements.terminal.innerText.trimEnd();
+  if (!text) return "";
+  const lines = text.split("\n").map(line => line.trim()).filter(Boolean);
+  const candidate = lines.slice(-2).join(" ").trim();
+  return candidate.length <= 180 ? candidate : candidate.slice(-180);
+}
+
+function looksLikeInputPrompt(text) {
+  const value = String(text || "").trim();
+  return /[:?]\s*$/.test(value) || /\b(?:enter|input|type|provide|choose|select|name|age|number|value|option|choice)\b/i.test(value);
+}
+
+function setInputRequired(required, prompt = "") {
+  elements.inputWaiting.hidden = !required;
+  elements.inputTab?.classList.toggle("input-required", required);
+  elements.inputNotice?.classList.toggle("visible", required);
+  if (required) elements.inputPrompt.textContent = prompt || latestTerminalPrompt() || inputGuidePrompt();
+}
+
+function clearInputAssist() {
+  clearTimeout(inputAssistTimer);
+  setInputRequired(false);
+}
+
+function showMobileInputAssist(prompt = "") {
+  if (!isMobileCompiler() || !isRunning || finalStatusSeen || !expectsInputThisRun) return;
+  const message = prompt || latestTerminalPrompt() || inputGuidePrompt();
+  setInputRequired(true, message);
+  setStatus("input", "Waiting for your input");
+  selectPanel("input");
+  window.setTimeout(() => {
+    elements.consoleInput.focus({ preventScroll: true });
+    elements.consoleInput.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 120);
+}
+
+function scheduleMobileInputAssist(delay = 450, prompt = "") {
+  if (!isMobileCompiler() || !expectsInputThisRun) return;
+  clearTimeout(inputAssistTimer);
+  inputAssistTimer = window.setTimeout(() => showMobileInputAssist(prompt), delay);
+}
+
 function clearTerminal(showMessage = false) {
   elements.terminal.textContent = "";
   if (showMessage) appendOutput("Ready for output. Run the program to see the result here.", "muted");
@@ -286,18 +368,33 @@ function appendOutput(text, kind = "output") {
   if (window.matchMedia("(max-width: 760px)").matches && !$("terminalTab").classList.contains("active")) elements.outputNotice.classList.add("visible");
 }
 function setStatus(status, message) {
-  const labels = { ready: "Ready", connecting: "Connecting", compiling: "Compiling", running: "Running", success: "Success", "compile-error": "Compile error", "runtime-error": "Runtime error", stopped: "Stopped", timeout: "Time limit", error: "Connection error" };
+  const labels = { ready: "Ready", connecting: "Preparing", compiling: "Compiling", running: "Running", input: "Input needed", success: "Success", "compile-error": "Compile error", "runtime-error": "Runtime error", stopped: "Stopped", timeout: "Time limit", error: "Connection error" };
   elements.statusBadge.className = `status-badge ${status}`;
   elements.statusBadge.textContent = labels[status] || status;
-  const busy = ["connecting", "compiling", "running"].includes(status);
+  const busy = ["connecting", "compiling", "running", "input"].includes(status);
   const failed = ["compile-error", "runtime-error", "timeout", "error"].includes(status);
   elements.serverDot.className = `server-dot ${busy ? "busy" : failed ? "error" : "live"}`;
   elements.serverText.textContent = message || labels[status] || status;
   if (["success", "compile-error", "runtime-error", "stopped", "timeout", "error"].includes(status)) {
-    isRunning = false; elements.runButton.disabled = false; elements.stopButton.disabled = true; elements.consoleInput.disabled = true; elements.consoleInput.placeholder = "Run a program to enable input";
+    isRunning = false;
+    clearInputAssist();
+    elements.runButton.disabled = false;
+    elements.stopButton.disabled = true;
+    elements.consoleInput.disabled = true;
+    elements.sendInputButton.disabled = true;
+    elements.consoleInput.placeholder = "Run a program to enable input";
   } else if (busy) {
-    isRunning = true; elements.runButton.disabled = true; elements.stopButton.disabled = false; elements.consoleInput.disabled = status !== "running";
-    if (status === "running") { elements.consoleInput.placeholder = "Type one response and press Enter"; if (window.matchMedia("(min-width: 761px)").matches) elements.consoleInput.focus(); }
+    isRunning = true;
+    elements.runButton.disabled = true;
+    elements.stopButton.disabled = false;
+    elements.consoleInput.disabled = !["running", "input"].includes(status);
+    elements.sendInputButton.disabled = elements.consoleInput.disabled;
+    if (status === "running") {
+      elements.consoleInput.placeholder = expectsInputThisRun ? "Type one response and press Enter" : "Program is running";
+      if (!isMobileCompiler()) elements.consoleInput.focus();
+    } else if (status === "input") {
+      elements.consoleInput.placeholder = "Type your response and press Enter";
+    }
   }
 }
 function selectPanel(panelName) {
@@ -310,30 +407,59 @@ function selectPanel(panelName) {
 function runCode() {
   if (!editor || isRunning) return;
   if (socket && socket.readyState < WebSocket.CLOSING) socket.close();
+  clearInputAssist();
   clearTerminal(); inputHistory = []; renderHistory(); finalStatusSeen = false;
-  setStatus("connecting", "Connecting to compiler server");
-  appendOutput("Connecting to the compiler server…\n", "system");
-  if (window.matchMedia("(max-width: 760px)").matches) selectPanel("terminal");
-  const startedConnecting = performance.now();
+  const source = getSource();
+  expectsInputThisRun = sourceReadsInput(source, currentLanguage);
+  expectedInputReads = Math.max(expectsInputThisRun ? 1 : 0, estimateInputReadCount(source, currentLanguage));
+  inputsSent = 0;
+  setStatus("connecting", "Preparing compiler…");
+  if (isMobileCompiler()) selectPanel("terminal");
   wakeTimer = setTimeout(() => {
-    if (socket?.readyState === WebSocket.CONNECTING) { elements.serverText.textContent = "Waking Render server — first run may take a moment"; appendOutput("The server is waking up. A free Render service can take 30–60 seconds on the first run.\n", "system"); }
+    if (socket?.readyState === WebSocket.CONNECTING) elements.serverText.textContent = "Preparing compiler… First start may take a little longer.";
   }, 2500);
   socket = new WebSocket(WS_URL);
   socket.addEventListener("open", () => {
     clearTimeout(wakeTimer);
-    appendOutput(`Connected in ${((performance.now() - startedConnecting) / 1000).toFixed(1)}s.\n`, "system");
-    socket.send(JSON.stringify({ type: "run", language: currentLanguage, code: getSource() }));
+    elements.serverText.textContent = "Compiler ready";
+    socket.send(JSON.stringify({ type: "run", language: currentLanguage, code: source }));
   });
   socket.addEventListener("message", (event) => {
     let data;
     try { data = JSON.parse(event.data); } catch (_error) { appendOutput(String(event.data)); return; }
-    if (data.type === "output" || Object.hasOwn(data, "output")) appendOutput(data.output || "", data.stream || "output");
+
+    if (data.type === "output" || Object.hasOwn(data, "output")) {
+      const chunk = data.output || "";
+      appendOutput(chunk, data.stream || "output");
+      if (expectsInputThisRun && (elements.statusBadge.classList.contains("running") || elements.statusBadge.classList.contains("input")) && looksLikeInputPrompt(chunk)) scheduleMobileInputAssist(120, chunk.trim());
+    }
+
+    if (["stdin_request", "input_request", "waiting_input", "waiting-input"].includes(data.type) || data.status === "waiting-input") {
+      scheduleMobileInputAssist(0, data.prompt || data.message || "");
+    }
+
     if (data.type === "error") appendOutput(`\n${data.message}\n`, "error");
     if (data.type === "exit" && data.phase !== "compile") appendOutput(`\n[Process finished${data.code === null ? "" : ` with exit code ${data.code}`} in ${(data.durationMs / 1000).toFixed(2)}s]\n`, data.code === 0 ? "success" : "error");
-    if (data.type === "status") { setStatus(data.status, data.message); if (["success", "compile-error", "runtime-error", "stopped", "timeout", "error"].includes(data.status)) finalStatusSeen = true; }
+    if (data.type === "status") {
+      const normalizedStatus = ["waiting-input", "waiting_input"].includes(data.status) ? "input" : data.status;
+      setStatus(normalizedStatus, data.message);
+      if (normalizedStatus === "running" && expectsInputThisRun) scheduleMobileInputAssist(450);
+      if (normalizedStatus === "input") scheduleMobileInputAssist(0, data.prompt || data.message || "");
+      if (["success", "compile-error", "runtime-error", "stopped", "timeout", "error"].includes(normalizedStatus)) finalStatusSeen = true;
+    }
   });
-  socket.addEventListener("error", () => { clearTimeout(wakeTimer); appendOutput("\nUnable to connect to the compiler server. Check the Render service and frontend config.\n", "error"); finalStatusSeen = true; setStatus("error", "Compiler server unavailable"); });
-  socket.addEventListener("close", () => { clearTimeout(wakeTimer); if (isRunning && !finalStatusSeen) { appendOutput("\n[Connection closed before the program finished]\n", "error"); setStatus("error", "Connection closed"); } });
+  socket.addEventListener("error", () => {
+    clearTimeout(wakeTimer);
+    clearInputAssist();
+    appendOutput("\nUnable to start the compiler right now. Please try again.\n", "error");
+    finalStatusSeen = true;
+    setStatus("error", "Compiler temporarily unavailable");
+  });
+  socket.addEventListener("close", () => {
+    clearTimeout(wakeTimer);
+    clearInputAssist();
+    if (isRunning && !finalStatusSeen) { appendOutput("\n[Connection closed before the program finished]\n", "error"); setStatus("error", "Connection closed"); }
+  });
 }
 function stopCode() {
   if (!isRunning) return;
@@ -344,7 +470,18 @@ function submitInput() {
   const value = elements.consoleInput.value;
   if (socket?.readyState !== WebSocket.OPEN || !isRunning) return;
   socket.send(JSON.stringify({ type: "input", value }));
-  inputHistory.push(value); appendOutput(`${value}\n`, "input"); elements.consoleInput.value = ""; renderHistory();
+  inputsSent += 1;
+  clearInputAssist();
+  inputHistory.push(value);
+  appendOutput(`${value}\n`, "input");
+  elements.consoleInput.value = "";
+  renderHistory();
+  setStatus("running", "Running your program…");
+  if (isMobileCompiler()) {
+    selectPanel("terminal");
+    requestAnimationFrame(() => { elements.terminal.scrollTop = elements.terminal.scrollHeight; });
+    if (inputsSent < expectedInputReads) scheduleMobileInputAssist(650);
+  }
 }
 function renderHistory() {
   [elements.historyList, elements.inputPreview].forEach((list) => {
@@ -470,6 +607,7 @@ elements.clearButton.addEventListener("click", () => clearTerminal(true));
 elements.copyButton.addEventListener("click", () => copyText(elements.terminal.innerText, elements.copyButton, "Copy output"));
 elements.copyCodeButton.addEventListener("click", () => copyText(getSource(), elements.copyCodeButton, "Copy code"));
 elements.consoleInput.addEventListener("keydown", (event) => { if (event.key === "Enter") { event.preventDefault(); submitInput(); } });
+elements.sendInputButton.addEventListener("click", submitInput);
 document.querySelectorAll(".tab").forEach((tab) => tab.addEventListener("click", () => selectPanel(tab.dataset.panel)));
 $("historyButton").addEventListener("click", () => toggleHistory(true));
 $("closeHistory").addEventListener("click", () => toggleHistory(false));
