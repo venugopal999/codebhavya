@@ -2,6 +2,7 @@
 
 const WS_URL = window.CODEBHAVYA_CONFIG?.compilerWebSocketUrl || "wss://online-compiler-srho.onrender.com";
 const LANGUAGE_KEY = "codebhavya.compiler.v2.language";
+const FONT_SIZE_KEY = "codebhavya.compiler.v3.font-size";
 const languageInfo = {
   c: { monaco: "c", filename: "program.c", label: "C program", template: `#include <stdio.h>
 
@@ -32,7 +33,7 @@ int main() {
 
 const $ = (id) => document.getElementById(id);
 const elements = {
-  language: $("language"), filename: $("filename"), sourceTitle: $("sourceTitle"), saveState: $("saveState"),
+  language: $("language"), fontSize: $("fontSize"), filename: $("filename"), sourceTitle: $("sourceTitle"), saveState: $("saveState"),
   terminal: $("terminal"), consoleInput: $("consoleInput"), inputPreview: $("inputPreview"),
   runButton: $("runButton"), stopButton: $("stopButton"), resetButton: $("resetButton"),
   downloadButton: $("downloadButton"), clearButton: $("clearButton"), copyButton: $("copyButton"),
@@ -49,6 +50,7 @@ const elements = {
 let editor, socket, wakeTimer, inputAssistTimer;
 let runSerial = 0;
 let currentLanguage = languageInfo[localStorage.getItem(LANGUAGE_KEY)] ? localStorage.getItem(LANGUAGE_KEY) : "c";
+let codeFontSize = Math.min(24, Math.max(12, Number(localStorage.getItem(FONT_SIZE_KEY)) || 16));
 const sessionDrafts = {};
 let inputHistory = [];
 let isRunning = false;
@@ -124,6 +126,21 @@ function highlightMobileSource(source) {
   return result + (source.endsWith("\n") ? "\n" : "");
 }
 
+function applyCodeFontSize(size, persist = true) {
+  const next = Math.min(24, Math.max(12, Number(size) || 16));
+  codeFontSize = next;
+  const lineHeight = Math.round(next * 1.5);
+  document.documentElement.style.setProperty("--code-font-size", `${next}px`);
+  document.documentElement.style.setProperty("--code-line-height", `${lineHeight}px`);
+  if (elements.fontSize) elements.fontSize.value = String(next);
+  editor?.updateOptions({ fontSize: next, lineHeight });
+  if (persist) localStorage.setItem(FONT_SIZE_KEY, String(next));
+  requestAnimationFrame(() => {
+    editor?.layout();
+    updateMobileEditorView();
+  });
+}
+
 function updateMobileEditorView() {
   const count = Math.max(1, elements.mobileSource.value.split("\n").length);
   elements.mobileLineNumbers.textContent = Array.from({ length: count }, (_, index) => index + 1).join("\n");
@@ -172,6 +189,7 @@ function scheduleSave() {
 }
 
 elements.mobileSource.value = draftFor(currentLanguage);
+applyCodeFontSize(codeFontSize, false);
 syncEditorMode();
 
 require.config({ paths: { vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs" } });
@@ -179,7 +197,7 @@ require(["vs/editor/editor.main"], () => {
   elements.language.value = currentLanguage;
   editor = monaco.editor.create($("editor"), {
     value: draftFor(currentLanguage), language: languageInfo[currentLanguage].monaco, theme: "vs-dark",
-    automaticLayout: true, fontSize: 14, lineHeight: 21, minimap: { enabled: false }, padding: { top: 12 },
+    automaticLayout: true, fontSize: codeFontSize, lineHeight: Math.round(codeFontSize * 1.5), minimap: { enabled: false }, padding: { top: 12 },
     scrollBeyondLastLine: false, smoothScrolling: !mobileEditor.matches,
     cursorSmoothCaretAnimation: mobileEditor.matches ? "off" : "on",
     wordWrap: "on", wrappingIndent: "same", tabSize: 4,
@@ -577,9 +595,11 @@ function savePanelSizes() {
   const editorRect = document.querySelector(".source-panel").getBoundingClientRect();
   const sideRect = elements.sideStack.getBoundingClientRect();
   const outputRect = document.querySelector(".output-panel").getBoundingClientRect();
+  const verticalSize = elements.verticalSplitter?.getBoundingClientRect().width || 12;
+  const horizontalSize = elements.horizontalSplitter?.getBoundingClientRect().height || 12;
   localStorage.setItem(SPLIT_STORAGE_KEY, JSON.stringify({
-    editor: Math.round((editorRect.width / Math.max(workspaceRect.width - 10, 1)) * 1000) / 10,
-    output: Math.round((outputRect.height / Math.max(sideRect.height - 10, 1)) * 1000) / 10
+    editor: Math.round((editorRect.width / Math.max(workspaceRect.width - verticalSize, 1)) * 1000) / 10,
+    output: Math.round((outputRect.height / Math.max(sideRect.height - horizontalSize, 1)) * 1000) / 10
   }));
 }
 
@@ -592,41 +612,76 @@ function resetPanelSizes() {
 
 function setupSplitter(splitter, orientation) {
   const isVertical = orientation === "vertical";
+  const minPercent = isVertical ? 42 : 33;
+  const maxPercent = isVertical ? 74 : 72;
   let dragging = false;
+
+  splitter.setAttribute("aria-valuemin", String(minPercent));
+  splitter.setAttribute("aria-valuemax", String(maxPercent));
+
+  function updateAria(percent) {
+    splitter.setAttribute("aria-valuenow", String(Math.round(percent)));
+    splitter.setAttribute("aria-valuetext", `${Math.round(percent)}%`);
+  }
+
+  function currentPercent() {
+    const target = isVertical ? elements.workspace : elements.sideStack;
+    const property = isVertical ? "--editor-size" : "--output-size";
+    return parseFloat(getComputedStyle(target).getPropertyValue(property)) || (isVertical ? DEFAULT_SPLITS.editor : DEFAULT_SPLITS.output);
+  }
 
   function move(clientPosition) {
     if (window.matchMedia("(max-width: 760px)").matches) return;
-    const container = (isVertical ? elements.workspace : elements.sideStack).getBoundingClientRect();
-    const total = (isVertical ? container.width : container.height) - 10;
+    const host = isVertical ? elements.workspace : elements.sideStack;
+    const container = host.getBoundingClientRect();
+    const splitterSize = isVertical ? splitter.getBoundingClientRect().width : splitter.getBoundingClientRect().height;
+    const total = Math.max(1, (isVertical ? container.width : container.height) - splitterSize);
     const raw = clientPosition - (isVertical ? container.left : container.top);
     const minimum = isVertical ? 320 : 180;
     const trailingMinimum = isVertical ? 300 : 170;
-    const pixels = clamp(raw, minimum, total - trailingMinimum);
-    const percent = (pixels / Math.max(total, 1)) * 100;
-    (isVertical ? elements.workspace : elements.sideStack).style.setProperty(isVertical ? "--editor-size" : "--output-size", `${percent}%`);
+    const pixels = clamp(raw, minimum, Math.max(minimum, total - trailingMinimum));
+    const percent = clamp((pixels / total) * 100, minPercent, maxPercent);
+    host.style.setProperty(isVertical ? "--editor-size" : "--output-size", `${percent}%`);
+    updateAria(percent);
     if (isVertical) syncSourceHeaderWidth();
     editor?.layout();
   }
 
-  splitter.addEventListener("pointerdown", (event) => {
-    if (window.matchMedia("(max-width: 760px)").matches) return;
-    dragging = true;
-    splitter.classList.add("dragging");
-    splitter.setPointerCapture(event.pointerId);
-    document.documentElement.classList.add("resizing");
-    document.documentElement.style.cursor = isVertical ? "col-resize" : "row-resize";
-  });
-  splitter.addEventListener("pointermove", (event) => { if (dragging) move(isVertical ? event.clientX : event.clientY); });
-  splitter.addEventListener("pointerup", (event) => {
+  function endDrag() {
     if (!dragging) return;
     dragging = false;
     splitter.classList.remove("dragging");
-    if (splitter.hasPointerCapture(event.pointerId)) splitter.releasePointerCapture(event.pointerId);
     document.documentElement.classList.remove("resizing");
     document.documentElement.style.cursor = "";
     savePanelSizes();
+    editor?.layout();
+  }
+
+  splitter.addEventListener("pointerdown", (event) => {
+    if (window.matchMedia("(max-width: 760px)").matches || event.button !== 0) return;
+    event.preventDefault();
+    dragging = true;
+    splitter.classList.add("dragging");
+    document.documentElement.classList.add("resizing");
+    document.documentElement.style.cursor = isVertical ? "col-resize" : "row-resize";
+    move(isVertical ? event.clientX : event.clientY);
   });
-  splitter.addEventListener("dblclick", resetPanelSizes);
+
+  // Listen on the document while dragging. This keeps resizing reliable even
+  // when the pointer moves over Monaco, Output, or outside the narrow handle.
+  document.addEventListener("pointermove", (event) => {
+    if (!dragging) return;
+    event.preventDefault();
+    move(isVertical ? event.clientX : event.clientY);
+  }, { passive: false });
+  document.addEventListener("pointerup", endDrag);
+  document.addEventListener("pointercancel", endDrag);
+  window.addEventListener("blur", endDrag);
+
+  splitter.addEventListener("dblclick", () => {
+    resetPanelSizes();
+    updateAria(isVertical ? DEFAULT_SPLITS.editor : DEFAULT_SPLITS.output);
+  });
   splitter.addEventListener("keydown", (event) => {
     const validKeys = isVertical ? ["ArrowLeft", "ArrowRight"] : ["ArrowUp", "ArrowDown"];
     if (!validKeys.includes(event.key)) return;
@@ -634,15 +689,19 @@ function setupSplitter(splitter, orientation) {
     const direction = ["ArrowRight", "ArrowDown"].includes(event.key) ? 1 : -1;
     const target = isVertical ? elements.workspace : elements.sideStack;
     const property = isVertical ? "--editor-size" : "--output-size";
-    const current = parseFloat(getComputedStyle(target).getPropertyValue(property)) || (isVertical ? DEFAULT_SPLITS.editor : DEFAULT_SPLITS.output);
-    target.style.setProperty(property, `${clamp(current + direction * 2, isVertical ? 42 : 33, isVertical ? 74 : 72)}%`);
+    const next = clamp(currentPercent() + direction * 2, minPercent, maxPercent);
+    target.style.setProperty(property, `${next}%`);
+    updateAria(next);
     if (isVertical) syncSourceHeaderWidth();
     savePanelSizes();
     editor?.layout();
   });
+
+  updateAria(currentPercent());
 }
 
 elements.language.addEventListener("change", changeLanguage);
+elements.fontSize?.addEventListener("change", (event) => applyCodeFontSize(event.target.value));
 elements.runButton.addEventListener("click", runCode);
 elements.stopButton.addEventListener("click", stopCode);
 elements.resetButton.addEventListener("click", resetCode);
