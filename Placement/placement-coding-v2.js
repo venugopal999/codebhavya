@@ -23,6 +23,10 @@
     let lastSubmissionId = null;
     let draftTimer = null;
     let runtimeLanguage = topic === "java" ? "java" : topic === "python" || topic === "ai-ml" ? "python" : topic === "database" ? "sql" : "c";
+    let solveTimerStartedAt = 0;
+    let solveTimerCompletedSeconds = null;
+    let solveTimerInterval = null;
+    let submissionRows = [];
     const problemLoadTimeoutMs = 15000;
 
     if (fullAssessmentEmbed) {
@@ -39,6 +43,217 @@
     function setStatus(text, tone = "neutral") {
         $("judgeStatus").textContent = text;
         $("judgeStatus").dataset.tone = tone;
+    }
+
+
+    function formatDuration(totalSeconds) {
+        const value = Math.max(0, Number(totalSeconds) || 0);
+        const hours = Math.floor(value / 3600);
+        const minutes = Math.floor((value % 3600) / 60);
+        const seconds = value % 60;
+        return hours > 0
+            ? `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`
+            : `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    }
+
+    function formatSubmissionDate(value) {
+        if (!value) return "Not recorded";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "Not recorded";
+        return date.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+    }
+
+    function solveTimerKey() {
+        if (!active?.id) return null;
+        return `codebhavya-solve-timer-v1:${user?.id || "guest"}:${active.id}`;
+    }
+
+    function saveSolveTimerState() {
+        const key = solveTimerKey();
+        if (!key) return;
+        try {
+            localStorage.setItem(key, JSON.stringify({
+                startedAt: solveTimerStartedAt || Date.now(),
+                completedSeconds: solveTimerCompletedSeconds
+            }));
+        } catch (_error) { /* Timer still works for this page. */ }
+    }
+
+    function currentSolveDurationSeconds() {
+        if (solveTimerCompletedSeconds !== null) return solveTimerCompletedSeconds;
+        if (!solveTimerStartedAt) return 0;
+        return Math.max(0, Math.floor((Date.now() - solveTimerStartedAt) / 1000));
+    }
+
+    function paintSolveTimer() {
+        const output = $("solveTimer");
+        const card = $("solveTimerCard");
+        if (!output || !card) return;
+        output.textContent = formatDuration(currentSolveDurationSeconds());
+        card.classList.toggle("completed", solveTimerCompletedSeconds !== null);
+        card.querySelector("span").textContent = solveTimerCompletedSeconds !== null ? "COMPLETED IN" : "SOLVE TIME";
+    }
+
+    function beginSolveTimer(forceNew = false) {
+        if (fullAssessmentEmbed || !active) return;
+        window.clearInterval(solveTimerInterval);
+        solveTimerStartedAt = Date.now();
+        solveTimerCompletedSeconds = null;
+        const key = solveTimerKey();
+        if (!forceNew && key) {
+            try {
+                const saved = JSON.parse(localStorage.getItem(key) || "null");
+                if (saved?.startedAt) solveTimerStartedAt = Number(saved.startedAt) || Date.now();
+                if (Number.isFinite(saved?.completedSeconds)) solveTimerCompletedSeconds = Number(saved.completedSeconds);
+            } catch (_error) { /* Start a clean timer. */ }
+        }
+        paintSolveTimer();
+        if (solveTimerCompletedSeconds === null) {
+            solveTimerInterval = window.setInterval(paintSolveTimer, 1000);
+        }
+        saveSolveTimerState();
+    }
+
+    function completeSolveTimer(seconds) {
+        window.clearInterval(solveTimerInterval);
+        solveTimerCompletedSeconds = Math.max(0, Number(seconds) || currentSolveDurationSeconds());
+        paintSolveTimer();
+        saveSolveTimerState();
+    }
+
+    function restartSolveTimer() {
+        if (!active) return;
+        if (solveTimerCompletedSeconds !== null && !window.confirm("Start a new solve timer for this problem? Your previous submission history will remain saved.")) return;
+        beginSolveTimer(true);
+    }
+
+    async function saveSubmissionDuration(submissionId, seconds) {
+        if (!client || !user || !submissionId) return;
+        try {
+            const result = await client.rpc("set_my_coding_submission_duration_v1", {
+                p_submission_id: String(submissionId),
+                p_duration_seconds: Math.max(0, Number(seconds) || 0)
+            });
+            if (result.error) console.warn("Solve duration was not stored. Run the coding submission history SQL migration.", result.error);
+        } catch (error) {
+            console.warn("Solve duration was not stored.", error);
+        }
+    }
+
+    function normalizeSubmissionRow(row) {
+        return {
+            submission_id: String(row.submission_id ?? row.id ?? ""),
+            language: String(row.language || ""),
+            source_code: String(row.source_code || ""),
+            status: String(row.status || "Submitted"),
+            passed_tests: Number(row.passed_tests) || 0,
+            total_tests: Number(row.total_tests) || 0,
+            execution_time: row.execution_time == null ? null : Number(row.execution_time),
+            memory_kb: row.memory_kb == null ? null : Number(row.memory_kb),
+            points_awarded: Number(row.points_awarded) || 0,
+            submitted_at: row.submitted_at || row.created_at || null,
+            solve_duration_seconds: row.solve_duration_seconds == null ? null : Number(row.solve_duration_seconds)
+        };
+    }
+
+    async function fetchMySubmissions() {
+        if (!client || !user || !active?.id) return [];
+        try {
+            const rpc = await client.rpc("get_my_coding_submissions_v1", { p_problem_id: String(active.id) });
+            if (!rpc.error) return (rpc.data || []).map(normalizeSubmissionRow);
+        } catch (_error) { /* Fall through to the table query for older deployments. */ }
+
+        const rich = await client.from("coding_submissions")
+            .select("id,language,source_code,status,passed_tests,total_tests,execution_time,memory_kb,points_awarded,created_at,solve_duration_seconds")
+            .eq("user_id", user.id).eq("problem_id", active.id)
+            .order("created_at", { ascending: false }).limit(50);
+        if (!rich.error) return (rich.data || []).map(normalizeSubmissionRow);
+
+        const legacy = await client.from("coding_submissions")
+            .select("id,language,source_code,status,passed_tests,total_tests,execution_time,memory_kb,points_awarded")
+            .eq("user_id", user.id).eq("problem_id", active.id).limit(50);
+        if (!legacy.error) return (legacy.data || []).map(normalizeSubmissionRow);
+        console.warn("Unable to load coding submission history", rich.error || legacy.error);
+        return [];
+    }
+
+    function submissionMetaCard(label, value, className = "") {
+        const card = document.createElement("article");
+        if (className) card.className = className;
+        const caption = document.createElement("span"); caption.textContent = label;
+        const content = document.createElement("strong"); content.textContent = value;
+        card.append(caption, content);
+        return card;
+    }
+
+    function loadSubmissionIntoEditor(row) {
+        if (!row?.source_code) return;
+        if (editorValue().trim() && editorValue() !== starter(active) && !window.confirm("Replace the current editor code with this submitted solution?")) return;
+        setEditorValue(row.source_code);
+        scheduleDraftSave();
+        $("draftStatus").textContent = "Submitted code loaded";
+        setStatus("Submitted code restored to the editor", "neutral");
+        document.querySelector(".code-lab")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderSubmissionHistory(rows) {
+        submissionRows = rows;
+        const panel = $("submissionPanel");
+        if (!panel) return;
+        panel.hidden = !user || fullAssessmentEmbed;
+        if (panel.hidden) return;
+        const empty = $("submissionEmpty");
+        const latestBox = $("latestSubmission");
+        const toggle = $("toggleSubmissionHistory");
+        const history = $("submissionHistory");
+        history.replaceChildren();
+        if (!rows.length) {
+            empty.hidden = false;
+            latestBox.hidden = true;
+            toggle.hidden = true;
+            history.hidden = true;
+            return;
+        }
+        empty.hidden = true;
+        latestBox.hidden = false;
+        const latest = rows[0];
+        const meta = $("latestSubmissionMeta");
+        meta.replaceChildren(
+            submissionMetaCard("Status", latest.status, latest.status.toLowerCase() === "accepted" ? "accepted" : ""),
+            submissionMetaCard("Submitted", formatSubmissionDate(latest.submitted_at)),
+            submissionMetaCard("Solve time", latest.solve_duration_seconds == null ? "Not recorded" : formatDuration(latest.solve_duration_seconds)),
+            submissionMetaCard("Points", String(latest.points_awarded))
+        );
+        $("latestSubmissionCode").textContent = latest.source_code || "Submitted source code is unavailable.";
+        toggle.hidden = rows.length <= 1;
+        toggle.textContent = history.hidden ? `Show all attempts (${rows.length})` : "Hide attempts";
+
+        rows.forEach((row, index) => {
+            const details = document.createElement("details");
+            const summary = document.createElement("summary");
+            const status = document.createElement("strong");
+            status.textContent = `#${index + 1} · ${row.status}`;
+            if (row.status.toLowerCase() === "accepted") status.className = "accepted";
+            const submitted = document.createElement("span"); submitted.textContent = formatSubmissionDate(row.submitted_at);
+            const duration = document.createElement("span"); duration.textContent = row.solve_duration_seconds == null ? "Time —" : `Time ${formatDuration(row.solve_duration_seconds)}`;
+            const points = document.createElement("span"); points.textContent = `${row.points_awarded} pts`;
+            summary.append(status, submitted, duration, points);
+            const body = document.createElement("div"); body.className = "history-body";
+            const actions = document.createElement("div"); actions.className = "history-actions";
+            const load = document.createElement("button"); load.type = "button"; load.textContent = "Load this code"; load.addEventListener("click", () => loadSubmissionIntoEditor(row));
+            actions.append(load);
+            const code = document.createElement("pre"); code.className = "submitted-code"; code.textContent = row.source_code || "Submitted source code is unavailable.";
+            body.append(actions, code); details.append(summary, body); history.append(details);
+        });
+    }
+
+    async function loadSubmissionHistory() {
+        if (!user || !active || fullAssessmentEmbed) {
+            if ($("submissionPanel")) $("submissionPanel").hidden = true;
+            return;
+        }
+        const rows = await fetchMySubmissions();
+        renderSubmissionHistory(rows);
     }
 
     function setEmpty(title, text) {
@@ -367,6 +582,8 @@
             setEditorValue(draft === null ? starter(problem) : draft);
             if ($("draftStatus")) $("draftStatus").textContent = draft === null ? "New draft" : "Saved draft restored";
             resetResultState();
+            beginSolveTimer(false);
+            loadSubmissionHistory();
         } catch (error) {
             console.error("Unable to open coding problem", error);
             active = null;
@@ -487,6 +704,7 @@
             return;
         }
 
+        const submittedSolveSeconds = mode === "submit" ? currentSolveDurationSeconds() : null;
         setJudgeBusy(true);
         setStatus(mode === "run" ? "Running sample tests…" : "Running 10 protected tests…");
         try {
@@ -497,8 +715,14 @@
                 mode
             });
             renderTests(result, mode);
-            setStatus(result.status || "Finished", result.passed_tests === result.total_tests ? "success" : "error");
-            if (mode === "submit") loadMyScore();
+            const accepted = Number(result.passed_tests) === Number(result.total_tests) && Number(result.total_tests) > 0;
+            setStatus(result.status || "Finished", accepted ? "success" : "error");
+            if (mode === "submit") {
+                if (result.submission_id) await saveSubmissionDuration(result.submission_id, submittedSolveSeconds);
+                if (accepted) completeSolveTimer(submittedSolveSeconds);
+                await loadMyScore();
+                await loadSubmissionHistory();
+            }
         } catch (error) {
             setStatus(await readableFunctionError(error), "error");
         } finally {
@@ -600,6 +824,10 @@
             client.auth.onAuthStateChange((_event, session) => {
                 user = session?.user || null;
                 loadMyScore();
+                if (active) {
+                    beginSolveTimer(false);
+                    loadSubmissionHistory();
+                }
             });
         }
 
@@ -617,6 +845,13 @@
         });
         $("openLeaderboard").addEventListener("click", showLeaderboard);
         $("codingLanguage").addEventListener("change", changeLanguage);
+        $("restartSolveTimer")?.addEventListener("click", restartSolveTimer);
+        $("loadLatestSubmission")?.addEventListener("click", () => loadSubmissionIntoEditor(submissionRows[0]));
+        $("toggleSubmissionHistory")?.addEventListener("click", () => {
+            const history = $("submissionHistory");
+            history.hidden = !history.hidden;
+            $("toggleSubmissionHistory").textContent = history.hidden ? `Show all attempts (${submissionRows.length})` : "Hide attempts";
+        });
 
         updateFallbackLines();
         loadMyScore();

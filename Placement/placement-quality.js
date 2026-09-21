@@ -17,7 +17,23 @@
         'interview.html':['Guided self-review','Checklist results are your self-assessment, not an independent assessment of technical correctness. Use the model points and follow-up answers to check your reasoning.']
     };
     const main=document.querySelector('main');
-    if(main&&notes[page]){const box=document.createElement('aside');box.className='placement-access';const title=document.createElement('strong');title.textContent=notes[page][0];box.append(title,document.createTextNode(notes[page][1]));main.prepend(box);}
+    if(main&&notes[page]){
+        const box=document.createElement('aside');box.className='placement-access';
+        const title=document.createElement('strong');title.textContent=notes[page][0];
+        box.append(title,document.createTextNode(notes[page][1]));
+        if(page==='solve.html') box.hidden=true;
+        main.prepend(box);
+        if(page==='solve.html'){
+            const client=window.CodeBhavyaSupabase?.client||null;
+            const syncAccess=async()=>{
+                if(!client){box.hidden=false;return;}
+                try{const auth=await client.auth.getUser();box.hidden=Boolean(auth.data?.user);}
+                catch(_error){box.hidden=false;}
+            };
+            syncAccess();
+            if(client) client.auth.onAuthStateChange((_event,session)=>{box.hidden=Boolean(session?.user);});
+        }
+    }
   /*  if(!document.querySelector('body > footer, footer.footer')){
         const footer=document.createElement('footer');footer.className='placement-global-footer';
         footer.innerHTML='<div class="pf-columns"><div class="pf-brand"><div><span>Code</span><b>Bhavya</b></div><p class="pf-tagline">From Learning to Limitless Possibilities.</p><p>Learn, practice, build and grow with structured learning resources.</p></div></div>';
