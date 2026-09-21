@@ -798,11 +798,17 @@ window.addEventListener("beforeunload", () => {
   if (socket?.readyState === WebSocket.OPEN && isRunning) socket.send(JSON.stringify({ type: "stop" }));
 });
 
-$("year").textContent = new Date().getFullYear();
+// Initialize the core compiler workspace first. Optional page chrome must never
+// be able to stop splitter/editor startup.
 renderHistory();
 loadPanelSizes();
+setupSplitter(elements.verticalSplitter, "vertical");
+setupSplitter(elements.horizontalSplitter, "horizontal");
 syncSourceHeaderWidth();
-if ("ResizeObserver" in window) new ResizeObserver(syncSourceHeaderWidth).observe(elements.sourcePanel);
+
+if ("ResizeObserver" in window && elements.sourcePanel) {
+  new ResizeObserver(syncSourceHeaderWidth).observe(elements.sourcePanel);
+}
 window.addEventListener("resize", syncSourceHeaderWidth);
 window.visualViewport?.addEventListener("resize", () => {
   syncSourceHeaderWidth();
@@ -817,5 +823,7 @@ mobileEditor.addEventListener?.("change", () => {
   });
   refreshMobileEditor(true, true);
 });
-setupSplitter(elements.verticalSplitter, "vertical");
-setupSplitter(elements.horizontalSplitter, "horizontal");
+
+// Footer is optional on this page (it is currently commented out in HTML).
+const yearElement = $("year");
+if (yearElement) yearElement.textContent = new Date().getFullYear();
