@@ -9,7 +9,7 @@ window.FULLSTACK_LESSONS = window.FULLSTACK_LESSONS || {};
 
 window.FULLSTACK_LESSONS[20] = {
 
-```
+
 n: 20,
 
 kicker: "PART 4 • NODE & EXPRESS • LEVEL 20",
@@ -158,17 +158,17 @@ sections: [
             "An Express application begins with installing Express, importing it, creating an application object and starting a server.",
 
         terminal:
-```
 
-`npm init -y
+
+npm init -y
 
 npm install express`,
 
-```
-        code:
-```
 
-`const express = require("express");
+        code:
+
+
+const express = require("express");
 
 const app = express();
 
@@ -180,7 +180,7 @@ console.log(
 );
 });`,
 
-```
+
         points: [
 
             "express() creates an Express application.",
@@ -276,31 +276,31 @@ console.log(
             "A GET route normally retrieves information from the server.",
 
         code:
-```
 
-`const express = require("express");
+
+const express = require("express");
 
 const app = express();
 
 app.get("/", (req, res) => {
 
-```
+
 res.send("Welcome to CodeBhavya");
-```
+
 
 });
 
 app.get("/about", (req, res) => {
 
-```
+
 res.send("About Page");
-```
+
 
 });
 
 app.listen(3000);`,
 
-```
+
         points: [
 
             "app.get() defines a route for GET requests.",
@@ -443,52 +443,51 @@ app.listen(3000);`,
         },
 
         code:
-```
 
-`app.post("/students", (req, res) => {
 
-```
+app.post("/students", (req, res) => {
+
 res.status(201).json({
     message: "Student created"
 });
-```
+
 
 });
 
 app.put("/students/:id", (req, res) => {
 
-```
+
 res.json({
     message: "Student replaced",
     id: req.params.id
 });
-```
+
 
 });
 
 app.patch("/students/:id", (req, res) => {
 
-```
+
 res.json({
     message: "Student updated",
     id: req.params.id
 });
-```
+
 
 });
 
 app.delete("/students/:id", (req, res) => {
 
-```
+
 res.json({
     message: "Student deleted",
     id: req.params.id
 });
-```
 
-});`,
 
-```
+});,
+
+
         keyIdea:
             "HTTP methods communicate the intended action while the URL identifies the resource."
 
@@ -518,22 +517,22 @@ res.json({
         ],
 
         code:
-```
 
-`app.use((req, res, next) => {
 
-```
+app.use((req, res, next) => {
+
+
 console.log(
     req.method,
     req.url
 );
 
 next();
-```
 
-});`,
 
-```
+});,
+
+
         flow: [
 
             "Request arrives",
@@ -567,9 +566,9 @@ next();
             "APIs frequently receive JSON data from clients. Express provides express.json() to parse JSON request bodies.",
 
         code:
-```
 
-`const express = require("express");
+
+const express = require("express");
 
 const app = express();
 
@@ -577,20 +576,19 @@ app.use(express.json());
 
 app.post("/students", (req, res) => {
 
-```
+
 console.log(req.body);
 
 res.status(201).json({
     message: "Student received",
     student: req.body
 });
-```
+
 
 });
 
 app.listen(3000);`,
 
-```
         points: [
 
             "express.json() is middleware.",
@@ -634,22 +632,22 @@ app.listen(3000);`,
             "Route parameters represent dynamic values embedded in a URL path.",
 
         code:
-```
 
-`app.get("/students/:id", (req, res) => {
 
-```
+app.get("/students/:id", (req, res) => {
+
+
 const studentId = req.params.id;
 
 res.json({
     message: "Student requested",
     id: studentId
 });
-```
 
-});`,
 
-```
+});,
+
+
         points: [
 
             "A route parameter is written with a colon.",
@@ -717,11 +715,11 @@ res.json({
             "Query parameters are values placed after the ? in a URL and are commonly used for filtering, searching, sorting and pagination.",
 
         code:
-```
 
-`app.get("/students", (req, res) => {
 
-```
+app.get("/students", (req, res) => {
+
+
 const course = req.query.course;
 
 const page = req.query.page;
@@ -730,17 +728,17 @@ res.json({
     course,
     page
 });
-```
 
-});`,
 
-```
+});,
+
+
         example:
-```
 
-`GET /students?course=aiml&page=2`,
 
-```
+GET /students?course=aiml&page=2`,
+
+
         points: [
 
             "Query parameters are available through req.query.",
@@ -803,11 +801,11 @@ res.json({
             "REST APIs commonly communicate using JSON rather than HTML pages.",
 
         code:
-```
 
-`app.get("/api/course", (req, res) => {
 
-```
+app.get("/api/course", (req, res) => {
+
+
 res.json({
 
     course: "Full Stack / MERN",
@@ -819,11 +817,11 @@ res.json({
     status: "active"
 
 });
-```
 
-});`,
 
-```
+});,
+
+
         points: [
 
             "res.json() sends a JSON response.",
@@ -837,16 +835,16 @@ res.json({
         ],
 
         example:
-```
 
-`{
+
+{
     "course": "Full Stack / MERN",
     "provider": "CodeBhavya",
     "level": 20,
     "status": "active"
-}`,
+},
 
-```
+
         keyIdea:
             "A REST API should return predictable, machine-readable responses."
 
@@ -960,11 +958,11 @@ res.json({
         },
 
         code:
-```
 
-`app.get("/students/:id", (req, res) => {
 
-```
+app.get("/students/:id", (req, res) => {
+
+
 const student = findStudent(
     req.params.id
 );
@@ -978,11 +976,11 @@ if (!student) {
 }
 
 res.status(200).json(student);
-```
 
-});`,
 
-```
+});,
+
+
         keyIdea:
             "Status codes are part of the API contract. Clients use them to understand the outcome of a request."
 
@@ -1074,9 +1072,9 @@ res.status(200).json(student);
             "CRUD means Create, Read, Update and Delete. A student API is a useful example for understanding the complete REST flow.",
 
         code:
-```
 
-`const express = require("express");
+
+const express = require("express");
 
 const app = express();
 
@@ -1099,7 +1097,7 @@ res.json(students);
 
 app.get("/students/:id", (req, res) => {
 
-```
+
 const student = students.find(
     item => item.id === Number(req.params.id)
 );
@@ -1111,13 +1109,13 @@ if (!student) {
 }
 
 res.json(student);
-```
+
 
 });
 
 app.post("/students", (req, res) => {
 
-```
+
 const student = {
     id: students.length + 1,
     name: req.body.name
@@ -1126,13 +1124,13 @@ const student = {
 students.push(student);
 
 res.status(201).json(student);
-```
+
 
 });
 
 app.delete("/students/:id", (req, res) => {
 
-```
+
 const id = Number(req.params.id);
 
 students = students.filter(
@@ -1140,13 +1138,13 @@ students = students.filter(
 );
 
 res.status(204).send();
-```
+
 
 });
 
 app.listen(3000);`,
 
-```
+
         comparison: {
 
             headers: [
@@ -1218,19 +1216,19 @@ app.listen(3000);`,
             "A well-designed Express application should provide a clear response when no route matches the request.",
 
         code:
-```
 
-`app.use((req, res) => {
 
-```
+app.use((req, res) => {
+
+
 res.status(404).json({
     message: "Route not found"
 });
-```
 
-});`,
 
-```
+});,
+
+
         points: [
 
             "Express processes middleware and routes in registration order.",
@@ -1258,21 +1256,21 @@ res.status(404).json({
             "Production applications need a predictable way to handle unexpected errors.",
 
         code:
-```
 
-`app.use((err, req, res, next) => {
 
-```
+app.use((err, req, res, next) => {
+
+
 console.error(err);
 
 res.status(500).json({
     message: "Internal server error"
 });
-```
 
-});`,
 
-```
+});,
+
+
         points: [
 
             "Express error-handling middleware has four parameters: err, req, res and next.",
@@ -1408,9 +1406,9 @@ res.status(500).json({
         ],
 
         code:
-```
 
-`project/
+
+project/
 │
 ├── server.js
 ├── app.js
@@ -1428,7 +1426,7 @@ res.status(500).json({
 └── models/
     └── studentModel.js`,
 
-```
+
         keyIdea:
             "Separation of responsibilities makes an Express application easier to test, maintain and extend."
 
