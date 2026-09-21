@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -86,97 +87,1454 @@
 </aside>
 <main class="main-content">
 <section class="content-card" data-content-standard="teaching-complete-v1" id="operators">
-<h2>➕ 6. Operators</h2><div class="cb-teaching-standard"><strong>🎓 Concept-First Explanation</strong><p>This lesson is organized in the same order a faculty member would normally teach it: meaning → purpose → syntax/model → internal working → examples → common confusion → safe use. The guided examples from the earlier lesson are preserved afterward for reinforcement.</p></div><h3>6.1 What an Operator Does</h3><p>An operator tells C to perform an operation on one or more operands and produce a result or side effect. Understanding an operator requires four questions: <strong>what operands it accepts, what result it produces, whether it changes an object, and when/how its operands are evaluated</strong>.</p><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>By number of operands</th><th>Examples</th></tr></thead><tbody><tr><td>Unary</td><td><code>-x</code>, <code>!x</code>, <code>~x</code>, <code>++x</code></td></tr><tr><td>Binary</td><td><code>a+b</code>, <code>a&lt;b</code>, <code>a&amp;b</code></td></tr><tr><td>Conditional/ternary</td><td><code>condition ? a : b</code></td></tr></tbody></table></div><h3>6.2 Arithmetic Operators</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Operator</th><th>Meaning</th><th>Important point</th></tr></thead><tbody><tr><td><code>+</code></td><td>addition</td><td>Conversions occur before arithmetic.</td></tr><tr><td><code>-</code></td><td>subtraction / unary negation</td><td>Unary <code>-</code> is a separate operator form.</td></tr><tr><td><code>*</code></td><td>multiplication</td><td>Also used syntactically for pointer declarators/dereference in other contexts.</td></tr><tr><td><code>/</code></td><td>division</td><td>Integer operands perform integer division.</td></tr><tr><td><code>%</code></td><td>remainder</td><td>Defined for integer operands.</td></tr></tbody></table></div><pre><code>int a = 7, b = 2;
-printf("%d\n", a / b);      /* 3 */
-printf("%d\n", a % b);      /* 1 */
-printf("%.1f\n", a / 2.0); /* 3.5 */</code></pre><h3>6.3 Relational and Equality Operators</h3><p>Relational/equality expressions compare values and produce an <code>int</code> result: <code>1</code> for true and <code>0</code> for false.</p><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Category</th><th>Operators</th></tr></thead><tbody><tr><td>Relational</td><td><code>&lt;</code> <code>&lt;=</code> <code>&gt;</code> <code>&gt;=</code></td></tr><tr><td>Equality</td><td><code>==</code> <code>!=</code></td></tr></tbody></table></div><div class="example-box"><strong>Classic confusion</strong><p><code>=</code> performs assignment. <code>==</code> compares for equality. <code>if (x = 5)</code> assigns 5 to x and then tests the resulting nonzero value; it is not an equality test.</p></div><h3>6.4 Logical Operators and Truth in C</h3><p>For scalar conditions, zero is treated as false and nonzero as true. Logical operators return <code>0</code> or <code>1</code>.</p><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Operator</th><th>Meaning</th></tr></thead><tbody><tr><td><code>&amp;&amp;</code></td><td>logical AND</td></tr><tr><td><code>||</code></td><td>logical OR</td></tr><tr><td><code>!</code></td><td>logical NOT</td></tr></tbody></table></div><pre><code>if (age &gt;= 18 &amp;&amp; age &lt;= 60)
-    printf("Eligible\n");</code></pre><h3>6.5 Short-Circuit Evaluation — A Semantic Guarantee</h3><p>For <code>&amp;&amp;</code>, if the left operand is false, the right operand is not evaluated. For <code>||</code>, if the left operand is true, the right operand is not evaluated.</p><pre><code>if (x != 0 &amp;&amp; 100 / x &gt; 5)
+<h2>➕ 6. Operators</h2>
+
+<div class="cb-teaching-standard">
+<strong>🎓 Learn Operators Step by Step</strong>
+<p>
+An operator is a symbol that tells the C compiler to perform an operation.
+Operators are everywhere in C: they calculate marks and salaries, compare values,
+combine conditions, update variables, work with bits, access memory, and select values.
+Instead of memorizing a list of symbols, learn what each operator asks C to do,
+what operands it needs, and what result it produces.
+</p>
+</div>
+
+<h3>6.1 What Is an Operator?</h3>
+
+<p>
+Consider this statement:
+</p>
+
+<pre><code>int total = 10 + 20;</code></pre>
+
+<p>
+Here <code>10</code> and <code>20</code> are the <strong>operands</strong>, and
+<code>+</code> is the <strong>operator</strong>. The operator tells C to add the
+two operands. The result, <code>30</code>, is then stored in <code>total</code>.
+</p>
+
+<div class="example-box">
+<strong>Think of an operator like an instruction.</strong>
+<p>
+A calculator button such as <strong>+</strong> tells the calculator what to do.
+In C, operators play the same role inside expressions. For example,
+<code>a + b</code> means “take the values of <code>a</code> and <code>b</code>
+and perform addition.”
+</p>
+</div>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operator</td>
+<td>Symbol or form that performs an operation</td>
+<td><code>+</code>, <code>==</code>, <code>&amp;&amp;</code></td>
+</tr>
+<tr>
+<td>Operand</td>
+<td>Value or expression operated on</td>
+<td>In <code>a + 5</code>, <code>a</code> and <code>5</code></td>
+</tr>
+<tr>
+<td>Expression</td>
+<td>A combination of operands and operators that produces a value or effect</td>
+<td><code>a + b * 2</code></td>
+</tr>
+<tr>
+<td>Result</td>
+<td>The value produced by evaluating an expression</td>
+<td><code>10 + 20</code> produces <code>30</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>6.2 Why Are Operators Important?</h3>
+
+<p>
+A C program cannot do useful work with variables alone. Operators allow a program
+to <strong>calculate, compare, decide, repeat, update, and manipulate data</strong>.
+For example:
+</p>
+
+<pre><code>int marks = 75;
+int pass = marks &gt;= 40;
+
+int salary = 30000;
+salary += 5000;
+
+int age = 22;
+if (age &gt;= 18 &amp;&amp; age &lt;= 60)
+    printf("Eligible");</code></pre>
+
+<p>
+The first expression compares marks, the second updates salary, and the third
+combines two conditions. These are all built from operators.
+</p>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>What the program needs to do</th>
+<th>Typical operators</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Calculate a value</td>
+<td><code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>%</code></td>
+</tr>
+<tr>
+<td>Compare two values</td>
+<td><code>&lt;</code> <code>&lt;=</code> <code>&gt;</code> <code>&gt;=</code> <code>==</code> <code>!=</code></td>
+</tr>
+<tr>
+<td>Combine conditions</td>
+<td><code>&amp;&amp;</code> <code>||</code> <code>!</code></td>
+</tr>
+<tr>
+<td>Store or update a value</td>
+<td><code>=</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code></td>
+</tr>
+<tr>
+<td>Increase or decrease a value</td>
+<td><code>++</code> <code>--</code></td>
+</tr>
+<tr>
+<td>Work with individual bits</td>
+<td><code>&amp;</code> <code>|</code> <code>^</code> <code>~</code> <code>&lt;&lt;</code> <code>&gt;&gt;</code></td>
+</tr>
+<tr>
+<td>Choose one of two values</td>
+<td><code>? :</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>6.3 Operators Based on Number of Operands</h3>
+
+<p>
+One useful way to understand operators is to count how many operands they work
+with. This is called their <strong>arity</strong>.
+</p>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Type</th>
+<th>Number of operands</th>
+<th>Example</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unary</td>
+<td>One</td>
+<td><code>-x</code></td>
+<td>Negate one value</td>
+</tr>
+<tr>
+<td>Binary</td>
+<td>Two</td>
+<td><code>a + b</code></td>
+<td>Operate on two values</td>
+</tr>
+<tr>
+<td>Ternary / conditional</td>
+<td>Three operands</td>
+<td><code>age &gt;= 18 ? 1 : 0</code></td>
+<td>Choose between two expressions based on a condition</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="example-box">
+<strong>Important:</strong>
+<p>
+The same symbol can have different meanings depending on how it is used.
+For example, <code>-</code> can mean subtraction in <code>a - b</code>, but it
+can mean unary negation in <code>-a</code>.
+Similarly, <code>*</code> can mean multiplication in <code>a * b</code> and is
+also used with pointers in expressions such as <code>*ptr</code>.
+</p>
+</div>
+
+<h3>6.4 Arithmetic Operators</h3>
+
+<p>
+Arithmetic operators perform numerical calculations. The five basic arithmetic
+operators are:
+</p>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Operator</th>
+<th>Name</th>
+<th>Example</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>+</code></td>
+<td>Addition</td>
+<td><code>10 + 3</code></td>
+<td><code>13</code></td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>Subtraction</td>
+<td><code>10 - 3</code></td>
+<td><code>7</code></td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>Multiplication</td>
+<td><code>10 * 3</code></td>
+<td><code>30</code></td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>Division</td>
+<td><code>10 / 3</code></td>
+<td><code>3</code> for integer operands</td>
+</tr>
+<tr>
+<td><code>%</code></td>
+<td>Remainder</td>
+<td><code>10 % 3</code></td>
+<td><code>1</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Simple Example</h4>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
 {
-    /* division is attempted only when x != 0 */
-}</code></pre><div class="example-box"><strong>Why it matters</strong><p>Short-circuiting is not merely an optimization. Programs commonly use it to guard an operation that would otherwise be invalid.</p></div><h3>6.6 Assignment and Compound Assignment</h3><pre><code>x = 10;
-x += 5;   /* conceptually x = x + 5, with important evaluation/conversion details */
-x *= 2;</code></pre><p>An assignment expression stores a converted value in a modifiable lvalue and also has a value. Compound assignment evaluates the left operand only once, which can matter when the left side is more complex than a simple variable.</p><h3>6.7 Increment and Decrement: Prefix vs Postfix</h3><pre><code>int a = 5;
-int p = ++a;   /* a becomes 6; expression value is 6 */
+    int a = 20;
+    int b = 6;
+
+    printf("Addition       = %d\n", a + b);
+    printf("Subtraction    = %d\n", a - b);
+    printf("Multiplication = %d\n", a * b);
+    printf("Division       = %d\n", a / b);
+    printf("Remainder      = %d\n", a % b);
+
+    return 0;
+}</code></pre>
+
+<p><strong>Output:</strong></p>
+
+<pre><code>Addition       = 26
+Subtraction    = 14
+Multiplication = 120
+Division       = 3
+Remainder      = 2</code></pre>
+
+<h4>How Does <code>/</code> Work With Integers?</h4>
+
+<p>
+This is one of the most important points for beginners. When both operands are
+integers, C performs integer division. The fractional part is not stored in the
+integer result.
+</p>
+
+<pre><code>printf("%d\n", 7 / 2);     /* 3 */
+printf("%.1f\n", 7.0 / 2); /* 3.5 */</code></pre>
+
+<p>
+In the first expression both operands are integers, so the result is an integer.
+In the second expression, <code>7.0</code> is a floating-point value, so floating-
+point division is performed.
+</p>
+
+<h4>What Does <code>%</code> Really Mean?</h4>
+
+<p>
+The modulus or remainder operator gives the remainder left after integer division.
+It is extremely useful for checking even/odd numbers, extracting digits, and
+solving cyclic problems.
+</p>
+
+<pre><code>int n = 27;
+
+printf("%d\n", n % 10); /* last digit = 7 */
+printf("%d\n", n % 2);  /* 1 means odd */</code></pre>
+
+<div class="example-box">
+<strong>Common mistake:</strong>
+<p>
+Do not use <code>%</code> with floating-point operands. The C remainder operator
+is for integer arithmetic. For floating-point remainder, the standard library
+provides functions such as <code>fmod()</code>.
+</p>
+</div>
+
+<h3>6.5 Relational Operators — Comparing Values</h3>
+
+<p>
+Relational operators ask a question such as “Is <code>a</code> greater than
+<code>b</code>?” The result of a comparison in C is an <code>int</code> value:
+<strong>1 for true and 0 for false</strong>.
+</p>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Operator</th>
+<th>Question</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;</code></td>
+<td>Is left value less than right value?</td>
+<td><code>a &lt; b</code></td>
+</tr>
+<tr>
+<td><code>&lt;=</code></td>
+<td>Is left value less than or equal to right value?</td>
+<td><code>a &lt;= b</code></td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td>Is left value greater than right value?</td>
+<td><code>a &gt; b</code></td>
+</tr>
+<tr>
+<td><code>&gt;=</code></td>
+<td>Is left value greater than or equal to right value?</td>
+<td><code>a &gt;= b</code></td>
+</tr>
+<tr>
+<td><code>==</code></td>
+<td>Are the two values equal?</td>
+<td><code>a == b</code></td>
+</tr>
+<tr>
+<td><code>!=</code></td>
+<td>Are the two values different?</td>
+<td><code>a != b</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<pre><code>int age = 20;
+
+printf("%d\n", age &gt;= 18); /* 1 */
+printf("%d\n", age &lt; 18);  /* 0 */</code></pre>
+
+<div class="example-box">
+<strong>Very important: <code>=</code> is not <code>==</code>.</strong>
+<p>
+<code>=</code> means assignment. It stores a value.
+<code>==</code> means equality comparison. It asks whether two values are equal.
+</p>
+<pre><code>int x = 10;       /* assignment */
+
+if (x == 10)      /* comparison */
+{
+    printf("x is 10");
+}</code></pre>
+</div>
+
+<h3>6.6 Logical Operators — Combining Conditions</h3>
+
+<p>
+Logical operators are mainly used when a program has more than one condition.
+C treats <code>0</code> as false and any nonzero value as true when a scalar
+value is used as a condition.
+</p>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Operator</th>
+<th>Name</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&amp;&amp;</code></td>
+<td>Logical AND</td>
+<td>True only when both conditions are true</td>
+</tr>
+<tr>
+<td><code>||</code></td>
+<td>Logical OR</td>
+<td>True when at least one condition is true</td>
+</tr>
+<tr>
+<td><code>!</code></td>
+<td>Logical NOT</td>
+<td>Reverses the truth value</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Logical AND <code>&amp;&amp;</code></h4>
+
+<pre><code>int age = 25;
+
+if (age &gt;= 18 &amp;&amp; age &lt;= 60)
+{
+    printf("Age is in the required range");
+}</code></pre>
+
+<p>
+Both conditions must be true:
+</p>
+
+<pre><code>age &gt;= 18     → true
+age &lt;= 60     → true
+                  ↓
+             true &amp;&amp; true
+                  ↓
+                true</code></pre>
+
+<h4>Logical OR <code>||</code></h4>
+
+<pre><code>int day = 6;
+
+if (day == 6 || day == 7)
+{
+    printf("Weekend");
+}</code></pre>
+
+<p>
+Only one condition needs to be true for the complete OR expression to be true.
+</p>
+
+<h4>Logical NOT <code>!</code></h4>
+
+<pre><code>int loggedIn = 0;
+
+if (!loggedIn)
+{
+    printf("Please log in");
+}</code></pre>
+
+<p>
+Because <code>loggedIn</code> is zero, it represents false. Applying
+<code>!</code> changes false to true.
+</p>
+
+<h3>6.7 Truth Table for Logical Operators</h3>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>A &amp;&amp; B</th>
+<th>A || B</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+<tr><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>
+For NOT:
+</p>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>A</th>
+<th>!A</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>1</td></tr>
+<tr><td>1</td><td>0</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>6.8 Short-Circuit Evaluation</h3>
+
+<p>
+Short-circuit evaluation is one of the most useful behaviors of logical
+operators. With <code>&amp;&amp;</code>, C evaluates the right side only when the
+left side is true. With <code>||</code>, C evaluates the right side only when the
+left side is false.
+</p>
+
+<pre><code>if (x != 0 &amp;&amp; 100 / x &gt; 5)
+{
+    printf("Condition satisfied");
+}</code></pre>
+
+<p>
+Suppose <code>x</code> is <code>0</code>. The first condition
+<code>x != 0</code> is false. Therefore C does not evaluate
+<code>100 / x</code>. This prevents a division-by-zero operation.
+</p>
+
+<div class="example-box">
+<strong>Remember:</strong>
+<p>
+Short-circuiting is part of the language behavior, not merely a compiler speed
+optimization. It is commonly used to safely check pointers, array boundaries,
+input values, and other conditions before using them.
+</p>
+</div>
+
+<h3>6.9 Assignment Operator <code>=</code></h3>
+
+<p>
+The assignment operator stores a value in a modifiable object.
+</p>
+
+<pre><code>int marks;
+
+marks = 85;</code></pre>
+
+<p>
+Think of the statement as:
+</p>
+
+<pre><code>marks
+  ↑
+85 is stored here</code></pre>
+
+<p>
+The expression on the right is evaluated first. The resulting value is then
+converted to the type of the object on the left and stored there.
+</p>
+
+<pre><code>int x;
+
+x = 10 + 5;
+
+printf("%d", x); /* 15 */</code></pre>
+
+<p>
+Assignment is different from comparison:
+</p>
+
+<pre><code>x = 5;   /* put 5 into x */
+x == 5;   /* ask whether x is equal to 5 */</code></pre>
+
+<h3>6.10 Compound Assignment Operators</h3>
+
+<p>
+When a program needs to update an existing value, compound assignment operators
+make the code shorter and clearer.
+</p>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Operator</th>
+<th>Example</th>
+<th>Conceptual meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><code>+=</code></td><td><code>x += 5</code></td><td><code>x = x + 5</code></td></tr>
+<tr><td><code>-=</code></td><td><code>x -= 5</code></td><td><code>x = x - 5</code></td></tr>
+<tr><td><code>*=</code></td><td><code>x *= 5</code></td><td><code>x = x * 5</code></td></tr>
+<tr><td><code>/=</code></td><td><code>x /= 5</code></td><td><code>x = x / 5</code></td></tr>
+<tr><td><code>%=</code></td><td><code>x %= 5</code></td><td><code>x = x % 5</code></td></tr>
+<tr><td><code>&amp;=</code></td><td><code>x &amp;= mask</code></td><td>Bitwise AND assignment</td></tr>
+<tr><td><code>|=</code></td><td><code>x |= mask</code></td><td>Bitwise OR assignment</td></tr>
+<tr><td><code>^=</code></td><td><code>x ^= mask</code></td><td>Bitwise XOR assignment</td></tr>
+<tr><td><code>&lt;&lt;=</code></td><td><code>x &lt;&lt;= 1</code></td><td>Left-shift assignment</td></tr>
+<tr><td><code>&gt;&gt;=</code></td><td><code>x &gt;&gt;= 1</code></td><td>Right-shift assignment</td></tr>
+</tbody>
+</table>
+</div>
+
+<pre><code>int score = 50;
+
+score += 10;  /* 60 */
+score -= 5;   /* 55 */
+score *= 2;   /* 110 */
+score /= 10;  /* 11 */
+
+printf("%d", score);</code></pre>
+
+<div class="example-box">
+<strong>Why compound assignment is useful</strong>
+<p>
+It reduces repetition and makes the intention of an update obvious. It is
+especially useful in counters, totals, balances, accumulators, and loops.
+</p>
+</div>
+
+<h3>6.11 Increment and Decrement Operators</h3>
+
+<p>
+The increment operator <code>++</code> increases a value by one. The decrement
+operator <code>--</code> decreases a value by one.
+</p>
+
+<pre><code>int count = 5;
+
+count++;
+printf("%d\n", count); /* 6 */
+
+count--;
+printf("%d\n", count); /* 5 */</code></pre>
+
+<p>
+There are two forms: <strong>prefix</strong> and <strong>postfix</strong>.
+</p>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Form</th>
+<th>Example</th>
+<th>Value of the expression</th>
+<th>What happens to the variable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prefix</td>
+<td><code>++x</code></td>
+<td>New value</td>
+<td>Increment happens before the value is used</td>
+</tr>
+<tr>
+<td>Postfix</td>
+<td><code>x++</code></td>
+<td>Old value</td>
+<td>The old value is used, then x is incremented</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<pre><code>int a = 5;
+
+int p = ++a;
+/* a = 6, p = 6 */
 
 a = 5;
-int q = a++;   /* expression value is 5; a becomes 6 */</code></pre><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Form</th><th>Change</th><th>Expression value</th></tr></thead><tbody><tr><td><code>++a</code></td><td>increment before value is produced</td><td>new value</td></tr><tr><td><code>a++</code></td><td>value is produced, then increment side effect is completed as required</td><td>old value</td></tr></tbody></table></div><div class="example-box"><strong>Do not create puzzle expressions</strong><p>Expressions that modify the same object multiple times without the required sequencing can have undefined behavior. Split updates into clear statements.</p></div><h3>6.8 Conditional Operator ?: — An Expression, Not an if Statement</h3><pre><code>int max = (a &gt; b) ? a : b;</code></pre><p>The first operand is evaluated as a condition. Exactly one of the second or third operands is evaluated. Because the operator forms an expression, its result can be assigned, returned or embedded in a larger expression when readability remains good.</p><h3>6.9 Bitwise Operators — Work on Integer Bit Patterns</h3><p>Bitwise operators operate on integer operands after the language’s integer promotions/conversions. Unlike logical operators, they manipulate corresponding bits rather than reducing operands to true/false.</p><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Operator</th><th>Name</th><th>Core rule</th></tr></thead><tbody><tr><td><code>&amp;</code></td><td>Bitwise AND</td><td>Result bit 1 only when both input bits are 1.</td></tr><tr><td><code>|</code></td><td>Bitwise OR</td><td>Result bit 1 when either input bit is 1.</td></tr><tr><td><code>^</code></td><td>Bitwise XOR</td><td>Result bit 1 when input bits differ.</td></tr><tr><td><code>~</code></td><td>Bitwise complement</td><td>Flips every bit of the promoted operand.</td></tr><tr><td><code>&lt;&lt;</code></td><td>Left shift</td><td>Moves bit pattern left subject to C shift rules.</td></tr><tr><td><code>&gt;&gt;</code></td><td>Right shift</td><td>Moves bit pattern right subject to signedness/value rules.</td></tr></tbody></table></div><h3>6.10 Bitwise AND &amp; — Test or Clear Selected Bits</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>A</th><th>B</th><th>A &amp; B</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td></tr><tr><td>1</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td></tr></tbody></table></div><pre><code>unsigned a = 5; /* 0101 */
-unsigned b = 3; /* 0011 */
-printf("%u\n", a &amp; b); /* 0001 -&gt; 1 */</code></pre><div class="cb-concept-tree"><pre>  0101  (5)
-&amp; 0011  (3)
+
+int q = a++;
+/* q = 5, a = 6 */</code></pre>
+
+<div class="example-box">
+<strong>Beginner rule:</strong>
+<p>
+If you are only changing a variable and not using the expression's value,
+<code>count++</code> and <code>++count</code> both clearly express an increment.
+The important difference appears when the increment expression itself is part
+of a larger expression.
+</p>
+</div>
+
+<h3>6.12 Avoid Tricky Increment Expressions</h3>
+
+<p>
+Beginners often see expressions such as:
+</p>
+
+<pre><code>printf("%d %d", i++, ++i);</code></pre>
+
+<p>
+Do not use such expressions in normal programs. When an object is modified more
+than once in an expression without the sequencing required by the C language,
+the behavior can be undefined. Even in cases that have defined behavior, such
+expressions are difficult for humans to read.
+</p>
+
+<p>
+Prefer simple statements:
+</p>
+
+<pre><code>printf("%d\n", i);
+i++;
+printf("%d\n", i);</code></pre>
+
+<div class="example-box">
+<strong>Professional C rule:</strong>
+<p>
+Do not try to impress the compiler with a complicated one-line expression.
+Write code that another programmer can understand and verify.
+</p>
+</div>
+
+<h3>6.13 Conditional Operator <code>? :</code></h3>
+
+<p>
+The conditional operator is C's only ternary operator. It is useful when a
+program needs to choose between two expressions based on a condition.
+</p>
+
+<pre><code>int a = 25;
+int b = 40;
+
+int max = (a &gt; b) ? a : b;
+
+printf("Maximum = %d", max);</code></pre>
+
+<p>
+Read it as:
+</p>
+
+<pre><code>condition ? value_if_true : value_if_false</code></pre>
+
+<p>
+For the example:
+</p>
+
+<pre><code>(a &gt; b) ? a : b
+   ↓
+Is a greater than b?
+   ↓
+No
+   ↓
+Choose b
+   ↓
+max = 40</code></pre>
+
+<p>
+Only the selected second or third operand is evaluated. This makes the
+conditional operator useful for compact choices, but a normal
+<code>if</code>/<code>else</code> statement is usually clearer when the logic
+becomes large.
+</p>
+
+<h3>6.14 Bitwise Operators — Working With Individual Bits</h3>
+
+<p>
+Bitwise operators work on the individual bits of integer values. They are
+important in systems programming, embedded programming, device registers,
+permissions, flags, networking, and some interview problems.
+</p>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Operator</th>
+<th>Name</th>
+<th>Main idea</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><code>&amp;</code></td><td>Bitwise AND</td><td>Keep a bit as 1 only when both bits are 1</td></tr>
+<tr><td><code>|</code></td><td>Bitwise OR</td><td>Set a bit when either bit is 1</td></tr>
+<tr><td><code>^</code></td><td>Bitwise XOR</td><td>Set a bit when the two bits are different</td></tr>
+<tr><td><code>~</code></td><td>Bitwise NOT</td><td>Flip every bit</td></tr>
+<tr><td><code>&lt;&lt;</code></td><td>Left shift</td><td>Move bits toward the left</td></tr>
+<tr><td><code>&gt;&gt;</code></td><td>Right shift</td><td>Move bits toward the right</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>
+For easy visualization, consider two small positive integers:
+</p>
+
+<pre><code>5 = 0101
+3 = 0011</code></pre>
+
+<h4>Bitwise AND <code>&amp;</code></h4>
+
+<pre><code>  0101   (5)
+&amp; 0011   (3)
 ------
-  0001  (1)</pre></div><p>AND is widely used with a mask to test whether selected bits are set or to clear bits. Example: <code>value &amp; 1u</code> tests the least-significant bit.</p><h3>6.11 Bitwise OR | — Set Selected Bits</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>A</th><th>B</th><th>A | B</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td></tr></tbody></table></div><div class="cb-concept-tree"><pre>  0101  (5)
-| 0011  (3)
+  0001   (1)</code></pre>
+
+<p>
+Each bit is 1 only when both corresponding bits are 1.
+</p>
+
+<h4>Bitwise OR <code>|</code></h4>
+
+<pre><code>  0101   (5)
+| 0011   (3)
 ------
-  0111  (7)</pre></div><pre><code>unsigned value = 0b0100; /* teaching notation; binary literal availability depends on C version */
-/* Conceptually, OR with a mask sets mask bits to 1 without clearing existing 1 bits. */</code></pre><p>For portable examples across older C standards, hexadecimal masks such as <code>0x04u</code> are commonly used.</p><h3>6.12 Bitwise XOR ^ — Toggle Selected Bits</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>A</th><th>B</th><th>A ^ B</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>0</td></tr></tbody></table></div><div class="cb-concept-tree"><pre>  0101  (5)
-^ 0011  (3)
+  0111   (7)</code></pre>
+
+<p>
+A result bit becomes 1 when at least one corresponding input bit is 1.
+</p>
+
+<h4>Bitwise XOR <code>^</code></h4>
+
+<pre><code>  0101   (5)
+^ 0011   (3)
 ------
-  0110  (6)</pre></div><p>XOR with a mask toggles exactly the mask-selected bits: 0 becomes 1 and 1 becomes 0. XOR is also useful in parity and “unique element” style problems.</p><h3>6.13 Bitwise Complement ~ — Flip Every Bit, Not the Truth Value</h3><p><code>~</code> first works on the promoted integer operand and flips every bit. A small 8-bit drawing is only a visual aid; an actual <code>int</code> may have more bits.</p><div class="cb-concept-tree"><pre>8-bit teaching view
-5   = 00000101
-~5  = 11111010</pre></div><pre><code>int x = 5;
-printf("%d\n", ~x);</code></pre><p>On the overwhelmingly common two’s-complement representation, the result is <code>-6</code>, matching the identity <code>~x == -(x + 1)</code>. The standard’s exact signed representation rules depend on the targeted C version, so bit-mask work is usually clearest with unsigned types.</p><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Expression</th><th>Meaning</th></tr></thead><tbody><tr><td><code>!5</code></td><td>logical NOT: 5 is true, so result is 0</td></tr><tr><td><code>~5</code></td><td>bitwise complement: flip every bit of the promoted integer value</td></tr></tbody></table></div><h3>6.14 Left Shift &lt;&lt;</h3><div class="cb-concept-tree"><pre>5        = 00000101
-5 &lt;&lt; 1   = 00001010  -&gt; 10
-5 &lt;&lt; 2   = 00010100  -&gt; 20</pre></div><p>For unsigned values and valid shift counts, left shift moves bits toward more significant positions, filling low-order positions with zeros. Bits shifted out are discarded. Do not memorize “left shift always multiplies by 2” without the range/definedness conditions.</p><h3>6.15 Right Shift &gt;&gt;</h3><div class="cb-concept-tree"><pre>20       = 00010100
-20 &gt;&gt; 1  = 00001010  -&gt; 10
-20 &gt;&gt; 2  = 00000101  -&gt; 5</pre></div><p>For unsigned operands, right shift is well behaved as a logical shift. For signed negative values, the exact result has historically been implementation-defined in common C versions, so unsigned types are preferable when the intent is bit manipulation.</p><h3>6.16 Logical vs Bitwise — Similar Symbols, Different Questions</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Logical</th><th>Bitwise</th><th>Difference</th></tr></thead><tbody><tr><td><code>&amp;&amp;</code></td><td><code>&amp;</code></td><td>truth test vs bit-by-bit AND</td></tr><tr><td><code>||</code></td><td><code>|</code></td><td>truth test vs bit-by-bit OR</td></tr><tr><td><code>!</code></td><td><code>~</code></td><td>reverse truth vs flip all bits</td></tr></tbody></table></div><p>Logical <code>&amp;&amp;</code> and <code>||</code> short-circuit. Bitwise <code>&amp;</code> and <code>|</code> evaluate both operands and combine integer bit patterns.</p><h3>6.17 Other Operators Students Must Recognize</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Operator/form</th><th>Purpose</th></tr></thead><tbody><tr><td><code>sizeof</code></td><td>size of type/object representation</td></tr><tr><td><code>(type)</code></td><td>explicit cast</td></tr><tr><td><code>&amp;obj</code></td><td>address-of</td></tr><tr><td><code>*ptr</code></td><td>dereference</td></tr><tr><td><code>.</code> / <code>-&gt;</code></td><td>structure/union member access</td></tr><tr><td><code>[]</code></td><td>array subscripting</td></tr><tr><td><code>()</code></td><td>function call</td></tr><tr><td>comma operator <code>,</code></td><td>sequenced expression operator in specific contexts</td></tr></tbody></table></div><h3>6.18 Operator Safety Checklist</h3><ul><li>Check operand types before assuming arithmetic behavior.</li><li>Distinguish assignment <code>=</code> from equality <code>==</code>.</li><li>Do not divide or take remainder by zero.</li><li>Use short-circuit conditions to guard unsafe operations.</li><li>Prefer unsigned types for deliberate bit manipulation.</li><li>Validate shift counts and avoid relying on signed-negative shift behavior.</li><li>Avoid expressions that modify the same scalar object multiple times without required sequencing.</li><li>Use parentheses for clarity even when precedence rules already determine grouping.</li></ul><h3>6.19 Quick Revision</h3>
+  0110   (6)</code></pre>
+
+<p>
+A result bit becomes 1 when the two input bits are different.
+</p>
+
+<h4>Bitwise NOT <code>~</code></h4>
+
+<pre><code>Before:  ...00000101
+After:   ...11111010</code></pre>
+
+<p>
+The <code>~</code> operator flips every bit of the promoted integer operand.
+Do not confuse it with logical NOT <code>!</code>.
+</p>
+
+<h4>Why Does <code>~5</code> Become <code>-6</code>?</h4>
+
+<p>
+This is one of the most important points to understand about the bitwise
+complement operator. Beginners often see <code>~5</code> and wonder: if we
+are only changing bits, where did the negative number come from? The answer
+depends on how the resulting bit pattern is interpreted.
+</p>
+
+<p>
+For a typical modern C implementation using a <strong>32-bit signed integer</strong>,
+start with the value 5:
+</p>
+
+<pre><code>5 = 00000000 00000000 00000000 00000101</code></pre>
+
+<p>
+Now <code>~</code> flips every 0 to 1 and every 1 to 0:
+</p>
+
+<pre><code>~5 = 11111111 11111111 11111111 11111010</code></pre>
+
+<p>
+The important point is that this bit pattern has its most significant bit set
+to 1. In the usual <strong>two's-complement representation</strong> used for
+signed integers, that means the value is negative. To understand exactly
+which negative value it represents, we can decode the bit pattern step by step.
+</p>
+
+<h5>Step 1 — Notice the sign bit</h5>
+
+<pre><code>11111111 11111111 11111111 11111010
+^
+Sign bit = 1 → negative value</code></pre>
+
+<h5>Step 2 — Find the magnitude</h5>
+
+<p>
+For a negative two's-complement number, invert all bits and then add 1 to
+find its positive magnitude:
+</p>
+
+<pre><code>Original negative pattern:
+11111111 11111111 11111111 11111010
+
+Invert the bits:
+00000000 00000000 00000000 00000101
+
+Add 1:
+00000000 00000000 00000000 00000110
+
+00000000 00000000 00000000 00000110 = 6</code></pre>
+
+<p>
+Therefore the original bit pattern represents <strong>-6</strong>. So, on a
+typical two's-complement signed integer system:
+</p>
+
+<pre><code>~5 = -6</code></pre>
+
+<h5>The Useful Formula</h5>
+
+<p>
+For a signed integer represented using two's complement, the complement of
+<code>x</code> follows this useful relationship:
+</p>
+
+<pre><code>~x = -x - 1
+
+Therefore:
+~5 = -5 - 1
+   = -6</code></pre>
+
+<p>
+This formula is a convenient shortcut, but you should still understand the
+bit-level process. In interviews, being able to explain both the formula and
+the binary representation is useful.
+</p>
+
+<h4>Signed vs Unsigned: The Same Bits Can Mean Different Values</h4>
+
+<p>
+The exact same sequence of bits can represent a positive value when it is
+treated as <strong>unsigned</strong>, but a negative value when it is treated
+as a <strong>signed two's-complement</strong> integer. This is why signed and
+unsigned complement results must be distinguished.
+</p>
+
+<h5>Signed Example</h5>
+
+<pre><code>int x = 5;
+
+~x
+
+Bit pattern:
+11111111 11111111 11111111 11111010
+
+Interpreted as signed two's-complement:
+-6</code></pre>
+
+<h5>Unsigned Example</h5>
+
+<p>
+Suppose an unsigned integer has <code>N</code> value bits. Every bit position
+represents a non-negative value, so there is no sign bit. To make the idea
+easy to visualize, consider an <strong>8-bit unsigned representation</strong>:
+</p>
+
+<pre><code>5       = 00000101
+~5      = 11111010
+11111010 = 250</code></pre>
+
+<p>
+So, when the complement is interpreted in an 8-bit unsigned domain, the result
+is <code>250</code>, not <code>-6</code>. The same eight bits have a different
+numeric meaning because the type is different.
+</p>
+
+<p>
+For an actual C expression, remember that <strong>integer promotions</strong>
+can change the type before <code>~</code> is applied. For example, a
+<code>uint8_t</code> or <code>unsigned char</code> is commonly promoted to
+<code>int</code> first. Therefore, the simple 8-bit example above is a way to
+understand the bit pattern; it is not a claim that every C expression
+<code>~some_unsigned_char</code> produces an 8-bit unsigned result.
+</p>
+
+<p>
+For a typical 32-bit <code>unsigned int</code>, the same idea gives:
+</p>
+
+<pre><code>unsigned int x = 5;
+
+5  = 00000000 00000000 00000000 00000101
+~5 = 11111111 11111111 11111111 11111010
+
+Result = 4294967290</code></pre>
+
+<p>
+The exact maximum width of <code>unsigned int</code> is implementation-defined,
+so the portable rule is expressed using <code>UINT_MAX</code>.
+</p>
+
+<p>
+The general unsigned relationship is:
+</p>
+
+<pre><code>~x = UINT_MAX - x</code></pre>
+
+<p>
+For an 8-bit unsigned value, <code>UINT_MAX</code> would conceptually be
+255, so:
+</p>
+
+<pre><code>~5 = 255 - 5
+   = 250</code></pre>
+
+<p>
+For the actual C type <code>unsigned int</code>, the number of value bits is
+implementation-defined, so the maximum is obtained from <code>UINT_MAX</code>
+from <code>&lt;limits.h&gt;</code>. The important idea is that unsigned arithmetic
+wraps modulo the range of the unsigned type.
+</p>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Case</th>
+<th>Bit pattern after <code>~5</code></th>
+<th>Typical interpretation</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Signed two's-complement integer</td>
+<td><code>11111111 ... 11111010</code></td>
+<td>Negative value</td>
+<td><code>-6</code></td>
+</tr>
+<tr>
+<td>8-bit unsigned representation</td>
+<td><code>11111010</code></td>
+<td>Positive value</td>
+<td><code>250</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="note-box">
+<strong>Important:</strong> The bitwise operation itself simply flips bits. It
+does not directly say “make the number negative.” The negative result appears
+when the resulting bit pattern is interpreted as a signed two's-complement
+integer. For unsigned values, the same flipped bits represent a non-negative
+value. Modern C systems overwhelmingly use two's complement; older C standards
+allowed other signed-integer representations, so the two's-complement
+explanation is the practical model used by modern compilers.
+</div>
+
+<p>
+Also remember that C performs <strong>integer promotions</strong> before applying
+operators such as <code>~</code>. Therefore, the type of the expression can be
+important when working with smaller integer types such as <code>char</code> or
+<code>short</code>.
+</p>
+
+<h3>6.15 Logical Operators vs Bitwise Operators</h3>
+
+<p>
+This is one of the most common C interview and beginner mistakes because the
+symbols look similar.
+</p>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Logical</th>
+<th>Bitwise</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&amp;&amp;</code></td>
+<td><code>&amp;</code></td>
+<td>Logical condition vs bit-by-bit AND</td>
+</tr>
+<tr>
+<td><code>||</code></td>
+<td><code>|</code></td>
+<td>Logical condition vs bit-by-bit OR</td>
+</tr>
+<tr>
+<td><code>!</code></td>
+<td><code>~</code></td>
+<td>Reverse truth value vs flip bits</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<pre><code>int a = 5;
+int b = 3;
+
+printf("%d\n", a &amp;&amp; b); /* 1: both values are nonzero */
+printf("%d\n", a &amp; b);   /* 1: 0101 &amp; 0011 = 0001 */</code></pre>
+
+<p>
+The first expression asks a logical question. The second expression manipulates
+the binary representation bit by bit.
+</p>
+
+<h3>6.16 Shift Operators <code>&lt;&lt;</code> and <code>&gt;&gt;</code></h3>
+
+<p>
+Shift operators move the bits of an integer value. They are commonly used with
+masks and low-level data processing.
+</p>
+
+<h4>Left Shift</h4>
+
+<pre><code>unsigned int x = 5;
+
+/*
+5       = 00000101
+5 &lt;&lt; 1  = 00001010 = 10
+5 &lt;&lt; 2  = 00010100 = 20
+*/</code></pre>
+
+<p>
+For suitable unsigned values and valid shift counts, a left shift moves bits
+toward more significant positions and fills the low-order positions with zeroes.
+Do not blindly memorize that left shift always means multiplication by two;
+the statement is only safe under the appropriate value and shift conditions.
+</p>
+
+<h4>Right Shift</h4>
+
+<pre><code>unsigned int x = 20;
+
+/*
+20       = 00010100
+20 &gt;&gt; 1  = 00001010 = 10
+20 &gt;&gt; 2  = 00000101 = 5
+*/</code></pre>
+
+<p>
+For unsigned values, right shift moves bits toward less significant positions
+and fills the high-order positions with zeroes.
+</p>
+
+<div class="example-box">
+<strong>Important:</strong>
+<p>
+The shift amount must be valid for the width of the promoted left operand.
+Also, signed negative values have additional rules and are best avoided in
+beginner bit-manipulation examples. Use unsigned integer types when the goal is
+deliberate bit manipulation.
+</p>
+</div>
+
+<h3>6.17 Unary Operators You Must Recognize</h3>
+
+<p>
+Unary operators work with one operand. Some of them become especially important
+when you later learn pointers and dynamic memory.
+</p>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Form</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><code>-x</code></td><td>Unary minus / negation</td><td><code>-10</code></td></tr>
+<tr><td><code>+x</code></td><td>Unary plus</td><td><code>+10</code></td></tr>
+<tr><td><code>!x</code></td><td>Logical NOT</td><td><code>!loggedIn</code></td></tr>
+<tr><td><code>~x</code></td><td>Bitwise complement</td><td><code>~mask</code></td></tr>
+<tr><td><code>++x</code> / <code>x++</code></td><td>Increment</td><td><code>++count</code></td></tr>
+<tr><td><code>--x</code> / <code>x--</code></td><td>Decrement</td><td><code>count--</code></td></tr>
+<tr><td><code>&amp;x</code></td><td>Address-of</td><td><code>&amp;number</code></td></tr>
+<tr><td><code>*ptr</code></td><td>Dereference a pointer</td><td><code>*ptr</code></td></tr>
+<tr><td><code>(type)x</code></td><td>Explicit type conversion</td><td><code>(float)x</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>
+The last three forms will become much clearer when you learn pointers and type
+conversion in detail. For now, recognize them as important C syntax.
+</p>
+
+<h3>6.18 <code>sizeof</code>, Casts, Member Access and Other Important Operators</h3>
+
+<p>
+C has several operators that do not fit into simple arithmetic or logical
+categories.
+</p>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Operator / form</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sizeof</code></td>
+<td>Find the size in bytes of a type or object</td>
+<td><code>sizeof(int)</code></td>
+</tr>
+<tr>
+<td><code>(type)</code></td>
+<td>Explicitly convert a value to another type</td>
+<td><code>(float)5 / 2</code></td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td>Address-of operator in a pointer context</td>
+<td><code>&amp;x</code></td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>Dereference operator in a pointer context</td>
+<td><code>*ptr</code></td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>Access a structure/union member through an object</td>
+<td><code>student.age</code></td>
+</tr>
+<tr>
+<td><code>-&gt;</code></td>
+<td>Access a structure/union member through a pointer</td>
+<td><code>ptr-&gt;age</code></td>
+</tr>
+<tr>
+<td><code>[]</code></td>
+<td>Array subscripting</td>
+<td><code>marks[2]</code></td>
+</tr>
+<tr>
+<td><code>()</code></td>
+<td>Function call</td>
+<td><code>printf("Hi")</code></td>
+</tr>
+<tr>
+<td><code>,</code></td>
+<td>Comma operator in contexts where the comma operator is used</td>
+<td><code>(x = 1, y = 2)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4><code>sizeof</code> Is an Operator, Not a Function</h4>
+
+<pre><code>int x;
+
+printf("%zu\n", sizeof(x));
+printf("%zu\n", sizeof(int));</code></pre>
+
+<p>
+<code>sizeof</code> tells us the size in bytes of a type or object. The exact
+number of bytes occupied by a type depends on the implementation, so do not
+assume that every C implementation has the same sizes.
+</p>
+
+<h4>Explicit Type Conversion</h4>
+
+<pre><code>int total = 5;
+int count = 2;
+
+double average = (double) total / count;
+
+printf("%.2f", average); /* 2.50 */</code></pre>
+
+<p>
+Without the cast, <code>total / count</code> would be integer division because
+both operands are integers. The cast changes the calculation so that floating-
+point division is performed.
+</p>
+
+<h3>6.19 Type Conversion and Operators</h3>
+
+<p>
+The result of an operator depends not only on the symbol but also on the types
+of its operands. This is why the following two expressions behave differently:
+</p>
+
+<pre><code>int a = 5;
+int b = 2;
+
+printf("%d\n", a / b);          /* 2 */
+printf("%.2f\n", (double)a / b); /* 2.50 */</code></pre>
+
+<p>
+Before performing many arithmetic operations, C applies its rules for integer
+promotions and usual arithmetic conversions. You do not need to memorize all
+of those rules at this stage, but you should remember this practical rule:
+<strong>always check the operand types before predicting the result.</strong>
+</p>
+
+<div class="example-box">
+<strong>Placement tip:</strong>
+<p>
+Many output-prediction questions are not testing arithmetic itself. They are
+testing whether you noticed the data types involved in the expression.
+</p>
+</div>
+
+<h3>6.20 Common Operator Mistakes</h3>
+
+<div class="comparison-table-wrapper">
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Common mistake</th>
+<th>Correct understanding</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>=</code> used when comparison is intended</td>
+<td>Use <code>==</code> for equality comparison</td>
+</tr>
+<tr>
+<td>Expecting <code>7 / 2</code> to produce <code>3.5</code></td>
+<td>Both operands are integers, so the result is <code>3</code></td>
+</tr>
+<tr>
+<td>Using <code>%</code> with floating-point values</td>
+<td>Use integer operands for <code>%</code>; use <code>fmod()</code> for floating-point remainder</td>
+</tr>
+<tr>
+<td>Confusing <code>&amp;&amp;</code> with <code>&amp;</code></td>
+<td>Logical AND combines conditions; bitwise AND works on bits</td>
+</tr>
+<tr>
+<td>Confusing <code>||</code> with <code>|</code></td>
+<td>Logical OR combines conditions; bitwise OR works on bits</td>
+</tr>
+<tr>
+<td>Confusing <code>!</code> with <code>~</code></td>
+<td><code>!</code> changes truth value; <code>~</code> flips bits</td>
+</tr>
+<tr>
+<td>Assuming prefix and postfix increment are identical</td>
+<td>The variable changes by one in both, but the expression values differ</td>
+</tr>
+<tr>
+<td>Using complicated increment expressions</td>
+<td>Separate updates into simple statements</td>
+</tr>
+<tr>
+<td>Dividing by zero</td>
+<td>Check the divisor before division or remainder</td>
+</tr>
+<tr>
+<td>Ignoring operand types</td>
+<td>Check whether the operands are integer, floating-point, signed, or unsigned</td>
+</tr>
+<tr>
+<td>Assuming every shift is safe</td>
+<td>Use valid shift counts and understand signedness</td>
+</tr>
+<tr>
+<td>Writing very long expressions</td>
+<td>Use parentheses or split the calculation into meaningful statements</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>6.21 How to Read an Operator Expression Step by Step</h3>
+
+<p>
+When you see a difficult expression in a program or placement question, do not
+try to calculate everything mentally in one step. Use a systematic process.
+</p>
+
+<div class="cb-concept-tree">
+<pre>Step 1 → Identify the variables and their types
+        ↓
+Step 2 → Identify each operator
+        ↓
+Step 3 → Check parentheses
+        ↓
+Step 4 → Determine which operation is evaluated first
+        ↓
+Step 5 → Calculate one operation at a time
+        ↓
+Step 6 → Check the resulting type
+        ↓
+Step 7 → Check whether any variable was modified
+        ↓
+Step 8 → Determine the final result</pre>
+</div>
+
+<p>
+For example:
+</p>
+
+<pre><code>int a = 10;
+int b = 3;
+int result = a + b * 2;</code></pre>
+
+<p>
+Do not simply read from left to right. First identify that multiplication and
+addition are different operations. The detailed rules that determine grouping
+are covered in the dedicated <strong>Operator Precedence &amp; Associativity</strong>
+topic. For now, use parentheses whenever they make your intended calculation
+clearer.
+</p>
+
+<pre><code>int result = a + (b * 2);</code></pre>
+
+<h3>6.22 Operator Safety Checklist</h3>
+
+<ul>
+<li>Check the data types of the operands.</li>
+<li>Know the difference between assignment <code>=</code> and equality <code>==</code>.</li>
+<li>Remember that integer division discards the fractional part.</li>
+<li>Use <code>%</code> for integer remainder calculations.</li>
+<li>Never allow an unexpected zero divisor.</li>
+<li>Use <code>&amp;&amp;</code> and <code>||</code> when combining conditions.</li>
+<li>Remember that logical operators short-circuit.</li>
+<li>Do not confuse logical operators with bitwise operators.</li>
+<li>Understand the difference between prefix and postfix increment/decrement.</li>
+<li>Avoid modifying the same variable multiple times in a complicated expression.</li>
+<li>Use unsigned types when deliberately manipulating bit patterns.</li>
+<li>Use valid shift counts.</li>
+<li>Use parentheses when they improve readability.</li>
+<li>Do not memorize output; trace the expression step by step.</li>
+</ul>
+
+<h3>6.23 Quick Revision</h3>
+
 <div class="tip-box">
+<p><strong>➕ Arithmetic</strong> → <code>+ - * / %</code></p>
+<p><strong>🔍 Relational</strong> → <code>&lt; &lt;= &gt; &gt;=</code></p>
+<p><strong>⚖️ Equality</strong> → <code>== !=</code></p>
+<p><strong>🧠 Logical</strong> → <code>&amp;&amp; || !</code></p>
+<p><strong>📥 Assignment</strong> → <code>=</code></p>
+<p><strong>🔄 Compound assignment</strong> → <code>+= -= *= /= %=</code></p>
+<p><strong>⬆️ Increment / decrement</strong> → <code>++ --</code></p>
+<p><strong>❓ Conditional</strong> → <code>? :</code></p>
+<p><strong>🔢 Bitwise</strong> → <code>&amp; | ^ ~ &lt;&lt; &gt;&gt;</code></p>
+<p><strong>📏 Size</strong> → <code>sizeof</code></p>
+<p><strong>🔄 Cast</strong> → <code>(type)</code></p>
+<p><strong>👉 Pointer-related forms</strong> → <code>&amp;</code> and <code>*</code></p>
+</div>
 
-        📌 <strong>+</strong> → Addition
+<div class="example-box">
+<strong>🎯 The main idea to remember</strong>
+<p>
+An operator is not just a symbol to memorize. To understand an expression,
+ask four questions:
+</p>
+<ol>
+<li><strong>What are the operands?</strong></li>
+<li><strong>What type are the operands?</strong></li>
+<li><strong>What does the operator do?</strong></li>
+<li><strong>What value or side effect does the expression produce?</strong></li>
+</ol>
+<p>
+Once you can answer those four questions, C expressions become much easier to
+read, debug, and predict.
+</p>
+</div>
 
-        <br/><br/>
-
-        📌 <strong>-</strong> → Subtraction
-
-        <br/><br/>
-
-        📌 <strong>*</strong> → Multiplication
-
-        <br/><br/>
-
-        📌 <strong>/</strong> → Division
-
-        <br/><br/>
-
-        📌 <strong>%</strong> → Remainder
-
-        <br/><br/>
-
-        📌 <strong>==</strong> → Equality comparison
-
-        <br/><br/>
-
-        📌 <strong>=</strong> → Assignment
-
-        <br/><br/>
-
-        📌 <strong>&amp;&amp;</strong> → Logical AND
-
-        <br/><br/>
-
-        📌 <strong>||</strong> → Logical OR
-
-        <br/><br/>
-
-        📌 <strong>!</strong> → Logical NOT
-
-        <br/><br/>
-
-        📌 <strong>++</strong> → Increment
-
-        <br/><br/>
-
-        📌 <strong>--</strong> → Decrement
-
-        <br/><br/>
-
-        📌 <strong>?:</strong> → Conditional operator
-
-        <br/><br/>
-
-        📌 <strong>&amp; | ^ ~ &lt;&lt; &gt;&gt;</strong>
-        → Bitwise operators
-
-    </div>
 <!-- MCQS -->
 <h3>6.20 Quick MCQs</h3>
 <p class="cb-mcq-guide">
