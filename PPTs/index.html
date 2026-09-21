@@ -6,7 +6,7 @@
   <meta name="description" content="CodeBhavya Premium PPT Library - course-wise and topic-wise classroom-ready presentations.">
   <title>Premium PPT Library | CodeBhavya</title>
   <link rel="icon" href="../images/codebhavya-icon-32.png">
-  <link rel="stylesheet" href="ppts.css?v=1">
+  <link rel="stylesheet" href="ppts.css?v=2">
 </head>
 <body>
 <header class="site-header">
@@ -29,11 +29,11 @@
     <div class="hero-copy">
       <span class="eyebrow">CODEBHAVYA RESOURCES</span>
       <h1>Premium PPT Library</h1>
-      <p>Course-wise and topic-wise classroom presentations in one place. Search a topic, choose a course and download the PPT directly from CodeBhavya.</p>
+      <p>Explore classroom-ready presentations course-wise and topic-wise. Preview the cover, check the slide count and download directly from CodeBhavya's Cloudflare R2 library.</p>
       <div class="hero-stats">
         <div><strong id="courseCount">8</strong><span>Courses</span></div>
         <div><strong id="pptCount">135</strong><span>Premium PPTs</span></div>
-        <!-- <div><strong>₹0</strong><span>Student access</span></div>  -->
+        <div><strong id="slideCount">0</strong><span>Total slides</span></div>
       </div>
     </div>
   </section>
@@ -48,11 +48,7 @@
     </div>
 
     <div class="course-grid" id="courseGrid" aria-label="PPT courses"></div>
-
-    <div class="result-summary">
-      <p id="resultText">Showing all premium presentations.</p>
-    </div>
-
+    <div class="result-summary"><p id="resultText">Showing all premium presentations.</p></div>
     <div id="pptSections"></div>
 
     <div class="empty-state" id="emptyState" hidden>
@@ -65,21 +61,31 @@
 </main>
 
 <footer class="site-footer">
-  <div>
-    <strong>CodeBhavya</strong>
-    <p>From Learning to Limitless Possibilities.</p>
-  </div>
-  <nav>
-    <a href="../index.html">Home</a>
-    <a href="../Online-Compiler/">Compiler</a>
-    <a href="../Placement/">Placement</a>
-  </nav>
+  <div><strong>CodeBhavya</strong><p>From Learning to Limitless Possibilities.</p></div>
+  <nav><a href="../index.html">Home</a><a href="../Online-Compiler/">Compiler</a><a href="../Placement/">Placement</a></nav>
   <p>© <span id="year"></span> CodeBhavya</p>
 </footer>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="ppt-modal" id="pptModal" hidden>
+  <div class="ppt-modal-backdrop" data-close-modal></div>
+  <section class="ppt-modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" type="button" aria-label="Close preview" data-close-modal>×</button>
+    <div class="modal-preview"><img id="modalImage" src="" alt="PPT cover preview"></div>
+    <div class="modal-copy">
+      <span class="eyebrow" id="modalCourse">COURSE</span>
+      <h2 id="modalTitle">Presentation</h2>
+      <div class="modal-meta"><span id="modalSlides"></span><span>Premium PPT</span></div>
+      <p id="modalFilename" class="modal-filename"></p>
+      <div class="modal-actions">
+        <a id="modalDownload" class="download-btn" href="#" target="_blank" rel="noopener">↓ Download PPT</a>
+        <button type="button" class="secondary-btn" data-close-modal>Close</button>
+      </div>
+    </div>
+  </section>
+</div>
 
-<script src="ppt-data.js?v=1"></script>
-<script src="ppts.js?v=1"></script>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="ppt-data.js?v=2"></script>
+<script src="ppts.js?v=2"></script>
 </body>
 </html>
