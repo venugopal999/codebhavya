@@ -1,2541 +1,2310 @@
+
 "use strict";
 
 /* =========================================================
-CODEBHAVYA FULL STACK / MERN
-LEVEL 20 — EXPRESS.JS FUNDAMENTALS & REST APIs
-========================================================= */
+   CODEBHAVYA FULL STACK / MERN
+   LEVEL 20 — EXPRESS.JS FUNDAMENTALS & REST APIs
+   ========================================================= */
 
 window.FULLSTACK_LESSONS = window.FULLSTACK_LESSONS || {};
 
 window.FULLSTACK_LESSONS[20] = {
 
+    n: 20,
 
-n: 20,
+    kicker: "PART 4 • NODE & EXPRESS • LEVEL 20",
 
-kicker: "PART 4 • NODE & EXPRESS • LEVEL 20",
+    title: "Express.js Fundamentals & REST APIs",
 
-title: "Express.js Fundamentals & REST APIs",
+    summary:
+        "Learn how Express.js simplifies Node.js server development, understand routing and middleware, work with HTTP methods and status codes, build REST APIs, handle errors, and organize a maintainable backend application.",
 
-summary:
-    "Learn how Express.js simplifies Node.js HTTP development through routing, middleware, request and response handling, REST API design, parameters, JSON responses and structured server-side applications.",
+    duration: "Estimated learning time: 3–4 hours",
 
-duration: "Estimated learning time: 3–4 hours",
+    difficulty: "Intermediate",
 
-difficulty: "Intermediate",
-
-concepts: 16,
-
-
-/* =====================================================
-   LEARNING OUTCOMES
-   ===================================================== */
-
-outcomes: [
-
-    "Explain why Express.js is used with Node.js.",
-
-    "Create a basic Express application.",
-
-    "Understand the request-response lifecycle in Express.",
-
-    "Create GET, POST, PUT, PATCH and DELETE routes.",
-
-    "Understand middleware and middleware execution order.",
-
-    "Use express.json() to process JSON request bodies.",
-
-    "Read route parameters and query parameters.",
-
-    "Return JSON responses with appropriate HTTP status codes.",
-
-    "Understand REST resource-oriented API design.",
-
-    "Separate routes from application logic.",
-
-    "Handle 404 responses for unknown routes.",
-
-    "Create centralized error-handling middleware.",
-
-    "Understand route chaining and reusable middleware.",
-
-    "Design a small CRUD API.",
-
-    "Test API endpoints using tools such as Postman or curl.",
-
-    "Prepare for validation, authentication and security in the next Express levels."
-
-],
+    concepts: 16,
 
 
-/* =====================================================
-   MAIN CONCEPTS
-   ===================================================== */
+    /* =====================================================
+       LEARNING OUTCOMES
+       ===================================================== */
 
-sections: [
+    outcomes: [
 
-    {
-        number: 1,
+        "Explain why Express.js is commonly used with Node.js.",
 
-        title: "Why Express.js?",
+        "Create a basic Express application.",
 
-        intro:
-            "Node.js can create HTTP servers directly, but manually handling every method and URL quickly becomes difficult as an application grows. Express.js provides a simpler application framework on top of Node.js HTTP capabilities.",
+        "Understand the Express request-response lifecycle.",
 
-        points: [
+        "Create GET, POST, PUT, PATCH and DELETE routes.",
 
-            "Express.js is a lightweight web application framework for Node.js.",
+        "Understand Express middleware.",
 
-            "It simplifies routing and middleware handling.",
+        "Use express.json() to process JSON request bodies.",
 
-            "It provides convenient request and response APIs.",
+        "Work with route parameters.",
 
-            "It makes REST API development easier to organize.",
+        "Work with query parameters.",
 
-            "It does not replace Node.js. Express runs on top of Node.js."
+        "Send structured JSON responses.",
 
-        ],
+        "Use appropriate HTTP status codes.",
 
-        comparison: {
+        "Understand REST resource design.",
 
-            headers: [
+        "Build a small CRUD-style REST API.",
 
-                "Node.js http module",
+        "Handle unknown routes with a 404 response.",
 
-                "Express.js"
+        "Create centralized error-handling middleware.",
+
+        "Understand basic Express project organization.",
+
+        "Prepare for validation, authentication and production API architecture."
+
+    ],
+
+
+    /* =====================================================
+       MAIN CONCEPTS
+       ===================================================== */
+
+    sections: [
+
+        {
+            number: 1,
+
+            title: "Why Express.js?",
+
+            intro:
+                "Node.js provides the low-level HTTP functionality needed to build servers, but building a complete API directly with the http module can become repetitive. Express.js provides a higher-level framework that simplifies routing, middleware and request handling.",
+
+            points: [
+
+                "<strong>Express.js is a web framework for Node.js.</strong>",
+
+                "It simplifies HTTP server and API development.",
+
+                "Express provides convenient routing APIs.",
+
+                "Express uses middleware to process requests.",
+
+                "Express makes it easier to organize REST APIs.",
+
+                "Express is commonly used as the backend layer of MERN applications."
 
             ],
 
-            rows: [
+            comparison: {
 
-                [
-
-                    "Manual route checks",
-
-                    "Declarative route methods"
-
+                headers: [
+                    "Node.js HTTP",
+                    "Express.js"
                 ],
 
-                [
+                rows: [
 
-                    "More low-level request handling",
+                    [
+                        "Lower-level HTTP handling",
+                        "Higher-level web framework"
+                    ],
 
-                    "Convenient req and res APIs"
+                    [
+                        "Manual routing logic",
+                        "Convenient route methods"
+                    ],
 
-                ],
+                    [
+                        "Manual request processing",
+                        "Middleware-based processing"
+                    ],
 
-                [
+                    [
+                        "More boilerplate",
+                        "Less repetitive server code"
+                    ],
 
-                    "Middleware must be designed manually",
-
-                    "Built-in middleware patterns and ecosystem"
-
-                ],
-
-                [
-
-                    "More boilerplate",
-
-                    "Less boilerplate for common web applications"
+                    [
+                        "Built into Node.js",
+                        "Installed as a project dependency"
+                    ]
 
                 ]
 
-            ]
+            },
+
+            keyIdea:
+                "Express does not replace Node.js. Express runs on top of Node.js and provides a more convenient way to build web servers and APIs."
 
         },
 
-        keyIdea:
-            "Express is a framework that makes common Node.js web-server tasks easier without changing the underlying JavaScript language."
 
-    },
+        {
+            number: 2,
 
+            title: "Creating an Express Application",
 
-    {
-        number: 2,
+            intro:
+                "An Express application starts with a Node.js project, the Express package and an application object created with express().",
 
-        title: "Creating an Express Application",
+            points: [
 
-        intro:
-            "An Express application begins with installing Express, importing it, creating an application object and starting a server.",
+                "Create a Node.js project using npm.",
 
-        terminal:
+                "Install Express as a project dependency.",
 
+                "Import or require Express.",
+
+                "Create an Express application with express().",
+
+                "Define routes.",
+
+                "Start the server with app.listen()."
+
+            ],
+
+            terminal: `mkdir codebhavya-api
+
+cd codebhavya-api
 
 npm init -y
 
 npm install express`,
 
-
-        code:
-
-
-const express = require("express");
-
-const app = express();
-
-const PORT = 3000;
-
-app.listen(PORT, () => {
-console.log(
-"Server running on port " + PORT
-);
-});`,
-
-
-        points: [
-
-            "express() creates an Express application.",
-
-            "The app object provides methods for routing and middleware.",
-
-            "app.listen() starts the HTTP server.",
-
-            "Express uses Node.js underneath to handle HTTP communication."
-
-        ],
-
-        flow: [
-
-            "Install Express",
-
-            "Import Express",
-
-            "Create app",
-
-            "Configure middleware and routes",
-
-            "Start server",
-
-            "Wait for requests"
-
-        ],
-
-        keyIdea:
-            "The Express app object becomes the central place where server behaviour is configured."
-
-    },
-
-
-    {
-        number: 3,
-
-        title: "The Express Request-Response Lifecycle",
-
-        intro:
-            "Every HTTP request passes through the Express application before a response is returned to the client.",
-
-        points: [
-
-            "A client sends an HTTP request.",
-
-            "Express receives the request.",
-
-            "Middleware can inspect or modify the request.",
-
-            "Express matches the request to a route.",
-
-            "Route logic performs the required work.",
-
-            "The server sends a response.",
-
-            "The request lifecycle ends."
-
-        ],
-
-        flow: [
-
-            "Client",
-
-            "HTTP Request",
-
-            "Express Application",
-
-            "Middleware",
-
-            "Route Matching",
-
-            "Controller / Route Logic",
-
-            "Response",
-
-            "Client"
-
-        ],
-
-        keyIdea:
-            "Middleware and routing together form the core request-processing pipeline in an Express application."
-
-    },
-
-
-    {
-        number: 4,
-
-        title: "GET Routes",
-
-        intro:
-            "A GET route normally retrieves information from the server.",
-
-        code:
-
-
-const express = require("express");
+            code: `const express = require("express");
 
 const app = express();
 
 app.get("/", (req, res) => {
+    res.send("Welcome to CodeBhavya");
+});
+
+app.listen(3000, () => {
+    console.log(
+        "Server running on port 3000"
+    );
+});`,
+
+            flow: [
+
+                "Create Node.js project",
+                "Install Express",
+                "Load Express",
+                "Create app",
+                "Define routes",
+                "Start server",
+                "Receive HTTP requests"
+
+            ],
+
+            keyIdea:
+                "The Express app object becomes the central place where routes and middleware are registered."
+
+        },
 
 
-res.send("Welcome to CodeBhavya");
+        {
+            number: 3,
+
+            title: "Express Request-Response Lifecycle",
+
+            intro:
+                "Every request entering an Express application passes through a sequence of processing steps before a response is returned to the client.",
+
+            points: [
+
+                "A client sends an HTTP request.",
+
+                "The request enters the Express application.",
+
+                "Middleware may inspect or modify the request.",
+
+                "Express finds a matching route.",
+
+                "The route handler executes application logic.",
+
+                "The server sends a response.",
+
+                "The response travels back to the client."
+
+            ],
+
+            flow: [
+
+                "Client",
+                "HTTP Request",
+                "Express Application",
+                "Middleware",
+                "Route Matching",
+                "Route Handler",
+                "HTTP Response",
+                "Client"
+
+            ],
+
+            comparison: {
+
+                headers: [
+                    "Stage",
+                    "Purpose"
+                ],
+
+                rows: [
+
+                    [
+                        "Request",
+                        "Client sends HTTP request"
+                    ],
+
+                    [
+                        "Middleware",
+                        "Process or inspect request"
+                    ],
+
+                    [
+                        "Routing",
+                        "Find matching endpoint"
+                    ],
+
+                    [
+                        "Controller / Handler",
+                        "Execute application logic"
+                    ],
+
+                    [
+                        "Response",
+                        "Send result to client"
+                    ]
+
+                ]
+
+            },
+
+            keyIdea:
+                "Express applications are easier to understand when you think of every request as moving through a processing pipeline."
+
+        },
 
 
+        {
+            number: 4,
+
+            title: "GET Routes",
+
+            intro:
+                "GET routes are commonly used to retrieve resources from a server.",
+
+            points: [
+
+                "app.get() registers a GET route.",
+
+                "The first argument is the route path.",
+
+                "The second argument is the route handler.",
+
+                "req represents the incoming request.",
+
+                "res represents the outgoing response."
+
+            ],
+
+            code: `const express = require("express");
+
+const app = express();
+
+app.get("/", (req, res) => {
+    res.send("Home Page");
 });
 
 app.get("/about", (req, res) => {
+    res.send("About CodeBhavya");
+});
 
-
-res.send("About Page");
-
-
+app.get("/contact", (req, res) => {
+    res.send("Contact Page");
 });
 
 app.listen(3000);`,
 
+            comparison: {
 
-        points: [
-
-            "app.get() defines a route for GET requests.",
-
-            "The first argument is the route path.",
-
-            "The callback receives req and res.",
-
-            "res.send() sends a response.",
-
-            "Different URLs can have different route handlers."
-
-        ],
-
-        comparison: {
-
-            headers: [
-
-                "Request",
-
-                "Route",
-
-                "Purpose"
-
-            ],
-
-            rows: [
-
-                [
-
-                    "GET /",
-
-                    "/",
-
-                    "Home"
-
+                headers: [
+                    "Request",
+                    "Handler"
                 ],
 
-                [
+                rows: [
 
-                    "GET /about",
+                    [
+                        "GET /",
+                        "Home Page"
+                    ],
 
-                    "/about",
+                    [
+                        "GET /about",
+                        "About CodeBhavya"
+                    ],
 
-                    "About information"
-
-                ],
-
-                [
-
-                    "GET /students",
-
-                    "/students",
-
-                    "Retrieve students"
+                    [
+                        "GET /contact",
+                        "Contact Page"
+                    ]
 
                 ]
 
-            ]
+            },
 
-        }
-
-    },
-
-
-    {
-        number: 5,
-
-        title: "POST, PUT, PATCH and DELETE",
-
-        intro:
-            "REST APIs use HTTP methods to communicate the intended operation on a resource.",
-
-        comparison: {
-
-            headers: [
-
-                "Method",
-
-                "Typical meaning",
-
-                "Example"
-
-            ],
-
-            rows: [
-
-                [
-
-                    "GET",
-
-                    "Read",
-
-                    "GET /students"
-
-                ],
-
-                [
-
-                    "POST",
-
-                    "Create",
-
-                    "POST /students"
-
-                ],
-
-                [
-
-                    "PUT",
-
-                    "Replace an existing resource",
-
-                    "PUT /students/101"
-
-                ],
-
-                [
-
-                    "PATCH",
-
-                    "Partially update a resource",
-
-                    "PATCH /students/101"
-
-                ],
-
-                [
-
-                    "DELETE",
-
-                    "Remove",
-
-                    "DELETE /students/101"
-
-                ]
-
-            ]
+            keyIdea:
+                "A route connects an HTTP method and URL pattern to the server-side logic responsible for handling that request."
 
         },
 
-        code:
 
+        {
+            number: 5,
 
-app.post("/students", (req, res) => {
+            title: "POST, PUT, PATCH and DELETE",
 
-res.status(201).json({
-    message: "Student created"
+            intro:
+                "REST APIs use different HTTP methods to describe different operations on resources.",
+
+            points: [
+
+                "GET is commonly used to retrieve data.",
+
+                "POST is commonly used to create a new resource.",
+
+                "PUT is commonly used to replace or fully update a resource.",
+
+                "PATCH is commonly used to partially update a resource.",
+
+                "DELETE is commonly used to remove a resource."
+
+            ],
+
+            code: `app.get("/products", (req, res) => {
+    res.json({
+        message: "Get products"
+    });
 });
 
-
+app.post("/products", (req, res) => {
+    res.status(201).json({
+        message: "Create product"
+    });
 });
 
-app.put("/students/:id", (req, res) => {
-
-
-res.json({
-    message: "Student replaced",
-    id: req.params.id
+app.put("/products/101", (req, res) => {
+    res.json({
+        message: "Replace product"
+    });
 });
 
-
+app.patch("/products/101", (req, res) => {
+    res.json({
+        message: "Update product"
+    });
 });
 
-app.patch("/students/:id", (req, res) => {
+app.delete("/products/101", (req, res) => {
+    res.status(204).send();
+});`,
+
+            comparison: {
+
+                headers: [
+                    "Method",
+                    "Typical purpose"
+                ],
+
+                rows: [
+
+                    [
+                        "GET",
+                        "Read resource"
+                    ],
+
+                    [
+                        "POST",
+                        "Create resource"
+                    ],
+
+                    [
+                        "PUT",
+                        "Replace resource"
+                    ],
+
+                    [
+                        "PATCH",
+                        "Partially update resource"
+                    ],
+
+                    [
+                        "DELETE",
+                        "Delete resource"
+                    ]
+
+                ]
+
+            },
+
+            keyIdea:
+                "HTTP methods communicate the intended operation on a resource and make an API easier to understand."
+
+        },
 
 
-res.json({
-    message: "Student updated",
-    id: req.params.id
+        {
+            number: 6,
+
+            title: "Middleware",
+
+            intro:
+                "Middleware functions are one of the most important concepts in Express. Middleware can inspect requests, modify data, perform authentication, log activity and decide whether processing should continue.",
+
+            points: [
+
+                "Middleware receives req, res and next.",
+
+                "Middleware can inspect the request.",
+
+                "Middleware can modify the request or response.",
+
+                "Middleware can end the response.",
+
+                "Middleware can call next() to continue processing.",
+
+                "Multiple middleware functions can form a request-processing pipeline."
+
+            ],
+
+            code: `const express = require("express");
+
+const app = express();
+
+function logger(req, res, next) {
+
+    console.log(
+        req.method,
+        req.url
+    );
+
+    next();
+}
+
+app.use(logger);
+
+app.get("/", (req, res) => {
+    res.send("Home");
 });
 
+app.listen(3000);`,
 
-});
+            flow: [
 
-app.delete("/students/:id", (req, res) => {
+                "Request arrives",
+                "Logger middleware executes",
+                "next() is called",
+                "Route matching continues",
+                "Route handler executes",
+                "Response is sent"
 
+            ],
 
-res.json({
-    message: "Student deleted",
-    id: req.params.id
-});
+            keyIdea:
+                "Middleware is reusable request-processing logic placed between the incoming request and the final response."
 
-
-});,
-
-
-        keyIdea:
-            "HTTP methods communicate the intended action while the URL identifies the resource."
-
-    },
+        },
 
 
-    {
-        number: 6,
+        {
+            number: 7,
 
-        title: "Middleware",
+            title: "Built-in JSON Middleware",
 
-        intro:
-            "Middleware is one of the most important Express concepts. Middleware functions run during the request-response lifecycle and can inspect, modify or control the request flow.",
+            intro:
+                "REST APIs frequently receive JSON data from clients. Express provides express.json() middleware to parse JSON request bodies.",
 
-        points: [
+            points: [
 
-            "Middleware receives req, res and next.",
+                "Clients can send JSON in the HTTP request body.",
 
-            "It can execute code before a route handler.",
+                "express.json() parses JSON request bodies.",
 
-            "It can modify request or response objects.",
+                "The parsed data becomes available through req.body.",
 
-            "It can terminate the request by sending a response.",
+                "The middleware should normally be registered before routes that need the body."
 
-            "It can call next() to continue to the next middleware or route."
+            ],
 
-        ],
-
-        code:
-
-
-app.use((req, res, next) => {
-
-
-console.log(
-    req.method,
-    req.url
-);
-
-next();
-
-
-});,
-
-
-        flow: [
-
-            "Request arrives",
-
-            "Middleware 1 runs",
-
-            "next()",
-
-            "Middleware 2 runs",
-
-            "next()",
-
-            "Route handler runs",
-
-            "Response sent"
-
-        ],
-
-        warning:
-            "If middleware neither sends a response nor calls next(), the request can remain pending."
-
-    },
-
-
-    {
-        number: 7,
-
-        title: "Built-in JSON Middleware",
-
-        intro:
-            "APIs frequently receive JSON data from clients. Express provides express.json() to parse JSON request bodies.",
-
-        code:
-
-
-const express = require("express");
+            code: `const express = require("express");
 
 const app = express();
 
 app.use(express.json());
 
-app.post("/students", (req, res) => {
+app.post("/products", (req, res) => {
 
+    console.log(req.body);
 
-console.log(req.body);
-
-res.status(201).json({
-    message: "Student received",
-    student: req.body
-});
-
-
-});
-
-app.listen(3000);`,
-
-        points: [
-
-            "express.json() is middleware.",
-
-            "It parses incoming JSON request bodies.",
-
-            "After parsing, the data is available through req.body.",
-
-            "The middleware should be registered before routes that need parsed JSON bodies."
-
-        ],
-
-        flow: [
-
-            "Client sends JSON",
-
-            "Request enters Express",
-
-            "express.json() parses body",
-
-            "req.body becomes available",
-
-            "POST route runs",
-
-            "JSON response is returned"
-
-        ],
-
-        keyIdea:
-            "Middleware converts raw incoming request information into a convenient form that route handlers can use."
-
-    },
-
-
-    {
-        number: 8,
-
-        title: "Route Parameters",
-
-        intro:
-            "Route parameters represent dynamic values embedded in a URL path.",
-
-        code:
-
-
-app.get("/students/:id", (req, res) => {
-
-
-const studentId = req.params.id;
-
-res.json({
-    message: "Student requested",
-    id: studentId
-});
-
-
-});,
-
-
-        points: [
-
-            "A route parameter is written with a colon.",
-
-            "For example, /students/:id defines an id parameter.",
-
-            "The value is available through req.params.",
-
-            "Route parameters are useful for identifying individual resources."
-
-        ],
-
-        comparison: {
-
-            headers: [
-
-                "Request",
-
-                "Parameter value"
-
-            ],
-
-            rows: [
-
-                [
-
-                    "GET /students/101",
-
-                    "id = 101"
-
-                ],
-
-                [
-
-                    "GET /students/205",
-
-                    "id = 205"
-
-                ],
-
-                [
-
-                    "GET /students/999",
-
-                    "id = 999"
-
-                ]
-
-            ]
-
-        },
-
-        keyIdea:
-            "Route parameters usually identify a particular resource."
-
-    },
-
-
-    {
-        number: 9,
-
-        title: "Query Parameters",
-
-        intro:
-            "Query parameters are values placed after the ? in a URL and are commonly used for filtering, searching, sorting and pagination.",
-
-        code:
-
-
-app.get("/students", (req, res) => {
-
-
-const course = req.query.course;
-
-const page = req.query.page;
-
-res.json({
-    course,
-    page
-});
-
-
-});,
-
-
-        example:
-
-
-GET /students?course=aiml&page=2`,
-
-
-        points: [
-
-            "Query parameters are available through req.query.",
-
-            "They are useful for optional filtering or configuration.",
-
-            "They should not normally be confused with resource identity.",
-
-            "A route parameter and query parameter serve different purposes."
-
-        ],
-
-        comparison: {
-
-            headers: [
-
-                "URL",
-
-                "Type",
-
-                "Typical purpose"
-
-            ],
-
-            rows: [
-
-                [
-
-                    "/students/101",
-
-                    "Route parameter",
-
-                    "Identify student 101"
-
-                ],
-
-                [
-
-                    "/students?course=aiml",
-
-                    "Query parameter",
-
-                    "Filter students"
-
-                ]
-
-            ]
-
-        }
-
-    },
-
-
-    {
-        number: 10,
-
-        title: "Sending JSON Responses",
-
-        intro:
-            "REST APIs commonly communicate using JSON rather than HTML pages.",
-
-        code:
-
-
-app.get("/api/course", (req, res) => {
-
-
-res.json({
-
-    course: "Full Stack / MERN",
-
-    provider: "CodeBhavya",
-
-    level: 20,
-
-    status: "active"
-
-});
-
-
-});,
-
-
-        points: [
-
-            "res.json() sends a JSON response.",
-
-            "Express automatically sets an appropriate JSON content type.",
-
-            "JSON is easy for frontend JavaScript applications to consume.",
-
-            "Consistent response structures make APIs easier to use."
-
-        ],
-
-        example:
-
-
-{
-    "course": "Full Stack / MERN",
-    "provider": "CodeBhavya",
-    "level": 20,
-    "status": "active"
-},
-
-
-        keyIdea:
-            "A REST API should return predictable, machine-readable responses."
-
-    },
-
-
-    {
-        number: 11,
-
-        title: "HTTP Status Codes",
-
-        intro:
-            "Status codes tell the client what happened during request processing.",
-
-        comparison: {
-
-            headers: [
-
-                "Status",
-
-                "Meaning",
-
-                "Typical use"
-
-            ],
-
-            rows: [
-
-                [
-
-                    "200",
-
-                    "OK",
-
-                    "Successful read or operation"
-
-                ],
-
-                [
-
-                    "201",
-
-                    "Created",
-
-                    "Resource successfully created"
-
-                ],
-
-                [
-
-                    "204",
-
-                    "No Content",
-
-                    "Successful operation with no response body"
-
-                ],
-
-                [
-
-                    "400",
-
-                    "Bad Request",
-
-                    "Invalid client input"
-
-                ],
-
-                [
-
-                    "401",
-
-                    "Unauthorized",
-
-                    "Authentication is required or invalid"
-
-                ],
-
-                [
-
-                    "403",
-
-                    "Forbidden",
-
-                    "Authenticated client lacks permission"
-
-                ],
-
-                [
-
-                    "404",
-
-                    "Not Found",
-
-                    "Requested resource does not exist"
-
-                ],
-
-                [
-
-                    "500",
-
-                    "Internal Server Error",
-
-                    "Unexpected server-side failure"
-
-                ]
-
-            ]
-
-        },
-
-        code:
-
-
-app.get("/students/:id", (req, res) => {
-
-
-const student = findStudent(
-    req.params.id
-);
-
-if (!student) {
-
-    return res.status(404).json({
-        message: "Student not found"
+    res.status(201).json({
+        message: "Product received",
+        product: req.body
     });
 
-}
+});
 
-res.status(200).json(student);
+app.listen(3000);`,
 
+            comparison: {
 
-});,
-
-
-        keyIdea:
-            "Status codes are part of the API contract. Clients use them to understand the outcome of a request."
-
-    },
-
-
-    {
-        number: 12,
-
-        title: "REST Resource Design",
-
-        intro:
-            "REST APIs are easier to understand when URLs represent resources rather than actions.",
-
-        comparison: {
-
-            headers: [
-
-                "Less resource-oriented",
-
-                "Resource-oriented"
-
-            ],
-
-            rows: [
-
-                [
-
-                    "GET /getStudents",
-
-                    "GET /students"
-
+                headers: [
+                    "Without JSON middleware",
+                    "With express.json()"
                 ],
 
-                [
+                rows: [
 
-                    "POST /createStudent",
+                    [
+                        "req.body may not contain parsed JSON",
+                        "JSON body is parsed"
+                    ],
 
-                    "POST /students"
+                    [
+                        "Manual parsing may be required",
+                        "Express provides convenient parsing"
+                    ],
 
-                ],
-
-                [
-
-                    "GET /getStudentById/101",
-
-                    "GET /students/101"
-
-                ],
-
-                [
-
-                    "DELETE /deleteStudent/101",
-
-                    "DELETE /students/101"
+                    [
+                        "More boilerplate",
+                        "Cleaner route handlers"
+                    ]
 
                 ]
 
-            ]
+            },
+
+            keyIdea:
+                "express.json() converts incoming JSON request data into a JavaScript object available through req.body."
 
         },
 
-        points: [
 
-            "Use nouns to represent resources.",
+        {
+            number: 8,
 
-            "Use HTTP methods to communicate actions.",
+            title: "Route Parameters",
 
-            "Use route parameters to identify individual resources.",
+            intro:
+                "Route parameters allow an API to capture dynamic values directly from the URL path.",
 
-            "Use query parameters for filtering, searching, sorting and pagination.",
+            points: [
 
-            "Keep URL structures predictable."
+                "A route parameter is defined using a colon.",
 
-        ],
+                "For example, /products/:id contains a dynamic id parameter.",
 
-        keyIdea:
-            "A clean REST API lets the HTTP method and resource URL communicate the intended operation."
+                "Express places route parameters inside req.params.",
 
-    },
+                "Route parameters are useful for identifying individual resources."
+
+            ],
+
+            code: `app.get(
+    "/products/:id",
+    (req, res) => {
+
+        const productId =
+            req.params.id;
+
+        res.json({
+            productId: productId
+        });
+    }
+);`,
+
+            comparison: {
+
+                headers: [
+                    "URL",
+                    "req.params"
+                ],
+
+                rows: [
+
+                    [
+                        "/products/101",
+                        "{ id: '101' }"
+                    ],
+
+                    [
+                        "/products/205",
+                        "{ id: '205' }"
+                    ],
+
+                    [
+                        "/products/999",
+                        "{ id: '999' }"
+                    ]
+
+                ]
+
+            },
+
+            keyIdea:
+                "Route parameters identify a resource as part of the URL path."
+
+        },
 
 
-    {
-        number: 13,
+        {
+            number: 9,
 
-        title: "Building a Small CRUD API",
+            title: "Query Parameters",
 
-        intro:
-            "CRUD means Create, Read, Update and Delete. A student API is a useful example for understanding the complete REST flow.",
+            intro:
+                "Query parameters provide optional information after the ? character in a URL. They are commonly used for filtering, searching, sorting and pagination.",
 
-        code:
+            points: [
+
+                "Query parameters appear after ? in the URL.",
+
+                "Multiple query parameters are separated with &.",
+
+                "Express makes them available through req.query.",
+
+                "Query parameters are useful when the URL identifies a collection rather than one specific resource."
+
+            ],
+
+            code: `app.get(
+    "/products",
+    (req, res) => {
+
+        const category =
+            req.query.category;
+
+        const limit =
+            req.query.limit;
+
+        res.json({
+            category: category,
+            limit: limit
+        });
+    }
+);`,
+
+            comparison: {
+
+                headers: [
+                    "URL",
+                    "Query values"
+                ],
+
+                rows: [
+
+                    [
+                        "/products?category=books",
+                        "category = books"
+                    ],
+
+                    [
+                        "/products?limit=10",
+                        "limit = 10"
+                    ],
+
+                    [
+                        "/products?category=books&limit=10",
+                        "category = books, limit = 10"
+                    ]
+
+                ]
+
+            },
+
+            keyIdea:
+                "Route parameters identify a specific resource, while query parameters commonly control how a collection is filtered or represented."
+
+        },
 
 
-const express = require("express");
+        {
+            number: 10,
+
+            title: "Sending JSON Responses",
+
+            intro:
+                "REST APIs normally return structured JSON instead of HTML pages.",
+
+            points: [
+
+                "res.json() sends a JavaScript value as JSON.",
+
+                "Express automatically sets an appropriate content type for JSON responses.",
+
+                "Objects and arrays can be returned directly.",
+
+                "Consistent response structures make APIs easier for frontend applications to consume."
+
+            ],
+
+            code: `app.get("/api/products", (req, res) => {
+
+    res.json({
+        success: true,
+
+        data: [
+            {
+                id: 101,
+                name: "Laptop"
+            },
+            {
+                id: 102,
+                name: "Keyboard"
+            }
+        ]
+    });
+
+});`,
+
+            comparison: {
+
+                headers: [
+                    "Method",
+                    "Purpose"
+                ],
+
+                rows: [
+
+                    [
+                        "res.send()",
+                        "Send a general response"
+                    ],
+
+                    [
+                        "res.json()",
+                        "Send JSON response"
+                    ],
+
+                    [
+                        "res.status()",
+                        "Set HTTP status code"
+                    ],
+
+                    [
+                        "res.end()",
+                        "Finish response"
+                    ]
+
+                ]
+
+            },
+
+            keyIdea:
+                "For REST APIs, res.json() is commonly used to return structured data to frontend applications."
+
+        },
+
+
+        {
+            number: 11,
+
+            title: "HTTP Status Codes",
+
+            intro:
+                "HTTP status codes communicate the result of an HTTP request to the client.",
+
+            points: [
+
+                "200 commonly indicates a successful request.",
+
+                "201 indicates that a resource was created.",
+
+                "204 indicates success with no response body.",
+
+                "400 commonly indicates an invalid client request.",
+
+                "401 indicates that authentication is required or has failed.",
+
+                "403 indicates that the server understood the request but refuses access.",
+
+                "404 indicates that the requested resource or route was not found.",
+
+                "500 indicates an unexpected server-side failure."
+
+            ],
+
+            code: `app.post("/products", (req, res) => {
+
+    const product = req.body;
+
+    if (!product.name) {
+
+        return res.status(400).json({
+            error: "Product name is required"
+        });
+
+    }
+
+    res.status(201).json({
+        message: "Product created",
+        product: product
+    });
+
+});`,
+
+            comparison: {
+
+                headers: [
+                    "Status",
+                    "Meaning"
+                ],
+
+                rows: [
+
+                    [
+                        "200",
+                        "OK"
+                    ],
+
+                    [
+                        "201",
+                        "Created"
+                    ],
+
+                    [
+                        "204",
+                        "No Content"
+                    ],
+
+                    [
+                        "400",
+                        "Bad Request"
+                    ],
+
+                    [
+                        "401",
+                        "Unauthorized"
+                    ],
+
+                    [
+                        "403",
+                        "Forbidden"
+                    ],
+
+                    [
+                        "404",
+                        "Not Found"
+                    ],
+
+                    [
+                        "500",
+                        "Internal Server Error"
+                    ]
+
+                ]
+
+            },
+
+            keyIdea:
+                "Good APIs use status codes to communicate the outcome of a request instead of returning 200 for every situation."
+
+        },
+
+
+        {
+            number: 12,
+
+            title: "REST Resource Design",
+
+            intro:
+                "REST API design focuses on resources and uses HTTP methods to describe actions performed on those resources.",
+
+            points: [
+
+                "Use nouns to represent resources.",
+
+                "Use plural resource names consistently.",
+
+                "Use HTTP methods to represent operations.",
+
+                "Use route parameters for individual resources.",
+
+                "Use query parameters for filtering and collection operations."
+
+            ],
+
+            comparison: {
+
+                headers: [
+                    "Endpoint",
+                    "Purpose"
+                ],
+
+                rows: [
+
+                    [
+                        "GET /products",
+                        "List products"
+                    ],
+
+                    [
+                        "GET /products/101",
+                        "Get product 101"
+                    ],
+
+                    [
+                        "POST /products",
+                        "Create product"
+                    ],
+
+                    [
+                        "PUT /products/101",
+                        "Replace product 101"
+                    ],
+
+                    [
+                        "PATCH /products/101",
+                        "Partially update product 101"
+                    ],
+
+                    [
+                        "DELETE /products/101",
+                        "Delete product 101"
+                    ]
+
+                ]
+
+            },
+
+            keyIdea:
+                "A clean REST API models resources through URLs and uses HTTP methods to describe operations."
+
+        },
+
+
+        {
+            number: 13,
+
+            title: "Building a Small CRUD API",
+
+            intro:
+                "CRUD means Create, Read, Update and Delete. These four operations form the foundation of many backend applications.",
+
+            points: [
+
+                "Create is commonly represented by POST.",
+
+                "Read is commonly represented by GET.",
+
+                "Update can be represented by PUT or PATCH.",
+
+                "Delete is commonly represented by DELETE.",
+
+                "A database would normally store the resources in a real application."
+
+            ],
+
+            code: `const express = require("express");
 
 const app = express();
 
 app.use(express.json());
 
-let students = [
-{
-id: 1,
-name: "Anita"
-},
-{
-id: 2,
-name: "Rahul"
-}
+let products = [
+    {
+        id: 1,
+        name: "Laptop",
+        price: 60000
+    },
+    {
+        id: 2,
+        name: "Mouse",
+        price: 1200
+    }
 ];
 
-app.get("/students", (req, res) => {
-res.json(students);
-});
+app.get("/products", (req, res) => {
 
-app.get("/students/:id", (req, res) => {
-
-
-const student = students.find(
-    item => item.id === Number(req.params.id)
-);
-
-if (!student) {
-    return res.status(404).json({
-        message: "Student not found"
-    });
-}
-
-res.json(student);
-
+    res.json(products);
 
 });
 
-app.post("/students", (req, res) => {
+app.get("/products/:id", (req, res) => {
 
+    const id =
+        Number(req.params.id);
 
-const student = {
-    id: students.length + 1,
-    name: req.body.name
-};
+    const product =
+        products.find(
+            item => item.id === id
+        );
 
-students.push(student);
+    if (!product) {
 
-res.status(201).json(student);
+        return res.status(404).json({
+            error: "Product not found"
+        });
 
+    }
 
-});
-
-app.delete("/students/:id", (req, res) => {
-
-
-const id = Number(req.params.id);
-
-students = students.filter(
-    student => student.id !== id
-);
-
-res.status(204).send();
-
+    res.json(product);
 
 });
 
-app.listen(3000);`,
+app.post("/products", (req, res) => {
 
+    const product = {
+        id: products.length + 1,
+        name: req.body.name,
+        price: req.body.price
+    };
 
-        comparison: {
+    products.push(product);
 
-            headers: [
+    res.status(201).json(product);
 
-                "CRUD operation",
+});
 
-                "HTTP request"
+app.patch("/products/:id", (req, res) => {
+
+    const id =
+        Number(req.params.id);
+
+    const product =
+        products.find(
+            item => item.id === id
+        );
+
+    if (!product) {
+
+        return res.status(404).json({
+            error: "Product not found"
+        });
+
+    }
+
+    if (req.body.name !== undefined) {
+        product.name = req.body.name;
+    }
+
+    if (req.body.price !== undefined) {
+        product.price = req.body.price;
+    }
+
+    res.json(product);
+
+});
+
+app.delete("/products/:id", (req, res) => {
+
+    const id =
+        Number(req.params.id);
+
+    const index =
+        products.findIndex(
+            item => item.id === id
+        );
+
+    if (index === -1) {
+
+        return res.status(404).json({
+            error: "Product not found"
+        });
+
+    }
+
+    products.splice(index, 1);
+
+    res.status(204).send();
+
+});
+
+app.listen(3000, () => {
+    console.log(
+        "API running on port 3000"
+    );
+});`,
+
+            flow: [
+
+                "Client sends request",
+                "Express parses request",
+                "Route is matched",
+                "Application finds or changes resource",
+                "Server prepares response",
+                "HTTP response is returned"
 
             ],
 
-            rows: [
-
-                [
-
-                    "Create",
-
-                    "POST /students"
-
-                ],
-
-                [
-
-                    "Read all",
-
-                    "GET /students"
-
-                ],
-
-                [
-
-                    "Read one",
-
-                    "GET /students/:id"
-
-                ],
-
-                [
-
-                    "Update",
-
-                    "PUT or PATCH /students/:id"
-
-                ],
-
-                [
-
-                    "Delete",
-
-                    "DELETE /students/:id"
-
-                ]
-
-            ]
+            keyIdea:
+                "CRUD APIs combine routing, request parsing, application logic, status codes and JSON responses."
 
         },
 
-        keyIdea:
-            "CRUD APIs connect HTTP methods, resources, application logic and data operations."
+
+        {
+            number: 14,
+
+            title: "404 Handling",
+
+            intro:
+                "An Express application should provide a predictable response when no registered route matches the incoming request.",
+
+            points: [
+
+                "A 404 response means the requested route or resource was not found.",
+
+                "A fallback middleware can handle unknown routes.",
+
+                "The fallback should normally be registered after valid routes.",
+
+                "Returning structured JSON makes the error easier for frontend applications to process."
+
+            ],
+
+            code: `app.use((req, res) => {
+
+    res.status(404).json({
+        error: "Route not found",
+        path: req.originalUrl
+    });
+
+});`,
+
+            keyIdea:
+                "The 404 fallback should be placed after the application's normal routes so that only unmatched requests reach it."
+
+        },
+
+
+        {
+            number: 15,
+
+            title: "Error-Handling Middleware",
+
+            intro:
+                "Production APIs need a consistent way to handle unexpected errors. Express supports dedicated error-handling middleware.",
+
+            points: [
+
+                "Error middleware has four parameters: err, req, res and next.",
+
+                "It should normally be registered after the normal routes and middleware.",
+
+                "Centralized handling prevents repetitive error-response code.",
+
+                "The server should avoid exposing sensitive internal error details to clients."
+
+            ],
+
+            code: `app.use(
+    (err, req, res, next) => {
+
+        console.error(err);
+
+        res.status(500).json({
+            error: "Internal server error"
+        });
+
+    }
+);`,
+
+            comparison: {
+
+                headers: [
+                    "Normal middleware",
+                    "Error middleware"
+                ],
+
+                rows: [
+
+                    [
+                        "req, res, next",
+                        "err, req, res, next"
+                    ],
+
+                    [
+                        "Processes normal requests",
+                        "Handles errors"
+                    ],
+
+                    [
+                        "Calls next() to continue",
+                        "Can send centralized error response"
+                    ]
+
+                ]
+
+            },
+
+            keyIdea:
+                "Centralized error middleware creates a predictable boundary for handling unexpected application failures."
+
+        },
+
+
+        {
+            number: 16,
+
+            title: "Organizing an Express Application",
+
+            intro:
+                "As an Express project grows, putting every route and piece of business logic in one file becomes difficult to maintain. A structured architecture separates responsibilities.",
+
+            points: [
+
+                "Routes define API endpoints.",
+
+                "Controllers handle request and response coordination.",
+
+                "Services contain reusable business logic.",
+
+                "Models represent database-related data structures.",
+
+                "Middleware handles cross-cutting request processing.",
+
+                "Configuration stores environment-specific settings."
+
+            ],
+
+            architecture: [
+
+                {
+                    title: "Routes",
+
+                    items: [
+                        "URL definitions",
+                        "HTTP methods",
+                        "Controller mapping"
+                    ]
+                },
+
+                {
+                    title: "Controllers",
+
+                    items: [
+                        "Read request",
+                        "Call services",
+                        "Send response"
+                    ]
+                },
+
+                {
+                    title: "Services",
+
+                    items: [
+                        "Business rules",
+                        "Reusable operations",
+                        "Application logic"
+                    ]
+                },
+
+                {
+                    title: "Models",
+
+                    items: [
+                        "Data structure",
+                        "Database interaction",
+                        "Persistence"
+                    ]
+                },
+
+                {
+                    title: "Middleware",
+
+                    items: [
+                        "Logging",
+                        "Authentication",
+                        "Validation",
+                        "Error handling"
+                    ]
+                }
+
+            ],
+
+            keyIdea:
+                "Good backend architecture separates responsibilities so that routes, business logic, data access and cross-cutting concerns can evolve independently."
+
+        }
+
+    ],
+
+
+    /* =====================================================
+       PREMIUM VISUALIZER
+       ===================================================== */
+
+    visualizer: {
+
+        title: "Express Request → Middleware → Route Laboratory",
+
+        description:
+            "Follow an HTTP request as it moves through Express middleware, route matching, application logic and the final response.",
+
+        steps: [
+
+            {
+                title: "Client Request",
+
+                operation:
+                    "POST /products",
+
+                detail:
+                    "A client sends a request containing product data in JSON format."
+            },
+
+            {
+                title: "Express Receives Request",
+
+                operation:
+                    "app receives req",
+
+                detail:
+                    "The Express application receives the incoming HTTP request."
+            },
+
+            {
+                title: "JSON Middleware",
+
+                operation:
+                    "express.json()",
+
+                detail:
+                    "Express parses the JSON request body and exposes it through req.body."
+            },
+
+            {
+                title: "Logger Middleware",
+
+                operation:
+                    "logger(req, res, next)",
+
+                detail:
+                    "Logging middleware records information about the incoming request."
+            },
+
+            {
+                title: "Route Matching",
+
+                operation:
+                    "POST /products",
+
+                detail:
+                    "Express finds the route registered for POST /products."
+            },
+
+            {
+                title: "Route Handler",
+
+                operation:
+                    "Create product",
+
+                detail:
+                    "The route handler validates and processes the submitted product data."
+            },
+
+            {
+                title: "Application Logic",
+
+                operation:
+                    "products.push(product)",
+
+                detail:
+                    "The application creates a product object and stores it in the example collection."
+            },
+
+            {
+                title: "HTTP Status",
+
+                operation:
+                    "201 Created",
+
+                detail:
+                    "The server selects 201 to indicate that a new resource was created."
+            },
+
+            {
+                title: "JSON Response",
+
+                operation:
+                    "res.status(201).json(product)",
+
+                detail:
+                    "Express serializes the product object and sends it to the client."
+            },
+
+            {
+                title: "Client Receives Response",
+
+                operation:
+                    "HTTP 201 + JSON",
+
+                detail:
+                    "The client receives the newly created resource."
+            }
+
+        ]
 
     },
 
 
-    {
-        number: 14,
+    /* =====================================================
+       PROGRAM TRACING
+       ===================================================== */
 
-        title: "404 Handling",
+    trace: {
 
-        intro:
-            "A well-designed Express application should provide a clear response when no route matches the request.",
+        title: "Trace an Express CRUD Request",
 
-        code:
-
-
-app.use((req, res) => {
-
-
-res.status(404).json({
-    message: "Route not found"
-});
-
-
-});,
-
-
-        points: [
-
-            "Express processes middleware and routes in registration order.",
-
-            "A final catch-all middleware can handle unmatched requests.",
-
-            "A 404 means the requested route or resource could not be found.",
-
-            "A 404 is different from a server crash."
-
-        ],
-
-        keyIdea:
-            "Route order matters. A fallback 404 handler should normally appear after the routes it is intended to protect."
-
-    },
-
-
-    {
-        number: 15,
-
-        title: "Error-Handling Middleware",
-
-        intro:
-            "Production applications need a predictable way to handle unexpected errors.",
-
-        code:
-
-
-app.use((err, req, res, next) => {
-
-
-console.error(err);
-
-res.status(500).json({
-    message: "Internal server error"
-});
-
-
-});,
-
-
-        points: [
-
-            "Express error-handling middleware has four parameters: err, req, res and next.",
-
-            "Errors can be passed to the error handler using next(error).",
-
-            "Centralized handling keeps error responses consistent.",
-
-            "Sensitive internal error information should not normally be exposed to clients."
-
-        ],
-
-        flow: [
-
-            "Request arrives",
-
-            "Route executes",
-
-            "Unexpected error occurs",
-
-            "next(error)",
-
-            "Error middleware receives error",
-
-            "Server logs useful details",
-
-            "Client receives safe error response"
-
-        ],
-
-        keyIdea:
-            "Separate internal debugging information from the safe error information returned to API clients."
-
-    },
-
-
-    {
-        number: 16,
-
-        title: "Organizing an Express Application",
-
-        intro:
-            "As an application grows, putting every route in server.js becomes difficult to maintain. A professional Express project separates responsibilities.",
-
-        architecture: [
+        lines: [
 
             {
-
-                title: "server.js",
-
-                items: [
-
-                    "Start server",
-
-                    "Load application"
-
-                ]
-
+                line: 1,
+                code: 'const express = require("express");'
             },
 
             {
-
-                title: "app.js",
-
-                items: [
-
-                    "Create Express app",
-
-                    "Register middleware",
-
-                    "Register routes"
-
-                ]
-
+                line: 2,
+                code: "const app = express();"
             },
 
             {
-
-                title: "routes/",
-
-                items: [
-
-                    "Define URL endpoints",
-
-                    "Connect routes to handlers"
-
-                ]
-
+                line: 3,
+                code: "app.use(express.json());"
             },
 
             {
-
-                title: "controllers/",
-
-                items: [
-
-                    "Application request logic",
-
-                    "Prepare responses"
-
-                ]
-
+                line: 4,
+                code: 'app.post("/products", (req, res) => {'
             },
 
             {
-
-                title: "services/",
-
-                items: [
-
-                    "Business logic",
-
-                    "Reusable operations"
-
-                ]
-
+                line: 5,
+                code: "    const product = {"
             },
 
             {
+                line: 6,
+                code: "        name: req.body.name"
+            },
 
-                title: "models/",
+            {
+                line: 7,
+                code: "    };"
+            },
 
-                items: [
+            {
+                line: 8,
+                code: "    res.status(201).json(product);"
+            },
 
-                    "Data structures",
+            {
+                line: 9,
+                code: "});"
+            },
 
-                    "Database interaction"
-
-                ]
-
+            {
+                line: 10,
+                code: "app.listen(3000);"
             }
 
         ],
 
-        code:
+        steps: [
+
+            {
+                line: 1,
+                state: "Load Express",
+
+                explain:
+                    "The Express package is loaded into the application."
+            },
+
+            {
+                line: 2,
+                state: "Create app",
+
+                explain:
+                    "express() creates the Express application object."
+            },
+
+            {
+                line: 3,
+                state: "JSON middleware",
+
+                explain:
+                    "Express is configured to parse JSON request bodies."
+            },
+
+            {
+                line: 4,
+                state: "POST route",
+
+                explain:
+                    "The application registers a route for creating products."
+            },
+
+            {
+                line: 5,
+                state: "Create object",
+
+                explain:
+                    "A new product object is prepared."
+            },
+
+            {
+                line: 6,
+                state: "Read body",
+
+                explain:
+                    "The product name is read from req.body."
+            },
+
+            {
+                line: 7,
+                state: "Object complete",
+
+                explain:
+                    "The product object is now ready for the response."
+            },
+
+            {
+                line: 8,
+                state: "Response",
+
+                explain:
+                    "The server returns HTTP 201 and the product as JSON."
+            },
+
+            {
+                line: 9,
+                state: "Route complete",
+
+                explain:
+                    "The POST route handler finishes."
+            },
+
+            {
+                line: 10,
+                state: "Listening",
+
+                explain:
+                    "The Express server begins listening for HTTP requests."
+            }
+
+        ]
+
+    },
 
 
-project/
-│
-├── server.js
-├── app.js
-├── package.json
-│
-├── routes/
-│   └── studentRoutes.js
-│
-├── controllers/
-│   └── studentController.js
-│
-├── services/
-│   └── studentService.js
-│
-└── models/
-    └── studentModel.js`,
+    /* =====================================================
+       QUICK REVISION
+       ===================================================== */
+
+    revision: [
+
+        [
+            "Express.js",
+            "A Node.js web framework that simplifies server and API development."
+        ],
+
+        [
+            "Express Application",
+            "The app object created using express() that manages routes and middleware."
+        ],
+
+        [
+            "Route",
+            "A combination of an HTTP method and URL pattern handled by server-side logic."
+        ],
+
+        [
+            "Middleware",
+            "Reusable request-processing logic that runs before or between route handlers."
+        ],
+
+        [
+            "next()",
+            "Function used by middleware to pass processing to the next middleware or handler."
+        ],
+
+        [
+            "req",
+            "The incoming Express request object."
+        ],
+
+        [
+            "res",
+            "The Express response object used to send data to the client."
+        ],
+
+        [
+            "req.params",
+            "Object containing route parameter values."
+        ],
+
+        [
+            "req.query",
+            "Object containing query-string parameters."
+        ],
+
+        [
+            "req.body",
+            "Object containing parsed request-body data when appropriate middleware is used."
+        ],
+
+        [
+            "res.json()",
+            "Method used to send a JSON response."
+        ],
+
+        [
+            "REST API",
+            "An API style that models resources through URLs and uses HTTP methods for operations."
+        ],
+
+        [
+            "CRUD",
+            "Create, Read, Update and Delete operations."
+        ],
+
+        [
+            "HTTP Status Code",
+            "Numeric code communicating the result of an HTTP request."
+        ],
+
+        [
+            "404",
+            "Status indicating that a requested route or resource was not found."
+        ],
+
+        [
+            "Error Middleware",
+            "Express middleware with err, req, res and next parameters used for centralized error handling."
+        ]
+
+    ],
 
 
-        keyIdea:
-            "Separation of responsibilities makes an Express application easier to test, maintain and extend."
+    /* =====================================================
+       INTERVIEW QUESTIONS
+       ===================================================== */
 
-    }
-
-],
-
-
-/* =====================================================
-   PREMIUM VISUALIZER
-   ===================================================== */
-
-visualizer: {
-
-    title: "Express Request → Middleware → Route Laboratory",
-
-    description:
-        "Trace an HTTP request through Express middleware, route matching and response generation.",
-
-    steps: [
+    interview: [
 
         {
-            title: "Client Request",
+            question:
+                "What is Express.js?",
 
-            operation:
-                "POST /students",
-
-            detail:
-                "The frontend sends an HTTP request containing a JSON student object."
+            answer:
+                "Express.js is a web framework for Node.js that simplifies HTTP server development, routing and middleware-based request processing."
         },
 
         {
-            title: "Express Receives",
+            question:
+                "Why use Express instead of the Node.js http module directly?",
 
-            operation:
-                "app receives request",
+            answer:
+                "Express provides convenient routing, middleware, request handling and response APIs that reduce repetitive low-level HTTP code."
+        },
 
-            detail:
-                "Node.js accepts the network request and Express begins processing it."
+        {
+            question:
+                "What is middleware in Express?",
+
+            answer:
+                "Middleware is a function that can inspect or modify a request and response, perform processing and either end the response or call next() to continue."
+        },
+
+        {
+            question:
+                "What does express.json() do?",
+
+            answer:
+                "It parses incoming JSON request bodies and makes the parsed data available through req.body."
+        },
+
+        {
+            question:
+                "What is the difference between req.params and req.query?",
+
+            answer:
+                "req.params contains values captured from route paths such as /products/:id, while req.query contains optional query-string values such as ?limit=10."
+        },
+
+        {
+            question:
+                "What is REST?",
+
+            answer:
+                "REST is an architectural style commonly used to design APIs around resources, URLs and standard HTTP methods."
+        },
+
+        {
+            question:
+                "What is CRUD?",
+
+            answer:
+                "CRUD stands for Create, Read, Update and Delete."
+        },
+
+        {
+            question:
+                "What HTTP method is commonly used to create a resource?",
+
+            answer:
+                "POST is commonly used to create a new resource."
+        },
+
+        {
+            question:
+                "What is the difference between PUT and PATCH?",
+
+            answer:
+                "PUT is commonly used for replacing or fully updating a resource, while PATCH is commonly used for partial updates."
+        },
+
+        {
+            question:
+                "Why use HTTP status codes correctly?",
+
+            answer:
+                "Status codes communicate the outcome of an HTTP request and allow clients to handle success and failure conditions consistently."
+        },
+
+        {
+            question:
+                "How do you handle a 404 route in Express?",
+
+            answer:
+                "Register a fallback middleware after the normal routes that sends a 404 response when no route has handled the request."
+        },
+
+        {
+            question:
+                "What makes error middleware different?",
+
+            answer:
+                "Express error middleware has four parameters: err, req, res and next."
+        },
+
+        {
+            question:
+                "Why should large Express applications be organized into multiple modules?",
+
+            answer:
+                "Separating routes, controllers, services, models and middleware makes the application easier to maintain, test and extend."
+        }
+
+    ],
+
+
+    /* =====================================================
+       PRACTICE
+       ===================================================== */
+
+    practice: [
+
+        {
+            title: "First Express Server",
+
+            task:
+                "Create an Express application that runs on port 3000 and returns 'Welcome to CodeBhavya' from GET /.",
+
+            hint:
+                "Use express(), app.get() and app.listen().",
+
+            answer:
+                "Create an Express app, register GET / and start the application on port 3000."
+        },
+
+        {
+            title: "Multiple Routes",
+
+            task:
+                "Create GET /, GET /about and GET /contact routes with different responses.",
+
+            hint:
+                "Use app.get() for each route.",
+
+            answer:
+                "Register three GET routes and send a different response from each handler."
         },
 
         {
             title: "JSON Middleware",
 
-            operation:
-                "express.json()",
+            task:
+                "Create a POST /products route that receives a JSON product and returns it as JSON.",
 
-            detail:
-                "Express parses the JSON request body and exposes it through req.body."
+            hint:
+                "Use app.use(express.json()) and req.body.",
+
+            answer:
+                "Enable express.json(), read the submitted product from req.body and return it using res.json()."
         },
 
         {
-            title: "Logger Middleware",
+            title: "Route Parameters",
 
-            operation:
-                "console.log(req.method, req.url)",
+            task:
+                "Create GET /students/:id and return the student ID from req.params.",
 
-            detail:
-                "A custom middleware records useful request information."
+            hint:
+                "Use req.params.id.",
+
+            answer:
+                "Define /students/:id and read the dynamic value using req.params.id."
         },
 
         {
-            title: "next()",
+            title: "Query Parameters",
 
-            operation:
-                "Continue pipeline",
+            task:
+                "Create GET /products?category=books&limit=10 and return the query values as JSON.",
 
-            detail:
-                "The middleware calls next() so Express can continue processing."
+            hint:
+                "Use req.query.",
+
+            answer:
+                "Read req.query.category and req.query.limit and return them through res.json()."
         },
 
         {
-            title: "Route Match",
+            title: "Status Codes",
 
-            operation:
-                "POST /students",
+            task:
+                "Create a POST /users endpoint that returns HTTP 201 after creating a user.",
 
-            detail:
-                "Express finds the route registered for the POST /students request."
+            hint:
+                "Use res.status(201).json().",
+
+            answer:
+                "Return the newly created user with res.status(201).json(user)."
         },
 
         {
-            title: "Read Request Body",
+            title: "404 Handler",
 
-            operation:
-                "req.body.name",
+            task:
+                "Create an Express fallback that returns a JSON 404 response for unknown routes.",
 
-            detail:
-                "The route handler reads the parsed student data."
+            hint:
+                "Register app.use() after your valid routes.",
+
+            answer:
+                "Add a final app.use() middleware that sends res.status(404).json(...)."
         },
 
         {
-            title: "Create Resource",
+            title: "CRUD API",
 
-            operation:
-                "students.push(student)",
+            task:
+                "Build a small in-memory products API supporting GET, POST, PATCH and DELETE.",
 
-            detail:
-                "The application creates a new student resource."
+            hint:
+                "Use an array to store products temporarily.",
+
+            answer:
+                "Create routes for listing products, adding products, updating products and deleting products."
         },
 
         {
-            title: "Status Code",
+            title: "Middleware Logger",
 
-            operation:
-                "201 Created",
+            task:
+                "Create middleware that logs the HTTP method and URL for every incoming request.",
 
-            detail:
-                "The API communicates that a new resource was created."
-        },
+            hint:
+                "Use req.method, req.url and next().",
 
-        {
-            title: "JSON Response",
-
-            operation:
-                "res.status(201).json(student)",
-
-            detail:
-                "Express serializes the object and sends it back to the client."
-        }
-
-    ]
-
-},
-
-
-/* =====================================================
-   PROGRAM TRACING
-   ===================================================== */
-
-trace: {
-
-    title: "Trace an Express CRUD Request",
-
-    lines: [
-
-        {
-            line: 1,
-            code: 'const express = require("express");'
-        },
-
-        {
-            line: 2,
-            code: "const app = express();"
-        },
-
-        {
-            line: 3,
-            code: "app.use(express.json());"
-        },
-
-        {
-            line: 4,
-            code: 'app.get("/students/:id",'
-        },
-
-        {
-            line: 5,
-            code: "    (req, res) => {"
-        },
-
-        {
-            line: 6,
-            code: "        const id = req.params.id;"
-        },
-
-        {
-            line: 7,
-            code: "        const student = findStudent(id);"
-        },
-
-        {
-            line: 8,
-            code: "        if (!student) {"
-        },
-
-        {
-            line: 9,
-            code: "            return res.status(404).json({"
-        },
-
-        {
-            line: 10,
-            code: '                message: "Student not found"'
-        },
-
-        {
-            line: 11,
-            code: "            });"
-        },
-
-        {
-            line: 12,
-            code: "        }"
-        },
-
-        {
-            line: 13,
-            code: "        res.json(student);"
-        },
-
-        {
-            line: 14,
-            code: "    }"
-        },
-
-        {
-            line: 15,
-            code: ");"
+            answer:
+                "Log the request information and call next() so processing continues."
         }
 
     ],
 
-    steps: [
+
+    /* =====================================================
+       MCQ
+       ===================================================== */
+
+    quiz: [
 
         {
-            line: 1,
-            state: "Module",
+            question:
+                "What is Express.js?",
 
-            explain:
-                "Node.js loads the Express package."
+            options: [
+                "A database",
+                "A Node.js web framework",
+                "A CSS language",
+                "A browser"
+            ],
+
+            answer: 1,
+
+            explanation:
+                "Express.js is a web framework commonly used with Node.js."
         },
 
         {
-            line: 2,
-            state: "Application",
+            question:
+                "Which function creates an Express application?",
 
-            explain:
-                "Express creates the application object."
+            options: [
+                "express()",
+                "createAppHTML()",
+                "node.server()",
+                "http.browser()"
+            ],
+
+            answer: 0,
+
+            explanation:
+                "Calling express() creates an Express application object."
         },
 
         {
-            line: 3,
-            state: "Middleware",
+            question:
+                "Which method is commonly used to retrieve a resource?",
 
-            explain:
-                "JSON parsing middleware is registered."
+            options: [
+                "GET",
+                "POST",
+                "DELETE",
+                "PATCH"
+            ],
+
+            answer: 0,
+
+            explanation:
+                "GET is commonly used to retrieve resources."
         },
 
         {
-            line: 4,
-            state: "Route",
+            question:
+                "Which HTTP method is commonly used to create a resource?",
 
-            explain:
-                "The application defines a GET route containing a dynamic id parameter."
+            options: [
+                "GET",
+                "POST",
+                "DELETE",
+                "OPTIONS"
+            ],
+
+            answer: 1,
+
+            explanation:
+                "POST is commonly used to create a new resource."
         },
 
         {
-            line: 5,
-            state: "Handler",
+            question:
+                "What does express.json() do?",
 
-            explain:
-                "The route handler receives req and res."
+            options: [
+                "Creates a database",
+                "Parses JSON request bodies",
+                "Starts the server",
+                "Deletes JSON"
+            ],
+
+            answer: 1,
+
+            explanation:
+                "express.json() parses incoming JSON request bodies."
         },
 
         {
-            line: 6,
-            state: "Parameter",
+            question:
+                "Where are route parameters available?",
 
-            explain:
-                "The student ID is read from req.params."
+            options: [
+                "req.params",
+                "req.cookiesOnly",
+                "res.params",
+                "app.parameters"
+            ],
+
+            answer: 0,
+
+            explanation:
+                "Express exposes route parameters through req.params."
         },
 
         {
-            line: 7,
-            state: "Lookup",
+            question:
+                "Where are query parameters available?",
 
-            explain:
-                "Application logic searches for the requested student."
+            options: [
+                "req.query",
+                "req.routeOnly",
+                "res.query",
+                "app.search"
+            ],
+
+            answer: 0,
+
+            explanation:
+                "Express exposes query-string parameters through req.query."
         },
 
         {
-            line: 8,
-            state: "Condition",
+            question:
+                "Which method is commonly used to send JSON?",
 
-            explain:
-                "The application checks whether the student exists."
+            options: [
+                "res.json()",
+                "res.database()",
+                "res.htmlOnly()",
+                "res.route()"
+            ],
+
+            answer: 0,
+
+            explanation:
+                "res.json() sends a JSON response."
         },
 
         {
-            line: 9,
-            state: "404",
+            question:
+                "Which status code commonly means Not Found?",
 
-            explain:
-                "If no student exists, the API prepares a 404 response."
+            options: [
+                "200",
+                "201",
+                "404",
+                "500"
+            ],
+
+            answer: 2,
+
+            explanation:
+                "404 indicates that the requested resource or route was not found."
         },
 
         {
-            line: 10,
-            state: "Message",
+            question:
+                "What does CRUD stand for?",
 
-            explain:
-                "A safe error message is included in the JSON response."
+            options: [
+                "Create, Read, Update, Delete",
+                "Create, Run, Upload, Download",
+                "Code, Route, Use, Deploy",
+                "Cache, Read, Upload, Debug"
+            ],
+
+            answer: 0,
+
+            explanation:
+                "CRUD stands for Create, Read, Update and Delete."
         },
 
         {
-            line: 11,
-            state: "Response",
+            question:
+                "How many parameters does Express error middleware normally receive?",
 
-            explain:
-                "The JSON error response is completed."
+            options: [
+                "1",
+                "2",
+                "3",
+                "4"
+            ],
+
+            answer: 3,
+
+            explanation:
+                "Express error-handling middleware normally uses err, req, res and next."
         },
 
         {
-            line: 12,
-            state: "Branch",
+            question:
+                "Which method is commonly used for partial updates?",
 
-            explain:
-                "If a student exists, execution continues past the not-found condition."
-        },
+            options: [
+                "GET",
+                "POST",
+                "PATCH",
+                "HEAD"
+            ],
 
-        {
-            line: 13,
-            state: "Success",
+            answer: 2,
 
-            explain:
-                "The student object is returned as JSON."
-        },
-
-        {
-            line: 14,
-            state: "Complete",
-
-            explain:
-                "The route handler finishes."
-        },
-
-        {
-            line: 15,
-            state: "Route complete",
-
-            explain:
-                "Express has completed this route definition."
+            explanation:
+                "PATCH is commonly used for partial updates."
         }
 
-    ]
-
-},
-
-
-/* =====================================================
-   QUICK REVISION
-   ===================================================== */
-
-revision: [
-
-    [
-        "Express.js",
-        "A web application framework for Node.js."
     ],
 
-    [
-        "Express App",
-        "The application object used to configure routes and middleware."
+
+    /* =====================================================
+       GLOSSARY
+       ===================================================== */
+
+    glossary: [
+
+        {
+            term: "Express.js",
+            definition:
+                "A web framework for Node.js used to build servers and APIs."
+        },
+
+        {
+            term: "Application",
+            definition:
+                "The Express app object that manages routes and middleware."
+        },
+
+        {
+            term: "Route",
+            definition:
+                "A URL pattern and HTTP method connected to server-side logic."
+        },
+
+        {
+            term: "Middleware",
+            definition:
+                "Reusable request-processing logic executed during the request lifecycle."
+        },
+
+        {
+            term: "next()",
+            definition:
+                "Function used to continue processing to the next middleware or handler."
+        },
+
+        {
+            term: "req",
+            definition:
+                "Express request object containing information about an incoming HTTP request."
+        },
+
+        {
+            term: "res",
+            definition:
+                "Express response object used to send information back to the client."
+        },
+
+        {
+            term: "req.params",
+            definition:
+                "Object containing dynamic values captured from route parameters."
+        },
+
+        {
+            term: "req.query",
+            definition:
+                "Object containing query-string parameters."
+        },
+
+        {
+            term: "req.body",
+            definition:
+                "Object containing parsed request-body data."
+        },
+
+        {
+            term: "res.json()",
+            definition:
+                "Express method for sending JSON responses."
+        },
+
+        {
+            term: "REST",
+            definition:
+                "An architectural style commonly used to design resource-oriented APIs."
+        },
+
+        {
+            term: "CRUD",
+            definition:
+                "Create, Read, Update and Delete operations."
+        },
+
+        {
+            term: "HTTP Method",
+            definition:
+                "Verb describing the intended operation of an HTTP request."
+        },
+
+        {
+            term: "Status Code",
+            definition:
+                "Numeric HTTP response code describing the result of a request."
+        },
+
+        {
+            term: "404",
+            definition:
+                "HTTP status indicating that a requested route or resource was not found."
+        },
+
+        {
+            term: "Error Middleware",
+            definition:
+                "Express middleware designed to centrally process application errors."
+        }
+
     ],
 
-    [
-        "Route",
-        "A combination of HTTP method and URL path handled by the server."
-    ],
 
-    [
-        "Middleware",
-        "A function that participates in the Express request-response pipeline."
-    ],
+    /* =====================================================
+       COMPLETION
+       ===================================================== */
 
-    [
-        "next()",
-        "Continues processing to the next middleware or matching handler."
-    ],
+    completion: {
 
-    [
-        "req.body",
-        "Parsed request body data, commonly populated by express.json()."
-    ],
+        title: "Express.js Fundamentals & REST APIs Completed",
 
-    [
-        "req.params",
-        "Object containing dynamic route parameter values."
-    ],
+        message:
+            "You now understand how Express.js builds on Node.js to simplify backend development. You can create routes, use middleware, process JSON requests, work with parameters, design REST APIs, implement CRUD operations and handle errors.",
 
-    [
-        "req.query",
-        "Object containing URL query parameters."
-    ],
+        achievements: [
 
-    [
-        "res.json()",
-        "Sends a JSON response to the client."
-    ],
+            "You understand why Express.js is used with Node.js.",
 
-    [
-        "REST",
-        "An architectural approach commonly used to design resource-oriented HTTP APIs."
-    ],
+            "You can create an Express application.",
 
-    [
-        "CRUD",
-        "Create, Read, Update and Delete operations."
-    ],
+            "You understand the Express request-response lifecycle.",
 
-    [
-        "Status Code",
-        "HTTP response code describing the outcome of a request."
-    ],
+            "You can create GET routes.",
 
-    [
-        "404",
-        "Indicates that the requested route or resource was not found."
-    ],
+            "You understand POST, PUT, PATCH and DELETE.",
 
-    [
-        "Error Middleware",
-        "Express middleware designed to handle errors centrally."
-    ],
+            "You understand Express middleware.",
 
-    [
-        "Route Parameter",
-        "A dynamic value embedded in a URL path."
-    ],
+            "You can process JSON request bodies.",
 
-    [
-        "Query Parameter",
-        "An optional value supplied after ? in a URL."
-    ]
+            "You understand route parameters.",
 
-],
+            "You understand query parameters.",
 
+            "You can return JSON responses.",
 
-/* =====================================================
-   INTERVIEW QUESTIONS
-   ===================================================== */
+            "You understand important HTTP status codes.",
 
-interview: [
+            "You understand REST resource design.",
 
-    {
-        question:
-            "What is Express.js?",
+            "You can build a basic CRUD API.",
 
-        answer:
-            "Express.js is a lightweight web application framework for Node.js that simplifies routing, middleware and HTTP application development."
-    },
+            "You can create 404 handling.",
 
-    {
-        question:
-            "Why use Express instead of only Node's http module?",
+            "You understand centralized error-handling middleware.",
 
-        answer:
-            "Express provides convenient routing, middleware and request-response APIs, reducing boilerplate for common web applications."
-    },
+            "You understand basic Express application architecture.",
 
-    {
-        question:
-            "What is middleware?",
+            "You are ready to learn advanced middleware, validation and API architecture."
 
-        answer:
-            "Middleware is a function that participates in the Express request-response pipeline and can inspect, modify or control request processing."
-    },
+        ],
 
-    {
-        question:
-            "What does next() do?",
+        nextLevel:
+            "Level 21 — Express Middleware, Validation & API Architecture"
 
-        answer:
-            "next() tells Express to continue processing with the next applicable middleware or route handler."
-    },
-
-    {
-        question:
-            "What does express.json() do?",
-
-        answer:
-            "It parses incoming JSON request bodies and makes the resulting data available through req.body."
-    },
-
-    {
-        question:
-            "What is req.params?",
-
-        answer:
-            "req.params contains values captured from dynamic route parameters such as /students/:id."
-    },
-
-    {
-        question:
-            "What is req.query?",
-
-        answer:
-            "req.query contains values supplied through the query string, such as ?page=2."
-    },
-
-    {
-        question:
-            "What is the difference between PUT and PATCH?",
-
-        answer:
-            "PUT is commonly used to replace a resource representation, while PATCH is commonly used for partial updates."
-    },
-
-    {
-        question:
-            "What does res.json() do?",
-
-        answer:
-            "It sends a JavaScript value as a JSON HTTP response."
-    },
-
-    {
-        question:
-            "What is REST?",
-
-        answer:
-            "REST is an architectural approach for designing networked resources and their interactions, commonly using HTTP methods and resource-oriented URLs."
-    },
-
-    {
-        question:
-            "What is CRUD?",
-
-        answer:
-            "CRUD stands for Create, Read, Update and Delete."
-    },
-
-    {
-        question:
-            "Why are HTTP status codes important?",
-
-        answer:
-            "They communicate the outcome of a request so clients can respond appropriately."
-    },
-
-    {
-        question:
-            "What is Express error-handling middleware?",
-
-        answer:
-            "It is middleware with the signature err, req, res, next that handles errors passed through the Express pipeline."
-    },
-
-    {
-        question:
-            "Why should routes and business logic eventually be separated?",
-
-        answer:
-            "Separating responsibilities makes the application easier to test, maintain and extend as it grows."
     }
 
-],
-
-
-/* =====================================================
-   PRACTICE
-   ===================================================== */
-
-practice: [
-
-    {
-        title: "First Express Server",
-
-        task:
-            "Create an Express server on port 3000 with GET / returning a CodeBhavya welcome message.",
-
-        hint:
-            "Use express(), app.get() and app.listen().",
-
-        answer:
-            "Create the Express app, define GET / and start the server on port 3000."
-    },
-
-    {
-        title: "Multiple Routes",
-
-        task:
-            "Create GET /, GET /about and GET /contact routes with different responses.",
-
-        hint:
-            "Each route can have its own app.get() handler.",
-
-        answer:
-            "Register three GET routes and return a different response from each."
-    },
-
-    {
-        title: "Logger Middleware",
-
-        task:
-            "Create middleware that logs the HTTP method and URL of every incoming request.",
-
-        hint:
-            "Use req.method, req.url and next().",
-
-        answer:
-            "Log req.method and req.url, then call next() so the request continues."
-    },
-
-    {
-        title: "JSON POST Request",
-
-        task:
-            "Create POST /students that receives JSON containing name and returns the created student.",
-
-        hint:
-            "Use express.json(), req.body and res.status(201).json().",
-
-        answer:
-            "Register express.json(), read req.body.name and return the student with status 201."
-    },
-
-    {
-        title: "Route Parameter",
-
-        task:
-            "Create GET /students/:id and return the requested student ID.",
-
-        hint:
-            "Use req.params.id.",
-
-        answer:
-            "Read req.params.id and include it in the JSON response."
-    },
-
-    {
-        title: "Query Filtering",
-
-        task:
-            "Create GET /students?course=aiml and return the selected course from req.query.",
-
-        hint:
-            "Read req.query.course.",
-
-        answer:
-            "Use req.query.course to read the optional course filter."
-    },
-
-    {
-        title: "CRUD API",
-
-        task:
-            "Build a small in-memory student API supporting GET all, GET by ID, POST and DELETE.",
-
-        hint:
-            "Use an array as temporary storage.",
-
-        answer:
-            "Create routes for each CRUD operation and use appropriate HTTP methods and status codes."
-    },
-
-    {
-        title: "404 Middleware",
-
-        task:
-            "Add a final middleware that returns JSON status 404 for unknown routes.",
-
-        hint:
-            "Register it after all normal routes.",
-
-        answer:
-            "Use app.use() after the route definitions to return a 404 JSON response."
-    },
-
-    {
-        title: "Error Middleware",
-
-        task:
-            "Create centralized error middleware that logs the internal error and returns status 500 with a safe JSON message.",
-
-        hint:
-            "Remember the four-argument signature.",
-
-        answer:
-            "Use (err, req, res, next), log the error server-side and return a safe 500 response."
-    }
-
-],
-
-
-/* =====================================================
-   MCQ
-   ===================================================== */
-
-quiz: [
-
-    {
-        question:
-            "What is Express.js?",
-
-        options: [
-
-            "A database",
-
-            "A Node.js web framework",
-
-            "A CSS preprocessor",
-
-            "A browser"
-
-        ],
-
-        answer: 1,
-
-        explanation:
-            "Express.js is a web application framework commonly used with Node.js."
-    },
-
-    {
-        question:
-            "Which method defines a GET route in Express?",
-
-        options: [
-
-            "app.get()",
-
-            "app.read()",
-
-            "app.fetch()",
-
-            "app.routeGetOnly()"
-
-        ],
-
-        answer: 0,
-
-        explanation:
-            "app.get() registers a route for HTTP GET requests."
-    },
-
-    {
-        question:
-            "What is middleware primarily used for?",
-
-        options: [
-
-            "Only database storage",
-
-            "Processing requests during the Express pipeline",
-
-            "Creating CSS files",
-
-            "Replacing JavaScript"
-
-        ],
-
-        answer: 1,
-
-        explanation:
-            "Middleware participates in request processing and can inspect, modify or control the flow."
-    },
-
-    {
-        question:
-            "What does next() normally do?",
-
-        options: [
-
-            "Stops the server",
-
-            "Deletes the request",
-
-            "Continues to the next middleware or handler",
-
-            "Restarts Node.js"
-
-        ],
-
-        answer: 2,
-
-        explanation:
-            "next() passes control to the next applicable middleware or handler."
-    },
-
-    {
-        question:
-            "Where is parsed JSON request data commonly available?",
-
-        options: [
-
-            "req.body",
-
-            "req.html",
-
-            "req.jsonOnly",
-
-            "res.body"
-
-        ],
-
-        answer: 0,
-
-        explanation:
-            "express.json() parses JSON request bodies and exposes them through req.body."
-    },
-
-    {
-        question:
-            "Where are route parameters available?",
-
-        options: [
-
-            "req.params",
-
-            "req.routeDataOnly",
-
-            "res.params",
-
-            "app.paramsOnly"
-
-        ],
-
-        answer: 0,
-
-        explanation:
-            "Dynamic route values such as :id are available through req.params."
-    },
-
-    {
-        question:
-            "Which request is commonly used to create a new resource?",
-
-        options: [
-
-            "GET",
-
-            "POST",
-
-            "HEAD",
-
-            "OPTIONS"
-
-        ],
-
-        answer: 1,
-
-        explanation:
-            "POST is commonly used to create a new resource."
-    },
-
-    {
-        question:
-            "Which status code commonly represents a newly created resource?",
-
-        options: [
-
-            "200",
-
-            "201",
-
-            "301",
-
-            "404"
-
-        ],
-
-        answer: 1,
-
-        explanation:
-            "201 Created commonly indicates that a resource was successfully created."
-    },
-
-    {
-        question:
-            "Which object contains query-string parameters?",
-
-        options: [
-
-            "req.query",
-
-            "req.bodyOnly",
-
-            "res.query",
-
-            "app.queryOnly"
-
-        ],
-
-        answer: 0,
-
-        explanation:
-            "Express exposes query-string parameters through req.query."
-    },
-
-    {
-        question:
-            "What does res.json() do?",
-
-        options: [
-
-            "Starts a database",
-
-            "Sends a JSON response",
-
-            "Creates a route",
-
-            "Installs Express"
-
-        ],
-
-        answer: 1,
-
-        explanation:
-            "res.json() sends the supplied value as a JSON HTTP response."
-    },
-
-    {
-        question:
-            "Which status code means Not Found?",
-
-        options: [
-
-            "200",
-
-            "201",
-
-            "404",
-
-            "500"
-
-        ],
-
-        answer: 2,
-
-        explanation:
-            "404 indicates that the requested route or resource was not found."
-    },
-
-    {
-        question:
-            "Which method is commonly used for deleting a resource?",
-
-        options: [
-
-            "GET",
-
-            "POST",
-
-            "DELETE",
-
-            "READ"
-
-        ],
-
-        answer: 2,
-
-        explanation:
-            "DELETE is the HTTP method commonly used to remove a resource."
-    }
-
-],
-
-
-/* =====================================================
-   GLOSSARY
-   ===================================================== */
-
-glossary: [
-
-    {
-        term: "Express.js",
-        definition:
-            "A lightweight web application framework for Node.js."
-    },
-
-    {
-        term: "Express App",
-        definition:
-            "The application object created by calling express()."
-    },
-
-    {
-        term: "Route",
-        definition:
-            "An HTTP method and path associated with server-side handling logic."
-    },
-
-    {
-        term: "Middleware",
-        definition:
-            "A function that participates in the Express request-response processing pipeline."
-    },
-
-    {
-        term: "next()",
-        definition:
-            "A function used to pass control to the next applicable middleware or handler."
-    },
-
-    {
-        term: "req",
-        definition:
-            "The Express request object containing incoming request information."
-    },
-
-    {
-        term: "res",
-        definition:
-            "The Express response object used to send information back to the client."
-    },
-
-    {
-        term: "req.body",
-        definition:
-            "Parsed request body data."
-    },
-
-    {
-        term: "req.params",
-        definition:
-            "Object containing values captured from route parameters."
-    },
-
-    {
-        term: "req.query",
-        definition:
-            "Object containing query-string parameters."
-    },
-
-    {
-        term: "REST",
-        definition:
-            "An architectural approach commonly used for resource-oriented HTTP APIs."
-    },
-
-    {
-        term: "CRUD",
-        definition:
-            "Create, Read, Update and Delete operations."
-    },
-
-    {
-        term: "HTTP Status Code",
-        definition:
-            "A numeric response code describing the outcome of an HTTP request."
-    },
-
-    {
-        term: "404",
-        definition:
-            "HTTP status indicating that the requested route or resource was not found."
-    },
-
-    {
-        term: "Error Middleware",
-        definition:
-            "Express middleware with an error-first signature used for centralized error handling."
-    },
-
-    {
-        term: "Route Parameter",
-        definition:
-            "A dynamic value embedded inside a URL path."
-    },
-
-    {
-        term: "Query Parameter",
-        definition:
-            "An optional URL value supplied after the question-mark portion of a URL."
-    }
-
-],
-
-
-/* =====================================================
-   COMPLETION
-   ===================================================== */
-
-completion: {
-
-    title: "Express.js Fundamentals & REST APIs Completed",
-
-    message:
-        "You can now build the basic backend layer of a MERN application using Express.js. You understand routing, middleware, request data, JSON responses, REST resources, CRUD operations and error handling.",
-
-    achievements: [
-
-        "You understand why Express.js is used with Node.js.",
-
-        "You can create an Express application.",
-
-        "You understand the Express request-response lifecycle.",
-
-        "You can create GET, POST, PUT, PATCH and DELETE routes.",
-
-        "You understand middleware and next().",
-
-        "You can process JSON request bodies.",
-
-        "You can use route parameters.",
-
-        "You can use query parameters.",
-
-        "You can return JSON API responses.",
-
-        "You understand important HTTP status codes.",
-
-        "You understand resource-oriented REST API design.",
-
-        "You can build a basic CRUD API.",
-
-        "You can create 404 handling.",
-
-        "You understand centralized error middleware.",
-
-        "You understand how a professional Express project can be organized.",
-
-        "You are ready for request validation and robust API input handling."
-
-    ],
-
-    nextLevel:
-        "Level 21 — Express Middleware, Validation & API Architecture"
-
-}
 };
+
