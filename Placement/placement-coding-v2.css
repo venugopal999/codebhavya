@@ -205,3 +205,30 @@ html.full-assessment-embed .solve-timer,html.full-assessment-embed .submission-p
   .solve-page .submission-code-actions button{flex:1}
   .solve-page .submission-history summary{grid-template-columns:1fr 1fr}
 }
+
+
+/* V46: Hide Problem must expand the entire coding workspace.
+   The V45 solve-page grid rule was more specific than the older
+   .statement-collapsed rule, leaving an empty second column. */
+.solve-page .coding-active.statement-collapsed{
+  grid-template-columns:minmax(0,1fr);
+}
+.solve-page .coding-active.statement-collapsed .problem-statement{
+  display:none;
+}
+.solve-page .coding-active.statement-collapsed .code-lab,
+.solve-page .coding-active.statement-collapsed .test-console,
+.solve-page .coding-active.statement-collapsed .submission-panel{
+  grid-column:1 / -1;
+  width:100%;
+  min-width:0;
+}
+.solve-page .coding-active.statement-collapsed .test-console,
+.solve-page .coding-active.statement-collapsed .submission-panel{
+  justify-self:stretch;
+}
+@media(max-width:900px){
+  .solve-page .coding-active.statement-collapsed{
+    grid-template-columns:1fr;
+  }
+}
