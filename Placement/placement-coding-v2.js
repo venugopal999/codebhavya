@@ -224,7 +224,14 @@
             submissionMetaCard("Solve time", latest.solve_duration_seconds == null ? "Not recorded" : formatDuration(latest.solve_duration_seconds)),
             submissionMetaCard("Points", String(latest.points_awarded))
         );
-        $("latestSubmissionCode").textContent = latest.source_code || "Submitted source code is unavailable.";
+        const latestCode = $("latestSubmissionCode");
+        latestCode.textContent = latest.source_code || "Submitted source code is unavailable.";
+        latestCode.hidden = true;
+        const latestCodeToggle = $("toggleLatestSubmissionCode");
+        if (latestCodeToggle) {
+            latestCodeToggle.textContent = "View code";
+            latestCodeToggle.setAttribute("aria-expanded", "false");
+        }
         toggle.hidden = rows.length <= 1;
         toggle.textContent = history.hidden ? `Show all attempts (${rows.length})` : "Hide attempts";
 
@@ -754,14 +761,44 @@
         }
     }
 
+    async function calculateBestTopicScore() {
+        if (!client || !user) return 0;
+        const problems = await client.from("coding_problems")
+            .select("id")
+            .eq("topic", topic)
+            .eq("is_published", true)
+            .limit(1000);
+        if (problems.error) throw problems.error;
+        const problemIds = (problems.data || []).map((row) => row.id).filter(Boolean);
+        if (!problemIds.length) return 0;
+        const submissions = await client.from("coding_submissions")
+            .select("problem_id,status,points_awarded")
+            .eq("user_id", user.id)
+            .in("problem_id", problemIds)
+            .limit(5000);
+        if (submissions.error) throw submissions.error;
+        const bestByProblem = new Map();
+        (submissions.data || []).forEach((row) => {
+            const points = Number(row.points_awarded) || 0;
+            const accepted = String(row.status || "").toLowerCase() === "accepted" || points > 0;
+            if (!accepted) return;
+            bestByProblem.set(row.problem_id, Math.max(bestByProblem.get(row.problem_id) || 0, points));
+        });
+        return Array.from(bestByProblem.values()).reduce((sum, points) => sum + points, 0);
+    }
+
     async function loadMyScore() {
         if (!client || !user) {
             $("myCodingScore").textContent = "0";
             return;
         }
-        const result = await client.rpc("get_my_coding_summary", { p_topic: topic });
-        if (result.error) return;
-        $("myCodingScore").textContent = String(Number(result.data?.points) || 0);
+        try {
+            $("myCodingScore").textContent = String(await calculateBestTopicScore());
+        } catch (error) {
+            console.warn("Unable to calculate best-per-problem coding score; falling back to the existing summary RPC.", error);
+            const result = await client.rpc("get_my_coding_summary", { p_topic: topic });
+            if (!result.error) $("myCodingScore").textContent = String(Number(result.data?.points) || 0);
+        }
     }
 
     async function showLeaderboard() {
@@ -847,6 +884,14 @@
         $("codingLanguage").addEventListener("change", changeLanguage);
         $("restartSolveTimer")?.addEventListener("click", restartSolveTimer);
         $("loadLatestSubmission")?.addEventListener("click", () => loadSubmissionIntoEditor(submissionRows[0]));
+        $("toggleLatestSubmissionCode")?.addEventListener("click", () => {
+            const code = $("latestSubmissionCode");
+            const button = $("toggleLatestSubmissionCode");
+            if (!code || !button) return;
+            code.hidden = !code.hidden;
+            button.textContent = code.hidden ? "View code" : "Hide code";
+            button.setAttribute("aria-expanded", code.hidden ? "false" : "true");
+        });
         $("toggleSubmissionHistory")?.addEventListener("click", () => {
             const history = $("submissionHistory");
             history.hidden = !history.hidden;

@@ -311,14 +311,44 @@
         }
     }
 
+    async function calculateBestTopicScore() {
+        if (!client || !user) return 0;
+        const problems = await client.from("coding_problems")
+            .select("id")
+            .eq("topic", topic)
+            .eq("is_published", true)
+            .limit(1000);
+        if (problems.error) throw problems.error;
+        const problemIds = (problems.data || []).map((row) => row.id).filter(Boolean);
+        if (!problemIds.length) return 0;
+        const submissions = await client.from("coding_submissions")
+            .select("problem_id,status,points_awarded")
+            .eq("user_id", user.id)
+            .in("problem_id", problemIds)
+            .limit(5000);
+        if (submissions.error) throw submissions.error;
+        const bestByProblem = new Map();
+        (submissions.data || []).forEach((row) => {
+            const points = Number(row.points_awarded) || 0;
+            const accepted = String(row.status || "").toLowerCase() === "accepted" || points > 0;
+            if (!accepted) return;
+            bestByProblem.set(row.problem_id, Math.max(bestByProblem.get(row.problem_id) || 0, points));
+        });
+        return Array.from(bestByProblem.values()).reduce((sum, points) => sum + points, 0);
+    }
+
     async function loadMyScore() {
         if (!client || !user) {
             $("myCodingScore").textContent = "0";
             return;
         }
-        const result = await client.rpc("get_my_coding_summary", { p_topic: topic });
-        if (result.error) return;
-        $("myCodingScore").textContent = String(Number(result.data?.points) || 0);
+        try {
+            $("myCodingScore").textContent = String(await calculateBestTopicScore());
+        } catch (error) {
+            console.warn("Unable to calculate best-per-problem coding score; falling back to the existing summary RPC.", error);
+            const result = await client.rpc("get_my_coding_summary", { p_topic: topic });
+            if (!result.error) $("myCodingScore").textContent = String(Number(result.data?.points) || 0);
+        }
     }
 
     async function showLeaderboard() {
