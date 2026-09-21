@@ -64,7 +64,6 @@ keyIdea:
 "A strong capstone begins with a clear problem, users and measurable requirements."
 },
 
-```
 {
   number: 2,
   title: "Problem Statement & User Roles",
@@ -84,8 +83,8 @@ keyIdea:
     rightTitle: "Authorization",
     right: "What are you allowed to do?"
   },
-  code: `const roles = {
-```
+  code: const roles = {
+
 
 student: [
 "viewJobs",
@@ -108,7 +107,7 @@ keyIdea:
 "Authentication identifies a user; authorization controls that user's permitted actions."
 },
 
-```
+
 {
   number: 3,
   title: "Functional & Non-Functional Requirements",
@@ -121,8 +120,8 @@ keyIdea:
     "Requirements should be testable whenever possible.",
     "Avoid adding features simply because a technology makes them possible."
   ],
-  code: `const requirements = {
-```
+  code: const requirements = {
+
 
 functional: [
 "register",
@@ -146,7 +145,7 @@ keyIdea:
 "A project is complete when its important requirements are satisfied, not when every possible feature is added."
 },
 
-```
+
 {
   number: 4,
   title: "Architecture & Module Boundaries",
@@ -162,8 +161,8 @@ keyIdea:
     "MongoDB stores application data.",
     "Authentication and security should cross the appropriate boundaries."
   ],
-  code: `Frontend
-```
+  code: Frontend
+
 
 |
 v
@@ -190,7 +189,7 @@ keyIdea:
 "Good architecture makes responsibilities obvious and limits unnecessary coupling."
 },
 
-```
+
 {
   number: 5,
   title: "Database Schema & Data Model",
@@ -205,8 +204,8 @@ keyIdea:
     "References are useful when related records have independent lifecycles.",
     "Indexes should support important query patterns."
   ],
-  code: `User
-```
+  code: User
+
 
 |
 +---- Profile
@@ -228,7 +227,7 @@ keyIdea:
 "Model the domain first; then choose embedding, references and indexes according to actual access patterns."
 },
 
-```
+
 {
   number: 6,
   title: "API Design",
@@ -243,8 +242,8 @@ keyIdea:
     "Protect private endpoints with authentication middleware.",
     "Document important request and response examples."
   ],
-  code: `GET    /api/jobs
-```
+  code: GET    /api/jobs
+
 
 GET    /api/jobs/:id
 POST   /api/jobs
@@ -261,7 +260,7 @@ keyIdea:
 "A good API is predictable, validated, secure and easy for another developer to consume."
 },
 
-```
+
 {
   number: 7,
   title: "Authentication & Authorization",
@@ -276,8 +275,8 @@ keyIdea:
     "Check roles and ownership before sensitive operations.",
     "Never trust role information supplied only by the browser."
   ],
-  code: `async function createJob(req, res, next) {
-```
+  code: async function createJob(req, res, next) {
+
 
 try {
 if (!req.user) {
@@ -286,7 +285,7 @@ message: "Authentication required"
 });
 }
 
-```
+
 if (req.user.role !== "recruiter" &&
     req.user.role !== "admin") {
   return res.status(403).json({
@@ -299,17 +298,17 @@ if (req.user.role !== "recruiter" &&
 res.status(201).json({
   message: "Job created"
 });
-```
+
 
 } catch (error) {
 next(error);
 }
-}`,
+},
 keyIdea:
 "Security decisions must be enforced by the backend, even when the frontend already hides restricted controls."
 },
 
-```
+
 {
   number: 8,
   title: "React Application Structure",
@@ -323,8 +322,8 @@ keyIdea:
     "Use controlled forms for important user input.",
     "Represent loading, error, empty and success states explicitly."
   ],
-  code: `src/
-```
+  code: src/
+
 
 components/
 layouts/
@@ -346,7 +345,7 @@ keyIdea:
 "Feature-oriented organization helps a project grow without turning every file into a global dependency."
 },
 
-```
+
 {
   number: 9,
   title: "State & API Management",
@@ -360,8 +359,8 @@ keyIdea:
     "Handle loading, success, empty and error states.",
     "Avoid duplicating the same server data unnecessarily."
   ],
-  code: `async function loadJobs() {
-```
+  code: async function loadJobs() {
+
 
 setLoading(true);
 setError("");
@@ -374,12 +373,12 @@ setError("Unable to load jobs");
 } finally {
 setLoading(false);
 }
-}`,
+},
 keyIdea:
 "Clear state ownership reduces bugs and makes frontend behavior easier to reason about."
 },
 
-```
+
 {
   number: 10,
   title: "Backend Implementation Strategy",
@@ -396,8 +395,8 @@ keyIdea:
     "Test the endpoint.",
     "Connect the React interface."
   ],
-  code: `Feature:
-```
+  code: Feature:
+
 
 "Create Job"
 
@@ -413,7 +412,7 @@ keyIdea:
 "A vertical feature slice gives you working software earlier than building every layer separately."
 },
 
-```
+
 {
   number: 11,
   title: "Validation, Errors & Security",
@@ -429,8 +428,8 @@ keyIdea:
     "Use secure configuration and environment variables.",
     "Apply appropriate rate limiting and security headers."
   ],
-  code: `function validateJob(input) {
-```
+  code: function validateJob(input) {
+
 
 if (!input.title || input.title.trim() === "") {
 throw new Error("Job title is required");
@@ -446,12 +445,12 @@ throw new Error("Openings must be a positive integer");
 }
 
 return true;
-}`,
+},
 keyIdea:
 "Treat every external input as untrusted until it passes the required validation and authorization checks."
 },
 
-```
+
 {
   number: 12,
   title: "Testing Strategy",
@@ -466,8 +465,7 @@ keyIdea:
     "Use end-to-end tests for critical user workflows.",
     "Run tests automatically before deployment."
   ],
-  code: `describe("job validation", () => {
-```
+  code: describe("job validation", () => {
 
 it("rejects a missing title", () => {
 expect(() => {
@@ -487,12 +485,12 @@ openings: 2
 })
 ).toBe(true);
 });
-});`,
+});,
 keyIdea:
 "Test both successful paths and failure paths because production systems encounter both."
 },
 
-```
+
 {
   number: 13,
   title: "Deployment & Observability",
@@ -508,8 +506,8 @@ keyIdea:
     "Collect useful logs and metrics.",
     "Prepare backups and recovery procedures."
   ],
-  code: `Developer
-```
+  code: Developer
+
 
 |
 v
@@ -529,12 +527,11 @@ Production
 +---- MongoDB
 +---- Logs
 +---- Metrics
-+---- Alerts`,
++---- Alerts,
 keyIdea:
 "Deployment is part of software engineering, not an afterthought added after coding."
 },
 
-```
 {
   number: 14,
   title: "Performance & Production Hardening",
@@ -550,8 +547,8 @@ keyIdea:
     "Protect expensive endpoints.",
     "Measure before making performance claims."
   ],
-  code: `GET /api/jobs?page=2&limit=20
-```
+  code: GET /api/jobs?page=2&limit=20
+
 
 Database:
 filter
@@ -566,12 +563,12 @@ request
 -> render
 
 Goal:
-Do useful work once and avoid unnecessary repeated work.`,
+Do useful work once and avoid unnecessary repeated work.,
 keyIdea:
 "Production hardening combines performance, security, reliability and controlled failure behavior."
 },
 
-```
+
 {
   number: 15,
   title: "Documentation & README",
@@ -590,8 +587,8 @@ keyIdea:
     "Include screenshots or a short demonstration when appropriate.",
     "Mention limitations and future improvements."
   ],
-  code: `# Placement Management Platform
-```
+  code: # Placement Management Platform
+
 
 ## Problem
 
@@ -624,7 +621,7 @@ keyIdea:
 "Documentation turns a code repository into a project that other people can understand and evaluate."
 },
 
-```
+
 {
   number: 16,
   title: "Portfolio Presentation & Demo",
@@ -642,8 +639,8 @@ keyIdea:
     "Be honest about limitations.",
     "Show what you would improve with more time."
   ],
-  code: `Presentation Flow:
-```
+  code: Presentation Flow:
+
 
 1. Problem
 2. Users
@@ -679,7 +676,7 @@ keyIdea:
     "Explain one trade-off you made.",
     "Explain what you would redesign at larger scale."
     ],
-    code: `Interviewer:
+    code: Interviewer:
     "Why did you separate controllers and services?"
 
 Strong answer structure:
