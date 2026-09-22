@@ -1,4032 +1,2474 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>C Programming | CodeBhavya</title>
+    <title>C Programming | CodeBhavya</title>
 
-  <link rel="icon" type="image/png" sizes="32x32"
-        href="../images/codebhavya-icon-32.png">
-  <link rel="icon" type="image/png" sizes="128x128"
-        href="../images/codebhavya-icon-128.png">
-  <link rel="icon" type="image/png" sizes="512x512"
-        href="../images/codebhavya-icon-512.png">
+    <meta name="description"
+          content="Learn the complete structure of a C program with detailed explanations of comments, preprocessor directives, header files, main(), declarations, statements, functions, execution flow and common mistakes.">
 
-  <link rel="stylesheet" href="c-programming.css">
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="../images/codebhavya-icon-32.png">
+    <link rel="icon" type="image/png" sizes="128x128"
+          href="../images/codebhavya-icon-128.png">
+    <link rel="icon" type="image/png" sizes="512x512"
+          href="../images/codebhavya-icon-512.png">
+
+    <link rel="stylesheet" href="c-programming.css">
 </head>
 
-<body class="cb-c-topic-page cb-structure-page">
+<body class="cb-c-topic-page">
 
-<!-- =========================================================
-     CODEBHAVYA HEADER
-========================================================= -->
+<header class="site-header">
+    <div class="header-container">
 
-<header class="cb-site-header">
+        <a href="../index.html" class="logo-link">
+            <img src="../images/codebhavya-main-logo.png"
+                 alt="CodeBhavya"
+                 class="site-logo">
+        </a>
 
-  <div class="cb-header-inner">
+        <nav class="main-nav" aria-label="Main navigation">
+            <a href="../index.html">Home</a>
+            <a href="../Maths/index.html">Maths</a>
+            <a href="index.html" class="active">C</a>
+            <a href="../Data-Structures/index.html">Data Structures</a>
+            <a href="../Advanced-Data-Structures/index.html">Advanced Data Structures</a>
+            <a href="../Python/index.html">Python</a>
+            <a href="../AI-ML/index.html">AI &amp; ML</a>
+            <a href="../Placement/index.html">Placement</a>
+        </nav>
 
-    <a href="../index.html" class="cb-brand">
-      <img
-        src="../images/codebhavya-main-logo.png"
-        alt="CodeBhavya"
-        class="cb-brand-logo"
-      >
-
-      <span class="cb-brand-name">CodeBhavya</span>
-    </a>
-
-    <nav class="cb-main-nav" aria-label="Main Navigation">
-
-      <a href="../index.html">Home</a>
-
-      <a href="../Maths/index.html">Maths</a>
-
-      <a href="index.html" class="active">C</a>
-
-      <a href="../Data-Structures/index.html">
-        Data Structures
-      </a>
-
-      <a href="../Advanced-Data-Structures/index.html">
-        Advanced Data Structures
-      </a>
-
-      <a href="../Python/index.html">
-        Python
-      </a>
-
-      <a href="../AI-ML/index.html">
-        AI &amp; ML
-      </a>
-
-      <a href="../Placement/index.html">
-        Placement
-      </a>
-
-    </nav>
-
-  </div>
-
+    </div>
 </header>
 
 
-<!-- =========================================================
-     PAGE LAYOUT
-========================================================= -->
-
 <div class="cb-c-page-layout">
 
-
-  <!-- =======================================================
-       SIDEBAR
-  ======================================================== -->
-
-  <aside class="cb-c-topic-sidebar">
-
-    <div class="cb-sidebar-title">
-      <span>C Programming</span>
-    </div>
-
-
-    <div class="cb-topic-search">
-
-      <input
-        type="search"
-        id="topicSearch"
-        placeholder="Search C topics..."
-        aria-label="Search C topics"
-        oninput="searchTopics()"
-      >
-
-    </div>
-
-
-    <!-- FUNDAMENTALS -->
-
-    <div class="cb-sidebar-section">
-
-      <div class="cb-sidebar-section-title">
-        Fundamentals
-      </div>
-
-      <a href="start-here.html">
-        START HERE - Programming from Zero
-      </a>
-
-      <a href="introduction.html">
-        Introduction to C
-      </a>
-
-      <a href="structure.html" class="active">
-        Structure of C Program
-      </a>
-
-      <a href="variables-constants.html">
-        Variables &amp; Constants
-      </a>
-
-      <a href="data-types.html">
-        Data Types
-      </a>
-
-      <a href="input-output.html">
-        Input &amp; Output
-      </a>
-
-    </div>
-
-
-    <!-- OPERATORS -->
-
-    <div class="cb-sidebar-section">
-
-      <div class="cb-sidebar-section-title">
-        Operators &amp; Control
-      </div>
-
-      <a href="operators.html">
-        Operators
-      </a>
-
-      <a href="expressions.html">
-        Expressions
-      </a>
-
-      <a href="decision-making.html">
-        Decision Making
-      </a>
-
-      <a href="loops.html">
-        Loops
-      </a>
-
-    </div>
-
-
-    <!-- PROGRAMMING CONCEPTS -->
-
-    <div class="cb-sidebar-section">
-
-      <div class="cb-sidebar-section-title">
-        Programming Concepts
-      </div>
-
-      <a href="arrays.html">
-        Arrays
-      </a>
-
-      <a href="strings.html">
-        Strings
-      </a>
-
-      <a href="functions.html">
-        Functions
-      </a>
-
-      <a href="pointers.html">
-        Pointers
-      </a>
-
-      <a href="structures-unions.html">
-        Structures &amp; Unions
-      </a>
-
-    </div>
-
-
-    <!-- ADVANCED C -->
-
-    <div class="cb-sidebar-section">
-
-      <div class="cb-sidebar-section-title">
-        Advanced C
-      </div>
-
-      <a href="preprocessor-header-files.html">
-        Preprocessor &amp; Header Files
-      </a>
-
-      <a href="file-handling.html">
-        File Handling
-      </a>
-
-      <a href="dynamic-memory-allocation.html">
-        Dynamic Memory Allocation
-      </a>
-
-      <a href="command-line-arguments.html">
-        Command Line Arguments
-      </a>
-
-      <a href="bitwise-programming.html">
-        Bitwise Programming
-      </a>
-
-      <a href="enumerations-typedef.html">
-        Enumerations &amp; typedef
-      </a>
-
-      <a href="operator-precedence.html">
-        Operator Precedence &amp; Associativity
-      </a>
-
-      <a href="storage-classes.html">
-        Storage Classes
-      </a>
-
-      <a href="advanced-preprocessor.html">
-        Advanced C Preprocessor
-      </a>
-
-    </div>
-
-
-    <!-- PRACTICE -->
-
-    <div class="cb-sidebar-section">
-
-      <div class="cb-sidebar-section-title">
-        Practice
-      </div>
-
-      <a href="practice/index.html">
-        C Practice
-      </a>
-
-    </div>
-
-  </aside>
-
-
-
-  <!-- =======================================================
-       MAIN CONTENT
-  ======================================================== -->
-
-  <main class="cb-c-topic-content">
-
-
-    <section
-      class="content-card"
-      data-content-standard="teaching-complete-v1"
-      id="structure"
-    >
-
-
-      <!-- ===================================================
-           LESSON HEADER
-      ==================================================== -->
-
-      <div class="cb-topic-kicker">
-        C PROGRAMMING · FUNDAMENTALS
-      </div>
-
-      <h2>
-        🧱 2. Structure of a C Program
-      </h2>
-
-      <p class="cb-topic-intro">
-        Before learning variables, data types, operators and control
-        statements, you should understand how a C program is built.
-        A C source file is not just a collection of random lines.
-        Different parts have different jobs.
-      </p>
-
-
-      <!-- ===================================================
-           HOW TO LEARN
-      ==================================================== -->
-
-      <div class="cb-teaching-standard">
-
-        <h3>📚 How to Learn This Lesson</h3>
-
-        <p>
-          Do not memorize a list such as
-          <strong>comments → header files → main() → functions</strong>
-          without understanding what each part actually does.
-        </p>
-
-        <p>
-          Instead, learn to look at a C program and ask:
-        </p>
-
-        <ul>
-          <li>Which lines are comments?</li>
-          <li>Which lines are handled by the preprocessor?</li>
-          <li>Where does the program's main execution begin?</li>
-          <li>Which names are being declared?</li>
-          <li>Which lines actually perform operations?</li>
-          <li>Where are blocks created using <code>{ }</code>?</li>
-          <li>Which functions belong to the programmer?</li>
-          <li>How does the source code eventually become an executable?</li>
-        </ul>
-
-        <p>
-          Once you can answer these questions, reading a new C program
-          becomes much easier.
-        </p>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.1 BIG PICTURE
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.1 🧠 What Is the Structure of a C Program?
+    <!-- =========================
+         SIDEBAR
+         ========================= -->
+    <aside class="cb-c-topic-sidebar">
+
+        <div class="cb-c-sidebar-title">
+            💻 C Programming
         </div>
 
-        <p>
-          The <strong>structure of a C program</strong> means the way
-          different C language elements are organized inside one or
-          more source files.
-        </p>
-
-        <p>
-          A typical beginner-level C program may contain:
-        </p>
-
-        <div class="cb-concept-grid">
-
-          <div class="cb-concept-card">
-            <h4>📝 Comments</h4>
-            <p>
-              Explain the program to human readers.
-            </p>
-          </div>
-
-          <div class="cb-concept-card">
-            <h4>🔧 Preprocessor Directives</h4>
-            <p>
-              Give instructions to the preprocessor before compilation.
-            </p>
-          </div>
-
-          <div class="cb-concept-card">
-            <h4>📦 Declarations</h4>
-            <p>
-              Introduce names, types, functions or other entities.
-            </p>
-          </div>
-
-          <div class="cb-concept-card">
-            <h4>🚀 main()</h4>
-            <p>
-              Defines the program's entry point in a hosted C environment.
-            </p>
-          </div>
-
-          <div class="cb-concept-card">
-            <h4>⚙️ Statements</h4>
-            <p>
-              Perform the actual operations of the program.
-            </p>
-          </div>
-
-          <div class="cb-concept-card">
-            <h4>🧩 Functions</h4>
-            <p>
-              Organize reusable pieces of program logic.
-            </p>
-          </div>
-
+        <div class="cb-c-topic-search">
+            <input
+                type="text"
+                id="topicSearch"
+                placeholder="🔍 Search topics..."
+                onkeyup="searchTopics()"
+                aria-label="Search C programming topics">
         </div>
 
-      </div>
+        <div class="cb-c-sidebar-section">
+            <h3>Fundamentals</h3>
 
+            <a href="start-here.html">
+                🚀 START HERE - Programming from Zero
+            </a>
 
+            <a href="introduction.html">
+                📖 Introduction to C
+            </a>
 
-      <!-- ===================================================
-           2.2 MENTAL MODEL
-      ==================================================== -->
+            <a href="structure.html" class="active">
+                🏗️ Structure of C Program
+            </a>
 
-      <div class="cb-deep-dive">
+            <a href="variables.html">
+                🔤 Variables &amp; Constants
+            </a>
 
-        <div class="cb-deep-dive-title">
-          2.2 🗺️ The Big Picture of a C Source File
+            <a href="data-types.html">
+                📦 Data Types
+            </a>
+
+            <a href="input-output.html">
+                ⌨️ Input &amp; Output
+            </a>
         </div>
 
-        <p>
-          A useful learning model is:
-        </p>
+        <div class="cb-c-sidebar-section">
+            <h3>Operators &amp; Control</h3>
 
-        <div class="cb-memory-diagram">
+            <a href="operators.html">
+                ➕ Operators
+            </a>
 
-<pre>
-C SOURCE FILE
-     │
-     ├── Comments
-     │
-     ├── Preprocessor directives
-     │      ├── #include
-     │      ├── #define
-     │      └── conditional compilation
-     │
-     ├── Declarations / definitions
-     │
-     ├── main()
-     │      ├── local declarations
-     │      └── statements
-     │
-     └── Other function definitions
-</pre>
+            <a href="expressions.html">
+                🧮 Expressions
+            </a>
 
+            <a href="decision-making.html">
+                🔀 Decision Making
+            </a>
+
+            <a href="loops.html">
+                🔁 Loops
+            </a>
         </div>
 
-        <div class="cb-important-box">
+        <div class="cb-c-sidebar-section">
+            <h3>Programming Concepts</h3>
 
-          <strong>Important:</strong>
+            <a href="arrays.html">
+                📊 Arrays
+            </a>
 
-          <p>
-            This diagram is a learning model for the common organization
-            of a C program. It is not a rule saying every C source file
-            must contain every section or must use exactly this order.
-          </p>
+            <a href="strings.html">
+                🔤 Strings
+            </a>
 
+            <a href="functions.html">
+                🧩 Functions
+            </a>
+
+            <a href="pointers.html">
+                👉 Pointers
+            </a>
+
+            <a href="structures-unions.html">
+                🏗️ Structures &amp; Unions
+            </a>
         </div>
 
-        <p>
-          A very small program may contain only a preprocessor directive
-          and <code>main()</code>. A large program may contain many source
-          files, header files, declarations, structures and functions.
-        </p>
+        <div class="cb-c-sidebar-section">
+            <h3>Advanced C</h3>
 
-      </div>
+            <a href="preprocessor.html">
+                ⚙️ Preprocessor &amp; Header Files
+            </a>
 
+            <a href="file-handling.html">
+                📁 File Handling
+            </a>
 
+            <a href="dynamic-memory.html">
+                🧠 Dynamic Memory Allocation
+            </a>
 
-      <!-- ===================================================
-           2.3 DOCUMENTATION / COMMENTS
-      ==================================================== -->
+            <a href="command-line-arguments.html">
+                💻 Command Line Arguments
+            </a>
 
-      <div class="cb-deep-dive">
+            <a href="bitwise.html">
+                🔢 Bitwise Programming
+            </a>
 
-        <div class="cb-deep-dive-title">
-          2.3 📝 Documentation and Comments
+            <a href="enumerations-typedef.html">
+                🔤 Enumerations &amp; typedef
+            </a>
+
+            <a href="operator-precedence.html">
+                🧮 Operator Precedence &amp; Associativity
+            </a>
+
+            <a href="storage-classes.html">
+                💾 Storage Classes
+            </a>
+
+            <a href="advanced-preprocessor.html">
+                🛠️ Advanced C Preprocessor
+            </a>
         </div>
 
-        <p>
-          Comments are text written for humans. They help explain
-          the purpose or reasoning behind code.
-        </p>
+        <div class="cb-c-sidebar-section">
+            <h3>Practice</h3>
 
-        <p>
-          The compiler does not treat ordinary comments as executable
-          C statements.
-        </p>
+            <a href="practice/index.html">
+                ✍️ C Practice
+            </a>
+        </div>
 
-
-<pre><code>// This program prints a message.
-
-#include &lt;stdio.h&gt;
-
-int main(void)
-{
-    printf("Hello, CodeBhavya!\n");
-    return 0;
-}</code></pre>
+    </aside>
 
 
-        <h4>Single-line comments</h4>
+    <!-- =========================
+         MAIN CONTENT
+         ========================= -->
+    <main class="cb-c-topic-content">
 
-<pre><code>// This is a single-line comment</code></pre>
+        <section class="content-card"
+                 data-content-standard="teaching-complete-v1"
+                 id="structure">
+
+            <h1>🏗️ 2. Structure of a C Program</h1>
+
+            <div class="cb-teaching-standard">
+
+                <strong>🎓 How to Learn This Lesson</strong>
+
+                <p>
+                    Do not try to memorize a C program line by line.
+                    Instead, learn what each part does and how all the parts
+                    work together.
+                </p>
+
+                <p>
+                    By the end of this lesson, you should be able to look at
+                    almost any basic C program and identify:
+                </p>
+
+                <ul>
+                    <li>Comments</li>
+                    <li>Preprocessor directives</li>
+                    <li>Header files</li>
+                    <li>Functions</li>
+                    <li><code>main()</code></li>
+                    <li>Declarations</li>
+                    <li>Statements</li>
+                    <li>Expressions</li>
+                    <li>Function calls</li>
+                    <li><code>return</code></li>
+                    <li>Opening and closing braces</li>
+                </ul>
+
+            </div>
 
 
-        <h4>Multi-line comments</h4>
+            <!-- =====================================================
+                 2.1
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-<pre><code>/*
-   This is a
-   multi-line comment.
+                <div class="cb-deep-dive-title">
+                    2.1 What Is the Structure of a C Program?
+                </div>
+
+                <p>
+                    A C program is a collection of instructions written using
+                    the C language. These instructions are organized into
+                    functions, declarations, expressions, statements and
+                    other language constructs.
+                </p>
+
+                <p>
+                    A very small C program may contain only one function,
+                    while a large real-world program may contain hundreds or
+                    thousands of functions distributed across many source and
+                    header files.
+                </p>
+
+                <div class="cb-why-box">
+
+                    <h3>💡 The Main Idea</h3>
+
+                    <p>
+                        A C program is not simply a collection of lines.
+                        Each part has a particular role.
+                    </p>
+
+                    <p>
+                        For example:
+                    </p>
+
+                    <ul>
+                        <li><code>#include</code> → gives the preprocessor a directive</li>
+                        <li><code>int main(void)</code> → defines the program's main function</li>
+                        <li><code>int age;</code> → declares an object</li>
+                        <li><code>age = 20;</code> → performs an assignment</li>
+                        <li><code>printf(...)</code> → calls a function</li>
+                        <li><code>return 0;</code> → returns a value from <code>main</code></li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 2.2
+                 ===================================================== -->
+            <div class="cb-deep-dive">
+
+                <div class="cb-deep-dive-title">
+                    2.2 Big Picture of a C Source File
+                </div>
+
+                <p>
+                    A beginner-friendly way to visualize a C source file is:
+                </p>
+
+                <div class="cb-memory-diagram">
+
+                    <pre>
+┌─────────────────────────────────────┐
+│ Comments / Documentation            │
+├─────────────────────────────────────┤
+│ Preprocessor Directives             │
+│ #include, #define, etc.             │
+├─────────────────────────────────────┤
+│ Declarations / Prototypes            │
+│ Variables, constants, functions     │
+├─────────────────────────────────────┤
+│ main() Function                     │
+│                                     │
+│   ┌─────────────────────────────┐   │
+│   │ Declarations                │   │
+│   │ Statements                  │   │
+│   │ Expressions                 │   │
+│   │ Function Calls              │   │
+│   │ return                      │   │
+│   └─────────────────────────────┘   │
+├─────────────────────────────────────┤
+│ Other Function Definitions          │
+└─────────────────────────────────────┘
+                    </pre>
+
+                </div>
+
+                <div class="cb-important-box">
+
+                    <h3>⚠️ Important</h3>
+
+                    <p>
+                        This is a learning model, not a compulsory six-section
+                        rule of the C language.
+                    </p>
+
+                    <p>
+                        C does not require every source file to contain all of
+                        these sections in exactly this order.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 2.3
+                 ===================================================== -->
+            <div class="cb-deep-dive">
+
+                <div class="cb-deep-dive-title">
+                    2.3 Documentation and Comments
+                </div>
+
+                <p>
+                    Comments are text written for programmers. They help us
+                    explain what the program is doing.
+                </p>
+
+                <p>
+                    Comments are ignored by the compiler when it translates
+                    the program.
+                </p>
+
+                <h3>Single-line comment</h3>
+
+                <pre><code>// This program calculates the sum</code></pre>
+
+                <h3>Multi-line comment</h3>
+
+                <pre><code>/*
+   This program demonstrates
+   the structure of a C program.
 */</code></pre>
 
+                <div class="comparison-table">
 
-        <div class="cb-why-box">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Comment type</th>
+                                <th>Syntax</th>
+                                <th>Typical use</th>
+                            </tr>
+                        </thead>
 
-          <strong>Why are comments useful?</strong>
+                        <tbody>
+                            <tr>
+                                <td>Single-line</td>
+                                <td><code>// ...</code></td>
+                                <td>Short explanation</td>
+                            </tr>
 
-          <ul>
-            <li>Explain purpose.</li>
-            <li>Document important decisions.</li>
-            <li>Make unfamiliar code easier to understand.</li>
-            <li>Help during maintenance and debugging.</li>
-          </ul>
+                            <tr>
+                                <td>Multi-line</td>
+                                <td><code>/* ... */</code></td>
+                                <td>Longer documentation</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-        </div>
+                </div>
 
+                <div class="tip-box">
+                    💡 <strong>Tip:</strong>
+                    Write comments to explain <em>why</em> something is done
+                    when the code itself does not make the reason obvious.
+                </div>
 
-        <div class="cb-confusion-box">
-
-          <strong>Common confusion:</strong>
-
-          <p>
-            Comments are not a replacement for readable code.
-            A comment such as
-            <code>// increment i</code>
-            above
-            <code>i++;</code>
-            usually adds little value.
-          </p>
-
-          <p>
-            Good comments explain <strong>why</strong> something is
-            done when the reason is not obvious from the code itself.
-          </p>
-
-        </div>
-
-      </div>
-
+            </div>
 
 
-      <!-- ===================================================
-           2.4 PREPROCESSOR
-      ==================================================== -->
+            <!-- =====================================================
+                 2.4
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-      <div class="cb-deep-dive">
+                <div class="cb-deep-dive-title">
+                    2.4 Preprocessor Directives
+                </div>
 
-        <div class="cb-deep-dive-title">
-          2.4 🔧 Preprocessor Directives
-        </div>
+                <p>
+                    Lines beginning with <code>#</code> are commonly used for
+                    preprocessor directives.
+                </p>
 
-        <p>
-          A line such as:
-        </p>
+                <p>Example:</p>
 
-<pre><code>#include &lt;stdio.h&gt;</code></pre>
+                <pre><code>#include &lt;stdio.h&gt;</code></pre>
 
-        <p>
-          begins with <code>#</code> and is a
-          <strong>preprocessing directive</strong>.
-        </p>
+                <p>
+                    The preprocessor handles such directives before the
+                    compiler performs the normal C translation process.
+                </p>
 
-        <p>
-          Preprocessing happens before the compiler performs the main
-          compilation work. The C preprocessor handles facilities such
-          as header inclusion, macro expansion and conditional compilation.
-          :contentReference[oaicite:1]{index=1}
-        </p>
+                <h3>Common examples</h3>
+
+                <pre><code>#include &lt;stdio.h&gt;
+#define PI 3.14159</code></pre>
+
+                <div class="cb-confusion-box">
+
+                    <h3>⚠️ Common Confusion</h3>
+
+                    <p>
+                        <strong>
+                            <code>#include</code> is not a function.
+                        </strong>
+                    </p>
+
+                    <p>
+                        It is a preprocessor directive.
+                    </p>
+
+                    <p>
+                        Also, <code>#include</code> itself does not perform
+                        library linking. Linking happens later in the build
+                        process.
+                    </p>
+
+                </div>
+
+            </div>
 
 
-        <h4>Example</h4>
+            <!-- =====================================================
+                 2.5
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-<pre><code>#include &lt;stdio.h&gt;
+                <div class="cb-deep-dive-title">
+                    2.5 Header Files and <code>#include</code>
+                </div>
 
-#define MESSAGE "Hello"
+                <p>
+                    Header files contain declarations and other information
+                    that can be shared with source files.
+                </p>
 
+                <p>
+                    For example:
+                </p>
+
+                <pre><code>#include &lt;stdio.h&gt;</code></pre>
+
+                <p>
+                    gives the compiler the declarations associated with the
+                    standard input/output facilities provided through
+                    <code>stdio.h</code>, including the declaration of
+                    <code>printf()</code>.
+                </p>
+
+                <div class="comparison-table">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Part</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Header file</td>
+                                <td>Provides declarations and related interface information</td>
+                            </tr>
+
+                            <tr>
+                                <td>Library implementation</td>
+                                <td>Provides the actual implementation of library facilities</td>
+                            </tr>
+
+                            <tr>
+                                <td>Linker</td>
+                                <td>Resolves external references during linking</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="cb-important-box">
+
+                    <h3>🎯 Remember</h3>
+
+                    <p>
+                        <code>#include &lt;stdio.h&gt;</code> does not mean
+                        "run stdio.h".
+                    </p>
+
+                    <p>
+                        It tells the preprocessor to make the requested header
+                        contents available to the source file.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 2.6
+                 ===================================================== -->
+            <div class="cb-deep-dive">
+
+                <div class="cb-deep-dive-title">
+                    2.6 The <code>main()</code> Function
+                </div>
+
+                <p>
+                    In a hosted C environment, <code>main</code> is the
+                    designated entry function of the program.
+                </p>
+
+                <p>
+                    A preferred form for a program that does not use command
+                    line arguments is:
+                </p>
+
+                <pre><code>int main(void)
+{
+    return 0;
+}</code></pre>
+
+                <div class="cb-concept-grid">
+
+                    <div>
+                        <h3><code>int</code></h3>
+                        <p>
+                            Specifies that <code>main</code> returns an
+                            integer value.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3><code>main</code></h3>
+                        <p>
+                            Identifies the program's main function.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3><code>(void)</code></h3>
+                        <p>
+                            Explicitly states that this function takes no
+                            parameters.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="cb-confusion-box">
+
+                    <h3>⚠️ Common Beginner Confusion</h3>
+
+                    <p>
+                        Avoid teaching <code>void main()</code> as the standard
+                        form of a hosted C program.
+                    </p>
+
+                    <p>
+                        Prefer <code>int main(void)</code> for a program with
+                        no command-line arguments.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 2.7
+                 ===================================================== -->
+            <div class="cb-deep-dive">
+
+                <div class="cb-deep-dive-title">
+                    2.7 Function Body and Curly Braces
+                </div>
+
+                <p>
+                    The curly braces <code>{</code> and <code>}</code> define
+                    a block.
+                </p>
+
+                <pre><code>int main(void)
+{
+    printf("Hello");
+    return 0;
+}</code></pre>
+
+                <p>
+                    Everything between the braces belongs to the body of
+                    <code>main</code>.
+                </p>
+
+                <div class="cb-memory-diagram">
+
+                    <pre>
 int main(void)
 {
-    printf("%s\n", MESSAGE);
-    return 0;
-}</code></pre>
+    ┌──────────────────────────────┐
+    │      Function Body           │
+    │                              │
+    │  statements                  │
+    │  declarations                │
+    │  function calls              │
+    │                              │
+    └──────────────────────────────┘
+}</pre>
 
+                </div>
 
-        <p>
-          Here:
-        </p>
+            </div>
 
-        <ul>
-          <li>
-            <code>#include</code> requests inclusion of a header.
-          </li>
-          <li>
-            <code>#define</code> creates a preprocessing macro.
-          </li>
-          <li>
-            <code>main()</code> belongs to the C language itself.
-          </li>
-          <li>
-            <code>printf()</code> is a library function being called.
-          </li>
-        </ul>
 
+            <!-- =====================================================
+                 2.8
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-        <div class="cb-important-box">
+                <div class="cb-deep-dive-title">
+                    2.8 Declarations Inside a Program
+                </div>
 
-          <strong>Remember:</strong>
+                <p>
+                    A declaration introduces information about an identifier
+                    to the compiler.
+                </p>
 
-          <p>
-            A preprocessing directive is not the same thing as a normal
-            C statement. For example, <code>#include</code> does not end
-            with a semicolon.
-          </p>
+                <p>Example:</p>
 
-        </div>
+                <pre><code>int age;
+float salary;
+char grade;</code></pre>
 
-      </div>
+                <p>
+                    These declarations tell C about the type of each object.
+                </p>
 
+                <div class="comparison-table">
 
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Declaration</th>
+                                <th>Meaning</th>
+                            </tr>
+                        </thead>
 
-      <!-- ===================================================
-           2.5 HEADER FILES
-      ==================================================== -->
+                        <tbody>
+                            <tr>
+                                <td><code>int age;</code></td>
+                                <td>An integer object named <code>age</code></td>
+                            </tr>
 
-      <div class="cb-deep-dive">
+                            <tr>
+                                <td><code>float salary;</code></td>
+                                <td>A floating-point object named <code>salary</code></td>
+                            </tr>
 
-        <div class="cb-deep-dive-title">
-          2.5 📦 Header Files and #include
-        </div>
+                            <tr>
+                                <td><code>char grade;</code></td>
+                                <td>A character object named <code>grade</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-        <p>
-          Header files provide declarations and other information needed
-          by source code.
-        </p>
+                </div>
 
-        <p>
-          For example:
-        </p>
+            </div>
 
-<pre><code>#include &lt;stdio.h&gt;</code></pre>
 
-        <p>
-          tells the preprocessing stage to include the contents available
-          through the standard input/output header according to the
-          implementation's header mechanism.
-        </p>
+            <!-- =====================================================
+                 2.9
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
+                <div class="cb-deep-dive-title">
+                    2.9 Statements
+                </div>
 
-        <div class="comparison-table">
+                <p>
+                    A statement represents an action that the program performs
+                    as execution proceeds.
+                </p>
 
-          <table>
+                <p>Examples:</p>
 
-            <thead>
-              <tr>
-                <th>Code</th>
-                <th>Purpose</th>
-              </tr>
-            </thead>
+                <pre><code>age = 20;
 
-            <tbody>
-
-              <tr>
-                <td><code>#include &lt;stdio.h&gt;</code></td>
-                <td>Provides declarations for standard I/O facilities.</td>
-              </tr>
-
-              <tr>
-                <td><code>#include &lt;math.h&gt;</code></td>
-                <td>Provides declarations for mathematical functions.</td>
-              </tr>
-
-              <tr>
-                <td><code>#include &lt;string.h&gt;</code></td>
-                <td>Provides declarations for string-handling functions.</td>
-              </tr>
-
-              <tr>
-                <td><code>#include &lt;stdlib.h&gt;</code></td>
-                <td>Provides declarations for general utility functions.</td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-
-        <div class="cb-confusion-box">
-
-          <strong>Do not say:</strong>
-
-          <p>
-            "<code>#include</code> is a C function."
-          </p>
-
-          <strong>Correct idea:</strong>
-
-          <p>
-            <code>#include</code> is a preprocessing directive.
-          </p>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.6 MAIN FUNCTION
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.6 🚀 The main() Function
-        </div>
-
-        <p>
-          In a hosted C environment, program startup ultimately reaches
-          the function named <code>main</code>.
-        </p>
-
-        <p>
-          A recommended beginner form is:
-        </p>
-
-<pre><code>int main(void)
-{
-    return 0;
-}</code></pre>
-
-
-        <div class="comparison-table">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Part</th>
-                <th>Meaning</th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              <tr>
-                <td><code>int</code></td>
-                <td>The function returns an integer value.</td>
-              </tr>
-
-              <tr>
-                <td><code>main</code></td>
-                <td>The special program entry function.</td>
-              </tr>
-
-              <tr>
-                <td><code>(void)</code></td>
-                <td>Explicitly indicates that this form takes no arguments.</td>
-              </tr>
-
-              <tr>
-                <td><code>{ }</code></td>
-                <td>Defines the function body.</td>
-              </tr>
-
-              <tr>
-                <td><code>return 0;</code></td>
-                <td>Returns a successful status to the host environment.</td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-
-        <div class="cb-important-box">
-
-          <strong>Important distinction:</strong>
-
-          <p>
-            Do not teach <code>void main()</code> as the standard form
-            for ordinary hosted C programs.
-          </p>
-
-          <p>
-            For this course, use:
-          </p>
-
-<pre><code>int main(void)</code></pre>
-
-          <p>
-            when the program does not use command-line arguments.
-          </p>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.7 FUNCTION BODY
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.7 🧱 Function Body and Curly Braces
-        </div>
-
-        <p>
-          The curly braces define a <strong>block</strong>.
-        </p>
-
-<pre><code>int main(void)
-{
-    printf("Hello\n");
-    return 0;
-}</code></pre>
-
-        <p>
-          Everything between the opening <code>{</code> and closing
-          <code>}</code> belongs to the body of <code>main</code>.
-        </p>
-
-
-        <div class="cb-memory-diagram">
-
-<pre>
-int main(void)
-│
-├── {
-│
-│   statements
-│   statements
-│   statements
-│
-└── }
-</pre>
-
-        </div>
-
-
-        <p>
-          Blocks become extremely important later when we learn:
-        </p>
-
-        <ul>
-          <li><code>if</code> statements</li>
-          <li><code>else</code></li>
-          <li><code>for</code> loops</li>
-          <li><code>while</code> loops</li>
-          <li>functions</li>
-          <li>scope</li>
-        </ul>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.8 DECLARATIONS
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.8 📦 Declarations Inside a Program
-        </div>
-
-        <p>
-          A declaration introduces information about an entity to the
-          compiler.
-        </p>
-
-        <p>
-          For example:
-        </p>
-
-<pre><code>int age;</code></pre>
-
-        <p>
-          tells the compiler about an object named <code>age</code>
-          having type <code>int</code>.
-        </p>
-
-
-        <p>
-          Inside a function, declarations commonly appear before the
-          statements that use those objects in beginner C programs.
-        </p>
-
-<pre><code>int main(void)
-{
-    int age;
-
-    age = 20;
-
-    printf("%d\n", age);
-
-    return 0;
-}</code></pre>
-
-
-        <div class="cb-why-box">
-
-          <strong>Think of a declaration as an introduction.</strong>
-
-          <p>
-            Before the compiler can correctly understand how a name is
-            being used, it often needs information about that name,
-            such as its type.
-          </p>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.9 STATEMENTS
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.9 ⚙️ Statements
-        </div>
-
-        <p>
-          A statement represents an instruction or action in a C program.
-        </p>
-
-        <p>
-          Example:
-        </p>
-
-<pre><code>printf("Hello\n");
+printf("%d", age);
 
 return 0;</code></pre>
 
+                <p>
+                    Many C statements end with a semicolon.
+                </p>
 
-        <p>
-          Many simple C statements end with a semicolon.
-        </p>
+                <div class="cb-important-box">
+
+                    <h3>⚠️ Important</h3>
+
+                    <p>
+                        Do not memorize the rule as "every C line needs a
+                        semicolon."
+                    </p>
+
+                    <p>
+                        The semicolon terminates particular statements, such
+                        as expression statements and declarations. Constructs
+                        such as <code>if</code>, <code>while</code> and function
+                        definitions have their own syntax.
+                    </p>
+
+                </div>
+
+            </div>
 
 
-        <div class="cb-important-box">
+            <!-- =====================================================
+                 2.10
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-          <strong>But remember:</strong>
+                <div class="cb-deep-dive-title">
+                    2.10 Expressions Inside Statements
+                </div>
 
-          <p>
-            Not every C construct ends with a semicolon.
-          </p>
+                <p>
+                    An expression produces a value or performs an operation.
+                </p>
 
-          <p>
-            For example, the declaration:
-          </p>
+                <p>Example:</p>
 
-<pre><code>int age;</code></pre>
+                <pre><code>a + b
+x * 10
+age = 25
+count++</code></pre>
 
-          <p>
-            does.
-          </p>
+                <p>
+                    An expression can appear inside a larger statement.
+                </p>
 
-          <p>
-            But the function definition:
-          </p>
+                <pre><code>sum = a + b;</code></pre>
 
-<pre><code>int main(void)
+                <p>
+                    Here:
+                </p>
+
+                <ul>
+                    <li><code>a + b</code> is an expression.</li>
+                    <li>The complete <code>sum = a + b;</code> is an expression statement.</li>
+                </ul>
+
+            </div>
+
+
+            <!-- =====================================================
+                 2.11
+                 ===================================================== -->
+            <div class="cb-deep-dive">
+
+                <div class="cb-deep-dive-title">
+                    2.11 Function Calls
+                </div>
+
+                <p>
+                    A function call asks a function to perform its operation.
+                </p>
+
+                <pre><code>printf("Hello");</code></pre>
+
+                <p>
+                    In this example, <code>printf()</code> is called with one
+                    argument: the string literal.
+                </p>
+
+                <p>
+                    Another example:
+                </p>
+
+                <pre><code>int result = add(10, 20);</code></pre>
+
+                <p>
+                    Here the program calls the user-defined function
+                    <code>add()</code>.
+                </p>
+
+            </div>
+
+
+            <!-- =====================================================
+                 2.12
+                 ===================================================== -->
+            <div class="cb-deep-dive">
+
+                <div class="cb-deep-dive-title">
+                    2.12 <code>return</code> and Program Status
+                </div>
+
+                <p>
+                    The <code>return</code> statement exits a function and can
+                    provide a value to the caller.
+                </p>
+
+                <pre><code>return 0;</code></pre>
+
+                <p>
+                    When used in <code>main</code>, this returns an integer
+                    termination status to the host environment.
+                </p>
+
+                <div class="cb-confusion-box">
+
+                    <h3>⚠️ Common Confusion</h3>
+
+                    <p>
+                        <code>return 0;</code> does <strong>not</strong> print
+                        zero on the screen.
+                    </p>
+
+                    <p>
+                        It returns the value <code>0</code> from
+                        <code>main</code>.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 2.13
+                 ===================================================== -->
+            <div class="cb-deep-dive">
+
+                <div class="cb-deep-dive-title">
+                    2.13 User-Defined Functions
+                </div>
+
+                <p>
+                    Large programs should not place all logic inside
+                    <code>main()</code>.
+                </p>
+
+                <p>
+                    We can divide the program into smaller functions.
+                </p>
+
+                <pre><code>#include &lt;stdio.h&gt;
+
+int add(int a, int b)
 {
-    return 0;
-}</code></pre>
-
-          <p>
-            does not have a semicolon after the closing brace.
-          </p>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.10 EXPRESSIONS
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.10 🧮 Expressions Inside Statements
-        </div>
-
-        <p>
-          An expression produces a value or performs an operation.
-        </p>
-
-<pre><code>5 + 3</code></pre>
-
-        <p>
-          is an expression.
-        </p>
-
-<pre><code>age = 20;</code></pre>
-
-        <p>
-          is a statement containing an assignment expression.
-        </p>
-
-        <p>
-          We will study expressions and operators in detail in later
-          lessons. For now, recognize that statements and expressions
-          are related but are not exactly the same concept.
-        </p>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.11 FUNCTION CALL
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.11 📞 Function Calls
-        </div>
-
-        <p>
-          A function call asks a function to perform its defined work.
-        </p>
-
-<pre><code>printf("Hello, CodeBhavya!\n");</code></pre>
-
-        <p>
-          Here <code>printf</code> is being called.
-        </p>
-
-
-        <div class="comparison-table">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Concept</th>
-                <th>Example</th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              <tr>
-                <td>Function name</td>
-                <td><code>printf</code></td>
-              </tr>
-
-              <tr>
-                <td>Arguments</td>
-                <td><code>"Hello, CodeBhavya!\n"</code></td>
-              </tr>
-
-              <tr>
-                <td>Function call</td>
-                <td><code>printf(...);</code></td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-
-        <p>
-          Function calls will become much more important when we study
-          user-defined functions.
-        </p>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.12 RETURN
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.12 ↩️ return and Program Status
-        </div>
-
-<pre><code>return 0;</code></pre>
-
-        <p>
-          returns the value <code>0</code> from <code>main</code> to
-          the host environment.
-        </p>
-
-        <p>
-          In a normal hosted program, returning zero from
-          <code>main</code> is conventionally used to indicate successful
-          termination.
-        </p>
-
-
-        <div class="cb-memory-diagram">
-
-<pre>
-main()
-  │
-  │ executes program
-  │
-  └── return 0;
-          │
-          ▼
-    host environment
-    receives status
-</pre>
-
-        </div>
-
-
-        <div class="cb-confusion-box">
-
-          <strong>Common confusion:</strong>
-
-          <p>
-            <code>return 0;</code> does not mean
-            "print zero".
-          </p>
-
-          <p>
-            It means:
-            <strong>return the integer value 0 from this function.</strong>
-          </p>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.13 USER DEFINED FUNCTIONS
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.13 🧩 User-Defined Functions
-        </div>
-
-        <p>
-          As programs become larger, putting everything inside
-          <code>main()</code> becomes difficult to manage.
-        </p>
-
-        <p>
-          C allows programmers to divide a program into functions.
-        </p>
-
-
-<pre><code>#include &lt;stdio.h&gt;
-
-void greet(void)
-{
-    printf("Welcome to CodeBhavya!\n");
+    return a + b;
 }
 
 int main(void)
 {
-    greet();
+    int result;
+
+    result = add(10, 20);
+
+    printf("%d", result);
 
     return 0;
 }</code></pre>
 
+                <p>
+                    Here the program contains two function definitions:
+                </p>
 
-        <p>
-          Here:
-        </p>
+                <ul>
+                    <li><code>add()</code></li>
+                    <li><code>main()</code></li>
+                </ul>
 
-        <ul>
-          <li><code>greet()</code> is a user-defined function.</li>
-          <li><code>main()</code> calls <code>greet()</code>.</li>
-          <li>The function contains its own block.</li>
-        </ul>
+                <div class="cb-why-box">
 
+                    <h3>💡 Why use functions?</h3>
 
-        <div class="cb-why-box">
+                    <ul>
+                        <li>Break large problems into smaller problems.</li>
+                        <li>Reuse logic.</li>
+                        <li>Improve readability.</li>
+                        <li>Make testing easier.</li>
+                        <li>Make maintenance easier.</li>
+                    </ul>
 
-          <strong>Why use functions?</strong>
+                </div>
 
-          <ul>
-            <li>Break large problems into smaller pieces.</li>
-            <li>Reduce repetition.</li>
-            <li>Improve readability.</li>
-            <li>Make testing easier.</li>
-            <li>Make programs easier to maintain.</li>
-          </ul>
-
-        </div>
-
-      </div>
+            </div>
 
 
+            <!-- =====================================================
+                 2.14
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-      <!-- ===================================================
-           2.14 COMPLETE ANATOMY
-      ==================================================== -->
+                <div class="cb-deep-dive-title">
+                    2.14 Complete Anatomy of a C Program
+                </div>
 
-      <div class="cb-deep-dive">
+                <p>
+                    Now combine the major concepts into one complete program.
+                </p>
 
-        <div class="cb-deep-dive-title">
-          2.14 🔍 Complete Anatomy of a C Program
-        </div>
-
-<pre><code>/* Program: Basic C Structure */
+                <pre><code>/* Program to calculate the sum of two numbers */
 
 #include &lt;stdio.h&gt;
 
-void greet(void);
-
-int main(void)
+int add(int a, int b)
 {
-    printf("Starting program...\n");
-
-    greet();
-
-    printf("Program finished.\n");
-
-    return 0;
-}
-
-void greet(void)
-{
-    printf("Hello, CodeBhavya!\n");
-}</code></pre>
-
-
-        <h4>Let's identify every part.</h4>
-
-        <div class="comparison-table">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Part</th>
-                <th>Code</th>
-                <th>Role</th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              <tr>
-                <td>Comment</td>
-                <td><code>/* ... */</code></td>
-                <td>Human-readable documentation.</td>
-              </tr>
-
-              <tr>
-                <td>Preprocessor directive</td>
-                <td><code>#include &lt;stdio.h&gt;</code></td>
-                <td>Requests header inclusion during preprocessing.</td>
-              </tr>
-
-              <tr>
-                <td>Function declaration</td>
-                <td><code>void greet(void);</code></td>
-                <td>Introduces the function before its definition.</td>
-              </tr>
-
-              <tr>
-                <td>main()</td>
-                <td><code>int main(void)</code></td>
-                <td>Program entry function.</td>
-              </tr>
-
-              <tr>
-                <td>Function body</td>
-                <td><code>{ ... }</code></td>
-                <td>Contains the function's code.</td>
-              </tr>
-
-              <tr>
-                <td>Function call</td>
-                <td><code>greet();</code></td>
-                <td>Calls the user-defined function.</td>
-              </tr>
-
-              <tr>
-                <td>Return statement</td>
-                <td><code>return 0;</code></td>
-                <td>Returns status from main.</td>
-              </tr>
-
-              <tr>
-                <td>Function definition</td>
-                <td><code>void greet(void) { ... }</code></td>
-                <td>Provides the actual implementation.</td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.15 DECLARATION VS DEFINITION
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.15 🧠 Declaration vs Definition
-        </div>
-
-        <p>
-          This distinction becomes very important as your C programs
-          become larger.
-        </p>
-
-
-        <h4>Function declaration</h4>
-
-<pre><code>void greet(void);</code></pre>
-
-        <p>
-          This tells the compiler that a function named
-          <code>greet</code> exists, takes no arguments in this form,
-          and returns <code>void</code>.
-        </p>
-
-
-        <h4>Function definition</h4>
-
-<pre><code>void greet(void)
-{
-    printf("Hello\n");
-}</code></pre>
-
-        <p>
-          This provides the actual implementation of the function.
-        </p>
-
-
-        <div class="comparison-table">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Declaration</th>
-                <th>Definition</th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              <tr>
-                <td>Introduces an entity.</td>
-                <td>Provides the entity's complete implementation where required.</td>
-              </tr>
-
-              <tr>
-                <td>Example: <code>void greet(void);</code></td>
-                <td>Example: <code>void greet(void) { ... }</code></td>
-              </tr>
-
-              <tr>
-                <td>Often ends with <code>;</code></td>
-                <td>Function definition ends with its closing <code>}</code></td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.16 ORDER OF FUNCTION DEFINITIONS
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.16 🔀 Why Do We Sometimes Write a Function Before main()?
-        </div>
-
-        <p>
-          Consider:
-        </p>
-
-<pre><code>#include &lt;stdio.h&gt;
-
-void greet(void)
-{
-    printf("Hello!\n");
+    return a + b;
 }
 
 int main(void)
 {
-    greet();
+    int x;
+    int y;
+    int result;
+
+    printf("Enter two numbers: ");
+    scanf("%d %d", &amp;x, &amp;y);
+
+    result = add(x, y);
+
+    printf("Sum = %d\n", result);
 
     return 0;
 }</code></pre>
 
+                <div class="comparison-table">
 
-        <p>
-          The compiler has already encountered the definition of
-          <code>greet</code> before reaching the call in
-          <code>main</code>.
-        </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Part</th>
+                                <th>Example</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Comment</td>
+                                <td><code>/* ... */</code></td>
+                                <td>Documentation</td>
+                            </tr>
+
+                            <tr>
+                                <td>Preprocessor directive</td>
+                                <td><code>#include &lt;stdio.h&gt;</code></td>
+                                <td>Include header information</td>
+                            </tr>
+
+                            <tr>
+                                <td>Function definition</td>
+                                <td><code>int add(...)</code></td>
+                                <td>Define reusable logic</td>
+                            </tr>
+
+                            <tr>
+                                <td>Declaration</td>
+                                <td><code>int result;</code></td>
+                                <td>Declare an object</td>
+                            </tr>
+
+                            <tr>
+                                <td>Input</td>
+                                <td><code>scanf(...)</code></td>
+                                <td>Read values</td>
+                            </tr>
+
+                            <tr>
+                                <td>Function call</td>
+                                <td><code>add(x, y)</code></td>
+                                <td>Execute another function</td>
+                            </tr>
+
+                            <tr>
+                                <td>Output</td>
+                                <td><code>printf(...)</code></td>
+                                <td>Display information</td>
+                            </tr>
+
+                            <tr>
+                                <td>Return statement</td>
+                                <td><code>return 0;</code></td>
+                                <td>Finish <code>main</code> with a status</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
 
 
-        <p>
-          Another common organization is:
-        </p>
+            <!-- =====================================================
+                 2.15
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-<pre><code>#include &lt;stdio.h&gt;
+                <div class="cb-deep-dive-title">
+                    2.15 Declaration vs Definition
+                </div>
 
-void greet(void);
+                <p>
+                    This distinction becomes extremely important as C programs
+                    become larger.
+                </p>
+
+                <h3>Declaration</h3>
+
+                <p>
+                    A declaration tells the compiler about an identifier and
+                    its type or interface.
+                </p>
+
+                <pre><code>int add(int, int);</code></pre>
+
+                <h3>Definition</h3>
+
+                <p>
+                    A definition provides the actual implementation or creates
+                    the entity being declared.
+                </p>
+
+                <pre><code>int add(int a, int b)
+{
+    return a + b;
+}</code></pre>
+
+                <div class="comparison-table">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Declaration</th>
+                                <th>Definition</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Describes an entity</td>
+                                <td>Provides the entity's implementation or storage</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>int add(int, int);</code></td>
+                                <td><code>int add(int a, int b) { ... }</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 2.16
+                 ===================================================== -->
+            <div class="cb-deep-dive">
+
+                <div class="cb-deep-dive-title">
+                    2.16 Why Function Definitions May Appear Before or After <code>main</code>
+                </div>
+
+                <p>
+                    A function can be defined before <code>main</code>:
+                </p>
+
+                <pre><code>int add(int a, int b)
+{
+    return a + b;
+}
 
 int main(void)
 {
-    greet();
+    printf("%d", add(2, 3));
+    return 0;
+}</code></pre>
 
+                <p>
+                    It can also be defined after <code>main</code>, provided
+                    that the compiler has seen an appropriate declaration
+                    before the call.
+                </p>
+
+                <pre><code>#include &lt;stdio.h&gt;
+
+int add(int, int);
+
+int main(void)
+{
+    printf("%d", add(2, 3));
     return 0;
 }
 
-void greet(void)
+int add(int a, int b)
 {
-    printf("Hello!\n");
+    return a + b;
 }</code></pre>
 
+                <div class="cb-important-box">
 
-        <p>
-          Here the declaration tells the compiler about
-          <code>greet</code> before the call, while the definition
-          appears later.
-        </p>
+                    <h3>🎯 Key Idea</h3>
 
+                    <p>
+                        The compiler needs to know enough about a function
+                        before it is used. A function prototype can provide
+                        that information.
+                    </p>
 
-        <div class="cb-important-box">
+                </div>
 
-          <strong>Important:</strong>
-
-          <p>
-            Do not memorize "all functions must come after main".
-            That is not a C language rule.
-          </p>
-
-          <p>
-            What matters is that the compiler has the necessary
-            declarations and that the program satisfies the language
-            rules.
-          </p>
-
-        </div>
-
-      </div>
+            </div>
 
 
+            <!-- =====================================================
+                 2.17
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-      <!-- ===================================================
-           2.17 EXECUTION FLOW
-      ==================================================== -->
+                <div class="cb-deep-dive-title">
+                    2.17 How the Program Executes
+                </div>
 
-      <div class="cb-deep-dive">
+                <p>
+                    The source code has a structure, and the executable has an
+                    execution flow.
+                </p>
 
-        <div class="cb-deep-dive-title">
-          2.17 ▶️ How the Program Executes
-        </div>
+                <div class="cb-memory-diagram">
 
-        <p>
-          The source file has a physical order, but preprocessing,
-          compilation, linking and execution are different stages.
-        </p>
-
-
-        <div class="cb-memory-diagram">
-
-<pre>
-SOURCE CODE
-     │
-     ▼
-PREPROCESSING
-     │
-     ▼
-COMPILATION
-     │
-     ▼
-OBJECT CODE
-     │
-     ▼
-LINKING
-     │
-     ▼
-EXECUTABLE
-     │
-     ▼
-PROGRAM STARTUP
-     │
-     ▼
+                    <pre>
+C SOURCE
+   │
+   ▼
+Preprocessing
+   │
+   ▼
+Compilation
+   │
+   ▼
+Assembly / Object Code
+   │
+   ▼
+Linking
+   │
+   ▼
+Executable
+   │
+   ▼
+Operating System
+   │
+   ▼
 main()
-     │
-     ▼
-statements execute
-     │
-     ▼
-return status
-</pre>
+   │
+   ├── statement 1
+   │
+   ├── statement 2
+   │
+   ├── function call
+   │       │
+   │       ▼
+   │   another function
+   │       │
+   │       ▼
+   │   return
+   │
+   └── return 0
+                    </pre>
 
-        </div>
+                </div>
 
+                <p>
+                    This is the basic mental model you should carry forward
+                    into later C topics.
+                </p>
 
-        <p>
-          In the previous Introduction lesson we studied the complete
-          build pipeline. In this lesson, the important connection is:
-          <strong>program structure gives the compiler and later execution
-          stages the information needed to build and run the program.</strong>
-        </p>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.18 SEMICOLON
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.18 ✏️ Why Does C Use Semicolons?
-        </div>
-
-        <p>
-          Semicolons are commonly used to terminate C statements.
-        </p>
+            </div>
 
 
-<pre><code>int age;
+            <!-- =====================================================
+                 2.18
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-age = 20;
+                <div class="cb-deep-dive-title">
+                    2.18 Why C Uses Semicolons
+                </div>
 
-printf("%d\n", age);
+                <p>
+                    The semicolon is an important token in C syntax.
+                </p>
 
+                <p>
+                    For example:
+                </p>
+
+                <pre><code>int age = 20;
+printf("%d", age);
 return 0;</code></pre>
 
+                <p>
+                    These are statements that are terminated with semicolons.
+                </p>
 
-        <p>
-          Beginners often make one of two mistakes:
-        </p>
+                <div class="cb-confusion-box">
+
+                    <h3>⚠️ Common Mistake</h3>
+
+                    <pre><code>printf("Hello")</code></pre>
+
+                    <p>
+                        The statement is incomplete because its terminating
+                        semicolon is missing.
+                    </p>
+
+                    <pre><code>printf("Hello");</code></pre>
+
+                    <p>
+                        This is the correct form.
+                    </p>
+
+                </div>
+
+            </div>
 
 
-        <h4>Missing semicolon</h4>
+            <!-- =====================================================
+                 2.19
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-<pre><code>int age
-age = 20;</code></pre>
+                <div class="cb-deep-dive-title">
+                    2.19 Whitespace and Indentation
+                </div>
 
+                <p>
+                    Spaces, tabs and line breaks make source code easier for
+                    humans to read. They generally do not change the meaning
+                    of ordinary C expressions when used appropriately.
+                </p>
 
-        <h4>Extra semicolon after a function definition</h4>
-
-<pre><code>int main(void)
+                <pre><code>int main(void)
 {
-    return 0;
-};</code></pre>
-
-
-        <p>
-          The second example illustrates why you should understand the
-          difference between a function definition and a normal statement,
-          rather than blindly adding semicolons everywhere.
-        </p>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.19 WHITESPACE
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.19 📐 Whitespace and Indentation
-        </div>
-
-        <p>
-          C uses whitespace such as spaces, tabs and newlines in many
-          places where it is not semantically significant.
-        </p>
-
-        <p>
-          Compare:
-        </p>
-
-<pre><code>int main(void)
-{
-    printf("Hello\n");
+    printf("Hello");
     return 0;
 }</code></pre>
 
+                <p>
+                    Compare it with:
+                </p>
 
-        <p>
-          with:
-        </p>
+                <pre><code>int main(void){printf("Hello");return 0;}</code></pre>
 
-<pre><code>int main(void){printf("Hello\n");return 0;}</code></pre>
+                <p>
+                    Both can represent the same basic program, but the first
+                    version is much easier to read and maintain.
+                </p>
 
+                <div class="tip-box">
+                    💡 <strong>Professional habit:</strong>
+                    Use consistent indentation and meaningful spacing.
+                </div>
 
-        <p>
-          They can represent the same basic operations, but the first
-          version is much easier for humans to read.
-        </p>
-
-
-        <div class="cb-why-box">
-
-          <strong>CodeBhavya rule:</strong>
-
-          <p>
-            Write code for both the compiler and the human reader.
-          </p>
-
-          <p>
-            Good indentation makes the block structure visible.
-          </p>
-
-        </div>
-
-      </div>
+            </div>
 
 
+            <!-- =====================================================
+                 2.20
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-      <!-- ===================================================
-           2.20 CASE SENSITIVITY
-      ==================================================== -->
+                <div class="cb-deep-dive-title">
+                    2.20 C Is Case-Sensitive
+                </div>
 
-      <div class="cb-deep-dive">
+                <p>
+                    C distinguishes between uppercase and lowercase letters.
+                </p>
 
-        <div class="cb-deep-dive-title">
-          2.20 🔤 C Is Case-Sensitive
-        </div>
+                <pre><code>int age;
 
-        <p>
-          C distinguishes between uppercase and lowercase letters.
-        </p>
+int Age;
 
-<pre><code>age
-Age
-AGE</code></pre>
+int AGE;</code></pre>
 
-        <p>
-          are three different identifiers.
-        </p>
+                <p>
+                    These are different identifiers.
+                </p>
 
+                <p>
+                    Similarly:
+                </p>
 
-        <p>
-          Likewise:
-        </p>
+                <pre><code>printf()</code></pre>
 
-<pre><code>printf</code></pre>
+                <p>
+                    is not the same as:
+                </p>
 
-        <p>
-          is not the same identifier as:
-        </p>
+                <pre><code>Printf()</code></pre>
 
-<pre><code>Printf</code></pre>
+                <div class="cb-important-box">
 
+                    <h3>🎯 Remember</h3>
 
-        <div class="cb-confusion-box">
+                    <p>
+                        C is case-sensitive. Small and capital letters matter.
+                    </p>
 
-          <strong>Common beginner mistake:</strong>
+                </div>
 
-          <p>
-            Writing <code>Printf()</code> instead of
-            <code>printf()</code>.
-          </p>
-
-          <p>
-            The C language and standard library names use exact spelling
-            and capitalization.
-          </p>
-
-        </div>
-
-      </div>
+            </div>
 
 
+            <!-- =====================================================
+                 2.21
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-      <!-- ===================================================
-           2.21 COMPLETE PROGRAM WALKTHROUGH
-      ==================================================== -->
+                <div class="cb-deep-dive-title">
+                    2.21 Complete Program — Read It Like a Programmer
+                </div>
 
-      <div class="cb-deep-dive">
+                <pre><code>#include &lt;stdio.h&gt;
 
-        <div class="cb-deep-dive-title">
-          2.21 🔬 Complete Program — Read It Like a Programmer
-        </div>
-
-<pre><code>/* Calculate and display a simple value */
-
-#include &lt;stdio.h&gt;
+int square(int number)
+{
+    return number * number;
+}
 
 int main(void)
 {
-    int number = 25;
+    int n;
+    int result;
 
-    printf("Number = %d\n", number);
+    printf("Enter a number: ");
+    scanf("%d", &amp;n);
+
+    result = square(n);
+
+    printf("Square = %d\n", result);
 
     return 0;
 }</code></pre>
 
-
-        <h4>Step 1 — Comment</h4>
-
-<pre><code>/* Calculate and display a simple value */</code></pre>
-
-        <p>
-          This communicates information to the human reader.
-        </p>
-
-
-        <h4>Step 2 — Header inclusion</h4>
-
-<pre><code>#include &lt;stdio.h&gt;</code></pre>
-
-        <p>
-          The program uses <code>printf</code>, so it includes the
-          appropriate standard input/output header.
-        </p>
-
-
-        <h4>Step 3 — main()</h4>
-
-<pre><code>int main(void)</code></pre>
-
-        <p>
-          This defines the program's entry function.
-        </p>
-
-
-        <h4>Step 4 — Block</h4>
-
-<pre><code>{
-    ...
-}</code></pre>
-
-        <p>
-          The braces delimit the body of <code>main</code>.
-        </p>
-
-
-        <h4>Step 5 — Declaration and initialization</h4>
-
-<pre><code>int number = 25;</code></pre>
-
-        <p>
-          An integer object named <code>number</code> is declared and
-          initialized with the value <code>25</code>.
-        </p>
-
-
-        <h4>Step 6 — Function call</h4>
-
-<pre><code>printf("Number = %d\n", number);</code></pre>
-
-        <p>
-          The program calls <code>printf</code> to produce formatted output.
-        </p>
-
-
-        <h4>Step 7 — Return</h4>
-
-<pre><code>return 0;</code></pre>
-
-        <p>
-          The function returns zero to the host environment.
-        </p>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.22 COMMON STRUCTURAL MISTAKES
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.22 ⚠️ Common Structural Mistakes
-        </div>
-
-
-        <h4>Mistake 1 — Forgetting the header</h4>
-
-<pre><code>int main(void)
-{
-    printf("Hello\n");
-    return 0;
-}</code></pre>
-
-        <p>
-          A modern compiler may diagnose the missing declaration for
-          <code>printf</code>. Include the appropriate header when using
-          the standard library function.
-        </p>
-
-
-        <h4>Correct:</h4>
-
-<pre><code>#include &lt;stdio.h&gt;
-
-int main(void)
-{
-    printf("Hello\n");
-    return 0;
-}</code></pre>
-
-
-        <h4>Mistake 2 — Wrong spelling</h4>
-
-<pre><code>#include &lt;studio.h&gt;</code></pre>
-
-        <p>
-          The standard header is:
-        </p>
-
-<pre><code>#include &lt;stdio.h&gt;</code></pre>
-
-
-        <h4>Mistake 3 — Wrong capitalization</h4>
-
-<pre><code>Printf("Hello");</code></pre>
-
-        <p>
-          Use:
-        </p>
-
-<pre><code>printf("Hello");</code></pre>
-
-
-        <h4>Mistake 4 — Missing braces</h4>
-
-<pre><code>int main(void)
-    printf("Hello\n");
-    return 0;</code></pre>
-
-        <p>
-          The function body needs braces.
-        </p>
-
-
-        <h4>Mistake 5 — Missing semicolon</h4>
-
-<pre><code>printf("Hello\n")</code></pre>
-
-        <p>
-          Should be:
-        </p>
-
-<pre><code>printf("Hello\n");</code></pre>
-
-
-        <h4>Mistake 6 — Treating #include as a function</h4>
-
-<pre><code>#include(&lt;stdio.h&gt;)</code></pre>
-
-        <p>
-          This is incorrect.
-        </p>
-
-        <p>
-          Use:
-        </p>
-
-<pre><code>#include &lt;stdio.h&gt;</code></pre>
-
-
-        <h4>Mistake 7 — Using void main()</h4>
-
-<pre><code>void main()
-{
-}</code></pre>
-
-        <p>
-          Do not use this as the standard beginner form for hosted C.
-        </p>
-
-        <p>
-          Use:
-        </p>
-
-<pre><code>int main(void)
-{
-    return 0;
-}</code></pre>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.23 COMMON CONFUSIONS
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.23 🤔 Common Beginner Confusions
-        </div>
-
-
-        <div class="cb-confusion-box">
-
-          <h4>Confusion 1: Is #include part of C?</h4>
-
-          <p>
-            It is part of the C preprocessing language and is processed
-            before the compiler's main translation of the C program.
-          </p>
-
-        </div>
-
-
-        <div class="cb-confusion-box">
-
-          <h4>Confusion 2: Is printf part of the C language syntax?</h4>
-
-          <p>
-            <code>printf</code> is a function provided by the C standard
-            library. It is not a C keyword.
-          </p>
-
-        </div>
-
-
-        <div class="cb-confusion-box">
-
-          <h4>Confusion 3: Is main() a normal user-defined function?</h4>
-
-          <p>
-            It has the syntax of a function, but it has a special role:
-            the program's startup environment invokes <code>main</code>
-            in a hosted implementation.
-          </p>
-
-        </div>
-
-
-        <div class="cb-confusion-box">
-
-          <h4>Confusion 4: Must every C program have comments?</h4>
-
-          <p>
-            No. Comments are useful for humans but are not a mandatory
-            component of every C source file.
-          </p>
-
-        </div>
-
-
-        <div class="cb-confusion-box">
-
-          <h4>Confusion 5: Must every C program have #include?</h4>
-
-          <p>
-            No. A program that does not require any included header can
-            exist without an <code>#include</code> directive.
-          </p>
-
-        </div>
-
-
-        <div class="cb-confusion-box">
-
-          <h4>Confusion 6: Must main() always be the first function?</h4>
-
-          <p>
-            No. The organization of declarations and definitions depends
-            on what the compiler needs to know at each point.
-          </p>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.24 COMMON STRUCTURE VS ACTUAL LANGUAGE RULES
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.24 📊 Common Textbook Structure vs Actual C
-        </div>
-
-        <div class="comparison-table">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Textbook phrase</th>
-                <th>Better understanding</th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              <tr>
-                <td>Documentation section</td>
-                <td>
-                  Comments are useful documentation, but not mandatory.
-                </td>
-              </tr>
-
-              <tr>
-                <td>Link section</td>
-                <td>
-                  <code>#include</code> is a preprocessing directive,
-                  not the linker itself.
-                </td>
-              </tr>
-
-              <tr>
-                <td>Definition section</td>
-                <td>
-                  <code>#define</code> creates preprocessing macros;
-                  it is not the same concept as every C declaration or
-                  definition.
-                </td>
-              </tr>
-
-              <tr>
-                <td>Global declaration section</td>
-                <td>
-                  Declarations and definitions at file scope are possible,
-                  but not every program needs them.
-                </td>
-              </tr>
-
-              <tr>
-                <td>Main function</td>
-                <td>
-                  In a hosted environment, <code>main</code> has a special
-                  startup role.
-                </td>
-              </tr>
-
-              <tr>
-                <td>User-defined functions</td>
-                <td>
-                  Functions can be organized in different valid ways
-                  depending on declarations and definitions.
-                </td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-        <div class="cb-important-box">
-
-          <strong>Placement + Interview Point:</strong>
-
-          <p>
-            If an interviewer asks "What are the sections of a C
-            program?", you can describe the common structure, but also
-            mention that it is a conventional organizational model rather
-            than a single mandatory template imposed on every C source file.
-          </p>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           2.25 MINI VISUAL MAP
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.25 🧠 C Program Structure Memory Map
-        </div>
-
-        <div class="cb-concept-tree">
-
-<pre>
-C PROGRAM
-│
-├── Human-readable information
-│     └── comments
-│
-├── Before compilation
-│     └── preprocessing directives
-│            ├── #include
-│            ├── #define
-│            └── conditional compilation
-│
-├── Program entities
-│     ├── declarations
-│     ├── definitions
-│     └── functions
-│
-├── Entry point
-│     └── main()
-│
-└── Executable logic
-      ├── declarations
-      ├── statements
-      ├── expressions
-      └── function calls
-</pre>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           QUICK REVISION
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.26 ⚡ Quick Revision
-        </div>
-
-        <div class="comparison-table">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Concept</th>
-                <th>Remember</th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              <tr>
-                <td>Comment</td>
-                <td>Human-readable documentation.</td>
-              </tr>
-
-              <tr>
-                <td>Preprocessor directive</td>
-                <td>Processed before the compiler's main translation.</td>
-              </tr>
-
-              <tr>
-                <td><code>#include</code></td>
-                <td>Requests inclusion of a header.</td>
-              </tr>
-
-              <tr>
-                <td><code>main()</code></td>
-                <td>Program entry function in hosted C.</td>
-              </tr>
-
-              <tr>
-                <td><code>{ }</code></td>
-                <td>Defines a block.</td>
-              </tr>
-
-              <tr>
-                <td>Declaration</td>
-                <td>Introduces information about an entity.</td>
-              </tr>
-
-              <tr>
-                <td>Statement</td>
-                <td>Represents an executable/action construct.</td>
-              </tr>
-
-              <tr>
-                <td>Function call</td>
-                <td>Invokes a function.</td>
-              </tr>
-
-              <tr>
-                <td><code>return 0;</code></td>
-                <td>Returns zero from main.</td>
-              </tr>
-
-              <tr>
-                <td>Semicolon</td>
-                <td>Commonly terminates C statements.</td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           PRACTICE QUESTIONS
-      ==================================================== -->
-
-      <div class="cb-deep-dive">
-
-        <div class="cb-deep-dive-title">
-          2.27 📝 Practice Questions
-        </div>
-
-
-        <div class="cb-practice-question">
-
-          <h4>Question 1</h4>
-
-          <p>
-            What is the purpose of the <code>main()</code> function?
-          </p>
-
-          <button
-            type="button"
-            onclick="CBShowAnswer.toggle(this)"
-          >
-            Show Answer
-          </button>
-
-          <div class="cb-answer" hidden>
-            In a hosted C environment, <code>main</code> is the function
-            through which program execution begins after program startup.
-          </div>
-
-        </div>
-
-
-        <div class="cb-practice-question">
-
-          <h4>Question 2</h4>
-
-          <p>
-            Is <code>#include</code> a function?
-          </p>
-
-          <button
-            type="button"
-            onclick="CBShowAnswer.toggle(this)"
-          >
-            Show Answer
-          </button>
-
-          <div class="cb-answer" hidden>
-            No. <code>#include</code> is a preprocessing directive.
-          </div>
-
-        </div>
-
-
-        <div class="cb-practice-question">
-
-          <h4>Question 3</h4>
-
-          <p>
-            Why is <code>int main(void)</code> preferred in this course
-            for a program that takes no command-line arguments?
-          </p>
-
-          <button
-            type="button"
-            onclick="CBShowAnswer.toggle(this)"
-          >
-            Show Answer
-          </button>
-
-          <div class="cb-answer" hidden>
-            It clearly declares main as returning int and explicitly
-            states that this form takes no arguments.
-          </div>
-
-        </div>
-
-
-        <div class="cb-practice-question">
-
-          <h4>Question 4</h4>
-
-          <p>
-            What do the curly braces around main() represent?
-          </p>
-
-          <button
-            type="button"
-            onclick="CBShowAnswer.toggle(this)"
-          >
-            Show Answer
-          </button>
-
-          <div class="cb-answer" hidden>
-            They delimit the function body, which is a block containing
-            the declarations and statements belonging to the function.
-          </div>
-
-        </div>
-
-
-        <div class="cb-practice-question">
-
-          <h4>Question 5</h4>
-
-          <p>
-            What is the difference between a function declaration and
-            a function definition?
-          </p>
-
-          <button
-            type="button"
-            onclick="CBShowAnswer.toggle(this)"
-          >
-            Show Answer
-          </button>
-
-          <div class="cb-answer" hidden>
-            A declaration introduces information about a function, while
-            a definition provides its implementation.
-          </div>
-
-        </div>
-
-
-        <div class="cb-practice-question">
-
-          <h4>Question 6</h4>
-
-          <p>
-            Does every C program need comments?
-          </p>
-
-          <button
-            type="button"
-            onclick="CBShowAnswer.toggle(this)"
-          >
-            Show Answer
-          </button>
-
-          <div class="cb-answer" hidden>
-            No. Comments are useful for human readers but are not mandatory
-            in every C program.
-          </div>
-
-        </div>
-
-
-        <div class="cb-practice-question">
-
-          <h4>Question 7</h4>
-
-          <p>
-            What is the role of a header file?
-          </p>
-
-          <button
-            type="button"
-            onclick="CBShowAnswer.toggle(this)"
-          >
-            Show Answer
-          </button>
-
-          <div class="cb-answer" hidden>
-            A header provides declarations and related information needed
-            by source code. Standard headers provide interfaces to parts
-            of the C standard library.
-          </div>
-
-        </div>
-
-
-        <div class="cb-practice-question">
-
-          <h4>Question 8</h4>
-
-          <p>
-            Why does <code>return 0;</code> appear at the end of main()
-            in many beginner programs?
-          </p>
-
-          <button
-            type="button"
-            onclick="CBShowAnswer.toggle(this)"
-          >
-            Show Answer
-          </button>
-
-          <div class="cb-answer" hidden>
-            It explicitly returns zero from main, conventionally indicating
-            successful termination to the host environment.
-          </div>
-
-        </div>
-
-
-        <div class="cb-practice-question">
-
-          <h4>Question 9</h4>
-
-          <p>
-            Is there one mandatory six-section template for every C
-            source file?
-          </p>
-
-          <button
-            type="button"
-            onclick="CBShowAnswer.toggle(this)"
-          >
-            Show Answer
-          </button>
-
-          <div class="cb-answer" hidden>
-            No. The commonly taught sections are a useful organizational
-            model. Actual C source files can be much simpler or more
-            complex.
-          </div>
-
-        </div>
-
-
-        <div class="cb-practice-question">
-
-          <h4>Question 10</h4>
-
-          <p>
-            Why is indentation important if the compiler can often ignore
-            whitespace?
-          </p>
-
-          <button
-            type="button"
-            onclick="CBShowAnswer.toggle(this)"
-          >
-            Show Answer
-          </button>
-
-          <div class="cb-answer" hidden>
-            Indentation makes the program's structure easier for humans
-            to read, understand, review and maintain.
-          </div>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           PROGRAMMING PRACTICE
-      ==================================================== -->
-
-      <section
-        class="cb-c-dsa-practice-section"
-        id="practice"
-      >
-
-        <div class="cb-practice-label">
-          PRACTICE
-        </div>
-
-        <h2>
-          2.28 🎯 5 Structure-Based Programming Problems
-        </h2>
-
-        <p>
-          These problems are intentionally simple.
-          The goal is not to test advanced C concepts yet.
-          The goal is to make you comfortable reading and writing the
-          structure of a C program.
-        </p>
-
-        <div class="cb-practice-guide">
-
-          <strong>Practice method:</strong>
-
-          <ol>
-            <li>Read the problem.</li>
-            <li>Try writing the complete program yourself.</li>
-            <li>Use the hint only when necessary.</li>
-            <li>Run your program.</li>
-            <li>Check the official solution only after trying.</li>
-          </ol>
-
-        </div>
-
-
-        <!-- =================================================
-             PROBLEM 1
-        ================================================== -->
-
-        <article class="cb-practice-problem" data-problem-key="structure-p1">
-
-          <div class="cb-practice-problem-head">
-
-            <div>
-              <span class="cb-practice-badge">
-                Problem 1
-              </span>
-
-              <h3>
-                Print a Welcome Message
-              </h3>
-            </div>
-
-          </div>
-
-          <p>
-            Write a complete C program that prints:
-          </p>
-
-<pre><code>Welcome to CodeBhavya!</code></pre>
-
-
-          <div class="cb-practice-actions">
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.toggle('structure-p1','workspace')"
-            >
-              💻 Solve It Yourself
-            </button>
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.markHint('structure-p1')"
-            >
-              💡 Hint
-            </button>
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.markSolution('structure-p1')"
-            >
-              👁 Show Program
-            </button>
-
-          </div>
-
-
-          <div
-            id="structure-p1-hint"
-            class="cb-practice-hint"
-            hidden
-          >
-            Use <code>#include &lt;stdio.h&gt;</code>,
-            <code>int main(void)</code>,
-            <code>printf()</code> and <code>return 0;</code>.
-          </div>
-
-
-          <div
-            id="structure-p1-workspace"
-            class="cb-practice-workspace"
-            hidden
-          >
-
-            <textarea
-              id="structure-p1-code"
-              class="cb-code-editor"
-              spellcheck="false"
->#include <stdio.h>
-
-int main(void)
-{
-    /* Write your program here */
-
-    return 0;
-}</textarea>
-
-            <div class="cb-practice-workspace-actions">
-
-              <button
-                type="button"
-                onclick="CodeBhavyaCPractice.run('structure-p1')"
-              >
-                ▶ Run / Check
-              </button>
-
-              <button
-                type="button"
-                onclick="CodeBhavyaCPractice.reset('structure-p1')"
-              >
-                ↺ Reset
-              </button>
+                <h3>🔎 Read it step by step</h3>
+
+                <ol>
+                    <li>
+                        <code>#include &lt;stdio.h&gt;</code> makes standard I/O
+                        declarations available.
+                    </li>
+
+                    <li>
+                        <code>square()</code> is a user-defined function.
+                    </li>
+
+                    <li>
+                        <code>main()</code> is the hosted program entry
+                        function.
+                    </li>
+
+                    <li>
+                        <code>n</code> stores the input.
+                    </li>
+
+                    <li>
+                        <code>scanf()</code> reads the input.
+                    </li>
+
+                    <li>
+                        <code>square(n)</code> calls another function.
+                    </li>
+
+                    <li>
+                        <code>result</code> stores the returned value.
+                    </li>
+
+                    <li>
+                        <code>printf()</code> displays the result.
+                    </li>
+
+                    <li>
+                        <code>return 0;</code> ends <code>main</code> with a
+                        success status.
+                    </li>
+                </ol>
 
             </div>
 
 
-            <div class="cb-practice-output">
+            <!-- =====================================================
+                 2.22
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-              <strong>Sample Output</strong>
+                <div class="cb-deep-dive-title">
+                    2.22 Common Structural Mistakes
+                </div>
 
-              <pre id="structure-p1-output">Welcome to CodeBhavya!</pre>
+                <div class="comparison-table">
 
-            </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mistake</th>
+                                <th>Problem</th>
+                                <th>Correct idea</th>
+                            </tr>
+                        </thead>
 
-          </div>
+                        <tbody>
 
+                            <tr>
+                                <td>Missing <code>#include</code></td>
+                                <td>Required declarations may be unavailable</td>
+                                <td>Include the appropriate header</td>
+                            </tr>
 
-          <div
-            id="structure-p1-solution"
-            class="cb-practice-solution"
-            hidden
-          >
+                            <tr>
+                                <td>Missing <code>{</code></td>
+                                <td>Function/block structure becomes invalid</td>
+                                <td>Match opening and closing braces</td>
+                            </tr>
 
-<pre><code>#include &lt;stdio.h&gt;
+                            <tr>
+                                <td>Missing <code>;</code></td>
+                                <td>Statement syntax becomes invalid</td>
+                                <td>Terminate statements where required</td>
+                            </tr>
 
-int main(void)
-{
-    printf("Welcome to CodeBhavya!\n");
+                            <tr>
+                                <td>Using <code>Printf()</code></td>
+                                <td>C is case-sensitive</td>
+                                <td>Use <code>printf()</code></td>
+                            </tr>
 
-    return 0;
-}</code></pre>
+                            <tr>
+                                <td>Writing <code>void main()</code></td>
+                                <td>Not the preferred standard hosted form</td>
+                                <td>Use <code>int main(void)</code></td>
+                            </tr>
 
-          </div>
+                            <tr>
+                                <td>Forgetting function declaration</td>
+                                <td>Function may be used without required prior information</td>
+                                <td>Declare it before use when needed</td>
+                            </tr>
 
-        </article>
+                            <tr>
+                                <td>Thinking <code>return 0;</code> prints 0</td>
+                                <td>Misunderstands return status</td>
+                                <td>It returns a value from <code>main</code></td>
+                            </tr>
 
+                        </tbody>
+                    </table>
 
-
-        <!-- =================================================
-             PROBLEM 2
-        ================================================== -->
-
-        <article class="cb-practice-problem" data-problem-key="structure-p2">
-
-          <div class="cb-practice-problem-head">
-
-            <div>
-              <span class="cb-practice-badge">
-                Problem 2
-              </span>
-
-              <h3>
-                Print Three Lines
-              </h3>
-            </div>
-
-          </div>
-
-          <p>
-            Write a complete C program that prints:
-          </p>
-
-<pre><code>C Programming
-CodeBhavya
-Learn and Practice</code></pre>
-
-
-          <div class="cb-practice-actions">
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.toggle('structure-p2','workspace')"
-            >
-              💻 Solve It Yourself
-            </button>
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.markHint('structure-p2')"
-            >
-              💡 Hint
-            </button>
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.markSolution('structure-p2')"
-            >
-              👁 Show Program
-            </button>
-
-          </div>
-
-
-          <div
-            id="structure-p2-hint"
-            class="cb-practice-hint"
-            hidden
-          >
-            You can use three <code>printf()</code> statements or
-            one <code>printf()</code> statement containing newline
-            characters.
-          </div>
-
-
-          <div
-            id="structure-p2-workspace"
-            class="cb-practice-workspace"
-            hidden
-          >
-
-            <textarea
-              id="structure-p2-code"
-              class="cb-code-editor"
-              spellcheck="false"
->#include <stdio.h>
-
-int main(void)
-{
-    /* Write your program here */
-
-    return 0;
-}</textarea>
-
-            <div class="cb-practice-workspace-actions">
-
-              <button
-                type="button"
-                onclick="CodeBhavyaCPractice.run('structure-p2')"
-              >
-                ▶ Run / Check
-              </button>
-
-              <button
-                type="button"
-                onclick="CodeBhavyaCPractice.reset('structure-p2')"
-              >
-                ↺ Reset
-              </button>
+                </div>
 
             </div>
 
 
-            <div class="cb-practice-output">
+            <!-- =====================================================
+                 2.23
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-              <strong>Sample Output</strong>
+                <div class="cb-deep-dive-title">
+                    2.23 Common Beginner Confusions
+                </div>
 
-<pre id="structure-p2-output">C Programming
-CodeBhavya
-Learn and Practice</pre>
+                <div class="cb-confusion-box">
 
-            </div>
+                    <h3>❓ Is <code>#include</code> a function?</h3>
 
-          </div>
+                    <p>
+                        No. It is a preprocessor directive.
+                    </p>
 
+                </div>
 
-          <div
-            id="structure-p2-solution"
-            class="cb-practice-solution"
-            hidden
-          >
+                <div class="cb-confusion-box">
 
-<pre><code>#include &lt;stdio.h&gt;
+                    <h3>❓ Is <code>main()</code> a keyword?</h3>
 
-int main(void)
-{
-    printf("C Programming\n");
-    printf("CodeBhavya\n");
-    printf("Learn and Practice\n");
+                    <p>
+                        No. <code>main</code> is the name of the designated
+                        entry function in a hosted C program.
+                    </p>
 
-    return 0;
-}</code></pre>
+                </div>
 
-          </div>
+                <div class="cb-confusion-box">
 
-        </article>
+                    <h3>❓ Is <code>printf()</code> a keyword?</h3>
 
+                    <p>
+                        No. <code>printf()</code> is a standard library
+                        function.
+                    </p>
 
+                </div>
 
-        <!-- =================================================
-             PROBLEM 3
-        ================================================== -->
+                <div class="cb-confusion-box">
 
-        <article class="cb-practice-problem" data-problem-key="structure-p3">
+                    <h3>❓ Is <code>return</code> a function?</h3>
 
-          <div class="cb-practice-problem-head">
+                    <p>
+                        No. <code>return</code> is a C keyword used by the
+                        return statement.
+                    </p>
 
-            <div>
-              <span class="cb-practice-badge">
-                Problem 3
-              </span>
+                </div>
 
-              <h3>
-                Display a Number
-              </h3>
-            </div>
+                <div class="cb-confusion-box">
 
-          </div>
+                    <h3>❓ Are braces only for functions?</h3>
 
-          <p>
-            Write a C program that declares an integer with the value
-            <code>25</code> and displays:
-          </p>
+                    <p>
+                        No. Braces are also used to form blocks for constructs
+                        such as <code>if</code>, <code>for</code> and
+                        <code>while</code>.
+                    </p>
 
-<pre><code>Number = 25</code></pre>
-
-
-          <div class="cb-practice-actions">
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.toggle('structure-p3','workspace')"
-            >
-              💻 Solve It Yourself
-            </button>
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.markHint('structure-p3')"
-            >
-              💡 Hint
-            </button>
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.markSolution('structure-p3')"
-            >
-              👁 Show Program
-            </button>
-
-          </div>
-
-
-          <div
-            id="structure-p3-hint"
-            class="cb-practice-hint"
-            hidden
-          >
-            Declare an integer inside <code>main()</code>, initialize it
-            with <code>25</code>, and use <code>%d</code> with
-            <code>printf()</code>.
-          </div>
-
-
-          <div
-            id="structure-p3-workspace"
-            class="cb-practice-workspace"
-            hidden
-          >
-
-            <textarea
-              id="structure-p3-code"
-              class="cb-code-editor"
-              spellcheck="false"
->#include <stdio.h>
-
-int main(void)
-{
-    int number = 25;
-
-    /* Display number */
-
-    return 0;
-}</textarea>
-
-            <div class="cb-practice-workspace-actions">
-
-              <button
-                type="button"
-                onclick="CodeBhavyaCPractice.run('structure-p3')"
-              >
-                ▶ Run / Check
-              </button>
-
-              <button
-                type="button"
-                onclick="CodeBhavyaCPractice.reset('structure-p3')"
-              >
-                ↺ Reset
-              </button>
+                </div>
 
             </div>
 
 
-            <div class="cb-practice-output">
+            <!-- =====================================================
+                 2.24
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-              <strong>Sample Output</strong>
+                <div class="cb-deep-dive-title">
+                    2.24 Textbook Structure vs Actual C
+                </div>
 
-<pre id="structure-p3-output">Number = 25</pre>
+                <p>
+                    You may see textbooks describe a C program using sections
+                    such as:
+                </p>
 
-            </div>
+                <ol>
+                    <li>Documentation section</li>
+                    <li>Link section</li>
+                    <li>Definition section</li>
+                    <li>Global declaration section</li>
+                    <li><code>main()</code> section</li>
+                    <li>Subprogram section</li>
+                </ol>
 
-          </div>
+                <p>
+                    This is a useful teaching model, but it should not be
+                    treated as a compulsory syntax rule.
+                </p>
 
+                <div class="cb-important-box">
 
-          <div
-            id="structure-p3-solution"
-            class="cb-practice-solution"
-            hidden
-          >
+                    <h3>🎯 Better Understanding</h3>
 
-<pre><code>#include &lt;stdio.h&gt;
+                    <p>
+                        Real C programs can have many different structures.
+                        The language standard does not require every program
+                        to follow the traditional six-section textbook
+                        arrangement.
+                    </p>
 
-int main(void)
-{
-    int number = 25;
+                    <p>
+                        Learn the purpose of each component instead of
+                        memorizing a fixed template.
+                    </p>
 
-    printf("Number = %d\n", number);
-
-    return 0;
-}</code></pre>
-
-          </div>
-
-        </article>
-
-
-
-        <!-- =================================================
-             PROBLEM 4
-        ================================================== -->
-
-        <article class="cb-practice-problem" data-problem-key="structure-p4">
-
-          <div class="cb-practice-problem-head">
-
-            <div>
-              <span class="cb-practice-badge">
-                Problem 4
-              </span>
-
-              <h3>
-                Rectangle Area Using a Fixed Value
-              </h3>
-            </div>
-
-          </div>
-
-          <p>
-            Write a C program that declares:
-          </p>
-
-<pre><code>length = 10
-width = 5</code></pre>
-
-          <p>
-            and displays the area:
-          </p>
-
-<pre><code>Area = 50</code></pre>
-
-
-          <div class="cb-practice-actions">
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.toggle('structure-p4','workspace')"
-            >
-              💻 Solve It Yourself
-            </button>
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.markHint('structure-p4')"
-            >
-              💡 Hint
-            </button>
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.markSolution('structure-p4')"
-            >
-              👁 Show Program
-            </button>
-
-          </div>
-
-
-          <div
-            id="structure-p4-hint"
-            class="cb-practice-hint"
-            hidden
-          >
-            Declare two integers, calculate
-            <code>length * width</code>, and print the result.
-          </div>
-
-
-          <div
-            id="structure-p4-workspace"
-            class="cb-practice-workspace"
-            hidden
-          >
-
-            <textarea
-              id="structure-p4-code"
-              class="cb-code-editor"
-              spellcheck="false"
->#include <stdio.h>
-
-int main(void)
-{
-    int length = 10;
-    int width = 5;
-
-    /* Calculate area */
-
-    return 0;
-}</textarea>
-
-            <div class="cb-practice-workspace-actions">
-
-              <button
-                type="button"
-                onclick="CodeBhavyaCPractice.run('structure-p4')"
-              >
-                ▶ Run / Check
-              </button>
-
-              <button
-                type="button"
-                onclick="CodeBhavyaCPractice.reset('structure-p4')"
-              >
-                ↺ Reset
-              </button>
+                </div>
 
             </div>
 
 
-            <div class="cb-practice-output">
+            <!-- =====================================================
+                 2.25
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-              <strong>Sample Output</strong>
+                <div class="cb-deep-dive-title">
+                    2.25 C Program Structure Memory Map
+                </div>
 
-<pre id="structure-p4-output">Area = 50</pre>
+                <div class="cb-concept-tree">
 
-            </div>
+                    <h3>🌳 C Program</h3>
 
-          </div>
+                    <ul>
+                        <li>
+                            <strong>Comments</strong>
+                            <ul>
+                                <li>Explain code</li>
+                            </ul>
+                        </li>
 
+                        <li>
+                            <strong>Preprocessor Directives</strong>
+                            <ul>
+                                <li><code>#include</code></li>
+                                <li><code>#define</code></li>
+                            </ul>
+                        </li>
 
-          <div
-            id="structure-p4-solution"
-            class="cb-practice-solution"
-            hidden
-          >
+                        <li>
+                            <strong>Declarations</strong>
+                            <ul>
+                                <li>Variables</li>
+                                <li>Constants</li>
+                                <li>Function prototypes</li>
+                            </ul>
+                        </li>
 
-<pre><code>#include &lt;stdio.h&gt;
+                        <li>
+                            <strong>Functions</strong>
+                            <ul>
+                                <li><code>main()</code></li>
+                                <li>User-defined functions</li>
+                            </ul>
+                        </li>
 
-int main(void)
-{
-    int length = 10;
-    int width = 5;
-    int area = length * width;
+                        <li>
+                            <strong>Statements</strong>
+                            <ul>
+                                <li>Input</li>
+                                <li>Processing</li>
+                                <li>Decision</li>
+                                <li>Loop</li>
+                                <li>Output</li>
+                                <li>Return</li>
+                            </ul>
+                        </li>
 
-    printf("Area = %d\n", area);
+                    </ul>
 
-    return 0;
-}</code></pre>
-
-          </div>
-
-        </article>
-
-
-
-        <!-- =================================================
-             PROBLEM 5
-        ================================================== -->
-
-        <article class="cb-practice-problem" data-problem-key="structure-p5">
-
-          <div class="cb-practice-problem-head">
-
-            <div>
-              <span class="cb-practice-badge">
-                Problem 5
-              </span>
-
-              <h3>
-                Display Student Information
-              </h3>
-            </div>
-
-          </div>
-
-          <p>
-            Write a C program that declares fixed values for a student's
-            name, age and marks and displays them in this format:
-          </p>
-
-<pre><code>Name: Venu
-Age: 20
-Marks: 85</code></pre>
-
-
-          <div class="cb-practice-actions">
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.toggle('structure-p5','workspace')"
-            >
-              💻 Solve It Yourself
-            </button>
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.markHint('structure-p5')"
-            >
-              💡 Hint
-            </button>
-
-            <button
-              type="button"
-              onclick="CodeBhavyaCPractice.markSolution('structure-p5')"
-            >
-              👁 Show Program
-            </button>
-
-          </div>
-
-
-          <div
-            id="structure-p5-hint"
-            class="cb-practice-hint"
-            hidden
-          >
-            For this lesson, focus on program structure.
-            Use a string literal directly with <code>printf()</code>
-            for the name and integer variables for age and marks.
-          </div>
-
-
-          <div
-            id="structure-p5-workspace"
-            class="cb-practice-workspace"
-            hidden
-          >
-
-            <textarea
-              id="structure-p5-code"
-              class="cb-code-editor"
-              spellcheck="false"
->#include <stdio.h>
-
-int main(void)
-{
-    int age = 20;
-    int marks = 85;
-
-    /* Display student information */
-
-    return 0;
-}</textarea>
-
-            <div class="cb-practice-workspace-actions">
-
-              <button
-                type="button"
-                onclick="CodeBhavyaCPractice.run('structure-p5')"
-              >
-                ▶ Run / Check
-              </button>
-
-              <button
-                type="button"
-                onclick="CodeBhavyaCPractice.reset('structure-p5')"
-              >
-                ↺ Reset
-              </button>
+                </div>
 
             </div>
 
 
-            <div class="cb-practice-output">
+            <!-- =====================================================
+                 2.26
+                 ===================================================== -->
+            <div class="cb-deep-dive">
 
-              <strong>Sample Output</strong>
+                <div class="cb-deep-dive-title">
+                    2.26 Quick Revision
+                </div>
 
-<pre id="structure-p5-output">Name: Venu
-Age: 20
-Marks: 85</pre>
+                <div class="cb-concept-grid">
+
+                    <div>
+                        <h3>📄 Source File</h3>
+                        <p>
+                            Usually contains C source code in a
+                            <code>.c</code> file.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3>⚙️ Preprocessor</h3>
+                        <p>
+                            Handles directives such as <code>#include</code>.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3>🚀 main()</h3>
+                        <p>
+                            Entry function of a hosted C program.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3>📦 Declarations</h3>
+                        <p>
+                            Introduce identifiers and their types/interfaces.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3>▶️ Statements</h3>
+                        <p>
+                            Describe actions performed during execution.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3>🔧 Functions</h3>
+                        <p>
+                            Divide large programs into reusable units.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="cb-important-box">
+
+                    <h3>📌 Remember This Flow</h3>
+
+                    <pre><code>Source Code
+     ↓
+Preprocessing
+     ↓
+Compilation
+     ↓
+Assembly / Object Code
+     ↓
+Linking
+     ↓
+Executable
+     ↓
+main()
+     ↓
+Statements
+     ↓
+Program Result</code></pre>
+
+                </div>
 
             </div>
 
-          </div>
+
+            <!-- =====================================================
+                 2.27
+                 ===================================================== -->
+            <div class="cb-deep-dive">
+
+                <div class="cb-deep-dive-title">
+                    2.27 Practice Questions
+                </div>
+
+                <div class="cb-c-dsa-practice-section">
+
+                    <h3>🧠 Test Your Understanding</h3>
+
+                    <div class="cb-practice-question">
+                        <p>
+                            <strong>1.</strong>
+                            What is the purpose of <code>#include</code>?
+                        </p>
+
+                        <button
+                            type="button"
+                            onclick="CBShowAnswer.toggle('structure-q1')">
+                            Show Answer
+                        </button>
+
+                        <div id="structure-q1" class="cb-answer" hidden>
+                            <p>
+                                It is a preprocessor directive that makes the
+                                contents or declarations from the specified
+                                header available to the source file.
+                            </p>
+                        </div>
+                    </div>
 
 
-          <div
-            id="structure-p5-solution"
-            class="cb-practice-solution"
-            hidden
-          >
+                    <div class="cb-practice-question">
+                        <p>
+                            <strong>2.</strong>
+                            What is the purpose of <code>main()</code>?
+                        </p>
 
-<pre><code>#include &lt;stdio.h&gt;
+                        <button
+                            type="button"
+                            onclick="CBShowAnswer.toggle('structure-q2')">
+                            Show Answer
+                        </button>
 
-int main(void)
-{
-    int age = 20;
-    int marks = 85;
-
-    printf("Name: Venu\n");
-    printf("Age: %d\n", age);
-    printf("Marks: %d\n", marks);
-
-    return 0;
-}</code></pre>
-
-          </div>
-
-        </article>
+                        <div id="structure-q2" class="cb-answer" hidden>
+                            <p>
+                                In a hosted C program, <code>main</code> is the
+                                designated program entry function.
+                            </p>
+                        </div>
+                    </div>
 
 
-        <!-- OVERALL PRACTICE -->
+                    <div class="cb-practice-question">
+                        <p>
+                            <strong>3.</strong>
+                            What is the difference between a declaration and a
+                            definition?
+                        </p>
 
-        <div class="cb-practice-overall">
+                        <button
+                            type="button"
+                            onclick="CBShowAnswer.toggle('structure-q3')">
+                            Show Answer
+                        </button>
 
-          <h3>📊 Your Practice Progress</h3>
+                        <div id="structure-q3" class="cb-answer" hidden>
+                            <p>
+                                A declaration provides information about an
+                                entity, while a definition provides the entity's
+                                implementation or storage as appropriate.
+                            </p>
+                        </div>
+                    </div>
 
-          <div class="cb-practice-overall-grid">
 
-            <div>
-              <span class="cb-practice-stat-label">
-                Solved
-              </span>
+                    <div class="cb-practice-question">
+                        <p>
+                            <strong>4.</strong>
+                            Why is <code>return 0;</code> used in
+                            <code>main()</code>?
+                        </p>
 
-              <strong id="cbPracticeOverallSolved">
-                0
-              </strong>
+                        <button
+                            type="button"
+                            onclick="CBShowAnswer.toggle('structure-q4')">
+                            Show Answer
+                        </button>
+
+                        <div id="structure-q4" class="cb-answer" hidden>
+                            <p>
+                                It returns the integer value <code>0</code>
+                                from <code>main</code> as the program's
+                                termination status.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="cb-practice-question">
+                        <p>
+                            <strong>5.</strong>
+                            Is <code>printf()</code> a keyword?
+                        </p>
+
+                        <button
+                            type="button"
+                            onclick="CBShowAnswer.toggle('structure-q5')">
+                            Show Answer
+                        </button>
+
+                        <div id="structure-q5" class="cb-answer" hidden>
+                            <p>
+                                No. <code>printf()</code> is a standard library
+                                function.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="cb-practice-question">
+                        <p>
+                            <strong>6.</strong>
+                            Why are curly braces important?
+                        </p>
+
+                        <button
+                            type="button"
+                            onclick="CBShowAnswer.toggle('structure-q6')">
+                            Show Answer
+                        </button>
+
+                        <div id="structure-q6" class="cb-answer" hidden>
+                            <p>
+                                Curly braces define blocks and group the
+                                declarations and statements belonging to a
+                                function or control-flow construct.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="cb-practice-question">
+                        <p>
+                            <strong>7.</strong>
+                            Is the traditional "six sections of a C program"
+                            a compulsory rule?
+                        </p>
+
+                        <button
+                            type="button"
+                            onclick="CBShowAnswer.toggle('structure-q7')">
+                            Show Answer
+                        </button>
+
+                        <div id="structure-q7" class="cb-answer" hidden>
+                            <p>
+                                No. It is a useful textbook organization model,
+                                not a compulsory structure imposed on every C
+                                source file.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
-            <div>
-              <span class="cb-practice-stat-label">
-                Completed
-              </span>
 
-              <strong id="cbPracticeOverallCompleted">
-                0
-              </strong>
+            <!-- =====================================================
+                 2.28
+                 ===================================================== -->
+            <div class="cb-deep-dive">
+
+                <div class="cb-deep-dive-title">
+                    2.28 🎯 Structure-Based Programming Problems
+                </div>
+
+                <p>
+                    Try these problems without looking at the solution first.
+                </p>
+
+                <div class="cb-c-dsa-practice-section">
+
+                    <h3>Problem 1 — Basic Program Structure</h3>
+
+                    <p>
+                        Write a C program containing <code>main()</code> that
+                        prints:
+                    </p>
+
+                    <pre><code>Welcome to CodeBhavya</code></pre>
+
+                    <p>
+                        Focus on identifying:
+                        <code>#include</code>, <code>main()</code>,
+                        braces, <code>printf()</code> and
+                        <code>return</code>.
+                    </p>
+
+
+                    <h3>Problem 2 — Variables and Statements</h3>
+
+                    <p>
+                        Write a program that declares two integers, stores
+                        values in them and prints their sum.
+                    </p>
+
+
+                    <h3>Problem 3 — Function Structure</h3>
+
+                    <p>
+                        Create a function named <code>square()</code> that
+                        receives an integer and returns its square.
+                    </p>
+
+
+                    <h3>Problem 4 — Function Prototype</h3>
+
+                    <p>
+                        Write a program in which <code>main()</code> appears
+                        before the definition of <code>add()</code>.
+                        Use a function prototype correctly.
+                    </p>
+
+
+                    <h3>Problem 5 — Identify the Parts</h3>
+
+                    <p>
+                        Given any C program, mark:
+                    </p>
+
+                    <ul>
+                        <li>Preprocessor directives</li>
+                        <li>Function declarations</li>
+                        <li>Function definitions</li>
+                        <li>Variables</li>
+                        <li>Statements</li>
+                        <li>Function calls</li>
+                        <li>Return statements</li>
+                    </ul>
+
+                </div>
+
             </div>
 
-            <div>
-              <span class="cb-practice-stat-label">
-                Score
-              </span>
 
-              <strong id="cbPracticeOverallScore">
-                0
-              </strong>
+            <!-- =====================================================
+                 INTERVIEW PREPARATION
+                 ===================================================== -->
+            <div class="cb-added-section">
+
+                <h2>🎤 Structure of C Program — Interview Questions</h2>
+
+                <div class="cb-practice-question">
+                    <p>
+                        <strong>1. What is the basic structure of a C program?</strong>
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="CBShowAnswer.toggle('interview-structure-1')">
+                        Show Answer
+                    </button>
+
+                    <div id="interview-structure-1" class="cb-answer" hidden>
+                        <p>
+                            A C program can contain comments, preprocessor
+                            directives, declarations, function definitions,
+                            <code>main()</code>, statements, expressions and
+                            other program components. There is no single
+                            compulsory textbook layout for every C program.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="cb-practice-question">
+                    <p>
+                        <strong>2. What is the role of <code>main()</code>?</strong>
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="CBShowAnswer.toggle('interview-structure-2')">
+                        Show Answer
+                    </button>
+
+                    <div id="interview-structure-2" class="cb-answer" hidden>
+                        <p>
+                            In a hosted C program, <code>main</code> is the
+                            designated entry function.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="cb-practice-question">
+                    <p>
+                        <strong>3. Is <code>#include</code> part of the C language syntax?</strong>
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="CBShowAnswer.toggle('interview-structure-3')">
+                        Show Answer
+                    </button>
+
+                    <div id="interview-structure-3" class="cb-answer" hidden>
+                        <p>
+                            <code>#include</code> is a preprocessing directive.
+                            It is handled by the preprocessor before normal
+                            C translation.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="cb-practice-question">
+                    <p>
+                        <strong>4. What is the difference between a function declaration and definition?</strong>
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="CBShowAnswer.toggle('interview-structure-4')">
+                        Show Answer
+                    </button>
+
+                    <div id="interview-structure-4" class="cb-answer" hidden>
+                        <p>
+                            A declaration provides information about the
+                            function, while the definition supplies its actual
+                            implementation.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="cb-practice-question">
+                    <p>
+                        <strong>5. Why is <code>int main(void)</code> preferred?</strong>
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="CBShowAnswer.toggle('interview-structure-5')">
+                        Show Answer
+                    </button>
+
+                    <div id="interview-structure-5" class="cb-answer" hidden>
+                        <p>
+                            It clearly specifies that <code>main</code> returns
+                            an integer and takes no parameters.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="cb-practice-question">
+                    <p>
+                        <strong>6. What is the purpose of a header file?</strong>
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="CBShowAnswer.toggle('interview-structure-6')">
+                        Show Answer
+                    </button>
+
+                    <div id="interview-structure-6" class="cb-answer" hidden>
+                        <p>
+                            A header provides declarations and related
+                            interface information that can be shared with
+                            source files.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="cb-practice-question">
+                    <p>
+                        <strong>7. What does <code>return 0;</code> mean in <code>main()</code>?</strong>
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="CBShowAnswer.toggle('interview-structure-7')">
+                        Show Answer
+                    </button>
+
+                    <div id="interview-structure-7" class="cb-answer" hidden>
+                        <p>
+                            It returns the integer value zero from
+                            <code>main</code> as the program's termination
+                            status.
+                        </p>
+                    </div>
+                </div>
+
             </div>
 
-            <div>
-              <span class="cb-practice-stat-label">
-                Progress
-              </span>
 
-              <strong id="cbPracticeOverallPercent">
-                0%
-              </strong>
+            <!-- =====================================================
+                 PLACEMENT TIPS
+                 ===================================================== -->
+            <div class="cb-added-section">
+
+                <h2>💡 Structure of C Program — Placement Tips</h2>
+
+                <ul>
+                    <li>
+                        Be able to explain the purpose of
+                        <code>#include</code> without saying that it "links"
+                        the library.
+                    </li>
+
+                    <li>
+                        Know the difference between a declaration and a
+                        definition.
+                    </li>
+
+                    <li>
+                        Understand why <code>main()</code> is special in a
+                        hosted C program.
+                    </li>
+
+                    <li>
+                        Be comfortable explaining
+                        <code>int main(void)</code>.
+                    </li>
+
+                    <li>
+                        Remember that C is case-sensitive.
+                    </li>
+
+                    <li>
+                        Know why missing semicolons and braces produce
+                        translation errors.
+                    </li>
+
+                    <li>
+                        Understand the basic sequence:
+                        preprocessing → compilation → assembly → linking →
+                        execution.
+                    </li>
+
+                    <li>
+                        Do not memorize the traditional "six sections" as a
+                        compulsory language rule.
+                    </li>
+                </ul>
+
             </div>
 
-          </div>
 
-          <div class="cb-practice-overall-bar">
-            <div
-              id="cbPracticeOverallBar"
-              style="width:0%;"
-            ></div>
-          </div>
+            <!-- =====================================================
+                 EXTRA PRACTICE
+                 ===================================================== -->
+            <div class="cb-added-section">
 
-        </div>
+                <h2>✍️ Structure of C Program — Extra Practice Questions</h2>
 
-      </section>
+                <ol>
+                    <li>
+                        Write a simple C program and label every major part.
+                    </li>
 
+                    <li>
+                        Explain the difference between
+                        <code>#include &lt;stdio.h&gt;</code> and
+                        linking.
+                    </li>
 
+                    <li>
+                        Write a program using a function prototype and a
+                        function definition after <code>main()</code>.
+                    </li>
 
-      <!-- ===================================================
-           INTERVIEW PREPARATION
-      ==================================================== -->
+                    <li>
+                        Find and correct three structural mistakes in a
+                        deliberately incorrect C program.
+                    </li>
 
-      <section class="cb-added-section">
+                    <li>
+                        Explain what happens to a C program from source file
+                        to executable.
+                    </li>
 
-        <div class="cb-added-section-label">
-          INTERVIEW PREPARATION
-        </div>
+                    <li>
+                        Explain the difference between an expression,
+                        statement and function call.
+                    </li>
 
-        <h2>
-          🎤 C Program Structure — Interview Questions
-        </h2>
+                    <li>
+                        Explain why <code>return 0;</code> does not display
+                        zero.
+                    </li>
 
+                    <li>
+                        Write a program containing two user-defined functions
+                        and explain how <code>main()</code> calls them.
+                    </li>
+                </ol>
 
-        <div class="cb-interview-question">
+            </div>
 
-          <h3>1. What are the basic components of a C program?</h3>
 
-          <p>
-            A typical C program can contain comments, preprocessing
-            directives, declarations and definitions, the
-            <code>main()</code> function, statements and additional
-            user-defined functions.
-          </p>
+            <!-- =====================================================
+                 KEY TAKEAWAY
+                 ===================================================== -->
+            <div class="cb-added-section">
 
-        </div>
+                <h2>🎯 Key Takeaway</h2>
 
+                <div class="cb-teaching-standard">
 
-        <div class="cb-interview-question">
+                    <p>
+                        Do not memorize a fixed C program template.
+                        Understand what each part does.
+                    </p>
 
-          <h3>2. What is the role of main()?</h3>
-
-          <p>
-            In a hosted C environment, <code>main</code> is the function
-            through which program execution begins.
-          </p>
-
-        </div>
-
-
-        <div class="cb-interview-question">
-
-          <h3>3. What is a preprocessor directive?</h3>
-
-          <p>
-            It is an instruction handled by the C preprocessing stage.
-            Examples include <code>#include</code>,
-            <code>#define</code> and conditional compilation directives.
-          </p>
-
-        </div>
-
-
-        <div class="cb-interview-question">
-
-          <h3>4. Is #include a statement?</h3>
-
-          <p>
-            No. It is a preprocessing directive.
-          </p>
-
-        </div>
-
-
-        <div class="cb-interview-question">
-
-          <h3>5. Why is stdio.h included when using printf()?</h3>
-
-          <p>
-            The standard input/output header provides the declaration
-            needed for the standard I/O facilities including
-            <code>printf</code>.
-          </p>
-
-        </div>
-
-
-        <div class="cb-interview-question">
-
-          <h3>6. What is the difference between declaration and definition?</h3>
-
-          <p>
-            A declaration introduces information about an entity.
-            A definition provides the complete implementation or storage
-            definition where applicable.
-          </p>
-
-        </div>
-
-
-        <div class="cb-interview-question">
-
-          <h3>7. Why do we use return 0 in main()?</h3>
-
-          <p>
-            It returns zero from <code>main</code>, conventionally
-            indicating successful program termination to the host
-            environment.
-          </p>
-
-        </div>
-
-
-        <div class="cb-interview-question">
-
-          <h3>8. Does every C program require #include?</h3>
-
-          <p>
-            No. It depends on whether the program needs declarations or
-            other facilities supplied through headers.
-          </p>
-
-        </div>
-
-
-        <div class="cb-interview-question">
-
-          <h3>9. Is void main() standard C?</h3>
-
-          <p>
-            It is not the standard hosted-program form taught in this
-            course. Use <code>int main(void)</code> for a program with
-            no command-line arguments.
-          </p>
-
-        </div>
-
-
-        <div class="cb-interview-question">
-
-          <h3>10. Can a C program contain multiple functions?</h3>
-
-          <p>
-            Yes. A program can contain many functions. In larger programs,
-            functions are commonly used to divide responsibilities into
-            manageable pieces.
-          </p>
-
-        </div>
-
-      </section>
-
-
-
-      <!-- ===================================================
-           PLACEMENT TIPS
-      ==================================================== -->
-
-      <section class="cb-added-section">
-
-        <div class="cb-added-section-label">
-          PLACEMENT TIPS
-        </div>
-
-        <h2>
-          💼 Placement Tips — C Program Structure
-        </h2>
-
-        <div class="tip-box">
-
-          <strong>Tip 1 — Know the difference between #include and linker.</strong>
-
-          <p>
-            <code>#include</code> belongs to preprocessing.
-            Linking is a later build stage.
-          </p>
-
-        </div>
-
-
-        <div class="tip-box">
-
-          <strong>Tip 2 — Use int main(void).</strong>
-
-          <p>
-            It is a clear and standard form for a hosted C program with
-            no command-line arguments.
-          </p>
-
-        </div>
-
-
-        <div class="tip-box">
-
-          <strong>Tip 3 — Don't memorize textbook sections blindly.</strong>
-
-          <p>
-            Interviewers may ask you to identify the actual role of
-            comments, headers, declarations, definitions and functions.
-          </p>
-
-        </div>
-
-
-        <div class="tip-box">
-
-          <strong>Tip 4 — Understand declaration vs definition.</strong>
-
-          <p>
-            This distinction becomes especially important when programs
-            are divided across multiple source and header files.
-          </p>
-
-        </div>
-
-
-        <div class="tip-box">
-
-          <strong>Tip 5 — Understand why headers are needed.</strong>
-
-          <p>
-            Do not memorize only "include stdio.h for printf".
-            Understand that headers provide declarations and interfaces
-            used by source code.
-          </p>
-
-        </div>
-
-
-        <div class="tip-box">
-
-          <strong>Tip 6 — Be ready for "find the error" questions.</strong>
-
-          <p>
-            Missing semicolons, incorrect header names, missing braces,
-            wrong capitalization and invalid function declarations are
-            common beginner-level interview exercises.
-          </p>
-
-        </div>
-
-      </section>
-
-
-
-      <!-- ===================================================
-           EXTRA PRACTICE
-      ==================================================== -->
-
-      <section class="cb-added-section">
-
-        <div class="cb-added-section-label">
-          EXTRA PRACTICE
-        </div>
-
-        <h2>
-          🧠 Extra Structure Practice
-        </h2>
-
-        <ol>
-
-          <li>
-            Write a program containing a documentation comment,
-            <code>#include</code>, <code>main()</code>,
-            <code>printf()</code> and <code>return</code>.
-          </li>
-
-          <li>
-            Write a program that prints five separate lines.
-          </li>
-
-          <li>
-            Write a program with a user-defined <code>greet()</code>
-            function.
-          </li>
-
-          <li>
-            Write a program where the function definition appears
-            before <code>main()</code>.
-          </li>
-
-          <li>
-            Write a program where a function declaration appears before
-            <code>main()</code> and its definition appears after
-            <code>main()</code>.
-          </li>
-
-          <li>
-            Find and correct five structural errors in a deliberately
-            broken C program.
-          </li>
-
-          <li>
-            Explain every line of your own C program without using
-            memorized textbook definitions.
-          </li>
-
-        </ol>
-
-      </section>
-
-
-
-      <!-- ===================================================
-           KEY TAKEAWAY
-      ==================================================== -->
-
-      <div class="cb-important-box">
-
-        <strong>🎯 Key Takeaway</strong>
-
-        <p>
-          A C program is built from different language and preprocessing
-          elements, each with a specific role.
-        </p>
-
-        <p>
-          The most important beginner mental model is:
-        </p>
-
-<pre>
-Comments
+                    <pre><code>Comments
    ↓
-Preprocessing directives
+Preprocessor Directives
    ↓
-Declarations / definitions
+Declarations / Prototypes
+   ↓
+Functions
    ↓
 main()
    ↓
-Statements and function calls
+Declarations
    ↓
-Other functions as required
-</pre>
+Statements
+   ↓
+Function Calls
+   ↓
+Output / Processing
+   ↓
+return</code></pre>
 
-        <p>
-          Do not memorize this as a rigid template. Understand what each
-          part does and why it exists.
-        </p>
+                    <p>
+                        Once you understand this structure, later topics such
+                        as variables, data types, input/output, operators,
+                        decisions, loops, arrays, functions and pointers will
+                        become much easier to organize.
+                    </p>
 
-        <p>
-          Once you can look at a C program and identify its structure,
-          the next lessons become much easier.
-        </p>
+                </div>
 
-      </div>
-
-
-
-      <!-- ===================================================
-           TOPIC NAVIGATION
-      ==================================================== -->
-
-      <div class="cb-topic-navigation">
-
-        <a
-          href="introduction.html"
-          class="cb-topic-nav-btn previous"
-        >
-          ← Previous Topic
-          <span>
-            Introduction to C
-          </span>
-        </a>
+            </div>
 
 
-        <a
-          href="variables-constants.html"
-          class="cb-topic-nav-btn next"
-        >
-          Next Topic →
-          <span>
-            Variables &amp; Constants
-          </span>
-        </a>
-
-      </div>
+        </section>
 
 
-    </section>
+        <!-- =========================================================
+             TOPIC NAVIGATION
+             ========================================================= -->
+        <div class="cb-topic-navigation">
 
-  </main>
+            <a href="introduction.html" class="cb-topic-prev">
+                ← Previous Topic: Introduction to C
+            </a>
+
+            <a href="variables.html" class="cb-topic-next">
+                Next Topic: Variables &amp; Constants →
+            </a>
+
+        </div>
+
+    </main>
 
 </div>
 
 
-
-<!-- =========================================================
+<!-- =========================
      FOOTER
-========================================================= -->
+     ========================= -->
+<footer class="site-footer">
 
-<footer class="cb-site-footer">
+    <div class="footer-container">
 
-  <div class="cb-footer-inner">
+        <div class="footer-brand">
 
-    <div class="cb-footer-brand">
+            <h2>CodeBhavya</h2>
 
-      <h3>CodeBhavya</h3>
+            <p>
+                From Learning to Limitless Possibilities.
+            </p>
 
-      <p class="cb-footer-tagline">
-        From Learning to Limitless Possibilities.
-      </p>
+            <p>
+                Learn, practice, build and grow with structured learning
+                resources.
+            </p>
 
-      <p>
-        Learn, practice, build and grow with structured learning resources.
-      </p>
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">Home</a>
+            <a href="../Maths/index.html">Maths</a>
+            <a href="index.html">C Programming</a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+            <a href="../Data-Structures/index.html">
+                Data Structures
+            </a>
+
+            <a href="../Advanced-Data-Structures/index.html">
+                Advanced Data Structures
+            </a>
+
+            <a href="../Python/index.html">
+                Python
+            </a>
+
+            <a href="../AI-ML/index.html">
+                AI &amp; Machine Learning
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="../Placement/index.html">
+                Practice Problems
+            </a>
+
+            <a href="../Placement/index.html">
+                Problem Solving
+            </a>
+
+        </div>
 
     </div>
 
 
-    <div class="cb-footer-column">
+    <div class="footer-bottom">
 
-      <h4>Quick Links</h4>
+        <p>
+            © 2026 CodeBhavya. All Rights Reserved.
+        </p>
 
-      <a href="../index.html">Home</a>
-      <a href="../about.html">About</a>
-      <a href="../contact.html">Contact</a>
-
-    </div>
-
-
-    <div class="cb-footer-column">
-
-      <h4>Learning</h4>
-
-      <a href="../Maths/index.html">Maths</a>
-      <a href="index.html">C Programming</a>
-      <a href="../Data-Structures/index.html">Data Structures</a>
-      <a href="../Python/index.html">Python</a>
+        <p>
+            From Learning to Limitless Possibilities.
+        </p>
 
     </div>
-
-
-    <div class="cb-footer-column">
-
-      <h4>Practice</h4>
-
-      <a href="practice/index.html">C Practice</a>
-      <a href="../Placement/index.html">Placement</a>
-
-    </div>
-
-  </div>
-
-
-  <div class="cb-footer-bottom">
-
-    <p>
-      © 2026 CodeBhavya. All rights reserved.
-    </p>
-
-  </div>
 
 </footer>
 
 
-
-<!-- =========================================================
-     SCRIPTS
-========================================================= -->
-
 <script src="c-programming.js"></script>
 
-
 <script>
-/* =========================================================
-   SIDEBAR SEARCH
-========================================================= */
-
 function searchTopics() {
 
-  const input =
-    document.getElementById("topicSearch");
+    const input = document.getElementById("topicSearch");
 
-  if (!input) return;
+    if (!input) return;
 
-  const query =
-    input.value.trim().toLowerCase();
+    const filter = input.value.toLowerCase().trim();
 
-  const links =
-    document.querySelectorAll(
-      ".cb-c-topic-sidebar a"
+    const links = document.querySelectorAll(
+        ".cb-c-topic-sidebar a"
     );
 
-  links.forEach(function(link) {
+    links.forEach(function (link) {
 
-    const text =
-      link.textContent.toLowerCase();
+        const text = link.textContent.toLowerCase();
 
-    link.style.display =
-      text.includes(query)
-        ? ""
-        : "none";
+        if (text.includes(filter)) {
+            link.style.display = "";
+        } else {
+            link.style.display = "none";
+        }
 
-  });
-
+    });
 }
-
-
-/* =========================================================
-   FALLBACK SHOW-ANSWER HANDLER
-   Existing c-programming.js can override/use this.
-========================================================= */
-
-window.CBShowAnswer =
-  window.CBShowAnswer || {
-
-    toggle: function(button) {
-
-      const container =
-        button.closest(
-          ".cb-practice-question"
-        );
-
-      if (!container) return;
-
-      const answer =
-        container.querySelector(
-          ".cb-answer"
-        );
-
-      if (!answer) return;
-
-      const hidden =
-        answer.hasAttribute("hidden");
-
-      if (hidden) {
-
-        answer.removeAttribute("hidden");
-
-        button.textContent =
-          "Hide Answer";
-
-      } else {
-
-        answer.setAttribute(
-          "hidden",
-          ""
-        );
-
-        button.textContent =
-          "Show Answer";
-
-      }
-
-    }
-
-  };
-
-
-/* =========================================================
-   PRACTICE CONFIGURATION
-========================================================= */
-
-const codeBhavyaStructurePracticeConfigs = {
-
-  "structure-p1": {
-
-    starterCode:
-`#include <stdio.h>
-
-int main(void)
-{
-    /* Write your program here */
-
-    return 0;
-}`,
-
-    sampleInput: "",
-
-    tests: [
-
-      {
-        input: "",
-        expectedOutput:
-          "Welcome to CodeBhavya!"
-      }
-
-    ]
-
-  },
-
-
-  "structure-p2": {
-
-    starterCode:
-`#include <stdio.h>
-
-int main(void)
-{
-    /* Write your program here */
-
-    return 0;
-}`,
-
-    sampleInput: "",
-
-    tests: [
-
-      {
-        input: "",
-        expectedOutput:
-`C Programming
-CodeBhavya
-Learn and Practice`
-      }
-
-    ]
-
-  },
-
-
-  "structure-p3": {
-
-    starterCode:
-`#include <stdio.h>
-
-int main(void)
-{
-    int number = 25;
-
-    /* Display number */
-
-    return 0;
-}`,
-
-    sampleInput: "",
-
-    tests: [
-
-      {
-        input: "",
-        expectedOutput:
-          "Number = 25"
-      }
-
-    ]
-
-  },
-
-
-  "structure-p4": {
-
-    starterCode:
-`#include <stdio.h>
-
-int main(void)
-{
-    int length = 10;
-    int width = 5;
-
-    /* Calculate area */
-
-    return 0;
-}`,
-
-    sampleInput: "",
-
-    tests: [
-
-      {
-        input: "",
-        expectedOutput:
-          "Area = 50"
-      }
-
-    ]
-
-  },
-
-
-  "structure-p5": {
-
-    starterCode:
-`#include <stdio.h>
-
-int main(void)
-{
-    int age = 20;
-    int marks = 85;
-
-    /* Display student information */
-
-    return 0;
-}`,
-
-    sampleInput: "",
-
-    tests: [
-
-      {
-        input: "",
-        expectedOutput:
-`Name: Venu
-Age: 20
-Marks: 85`
-      }
-
-    ]
-
-  }
-
-};
-
-
-/* =========================================================
-   REGISTER PRACTICE WITH EXISTING ENGINE
-========================================================= */
-
-if (
-  window.CodeBhavyaCPractice &&
-  typeof CodeBhavyaCPractice.registerAll === "function"
-) {
-
-  CodeBhavyaCPractice.registerAll(
-    codeBhavyaStructurePracticeConfigs
-  );
-
-}
-
-
-/* =========================================================
-   INITIALIZE PRACTICE UI
-========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
-
-    if (
-      window.CodeBhavyaCPractice &&
-      typeof CodeBhavyaCPractice.init === "function"
-    ) {
-
-      CodeBhavyaCPractice.init();
-
-    }
-
-  }
-);
 </script>
-
 
 <script src="../script.js"></script>
 
