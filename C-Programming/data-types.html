@@ -1,1227 +1,3283 @@
-
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>C Programming | CodeBhavya</title>
+
+<title>C Programming | Data Types | CodeBhavya</title>
+
 <link href="../images/codebhavya-icon-32.png" rel="icon" sizes="32x32" type="image/png"/>
 <link href="../images/codebhavya-icon-128.png" rel="icon" sizes="128x128" type="image/png"/>
 <link href="../images/codebhavya-icon-512.png" rel="icon" sizes="512x512" type="image/png"/>
+
 <link href="c-programming.css" rel="stylesheet"/>
 </head>
-<body class="cb-c-topic-page cb-data-types-page">
+
+<body class="cb-c-topic-page">
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+
 <header class="top-header">
-<!-- <a href="../index.html" class="logo">
-    <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
-</a> -->
-<a class="logo codebhavya-new-logo" href="../index.html">
-<img alt="CodeBhavya Logo" class="main-logo" src="../images/codebhavya-main-logo.png"/>
-<span class="brand-name">
-<span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
-</span>
-</a>
-<nav class="top-nav">
-<a href="../index.html">
-            Home
+
+    <a class="logo codebhavya-new-logo" href="../index.html">
+        <img
+            alt="CodeBhavya Logo"
+            class="main-logo"
+            src="../images/codebhavya-main-logo.png"
+        />
+
+        <span class="brand-name">
+            <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
+        </span>
+    </a>
+
+    <nav class="top-nav">
+
+        <a href="../index.html">Home</a>
+
+        <a href="../Maths/index.html">Maths</a>
+
+        <a class="active" href="index.html">C</a>
+
+        <a href="../Data-Structures/">Data Structures</a>
+
+        <a href="../Advanced-Data-Structures/">
+            Advanced Data Structures
         </a>
-<a href="../Maths/">
-            Maths
-        </a>
-<a class="active" href="index.html">
-            C
-        </a>
-<a href="../Data-Structures/index.html">
-    Data Structures
-</a>
-<a href="../Advanced-Data-Structures/index.html">
-    Advanced Data Structures
-</a>
-<a href="../Python/">
-            Python
-        </a>
-<a href="../AI-ML/">
-            AI &amp; ML
-        </a>
-<a href="../Placement/">
-            Placement
-        </a>
-</nav>
+
+        <a href="../Python/">Python</a>
+
+        <a href="../AI-ML/">AI &amp; ML</a>
+
+        <a href="../Placement/">Placement</a>
+
+    </nav>
+
 </header>
+
+
+<!-- =========================================================
+     DOCUMENT LAYOUT
+     ========================================================= -->
+
 <div class="docs-layout">
-<aside class="sidebar cb-c-topic-sidebar">
-<div class="sidebar-title">💻 C Programming</div>
-<input class="search-box" id="topicSearch" onkeyup="searchTopics()" placeholder="🔍 Search topics..." type="text"/>
-<div class="sidebar-title">Fundamentals</div>
-<a class="cb-topic-link" data-topic-link="1" href="start-here.html">🚀 START HERE - Programming from Zero</a>
-<a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
-<a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
-<a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
-<a class="cb-topic-link active" data-topic-link="1" href="data-types.html">📦 Data Types</a>
-<a class="cb-topic-link" data-topic-link="1" href="input-output.html">⌨️ Input &amp; Output</a>
-<div class="sidebar-title">Operators &amp; Control</div>
-<a class="cb-topic-link" data-topic-link="1" href="operators.html">➕ Operators</a>
-<a class="cb-topic-link" data-topic-link="1" href="expressions.html">🧮 Expressions</a>
-<a class="cb-topic-link" data-topic-link="1" href="decision-making.html">🔀 Decision Making</a>
-<a class="cb-topic-link" data-topic-link="1" href="loops.html">🔁 Loops</a>
-<div class="sidebar-title">Programming Concepts</div>
-<a class="cb-topic-link" data-topic-link="1" href="arrays.html">📊 Arrays</a>
-<a class="cb-topic-link" data-topic-link="1" href="strings.html">🔤 Strings</a>
-<a class="cb-topic-link" data-topic-link="1" href="functions.html">🧩 Functions</a>
-<a class="cb-topic-link" data-topic-link="1" href="pointers.html">👉 Pointers</a>
-<a class="cb-topic-link" data-topic-link="1" href="structures-unions.html">🏗️ Structures &amp; Unions</a>
-<div class="sidebar-title">Advanced C</div>
-<a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">⚙️ Preprocessor &amp; Header Files</a>
-<a class="cb-topic-link" data-topic-link="1" href="file-handling.html">📁 File Handling</a>
-<a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">🧠 Dynamic Memory Allocation</a>
-<a class="cb-topic-link" data-topic-link="1" href="command-line.html">💻 Command Line Arguments</a>
-<a class="cb-topic-link" data-topic-link="1" href="bitwise.html">🔢 Bitwise Programming</a>
-<a class="cb-topic-link" data-topic-link="1" href="enum-typedef.html">🔤 Enumerations &amp; typedef</a>
-<a class="cb-topic-link" data-topic-link="1" href="precedence.html">🧮 Operator Precedence &amp; Associativity</a>
-<a class="cb-topic-link" data-topic-link="1" href="storage-classes.html">💾 Storage Classes</a>
-<a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">🛠️ Advanced C Preprocessor</a>
-<div class="sidebar-title">Practice</div>
-<a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
-</aside>
-<main class="main-content">
-<section class="content-card" data-content-standard="teaching-complete-v1" id="datatypes">
-<h2>
-        📦 4. Data Types
-    </h2><!--<div class="cb-teaching-standard"><strong>🎓 Concept-First Explanation</strong><p>This lesson is organized in the same order a faculty member would normally teach it: meaning → purpose → syntax/model → internal working → examples → common confusion → safe use. The guided examples from the earlier lesson are preserved afterward for reinforcement.</p></div>-->
-    <h3>4.1 Why C Needs Data Types</h3><p>A type tells the compiler how a value is represented and what operations are meaningful. The same bit pattern can have different interpretations depending on type, so a data type is not simply “how many bytes a variable occupies.”</p><h3>4.2 Complete Data-Type Family</h3><div class="cb-concept-tree"><pre>C Types
-├── Arithmetic types
-│   ├── Integer types
-│   │   ├── char / signed char / unsigned char
-│   │   ├── short / int / long / long long (+ unsigned forms)
-│   │   └── _Bool
-│   └── Floating types
-│       ├── float
-│       ├── double
-│       └── long double
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar cb-c-topic-sidebar">
+
+        <div class="sidebar-title">
+            💻 C Programming
+        </div>
+
+        <input
+            class="search-box"
+            id="topicSearch"
+            onkeyup="searchTopics()"
+            placeholder="🔍 Search topics..."
+            type="text"
+        />
+
+
+        <!-- FUNDAMENTALS -->
+
+        <div class="sidebar-section-title">
+            FUNDAMENTALS
+        </div>
+
+        <a class="cb-topic-link" data-topic-link="1" href="start-here.html">
+            🚀 START HERE - Programming from Zero
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="introduction.html">
+            📖 Introduction to C
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="structure.html">
+            🏗️ Structure of C Program
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="variables.html">
+            🔤 Variables &amp; Constants
+        </a>
+
+        <a class="cb-topic-link active" data-topic-link="1" href="data-types.html">
+            📦 Data Types
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="input-output.html">
+            ⌨️ Input &amp; Output
+        </a>
+
+
+        <!-- OPERATORS & CONTROL -->
+
+        <div class="sidebar-section-title">
+            OPERATORS &amp; CONTROL
+        </div>
+
+        <a class="cb-topic-link" data-topic-link="1" href="operators.html">
+            ➕ Operators
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="expressions.html">
+            🧮 Expressions
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="decision-making.html">
+            🔀 Decision Making
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="loops.html">
+            🔁 Loops
+        </a>
+
+
+        <!-- PROGRAMMING CONCEPTS -->
+
+        <div class="sidebar-section-title">
+            PROGRAMMING CONCEPTS
+        </div>
+
+        <a class="cb-topic-link" data-topic-link="1" href="arrays.html">
+            📊 Arrays
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="strings.html">
+            🔤 Strings
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="functions.html">
+            🧩 Functions
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="pointers.html">
+            👉 Pointers
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="structures-unions.html">
+            🏗️ Structures &amp; Unions
+        </a>
+
+
+        <!-- ADVANCED C -->
+
+        <div class="sidebar-section-title">
+            ADVANCED C
+        </div>
+
+        <a class="cb-topic-link" data-topic-link="1" href="preprocessor.html">
+            ⚙️ Preprocessor &amp; Header Files
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="file-handling.html">
+            📁 File Handling
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="dynamic-memory.html">
+            🧠 Dynamic Memory Allocation
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="command-line.html">
+            💻 Command Line Arguments
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="bitwise.html">
+            🔢 Bitwise Programming
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="enum-typedef.html">
+            🔤 Enumerations &amp; typedef
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="precedence.html">
+            🧮 Operator Precedence &amp; Associativity
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="storage-classes.html">
+            💾 Storage Classes
+        </a>
+
+        <a class="cb-topic-link" data-topic-link="1" href="advanced-preprocessor.html">
+            🛠️ Advanced C Preprocessor
+        </a>
+
+
+        <!-- PRACTICE -->
+
+        <div class="sidebar-section-title">
+            PRACTICE
+        </div>
+
+        <a class="cb-topic-link" data-topic-link="1" href="practice.html">
+            ✍️ C Practice
+        </a>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+        <section
+            class="content-card"
+            data-content-standard="teaching-complete-v1"
+            id="data-types">
+
+            <div class="cb-teaching-standard">
+
+                <h1>
+                    Data Types in C
+                </h1>
+
+                <p class="topic-intro">
+                    A data type tells the C compiler what kind of value an object can
+                    represent and provides the information needed to interpret that
+                    object's stored representation. Choosing the appropriate data type
+                    is one of the foundations of writing correct and efficient C programs.
+                </p>
+
+
+                <!-- =================================================
+                     5.1 WHAT IS A DATA TYPE?
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.1 What Is a Data Type?
+                    </div>
+
+                    <p>
+                        A <strong>data type</strong> describes the kind of data associated
+                        with an object, expression, function return value, or other
+                        declaration in C.
+                    </p>
+
+                    <p>
+                        For example:
+                    </p>
+
+                    <pre><code>int age = 20;
+float price = 99.50f;
+char grade = 'A';</code></pre>
+
+                    <p>
+                        The declarations tell the compiler that these objects have
+                        different types.
+                    </p>
+
+                    <div class="cb-memory-diagram">
+
+<pre>
+             DATA TYPE
+                 │
+        ┌────────┼────────┐
+        │        │        │
+        ▼        ▼        ▼
+       int     float     char
+        │        │        │
+        ▼        ▼        ▼
+       20      99.5       A
+</pre>
+
+                    </div>
+
+                    <div class="cb-important-box">
+
+                        <strong>Core idea:</strong>
+
+                        <p>
+                            The type is not merely a label. It is part of the information
+                            the compiler uses to determine how an object or expression
+                            is interpreted and what operations are valid.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.2 WHY DATA TYPES ARE NEEDED
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.2 Why Does C Need Data Types?
+                    </div>
+
+                    <p>
+                        A program works with different kinds of information.
+                    </p>
+
+                    <ul>
+                        <li>whole numbers</li>
+                        <li>fractional values</li>
+                        <li>characters</li>
+                        <li>very large or very small numeric values</li>
+                        <li>addresses</li>
+                        <li>collections of related data</li>
+                    </ul>
+
+                    <p>
+                        C needs a way to distinguish these different kinds of data.
+                    </p>
+
+                    <pre><code>int students = 60;
+float temperature = 36.5f;
+char section = 'A';</code></pre>
+
+                    <p>
+                        These objects represent different kinds of information and
+                        therefore use different types.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.3 C TYPE CATEGORIES
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.3 Major Categories of C Types
+                    </div>
+
+                    <div class="cb-concept-tree">
+
+<pre>
+C TYPES
+│
+├── Basic / Fundamental Types
+│   ├── char
+│   ├── signed integer types
+│   ├── unsigned integer types
+│   ├── _Bool
+│   ├── float
+│   ├── double
+│   └── long double
+│
 ├── void
-├── Derived / constructed types
-│   ├── arrays
-│   ├── pointers
-│   └── function types
-└── User-defined compositions / aliases
-    ├── struct
-    ├── union
-    ├── enum
-    └── typedef aliases</pre></div><p>Exact terminology in the C standard is more detailed, but this map gives students a reliable learning structure.</p><h3>4.3 Integer Types and Modifiers</h3><p>C provides several integer type families. <code>signed</code>, <code>unsigned</code>, <code>short</code> and <code>long</code> participate in forming integer types.</p><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Common spelling</th><th>Meaning</th></tr></thead><tbody><tr><td><code>short</code></td><td>short int</td></tr><tr><td><code>unsigned</code></td><td>unsigned int</td></tr><tr><td><code>long</code></td><td>long int</td></tr><tr><td><code>unsigned long</code></td><td>unsigned long int</td></tr><tr><td><code>long long</code></td><td>long long int</td></tr></tbody></table></div><h3>4.4 Do Not Memorize “int = 4 Bytes” as a Language Rule</h3><p>The C standard specifies ordering and minimum capabilities for integer types rather than one universal byte size. On many current desktop systems <code>int</code> is 4 bytes, but a program should use <code>sizeof</code>, limits macros and fixed-width types when exact properties matter.</p><pre><code>printf("sizeof(int) = %zu\n", sizeof(int));
-printf("sizeof(long) = %zu\n", sizeof(long));</code></pre><div class="example-box"><strong>Why int and long can both be 4 bytes</strong><p>C requires <code>long</code> to provide at least the range required by <code>int</code>, not necessarily to occupy more bytes on every implementation. On other data models, <code>long</code> may be wider.</p></div><h3>4.5 char, signed char and unsigned char</h3><p>All three are distinct integer types. Plain <code>char</code> is the type normally used to store character data, but whether plain <code>char</code> behaves as signed or unsigned for values outside the basic character range is implementation-defined.</p><pre><code>char letter = 'A';
-signed char temperatureDelta = -10;
-unsigned char byteValue = 250;</code></pre><div class="example-box"><strong>Why can signed char hold -10?</strong><p>Because <code>signed char</code> is an integer type. The word “char” does not mean the object must always contain a character literal. Character encoding values are one important use of character types, not their only possible values.</p></div><h3>4.6 _Bool and bool</h3><p>The built-in boolean integer type is <code>_Bool</code>. The standard header <code>&lt;stdbool.h&gt;</code> historically provides convenient boolean macros such as <code>bool</code>, <code>true</code> and <code>false</code> in language versions where they are defined by that header. In modern code, check the targeted C standard/compiler mode.</p><pre><code>#include &lt;stdbool.h&gt;
+│
+├── Derived Types
+│   ├── Arrays
+│   ├── Pointers
+│   └── Function types
+│
+├── Structure Types
+│
+├── Union Types
+│
+└── Enumeration Types
+</pre>
 
-bool ready = true;</code></pre><h3>4.7 Floating-Point Types and Precision</h3><p><code>float</code>, <code>double</code> and <code>long double</code> represent floating-point values with implementation-defined formats that meet standard requirements. Precision describes how many significant digits can be represented reliably; it does not dictate how many digits <code>printf</code> displays.</p><pre><code>double x = 71.2357455;
-printf("%f\n", x);      /* default: 6 digits after decimal for %f */
-printf("%.10f\n", x);   /* request 10 digits after decimal */</code></pre><div class="example-box"><strong>Critical distinction</strong><p>Storage precision and output formatting precision are different. A <code>double</code> may carry roughly 15–17 significant decimal digits on common IEEE-754 systems, while <code>printf("%f", x)</code> still defaults to six digits after the decimal point.</p></div><h3>4.8 void — Absence of a Value/Specified Object Type</h3><p><code>void</code> is used when a function returns no value, to state that a function takes no parameters in a prototype such as <code>f(void)</code>, and as <code>void *</code> for generic object pointers. You cannot create an ordinary object of type <code>void</code> because it has no size for such an object.</p><h3>4.9 sizeof and What It Measures</h3><p><code>sizeof</code> yields the size in bytes of a type or object representation, where one C byte is <code>CHAR_BIT</code> bits. The result type is <code>size_t</code>.</p><pre><code>sizeof(char)          /* always 1 C byte */
-sizeof(int)
-sizeof(double)
-sizeof array / sizeof array[0]  /* element count only while array is still an array */</code></pre><h3>4.10 Use limits.h, float.h and stdint.h Instead of Guessing</h3><pre><code>#include &lt;limits.h&gt;
+                    </div>
+
+                    <p>
+                        C's type system is richer than the small list of types usually
+                        shown in beginner examples. We will study each category gradually.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.4 BASIC TYPES
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.4 Fundamental Numeric and Character Types
+                    </div>
+
+                    <table class="comparison-table">
+
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Typical Use</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td><code>char</code></td>
+                                <td>Character-sized integer type</td>
+                                <td><code>'A'</code></td>
+                            </tr>
+
+                            <tr>
+                                <td><code>short</code></td>
+                                <td>Short integer type</td>
+                                <td><code>100</code></td>
+                            </tr>
+
+                            <tr>
+                                <td><code>int</code></td>
+                                <td>General-purpose integer</td>
+                                <td><code>500</code></td>
+                            </tr>
+
+                            <tr>
+                                <td><code>long</code></td>
+                                <td>Integer type with at least as much range as int</td>
+                                <td><code>100000L</code></td>
+                            </tr>
+
+                            <tr>
+                                <td><code>long long</code></td>
+                                <td>Large integer values</td>
+                                <td><code>9000000000LL</code></td>
+                            </tr>
+
+                            <tr>
+                                <td><code>float</code></td>
+                                <td>Single-precision floating-point</td>
+                                <td><code>3.14f</code></td>
+                            </tr>
+
+                            <tr>
+                                <td><code>double</code></td>
+                                <td>Double-precision floating-point</td>
+                                <td><code>3.14159</code></td>
+                            </tr>
+
+                            <tr>
+                                <td><code>long double</code></td>
+                                <td>Extended floating-point type</td>
+                                <td><code>3.14159L</code></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                    <div class="cb-important-box">
+
+                        <strong>Important:</strong>
+
+                        <p>
+                            The exact size and range of many C types are implementation-defined.
+                            Do not memorize one fixed size as a universal rule for every C compiler
+                            and platform.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.5 CHAR
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.5 The <code>char</code> Type
+                    </div>
+
+                    <p>
+                        The <code>char</code> type is designed for character data and is
+                        also an integer type in C.
+                    </p>
+
+                    <pre><code>char grade = 'A';
+char symbol = '#';</code></pre>
+
+                    <p>
+                        Character constants use single quotation marks.
+                    </p>
+
+                    <pre><code>'A'
+'B'
+'7'
+'@'</code></pre>
+
+                    <div class="cb-confusion-box">
+
+                        <strong>Do not confuse:</strong>
+
+                        <pre><code>'A'
+"A"</code></pre>
+
+                        <p>
+                            <code>'A'</code> is a character constant.
+                            <code>"A"</code> is a string literal containing the
+                            character <code>A</code> followed by a terminating null character.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.6 INTEGER TYPES
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.6 Integer Types
+                    </div>
+
+                    <p>
+                        Integer types represent whole-number values.
+                    </p>
+
+                    <pre><code>int count = 100;
+short smallNumber = 25;
+long population = 1000000L;
+long long distance = 9000000000LL;</code></pre>
+
+                    <p>
+                        C provides several integer types because programs may need
+                        different ranges and storage requirements.
+                    </p>
+
+                    <div class="cb-concept-grid">
+
+                        <div>
+                            <strong>Signed integer</strong>
+
+                            <p>
+                                Can represent negative and non-negative values within
+                                its implementation-defined range.
+                            </p>
+                        </div>
+
+                        <div>
+                            <strong>Unsigned integer</strong>
+
+                            <p>
+                                Represents non-negative values and generally provides
+                                a larger non-negative range for the same width.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.7 SIGNED AND UNSIGNED
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.7 Signed and Unsigned Integer Types
+                    </div>
+
+                    <pre><code>signed int temperature = -10;
+unsigned int students = 500;</code></pre>
+
+                    <p>
+                        The <code>unsigned</code> keyword specifies that the type is
+                        non-negative.
+                    </p>
+
+                    <table class="comparison-table">
+
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Can represent negative values?</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td><code>int</code></td>
+                                <td>Yes</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>signed int</code></td>
+                                <td>Yes</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>unsigned int</code></td>
+                                <td>No</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                    <div class="cb-confusion-box">
+
+                        <strong>Important:</strong>
+
+                        <p>
+                            Unsigned arithmetic has its own rules. Converting between
+                            signed and unsigned integer types can also produce surprising
+                            results if you do not understand the conversion rules.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.8 FLOAT
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.8 The <code>float</code> Type
+                    </div>
+
+                    <p>
+                        <code>float</code> is a floating-point type used for values
+                        that may contain a fractional component.
+                    </p>
+
+                    <pre><code>float temperature = 36.5f;
+float price = 99.99f;</code></pre>
+
+                    <p>
+                        The <code>f</code> suffix indicates a <code>float</code>
+                        floating constant.
+                    </p>
+
+                    <pre><code>3.14f</code></pre>
+
+                    <p>
+                        Without the suffix:
+                    </p>
+
+                    <pre><code>3.14</code></pre>
+
+                    <p>
+                        the floating constant has type <code>double</code>.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.9 DOUBLE
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.9 The <code>double</code> Type
+                    </div>
+
+                    <p>
+                        <code>double</code> is a floating-point type that normally provides
+                        more precision than <code>float</code>.
+                    </p>
+
+                    <pre><code>double pi = 3.141592653589793;</code></pre>
+
+                    <p>
+                        Floating-point types represent real-number approximations rather
+                        than arbitrary exact decimal values.
+                    </p>
+
+                    <div class="cb-important-box">
+
+                        <strong>Placement point:</strong>
+
+                        <p>
+                            Do not assume that every decimal value can be represented
+                            exactly in binary floating-point.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.10 LONG DOUBLE
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.10 <code>long double</code>
+                    </div>
+
+                    <p>
+                        <code>long double</code> is an extended floating-point type.
+                        Its precision and representation are implementation-dependent.
+                    </p>
+
+                    <pre><code>long double value = 3.141592653589793238L;</code></pre>
+
+                    <p>
+                        The <code>L</code> suffix identifies a <code>long double</code>
+                        floating constant.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.11 _BOOL
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.11 The <code>_Bool</code> Type
+                    </div>
+
+                    <p>
+                        C provides the built-in integer type <code>_Bool</code>.
+                    </p>
+
+                    <pre><code>_Bool isPassed = 1;</code></pre>
+
+                    <p>
+                        The standard header <code>&lt;stdbool.h&gt;</code> can provide
+                        the convenient spelling <code>bool</code> together with
+                        <code>true</code> and <code>false</code> macros.
+                    </p>
+
+                    <pre><code>#include &lt;stdbool.h&gt;
+
+bool isPassed = true;</code></pre>
+
+                    <div class="cb-important-box">
+
+                        <strong>Remember:</strong>
+
+                        <p>
+                            <code>bool</code> is provided by the standard header
+                            <code>&lt;stdbool.h&gt;</code>; the fundamental C type is
+                            <code>_Bool</code>.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.12 VOID
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.12 The <code>void</code> Type
+                    </div>
+
+                    <p>
+                        <code>void</code> represents the absence of a value or type
+                        information in several C contexts.
+                    </p>
+
+                    <p>
+                        A common example is a function that does not return a value:
+                    </p>
+
+                    <pre><code>void displayMessage(void)
+{
+    printf("Hello");
+}</code></pre>
+
+                    <p>
+                        A pointer to <code>void</code>, written <code>void *</code>,
+                        is a separate concept and is useful for generic object pointers.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.13 SIZEOF
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.13 The <code>sizeof</code> Operator
+                    </div>
+
+                    <p>
+                        The <code>sizeof</code> operator determines the size in bytes
+                        of a type or object.
+                    </p>
+
+                    <pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    printf("%zu\n", sizeof(int));
+    printf("%zu\n", sizeof(double));
+    printf("%zu\n", sizeof(char));
+
+    return 0;
+}</code></pre>
+
+                    <div class="cb-memory-diagram">
+
+<pre>
+sizeof(type)
+     │
+     ▼
+number of bytes
+     │
+     ▼
+depends on implementation
+</pre>
+
+                    </div>
+
+                    <div class="cb-important-box">
+
+                        <strong>Important:</strong>
+
+                        <p>
+                            The result of <code>sizeof</code> has type
+                            <code>size_t</code>, which is why <code>%zu</code>
+                            is the appropriate printf conversion specifier in C99
+                            and later.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.14 SIZE GUARANTEES
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.14 Do Not Memorize Fixed Sizes
+                    </div>
+
+                    <p>
+                        A common beginner mistake is memorizing:
+                    </p>
+
+                    <pre><code>int = 4 bytes
+char = 1 byte
+float = 4 bytes
+double = 8 bytes</code></pre>
+
+                    <p>
+                        These are common on many modern systems, but C does not require
+                        every implementation to use exactly those sizes.
+                    </p>
+
+                    <p>
+                        The correct way to discover the size on the current implementation
+                        is:
+                    </p>
+
+                    <pre><code>sizeof(type)</code></pre>
+
+                    <div class="cb-confusion-box">
+
+                        <strong>Special point:</strong>
+
+                        <p>
+                            C guarantees that <code>sizeof(char)</code> is exactly
+                            <code>1</code>. A C byte is not required to contain exactly
+                            8 bits; the number of bits in a byte is represented by
+                            <code>CHAR_BIT</code>.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.15 LIMITS.H
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.15 Finding Integer Limits
+                    </div>
+
+                    <p>
+                        The header <code>&lt;limits.h&gt;</code> provides macros describing
+                        limits of integer types on the current implementation.
+                    </p>
+
+                    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt;
+
+int main(void)
+{
+    printf("INT_MIN = %d\n", INT_MIN);
+    printf("INT_MAX = %d\n", INT_MAX);
+    printf("UINT_MAX = %u\n", UINT_MAX);
+
+    return 0;
+}</code></pre>
+
+                    <p>
+                        This is safer than assuming one universal numeric range.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.16 FLOAT.H
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.16 Floating-Point Properties
+                    </div>
+
+                    <p>
+                        The header <code>&lt;float.h&gt;</code> provides information
+                        about the characteristics of floating-point types.
+                    </p>
+
+                    <pre><code>#include &lt;stdio.h&gt;
 #include &lt;float.h&gt;
-#include &lt;stdint.h&gt;
 
-printf("INT_MAX = %d\n", INT_MAX);
-printf("DBL_DIG = %d\n", DBL_DIG);
-
-int32_t id;   /* available only if implementation provides exactly 32-bit type */</code></pre><p><code>&lt;limits.h&gt;</code> describes integer limits, <code>&lt;float.h&gt;</code> describes floating characteristics, and <code>&lt;stdint.h&gt;</code> provides exact-width and related integer typedefs when supported.</p><h3>4.11 Type Qualifiers Are Not New Numeric Types</h3><p><code>const</code>, <code>volatile</code> and <code>restrict</code> qualify types and affect how objects/pointers may be used or optimized. They should not be mixed conceptually with size modifiers such as <code>short</code> and <code>long</code>.</p><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Qualifier</th><th>Core idea</th></tr></thead><tbody><tr><td><code>const</code></td><td>Program should not modify the object through that qualified lvalue.</td></tr><tr><td><code>volatile</code></td><td>Accesses are observable and may reflect changes outside ordinary program flow; does not make operations atomic.</td></tr><tr><td><code>restrict</code></td><td>Pointer qualification used to express non-aliasing promises within its rules.</td></tr></tbody></table></div><h3>4.12 Conversion Is Part of Expression Evaluation</h3><p>C automatically converts values in many contexts: integer promotions, usual arithmetic conversions, assignment, function calls with prototypes and explicit casts. The destination type is only one part of the story; an intermediate expression may be evaluated in another type before assignment.</p><pre><code>double a = 5 / 2;      /* integer division first -&gt; 2, then converted to 2.0 */
-double b = 5 / 2.0;    /* one operand double -&gt; floating computation -&gt; 2.5 */</code></pre><h3>4.13 Common Data-Type Misconceptions</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Myth</th><th>Reality</th></tr></thead><tbody><tr><td><code>int</code> is always 4 bytes</td><td>Common, not guaranteed.</td></tr><tr><td><code>long</code> must be larger than <code>int</code></td><td>It must meet at least the required range relationship; size can be equal.</td></tr><tr><td><code>char</code> only stores letters</td><td>Character types are integer types.</td></tr><tr><td><code>double</code> always prints 15 decimal places</td><td>Output formatting is separate from representation precision.</td></tr><tr><td><code>sizeof(char)</code> means 8 bits</td><td>It is always 1 C byte; <code>CHAR_BIT</code> tells how many bits are in a byte.</td></tr></tbody></table></div><h3>4.14 Quick Revision</h3>
-<div class="tip-box">
-
-        📌 <strong>char</strong> is used for
-        character values.
-
-        <br/><br/>
-
-        📌 <strong>int</strong> is commonly used
-        for integer values.
-
-        <br/><br/>
-
-        📌 <strong>float</strong> represents
-        single-precision floating-point values.
-
-        <br/><br/>
-
-        📌 <strong>double</strong> represents
-        double-precision floating-point values.
-
-        <br/><br/>
-
-        📌 <strong>void</strong> represents the
-        absence of a value in certain contexts.
-
-        <br/><br/>
-
-        📌 <strong>sizeof</strong> reports size
-        in bytes.
-
-        <br/><br/>
-
-        📌 Use <strong>sizeof()</strong> when you
-        need the actual size on your system.
-
-        <br/><br/>
-
-        📌 Integer division discards the fractional
-        part of the result.
-
-    </div>
-<!-- MCQs -->
-<h3>4.15 Quick MCQs</h3>
-<p class="cb-mcq-guide">
-        Select an answer first, then click <strong>Check Answer</strong>.
-        A correct choice becomes green. If the choice is wrong, it becomes red and the correct option is shown in green.
-        The explanation appears below after checking.
-    </p>
-<div class="cb-mcq-list">
-<div class="cb-mcq-card" data-correct="B" id="datatype-mcq1">
-<div class="cb-mcq-question">
-<span class="cb-mcq-number">1.</span>
-<strong>Which data type is commonly used to store an integer?</strong>
-</div>
-<div class="cb-mcq-options">
-<label class="cb-mcq-option" data-option="A">
-<input name="datatype-mcq1" type="radio" value="A"/>
-<span class="cb-mcq-letter">A</span>
-<span class="cb-mcq-option-text">float</span>
-</label>
-<label class="cb-mcq-option" data-option="B">
-<input name="datatype-mcq1" type="radio" value="B"/>
-<span class="cb-mcq-letter">B</span>
-<span class="cb-mcq-option-text">int</span>
-</label>
-<label class="cb-mcq-option" data-option="C">
-<input name="datatype-mcq1" type="radio" value="C"/>
-<span class="cb-mcq-letter">C</span>
-<span class="cb-mcq-option-text">char</span>
-</label>
-<label class="cb-mcq-option" data-option="D">
-<input name="datatype-mcq1" type="radio" value="D"/>
-<span class="cb-mcq-letter">D</span>
-<span class="cb-mcq-option-text">void</span>
-</label>
-</div>
-<div class="cb-mcq-actions">
-<button class="cb-mcq-check-btn" onclick="CBMCQ.check('datatype-mcq1')" type="button">Check Answer</button>
-<button class="cb-mcq-reset-btn" hidden="" onclick="CBMCQ.reset('datatype-mcq1')" type="button">Try Again</button>
-</div>
-<div class="cb-mcq-feedback" hidden="">
-<div class="cb-mcq-result"></div>
-<div class="cb-mcq-explanation">
-<strong>Correct Answer: B</strong>
-<p>int is the standard integer type commonly used for whole-number values.</p>
-</div>
-</div>
-</div>
-<div class="cb-mcq-card" data-correct="C" id="datatype-mcq2">
-<div class="cb-mcq-question">
-<span class="cb-mcq-number">2.</span>
-<strong>Which operator gives the size of a type or object?</strong>
-</div>
-<div class="cb-mcq-options">
-<label class="cb-mcq-option" data-option="A">
-<input name="datatype-mcq2" type="radio" value="A"/>
-<span class="cb-mcq-letter">A</span>
-<span class="cb-mcq-option-text">size</span>
-</label>
-<label class="cb-mcq-option" data-option="B">
-<input name="datatype-mcq2" type="radio" value="B"/>
-<span class="cb-mcq-letter">B</span>
-<span class="cb-mcq-option-text">length</span>
-</label>
-<label class="cb-mcq-option" data-option="C">
-<input name="datatype-mcq2" type="radio" value="C"/>
-<span class="cb-mcq-letter">C</span>
-<span class="cb-mcq-option-text">sizeof</span>
-</label>
-<label class="cb-mcq-option" data-option="D">
-<input name="datatype-mcq2" type="radio" value="D"/>
-<span class="cb-mcq-letter">D</span>
-<span class="cb-mcq-option-text">bytes</span>
-</label>
-</div>
-<div class="cb-mcq-actions">
-<button class="cb-mcq-check-btn" onclick="CBMCQ.check('datatype-mcq2')" type="button">Check Answer</button>
-<button class="cb-mcq-reset-btn" hidden="" onclick="CBMCQ.reset('datatype-mcq2')" type="button">Try Again</button>
-</div>
-<div class="cb-mcq-feedback" hidden="">
-<div class="cb-mcq-result"></div>
-<div class="cb-mcq-explanation">
-<strong>Correct Answer: C</strong>
-<p>sizeof is a C operator that reports the size in bytes of a type or object.</p>
-</div>
-</div>
-</div>
-<div class="cb-mcq-card" data-correct="B" id="datatype-mcq3">
-<div class="cb-mcq-question">
-<span class="cb-mcq-number">3.</span>
-<strong>Which is a character constant?</strong>
-</div>
-<div class="cb-mcq-options">
-<label class="cb-mcq-option" data-option="A">
-<input name="datatype-mcq3" type="radio" value="A"/>
-<span class="cb-mcq-letter">A</span>
-<span class="cb-mcq-option-text">"A"</span>
-</label>
-<label class="cb-mcq-option" data-option="B">
-<input name="datatype-mcq3" type="radio" value="B"/>
-<span class="cb-mcq-letter">B</span>
-<span class="cb-mcq-option-text">'A'</span>
-</label>
-<label class="cb-mcq-option" data-option="C">
-<input name="datatype-mcq3" type="radio" value="C"/>
-<span class="cb-mcq-letter">C</span>
-<span class="cb-mcq-option-text">A</span>
-</label>
-<label class="cb-mcq-option" data-option="D">
-<input name="datatype-mcq3" type="radio" value="D"/>
-<span class="cb-mcq-letter">D</span>
-<span class="cb-mcq-option-text">`A`</span>
-</label>
-</div>
-<div class="cb-mcq-actions">
-<button class="cb-mcq-check-btn" onclick="CBMCQ.check('datatype-mcq3')" type="button">Check Answer</button>
-<button class="cb-mcq-reset-btn" hidden="" onclick="CBMCQ.reset('datatype-mcq3')" type="button">Try Again</button>
-</div>
-<div class="cb-mcq-feedback" hidden="">
-<div class="cb-mcq-result"></div>
-<div class="cb-mcq-explanation">
-<strong>Correct Answer: B</strong>
-<p>A character constant is written inside single quotes, such as 'A'. Double quotes create a string literal.</p>
-</div>
-</div>
-</div>
-<div class="cb-mcq-card" data-correct="C" id="datatype-mcq4">
-<div class="cb-mcq-question">
-<span class="cb-mcq-number">4.</span>
-<strong>What is the result of 5 / 2 when both operands are int?</strong>
-</div>
-<div class="cb-mcq-options">
-<label class="cb-mcq-option" data-option="A">
-<input name="datatype-mcq4" type="radio" value="A"/>
-<span class="cb-mcq-letter">A</span>
-<span class="cb-mcq-option-text">2.5</span>
-</label>
-<label class="cb-mcq-option" data-option="B">
-<input name="datatype-mcq4" type="radio" value="B"/>
-<span class="cb-mcq-letter">B</span>
-<span class="cb-mcq-option-text">3</span>
-</label>
-<label class="cb-mcq-option" data-option="C">
-<input name="datatype-mcq4" type="radio" value="C"/>
-<span class="cb-mcq-letter">C</span>
-<span class="cb-mcq-option-text">2</span>
-</label>
-<label class="cb-mcq-option" data-option="D">
-<input name="datatype-mcq4" type="radio" value="D"/>
-<span class="cb-mcq-letter">D</span>
-<span class="cb-mcq-option-text">0</span>
-</label>
-</div>
-<div class="cb-mcq-actions">
-<button class="cb-mcq-check-btn" onclick="CBMCQ.check('datatype-mcq4')" type="button">Check Answer</button>
-<button class="cb-mcq-reset-btn" hidden="" onclick="CBMCQ.reset('datatype-mcq4')" type="button">Try Again</button>
-</div>
-<div class="cb-mcq-feedback" hidden="">
-<div class="cb-mcq-result"></div>
-<div class="cb-mcq-explanation">
-<strong>Correct Answer: C</strong>
-<p>When both operands are integers, integer division is performed, so the fractional part is discarded and the result is 2.</p>
-</div>
-</div>
-</div>
-<div class="cb-mcq-card" data-correct="C" id="datatype-mcq5">
-<div class="cb-mcq-question">
-<span class="cb-mcq-number">5.</span>
-<strong>Which type generally provides more precision than float?</strong>
-</div>
-<div class="cb-mcq-options">
-<label class="cb-mcq-option" data-option="A">
-<input name="datatype-mcq5" type="radio" value="A"/>
-<span class="cb-mcq-letter">A</span>
-<span class="cb-mcq-option-text">char</span>
-</label>
-<label class="cb-mcq-option" data-option="B">
-<input name="datatype-mcq5" type="radio" value="B"/>
-<span class="cb-mcq-letter">B</span>
-<span class="cb-mcq-option-text">int</span>
-</label>
-<label class="cb-mcq-option" data-option="C">
-<input name="datatype-mcq5" type="radio" value="C"/>
-<span class="cb-mcq-letter">C</span>
-<span class="cb-mcq-option-text">double</span>
-</label>
-<label class="cb-mcq-option" data-option="D">
-<input name="datatype-mcq5" type="radio" value="D"/>
-<span class="cb-mcq-letter">D</span>
-<span class="cb-mcq-option-text">void</span>
-</label>
-</div>
-<div class="cb-mcq-actions">
-<button class="cb-mcq-check-btn" onclick="CBMCQ.check('datatype-mcq5')" type="button">Check Answer</button>
-<button class="cb-mcq-reset-btn" hidden="" onclick="CBMCQ.reset('datatype-mcq5')" type="button">Try Again</button>
-</div>
-<div class="cb-mcq-feedback" hidden="">
-<div class="cb-mcq-result"></div>
-<div class="cb-mcq-explanation">
-<strong>Correct Answer: C</strong>
-<p>double generally provides greater floating-point precision than float, although exact representation details are implementation-dependent.</p>
-</div>
-</div>
-</div>
-</div>
-<!-- PROGRAMMING PROBLEMS -->
-<div class="cb-c-dsa-practice-section">
-<span class="cb-c-practice-label">PRACTICE</span>
-<h3>4.16 🎯 Programming Problems</h3>
-<p class="cb-c-practice-guide">
-            Try each program yourself first. Use <strong>💻 Solve It Yourself</strong> to write and run your C code.
-            Open a hint only when needed, and use <strong>Show Program</strong> to study the official solution after attempting the problem.
-        </p>
-<div class="cb-practice-overall" data-practice-total="5">
-<div class="cb-practice-overall-title">📈 Data Types Practice Progress</div>
-<div class="cb-practice-overall-grid">
-<div class="cb-practice-overall-item">
-<strong>Solved</strong>
-<span id="cbPracticeOverallSolved">0 / 5</span>
-</div>
-<div class="cb-practice-overall-item">
-<strong>Completed with Solution</strong>
-<span id="cbPracticeOverallCompleted">0</span>
-</div>
-<div class="cb-practice-overall-item">
-<strong>Total Score</strong>
-<span id="cbPracticeOverallScore">0 / 500</span>
-</div>
-<div class="cb-practice-overall-item">
-<strong>Completion</strong>
-<span id="cbPracticeOverallPercent">0%</span>
-</div>
-</div>
-<div class="cb-practice-progress-track">
-<div class="cb-practice-progress-fill" id="cbPracticeOverallBar"></div>
-</div>
-<div class="cb-practice-progress-note">
-                A problem counts as <strong>Solved</strong> when all test cases pass without opening the full solution.
-                Problems completed after viewing the official solution are tracked separately.
-            </div>
-</div>
-<div class="cb-c-practice-list">
-<div class="cb-c-practice-item">
-<div class="cb-c-practice-problem-head">
-<strong>1. Print Values of Different Data Types</strong>
-<span class="cb-practice-badge" id="practiceBadge-datatype-p1"></span>
-</div>
-<p class="cb-c-practice-statement"><strong>Problem 1: Declare variables of type int, float, double and char, read their values, and print them.</strong></p>
-<p><strong>Input:</strong> An integer, a float, a double and a character.</p>
-<p><strong>Output:</strong> Print all four values with clear labels.</p>
-<div class="cb-c-practice-buttons">
-<button class="cb-practice-start-button" onclick="CodeBhavyaCPractice.toggle('datatype-p1')">💻 Solve It Yourself</button>
-<button class="cb-practice-hint-button" onclick="CodeBhavyaCPractice.markHint('datatype-p1')">Hint</button>
-<button class="cb-practice-program-button" onclick="CodeBhavyaCPractice.markSolution('datatype-p1')">Show Program</button>
-</div>
-<div class="cb-c-practice-hint" hidden="" id="practiceHint-datatype-p1">
-                💡 <strong>Hint:</strong> Use %d for int, %f for float, %lf for double with scanf, and %c for char.
-            </div>
-<div class="cb-c-practice-workspace" hidden="" id="practiceWorkspace-datatype-p1">
-<div class="cb-c-practice-workspace-title">
-                    💻 Solve It Yourself — Print Values of Different Data Types
-                </div>
-<div class="cb-c-practice-grid">
-<div class="cb-c-practice-panel">
-<h4>C Code Editor</h4>
-<textarea class="cb-c-code-editor" id="practiceCode-datatype-p1" spellcheck="false"></textarea>
-<div class="cb-c-practice-actions">
-<button class="cb-c-run-btn" id="practiceRun-datatype-p1" onclick="CodeBhavyaCPractice.runSample('datatype-p1')">▶ Run Code</button>
-<button class="cb-c-check-btn" id="practiceCheck-datatype-p1" onclick="CodeBhavyaCPractice.checkAnswer('datatype-p1')">✓ Check Answer</button>
-<button class="cb-c-reset-btn" onclick="CodeBhavyaCPractice.resetEditor('datatype-p1')">↺ Reset Editor</button>
-</div>
-</div>
-<div class="cb-c-practice-panel">
-<h4>Sample Input</h4>
-<textarea class="cb-c-practice-input" id="practiceInput-datatype-p1" spellcheck="false"></textarea>
-<h4 class="cb-c-output-heading">Program Output</h4>
-<pre class="cb-c-practice-output" id="practiceOutput-datatype-p1">Run your program to see the output.</pre>
-<h4 class="cb-c-tests-heading">Test Cases</h4>
-<div class="cb-c-test-results" id="practiceTests-datatype-p1">
-<div class="cb-c-test-row">
-<span>No tests checked yet.</span>
-<strong>—</strong>
-</div>
-</div>
-</div>
-</div>
-<div class="cb-c-practice-score">
-<div class="cb-c-practice-score-grid">
-<div class="cb-c-score-item">
-<strong>Best Score</strong>
-<span id="practiceScore-datatype-p1">0 / 100</span>
-</div>
-<div class="cb-c-score-item">
-<strong>Attempts</strong>
-<span id="practiceAttempts-datatype-p1">0</span>
-</div>
-<div class="cb-c-score-item">
-<strong>Status</strong>
-<span id="practiceStatus-datatype-p1">Not Solved</span>
-</div>
-</div>
-<div class="cb-c-practice-message" id="practiceMessage-datatype-p1">
-                        Write your C program and test it. You can do it! 💪
-                    </div>
-<div class="cb-c-practice-note">
-                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
-                        If the full solution is opened, the problem can still be completed,
-                        but it is not counted as a competitive score.
-                    </div>
-</div>
-</div>
-<div class="cb-c-practice-solution" hidden="" id="practiceSolution-datatype-p1">
-<div class="cb-c-practice-solution-title">Official C Program</div>
-<pre><code>#include &lt;stdio.h&gt;
-
-int main()
+int main(void)
 {
-    int i;
-    float f;
-    double d;
-    char ch;
-
-    scanf("%d %f %lf %c", &amp;i, &amp;f, &amp;d, &amp;ch);
-
-    printf("int = %d\n", i);
-    printf("float = %.2f\n", f);
-    printf("double = %.3f\n", d);
-    printf("char = %c", ch);
+    printf("FLT_DIG = %d\n", FLT_DIG);
+    printf("DBL_DIG = %d\n", DBL_DIG);
 
     return 0;
 }</code></pre>
-</div>
-</div>
-<div class="cb-c-practice-item">
-<div class="cb-c-practice-problem-head">
-<strong>2. Print Sizes Using sizeof</strong>
-<span class="cb-practice-badge" id="practiceBadge-datatype-p2"></span>
-</div>
-<p class="cb-c-practice-statement"><strong>Problem 2: Write a program to print the size of char, int, float and double using sizeof.</strong></p>
-<p><strong>Input:</strong> No input.</p>
-<p><strong>Output:</strong> Print the sizes in bytes on separate lines.</p>
-<div class="cb-c-practice-buttons">
-<button class="cb-practice-start-button" onclick="CodeBhavyaCPractice.toggle('datatype-p2')">💻 Solve It Yourself</button>
-<button class="cb-practice-hint-button" onclick="CodeBhavyaCPractice.markHint('datatype-p2')">Hint</button>
-<button class="cb-practice-program-button" onclick="CodeBhavyaCPractice.markSolution('datatype-p2')">Show Program</button>
-</div>
-<div class="cb-c-practice-hint" hidden="" id="practiceHint-datatype-p2">
-                💡 <strong>Hint:</strong> Use sizeof(char), sizeof(int), sizeof(float), and sizeof(double). Print the result with %zu.
-            </div>
-<div class="cb-c-practice-workspace" hidden="" id="practiceWorkspace-datatype-p2">
-<div class="cb-c-practice-workspace-title">
-                    💻 Solve It Yourself — Print Sizes Using sizeof
-                </div>
-<div class="cb-c-practice-grid">
-<div class="cb-c-practice-panel">
-<h4>C Code Editor</h4>
-<textarea class="cb-c-code-editor" id="practiceCode-datatype-p2" spellcheck="false"></textarea>
-<div class="cb-c-practice-actions">
-<button class="cb-c-run-btn" id="practiceRun-datatype-p2" onclick="CodeBhavyaCPractice.runSample('datatype-p2')">▶ Run Code</button>
-<button class="cb-c-check-btn" id="practiceCheck-datatype-p2" onclick="CodeBhavyaCPractice.checkAnswer('datatype-p2')">✓ Check Answer</button>
-<button class="cb-c-reset-btn" onclick="CodeBhavyaCPractice.resetEditor('datatype-p2')">↺ Reset Editor</button>
-</div>
-</div>
-<div class="cb-c-practice-panel">
-<h4>Sample Input</h4>
-<textarea class="cb-c-practice-input" id="practiceInput-datatype-p2" spellcheck="false"></textarea>
-<h4 class="cb-c-output-heading">Program Output</h4>
-<pre class="cb-c-practice-output" id="practiceOutput-datatype-p2">Run your program to see the output.</pre>
-<h4 class="cb-c-tests-heading">Test Cases</h4>
-<div class="cb-c-test-results" id="practiceTests-datatype-p2">
-<div class="cb-c-test-row">
-<span>No tests checked yet.</span>
-<strong>—</strong>
-</div>
-</div>
-</div>
-</div>
-<div class="cb-c-practice-score">
-<div class="cb-c-practice-score-grid">
-<div class="cb-c-score-item">
-<strong>Best Score</strong>
-<span id="practiceScore-datatype-p2">0 / 100</span>
-</div>
-<div class="cb-c-score-item">
-<strong>Attempts</strong>
-<span id="practiceAttempts-datatype-p2">0</span>
-</div>
-<div class="cb-c-score-item">
-<strong>Status</strong>
-<span id="practiceStatus-datatype-p2">Not Solved</span>
-</div>
-</div>
-<div class="cb-c-practice-message" id="practiceMessage-datatype-p2">
-                        Write your C program and test it. You can do it! 💪
-                    </div>
-<div class="cb-c-practice-note">
-                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
-                        If the full solution is opened, the problem can still be completed,
-                        but it is not counted as a competitive score.
-                    </div>
-</div>
-</div>
-<div class="cb-c-practice-solution" hidden="" id="practiceSolution-datatype-p2">
-<div class="cb-c-practice-solution-title">Official C Program</div>
-<pre><code>#include &lt;stdio.h&gt;
 
-int main()
+                    <p>
+                        This becomes useful when programs need to reason about
+                        floating-point precision.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.17 MODIFIERS
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.17 Type Specifiers and Modifiers
+                    </div>
+
+                    <p>
+                        C provides keywords that combine with integer and floating
+                        types to describe different type forms.
+                    </p>
+
+                    <table class="comparison-table">
+
+                        <thead>
+                            <tr>
+                                <th>Keyword</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td><code>signed</code></td>
+                                <td>Specifies a signed integer type.</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>unsigned</code></td>
+                                <td>Specifies a non-negative integer type.</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>short</code></td>
+                                <td>Specifies a short integer type.</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>long</code></td>
+                                <td>Specifies a long integer or extended floating type.</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                    <pre><code>short int a;
+unsigned int b;
+long int c;
+long long int d;</code></pre>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.18 INTEGER HIERARCHY
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.18 Integer Type Relationships
+                    </div>
+
+                    <div class="cb-concept-tree">
+
+<pre>
+Integer types
+
+signed
+│
+├── signed char
+├── short
+├── int
+├── long
+└── long long
+
+unsigned
+│
+├── unsigned char
+├── unsigned short
+├── unsigned int
+├── unsigned long
+└── unsigned long long
+</pre>
+
+                    </div>
+
+                    <p>
+                        The exact representation and range depend on the implementation,
+                        but C defines minimum requirements and ordering relationships
+                        among these standard integer types.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.19 CHARACTER TYPES
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.19 Character Type Variants
+                    </div>
+
+                    <p>
+                        C provides three character types:
+                    </p>
+
+                    <pre><code>char
+signed char
+unsigned char</code></pre>
+
+                    <p>
+                        Whether plain <code>char</code> behaves as signed or unsigned
+                        is implementation-defined.
+                    </p>
+
+                    <div class="cb-important-box">
+
+                        <strong>Placement point:</strong>
+
+                        <p>
+                            Do not assume plain <code>char</code> is always signed
+                            or always unsigned.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.20 INTEGER CONSTANT SUFFIXES
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.20 Integer Constant Suffixes
+                    </div>
+
+                    <p>
+                        Integer literals can use suffixes to influence their type.
+                    </p>
+
+                    <pre><code>100
+100U
+100L
+100UL
+100LL
+100ULL</code></pre>
+
+                    <table class="comparison-table">
+
+                        <thead>
+                            <tr>
+                                <th>Literal</th>
+                                <th>Meaning</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td><code>100</code></td>
+                                <td>Integer constant without an explicit suffix</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>100U</code></td>
+                                <td>Unsigned integer constant</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>100L</code></td>
+                                <td>Long integer constant</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>100LL</code></td>
+                                <td>Long long integer constant</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>100ULL</code></td>
+                                <td>Unsigned long long integer constant</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.21 FLOATING CONSTANT SUFFIXES
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.21 Floating-Point Constant Suffixes
+                    </div>
+
+                    <pre><code>3.14
+3.14f
+3.14L</code></pre>
+
+                    <table class="comparison-table">
+
+                        <thead>
+                            <tr>
+                                <th>Literal</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td><code>3.14</code></td>
+                                <td><code>double</code></td>
+                            </tr>
+
+                            <tr>
+                                <td><code>3.14f</code></td>
+                                <td><code>float</code></td>
+                            </tr>
+
+                            <tr>
+                                <td><code>3.14L</code></td>
+                                <td><code>long double</code></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.22 TYPE CONVERSION INTRO
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.22 Data Types and Type Conversion
+                    </div>
+
+                    <p>
+                        When different arithmetic types participate in an expression,
+                        C may convert values according to its conversion rules.
+                    </p>
+
+                    <pre><code>int a = 10;
+double b = 2.5;
+
+double result = a + b;</code></pre>
+
+                    <p>
+                        The integer value participates in the calculation after the
+                        appropriate conversion.
+                    </p>
+
+                    <div class="cb-memory-diagram">
+
+<pre>
+       10        +        2.5
+        │                  │
+        │                  │
+        └──────┬───────────┘
+               ▼
+       common arithmetic
+          conversion
+               │
+               ▼
+             12.5
+</pre>
+
+                    </div>
+
+                    <p>
+                        Type conversion is covered in greater depth when expressions
+                        and operators are introduced.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.23 IMPLICIT VS EXPLICIT
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.23 Implicit and Explicit Conversion
+                    </div>
+
+                    <div class="cb-concept-grid">
+
+                        <div>
+
+                            <strong>Implicit conversion</strong>
+
+                            <p>
+                                The language rules cause a conversion automatically.
+                            </p>
+
+                            <pre><code>double x = 10;</code></pre>
+
+                        </div>
+
+                        <div>
+
+                            <strong>Explicit conversion</strong>
+
+                            <p>
+                                The programmer requests a conversion using a cast.
+                            </p>
+
+                            <pre><code>double x = (double)10;</code></pre>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.24 INTEGER DIVISION PREVIEW
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.24 Why Data Types Affect Results
+                    </div>
+
+                    <pre><code>int a = 5;
+int b = 2;
+
+printf("%d\n", a / b);</code></pre>
+
+                    <p>
+                        Because both operands are integers, the division is integer
+                        division and the result is <code>2</code>.
+                    </p>
+
+                    <p>
+                        Compare:
+                    </p>
+
+                    <pre><code>double result = 5.0 / 2.0;</code></pre>
+
+                    <p>
+                        Here the result is <code>2.5</code>.
+                    </p>
+
+                    <div class="cb-important-box">
+
+                        <strong>Key lesson:</strong>
+
+                        <p>
+                            Data types can affect not only storage but also the behavior
+                            of expressions and operations.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.25 POINTER PREVIEW
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.25 Derived Types — Preview
+                    </div>
+
+                    <p>
+                        C also supports derived and user-defined type constructs.
+                    </p>
+
+                    <pre><code>int numbers[5];
+
+int *ptr;
+
+struct Student
 {
-    printf("char = %zu\n", sizeof(char));
-    printf("int = %zu\n", sizeof(int));
-    printf("float = %zu\n", sizeof(float));
-    printf("double = %zu", sizeof(double));
+    int roll;
+};</code></pre>
+
+                    <p>
+                        Arrays, pointers, structures, unions, enumerations and function
+                        types will be studied separately.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.26 TYPE SELECTION
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.26 How Do You Choose a Data Type?
+                    </div>
+
+                    <table class="comparison-table">
+
+                        <thead>
+                            <tr>
+                                <th>Requirement</th>
+                                <th>Possible Choice</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>General whole number</td>
+                                <td><code>int</code></td>
+                            </tr>
+
+                            <tr>
+                                <td>Non-negative count</td>
+                                <td>Appropriate unsigned integer type when justified</td>
+                            </tr>
+
+                            <tr>
+                                <td>Character-sized data</td>
+                                <td><code>char</code></td>
+                            </tr>
+
+                            <tr>
+                                <td>Fractional value</td>
+                                <td><code>float</code> or <code>double</code></td>
+                            </tr>
+
+                            <tr>
+                                <td>Higher floating-point precision</td>
+                                <td><code>double</code> or <code>long double</code>, as appropriate</td>
+                            </tr>
+
+                            <tr>
+                                <td>Boolean-style state</td>
+                                <td><code>_Bool</code> or <code>bool</code> with <code>&lt;stdbool.h&gt;</code></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                    <div class="tip-box">
+
+                        <strong>Programming principle:</strong>
+
+                        <p>
+                            Choose a type based on the required range, representation,
+                            operations and portability requirements rather than simply
+                            choosing the smallest type you can remember.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.27 COMPLETE PROGRAM
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.27 Complete Program — Different Data Types
+                    </div>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdbool.h&gt;
+
+int main(void)
+{
+    int age = 21;
+    float height = 5.8f;
+    double percentage = 87.4567;
+    char grade = 'A';
+    bool passed = true;
+
+    printf("Age = %d\n", age);
+    printf("Height = %.1f\n", height);
+    printf("Percentage = %.4f\n", percentage);
+    printf("Grade = %c\n", grade);
+    printf("Passed = %d\n", passed);
 
     return 0;
 }</code></pre>
-</div>
-</div>
-<div class="cb-c-practice-item">
-<div class="cb-c-practice-problem-head">
-<strong>3. Average with Decimal Precision</strong>
-<span class="cb-practice-badge" id="practiceBadge-datatype-p3"></span>
-</div>
-<p class="cb-c-practice-statement"><strong>Problem 3: Write a program to calculate the average of two integers and display the result with decimal precision.</strong></p>
-<p><strong>Input:</strong> Two integers.</p>
-<p><strong>Output:</strong> Print the average rounded to two decimal places.</p>
-<div class="cb-c-practice-buttons">
-<button class="cb-practice-start-button" onclick="CodeBhavyaCPractice.toggle('datatype-p3')">💻 Solve It Yourself</button>
-<button class="cb-practice-hint-button" onclick="CodeBhavyaCPractice.markHint('datatype-p3')">Hint</button>
-<button class="cb-practice-program-button" onclick="CodeBhavyaCPractice.markSolution('datatype-p3')">Show Program</button>
-</div>
-<div class="cb-c-practice-hint" hidden="" id="practiceHint-datatype-p3">
-                💡 <strong>Hint:</strong> Convert the sum or one operand to double before division by 2.
-            </div>
-<div class="cb-c-practice-workspace" hidden="" id="practiceWorkspace-datatype-p3">
-<div class="cb-c-practice-workspace-title">
-                    💻 Solve It Yourself — Average with Decimal Precision
+
+                    <div class="cb-concept-tree">
+
+<pre>
+Program
+│
+├── int
+│   └── age
+│
+├── float
+│   └── height
+│
+├── double
+│   └── percentage
+│
+├── char
+│   └── grade
+│
+├── bool
+│   └── passed
+│
+└── printf()
+    └── displays values
+</pre>
+
+                    </div>
+
                 </div>
-<div class="cb-c-practice-grid">
-<div class="cb-c-practice-panel">
-<h4>C Code Editor</h4>
-<textarea class="cb-c-code-editor" id="practiceCode-datatype-p3" spellcheck="false"></textarea>
-<div class="cb-c-practice-actions">
-<button class="cb-c-run-btn" id="practiceRun-datatype-p3" onclick="CodeBhavyaCPractice.runSample('datatype-p3')">▶ Run Code</button>
-<button class="cb-c-check-btn" id="practiceCheck-datatype-p3" onclick="CodeBhavyaCPractice.checkAnswer('datatype-p3')">✓ Check Answer</button>
-<button class="cb-c-reset-btn" onclick="CodeBhavyaCPractice.resetEditor('datatype-p3')">↺ Reset Editor</button>
-</div>
-</div>
-<div class="cb-c-practice-panel">
-<h4>Sample Input</h4>
-<textarea class="cb-c-practice-input" id="practiceInput-datatype-p3" spellcheck="false"></textarea>
-<h4 class="cb-c-output-heading">Program Output</h4>
-<pre class="cb-c-practice-output" id="practiceOutput-datatype-p3">Run your program to see the output.</pre>
-<h4 class="cb-c-tests-heading">Test Cases</h4>
-<div class="cb-c-test-results" id="practiceTests-datatype-p3">
-<div class="cb-c-test-row">
-<span>No tests checked yet.</span>
-<strong>—</strong>
-</div>
-</div>
-</div>
-</div>
-<div class="cb-c-practice-score">
-<div class="cb-c-practice-score-grid">
-<div class="cb-c-score-item">
-<strong>Best Score</strong>
-<span id="practiceScore-datatype-p3">0 / 100</span>
-</div>
-<div class="cb-c-score-item">
-<strong>Attempts</strong>
-<span id="practiceAttempts-datatype-p3">0</span>
-</div>
-<div class="cb-c-score-item">
-<strong>Status</strong>
-<span id="practiceStatus-datatype-p3">Not Solved</span>
-</div>
-</div>
-<div class="cb-c-practice-message" id="practiceMessage-datatype-p3">
-                        Write your C program and test it. You can do it! 💪
+
+
+                <!-- =================================================
+                     5.28 COMMON MISTAKES
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.28 Common Data Type Mistakes
                     </div>
-<div class="cb-c-practice-note">
-                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
-                        If the full solution is opened, the problem can still be completed,
-                        but it is not counted as a competitive score.
+
+                    <ol>
+
+                        <li>
+                            Assuming every C compiler uses exactly the same type sizes.
+                        </li>
+
+                        <li>
+                            Using <code>int</code> for a value that cannot fit in the
+                            required range.
+                        </li>
+
+                        <li>
+                            Expecting integer division to produce a fractional result.
+                        </li>
+
+                        <li>
+                            Confusing <code>char</code> with a string.
+                        </li>
+
+                        <li>
+                            Using the wrong <code>printf()</code> format specifier.
+                        </li>
+
+                        <li>
+                            Assuming plain <code>char</code> is always signed.
+                        </li>
+
+                        <li>
+                            Treating floating-point values as if they were always
+                            exact decimal numbers.
+                        </li>
+
+                    </ol>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.29 FORMAT SPECIFIER PREVIEW
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.29 Common <code>printf()</code> Format Specifiers
                     </div>
-</div>
-</div>
-<div class="cb-c-practice-solution" hidden="" id="practiceSolution-datatype-p3">
-<div class="cb-c-practice-solution-title">Official C Program</div>
+
+                    <table class="comparison-table">
+
+                        <thead>
+                            <tr>
+                                <th>Specifier</th>
+                                <th>Common Use</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td><code>%d</code></td>
+                                <td>Signed decimal integer</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>%u</code></td>
+                                <td>Unsigned decimal integer</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>%c</code></td>
+                                <td>Character</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>%f</code></td>
+                                <td>Floating-point output</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>%zu</code></td>
+                                <td><code>size_t</code>, commonly used with <code>sizeof</code></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                    <div class="cb-important-box">
+
+                        <strong>Important:</strong>
+
+                        <p>
+                            Correct format specifiers matter. Passing an argument of the
+                            wrong type to a variadic function such as <code>printf()</code>
+                            can result in undefined behavior.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     5.30 QUICK REVISION
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        5.30 Quick Revision
+                    </div>
+
+                    <table class="comparison-table">
+
+                        <thead>
+                            <tr>
+                                <th>Concept</th>
+                                <th>Remember</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Data type</td>
+                                <td>Describes the type associated with a C entity.</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>char</code></td>
+                                <td>Character type and integer type.</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>int</code></td>
+                                <td>General-purpose integer type.</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>float</code></td>
+                                <td>Single-precision floating-point type.</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>double</code></td>
+                                <td>Double-precision floating-point type.</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>void</code></td>
+                                <td>Represents absence of a value/type in several contexts.</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>_Bool</code></td>
+                                <td>Built-in Boolean-capable integer type.</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>sizeof</code></td>
+                                <td>Reports size in bytes.</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>limits.h</code></td>
+                                <td>Provides integer type limits.</td>
+                            </tr>
+
+                            <tr>
+                                <td><code>float.h</code></td>
+                                <td>Provides floating-point characteristics.</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- =================================================
+                     ORIGINAL QUESTIONS
+                     ================================================= -->
+
+                <div class="cb-deep-dive">
+
+                    <div class="cb-deep-dive-title">
+                        Test Your Understanding
+                    </div>
+
+                    <div class="cb-original-qa-list">
+
+
+                        <div class="cb-original-qa-item">
+
+                            <div class="cb-original-qa-question">
+                                <span class="cb-original-qa-number">1</span>
+                                Why does C have different data types?
+                            </div>
+
+                            <button
+                                class="cb-show-answer-btn"
+                                onclick="CBShowAnswer.toggle('datatype-answer-1')"
+                                type="button">
+                                Show Answer
+                            </button>
+
+                            <div
+                                class="cb-original-qa-answer"
+                                hidden
+                                id="datatype-answer-1">
+
+                                Different types describe different kinds of data and
+                                allow the compiler to interpret objects and expressions
+                                correctly.
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="cb-original-qa-item">
+
+                            <div class="cb-original-qa-question">
+                                <span class="cb-original-qa-number">2</span>
+                                Is <code>int</code> always 4 bytes?
+                            </div>
+
+                            <button
+                                class="cb-show-answer-btn"
+                                onclick="CBShowAnswer.toggle('datatype-answer-2')"
+                                type="button">
+                                Show Answer
+                            </button>
+
+                            <div
+                                class="cb-original-qa-answer"
+                                hidden
+                                id="datatype-answer-2">
+
+                                No. Its exact size is implementation-defined. Use
+                                <code>sizeof(int)</code> to determine the size on the
+                                current implementation.
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="cb-original-qa-item">
+
+                            <div class="cb-original-qa-question">
+                                <span class="cb-original-qa-number">3</span>
+                                What is the difference between <code>float</code> and
+                                <code>double</code>?
+                            </div>
+
+                            <button
+                                class="cb-show-answer-btn"
+                                onclick="CBShowAnswer.toggle('datatype-answer-3')"
+                                type="button">
+                                Show Answer
+                            </button>
+
+                            <div
+                                class="cb-original-qa-answer"
+                                hidden
+                                id="datatype-answer-3">
+
+                                Both are floating-point types, but <code>double</code>
+                                normally provides greater precision. Their exact
+                                representation is implementation-dependent.
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="cb-original-qa-item">
+
+                            <div class="cb-original-qa-question">
+                                <span class="cb-original-qa-number">4</span>
+                                What does <code>sizeof</code> return?
+                            </div>
+
+                            <button
+                                class="cb-show-answer-btn"
+                                onclick="CBShowAnswer.toggle('datatype-answer-4')"
+                                type="button">
+                                Show Answer
+                            </button>
+
+                            <div
+                                class="cb-original-qa-answer"
+                                hidden
+                                id="datatype-answer-4">
+
+                                It produces the size in bytes of its operand. The result
+                                has type <code>size_t</code>.
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="cb-original-qa-item">
+
+                            <div class="cb-original-qa-question">
+                                <span class="cb-original-qa-number">5</span>
+                                Why can <code>5 / 2</code> produce <code>2</code>
+                                instead of <code>2.5</code>?
+                            </div>
+
+                            <button
+                                class="cb-show-answer-btn"
+                                onclick="CBShowAnswer.toggle('datatype-answer-5')"
+                                type="button">
+                                Show Answer
+                            </button>
+
+                            <div
+                                class="cb-original-qa-answer"
+                                hidden
+                                id="datatype-answer-5">
+
+                                Both operands are integers, so integer arithmetic is
+                                performed and the fractional part is discarded.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     INTERVIEW PREPARATION
+                     ================================================= -->
+
+                <section class="content-card cb-added-section" id="interview-preparation">
+
+                    <span class="cb-added-label">
+                        INTERVIEW PREPARATION
+                    </span>
+
+                    <h2>
+                        C Data Types — Interview Questions
+                    </h2>
+
+                    <p class="cb-added-note">
+                        These questions focus on concepts frequently tested in
+                        C programming interviews and placement examinations.
+                    </p>
+
+                    <ul class="cb-tip-grid">
+
+                        <li>
+                            <strong>What is a data type?</strong>
+                            It describes the type of data associated with a C entity.
+                        </li>
+
+                        <li>
+                            <strong>What is the difference between signed and unsigned?</strong>
+                            Unsigned integer types represent only non-negative values.
+                        </li>
+
+                        <li>
+                            <strong>Is <code>char</code> an integer type?</strong>
+                            Yes. C defines <code>char</code> as an integer type.
+                        </li>
+
+                        <li>
+                            <strong>What is <code>sizeof</code>?</strong>
+                            An operator that determines size in bytes.
+                        </li>
+
+                        <li>
+                            <strong>What is <code>size_t</code>?</strong>
+                            An unsigned integer type suitable for representing object sizes.
+                        </li>
+
+                        <li>
+                            <strong>What is <code>void</code>?</strong>
+                            A type used to represent absence of a value/type in several contexts.
+                        </li>
+
+                        <li>
+                            <strong>What is <code>_Bool</code>?</strong>
+                            C's built-in Boolean-capable integer type.
+                        </li>
+
+                        <li>
+                            <strong>Why should fixed type sizes not be assumed?</strong>
+                            C permits implementation-defined sizes for many types.
+                        </li>
+
+                    </ul>
+
+                </section>
+
+
+                <!-- =================================================
+                     PLACEMENT TIPS
+                     ================================================= -->
+
+                <section class="content-card cb-added-section" id="placement-tips">
+
+                    <span class="cb-added-label">
+                        PLACEMENT TIPS
+                    </span>
+
+                    <h2>
+                        Data Types — Placement Tips
+                    </h2>
+
+                    <ol class="cb-extra-practice">
+
+                        <li>
+                            Know the difference between <code>char</code>,
+                            <code>int</code>, <code>float</code> and <code>double</code>.
+                        </li>
+
+                        <li>
+                            Do not memorize type sizes as universal constants.
+                        </li>
+
+                        <li>
+                            Remember <code>sizeof(char)</code> is always <code>1</code>.
+                        </li>
+
+                        <li>
+                            Understand signed versus unsigned integer types.
+                        </li>
+
+                        <li>
+                            Remember that <code>5 / 2</code> is integer division.
+                        </li>
+
+                        <li>
+                            Know why <code>3.14</code> is a <code>double</code>
+                            floating constant and <code>3.14f</code> is a
+                            <code>float</code> constant.
+                        </li>
+
+                        <li>
+                            Know what <code>limits.h</code> and <code>float.h</code>
+                            provide.
+                        </li>
+
+                    </ol>
+
+                </section>
+
+
+                <!-- =================================================
+                     PRACTICE
+                     ================================================= -->
+
+                <section class="cb-c-dsa-practice-section" id="practice">
+
+                    <span class="cb-c-practice-label">
+                        PRACTICE
+                    </span>
+
+                    <div class="cb-practice-overall">
+
+                        <div class="cb-practice-overall-title">
+                            Data Types Practice
+                        </div>
+
+                        <div class="cb-practice-overall-grid">
+
+                            <div class="cb-practice-overall-item">
+                                <strong id="cbPracticeOverallSolvedDataTypes">0</strong>
+                                <span>Solved</span>
+                            </div>
+
+                            <div class="cb-practice-overall-item">
+                                <strong id="cbPracticeOverallCompletedDataTypes">
+                                    0 / 5
+                                </strong>
+                                <span>Completed</span>
+                            </div>
+
+                            <div class="cb-practice-overall-item">
+                                <strong id="cbPracticeOverallScoreDataTypes">
+                                    0%
+                                </strong>
+                                <span>Score</span>
+                            </div>
+
+                        </div>
+
+                        <div class="cb-practice-progress-track">
+
+                            <div
+                                class="cb-practice-progress-fill"
+                                id="cbPracticeOverallBarDataTypes">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="cb-c-practice-list">
+
+
+                        <!-- =================================================
+                             PROBLEM 1
+                             ================================================= -->
+
+                        <div class="cb-c-practice-item">
+
+                            <div class="cb-c-practice-problem-head">
+
+                                <span
+                                    class="cb-practice-badge"
+                                    id="practiceBadge-datatypes-p1">
+                                    Problem 1
+                                </span>
+
+                                <h3>
+                                    Integer and Character
+                                </h3>
+
+                            </div>
+
+                            <p>
+                                Declare an integer variable with value
+                                <code>25</code> and a character variable with value
+                                <code>'A'</code>. Print both values.
+                            </p>
+
+                            <div class="cb-c-practice-buttons">
+
+                                <button
+                                    class="cb-practice-start-button"
+                                    onclick="CodeBhavyaCPractice.start('datatypes-p1')">
+                                    Start
+                                </button>
+
+                                <button
+                                    class="cb-practice-hint-button"
+                                    onclick="CodeBhavyaCPractice.toggleHint('datatypes-p1')">
+                                    Hint
+                                </button>
+
+                                <button
+                                    class="cb-practice-program-button"
+                                    onclick="CodeBhavyaCPractice.toggleWorkspace('datatypes-p1')">
+                                    Write Program
+                                </button>
+
+                            </div>
+
+                            <div
+                                class="cb-c-practice-hint"
+                                hidden
+                                id="practiceHint-datatypes-p1">
+
+                                Use:
+
+                                <code>int number = 25;</code>
+
+                                and
+
+                                <code>char letter = 'A';</code>
+
+                                Then use <code>%d</code> and <code>%c</code>.
+
+                            </div>
+
+                            <div
+                                class="cb-c-practice-workspace"
+                                hidden
+                                id="practiceWorkspace-datatypes-p1">
+
+                                <div class="cb-c-practice-grid">
+
+                                    <div class="cb-c-practice-panel">
+
+                                        <h4>Your Code</h4>
+
+                                        <textarea
+                                            class="cb-c-code-editor"
+                                            id="practiceCode-datatypes-p1">#include <stdio.h>
+
+int main(void)
+{
+    int number = 25;
+    char letter = 'A';
+
+    printf("%d\n", number);
+    printf("%c\n", letter);
+
+    return 0;
+}</textarea>
+
+                                    </div>
+
+                                    <div class="cb-c-practice-panel">
+
+                                        <h4>Input</h4>
+
+                                        <textarea
+                                            class="cb-c-code-editor"
+                                            id="practiceInput-datatypes-p1"
+                                            placeholder="No input required"></textarea>
+
+                                        <h4>Output</h4>
+
+                                        <pre id="practiceOutput-datatypes-p1"></pre>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="cb-c-practice-actions">
+
+                                    <button
+                                        class="cb-c-run-btn"
+                                        onclick="CodeBhavyaCPractice.run('datatypes-p1')">
+                                        Run
+                                    </button>
+
+                                    <button
+                                        class="cb-c-check-btn"
+                                        onclick="CodeBhavyaCPractice.check('datatypes-p1')">
+                                        Check
+                                    </button>
+
+                                    <button
+                                        class="cb-c-reset-btn"
+                                        onclick="CodeBhavyaCPractice.reset('datatypes-p1')">
+                                        Reset
+                                    </button>
+
+                                </div>
+
+                                <div
+                                    class="cb-c-practice-score"
+                                    id="practiceScore-datatypes-p1">
+                                </div>
+
+                                <div id="practiceTests-datatypes-p1"></div>
+
+                                <div id="practiceAttempts-datatypes-p1"></div>
+
+                                <div id="practiceStatus-datatypes-p1"></div>
+
+                                <div id="practiceMessage-datatypes-p1"></div>
+
+                                <div
+                                    class="cb-c-practice-solution"
+                                    hidden
+                                    id="practiceSolution-datatypes-p1">
+
 <pre><code>#include &lt;stdio.h&gt;
 
-int main()
+int main(void)
+{
+    int number = 25;
+    char letter = 'A';
+
+    printf("%d\n", number);
+    printf("%c\n", letter);
+
+    return 0;
+}</code></pre>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             PROBLEM 2
+                             ================================================= -->
+
+                        <div class="cb-c-practice-item">
+
+                            <div class="cb-c-practice-problem-head">
+
+                                <span
+                                    class="cb-practice-badge"
+                                    id="practiceBadge-datatypes-p2">
+                                    Problem 2
+                                </span>
+
+                                <h3>
+                                    Calculate a Decimal Result
+                                </h3>
+
+                            </div>
+
+                            <p>
+                                Read two integers and calculate their average as a
+                                floating-point value.
+                            </p>
+
+                            <div class="cb-c-practice-buttons">
+
+                                <button
+                                    class="cb-practice-start-button"
+                                    onclick="CodeBhavyaCPractice.start('datatypes-p2')">
+                                    Start
+                                </button>
+
+                                <button
+                                    class="cb-practice-hint-button"
+                                    onclick="CodeBhavyaCPractice.toggleHint('datatypes-p2')">
+                                    Hint
+                                </button>
+
+                                <button
+                                    class="cb-practice-program-button"
+                                    onclick="CodeBhavyaCPractice.toggleWorkspace('datatypes-p2')">
+                                    Write Program
+                                </button>
+
+                            </div>
+
+                            <div
+                                class="cb-c-practice-hint"
+                                hidden
+                                id="practiceHint-datatypes-p2">
+
+                                Use a floating-point variable for the result and make
+                                sure the division is performed as floating-point
+                                arithmetic.
+
+                            </div>
+
+                            <div
+                                class="cb-c-practice-workspace"
+                                hidden
+                                id="practiceWorkspace-datatypes-p2">
+
+                                <div class="cb-c-practice-grid">
+
+                                    <div class="cb-c-practice-panel">
+
+                                        <h4>Your Code</h4>
+
+                                        <textarea
+                                            class="cb-c-code-editor"
+                                            id="practiceCode-datatypes-p2">#include <stdio.h>
+
+int main(void)
+{
+    int a, b;
+    double average;
+
+    scanf("%d %d", &a, &b);
+
+    average = (double)(a + b) / 2;
+
+    printf("%.2f\n", average);
+
+    return 0;
+}</textarea>
+
+                                    </div>
+
+                                    <div class="cb-c-practice-panel">
+
+                                        <h4>Input</h4>
+
+                                        <textarea
+                                            class="cb-c-code-editor"
+                                            id="practiceInput-datatypes-p2"
+                                            placeholder="Enter two integers"></textarea>
+
+                                        <h4>Output</h4>
+
+                                        <pre id="practiceOutput-datatypes-p2"></pre>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="cb-c-practice-actions">
+
+                                    <button
+                                        class="cb-c-run-btn"
+                                        onclick="CodeBhavyaCPractice.run('datatypes-p2')">
+                                        Run
+                                    </button>
+
+                                    <button
+                                        class="cb-c-check-btn"
+                                        onclick="CodeBhavyaCPractice.check('datatypes-p2')">
+                                        Check
+                                    </button>
+
+                                    <button
+                                        class="cb-c-reset-btn"
+                                        onclick="CodeBhavyaCPractice.reset('datatypes-p2')">
+                                        Reset
+                                    </button>
+
+                                </div>
+
+                                <div
+                                    class="cb-c-practice-score"
+                                    id="practiceScore-datatypes-p2">
+                                </div>
+
+                                <div id="practiceTests-datatypes-p2"></div>
+
+                                <div id="practiceAttempts-datatypes-p2"></div>
+
+                                <div id="practiceStatus-datatypes-p2"></div>
+
+                                <div id="practiceMessage-datatypes-p2"></div>
+
+                                <div
+                                    class="cb-c-practice-solution"
+                                    hidden
+                                    id="practiceSolution-datatypes-p2">
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
 {
     int a, b;
     double average;
 
     scanf("%d %d", &amp;a, &amp;b);
 
-    average = (a + b) / 2.0;
+    average = (double)(a + b) / 2;
 
-    printf("Average = %.2f", average);
+    printf("%.2f\n", average);
 
     return 0;
 }</code></pre>
-</div>
-</div>
-<div class="cb-c-practice-item">
-<div class="cb-c-practice-problem-head">
-<strong>4. Integer Division vs Floating-Point Division</strong>
-<span class="cb-practice-badge" id="practiceBadge-datatype-p4"></span>
-</div>
-<p class="cb-c-practice-statement"><strong>Problem 4: Write a program demonstrating the difference between integer division and floating-point division.</strong></p>
-<p><strong>Input:</strong> Two integers a and b, where b is non-zero.</p>
-<p><strong>Output:</strong> Print integer division and floating-point division results.</p>
-<div class="cb-c-practice-buttons">
-<button class="cb-practice-start-button" onclick="CodeBhavyaCPractice.toggle('datatype-p4')">💻 Solve It Yourself</button>
-<button class="cb-practice-hint-button" onclick="CodeBhavyaCPractice.markHint('datatype-p4')">Hint</button>
-<button class="cb-practice-program-button" onclick="CodeBhavyaCPractice.markSolution('datatype-p4')">Show Program</button>
-</div>
-<div class="cb-c-practice-hint" hidden="" id="practiceHint-datatype-p4">
-                💡 <strong>Hint:</strong> Use a / b for integer division and (double)a / b for floating-point division.
-            </div>
-<div class="cb-c-practice-workspace" hidden="" id="practiceWorkspace-datatype-p4">
-<div class="cb-c-practice-workspace-title">
-                    💻 Solve It Yourself — Integer Division vs Floating-Point Division
-                </div>
-<div class="cb-c-practice-grid">
-<div class="cb-c-practice-panel">
-<h4>C Code Editor</h4>
-<textarea class="cb-c-code-editor" id="practiceCode-datatype-p4" spellcheck="false"></textarea>
-<div class="cb-c-practice-actions">
-<button class="cb-c-run-btn" id="practiceRun-datatype-p4" onclick="CodeBhavyaCPractice.runSample('datatype-p4')">▶ Run Code</button>
-<button class="cb-c-check-btn" id="practiceCheck-datatype-p4" onclick="CodeBhavyaCPractice.checkAnswer('datatype-p4')">✓ Check Answer</button>
-<button class="cb-c-reset-btn" onclick="CodeBhavyaCPractice.resetEditor('datatype-p4')">↺ Reset Editor</button>
-</div>
-</div>
-<div class="cb-c-practice-panel">
-<h4>Sample Input</h4>
-<textarea class="cb-c-practice-input" id="practiceInput-datatype-p4" spellcheck="false"></textarea>
-<h4 class="cb-c-output-heading">Program Output</h4>
-<pre class="cb-c-practice-output" id="practiceOutput-datatype-p4">Run your program to see the output.</pre>
-<h4 class="cb-c-tests-heading">Test Cases</h4>
-<div class="cb-c-test-results" id="practiceTests-datatype-p4">
-<div class="cb-c-test-row">
-<span>No tests checked yet.</span>
-<strong>—</strong>
-</div>
-</div>
-</div>
-</div>
-<div class="cb-c-practice-score">
-<div class="cb-c-practice-score-grid">
-<div class="cb-c-score-item">
-<strong>Best Score</strong>
-<span id="practiceScore-datatype-p4">0 / 100</span>
-</div>
-<div class="cb-c-score-item">
-<strong>Attempts</strong>
-<span id="practiceAttempts-datatype-p4">0</span>
-</div>
-<div class="cb-c-score-item">
-<strong>Status</strong>
-<span id="practiceStatus-datatype-p4">Not Solved</span>
-</div>
-</div>
-<div class="cb-c-practice-message" id="practiceMessage-datatype-p4">
-                        Write your C program and test it. You can do it! 💪
-                    </div>
-<div class="cb-c-practice-note">
-                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
-                        If the full solution is opened, the problem can still be completed,
-                        but it is not counted as a competitive score.
-                    </div>
-</div>
-</div>
-<div class="cb-c-practice-solution" hidden="" id="practiceSolution-datatype-p4">
-<div class="cb-c-practice-solution-title">Official C Program</div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             PROBLEM 3
+                             ================================================= -->
+
+                        <div class="cb-c-practice-item">
+
+                            <div class="cb-c-practice-problem-head">
+
+                                <span
+                                    class="cb-practice-badge"
+                                    id="practiceBadge-datatypes-p3">
+                                    Problem 3
+                                </span>
+
+                                <h3>
+                                    Find the Size of a Type
+                                </h3>
+
+                            </div>
+
+                            <p>
+                                Print the size of <code>int</code>,
+                                <code>char</code>, and <code>double</code> using
+                                <code>sizeof</code>.
+                            </p>
+
+                            <div class="cb-c-practice-buttons">
+
+                                <button
+                                    class="cb-practice-start-button"
+                                    onclick="CodeBhavyaCPractice.start('datatypes-p3')">
+                                    Start
+                                </button>
+
+                                <button
+                                    class="cb-practice-hint-button"
+                                    onclick="CodeBhavyaCPractice.toggleHint('datatypes-p3')">
+                                    Hint
+                                </button>
+
+                                <button
+                                    class="cb-practice-program-button"
+                                    onclick="CodeBhavyaCPractice.toggleWorkspace('datatypes-p3')">
+                                    Write Program
+                                </button>
+
+                            </div>
+
+                            <div
+                                class="cb-c-practice-hint"
+                                hidden
+                                id="practiceHint-datatypes-p3">
+
+                                Use:
+
+                                <code>sizeof(int)</code>,
+                                <code>sizeof(char)</code>,
+                                and
+                                <code>sizeof(double)</code>.
+
+                                Print the results using <code>%zu</code>.
+
+                            </div>
+
+                            <div
+                                class="cb-c-practice-workspace"
+                                hidden
+                                id="practiceWorkspace-datatypes-p3">
+
+                                <div class="cb-c-practice-grid">
+
+                                    <div class="cb-c-practice-panel">
+
+                                        <h4>Your Code</h4>
+
+                                        <textarea
+                                            class="cb-c-code-editor"
+                                            id="practiceCode-datatypes-p3">#include <stdio.h>
+
+int main(void)
+{
+    printf("%zu\n", sizeof(int));
+    printf("%zu\n", sizeof(char));
+    printf("%zu\n", sizeof(double));
+
+    return 0;
+}</textarea>
+
+                                    </div>
+
+                                    <div class="cb-c-practice-panel">
+
+                                        <h4>Input</h4>
+
+                                        <textarea
+                                            class="cb-c-code-editor"
+                                            id="practiceInput-datatypes-p3"
+                                            placeholder="No input required"></textarea>
+
+                                        <h4>Output</h4>
+
+                                        <pre id="practiceOutput-datatypes-p3"></pre>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="cb-c-practice-actions">
+
+                                    <button
+                                        class="cb-c-run-btn"
+                                        onclick="CodeBhavyaCPractice.run('datatypes-p3')">
+                                        Run
+                                    </button>
+
+                                    <button
+                                        class="cb-c-check-btn"
+                                        onclick="CodeBhavyaCPractice.check('datatypes-p3')">
+                                        Check
+                                    </button>
+
+                                    <button
+                                        class="cb-c-reset-btn"
+                                        onclick="CodeBhavyaCPractice.reset('datatypes-p3')">
+                                        Reset
+                                    </button>
+
+                                </div>
+
+                                <div
+                                    class="cb-c-practice-score"
+                                    id="practiceScore-datatypes-p3">
+                                </div>
+
+                                <div id="practiceTests-datatypes-p3"></div>
+
+                                <div id="practiceAttempts-datatypes-p3"></div>
+
+                                <div id="practiceStatus-datatypes-p3"></div>
+
+                                <div id="practiceMessage-datatypes-p3"></div>
+
+                                <div
+                                    class="cb-c-practice-solution"
+                                    hidden
+                                    id="practiceSolution-datatypes-p3">
+
 <pre><code>#include &lt;stdio.h&gt;
 
-int main()
+int main(void)
+{
+    printf("%zu\n", sizeof(int));
+    printf("%zu\n", sizeof(char));
+    printf("%zu\n", sizeof(double));
+
+    return 0;
+}</code></pre>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             PROBLEM 4
+                             ================================================= -->
+
+                        <div class="cb-c-practice-item">
+
+                            <div class="cb-c-practice-problem-head">
+
+                                <span
+                                    class="cb-practice-badge"
+                                    id="practiceBadge-datatypes-p4">
+                                    Problem 4
+                                </span>
+
+                                <h3>
+                                    Integer vs Floating-Point Division
+                                </h3>
+
+                            </div>
+
+                            <p>
+                                Read two integers and print their division as a
+                                floating-point value with exactly two decimal places.
+                            </p>
+
+                            <div class="cb-c-practice-buttons">
+
+                                <button
+                                    class="cb-practice-start-button"
+                                    onclick="CodeBhavyaCPractice.start('datatypes-p4')">
+                                    Start
+                                </button>
+
+                                <button
+                                    class="cb-practice-hint-button"
+                                    onclick="CodeBhavyaCPractice.toggleHint('datatypes-p4')">
+                                    Hint
+                                </button>
+
+                                <button
+                                    class="cb-practice-program-button"
+                                    onclick="CodeBhavyaCPractice.toggleWorkspace('datatypes-p4')">
+                                    Write Program
+                                </button>
+
+                            </div>
+
+                            <div
+                                class="cb-c-practice-hint"
+                                hidden
+                                id="practiceHint-datatypes-p4">
+
+                                Convert one operand to <code>double</code> before
+                                division.
+
+                            </div>
+
+                            <div
+                                class="cb-c-practice-workspace"
+                                hidden
+                                id="practiceWorkspace-datatypes-p4">
+
+                                <div class="cb-c-practice-grid">
+
+                                    <div class="cb-c-practice-panel">
+
+                                        <h4>Your Code</h4>
+
+                                        <textarea
+                                            class="cb-c-code-editor"
+                                            id="practiceCode-datatypes-p4">#include <stdio.h>
+
+int main(void)
 {
     int a, b;
+    double result;
+
+    scanf("%d %d", &a, &b);
+
+    result = (double)a / b;
+
+    printf("%.2f\n", result);
+
+    return 0;
+}</textarea>
+
+                                    </div>
+
+                                    <div class="cb-c-practice-panel">
+
+                                        <h4>Input</h4>
+
+                                        <textarea
+                                            class="cb-c-code-editor"
+                                            id="practiceInput-datatypes-p4"
+                                            placeholder="Enter two integers"></textarea>
+
+                                        <h4>Output</h4>
+
+                                        <pre id="practiceOutput-datatypes-p4"></pre>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="cb-c-practice-actions">
+
+                                    <button
+                                        class="cb-c-run-btn"
+                                        onclick="CodeBhavyaCPractice.run('datatypes-p4')">
+                                        Run
+                                    </button>
+
+                                    <button
+                                        class="cb-c-check-btn"
+                                        onclick="CodeBhavyaCPractice.check('datatypes-p4')">
+                                        Check
+                                    </button>
+
+                                    <button
+                                        class="cb-c-reset-btn"
+                                        onclick="CodeBhavyaCPractice.reset('datatypes-p4')">
+                                        Reset
+                                    </button>
+
+                                </div>
+
+                                <div
+                                    class="cb-c-practice-score"
+                                    id="practiceScore-datatypes-p4">
+                                </div>
+
+                                <div id="practiceTests-datatypes-p4"></div>
+
+                                <div id="practiceAttempts-datatypes-p4"></div>
+
+                                <div id="practiceStatus-datatypes-p4"></div>
+
+                                <div id="practiceMessage-datatypes-p4"></div>
+
+                                <div
+                                    class="cb-c-practice-solution"
+                                    hidden
+                                    id="practiceSolution-datatypes-p4">
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a, b;
+    double result;
 
     scanf("%d %d", &amp;a, &amp;b);
 
-    printf("Integer Division = %d\n", a / b);
-    printf("Floating Division = %.2f", (double)a / b);
+    result = (double)a / b;
+
+    printf("%.2f\n", result);
 
     return 0;
 }</code></pre>
-</div>
-</div>
-<div class="cb-c-practice-item">
-<div class="cb-c-practice-problem-head">
-<strong>5. Convert Integer to Double</strong>
-<span class="cb-practice-badge" id="practiceBadge-datatype-p5"></span>
-</div>
-<p class="cb-c-practice-statement"><strong>Problem 5: Write a program that reads an integer and displays its value as a double.</strong></p>
-<p><strong>Input:</strong> One integer.</p>
-<p><strong>Output:</strong> Print the converted value with two digits after the decimal point.</p>
-<div class="cb-c-practice-buttons">
-<button class="cb-practice-start-button" onclick="CodeBhavyaCPractice.toggle('datatype-p5')">💻 Solve It Yourself</button>
-<button class="cb-practice-hint-button" onclick="CodeBhavyaCPractice.markHint('datatype-p5')">Hint</button>
-<button class="cb-practice-program-button" onclick="CodeBhavyaCPractice.markSolution('datatype-p5')">Show Program</button>
-</div>
-<div class="cb-c-practice-hint" hidden="" id="practiceHint-datatype-p5">
-                💡 <strong>Hint:</strong> Assign the integer to a double variable or use an explicit cast.
-            </div>
-<div class="cb-c-practice-workspace" hidden="" id="practiceWorkspace-datatype-p5">
-<div class="cb-c-practice-workspace-title">
-                    💻 Solve It Yourself — Convert Integer to Double
-                </div>
-<div class="cb-c-practice-grid">
-<div class="cb-c-practice-panel">
-<h4>C Code Editor</h4>
-<textarea class="cb-c-code-editor" id="practiceCode-datatype-p5" spellcheck="false"></textarea>
-<div class="cb-c-practice-actions">
-<button class="cb-c-run-btn" id="practiceRun-datatype-p5" onclick="CodeBhavyaCPractice.runSample('datatype-p5')">▶ Run Code</button>
-<button class="cb-c-check-btn" id="practiceCheck-datatype-p5" onclick="CodeBhavyaCPractice.checkAnswer('datatype-p5')">✓ Check Answer</button>
-<button class="cb-c-reset-btn" onclick="CodeBhavyaCPractice.resetEditor('datatype-p5')">↺ Reset Editor</button>
-</div>
-</div>
-<div class="cb-c-practice-panel">
-<h4>Sample Input</h4>
-<textarea class="cb-c-practice-input" id="practiceInput-datatype-p5" spellcheck="false"></textarea>
-<h4 class="cb-c-output-heading">Program Output</h4>
-<pre class="cb-c-practice-output" id="practiceOutput-datatype-p5">Run your program to see the output.</pre>
-<h4 class="cb-c-tests-heading">Test Cases</h4>
-<div class="cb-c-test-results" id="practiceTests-datatype-p5">
-<div class="cb-c-test-row">
-<span>No tests checked yet.</span>
-<strong>—</strong>
-</div>
-</div>
-</div>
-</div>
-<div class="cb-c-practice-score">
-<div class="cb-c-practice-score-grid">
-<div class="cb-c-score-item">
-<strong>Best Score</strong>
-<span id="practiceScore-datatype-p5">0 / 100</span>
-</div>
-<div class="cb-c-score-item">
-<strong>Attempts</strong>
-<span id="practiceAttempts-datatype-p5">0</span>
-</div>
-<div class="cb-c-score-item">
-<strong>Status</strong>
-<span id="practiceStatus-datatype-p5">Not Solved</span>
-</div>
-</div>
-<div class="cb-c-practice-message" id="practiceMessage-datatype-p5">
-                        Write your C program and test it. You can do it! 💪
-                    </div>
-<div class="cb-c-practice-note">
-                        Scoring: up to 100 marks without help; up to 90 after viewing a hint.
-                        If the full solution is opened, the problem can still be completed,
-                        but it is not counted as a competitive score.
-                    </div>
-</div>
-</div>
-<div class="cb-c-practice-solution" hidden="" id="practiceSolution-datatype-p5">
-<div class="cb-c-practice-solution-title">Official C Program</div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             PROBLEM 5
+                             ================================================= -->
+
+                        <div class="cb-c-practice-item">
+
+                            <div class="cb-c-practice-problem-head">
+
+                                <span
+                                    class="cb-practice-badge"
+                                    id="practiceBadge-datatypes-p5">
+                                    Problem 5
+                                </span>
+
+                                <h3>
+                                    Store Different Types
+                                </h3>
+
+                            </div>
+
+                            <p>
+                                Read an integer age, a floating-point height, and a
+                                character grade. Print them in the same order.
+                            </p>
+
+                            <div class="cb-c-practice-buttons">
+
+                                <button
+                                    class="cb-practice-start-button"
+                                    onclick="CodeBhavyaCPractice.start('datatypes-p5')">
+                                    Start
+                                </button>
+
+                                <button
+                                    class="cb-practice-hint-button"
+                                    onclick="CodeBhavyaCPractice.toggleHint('datatypes-p5')">
+                                    Hint
+                                </button>
+
+                                <button
+                                    class="cb-practice-program-button"
+                                    onclick="CodeBhavyaCPractice.toggleWorkspace('datatypes-p5')">
+                                    Write Program
+                                </button>
+
+                            </div>
+
+                            <div
+                                class="cb-c-practice-hint"
+                                hidden
+                                id="practiceHint-datatypes-p5">
+
+                                Use <code>int</code>, <code>float</code>, and
+                                <code>char</code>. A suitable <code>scanf()</code>
+                                pattern is:
+
+                                <code>%d %f %c</code>
+
+                            </div>
+
+                            <div
+                                class="cb-c-practice-workspace"
+                                hidden
+                                id="practiceWorkspace-datatypes-p5">
+
+                                <div class="cb-c-practice-grid">
+
+                                    <div class="cb-c-practice-panel">
+
+                                        <h4>Your Code</h4>
+
+                                        <textarea
+                                            class="cb-c-code-editor"
+                                            id="practiceCode-datatypes-p5">#include <stdio.h>
+
+int main(void)
+{
+    int age;
+    float height;
+    char grade;
+
+    scanf("%d %f %c", &age, &height, &grade);
+
+    printf("Age = %d\n", age);
+    printf("Height = %.1f\n", height);
+    printf("Grade = %c\n", grade);
+
+    return 0;
+}</textarea>
+
+                                    </div>
+
+                                    <div class="cb-c-practice-panel">
+
+                                        <h4>Input</h4>
+
+                                        <textarea
+                                            class="cb-c-code-editor"
+                                            id="practiceInput-datatypes-p5"
+                                            placeholder="Example: 21 5.8 A"></textarea>
+
+                                        <h4>Output</h4>
+
+                                        <pre id="practiceOutput-datatypes-p5"></pre>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="cb-c-practice-actions">
+
+                                    <button
+                                        class="cb-c-run-btn"
+                                        onclick="CodeBhavyaCPractice.run('datatypes-p5')">
+                                        Run
+                                    </button>
+
+                                    <button
+                                        class="cb-c-check-btn"
+                                        onclick="CodeBhavyaCPractice.check('datatypes-p5')">
+                                        Check
+                                    </button>
+
+                                    <button
+                                        class="cb-c-reset-btn"
+                                        onclick="CodeBhavyaCPractice.reset('datatypes-p5')">
+                                        Reset
+                                    </button>
+
+                                </div>
+
+                                <div
+                                    class="cb-c-practice-score"
+                                    id="practiceScore-datatypes-p5">
+                                </div>
+
+                                <div id="practiceTests-datatypes-p5"></div>
+
+                                <div id="practiceAttempts-datatypes-p5"></div>
+
+                                <div id="practiceStatus-datatypes-p5"></div>
+
+                                <div id="practiceMessage-datatypes-p5"></div>
+
+                                <div
+                                    class="cb-c-practice-solution"
+                                    hidden
+                                    id="practiceSolution-datatypes-p5">
+
 <pre><code>#include &lt;stdio.h&gt;
 
-int main()
+int main(void)
 {
-    int value;
-    double converted;
+    int age;
+    float height;
+    char grade;
 
-    scanf("%d", &amp;value);
+    scanf("%d %f %c", &amp;age, &amp;height, &amp;grade);
 
-    converted = value;
-
-    printf("Double = %.2f", converted);
+    printf("Age = %d\n", age);
+    printf("Height = %.1f\n", height);
+    printf("Grade = %c\n", grade);
 
     return 0;
 }</code></pre>
-</div>
-</div>
-</div>
-</div>
-<!-- KEY TAKEAWAY -->
-<h3>4.17 Key Takeaway</h3>
-<div class="tip-box">
 
-        🎯 Don't simply memorize data types.
+                                </div>
 
-        <br/><br/>
+                            </div>
 
-        Understand three things:
+                        </div>
 
-        <br/><br/>
-<strong>
-        1. What kind of value do I need?
-        </strong>
-<br/><br/>
-<strong>
-        2. What type is appropriate?
-        </strong>
-<br/><br/>
-<strong>
-        3. What happens when different types
-        are used together?
-        </strong>
-<br/><br/>
+                    </div>
 
-        These ideas become extremely important
-        when we learn operators, expressions,
-        arrays, pointers and functions.
+                </section>
 
-    </div>
-</section>
-<section class="content-card cb-added-section cb-compact-learning" id="datatypes-tracing-extra">
-<!--    <div class="cb-viz-dsa-topbar">
-    <div class="cb-viz-dsa-label">PROGRAM TRACING</div>
 
-    <div class="cb-viz-dsa-brand" aria-label="CodeBhavya">
-        <span class="cb-viz-dsa-brand-mark">
-            <img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo">
-        </span>
-        <span class="cb-viz-dsa-code">Code</span>
-        <span class="cb-viz-dsa-bhavya">Bhavya</span>
-    </div>
-</div>   -->
-<span class="cb-added-label">PROGRAM TRACING</span>
-<h2>🔎 Program Tracing — Data Types</h2>
-<p class="cb-added-note">
-        Trace how integer division differs from floating-point division after an explicit type conversion.
-    </p>
-<button class="cb-compact-toggle" onclick="CBProgramTrace.toggle('datatypes')" type="button">▶ Program Tracing — Data Types</button>
-<div class="cb-compact-panel" hidden="" id="cbTracePanel-datatypes">
-<div class="cb-tracer" data-cb-trace="datatypes" data-config='{"code": ["int main()", "{", "    int a = 5;", "    int b = 2;", "    int whole = a / b;", "    double precise = (double)a / b;", "    printf(\"whole = %d\\\\n\", whole);", "    printf(\"precise = %.2f\", precise);", "    return 0;", "}"], "steps": [{"line": 0, "state": {"a": "—", "b": "—", "whole": "—", "precise": "—", "output": ""}, "note": "Execution starts at main()."}, {"line": 2, "state": {"a": 5, "b": "—", "whole": "—", "precise": "—", "output": ""}, "note": "a is defined as an int and initialized to 5."}, {"line": 3, "state": {"a": 5, "b": 2, "whole": "—", "precise": "—", "output": ""}, "note": "b is defined as an int and initialized to 2."}, {"line": 4, "state": {"a": 5, "b": 2, "whole": 2, "precise": "—", "output": ""}, "note": "Both operands are int, so a / b performs integer division. The fractional part is discarded and whole becomes 2."}, {"line": 5, "state": {"a": 5, "b": 2, "whole": 2, "precise": 2.5, "output": ""}, "note": "(double)a explicitly converts a to double. Floating-point division is then performed, so precise becomes 2.5."}, {"line": 6, "state": {"a": 5, "b": 2, "whole": 2, "precise": 2.5, "output": "whole = 2\n"}, "note": "The integer-division result is printed."}, {"line": 7, "state": {"a": 5, "b": 2, "whole": 2, "precise": 2.5, "output": "whole = 2\nprecise = 2.50"}, "note": "The floating-point result is printed with two digits after the decimal point."}, {"line": 8, "state": {"a": 5, "b": 2, "whole": 2, "precise": 2.5, "output": "whole = 2\nprecise = 2.50"}, "note": "return 0 ends the program successfully."}]}'>
-<div class="cb-tracer-grid">
-<div class="cb-tracer-code-wrap">
-<div class="cb-tracer-heading">C Program</div>
-<pre class="cb-tracer-code" id="cbTraceCode-datatypes"></pre>
-</div>
-<div class="cb-tracer-state-wrap">
-<div class="cb-tracer-heading">Live Variables</div>
-<div class="cb-tracer-note" id="cbTraceNote-datatypes"></div>
-<div class="cb-live-state" id="cbTraceState-datatypes"></div>
-<div class="cb-tracer-output">
-<strong>Output</strong>
-<pre id="cbTraceOutput-datatypes">—</pre>
-</div>
-</div>
-</div>
-<div class="cb-standard-controls">
-<button class="cb-control cb-previous" onclick="CBProgramTrace.prev('datatypes')">← Previous</button>
-<button class="cb-control cb-next" id="cbTraceNext-datatypes" onclick="CBProgramTrace.next('datatypes')">Next →</button>
-<button class="cb-control cb-auto" id="cbTraceAuto-datatypes" onclick="CBProgramTrace.auto('datatypes')">▶ Auto Run</button>
-<button class="cb-control cb-pause" onclick="CBProgramTrace.pause('datatypes')">Ⅱ Pause</button>
-<button class="cb-control cb-reset" onclick="CBProgramTrace.reset('datatypes')">↺ Reset</button>
-</div>
-<div class="cb-tracer-status" id="cbTraceStatus-datatypes">Step 0</div>
-</div>
-</div>
-</section>
-<section class="content-card cb-added-section" id="datatypes-interview-extra">
-<span class="cb-added-label">INTERVIEW PREPARATION</span>
-<h2>🎤 Data Types — Interview Questions</h2>
-<div class="cb-original-qa-list cb-interview-qa-list">
-<div class="cb-original-qa-item">
-<div class="cb-original-qa-question">
-<span class="cb-original-qa-number">1.</span>
-<span>What is a data type in C?</span>
-<button class="cb-show-answer-btn" onclick="CBShowAnswer.toggle('datatypeInterviewAnswer1', this)" type="button">Show Answer</button>
-</div>
-<div class="cb-original-qa-answer" hidden="" id="datatypeInterviewAnswer1">
-                A data type tells the compiler what kind of value an object can represent and helps determine how that object is stored and interpreted.
+                <!-- =================================================
+                     EXTRA PRACTICE
+                     ================================================= -->
+
+                <section class="content-card cb-added-section" id="extra-practice">
+
+                    <span class="cb-added-label">
+                        EXTRA PRACTICE
+                    </span>
+
+                    <h2>
+                        More Data Type Problems
+                    </h2>
+
+                    <ol class="cb-extra-practice">
+
+                        <li>
+                            Print the sizes of all common integer types using
+                            <code>sizeof</code>.
+                        </li>
+
+                        <li>
+                            Read two integers and print their sum, difference,
+                            product and floating-point quotient.
+                        </li>
+
+                        <li>
+                            Read a character and print it.
+                        </li>
+
+                        <li>
+                            Store a temperature using <code>float</code> and print it
+                            with two decimal places.
+                        </li>
+
+                        <li>
+                            Use <code>double</code> to calculate the area of a circle.
+                        </li>
+
+                        <li>
+                            Create a program that demonstrates the difference between
+                            <code>5 / 2</code> and <code>5.0 / 2.0</code>.
+                        </li>
+
+                        <li>
+                            Use <code>limits.h</code> to display <code>INT_MIN</code>
+                            and <code>INT_MAX</code>.
+                        </li>
+
+                        <li>
+                            Use <code>float.h</code> to display floating-point precision
+                            information.
+                        </li>
+
+                    </ol>
+
+                </section>
+
+
+                <!-- =================================================
+                     KEY TAKEAWAY
+                     ================================================= -->
+
+                <section class="content-card cb-added-section" id="key-takeaway">
+
+                    <span class="cb-added-label">
+                        KEY TAKEAWAY
+                    </span>
+
+                    <h2>
+                        Data Types — What You Must Remember
+                    </h2>
+
+                    <ul class="cb-tip-grid">
+
+                        <li>
+                            Data types describe the kind of data associated with
+                            C entities.
+                        </li>
+
+                        <li>
+                            <code>int</code> is the common general-purpose integer type.
+                        </li>
+
+                        <li>
+                            <code>char</code> is an integer type used for character-sized
+                            data.
+                        </li>
+
+                        <li>
+                            <code>float</code>, <code>double</code>, and
+                            <code>long double</code> are floating-point types.
+                        </li>
+
+                        <li>
+                            <code>_Bool</code> is C's built-in Boolean-capable integer type.
+                        </li>
+
+                        <li>
+                            <code>void</code> represents absence of a value/type in
+                            several contexts.
+                        </li>
+
+                        <li>
+                            Integer types can be signed or unsigned.
+                        </li>
+
+                        <li>
+                            Type sizes are implementation-dependent; use
+                            <code>sizeof</code> when you need the actual size.
+                        </li>
+
+                        <li>
+                            <code>limits.h</code> provides integer limits.
+                        </li>
+
+                        <li>
+                            <code>float.h</code> provides floating-point characteristics.
+                        </li>
+
+                        <li>
+                            Data types can affect expression results, such as integer
+                            versus floating-point division.
+                        </li>
+
+                    </ul>
+
+                </section>
+
             </div>
+
+        </section>
+
+
+        <!-- =========================================================
+             TOPIC NAVIGATION
+             ========================================================= -->
+
+        <section
+            aria-label="C Programming topic navigation"
+            class="cb-topic-navigation">
+
+            <a
+                class="cb-topic-nav-btn cb-topic-nav-prev"
+                href="variables.html">
+
+                ← Previous Topic: Variables &amp; Constants
+
+            </a>
+
+            <a
+                class="cb-topic-nav-btn cb-topic-nav-next"
+                href="input-output.html">
+
+                Next Topic: Input &amp; Output →
+
+            </a>
+
+        </section>
+
+    </main>
+
 </div>
-<div class="cb-original-qa-item">
-<div class="cb-original-qa-question">
-<span class="cb-original-qa-number">2.</span>
-<span>What are the main categories of C data types?</span>
-<button class="cb-show-answer-btn" onclick="CBShowAnswer.toggle('datatypeInterviewAnswer2', this)" type="button">Show Answer</button>
-</div>
-<div class="cb-original-qa-answer" hidden="" id="datatypeInterviewAnswer2">
-                Common categories include basic/fundamental types, void, derived types such as arrays, pointers and functions, and user-defined types such as struct, union and enum.
-            </div>
-</div>
-<div class="cb-original-qa-item">
-<div class="cb-original-qa-question">
-<span class="cb-original-qa-number">3.</span>
-<span>What is the difference between float and double?</span>
-<button class="cb-show-answer-btn" onclick="CBShowAnswer.toggle('datatypeInterviewAnswer3', this)" type="button">Show Answer</button>
-</div>
-<div class="cb-original-qa-answer" hidden="" id="datatypeInterviewAnswer3">
-                Both represent floating-point values, but double generally provides greater precision than float. Exact representation and precision are implementation-dependent.
-            </div>
-</div>
-<div class="cb-original-qa-item">
-<div class="cb-original-qa-question">
-<span class="cb-original-qa-number">4.</span>
-<span>What is the purpose of sizeof?</span>
-<button class="cb-show-answer-btn" onclick="CBShowAnswer.toggle('datatypeInterviewAnswer4', this)" type="button">Show Answer</button>
-</div>
-<div class="cb-original-qa-answer" hidden="" id="datatypeInterviewAnswer4">
-                sizeof reports the size in bytes of a type or object. Its result has type size_t.
-            </div>
-</div>
-<div class="cb-original-qa-item">
-<div class="cb-original-qa-question">
-<span class="cb-original-qa-number">5.</span>
-<span>What is the difference between implicit and explicit type conversion?</span>
-<button class="cb-show-answer-btn" onclick="CBShowAnswer.toggle('datatypeInterviewAnswer5', this)" type="button">Show Answer</button>
-</div>
-<div class="cb-original-qa-answer" hidden="" id="datatypeInterviewAnswer5">
-                Implicit conversion is applied automatically according to C language rules. Explicit conversion is requested by the programmer using a cast.
-            </div>
-</div>
-<div class="cb-original-qa-item">
-<div class="cb-original-qa-question">
-<span class="cb-original-qa-number">6.</span>
-<span>Why does 5 / 2 produce 2 in an integer expression?</span>
-<button class="cb-show-answer-btn" onclick="CBShowAnswer.toggle('datatypeInterviewAnswer6', this)" type="button">Show Answer</button>
-</div>
-<div class="cb-original-qa-answer" hidden="" id="datatypeInterviewAnswer6">
-                Because both operands are integers, integer division is performed and the fractional part is discarded.
-            </div>
-</div>
-<div class="cb-original-qa-item">
-<div class="cb-original-qa-question">
-<span class="cb-original-qa-number">7.</span>
-<span>What is the purpose of signed and unsigned integer types?</span>
-<button class="cb-show-answer-btn" onclick="CBShowAnswer.toggle('datatypeInterviewAnswer7', this)" type="button">Show Answer</button>
-</div>
-<div class="cb-original-qa-answer" hidden="" id="datatypeInterviewAnswer7">
-                signed integer types can represent negative and non-negative values, while corresponding unsigned types represent only non-negative values and have a different range.
-            </div>
-</div>
-</div>
-</section>
-<section class="content-card cb-added-section" id="datatypes-tips-extra">
-<span class="cb-added-label">PLACEMENT TIPS</span>
-<h2>💡 Data Types — Extra Tips</h2>
-<ul class="cb-tip-grid">
-<li>Do not memorize fixed byte sizes for every machine. Except for <strong>sizeof(char) == 1</strong>, sizes of fundamental types are implementation-dependent.</li>
-<li>Know the correct format specifier for common types and remember that <strong>scanf</strong> uses <code>%lf</code> for <code>double</code>.</li>
-<li>Be ready to explain why <strong>integer division</strong> can produce a different result from floating-point division.</li>
-<li>Understand when a cast such as <code>(double)a</code> changes the type used by an expression.</li>
-<li>In interviews, connect <strong>type + range/precision + operation behavior</strong> instead of memorizing only syntax.</li>
-</ul>
-</section>
-<section class="content-card cb-added-section" id="datatypes-practice-extra">
-<span class="cb-added-label">EXTRA PRACTICE</span>
-<h2>✍️ Data Types — Extra Practice Questions</h2>
-<ol class="cb-extra-practice">
-<li>Predict the type and result of the expression <code>5 + 2.5</code>.</li>
-<li>Explain why <code>5 / 2</code> and <code>5.0 / 2</code> produce different results.</li>
-<li>Write a short program that uses <code>sizeof</code> with five different types available in C.</li>
-<li>Compare <code>char</code>, <code>int</code>, <code>float</code>, and <code>double</code> with one suitable example value for each.</li>
-<li>Rewrite an integer-division expression so that it produces a floating-point result using an explicit cast.</li>
-</ol>
-</section>
-<section aria-label="C Programming topic navigation" class="cb-topic-navigation">
-<a class="cb-topic-nav-btn cb-topic-nav-prev" href="variables.html">
-        ← Previous Topic: Variables &amp; Constants
-    </a>
-<a class="cb-topic-nav-btn cb-topic-nav-next" href="input-output.html">
-        Next Topic: Input &amp; Output →
-    </a>
-</section>
-</main>
-</div>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
 <footer class="footer">
-<div class="footer-container">
-<!-- BRAND -->
-<div class="footer-brand-section">
-<div class="footer-brand">
-<span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
-</div>
-<p class="footer-tagline">
+
+    <div class="footer-container">
+
+        <div class="footer-brand-section">
+
+            <div class="footer-brand">
+                <span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+            </div>
+
+            <p class="footer-tagline">
                 From Learning to Limitless Possibilities.
             </p>
-<p class="footer-description">
+
+            <p class="footer-description">
                 Learn, practice, build and grow with
                 structured learning resources.
             </p>
-</div>
-<!-- QUICK LINKS -->
-<div class="footer-column">
-<h3>Quick Links</h3>
-<a href="../index.html">
-                Home
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="../index.html">Home</a>
+            <a href="../Maths/index.html">Maths</a>
+            <a href="index.html">C Programming</a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>Learning</h3>
+
+            <a href="../Data-Structures/">Data Structures</a>
+            <a href="../Advanced-Data-Structures/">
+                Advanced Data Structures
             </a>
-<a href="../Maths/index.html">
-                Maths
-            </a>
-<a href="index.html">
-                C Programming
-            </a>
-</div>
-<!-- LEARNING -->
-<div class="footer-column">
-<h3>Learning</h3>
-<a href="../Data-Structures/">
-    Data Structures
-</a>
-<a href="../Advanced-Data-Structures/">
-    Advanced Data Structures
-</a>
-<a href="#">
-                Python
-            </a>
-<a href="#">
-                AI &amp; Machine Learning
-            </a>
-</div>
-<!-- PRACTICE -->
-<div class="footer-column">
-<h3>Practice</h3>
-<a href="#practice">
-                Practice Problems
-            </a>
-<a href="#practice">
-                Problem Solving
-            </a>
-</div>
-</div>
-<!-- FOOTER BOTTOM -->
-<div class="footer-bottom">
-<p>
+            <a href="#">Python</a>
+            <a href="#">AI &amp; Machine Learning</a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>Practice</h3>
+
+            <a href="#practice">Practice Problems</a>
+            <a href="#practice">Problem Solving</a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
             © 2026 CodeBhavya. All Rights Reserved.
         </p>
-<p>
+
+        <p>
             From Learning to Limitless Possibilities.
         </p>
-</div>
+
+    </div>
+
 </footer>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
 <script src="c-programming.js"></script>
+
 <script>
-const codeBhavyaDataTypePracticeConfigs = [{"key": "datatype-p1", "title": "Print Values of Different Data Types", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int i;\n    float f;\n    double d;\n    char ch;\n\n    /* Read and print the four values */\n\n    return 0;\n}", "sampleInput": "25 12.5 99.125 A", "tests": [{"input": "25 12.5 99.125 A", "expected": "int = 25\nfloat = 12.50\ndouble = 99.125\nchar = A"}, {"input": "0 0.5 1.234 Z", "expected": "int = 0\nfloat = 0.50\ndouble = 1.234\nchar = Z"}, {"input": "-7 -2.25 8.5 B", "expected": "int = -7\nfloat = -2.25\ndouble = 8.500\nchar = B"}, {"input": "100 45 3.141 C", "expected": "int = 100\nfloat = 45.00\ndouble = 3.141\nchar = C"}, {"input": "9 7.75 12.345 X", "expected": "int = 9\nfloat = 7.75\ndouble = 12.345\nchar = X"}]}, {"key": "datatype-p2", "title": "Print Sizes Using sizeof", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    /* Print sizes of char, int, float and double */\n\n    return 0;\n}", "sampleInput": "", "tests": [{"input": "", "expected": "char = 1\nint = 4\nfloat = 4\ndouble = 8"}]}, {"key": "datatype-p3", "title": "Average with Decimal Precision", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int a, b;\n\n    /* Read two integers and print decimal average */\n\n    return 0;\n}", "sampleInput": "5 2", "tests": [{"input": "5 2", "expected": "Average = 3.50"}, {"input": "10 20", "expected": "Average = 15.00"}, {"input": "1 2", "expected": "Average = 1.50"}, {"input": "-4 6", "expected": "Average = 1.00"}, {"input": "100 101", "expected": "Average = 100.50"}]}, {"key": "datatype-p4", "title": "Integer Division vs Floating-Point Division", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int a, b;\n\n    /* Read a and b and print both division results */\n\n    return 0;\n}", "sampleInput": "5 2", "tests": [{"input": "5 2", "expected": "Integer Division = 2\nFloating Division = 2.50"}, {"input": "10 4", "expected": "Integer Division = 2\nFloating Division = 2.50"}, {"input": "9 3", "expected": "Integer Division = 3\nFloating Division = 3.00"}, {"input": "7 2", "expected": "Integer Division = 3\nFloating Division = 3.50"}, {"input": "20 6", "expected": "Integer Division = 3\nFloating Division = 3.33"}]}, {"key": "datatype-p5", "title": "Convert Integer to Double", "starterCode": "#include <stdio.h>\n\nint main()\n{\n    int value;\n\n    /* Read integer and display it as double */\n\n    return 0;\n}", "sampleInput": "25", "tests": [{"input": "25", "expected": "Double = 25.00"}, {"input": "0", "expected": "Double = 0.00"}, {"input": "-8", "expected": "Double = -8.00"}, {"input": "100", "expected": "Double = 100.00"}, {"input": "12345", "expected": "Double = 12345.00"}]}];
-CodeBhavyaCPractice.registerAll(codeBhavyaDataTypePracticeConfigs);
-</script>
-<script>
-/* ============================================================
-   DATA TYPES — QUICK MCQ ENGINE
-   This page keeps the MCQ checker locally, so c-programming.js
-   does not need to be changed.
-   ============================================================ */
 
-window.CBMCQ = {
+const codeBhavyaCPracticeConfigs = [
 
-    check(id) {
-
-        const card = document.getElementById(id);
-
-        if (!card)
-            return;
-
-        const selected =
-            card.querySelector('input[type="radio"]:checked');
-
-        const feedback =
-            card.querySelector(".cb-mcq-feedback");
-
-        const result =
-            card.querySelector(".cb-mcq-result");
-
-        if (!selected) {
-
-            if (feedback)
-                feedback.hidden = false;
-
-            if (result) {
-                result.className = "cb-mcq-result wrong";
-                result.textContent = "Please select an answer first.";
+    {
+        key: "datatypes-p1",
+        badgeId: "practiceBadge-datatypes-p1",
+        codeId: "practiceCode-datatypes-p1",
+        inputId: "practiceInput-datatypes-p1",
+        outputId: "practiceOutput-datatypes-p1",
+        testsId: "practiceTests-datatypes-p1",
+        scoreId: "practiceScore-datatypes-p1",
+        attemptsId: "practiceAttempts-datatypes-p1",
+        statusId: "practiceStatus-datatypes-p1",
+        messageId: "practiceMessage-datatypes-p1",
+        solutionId: "practiceSolution-datatypes-p1",
+        tests: [
+            {
+                input: "",
+                expected: "25\nA"
             }
-
-            return;
-        }
-
-        const correct = card.dataset.correct;
-        const selectedValue = selected.value;
-
-        card.querySelectorAll(".cb-mcq-option").forEach(option => {
-
-            option.classList.remove("correct", "wrong");
-
-            const value = option.dataset.option;
-
-            if (value === correct)
-                option.classList.add("correct");
-
-            if (value === selectedValue && selectedValue !== correct)
-                option.classList.add("wrong");
-        });
-
-        card.querySelectorAll('input[type="radio"]').forEach(input => {
-            input.disabled = true;
-        });
-
-        if (feedback)
-            feedback.hidden = false;
-
-        if (result) {
-
-            if (selectedValue === correct) {
-                result.className = "cb-mcq-result correct";
-                result.textContent = "✓ Correct!";
-            } else {
-                result.className = "cb-mcq-result wrong";
-                result.textContent = `✗ Incorrect. The correct answer is ${correct}.`;
-            }
-        }
-
-        const checkButton = card.querySelector(".cb-mcq-check-btn");
-        const resetButton = card.querySelector(".cb-mcq-reset-btn");
-
-        if (checkButton)
-            checkButton.disabled = true;
-
-        if (resetButton)
-            resetButton.hidden = false;
+        ]
     },
 
-    reset(id) {
+    {
+        key: "datatypes-p2",
+        badgeId: "practiceBadge-datatypes-p2",
+        codeId: "practiceCode-datatypes-p2",
+        inputId: "practiceInput-datatypes-p2",
+        outputId: "practiceOutput-datatypes-p2",
+        testsId: "practiceTests-datatypes-p2",
+        scoreId: "practiceScore-datatypes-p2",
+        attemptsId: "practiceAttempts-datatypes-p2",
+        statusId: "practiceStatus-datatypes-p2",
+        messageId: "practiceMessage-datatypes-p2",
+        solutionId: "practiceSolution-datatypes-p2",
+        tests: [
+            {
+                input: "10 20",
+                expected: "15.00"
+            },
+            {
+                input: "5 2",
+                expected: "3.50"
+            },
+            {
+                input: "100 50",
+                expected: "75.00"
+            }
+        ]
+    },
 
-        const card = document.getElementById(id);
+    {
+        key: "datatypes-p3",
+        badgeId: "practiceBadge-datatypes-p3",
+        codeId: "practiceCode-datatypes-p3",
+        inputId: "practiceInput-datatypes-p3",
+        outputId: "practiceOutput-datatypes-p3",
+        testsId: "practiceTests-datatypes-p3",
+        scoreId: "practiceScore-datatypes-p3",
+        attemptsId: "practiceAttempts-datatypes-p3",
+        statusId: "practiceStatus-datatypes-p3",
+        messageId: "practiceMessage-datatypes-p3",
+        solutionId: "practiceSolution-datatypes-p3",
+        customValidator: "datatype-size-test"
+    },
 
-        if (!card)
-            return;
+    {
+        key: "datatypes-p4",
+        badgeId: "practiceBadge-datatypes-p4",
+        codeId: "practiceCode-datatypes-p4",
+        inputId: "practiceInput-datatypes-p4",
+        outputId: "practiceOutput-datatypes-p4",
+        testsId: "practiceTests-datatypes-p4",
+        scoreId: "practiceScore-datatypes-p4",
+        attemptsId: "practiceAttempts-datatypes-p4",
+        statusId: "practiceStatus-datatypes-p4",
+        messageId: "practiceMessage-datatypes-p4",
+        solutionId: "practiceSolution-datatypes-p4",
+        tests: [
+            {
+                input: "5 2",
+                expected: "2.50"
+            },
+            {
+                input: "10 4",
+                expected: "2.50"
+            },
+            {
+                input: "7 2",
+                expected: "3.50"
+            }
+        ]
+    },
 
-        card.querySelectorAll('input[type="radio"]').forEach(input => {
-            input.checked = false;
-            input.disabled = false;
-        });
-
-        card.querySelectorAll(".cb-mcq-option").forEach(option => {
-            option.classList.remove("correct", "wrong");
-        });
-
-        const feedback = card.querySelector(".cb-mcq-feedback");
-        const result = card.querySelector(".cb-mcq-result");
-        const checkButton = card.querySelector(".cb-mcq-check-btn");
-        const resetButton = card.querySelector(".cb-mcq-reset-btn");
-
-        if (feedback)
-            feedback.hidden = true;
-
-        if (result) {
-            result.className = "cb-mcq-result";
-            result.textContent = "";
-        }
-
-        if (checkButton)
-            checkButton.disabled = false;
-
-        if (resetButton)
-            resetButton.hidden = true;
+    {
+        key: "datatypes-p5",
+        badgeId: "practiceBadge-datatypes-p5",
+        codeId: "practiceCode-datatypes-p5",
+        inputId: "practiceInput-datatypes-p5",
+        outputId: "practiceOutput-datatypes-p5",
+        testsId: "practiceTests-datatypes-p5",
+        scoreId: "practiceScore-datatypes-p5",
+        attemptsId: "practiceAttempts-datatypes-p5",
+        statusId: "practiceStatus-datatypes-p5",
+        messageId: "practiceMessage-datatypes-p5",
+        solutionId: "practiceSolution-datatypes-p5",
+        tests: [
+            {
+                input: "21 5.8 A",
+                expected: "Age = 21\nHeight = 5.8\nGrade = A"
+            },
+            {
+                input: "18 6.2 B",
+                expected: "Age = 18\nHeight = 6.2\nGrade = B"
+            },
+            {
+                input: "25 5.5 C",
+                expected: "Age = 25\nHeight = 5.5\nGrade = C"
+            }
+        ]
     }
-};
+
+];
+
+if (
+    typeof CodeBhavyaCPractice !== "undefined" &&
+    typeof CodeBhavyaCPractice.registerAll === "function"
+) {
+    CodeBhavyaCPractice.registerAll(codeBhavyaCPracticeConfigs);
+}
+
 </script>
+
 <script src="../script.js"></script>
+
 </body>
 </html>
