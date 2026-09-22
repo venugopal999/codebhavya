@@ -11,7 +11,7 @@
 <link href="../images/codebhavya-icon-512.png" rel="icon" sizes="512x512" type="image/png"/>
 <link href="c-programming.css" rel="stylesheet"/>
 </head>
-<body class="cb-introduction-page">
+<body class="cb-c-topic-page cb-introduction-page">
 <header class="top-header">
 <!-- <a href="../index.html" class="logo">
     <span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span>
@@ -86,80 +86,347 @@
 </aside>
 <main class="main-content">
 <section class="content-card" data-content-standard="teaching-complete-v1" id="introduction">
-<h2>
-        📖 1. Introduction to C Programming
-    </h2>
-    <!-- <div class="cb-teaching-standard"><strong>🎓 Concept-First Explanation</strong>
-        <p>This lesson is organized in the same order a faculty member would normally teach it: meaning → purpose → syntax/model → internal working → examples → common confusion → safe use. 
-            The guided examples from the earlier lesson are preserved afterward for reinforcement.</p></div> -->
-    <h3>1.1 What C Is — and What a C Program Really Does</h3><p>C is a general-purpose procedural programming language. A C program is a set of declarations, definitions and executable statements written according to the rules of the C language. The source code itself is not directly executed by the processor; it is translated into machine code by a toolchain.</p>
-    <div class="example-box"><strong>Why this matters</strong><p>Students often think “C code runs line by line from the file.” In reality, the source first passes through preprocessing and compilation, then object code is linked into an executable. Only then does the operating system load the executable and start the program.</p></div>
-    <div class="cb-concept-tree"><pre><h3>C source (.c)
-   ↓ preprocessing
-preprocessed source
-   ↓ compilation
-assembly / object code
-   ↓ linking
-executable program
-   ↓ loading
-running process</h3></pre></div><h3>1.2 History and Design Goal of C</h3>
-    <p>C was developed at Bell Labs in the early 1970s, primarily by Dennis Ritchie, during the development of the Unix operating system. Its design aimed to provide high-level structured programming while still giving programmers efficient access to memory and machine-oriented operations.</p>
-    <p>That combination explains why C is often described as a “middle-level” language in textbooks: it supports functions, loops, structures and abstraction, but also pointers, bitwise operations and direct memory manipulation. “Middle-level” is an informal teaching description, not an official language classification.</p>
-    <h3>1.3 Why C Is Still Important</h3><p>C remains important because many operating systems, embedded systems, device drivers, language runtimes, database engines and performance-sensitive libraries contain substantial C code. Learning C also exposes concepts that higher-level languages often hide: memory layout, addresses, object lifetime, data representation and compilation.</p>
-    <div class="comparison-table-wrapper">
-        <table class="comparison-table"><thead><tr><th>Area</th><th>Why C fits</th></tr></thead><tbody><tr><td>Operating systems</td>
-            <td>Low-level memory access and predictable runtime model</td></tr><tr><td>Embedded systems</td>
-                <td>Small runtime footprint and hardware access</td></tr><tr><td>Compilers/runtimes</td><td>Efficient systems-level implementation</td></tr>
-            <tr><td>Libraries</td><td>Stable native interfaces and portability across platforms</td></tr><tr><td>Learning</td>
-                <td>Makes memory, pointers, representation and execution visible</td></tr></tbody></table></div>
-    
-    <h3>1.4 Characteristics of C — Explained, Not Memorized</h3><ul><li><strong>Procedural:</strong> programs are commonly organized as functions that perform tasks.</li>
-        <li><strong>Compiled:</strong> source is translated before execution.</li><li><strong>Statically typed:</strong> objects and expressions have types known during translation.</li>
-        <li><strong>Portable:</strong> standard-conforming source can often be moved across systems, but sizes, representations and implementation-defined behavior must still be considered.</li>
-        <li><strong>Efficient:</strong> C offers a small abstraction gap from machine operations.</li>
-        <li><strong>Manual resource management:</strong> dynamic memory and many external resources must be managed explicitly by the programmer.</li></ul>
-    <h3>1.5 First C Program — Identify Every Part</h3><pre><code>#include &lt;stdio.h&gt;
+<h2>📖 1. Introduction to C Programming</h2>
+
+<div class="cb-teaching-standard">
+<strong>🎓 How to Learn This Lesson</strong>
+<p>Do not try to memorize definitions. Build the idea step by step: <strong>What is C?</strong> → <strong>Why was it created?</strong> → <strong>How does a C program become a running program?</strong> → <strong>How do we read our first program?</strong> → <strong>How do we avoid common beginner mistakes?</strong></p>
+</div>
+
+<div class="cb-deep-dive">
+<div class="cb-deep-dive-title">1.1 What Is C — and What Does a C Program Really Do?</div>
+<p><strong>C is a general-purpose, procedural programming language</strong> designed to let programmers write structured programs while still giving them close control over memory and machine-level operations.</p>
+
+<div class="cb-concept-grid">
+<div><strong>🧩 General-purpose</strong><span>Used for many kinds of software</span></div>
+<div><strong>🧭 Procedural</strong><span>Programs are organized around functions and steps</span></div>
+<div><strong>⚙️ Compiled</strong><span>Source is translated before execution</span></div>
+<div><strong>🧠 Statically typed</strong><span>Types are part of the program's declarations and expressions</span></div>
+<div><strong>💾 Low-level access</strong><span>Pointers and memory can be handled directly</span></div>
+</div>
+
+<div class="cb-why-box">
+<strong>💡 First idea to remember</strong>
+<p>Your <code>.c</code> file is <strong>source code</strong>. The processor does not simply open that text file and execute it. A toolchain translates the source, creates machine-oriented code, links required components, and produces an executable that the operating system can load.</p>
+</div>
+
+<div class="cb-concept-tree">
+<pre>C source file (.c)
+      ↓
+Preprocessing
+      ↓
+C source after directives are handled
+      ↓
+Compilation
+      ↓
+Assembly / object code
+      ↓
+Linking with required libraries and object files
+      ↓
+Executable program
+      ↓
+Operating system loads it
+      ↓
+Running process</pre>
+</div>
+
+<div class="cb-important-box">
+<strong>🎯 Why beginners should understand this</strong>
+<ul>
+<li>It explains why a program can have a <strong>compile error</strong> before it ever runs.</li>
+<li>It explains why a missing function definition can produce a <strong>linker error</strong>.</li>
+<li>It explains why <code>#include</code>, compilation and linking are <strong>different jobs</strong>.</li>
+<li>It prepares you for later topics such as pointers, memory, files and system programming.</li>
+</ul>
+</div>
+</div>
+
+<div class="cb-deep-dive">
+<div class="cb-deep-dive-title">1.2 History and Design Goal of C</div>
+<p>C was developed at <strong>Bell Labs in the early 1970s</strong>, primarily by <strong>Dennis Ritchie</strong>, during the development of the Unix operating system.</p>
+
+<div class="cb-concept-grid">
+<div><strong>1970s</strong><span>C emerges at Bell Labs</span></div>
+<div><strong>Unix</strong><span>C became closely associated with Unix development</span></div>
+<div><strong>Structured</strong><span>Functions and control structures organize programs</span></div>
+<div><strong>Efficient</strong><span>Designed with practical machine efficiency in mind</span></div>
+<div><strong>Portable</strong><span>Standard C can be moved across systems</span></div>
+</div>
+
+<p>The important lesson is not simply <em>“Dennis Ritchie created C.”</em> The design problem C addressed was more interesting: programmers needed a language expressive enough for structured software development but powerful enough for operating-system and hardware-oriented work.</p>
+
+<div class="cb-memory-diagram">
+<strong>🧠 Think of C as a bridge</strong>
+<pre>Higher-level programming ideas          Machine-oriented control
+        │                                      │
+        │   functions, loops, structures      │
+        └─────────────── C ────────────────────┘
+                         │
+                 pointers, bits,
+                 memory, addresses</pre>
+</div>
+
+<p>That balance is why C is sometimes called a <strong>“middle-level language”</strong> in textbooks. This is an informal description, not an official classification in the C standard.</p>
+</div>
+
+<div class="cb-deep-dive">
+<div class="cb-deep-dive-title">1.3 Why Is C Still Important?</div>
+<p>C is not only a historical language. It is still important because it exposes concepts that many higher-level languages hide behind abstractions.</p>
+
+<table class="comparison-table">
+<thead><tr><th>Area</th><th>Why C is useful</th><th>What You Learn</th></tr></thead>
+<tbody>
+<tr><td>🖥️ Operating systems</td><td>Efficient native code and low-level control</td><td>Memory, processes, system interfaces</td></tr>
+<tr><td>🔌 Embedded systems</td><td>Small runtime requirements and hardware access</td><td>Registers, bits, memory and timing</td></tr>
+<tr><td>⚙️ Compilers & runtimes</td><td>Fast native implementation</td><td>Translation and execution concepts</td></tr>
+<tr><td>📚 Native libraries</td><td>Portable interfaces and performance</td><td>Functions, pointers and data representation</td></tr>
+<tr><td>🎓 Programming education</td><td>Makes hidden concepts visible</td><td>Memory, types, addresses and execution</td></tr>
+</tbody>
+</table>
+
+<div class="cb-why-box">
+<strong>💡 Placement connection</strong>
+<p>Many interview questions about <strong>pointers, arrays, memory allocation, structures, recursion, bitwise operations and data structures</strong> become easier when your C foundation is strong.</p>
+</div>
+</div>
+
+<div class="cb-deep-dive">
+<div class="cb-deep-dive-title">1.4 Characteristics of C — Understand Them, Don't Memorize Them</div>
+<table class="comparison-table">
+<thead><tr><th>Characteristic</th><th>What it means</th><th>Simple example</th></tr></thead>
+<tbody>
+<tr><td><strong>Procedural</strong></td><td>Logic is commonly divided into functions and ordered steps.</td><td><code>main()</code> calls other functions.</td></tr>
+<tr><td><strong>Compiled</strong></td><td>Source code is translated before normal execution.</td><td><code>gcc program.c -o program</code></td></tr>
+<tr><td><strong>Statically typed</strong></td><td>Expressions and objects have types that affect valid operations and conversions.</td><td><code>int age;</code></td></tr>
+<tr><td><strong>Portable</strong></td><td>Standard-conforming programs can often move between systems, although implementation details still matter.</td><td>The same standard C program can be compiled on different platforms.</td></tr>
+<tr><td><strong>Efficient</strong></td><td>C has a relatively small runtime model and allows close control of representation.</td><td>Direct integer and pointer operations.</td></tr>
+<tr><td><strong>Manual resource management</strong></td><td>Programmers explicitly manage resources such as dynamically allocated memory.</td><td><code>malloc()</code> followed by <code>free()</code>.</td></tr>
+</tbody>
+</table>
+
+<div class="cb-confusion-box">
+<strong>⚠️ Common confusion: “C is portable, so everything is identical everywhere.”</strong>
+<p>No. The <strong>language rules are standardized</strong>, but some details such as type sizes, alignment, byte order and implementation-defined behavior can differ between systems. Good C programmers know the difference between <strong>standard guarantees</strong> and <strong>implementation details</strong>.</p>
+</div>
+</div>
+
+<div class="cb-deep-dive">
+<div class="cb-deep-dive-title">1.5 Your First C Program — Understand Every Part</div>
+<pre><code>#include &lt;stdio.h&gt;
 
 int main(void)
 {
     printf("Hello, CodeBhavya!\n");
     return 0;
-}</code></pre><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Part</th><th>Meaning</th></tr></thead><tbody><tr><td><code>#include &lt;stdio.h&gt;</code></td><td>Makes declarations from the standard input/output header available.</td></tr><tr><td><code>int main(void)</code></td><td>Defines the program entry function for a hosted C program with no parameters.</td></tr><tr><td><code>{ ... }</code></td><td>Forms the function body/block.</td></tr><tr><td><code>printf(...)</code></td><td>Calls a library function to write formatted output.</td></tr><tr><td><code>;</code></td><td>Terminates this expression statement.</td></tr><tr><td><code>return 0;</code></td><td>Returns successful termination status from <code>main</code>.</td></tr></tbody></table></div><h3>1.6 Compiler, Linker and Library — Different Jobs</h3><p>A compiler checks and translates each translation unit. A linker combines object files and resolves external references such as calls to library functions. A library is a collection of reusable compiled functionality and declarations supplied through headers.</p><div class="example-box"><strong>Common confusion</strong><p>Including <code>&lt;stdio.h&gt;</code> does not “copy printf code into your program.” The header provides declarations needed for compilation; the actual implementation is supplied later by the C library and linked as appropriate.</p></div><h3>1.7 The Four Major Translation Stages</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Stage</th><th>Typical work</th></tr></thead><tbody><tr><td>Preprocessing</td><td>Handles directives such as <code>#include</code>, <code>#define</code> and conditional compilation.</td></tr><tr><td>Compilation</td><td>Parses C, checks constraints/types and translates source toward machine code.</td></tr><tr><td>Assembly</td><td>Produces object code from assembly representation when the toolchain uses a separate assembler stage.</td></tr><tr><td>Linking</td><td>Combines object files/libraries and resolves external symbols to form an executable.</td></tr></tbody></table></div><h3>1.8 Syntax Error, Constraint/Compile Error, Link Error and Runtime Problem</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Problem</th><th>Example idea</th></tr></thead><tbody><tr><td>Syntax/translation error</td><td>Missing token or malformed declaration.</td></tr><tr><td>Type/constraint diagnostic</td><td>Passing an incompatible argument where a diagnostic is required.</td></tr><tr><td>Link error</td><td>Function declared and called but no definition is available to the linker.</td></tr><tr><td>Runtime error/problem</td><td>Invalid memory access or division by zero during execution.</td></tr><tr><td>Logical error</td><td>Program runs but computes the wrong answer.</td></tr></tbody></table></div><p>Students should learn to classify an error before trying random fixes. The stage at which the error appears often tells you which part of the program to inspect.</p><h3>1.9 Standard C vs Compiler-Specific C</h3><p>The C standard defines the language and standard library, but compilers may also provide extensions. CodeBhavya examples should prefer standard C unless an extension is explicitly identified. This makes examples easier to understand and more portable.</p><div class="example-box"><strong>Important</strong><p>A program compiling on one compiler does not automatically prove that every construct is portable or defined by the C standard.</p></div><h3>1.10 How to Read a C Program as a Beginner</h3><p>Use a fixed reading order: identify declarations first, then inputs, then expressions that transform values, then control flow, then outputs, and finally resource cleanup. For functions, trace calls with the values passed into parameters and the value returned.</p><div class="formula-box">Declarations → Input → Processing → Decisions/Loops → Output → Cleanup</div><h3>1.11 Common Beginner Misconceptions</h3><ul><li>“The compiler executes my program.” — It translates it; the executable is run later.</li><li>“<code>#include</code> links a library.” — Inclusion is preprocessing; linking is a later stage.</li><li>“Every C compiler uses the same type sizes.” — Many sizes are implementation-dependent.</li><li>“If it compiles, the program is correct.” — Logical errors and undefined behavior may still exist.</li><li>“C automatically manages dynamic memory.” — Allocated memory normally must be released explicitly.</li></ul><h3>1.12 Quick Revision</h3>
+}</code></pre>
+
+<table class="comparison-table">
+<thead><tr><th>Part</th><th>What it does</th><th>Beginner meaning</th></tr></thead>
+<tbody>
+<tr><td><code>#include &lt;stdio.h&gt;</code></td><td>Provides declarations from the standard input/output header.</td><td>“I need the declarations for standard I/O facilities such as <code>printf</code>.”</td></tr>
+<tr><td><code>int main(void)</code></td><td>Defines the program's entry function in a hosted C environment.</td><td>“This is where the program starts.”</td></tr>
+<tr><td><code>{ ... }</code></td><td>Marks the body of the function.</td><td>“These statements belong to <code>main</code>.”</td></tr>
+<tr><td><code>printf(...)</code></td><td>Calls a standard library function to produce formatted output.</td><td>“Display this message.”</td></tr>
+<tr><td><code>\n</code></td><td>Represents a newline escape sequence in the string.</td><td>“Move the cursor to the next line.”</td></tr>
+<tr><td><code>;</code></td><td>Terminates the expression statement.</td><td>“This statement is finished.”</td></tr>
+<tr><td><code>return 0;</code></td><td>Returns a successful termination status from <code>main</code>.</td><td>“The program finished normally.”</td></tr>
+</tbody>
+</table>
+
+<div class="cb-memory-diagram">
+<strong>🔍 Read the program from top to bottom</strong>
+<pre>#include &lt;stdio.h&gt;     → make I/O declarations available
+        ↓
+int main(void)         → define the starting function
+        ↓
+{                      → begin function body
+        ↓
+printf(...)           → perform output
+        ↓
+return 0;              → finish successfully
+        ↓
+}                      → end function body</pre>
+</div>
+</div>
+
+<div class="cb-deep-dive">
+<div class="cb-deep-dive-title">1.6 Compiler, Linker and Library — Three Different Jobs</div>
+<p>These words are often mixed together by beginners. They are related, but they are not the same thing.</p>
+<table class="comparison-table">
+<thead><tr><th>Component</th><th>Main responsibility</th><th>Think of it as...</th></tr></thead>
+<tbody>
+<tr><td>🧪 Compiler</td><td>Reads C source, checks it and translates it toward machine-oriented code.</td><td>A translator + checker</td></tr>
+<tr><td>🔗 Linker</td><td>Combines object files and libraries and resolves external symbols.</td><td>A connector</td></tr>
+<tr><td>📦 Library</td><td>Provides reusable functionality that programs can call.</td><td>A toolbox</td></tr>
+<tr><td>📄 Header</td><td>Provides declarations and related information needed by source files.</td><td>A description of available interfaces</td></tr>
+</tbody>
+</table>
+
+<div class="cb-confusion-box">
+<strong>⚠️ Important: <code>#include &lt;stdio.h&gt;</code> does not itself perform linking.</strong>
+<p>The header gives the compiler declarations. The actual library implementation is supplied by the toolchain and linked as required. This distinction becomes very important when you start seeing <strong>linker errors</strong>.</p>
+</div>
+</div>
+
+<div class="cb-deep-dive">
+<div class="cb-deep-dive-title">1.7 How a C Program Becomes an Executable</div>
+<p>For learning purposes, it is useful to remember four major stages. A real toolchain may expose additional intermediate steps, but this model gives you the correct mental picture.</p>
+
+<div class="cb-concept-grid">
+<div><strong>1️⃣ Preprocess</strong><span>Handle directives such as <code>#include</code></span></div>
+<div><strong>2️⃣ Compile</strong><span>Parse C and translate it</span></div>
+<div><strong>3️⃣ Assemble</strong><span>Create object/machine-oriented code</span></div>
+<div><strong>4️⃣ Link</strong><span>Resolve external references</span></div>
+<div><strong>▶ Run</strong><span>OS loads the executable</span></div>
+</div>
+
+<div class="cb-concept-tree">
+<pre>program.c
+   │
+   ├── Preprocessor ──→ expanded source
+   │
+   ├── Compiler ──────→ assembly/object representation
+   │
+   ├── Assembler ─────→ object file
+   │
+   └── Linker ────────→ executable
+                              │
+                              ↓
+                     Operating system
+                              │
+                              ↓
+                       Running process</pre>
+</div>
+
+<div class="cb-important-box">
+<strong>🎯 Interview point</strong>
+<p>If someone asks, <em>“Does the compiler directly execute your C program?”</em>, the answer is <strong>no</strong>. Compilation translates source; execution happens later when the resulting program is loaded and run.</p>
+</div>
+</div>
+
+<div class="cb-deep-dive">
+<div class="cb-deep-dive-title">1.8 Different Types of Errors — Learn to Identify the Stage</div>
+<p>When a program fails, first ask <strong>“At what stage did it fail?”</strong> This is much better than changing random lines.</p>
+<table class="comparison-table">
+<thead><tr><th>Problem</th><th>Example</th><th>Usually discovered when?</th></tr></thead>
+<tbody>
+<tr><td>🔴 Syntax / translation error</td><td>Malformed statement or missing required token.</td><td>During translation</td></tr>
+<tr><td>🟠 Type / constraint diagnostic</td><td>Using an incompatible expression in a context that requires a diagnostic.</td><td>During translation</td></tr>
+<tr><td>🟣 Link error</td><td>A function is referenced but its definition is not available to the linker.</td><td>During linking</td></tr>
+<tr><td>🔵 Runtime problem</td><td>Invalid memory access or another failure while executing.</td><td>During execution</td></tr>
+<tr><td>🟢 Logical error</td><td>The program runs but calculates the wrong result.</td><td>After execution / testing</td></tr>
+</tbody>
+</table>
+
+<div class="cb-memory-diagram">
+<strong>🧭 A useful debugging path</strong>
+<pre>Does it compile?
+      │
+      ├── No → inspect syntax/types/translation diagnostics
+      │
+      └── Yes
+           ↓
+      Does it link?
+           │
+           ├── No → inspect missing definitions/libraries
+           │
+           └── Yes
+                ↓
+          Does it run correctly?
+                │
+                ├── No → inspect runtime behavior
+                │
+                └── Yes, but wrong answer → inspect logic</pre>
+</div>
+</div>
+
+<div class="cb-deep-dive">
+<div class="cb-deep-dive-title">1.9 Standard C vs Compiler-Specific Features</div>
+<p>The C standard defines the language and standard library. Compilers may also provide extra features that are not part of standard C.</p>
+
+<div class="cb-concept-grid">
+<div><strong>📘 Standard C</strong><span>Defined by the language standard</span></div>
+<div><strong>🛠️ Extension</strong><span>Extra compiler feature</span></div>
+<div><strong>🔄 Portable code</strong><span>Prefer standard constructs</span></div>
+<div><strong>⚠️ Dependency</strong><span>Extensions can tie code to a compiler</span></div>
+<div><strong>🎯 Best practice</strong><span>Identify extensions explicitly</span></div>
+</div>
+
+<div class="cb-confusion-box">
+<strong>⚠️ “It compiled on my compiler” is not the same as “the C standard guarantees it.”</strong>
+<p>For CodeBhavya lessons, examples should prefer <strong>standard C</strong> unless a compiler-specific feature is intentionally being taught and clearly identified.</p>
+</div>
+</div>
+
+<div class="cb-deep-dive">
+<div class="cb-deep-dive-title">1.10 How to Read a C Program as a Beginner</div>
+<p>Do not stare at an entire program and try to understand everything at once. Use a fixed reading order.</p>
+
+<div class="cb-concept-grid">
+<div><strong>1️⃣ Declarations</strong><span>What values/data exist?</span></div>
+<div><strong>2️⃣ Input</strong><span>Where do values come from?</span></div>
+<div><strong>3️⃣ Processing</strong><span>What calculations happen?</span></div>
+<div><strong>4️⃣ Control flow</strong><span>Which decisions or loops occur?</span></div>
+<div><strong>5️⃣ Output</strong><span>What result is displayed?</span></div>
+</div>
+
+<div class="cb-concept-tree">
+<pre>INPUT
+  ↓
+PROCESSING
+  ↓
+DECISION / LOOP
+  ↓
+OUTPUT
+  ↓
+CLEANUP (when resources require it)</pre>
+</div>
+
+<div class="cb-why-box">
+<strong>💡 Example thinking method</strong>
+<p>If you see <code>int a, b;</code>, first identify the data. If you see <code>scanf</code>, identify the input. If you see <code>a + b</code>, identify the processing. If you see <code>if</code>, identify the decision. If you see <code>printf</code>, identify the output.</p>
+</div>
+</div>
+
+<div class="cb-deep-dive">
+<div class="cb-deep-dive-title">1.11 Common Beginner Misconceptions</div>
+<table class="comparison-table">
+<thead><tr><th>Misconception</th><th>Correct understanding</th></tr></thead>
+<tbody>
+<tr><td>“The compiler runs my program.”</td><td>The compiler translates the source. The resulting program is executed later.</td></tr>
+<tr><td>“<code>#include</code> links the library.”</td><td><code>#include</code> is handled by preprocessing. Linking happens later.</td></tr>
+<tr><td>“Every computer has the same C type sizes.”</td><td>Some sizes and representations are implementation-dependent.</td></tr>
+<tr><td>“If it compiles, it must be correct.”</td><td>A program can compile successfully and still contain logical errors or undefined behavior.</td></tr>
+<tr><td>“C automatically cleans every resource.”</td><td>Dynamic memory and many resources require explicit management.</td></tr>
+<tr><td>“<code>main()</code> is just another random function.”</td><td>In a hosted C program, <code>main</code> is the designated program entry function.</td></tr>
+<tr><td>“C is only for old programs.”</td><td>C remains relevant in systems, embedded software, libraries, runtimes and performance-sensitive code.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>1.12 Quick Revision</h3>
+<div class="cb-concept-grid">
+<div><strong>👨‍💻 Dennis Ritchie</strong><span>Key developer of C</span></div>
+<div><strong>🧩 Procedural</strong><span>Functions and ordered program logic</span></div>
+<div><strong>🚀 main()</strong><span>Hosted-program entry function</span></div>
+<div><strong>🖨️ printf()</strong><span>Formatted output function</span></div>
+<div><strong>🔗 Linker</strong><span>Resolves external references</span></div>
+</div>
+
 <div class="tip-box">
+<strong>📌 Remember the big picture</strong>
+<ul>
+<li>C is a general-purpose procedural language with strong support for low-level programming.</li>
+<li>A C source file is <strong>translated before it runs</strong>.</li>
+<li>The basic toolchain story is <strong>preprocess → compile → assemble → link → run</strong>.</li>
+<li><code>main()</code> is the entry function of a hosted C program.</li>
+<li><code>printf()</code> is a standard library function used for formatted output.</li>
+<li>Do not confuse <strong>header inclusion</strong> with <strong>library linking</strong>.</li>
+<li>Always distinguish <strong>syntax/translation errors, link errors, runtime problems and logical errors</strong>.</li>
+<li>C is especially valuable because it makes <strong>types, memory, addresses, representation and execution</strong> easier to see.</li>
+</ul>
+</div>
 
-        📌 C was developed by
-        <strong>Dennis Ritchie</strong>.
-
-        <br/><br/>
-
-        📌 C is primarily a procedural,
-        general-purpose programming language.
-
-        <br/><br/>
-
-        📌 <strong>main()</strong> is the entry point
-        of a C program.
-
-        <br/><br/>
-
-        📌 <strong>printf()</strong> displays output.
-
-        <br/><br/>
-
-        📌 <strong>scanf()</strong> is commonly used
-        for formatted input.
-
-        <br/><br/>
-
-        📌 Pointers allow programs to work with
-        memory addresses.
-
-        <br/><br/>
-
-        📌 C is an important foundation for
-        Data Structures and Algorithms.
-
-    </div>
 <!-- PRACTICE QUESTIONS -->
 <h3>1.13 Practice Questions</h3>
 <div class="cb-original-qa-list">
