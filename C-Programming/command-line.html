@@ -54,7 +54,6 @@
 <div class="sidebar-title">💻 C Programming</div>
 <input class="search-box" id="topicSearch" onkeyup="searchTopics()" placeholder="🔍 Search topics..." type="text"/>
 <div class="sidebar-title">Fundamentals</div>
-<a class="cb-topic-link" data-topic-link="1" href="start-here.html">🚀 START HERE - Programming from Zero</a>
 <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
 <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
 <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
@@ -85,44 +84,198 @@
 <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
 </aside>
 <main class="main-content">
-<section class="content-card" data-content-standard="teaching-complete-v1" id="command-line">
-<h2>💻 18. Command Line Arguments</h2><div class="cb-teaching-standard"><strong>🎓 Concept-First Explanation</strong><p>This lesson is organized in the same order a faculty member would normally teach it: meaning → purpose → syntax/model → internal working → examples → common confusion → safe use. The guided examples from the earlier lesson are preserved afterward for reinforcement.</p></div><h3>18.1 What Command-Line Arguments Are</h3><p>A program can receive strings from its execution environment when it starts. In the common hosted form, <code>argc</code> reports how many argument strings are available and <code>argv</code> points to an array of pointers to those strings.</p><pre><code>int main(int argc, char *argv[])
+<section class="content-card" id="command-line">
+<h2>💻 18. Command Line Arguments</h2>
+<h3>18.1 What Are Command Line Arguments?</h3>
+<p>Command line arguments are values supplied to a C program when the program starts. They let the program receive input from the command that launches it, instead of asking for that input later with <code>scanf()</code>.</p>
+<div class="formula-box">Command / Terminal<br/>↓<br/>Program + Arguments<br/>↓<br/><code>main(argc, argv)</code><br/>↓<br/>Validate → Convert → Process → Output</div>
+<pre><code>program.exe 10 20 30</code></pre>
+<p>Here <code>10</code>, <code>20</code>, and <code>30</code> are supplied to the program as command line arguments.</p>
+<h3>18.2 The <code>main()</code> Function</h3>
+<pre><code>int main(int argc, char *argv[])
 {
-    /* ... */
-}</code></pre><h3>18.2 char *argv[] and char **argv in a Parameter List</h3><p>In a function parameter declaration, <code>char *argv[]</code> is adjusted to <code>char **argv</code>. They describe the same parameter type in the common <code>main</code> declaration context.</p><pre><code>int main(int argc, char **argv)</code></pre><h3>18.3 The Shape of argv</h3><div class="cb-concept-tree"><pre>argv
+    return 0;
+}</code></pre>
+<div class="cb-concept-grid">
+<div class="cb-concept-card"><h4><code>argc</code></h4><p>Argument count. It tells the program how many argument strings are available, including the program name.</p></div>
+<div class="cb-concept-card"><h4><code>argv</code></h4><p>Argument vector. It is an array of pointers to null-terminated character strings.</p></div>
+</div>
+<h3>18.3 Understanding <code>argc</code></h3>
+<p>Suppose the program is started as:</p>
+<pre><code>program.exe 10 20</code></pre>
+<p>Conceptually:</p>
+<div class="memory-diagram">argc = 3
+
+argv[0] → "program.exe"
+argv[1] → "10"
+argv[2] → "20"
+argv[3] → NULL</div>
+<p>The important point is that the program name occupies <code>argv[0]</code>. Therefore, two user-supplied values normally make <code>argc == 3</code>.</p>
+<h3>18.4 Understanding <code>argv</code></h3>
+<p>Think of <code>argv</code> as a table of strings:</p>
+<div class="memory-diagram">argv
   │
-  ├─ argv[0] → program name/path string (when supplied by environment)
-  ├─ argv[1] → first user argument
-  ├─ argv[2] → second user argument
-  └─ argv[argc] = NULL</pre></div><p>For positive <code>argc</code> in the standard hosted model, <code>argv[0]</code> conventionally represents the program invocation name when available. The array terminates with a null pointer at <code>argv[argc]</code>.</p><h3>18.4 Arguments Are Strings, Even When They Look Numeric</h3><pre><code>/* command: app 25 3.5 */
-/* argv[1] points to "25"; argv[2] points to "3.5" */</code></pre><p>Arithmetic requires conversion from text to a numeric type. The text itself is not automatically an <code>int</code> or <code>double</code>.</p><h3>18.5 Why atoi Is Convenient but Weak for Validation</h3><pre><code>int n = atoi(argv[1]);</code></pre><p><code>atoi</code> cannot cleanly distinguish several invalid-input cases from a legitimate converted zero and provides limited error information. For robust input validation, <code>strtol</code> or related functions are preferable.</p><h3>18.6 Validated Integer Conversion with strtol</h3><pre><code>errno = 0;
+  ├── argv[0] → program name
+  ├── argv[1] → first argument
+  ├── argv[2] → second argument
+  ├── argv[3] → third argument
+  └── ...</div>
+<p><code>argv[i]</code> is therefore a string, not an integer. This distinction is the foundation of safe command-line programming in C.</p>
+<h3>18.5 Displaying Command Line Arguments</h3>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    for (int i = 0; i &lt; argc; i++)
+        printf("argv[%d] = %s\n", i, argv[i]);
+
+    return 0;
+}</code></pre>
+<p>For <code>program.exe apple 25</code>, the program can display the arguments in order. The loop is safe because it stays within <code>0 ... argc - 1</code>.</p>
+<h3>18.6 The Most Important Rule: Arguments Are Strings</h3>
+<div class="cb-important-box"><strong>Remember:</strong> <code>argv[1]</code> containing <code>"25"</code> is a string representing the characters <code>2</code> and <code>5</code>. It is not an <code>int</code> with value 25.</div>
+<p>So this is wrong when numeric arithmetic is required:</p>
+<pre><code>int sum = argv[1] + argv[2];</code></pre>
+<p>First convert the text into the required numeric type.</p>
+<h3>18.7 Converting an Argument with <code>atoi()</code></h3>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[])
+{
+    if (argc != 3)
+        return 1;
+
+    int a = atoi(argv[1]);
+    int b = atoi(argv[2]);
+
+    printf("%d\n", a + b);
+    return 0;
+}</code></pre>
+<p><code>atoi()</code> is convenient for simple examples, but it does not provide robust error reporting for invalid numeric text. For production-style input validation, prefer <code>strtol()</code>.</p>
+<h3>18.8 <code>strtol()</code> — Safer Integer Conversion</h3>
+<pre><code>#include &lt;errno.h&gt;
+#include &lt;limits.h&gt;
+#include &lt;stdlib.h&gt;
+
 char *end;
+errno = 0;
 long value = strtol(argv[1], &amp;end, 10);
 
 if (errno == ERANGE || end == argv[1] || *end != '\0')
 {
-    fprintf(stderr, "Invalid integer\n");
-    return EXIT_FAILURE;
-}</code></pre><p>A robust conversion checks: whether any digits were consumed, whether trailing unwanted characters remain, and whether the result was outside the representable range of <code>long</code>.</p><h3>18.7 Range-Check Before Narrowing to int</h3><pre><code>if (value &lt; INT_MIN || value &gt; INT_MAX)
+    /* invalid or out-of-range integer */
+}</code></pre>
+<p>The useful idea is not merely conversion; it is validation. <code>strtol()</code> lets the program distinguish successful conversion from trailing characters and range errors.</p>
+<h3>18.9 Adding Two Command Line Numbers</h3>
+<p>For a program started as <code>program.exe 10 20</code>:</p>
+<pre><code>int a = atoi(argv[1]);
+int b = atoi(argv[2]);
+printf("Sum = %d\n", a + b);</code></pre>
+<p>Before accessing <code>argv[1]</code> and <code>argv[2]</code>, verify that the required arguments exist.</p>
+<h3>18.10 Subtraction, Multiplication and Division</h3>
+<div class="cb-concept-grid">
+<div class="cb-concept-card"><h4>Subtraction</h4><pre><code>a - b</code></pre></div>
+<div class="cb-concept-card"><h4>Multiplication</h4><pre><code>a * b</code></pre></div>
+<div class="cb-concept-card"><h4>Division</h4><pre><code>a / b</code></pre><p>Check that <code>b != 0</code> before integer division.</p></div>
+</div>
+<h3>18.11 Processing Multiple Numeric Arguments</h3>
+<p>Once each argument has been converted, normal C algorithms can process them.</p>
+<pre><code>long sum = 0;
+for (int i = 1; i &lt; argc; i++)
+    sum += strtol(argv[i], NULL, 10);</code></pre>
+<p>This pattern is useful for sums, counts, minimum/maximum searches and other command-line utilities.</p>
+<h3>18.12 Finding Maximum and Minimum</h3>
+<p>A reliable pattern is to initialize the result from the first actual data argument rather than assuming a value such as zero.</p>
+<pre><code>long max = strtol(argv[1], NULL, 10);
+
+for (int i = 2; i &lt; argc; i++)
 {
-    fprintf(stderr, "Out of int range\n");
-    return EXIT_FAILURE;
-}
-int n = (int)value;</code></pre><p>Successful conversion to <code>long</code> does not prove the value fits a narrower destination type. Validate the destination range before casting.</p><h3>18.8 Base Argument in strtol</h3><pre><code>strtol(text, &amp;end, 10); /* decimal only */
-strtol(text, &amp;end, 0);  /* recognizes supported prefixes such as 0x */</code></pre><p>Use base 10 when decimal input is required. Base 0 intentionally lets the textual prefix participate in choosing the base; that can be useful or surprising depending on the interface.</p><h3>18.9 Quoted Arguments and the Shell</h3><p>The C program usually does not parse the user’s raw command line itself. A shell or runtime often handles quoting, escaping, wildcard expansion or environment-specific transformations before <code>main</code> receives <code>argv</code>.</p><pre><code>app "Computer Science" 2026</code></pre><p>The intent is that <code>"Computer Science"</code> reaches the program as one argument string when processed by a shell with that quoting convention. Exact shell rules are outside the C language specification.</p><h3>18.10 Check argc Before Accessing argv Elements</h3><pre><code>if (argc != 3)
+    long value = strtol(argv[i], NULL, 10);
+    if (value &gt; max)
+        max = value;
+}</code></pre>
+<p>This also works correctly when all supplied numbers are negative.</p>
+<h3>18.13 Average of Command Line Numbers</h3>
+<pre><code>long sum = 0;
+for (int i = 1; i &lt; argc; i++)
+    sum += strtol(argv[i], NULL, 10);
+
+double average = (double)sum / (argc - 1);</code></pre>
+<p>The cast matters: without a floating-point operand, integer division can discard the fractional part.</p>
+<h3>18.14 Passing Words and Text</h3>
+<p>Arguments do not have to be numbers. They can be names, commands, modes, file names or other text.</p>
+<pre><code>program.exe hello CodeBhavya</code></pre>
+<p>Then <code>argv[1]</code> is <code>"hello"</code> and <code>argv[2]</code> is <code>"CodeBhavya"</code>.</p>
+<h3>18.15 Arguments Containing Spaces</h3>
+<p>When a shell treats spaces as argument separators, text containing spaces must normally be quoted.</p>
+<pre><code>program.exe "CodeBhavya C Programming"</code></pre>
+<p>The program receives the quoted text as one argument. Exact shell behavior can vary, but the C program still sees the resulting argument strings through <code>argv</code>.</p>
+<h3>18.16 Checking the Number of Arguments</h3>
+<p>Never access an argument index that is not available.</p>
+<pre><code>if (argc != 3)
 {
-    fprintf(stderr, "Usage: %s &lt;a&gt; &lt;b&gt;\n", argv[0]);
-    return EXIT_FAILURE;
-}</code></pre><p>Accessing <code>argv[2]</code> when fewer arguments were supplied is invalid. Argument-count checks should happen before conversion or use.</p><h3>18.11 Options vs Positional Arguments</h3><p>A command-line interface often distinguishes options such as <code>-v</code> or <code>--output=file</code> from positional values such as input filenames. Even a simple parser should define order, repetition, missing-value behavior and unknown-option behavior clearly.</p><h3>18.12 File Names as Arguments</h3><pre><code>if (argc &lt; 2) return EXIT_FAILURE;
-FILE *fp = fopen(argv[1], "r");
-if (fp == NULL)
-{
-    perror(argv[1]);
-    return EXIT_FAILURE;
-}</code></pre><p>Command-line arguments frequently provide file paths, but path syntax, encoding and permissions are environment-specific. Always check file-opening results.</p><h3>18.13 Portable Exit Status</h3><pre><code>#include &lt;stdlib.h&gt;
-return EXIT_SUCCESS;
-/* or */
-return EXIT_FAILURE;</code></pre><p><code>EXIT_SUCCESS</code> and <code>EXIT_FAILURE</code> express portable success/failure intent. Returning 0 from <code>main</code> also denotes success in hosted C.</p><h3>18.14 Command-Line Processing Workflow</h3><div class="formula-box">Check argc → parse each string → validate syntax → validate numeric/range meaning → open resources → perform work → report errors clearly</div><p>Treat command-line input as untrusted text. Parsing and validation should be explicit, just like interactive input validation.</p><h3>18.15 Quick Revision</h3>
+    printf("Usage: program number1 number2\n");
+    return 1;
+}</code></pre>
+<div class="cb-confusion-box"><strong>Common confusion:</strong> If you need two user values, do not check <code>argc == 2</code>. The program name is also counted, so the expected count is normally <code>3</code>.</div>
+<h3>18.17 Command Line Argument Diagram</h3>
+<div class="memory-diagram">Command:
+
+program.exe  25  40
+    │         │   │
+    ▼         ▼   ▼
+ argv[0]   argv[1] argv[2]
+    │         │      │
+ program    "25"   "40"
+              │      │
+           convert  convert
+              │      │
+              25     40
+               \     /
+                \   /
+                 process</div>
+<h3>18.18 Command Line Arguments vs <code>scanf()</code></h3>
+<table class="comparison-table"><thead><tr><th>Command Line Arguments</th><th><code>scanf()</code></th></tr></thead><tbody>
+<tr><td>Input is supplied when starting the program</td><td>Input is read while the program is running</td></tr>
+<tr><td>Arrives through <code>argc</code>/<code>argv</code></td><td>Reads from standard input</td></tr>
+<tr><td>Useful for scripts and command-line tools</td><td>Useful for interactive console programs</td></tr>
+<tr><td>Arguments initially arrive as strings</td><td>Conversion is specified by the format string</td></tr>
+</tbody></table>
+<h3>18.19 Building a Command Line Calculator</h3>
+<p>A small calculator can accept an operator and two operands:</p>
+<pre><code>program.exe 12 + 5</code></pre>
+<p>A good design is:</p>
+<div class="formula-box">Validate argc<br/>↓<br/>Read operator and operands<br/>↓<br/>Convert numeric text<br/>↓<br/>Select operation<br/>↓<br/>Check special cases (such as division by zero)<br/>↓<br/>Print result</div>
+<h3>18.20 Passing a File Name</h3>
+<pre><code>program.exe students.txt</code></pre>
+<p>Then <code>argv[1]</code> can be used as the file name passed to functions such as <code>fopen()</code>. This connects command-line arguments with practical file-processing utilities.</p>
+<h3>18.21 A Reliable Problem-Solving Method</h3>
+<div class="cb-concept-grid">
+<div class="cb-concept-card"><h4>1. Count</h4><p>Determine how many user arguments are required.</p></div>
+<div class="cb-concept-card"><h4>2. Validate</h4><p>Check <code>argc</code> before reading <code>argv[i]</code>.</p></div>
+<div class="cb-concept-card"><h4>3. Convert</h4><p>Use appropriate conversion for numeric input.</p></div>
+<div class="cb-concept-card"><h4>4. Process</h4><p>Apply the normal C algorithm after validation.</p></div>
+<div class="cb-concept-card"><h4>5. Report</h4><p>Print useful output or a clear usage message.</p></div>
+</div>
+<h3>18.22 Common Command Line Mistakes</h3>
+<ul>
+<li>Using <code>argv[1]</code> without checking <code>argc</code>.</li>
+<li>Forgetting that <code>argv</code> contains strings.</li>
+<li>Trying to perform numeric arithmetic directly on argument strings.</li>
+<li>Assuming <code>argv[0]</code> is a user-supplied value.</li>
+<li>Using <code>atoi()</code> when detailed validation is required.</li>
+<li>Forgetting division-by-zero checks.</li>
+<li>Using an incorrect loop boundary and reading past <code>argv[argc - 1]</code>.</li>
+<li>Ignoring negative values when calculating minimum or maximum.</li>
+<li>Forgetting that spaces can separate arguments at the command-line level.</li>
+</ul>
+<h3>18.23 Interview-Level Understanding</h3>
+<div class="cb-important-box"><strong>Placement point:</strong> Be able to explain why <code>argc</code> includes the program name, why <code>argv</code> contains strings, how to validate argument count, and how to safely convert numeric text.</div>
+<p>Also remember that command-line argument handling is an interface boundary: input arrives as text, so a robust program should validate it before trusting or processing it.</p>
+<h3>18.24 CodeBhavya Rule</h3>
+<div class="tip-box">📌 <strong>Count → Validate → Convert → Process → Report.</strong><br/><br/>Do not treat command-line text as trusted numeric data until the program has checked and converted it.</div>
+<h3>18.25 Quick Revision</h3>
 <div class="tip-box">
 
         📌 <strong>argc</strong> → Number of command-line arguments,
@@ -206,7 +359,7 @@ return EXIT_FAILURE;</code></pre><p><code>EXIT_SUCCESS</code> and <code>EXIT_FAI
 </div>
 <div class="cb-viz-stage">
 <div class="cb-viz-step" id="cbVizStep-commandline">Step 1</div>
-
+<h3 id="cbVizTitle-commandline"></h3>
 <p id="cbVizDetail-commandline"></p>
 <div class="cb-viz-dots" id="cbVizDots-commandline"></div>
 </div>
@@ -259,7 +412,7 @@ return EXIT_FAILURE;</code></pre><p><code>EXIT_SUCCESS</code> and <code>EXIT_FAI
 </div>
 </div>
 </section>
-<h3>18.16 Quick MCQs</h3>
+<h3>18.26 Quick MCQs</h3>
 <p class="cb-mcq-guide">
         Select an answer first, then click <strong>Check Answer</strong>.
         A correct choice becomes green. If the answer is wrong, your choice becomes red
@@ -609,7 +762,7 @@ return EXIT_FAILURE;</code></pre><p><code>EXIT_SUCCESS</code> and <code>EXIT_FAI
 </div>
 <div class="cb-c-dsa-practice-section">
 <span class="cb-c-practice-label">PRACTICE</span>
-<h3>18.17 🎯 Practice Problems</h3>
+<h3>18.27 🎯 Practice Problems</h3>
 <p class="cb-c-practice-guide">
             Practice <code>argc</code>, <code>argv</code>, numeric conversion,
             validation, quoted arguments, file names, and command-line applications.
@@ -2492,7 +2645,7 @@ int main(int argc, char *argv[])
 </div>
 </div>
 </div>
-<h3>18.18 Key Takeaway</h3>
+<h3>18.28 Key Takeaway</h3>
 <div class="tip-box">
 
         🎯 Remember:
