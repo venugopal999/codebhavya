@@ -278,9 +278,50 @@
     tick(); timerId=setInterval(tick,1000);
   }
 
-  async function submit(auto) {
+  function openSubmitDialog() {
     if(submitting) return;
-    if (!auto && !confirm("Submit this quiz now? You cannot attempt it again.")) return;
+    const answered = payload ? payload.questions.filter(q=>answers[q.id]).length : 0;
+    const total = payload ? payload.questions.length : 0;
+    const unanswered = Math.max(0,total-answered);
+
+    let modal = document.getElementById("submitConfirmModal");
+    if(!modal){
+      modal=document.createElement("div");
+      modal.id="submitConfirmModal";
+      modal.className="cb-modal-backdrop";
+      document.body.appendChild(modal);
+    }
+
+    modal.innerHTML=`
+      <div class="cb-modal" role="dialog" aria-modal="true" aria-labelledby="submitDialogTitle">
+        <div class="cb-modal-icon">✓</div>
+        <h2 id="submitDialogTitle">Submit Quiz?</h2>
+        <p>Your answers will be submitted and you cannot continue this attempt.</p>
+        <div class="submit-summary-mini">
+          <div><strong>${answered}</strong><span>Answered</span></div>
+          <div><strong>${unanswered}</strong><span>Unanswered</span></div>
+          <div><strong>${total}</strong><span>Total</span></div>
+        </div>
+        ${unanswered ? `<div class="notice warn">You still have ${unanswered} unanswered question${unanswered===1?"":"s"}.</div>` : ""}
+        <div class="actions" style="justify-content:center">
+          <button class="btn ghost" id="cancelSubmitBtn">Continue Quiz</button>
+          <button class="btn danger" id="confirmSubmitBtn">Yes, Submit Quiz</button>
+        </div>
+      </div>`;
+    modal.classList.add("show");
+
+    document.getElementById("cancelSubmitBtn").onclick=()=>modal.classList.remove("show");
+    document.getElementById("confirmSubmitBtn").onclick=async()=>{
+      modal.classList.remove("show");
+      await submit(true, true);
+    };
+  }
+
+  async function submit(auto, userConfirmed=false) {
+    if(submitting) return;
+    // Never use window.confirm() here. Native dialogs can interrupt browser
+    // fullscreen and were being mistaken for a malpractice/fullscreen exit.
+    if (!auto && !userConfirmed) { openSubmitDialog(); return; }
     submitting=true;
     try{
       await saveCurrent();
