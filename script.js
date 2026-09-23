@@ -368,7 +368,7 @@ function searchTopics() {
                 { label: "Timed Quiz", path: "Placement/quiz.html?topic=c", icon: "Q" },
                 { label: "Coding Arena", path: "Placement/coding.html?topic=c", icon: "</>" },
                 { label: "Online Compiler", path: "Online-Compiler/", icon: "Run" },
-                { label: "Complete Mock Drive", path: "Placement/mock-drive.html", icon: "4R" }
+                { label: "Complete Mock Drive", path: "Placement/mock-drive.html", icon: "4R" },
                 { label: "Class Room Quiz", path: "Quiz/index.html", icon: "CQ" }
             ]
         },
