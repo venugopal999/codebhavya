@@ -54,7 +54,6 @@
 <div class="sidebar-title">💻 C Programming</div>
 <input class="search-box" id="topicSearch" onkeyup="searchTopics()" placeholder="🔍 Search topics..." type="text"/>
 <div class="sidebar-title">Fundamentals</div>
-<a class="cb-topic-link" data-topic-link="1" href="start-here.html">🚀 START HERE - Programming from Zero</a>
 <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
 <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
 <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
@@ -85,23 +84,199 @@
 <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
 </aside>
 <main class="main-content">
-<section class="content-card" data-content-standard="teaching-complete-v1" id="bitwise">
-<h2>🔢 19. Bitwise Programming</h2><div class="cb-teaching-standard"><strong>🎓 Concept-First Explanation</strong><p>This lesson is organized in the same order a faculty member would normally teach it: meaning → purpose → syntax/model → internal working → examples → common confusion → safe use. The guided examples from the earlier lesson are preserved afterward for reinforcement.</p></div><h3>19.1 Bitwise Programming Starts with Binary Representation</h3><p>Bitwise programming treats integer values as groups of binary bits. A bit is either 0 or 1. Operators can test, set, clear, toggle or shift selected positions without changing unrelated bits.</p><div class="cb-concept-tree"><pre>decimal 13
-binary   1101
-bit pos  3210</pre></div><h3>19.2 Use Unsigned Types When the Goal Is a Bit Pattern</h3><p>Unsigned integer operations have defined modulo arithmetic and clearer shift behavior for low-level masks. Signed negative values introduce representation and right-shift concerns that distract from the intended bit pattern.</p><pre><code>uint32_t flags = 0; /* when uint32_t is provided */
-unsigned int mask = 1u &lt;&lt; 3;</code></pre><h3>19.3 Bitwise AND &amp;</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>A</th><th>B</th><th>A &amp; B</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td></tr><tr><td>1</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td></tr></tbody></table></div><p>AND keeps a 1 only where both operands have 1. Therefore it is ideal for <strong>testing</strong> selected bits or <strong>clearing</strong> positions using an appropriate mask.</p><h3>19.4 Bitwise OR |</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>A</th><th>B</th><th>A | B</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td></tr></tbody></table></div><p>OR produces 1 where either operand has 1. OR with a mask is the standard pattern for setting selected flag bits.</p><h3>19.5 Bitwise XOR ^</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>A</th><th>B</th><th>A ^ B</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>0</td></tr></tbody></table></div><p>XOR produces 1 where bits differ. XOR with a mask toggles selected bits, which makes it useful for reversible flag changes and parity-like algorithms.</p><h3>19.6 Bitwise Complement ~</h3><div class="cb-concept-tree"><pre>x  = 00000101
-~x = 11111010</pre></div><p><code>~</code> flips every bit after integer promotion. The width of the promoted type matters; drawing only 8 bits is a visualization, not necessarily the width of the actual computation.</p><h3>19.7 Left Shift &lt;&lt;</h3><pre><code>unsigned x = 5u;   /* ...0101 */
-unsigned y = x &lt;&lt; 1; /* ...1010 */</code></pre><p>For a valid shift count, unsigned left shift moves bits left and introduces zeros at the low end, with the result defined modulo the unsigned width. Bits shifted out are lost.</p><h3>19.8 Right Shift &gt;&gt;</h3><pre><code>unsigned x = 20u;  /* 10100 */
-unsigned y = x &gt;&gt; 2; /* 00101 -&gt; 5 */</code></pre><p>Unsigned right shift shifts in zeros at the high end. This is the clearest form for extracting bit fields.</p><h3>19.9 Validate Shift Counts</h3><p>A shift count must be nonnegative and less than the width of the promoted left operand. Shifting by the type width or more is undefined behavior.</p><pre><code>unsigned width = sizeof(value) * CHAR_BIT;
-if (k &lt; width)
-    result = value &lt;&lt; k;</code></pre><h3>19.10 Test a Bit</h3><div class="formula-box">(value &amp; (1u &lt;&lt; bit)) != 0</div><pre><code>if ((flags &amp; (1u &lt;&lt; bit)) != 0)
-    puts("bit is set");</code></pre><p>The mask contains 1 only at the position of interest. AND clears every other result bit, so a nonzero result means the selected bit was 1.</p><h3>19.11 Set a Bit</h3><div class="formula-box">value |= (1u &lt;&lt; bit)</div><p>OR forces the selected bit to 1 because <code>x | 1</code> is always 1 while positions where the mask has 0 retain their original bit.</p><h3>19.12 Clear a Bit</h3><div class="formula-box">value &amp;= ~(1u &lt;&lt; bit)</div><p>First build a one-bit mask, complement it so every position is 1 except the target bit, then AND with the value.</p><h3>19.13 Toggle a Bit</h3><div class="formula-box">value ^= (1u &lt;&lt; bit)</div><p>XOR with 1 flips a bit; XOR with 0 preserves it.</p><h3>19.14 Extract a Multi-Bit Field</h3><div class="formula-box">(value &gt;&gt; shift) &amp; mask</div><pre><code>unsigned field = (value &gt;&gt; 4) &amp; 0x7u; /* extract 3 bits */</code></pre><p>Shift the desired field down to bit 0, then mask away unrelated higher bits.</p><h3>19.15 Replace a Multi-Bit Field</h3><pre><code>unsigned fieldMask = 0x7u &lt;&lt; 4;
-value = (value &amp; ~fieldMask) | ((newField &amp; 0x7u) &lt;&lt; 4);</code></pre><p>Clear the old field first, constrain the new value to the field width, shift it into position, then combine with OR.</p><h3>19.16 Count Set Bits</h3><pre><code>unsigned count = 0;
-while (x != 0)
-{
-    x &amp;= x - 1; /* clears lowest set bit */
+<section class="content-card" id="bitwise">
+<h2>🔢 19. Bitwise Programming</h2>
+<!-- 19.1 INTRODUCTION -->
+
+<div class="cb-important-box"><strong>CodeBhavya Rule:</strong> In bitwise code, clarity beats cleverness. First write the mask, then explain which bit it selects, then perform the operation.</div>
+<p>Do not rely on memory alone when an expression becomes complicated. Parentheses make the intended operation visible to both the compiler and the reader.</p>
+<pre><code>if ((flags &amp; MASK) != 0) {
+    /* selected bit is set */
+}</code></pre>
+<p>Bitwise expressions can become difficult to read when mixed with arithmetic, relational, and logical operators. Use parentheses when the intended grouping is important.</p>
+<h3>19.31 Important Operator Precedence</h3>
+<ul>
+<li>Confusing bitwise and logical operators.</li>
+<li>Forgetting that bit positions normally start at 0.</li>
+<li>Using a shift count that is invalid for the operand width.</li>
+<li>Assuming signed right shift always behaves the same on every implementation.</li>
+<li>Using signed values when unsigned masks would make the intent clearer.</li>
+<li>Forgetting integer promotions when using small integer types such as <code>unsigned char</code>.</li>
+<li>Writing masks with the wrong type or width.</li>
+<li>Assuming <code>~x</code> simply means “make x negative”. It flips bits; the resulting value is then interpreted as an integer.</li>
+<li>Using the XOR swap trick when both operands refer to the same object.</li>
+</ul>
+<h3>19.30 Common Bitwise Mistakes</h3>
+<div class="cb-confusion-box"><strong>Common interview trap:</strong> <code>&amp;</code> is not the same as <code>&amp;&amp;</code>, and <code>|</code> is not the same as <code>||</code>.</div>
+<div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Bitwise</th><th>Logical</th></tr></thead><tbody>
+<tr><td><code>&amp;</code>, <code>|</code>, <code>^</code>, <code>~</code></td><td><code>&amp;&amp;</code>, <code>||</code>, <code>!</code></td></tr>
+<tr><td>Works on bit patterns</td><td>Works with truth conditions</td></tr>
+<tr><td><code>5 &amp; 3</code> → <code>1</code></td><td><code>5 &amp;&amp; 3</code> → <code>1</code></td></tr>
+<tr><td>Usually does not mean “true/false”</td><td>Produces a logical truth result</td></tr>
+</tbody></table></div>
+<h3>19.29 Bitwise vs Logical Operators</h3>
+<p>For portable code, choose the width from the actual unsigned type rather than hard-coding an assumption when possible.</p>
+<pre><code>for (int i = width - 1; i &gt;= 0; i--)
+    printf("%u", (value &gt;&gt; i) &amp; 1u);</code></pre>
+<p>To print an unsigned integer in binary, inspect each bit from the most significant position toward the least significant position.</p>
+<h3>19.28 Print a Binary Representation</h3>
+<p>This is one of the most practical real-world uses of bitwise programming.</p>
+<pre><code>flags |= READ_FLAG;      /* set */
+flags &amp;= ~READ_FLAG;     /* clear */
+flags ^= READ_FLAG;      /* toggle */
+
+if (flags &amp; READ_FLAG)   /* test */
+    printf("Enabled");</code></pre>
+<h3>19.27 Set, Clear and Toggle a Flag</h3>
+<p>This technique can represent multiple Boolean settings compactly inside one value.</p>
+<pre><code>#define READ_FLAG   (1u &lt;&lt; 0)
+#define WRITE_FLAG  (1u &lt;&lt; 1)
+#define EXEC_FLAG   (1u &lt;&lt; 2)</code></pre>
+<p>One integer can store several independent yes/no states. Each bit represents one flag.</p>
+<h3>19.26 Using Bits as Flags</h3>
+<pre><code>result = 0;
+for (i = 0; i &lt; n; i++)
+    result ^= a[i];</code></pre>
+<ul><li><code>x ^ x = 0</code></li><li><code>x ^ 0 = x</code></li><li>XOR is associative and commutative.</li></ul>
+<p>If every value occurs exactly twice except one value, XOR can isolate the unique value because:</p>
+<h3>19.25 Find the Unique Element Using XOR</h3>
+<div class="cb-confusion-box"><strong>Important:</strong> this is mainly a bitwise exercise/interview technique. A temporary variable is usually clearer in normal application code, and the XOR trick must not be used when both expressions refer to the same object.</div>
+<pre><code>a ^= b;
+b ^= a;
+a ^= b;</code></pre>
+<p>XOR can swap two integer values without a third variable:</p>
+<h3>19.24 Swap Two Values Using XOR</h3>
+<p>Use the technique deliberately and keep the signed/unsigned type rules in mind.</p>
+<pre><code>lowest = value &amp; -value;</code></pre>
+<p>For unsigned integers, the more familiar equivalent is:</p>
+<pre><code>lowest = value &amp; (~value + 1);</code></pre>
+<p>To keep only the lowest set bit:</p>
+<h3>19.23 Isolate the Lowest Set Bit</h3>
+<p>This is the same operation used by the efficient set-bit counting algorithm.</p>
+<pre><code>value = value &amp; (value - 1);</code></pre>
+<p>The expression below removes the lowest 1-bit:</p>
+<h3>19.22 Clear the Lowest Set Bit</h3>
+<div class="cb-important-box"><strong>Why?</strong> Subtracting 1 changes the single set bit to 0 and turns lower zeros into 1s, so AND produces zero.</div>
+<pre><code>value != 0 &amp;&amp; (value &amp; (value - 1)) == 0</code></pre>
+<p>For a positive unsigned integer, a power of two has exactly one set bit.</p>
+<h3>19.21 Check Whether a Number Is a Power of 2</h3>
+<p>Each iteration eliminates one 1-bit, so the loop runs once per set bit rather than once per bit position.</p>
+<pre><code>while (value != 0) {
+    value = value &amp; (value - 1);
     count++;
-}</code></pre><p><code>x &amp; (x-1)</code> removes the least-significant 1 bit. Therefore the loop executes once per set bit rather than once per bit position.</p><h3>19.17 Check Power of Two</h3><pre><code>int isPowerOfTwo = x != 0 &amp;&amp; (x &amp; (x - 1)) == 0;</code></pre><p>A positive power of two has exactly one set bit. Subtracting 1 turns that bit off and all lower bits on; ANDing the two values gives zero.</p><h3>19.18 Shift Is Not Rotation</h3><p>A shift discards bits that leave the width. A rotation deliberately reintroduces those bits at the opposite end. C provides shift operators, not a universal built-in rotate operator in classic language versions; rotation requires a width-aware expression or implementation intrinsic.</p><h3>19.19 Bit Masks vs Structure Bit-Fields</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Masks on unsigned integers</th><th>Structure bit-fields</th></tr></thead><tbody><tr><td>Explicit shifts/masks; good for protocols/register values</td><td>Convenient named fields in a structure</td></tr><tr><td>Bit positions controlled by your expressions</td><td>Physical allocation order has implementation-defined aspects</td></tr><tr><td>Often preferred for defined external layouts</td><td>Good for implementation-controlled compact state</td></tr></tbody></table></div><h3>19.20 Quick Revision</h3>
+}</code></pre>
+<p>A classic technique removes the lowest set bit in each iteration:</p>
+<h3>19.20 Efficient Set-Bit Counting</h3>
+<p>This is easy to understand and demonstrates how binary positions can be processed one at a time.</p>
+<pre><code>count = 0;
+while (value != 0) {
+    count += value &amp; 1u;
+    value &gt;&gt;= 1;
+}</code></pre>
+<p>A set bit is a bit whose value is 1. The simple approach repeatedly checks the lowest bit and shifts the value:</p>
+<h3>19.19 Count Set Bits</h3>
+<div class="cb-concept-grid"><div><strong>Test</strong><br/><code>value &amp; mask</code></div><div><strong>Set</strong><br/><code>value | mask</code></div><div><strong>Toggle</strong><br/><code>value ^ mask</code></div><div><strong>Clear</strong><br/><code>value &amp; ~mask</code></div></div>
+<p>Think of the mask as a set of switches identifying exactly which bits an operation should affect.</p>
+<pre><code>1u &lt;&lt; 3  → 00001000</code></pre>
+<p>A <strong>mask</strong> is a carefully chosen bit pattern used to select or modify specific positions.</p>
+<h3>19.18 Bit Mask — The Central Bitwise Technique</h3>
+<p>XOR is ideal because XOR with 1 flips a bit, while XOR with 0 leaves it unchanged.</p>
+<pre><code>value = value ^ (1u &lt;&lt; k);</code></pre>
+<p>Toggle means 0 becomes 1 and 1 becomes 0:</p>
+<h3>19.17 Toggle a Bit</h3>
+<p>The mask is first inverted so every other position remains 1 while the selected position becomes 0.</p>
+<pre><code>value = value &amp; ~(1u &lt;&lt; k);</code></pre>
+<p>Clearing a bit means forcing it to 0:</p>
+<h3>19.16 Clear a Bit</h3>
+<p>OR is used because a 1 in the mask turns the selected bit on.</p>
+<pre><code>value = value | (1u &lt;&lt; k);</code></pre>
+<p>Setting a bit means forcing it to 1 without changing the other bits:</p>
+<h3>19.15 Set a Bit</h3>
+<p>Bit positions start at <strong>0</strong> from the least significant bit.</p>
+<pre><code>mask = 1u &lt;&lt; k;
+if (value &amp; mask)
+    /* bit k is set */</code></pre>
+<p>To test bit position <code>k</code>, build a mask with only that bit set:</p>
+<h3>19.14 Check Whether a Bit Is Set</h3>
+<pre><code>10 = 1010   → 10 &amp; 1 = 0
+11 = 1011   → 11 &amp; 1 = 1</code></pre>
+<ul><li>Result <code>0</code> → even</li><li>Result <code>1</code> → odd</li></ul>
+<pre><code>number &amp; 1</code></pre>
+<p>The least significant bit tells whether a nonnegative integer is odd or even.</p>
+<h3>19.13 Check Odd or Even Using Bitwise AND</h3>
+<div class="cb-important-box"><strong>Placement rule:</strong> before shifting, know the type, its width, and whether the value is signed or unsigned.</div>
+<ul>
+<li>The right operand must be nonnegative.</li>
+<li>Its value must be less than the width in bits of the promoted left operand.</li>
+<li>Do not assume signed shifts behave like mathematical multiplication or division for every value.</li>
+<li>Use unsigned integers when implementing masks and bit fields that require predictable binary behavior.</li>
+</ul>
+<h3>19.12 Important Shift Rules</h3>
+<p>For unsigned values, zero bits are shifted in from the left. For negative signed values, the result of right shift is implementation-defined, so use unsigned types when you need predictable bit manipulation.</p>
+<pre><code>20      = 00010100
+20 &gt;&gt; 1 = 00001010 = 10
+20 &gt;&gt; 2 = 00000101 = 5</code></pre>
+<p>A right shift moves bits toward lower positions. Bits shifted out on the right are discarded.</p>
+<h3>19.11 Right Shift <code>&gt;&gt;</code></h3>
+<p>For nonnegative values, a left shift by <code>n</code> often corresponds to multiplying by <code>2^n</code>, but shift expressions must still respect C's type and undefined-behavior rules.</p>
+<pre><code>5       = 00000101
+5 &lt;&lt; 1  = 00001010 = 10
+5 &lt;&lt; 2  = 00010100 = 20</code></pre>
+<p>A left shift moves bits toward higher positions and inserts zeros into the vacated low-order positions.</p>
+<h3>19.10 Left Shift <code>&lt;&lt;</code></h3>
+<div class="cb-confusion-box"><strong>Do not confuse:</strong> <code>~</code> is bitwise NOT; <code>!</code> is logical NOT. They solve completely different problems.</div>
+<div class="formula-box"><strong>For the usual two’s-complement signed representation:</strong><br/><code>~x = -x - 1</code><br/><br/>Therefore: <code>~5 = -5 - 1 = -6</code></div>
+<p>The resulting bit pattern represents <code>-6</code> in two’s complement.</p>
+<pre><code> 5  = 00000000 00000000 00000000 00000101
+~5  = 11111111 11111111 11111111 11111010</code></pre>
+<p>NOT flips every bit. For a signed C integer, the result must also be interpreted using the representation of signed integers on the implementation. On the usual two’s-complement representation:</p>
+<h3>19.9 Bitwise NOT <code>~</code> — Why Does <code>~5</code> Become <code>-6</code>?</h3>
+<div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>A</th><th>B</th><th>A ^ B</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>0</td></tr></tbody></table></div>
+<h3>19.8 XOR Truth Table</h3>
+<div class="cb-memory-diagram"><strong>XOR memory rule:</strong> same → 0, different → 1.</div>
+<p>So <code>12 ^ 10</code> produces <code>6</code>.</p>
+<pre><code>12 = 1100
+10 = 1010
+     ----
+^    0110 = 6</code></pre>
+<p>XOR produces 1 when the two corresponding bits are different.</p>
+<h3>19.7 Bitwise XOR <code>^</code></h3>
+<p>So <code>12 | 10</code> produces <code>14</code>.</p>
+<pre><code>12 = 1100
+10 = 1010
+     ----
+|    1110 = 14</code></pre>
+<p>OR produces 1 when at least one corresponding bit is 1.</p>
+<h3>19.6 Bitwise OR <code>|</code></h3>
+<div class="cb-important-box"><strong>Common use:</strong> AND with a mask to <strong>test or clear selected bits</strong>.</div>
+<div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>A</th><th>B</th><th>A &amp; B</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td></tr><tr><td>1</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td></tr></tbody></table></div>
+<h3>19.5 AND Truth Table</h3>
+<p>So <code>12 &amp; 10</code> produces <code>8</code>.</p>
+<pre><code>12 = 1100
+10 = 1010
+     ----
+&amp;    1000 = 8</code></pre>
+<p>AND examines corresponding bits and produces 1 only when <strong>both</strong> input bits are 1.</p>
+<h3>19.4 Bitwise AND <code>&amp;</code></h3>
+<div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Operator</th><th>Name</th><th>Works on</th><th>Main idea</th></tr></thead><tbody>
+<tr><td><code>&amp;</code></td><td>AND</td><td>Each pair of bits</td><td>1 only when both bits are 1</td></tr>
+<tr><td><code>|</code></td><td>OR</td><td>Each pair of bits</td><td>1 when at least one bit is 1</td></tr>
+<tr><td><code>^</code></td><td>XOR</td><td>Each pair of bits</td><td>1 when the bits are different</td></tr>
+<tr><td><code>~</code></td><td>NOT</td><td>Each bit</td><td>Flips every bit</td></tr>
+<tr><td><code>&lt;&lt;</code></td><td>Left shift</td><td>Bits of a value</td><td>Moves bits toward higher positions</td></tr>
+<tr><td><code>&gt;&gt;</code></td><td>Right shift</td><td>Bits of a value</td><td>Moves bits toward lower positions</td></tr>
+</tbody></table></div>
+<h3>19.3 The Bitwise Operators</h3>
+<p>For example, <code>10</code> is <code>00001010</code> because <code>8 + 2 = 10</code>.</p>
+<div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Bit</th><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead><tbody><tr><td>Weight</td><td>128</td><td>64</td><td>32</td><td>16</td><td>8</td><td>4</td><td>2</td><td>1</td></tr></tbody></table></div>
+<p>For an 8-bit unsigned value, each position represents a power of 2:</p>
+<h3>19.2 Binary Representation — The Foundation</h3>
+<div class="cb-why-box"><strong>Think of it this way:</strong> arithmetic usually asks “what is the value?”, while bitwise programming asks “what is happening to each binary position?”</div>
+<p>Bitwise operations are especially useful when a program needs compact flags, masks, device control, binary protocols, permissions, or low-level data manipulation.</p>
+<div class="formula-box">Decimal value → Binary representation → Individual bits → Bitwise operation → Result</div>
+<p>Bitwise programming works directly with the individual <strong>bits</strong> of an integer. Each bit is either <strong>0</strong> or <strong>1</strong>.</p>
+<h3>19.1 What Is Bitwise Programming?</h3>
+<h3>19.32 Quick Revision</h3>
 <div class="tip-box">
 
         📌 <strong>&amp;</strong> → AND
@@ -204,7 +379,7 @@ while (x != 0)
 </div>
 <div class="cb-viz-stage">
 <div class="cb-viz-step" id="cbVizStep-bitwise">Step 1</div>
-
+<h3 id="cbVizTitle-bitwise"></h3>
 <p id="cbVizDetail-bitwise"></p>
 <div class="cb-viz-dots" id="cbVizDots-bitwise"></div>
 </div>
@@ -256,7 +431,7 @@ while (x != 0)
 </div>
 </div>
 </section>
-<h3>19.21 Quick MCQs</h3>
+<h3>19.33 Quick MCQs</h3>
 <p class="cb-mcq-guide">
         Select an answer first, then click <strong>Check Answer</strong>.
         A correct choice becomes green. If the answer is wrong, your choice becomes red
@@ -606,7 +781,7 @@ while (x != 0)
 </div>
 <div class="cb-c-dsa-practice-section">
 <span class="cb-c-practice-label">PRACTICE</span>
-<h3>19.22 🎯 Practice Problems</h3>
+<h3>19.34 🎯 Practice Problems</h3>
 <p class="cb-c-practice-guide">
             Practice AND, OR, XOR, NOT, shifts, bit masks, set-bit counting,
             powers of two, flags, and XOR-based array problems.
@@ -2483,7 +2658,7 @@ int main()
 </div>
 </div>
 </div>
-<h3>19.23 Key Takeaway</h3>
+<h3>19.35 Key Takeaway</h3>
 <div class="tip-box">
 
         🎯 Remember:
