@@ -369,7 +369,7 @@ function searchTopics() {
                 { label: "Coding Arena", path: "Placement/coding.html?topic=c", icon: "</>" },
                 { label: "Online Compiler", path: "Online-Compiler/", icon: "Run" },
                 { label: "Complete Mock Drive", path: "Placement/mock-drive.html", icon: "4R" },
-                { label: "Class Room Quiz", path: "Quiz/login.html", icon: "CQ" }
+                { label: "Class Room Quiz", path: "Quiz/", icon: "CQ" }
             ]
         },
         {
