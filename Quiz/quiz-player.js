@@ -7,7 +7,7 @@
   if (!attemptId) { location.href="./"; return; }
 
   let state=null, payload=null, current=0, answers={}, timerId=null, channel=null, waitingPoll=null;
-  let inReview=false, examActive=false, submitting=false, fullscreenExitBusy=false, resumeMode="quiz";
+  let inReview=false, examActive=false, submitting=false, fullscreenExitBusy=false, resumeMode="quiz", feedbackStage=false, feedbackSaved=false;
 
   async function loadState() {
     const { data, error } = await client.rpc("quiz_state_for_attempt_v1", { p_attempt_id: attemptId });
@@ -317,17 +317,174 @@
     };
   }
 
+  function ratingButtons(key,label) {
+    return `<div class="rating-row">
+      <strong>${esc(label)}</strong>
+      <div class="star-rating" data-rating="${key}">
+        ${[1,2,3,4,5].map(n=>`<button type="button" data-value="${n}" title="${n} out of 5">★</button>`).join("")}
+      </div>
+    </div>`;
+  }
+
+  async function renderPostSubmitFeedback(autoReason="normal") {
+    clearInterval(timerId);
+    stopWaitingPoll();
+    examActive=false;
+    submitting=false;
+    feedbackStage=true;
+    inReview=false;
+
+    // Feedback is intentionally kept inside browser full screen.
+    if (!document.fullscreenElement) {
+      $("examGuard").innerHTML="";
+      $("quizRoot").innerHTML=`
+        <section class="panel fullscreen-gate center">
+          <div class="fs-lock-icon">★</div>
+          <h1>${autoReason==="malpractice" ? "Quiz submitted automatically" : "Quiz submitted successfully"}</h1>
+          <p class="lead-text">Your quiz answers are already safe in CodeBhavya.</p>
+          <div class="notice warn">Please return to full screen to complete the submission summary and classroom feedback.</div>
+          <button class="btn teal fullscreen-main-btn" id="feedbackFullscreenBtn">Return to Full Screen</button>
+        </section>`;
+      $("feedbackFullscreenBtn").onclick=async()=>{
+        const ok=await requestExamFullscreen();
+        if(ok) renderPostSubmitFeedback(autoReason);
+      };
+      return;
+    }
+
+    const total=payload?.questions?.length || state?.question_count || 0;
+    const answered=payload ? payload.questions.filter(q=>answers[q.id]).length : Object.keys(answers).length;
+    const unanswered=Math.max(0,total-answered);
+    let used=0;
+    if(state?.started_at){
+      used=Math.max(0,Math.min(state.duration_seconds,Math.floor((Date.now()-new Date(state.started_at).getTime())/1000)));
+    }
+
+    $("examGuard").innerHTML="";
+    $("quizRoot").innerHTML=`
+      <section class="panel post-submit-card">
+        <div class="submission-success-icon">✓</div>
+        <h1>${autoReason==="malpractice" ? "Quiz Submitted Automatically" : "Quiz Submitted Successfully"}</h1>
+        <p class="muted center">${autoReason==="malpractice"
+          ? "The maximum full-screen warnings were reached. Your saved answers have been submitted."
+          : "Your answers have been saved. Complete the short feedback below before leaving full screen."}</p>
+
+        <div class="result-summary-grid">
+          <div class="summary-box"><strong>${total}</strong><span>Total Questions</span></div>
+          <div class="summary-box"><strong>${answered}</strong><span>Answered</span></div>
+          <div class="summary-box"><strong>${unanswered}</strong><span>Unanswered</span></div>
+          <div class="summary-box"><strong>${fmtDuration(used)}</strong><span>Time Used</span></div>
+        </div>
+
+        <section class="feedback-card mandatory-feedback" id="feedbackCard">
+          <div class="feedback-required-badge">Required before leaving quiz</div>
+          <h2>Quick Quiz Feedback</h2>
+          <p class="muted center">This feedback does not affect your score.</p>
+
+          ${ratingButtons("ui","Quiz UI / Ease of Use")}
+          ${ratingButtons("questions","Question Quality")}
+          ${ratingButtons("overall","Overall Quiz Experience")}
+
+          <label>Difficulty</label>
+          <select id="feedbackDifficulty">
+            <option value="">Select difficulty</option>
+            <option value="very_easy">Very Easy</option>
+            <option value="easy">Easy</option>
+            <option value="balanced">Balanced</option>
+            <option value="hard">Hard</option>
+            <option value="very_hard">Very Hard</option>
+          </select>
+
+          <label>Any issue or suggestion? <span class="muted">(optional)</span></label>
+          <textarea id="feedbackComment" maxlength="1000" placeholder="Example: UI was clear, one question wording was confusing, more time needed..."></textarea>
+
+          <div class="actions" style="justify-content:center">
+            <button class="btn teal" id="sendFeedbackBtn">Submit Feedback & Continue</button>
+          </div>
+        </section>
+      </section>`;
+
+    const ratings={ui:0,questions:0,overall:0};
+    document.querySelectorAll(".star-rating").forEach(group=>{
+      const key=group.dataset.rating;
+      group.querySelectorAll("button").forEach(btn=>{
+        btn.onclick=()=>{
+          ratings[key]=Number(btn.dataset.value);
+          group.querySelectorAll("button").forEach(b=>{
+            b.classList.toggle("active",Number(b.dataset.value)<=ratings[key]);
+          });
+        };
+      });
+    });
+
+    $("sendFeedbackBtn").onclick=async()=>{
+      if(!ratings.ui || !ratings.questions || !ratings.overall){
+        toast("Please rate UI, question quality and overall experience.","error");
+        return;
+      }
+      if(!$("feedbackDifficulty").value){
+        toast("Please select the quiz difficulty.","error");
+        return;
+      }
+
+      const btn=$("sendFeedbackBtn");
+      btn.disabled=true;
+      btn.textContent="Saving Feedback...";
+
+      const {error}=await client.rpc("quiz_submit_feedback_v4",{
+        p_attempt_id:attemptId,
+        p_ui_rating:ratings.ui,
+        p_question_rating:ratings.questions,
+        p_overall_rating:ratings.overall,
+        p_difficulty:$("feedbackDifficulty").value,
+        p_comment:$("feedbackComment").value.trim() || null
+      });
+
+      if(error){
+        btn.disabled=false;
+        btn.textContent="Submit Feedback & Continue";
+        toast(error.message,"error");
+        return;
+      }
+
+      feedbackSaved=true;
+      feedbackStage=false;
+
+      $("feedbackCard").innerHTML=`
+        <div class="feedback-thanks">
+          <strong>Thank you for your feedback.</strong><br>
+          UI: ${ratings.ui}/5 · Questions: ${ratings.questions}/5 · Overall: ${ratings.overall}/5<br>
+          <span class="muted">Difficulty: ${esc($("feedbackDifficulty")?.value?.replaceAll("_"," ") || "")}</span>
+        </div>
+        <div class="actions" style="justify-content:center;margin-top:15px">
+          <button class="btn primary" id="continueResultBtn">View Result / Summary</button>
+        </div>`;
+
+      $("continueResultBtn").onclick=async()=>{
+        try{
+          if(document.fullscreenElement && document.exitFullscreen){
+            await document.exitFullscreen();
+          }
+        }catch(e){}
+        location.href=`result.html?attempt=${encodeURIComponent(attemptId)}`;
+      };
+    };
+  }
+
   async function submit(auto, userConfirmed=false) {
     if(submitting) return;
-    // Never use window.confirm() here. Native dialogs can interrupt browser
-    // fullscreen and were being mistaken for a malpractice/fullscreen exit.
+    // Native confirm dialogs are intentionally avoided because they can disturb
+    // browser fullscreen and look like a malpractice exit.
     if (!auto && !userConfirmed) { openSubmitDialog(); return; }
+
     submitting=true;
     try{
       await saveCurrent();
       const { error } = await client.rpc("quiz_submit_v1", { p_attempt_id: attemptId });
       if (error) { submitting=false; toast(error.message,"error"); return; }
-      location.href=`result.html?attempt=${encodeURIComponent(attemptId)}`;
+
+      // Stay on the same fullscreen page for the mandatory post-quiz feedback.
+      await renderPostSubmitFeedback("normal");
     }catch(e){
       submitting=false;
       toast(e.message,"error");
@@ -384,16 +541,11 @@
       const maxWarnings=Number(data?.max_warnings||3);
 
       if(data?.auto_submitted){
-        submitting=true;
+        submitting=false;
         clearInterval(timerId);
-        $("quizRoot").innerHTML=`
-          <section class="panel fullscreen-warning center">
-            <div class="warning-number danger-count">${count}</div>
-            <h1>Quiz submitted automatically</h1>
-            <div class="notice bad">You exited full-screen mode ${count} times. The maximum allowed is ${maxWarnings}.</div>
-            <p>Your answers up to this point have been submitted.</p>
-          </section>`;
-        setTimeout(()=>location.href=`result.html?attempt=${encodeURIComponent(attemptId)}`,1600);
+        examActive=false;
+        feedbackStage=true;
+        await renderPostSubmitFeedback("malpractice");
         return;
       }
 
@@ -424,14 +576,25 @@
       updateWaitingFullscreenState();
       return;
     }
-    if(state?.status==="live" && !document.fullscreenElement){
+
+    if(feedbackStage && !feedbackSaved && !document.fullscreenElement){
+      // Quiz is already submitted, so this is NOT a malpractice warning.
+      // Feedback is simply hidden until the student returns to fullscreen.
+      renderPostSubmitFeedback("normal");
+      return;
+    }
+
+    if(state?.status==="live" && !document.fullscreenElement && !feedbackStage){
       handleFullscreenExit();
     }
   });
 
   window.addEventListener("beforeunload",e=>{
-    if(state?.status==="live" && state?.attempt_status!=="submitted" && !submitting) {
-      e.preventDefault(); e.returnValue="";
+    const activeQuiz = state?.status==="live" && state?.attempt_status!=="submitted" && !submitting && !feedbackStage;
+    const pendingFeedback = feedbackStage && !feedbackSaved;
+    if(activeQuiz || pendingFeedback){
+      e.preventDefault();
+      e.returnValue="";
     }
   });
 
