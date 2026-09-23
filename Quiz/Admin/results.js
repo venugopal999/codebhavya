@@ -2,12 +2,28 @@
  const {client,$,requireAdmin,esc,localDate,fmtDuration}=CBQuiz;try{await requireAdmin()}catch{return}
  const id=new URLSearchParams(location.search).get("id");
  const {data,error}=await client.rpc("quiz_admin_results_v1",{p_quiz_id:id});
- if(error){$("rows").innerHTML=`<tr><td colspan="7">${esc(error.message)}</td></tr>`;return}
+ if(error){$("rows").innerHTML=`<tr><td colspan="8">${esc(error.message)}</td></tr>`;return}
+
  $("title").textContent=data.title+" - Results";
  const submitted=data.participants.filter(x=>x.status==="submitted");
  const avg=submitted.length?submitted.reduce((s,x)=>s+Number(x.score||0),0)/submitted.length:0;
- $("stats").innerHTML=`<div class="stat"><strong>${data.participants.length}</strong><span>Joined</span></div><div class="stat"><strong>${submitted.length}</strong><span>Submitted</span></div><div class="stat"><strong>${avg.toFixed(1)}</strong><span>Average Score</span></div><div class="stat"><strong>${data.max_score}</strong><span>Maximum</span></div>`;
- $("rows").innerHTML=data.participants.map(p=>`<tr><td>${esc(p.student_label)}</td><td>${esc(p.status)}</td><td>${p.score==null?"—":p.score}</td><td>${Number(p.fullscreen_exit_count||0)} / 3</td><td>${esc(localDate(p.joined_at))}</td><td>${esc(localDate(p.submitted_at))}</td><td>${p.duration_seconds==null?"—":fmtDuration(p.duration_seconds)}</td></tr>`).join("")||`<tr><td colspan="7">No attempts yet.</td></tr>`;
+
+ $("stats").innerHTML=`
+   <div class="stat"><strong>${data.participants.length}</strong><span>Joined</span></div>
+   <div class="stat"><strong>${submitted.length}</strong><span>Submitted</span></div>
+   <div class="stat"><strong>${avg.toFixed(1)}</strong><span>Average Score</span></div>
+   <div class="stat"><strong>${data.max_score}</strong><span>Maximum</span></div>`;
+
+ $("rows").innerHTML=data.participants.map(p=>`<tr>
+   <td><a class="student-result-link" href="student-result.html?attempt=${encodeURIComponent(p.attempt_id)}">${esc(p.student_label)}</a></td>
+   <td>${esc(p.status)}</td>
+   <td>${p.score==null?"—":p.score}</td>
+   <td>${Number(p.fullscreen_exit_count||0)} / 3</td>
+   <td>${esc(localDate(p.joined_at))}</td>
+   <td>${esc(localDate(p.submitted_at))}</td>
+   <td>${p.duration_seconds==null?"—":fmtDuration(p.duration_seconds)}</td>
+   <td><a class="btn ghost detail-btn" href="student-result.html?attempt=${encodeURIComponent(p.attempt_id)}">View</a></td>
+ </tr>`).join("")||`<tr><td colspan="8">No attempts yet.</td></tr>`;
 
  const fs=data.feedback_summary||{};
  const entries=data.feedback_entries||[];
