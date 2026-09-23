@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1489,5 +1488,2335 @@ Recursion occurs when a function calls itself.
 A recursive function normally needs two important parts:
 </p>
 
-<div c
-```
+<div class="cb-concept-grid">
+
+<div>
+<strong>Base case</strong>
+<p>The condition that stops recursion.</p>
+</div>
+
+<div>
+<strong>Recursive case</strong>
+<p>The part that calls the function again.</p>
+</div>
+
+</div>
+
+<div class="cb-important-box">
+
+<strong>Without a proper base case:</strong>
+
+<p>
+The recursive calls may continue until the program exhausts available
+stack space, resulting in undefined behavior or abnormal termination.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     11.21 RECURSION TRACE
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>11.21 Program Tracing — Recursive Function</h2>
+
+<p>Consider:</p>
+
+<pre><code>void countDown(int n)
+{
+    if (n == 0)
+        return;
+
+    printf("%d ", n);
+
+    countDown(n - 1);
+}</code></pre>
+
+<p>Suppose:</p>
+
+<pre><code>countDown(3);</code></pre>
+
+<p>The execution can be visualized as:</p>
+
+<div class="cb-memory-diagram">
+
+<pre><code>countDown(3)
+    |
+    | print 3
+    v
+countDown(2)
+    |
+    | print 2
+    v
+countDown(1)
+    |
+    | print 1
+    v
+countDown(0)
+    |
+    | base case
+    v
+return
+
+Output:
+3 2 1</code></pre>
+
+</div>
+
+<div class="cb-deep-dive">
+
+<div class="cb-deep-dive-title">
+Important tracing idea
+</div>
+
+<p>
+When a function calls another function, the current function's execution
+is paused until the called function returns.
+For recursion, this creates a chain of active function calls.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     11.22 FUNCTION CALL STACK
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>11.22 Function Calls and the Call Stack</h2>
+
+<p>
+When a function is called, the program needs to keep track of the
+function's execution state, parameters and local information.
+This is commonly represented using the call stack.
+</p>
+
+<pre><code>main()
+  |
+  +--> calculate()
+          |
+          +--> square()
+                  |
+                  +--> return
+          |
+          +--> return
+  |
+  +--> return</code></pre>
+
+<div class="cb-memory-diagram">
+
+<pre><code>TOP
+┌──────────────────────┐
+│ square()             │
+├──────────────────────┤
+│ calculate()          │
+├──────────────────────┤
+│ main()               │
+└──────────────────────┘
+BOTTOM</code></pre>
+
+</div>
+
+<p>
+When <code>square()</code> returns, its active call is removed and
+execution continues in <code>calculate()</code>.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     11.23 NESTED FUNCTION CALLS
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>11.23 One Function Can Call Another Function</h2>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int square(int n)
+{
+    return n * n;
+}
+
+int doubleValue(int n)
+{
+    return 2 * n;
+}
+
+int main(void)
+{
+    int value = square(doubleValue(3));
+
+    printf("%d\n", value);
+
+    return 0;
+}</code></pre>
+
+<p>Trace the calls from the inside:</p>
+
+<pre><code>doubleValue(3)
+    ↓
+6
+
+square(6)
+    ↓
+36
+
+value = 36</code></pre>
+
+<div class="cb-tip-grid">
+
+<div class="tip-box">
+<strong>Tracing tip</strong>
+<p>For nested function calls, identify which function must produce a value first.</p>
+</div>
+
+<div class="tip-box">
+<strong>Placement tip</strong>
+<p>Draw the call chain when the expression looks complicated.</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     11.24 FUNCTION DESIGN
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>11.24 Designing Good Functions</h2>
+
+<p>
+A good function generally has a clear responsibility.
+</p>
+
+<table class="comparison-table">
+
+<thead>
+<tr>
+<th>Less Clear</th>
+<th>Better Decomposition</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>One huge <code>main()</code></td>
+<td><code>readInput()</code></td>
+</tr>
+
+<tr>
+<td>Mixed calculation and display</td>
+<td><code>calculateTotal()</code></td>
+</tr>
+
+<tr>
+<td>Repeated validation logic</td>
+<td><code>isValid()</code></td>
+</tr>
+
+<tr>
+<td>Repeated searching logic</td>
+<td><code>findMaximum()</code></td>
+</tr>
+
+</tbody>
+
+</table>
+
+<div class="cb-why-box">
+
+<strong>Think in responsibilities:</strong>
+
+<pre><code>Input
+  ↓
+Validation
+  ↓
+Calculation
+  ↓
+Output</code></pre>
+
+<p>
+Each responsibility can potentially become a separate function.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     11.25 COMMON FUNCTION MISTAKES
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>11.25 Common Mistakes</h2>
+
+<h3>1. Calling a function with the wrong number of arguments</h3>
+
+<pre><code>int add(int a, int b);
+
+add(10);       /* Wrong */
+add(10, 20);   /* Correct */</code></pre>
+
+
+<h3>2. Forgetting the return statement</h3>
+
+<pre><code>int square(int n)
+{
+    n * n;      /* Does not return the result */
+}</code></pre>
+
+<p>Correct:</p>
+
+<pre><code>int square(int n)
+{
+    return n * n;
+}</code></pre>
+
+
+<h3>3. Returning a value from a void function</h3>
+
+<pre><code>void display(void)
+{
+    return 10;      /* Wrong */
+}</code></pre>
+
+
+<h3>4. Using a local variable outside its scope</h3>
+
+<pre><code>void test(void)
+{
+    int x = 10;
+}
+
+int main(void)
+{
+    printf("%d", x);    /* Wrong */
+}</code></pre>
+
+
+<h3>5. Infinite recursion</h3>
+
+<pre><code>void test(void)
+{
+    test();
+}</code></pre>
+
+<p>
+There is no terminating condition.
+</p>
+
+
+<h3>6. Modifying a variable incorrectly through a value parameter</h3>
+
+<pre><code>void change(int x)
+{
+    x = 100;
+}</code></pre>
+
+<p>
+This does not modify the caller's ordinary variable.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     11.26 COMMON CONFUSIONS
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>11.26 Common Confusions</h2>
+
+<div class="cb-confusion-box">
+
+<h3>Function declaration vs function call</h3>
+
+<pre><code>int add(int, int);     /* declaration */
+
+add(10, 20);           /* call */</code></pre>
+
+</div>
+
+<div class="cb-confusion-box">
+
+<h3>Parameter vs argument</h3>
+
+<pre><code>int add(int a, int b)
+{
+    return a + b;
+}
+
+add(5, 7);</code></pre>
+
+<p>
+<code>a</code> and <code>b</code> are parameters.
+<code>5</code> and <code>7</code> are arguments.
+</p>
+
+</div>
+
+<div class="cb-confusion-box">
+
+<h3>Return value vs printing</h3>
+
+<pre><code>int square(int n)
+{
+    return n * n;
+}</code></pre>
+
+<p>
+Returning a value and printing a value are different operations.
+</p>
+
+</div>
+
+<div class="cb-confusion-box">
+
+<h3><code>void</code> parameter list</h3>
+
+<pre><code>void display(void)</code></pre>
+
+<p>
+This explicitly means that the function accepts no parameters.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     11.27 COMPLETE PROGRAM ANALYSIS
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>11.27 Complete Program Analysis</h2>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int calculateSquare(int n);
+
+int main(void)
+{
+    int number;
+    int result;
+
+    printf("Enter a number: ");
+    scanf("%d", &amp;number);
+
+    result = calculateSquare(number);
+
+    printf("Square = %d\n", result);
+
+    return 0;
+}
+
+int calculateSquare(int n)
+{
+    return n * n;
+}</code></pre>
+
+<h3>Execution flow</h3>
+
+<div class="cb-memory-diagram">
+
+<pre><code>1. Program starts
+       ↓
+2. main() begins
+       ↓
+3. number is declared
+       ↓
+4. Input is read
+       ↓
+5. calculateSquare(number) is called
+       ↓
+6. value is copied into n
+       ↓
+7. n * n is calculated
+       ↓
+8. result is returned
+       ↓
+9. result receives returned value
+       ↓
+10. printf() displays result
+       ↓
+11. return 0
+       ↓
+12. Program ends</code></pre>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     11.28 FUNCTION CLASSIFICATION
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>11.28 Four Common Function Forms</h2>
+
+<p>
+A useful beginner classification is based on whether a function receives
+arguments and whether it returns a value.
+</p>
+
+<table class="comparison-table">
+
+<thead>
+<tr>
+<th>Type</th>
+<th>Example</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>No arguments, no return value</td>
+<td><code>void display(void)</code></td>
+</tr>
+
+<tr>
+<td>Arguments, no return value</td>
+<td><code>void display(int n)</code></td>
+</tr>
+
+<tr>
+<td>No arguments, returns value</td>
+<td><code>int getNumber(void)</code></td>
+</tr>
+
+<tr>
+<td>Arguments and returns value</td>
+<td><code>int add(int a, int b)</code></td>
+</tr>
+
+</tbody>
+
+</table>
+
+<div class="cb-important-box">
+
+<strong>Placement memory trick:</strong>
+
+<p>
+Ask two questions:
+</p>
+
+<ol>
+<li>Does the function receive data?</li>
+<li>Does the function return data?</li>
+</ol>
+
+<p>
+Those two answers help identify the function form.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     11.29 FUNCTIONS AND ARRAYS — IMPORTANT INTERVIEW POINT
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>11.29 Important Interview Point: Array Parameter</h2>
+
+<p>
+Consider:
+</p>
+
+<pre><code>void display(int arr[])</code></pre>
+
+<p>
+For a function parameter, an array parameter is adjusted to a pointer
+parameter. Therefore, these forms are equivalent for parameter purposes:
+</p>
+
+<pre><code>void display(int arr[]);
+void display(int *arr);</code></pre>
+
+<p>
+The array's size is therefore commonly passed separately:
+</p>
+
+<pre><code>void display(int arr[], int size)</code></pre>
+
+<div class="cb-confusion-box">
+
+<strong>Do not say:</strong>
+
+<p>
+"An array is completely copied when passed to a function."
+</p>
+
+<strong>Better explanation:</strong>
+
+<p>
+For a function parameter, an array parameter is adjusted to a pointer to
+its first element, so the function can access the original array elements.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     QUICK REVISION
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>11.30 Quick Revision</h2>
+
+<div class="cb-concept-grid">
+
+<div>
+<strong>Function</strong>
+<p>Reusable block of code for a particular task.</p>
+</div>
+
+<div>
+<strong>Prototype</strong>
+<p>Declares a function before its use.</p>
+</div>
+
+<div>
+<strong>Parameter</strong>
+<p>Variable listed in a function definition.</p>
+</div>
+
+<div>
+<strong>Argument</strong>
+<p>Actual value supplied during a call.</p>
+</div>
+
+<div>
+<strong>Return</strong>
+<p>Sends a value back to the caller.</p>
+</div>
+
+<div>
+<strong>void</strong>
+<p>Represents no value in relevant function contexts.</p>
+</div>
+
+<div>
+<strong>Recursion</strong>
+<p>A function calling itself.</p>
+</div>
+
+<div>
+<strong>Call by value</strong>
+<p>C passes argument values to parameters.</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     TEST YOUR UNDERSTANDING
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>🧠 Test Your Understanding</h2>
+
+<div class="cb-original-qa-list">
+
+
+<div class="cb-original-qa-item">
+
+<div class="cb-original-qa-question">
+
+<span class="cb-original-qa-number">1</span>
+
+What is the difference between a function declaration and definition?
+
+</div>
+
+<button
+class="cb-show-answer-btn"
+onclick="this.nextElementSibling.classList.toggle('show')">
+Show Answer
+</button>
+
+<div class="cb-original-qa-answer">
+
+A declaration tells the compiler about the function's name, return type
+and parameters. A definition contains the actual function body and
+implementation.
+
+</div>
+
+</div>
+
+
+<div class="cb-original-qa-item">
+
+<div class="cb-original-qa-question">
+
+<span class="cb-original-qa-number">2</span>
+
+What is the difference between a parameter and an argument?
+
+</div>
+
+<button
+class="cb-show-answer-btn"
+onclick="this.nextElementSibling.classList.toggle('show')">
+Show Answer
+</button>
+
+<div class="cb-original-qa-answer">
+
+A parameter is a variable in the function definition.
+An argument is the actual value supplied during the function call.
+
+</div>
+
+</div>
+
+
+<div class="cb-original-qa-item">
+
+<div class="cb-original-qa-question">
+
+<span class="cb-original-qa-number">3</span>
+
+Does C pass ordinary arguments by reference?
+
+</div>
+
+<button
+class="cb-show-answer-btn"
+onclick="this.nextElementSibling.classList.toggle('show')">
+Show Answer
+</button>
+
+<div class="cb-original-qa-answer">
+
+No. C passes arguments by value. A function can modify caller data by
+receiving an address through a pointer.
+
+</div>
+
+</div>
+
+
+<div class="cb-original-qa-item">
+
+<div class="cb-original-qa-question">
+
+<span class="cb-original-qa-number">4</span>
+
+Why is the array size commonly passed separately to a function?
+
+</div>
+
+<button
+class="cb-show-answer-btn"
+onclick="this.nextElementSibling.classList.toggle('show')">
+Show Answer
+</button>
+
+<div class="cb-original-qa-answer">
+
+Because an array parameter is adjusted to a pointer to its first element.
+The function therefore does not automatically receive the original
+array's element count.
+
+</div>
+
+</div>
+
+
+<div class="cb-original-qa-item">
+
+<div class="cb-original-qa-question">
+
+<span class="cb-original-qa-number">5</span>
+
+What are the two essential parts of a recursive function?
+
+</div>
+
+<button
+class="cb-show-answer-btn"
+onclick="this.nextElementSibling.classList.toggle('show')">
+Show Answer
+</button>
+
+<div class="cb-original-qa-answer">
+
+A recursive function normally needs a base case that stops recursion and
+a recursive case that makes progress toward that base case.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     INTERVIEW PREPARATION
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>🎯 Interview Preparation</h2>
+
+<h3>1. What is a function in C?</h3>
+
+<p>
+A function is a named block of code that performs a particular task.
+It may receive parameters and may return a value.
+</p>
+
+<h3>2. What is a function prototype?</h3>
+
+<p>
+A function prototype declares the function's return type, name and
+parameter types before the function is used.
+</p>
+
+<h3>3. What is call by value?</h3>
+
+<p>
+C passes argument values to function parameters. The parameter is therefore
+a separate object/value from the caller's ordinary variable.
+</p>
+
+<h3>4. How can a function modify a caller's variable?</h3>
+
+<p>
+By passing its address to the function and using a pointer parameter.
+</p>
+
+<h3>5. What is recursion?</h3>
+
+<p>
+Recursion occurs when a function directly or indirectly calls itself.
+A terminating condition is required.
+</p>
+
+<h3>6. Can a function return multiple values directly?</h3>
+
+<p>
+A function has one return value expression. Multiple pieces of information
+can be returned through pointers, structures, or other suitable designs.
+</p>
+
+<h3>7. Can a function return an array directly?</h3>
+
+<p>
+A function cannot return an array type directly. Other techniques such as
+returning a pointer to suitable storage or returning a structure can be
+used depending on the problem.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     PLACEMENT TIPS
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>💼 Placement Tips</h2>
+
+<div class="cb-tip-grid">
+
+<div class="tip-box">
+
+<strong>Tip 1 — Trace calls</strong>
+
+<p>
+For function-based questions, first identify the order in which functions
+are called.
+</p>
+
+</div>
+
+<div class="tip-box">
+
+<strong>Tip 2 — Check return values</strong>
+
+<p>
+Follow exactly where each returned value is stored or used.
+</p>
+
+</div>
+
+<div class="tip-box">
+
+<strong>Tip 3 — Watch scope</strong>
+
+<p>
+A local variable belongs to its appropriate block and cannot automatically
+be used elsewhere.
+</p>
+
+</div>
+
+<div class="tip-box">
+
+<strong>Tip 4 — Know value passing</strong>
+
+<p>
+Remember that C passes arguments by value.
+</p>
+
+</div>
+
+<div class="tip-box">
+
+<strong>Tip 5 — Recursion</strong>
+
+<p>
+Always identify the base case before tracing recursive calls.
+</p>
+
+</div>
+
+<div class="tip-box">
+
+<strong>Tip 6 — Arrays</strong>
+
+<p>
+Remember that an array parameter is adjusted to a pointer parameter.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     PRACTICE PROBLEMS
+========================================================= -->
+
+<section class="content-card cb-c-dsa-practice-section" id="practice">
+
+<div class="cb-teaching-standard">
+
+<div class="cb-c-practice-label">
+✍️ PRACTICE
+</div>
+
+<h2>11.31 Function Practice Problems</h2>
+
+<p>
+Solve these problems using user-defined functions.
+Try the problem yourself before opening the solution.
+</p>
+
+
+<div class="cb-practice-overall">
+
+<div class="cb-practice-overall-title">
+Functions Practice Progress
+</div>
+
+<div class="cb-practice-overall-grid">
+
+<div class="cb-practice-overall-item">
+<strong>5</strong>
+<span>Problems</span>
+</div>
+
+<div class="cb-practice-overall-item">
+<strong>Beginner</strong>
+<span>Difficulty</span>
+</div>
+
+<div class="cb-practice-overall-item">
+<strong>C</strong>
+<span>Language</span>
+</div>
+
+</div>
+
+<div class="cb-practice-progress-track">
+
+<div
+class="cb-practice-progress-fill"
+id="practiceOverallProgress">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="cb-c-practice-list">
+
+
+<!-- =====================================================
+     PRACTICE 1
+===================================================== -->
+
+<div class="cb-c-practice-item">
+
+<div class="cb-c-practice-problem-head">
+
+<h3>Problem 1 — Add Two Numbers Using a Function</h3>
+
+<span
+class="cb-practice-badge"
+id="practiceBadge-operators-p1">
+Not Started
+</span>
+
+</div>
+
+<p>
+Read two integers and create a function <code>add()</code> that returns
+their sum.
+</p>
+
+<div class="cb-c-practice-buttons">
+
+<button
+class="cb-c-practice-start-button"
+onclick="document.getElementById('practiceWorkspace-functions-p1').classList.toggle('show')">
+Start Practice
+</button>
+
+<button
+class="cb-practice-hint-button"
+onclick="document.getElementById('practiceHint-functions-p1').classList.toggle('show')">
+Hint
+</button>
+
+<button
+class="cb-practice-program-button"
+onclick="document.getElementById('practiceSolution-functions-p1').classList.toggle('show')">
+View Solution
+</button>
+
+</div>
+
+<div class="cb-c-practice-hint" id="practiceHint-functions-p1">
+
+Create:
+
+<pre><code>int add(int a, int b)</code></pre>
+
+Then return <code>a + b</code>.
+
+</div>
+
+<div class="cb-c-practice-workspace" id="practiceWorkspace-functions-p1">
+
+<div class="cb-c-practice-grid">
+
+<div class="cb-c-practice-panel">
+
+<h4>Your Program</h4>
+
+<textarea
+class="cb-c-code-editor"
+id="practiceCode-functions-p1"
+spellcheck="false">#include &lt;stdio.h&gt;
+
+int add(int a, int b)
+{
+    return 0;
+}
+
+int main(void)
+{
+    int a, b;
+
+    scanf("%d %d", &amp;a, &amp;b);
+
+    printf("%d\n", add(a, b));
+
+    return 0;
+}</textarea>
+
+<div class="cb-c-practice-actions">
+
+<button class="cb-c-run-btn">Run</button>
+<button class="cb-c-check-btn">Check</button>
+<button class="cb-c-reset-btn">Reset</button>
+
+</div>
+
+</div>
+
+<div class="cb-c-practice-panel">
+
+<h4>Input</h4>
+
+<textarea
+class="cb-c-code-editor"
+id="practiceInput-functions-p1">10 20</textarea>
+
+<h4>Expected Output</h4>
+
+<pre
+id="practiceOutput-functions-p1">30</pre>
+
+</div>
+
+</div>
+
+<div
+class="cb-c-practice-score"
+id="practiceScore-functions-p1">
+Score: 0
+</div>
+
+<div
+id="practiceTests-functions-p1">
+Tests: 0 / 1
+</div>
+
+<div
+id="practiceAttempts-functions-p1">
+Attempts: 0
+</div>
+
+<div
+id="practiceStatus-functions-p1">
+Status: Not Started
+</div>
+
+<div
+id="practiceMessage-functions-p1">
+Write your solution and check it.
+</div>
+
+</div>
+
+<div
+class="cb-c-practice-solution"
+id="practiceSolution-functions-p1">
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int main(void)
+{
+    int a, b;
+
+    scanf("%d %d", &amp;a, &amp;b);
+
+    printf("%d\n", add(a, b));
+
+    return 0;
+}</code></pre>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     PRACTICE 2
+===================================================== -->
+
+<div class="cb-c-practice-item">
+
+<div class="cb-c-practice-problem-head">
+
+<h3>Problem 2 — Find the Larger Number</h3>
+
+<span
+class="cb-practice-badge"
+id="practiceBadge-functions-p2">
+Not Started
+</span>
+
+</div>
+
+<p>
+Create a function <code>maximum()</code> that receives two integers and
+returns the larger value.
+</p>
+
+<div class="cb-c-practice-buttons">
+
+<button
+class="cb-c-practice-start-button"
+onclick="document.getElementById('practiceWorkspace-functions-p2').classList.toggle('show')">
+Start Practice
+</button>
+
+<button
+class="cb-practice-hint-button"
+onclick="document.getElementById('practiceHint-functions-p2').classList.toggle('show')">
+Hint
+</button>
+
+<button
+class="cb-practice-program-button"
+onclick="document.getElementById('practiceSolution-functions-p2').classList.toggle('show')">
+View Solution
+</button>
+
+</div>
+
+<div class="cb-c-practice-hint" id="practiceHint-functions-p2">
+
+Use an <code>if</code> condition inside the function.
+
+</div>
+
+<div class="cb-c-practice-workspace" id="practiceWorkspace-functions-p2">
+
+<div class="cb-c-practice-grid">
+
+<div class="cb-c-practice-panel">
+
+<h4>Your Program</h4>
+
+<textarea
+class="cb-c-code-editor"
+id="practiceCode-functions-p2"
+spellcheck="false">#include &lt;stdio.h&gt;
+
+int maximum(int a, int b)
+{
+    return 0;
+}
+
+int main(void)
+{
+    int a, b;
+
+    scanf("%d %d", &amp;a, &amp;b);
+
+    printf("%d\n", maximum(a, b));
+
+    return 0;
+}</textarea>
+
+<div class="cb-c-practice-actions">
+
+<button class="cb-c-run-btn">Run</button>
+<button class="cb-c-check-btn">Check</button>
+<button class="cb-c-reset-btn">Reset</button>
+
+</div>
+
+</div>
+
+<div class="cb-c-practice-panel">
+
+<h4>Input</h4>
+
+<textarea
+class="cb-c-code-editor"
+id="practiceInput-functions-p2">25 17</textarea>
+
+<h4>Expected Output</h4>
+
+<pre
+id="practiceOutput-functions-p2">25</pre>
+
+</div>
+
+</div>
+
+<div
+class="cb-c-practice-score"
+id="practiceScore-functions-p2">
+Score: 0
+</div>
+
+<div id="practiceTests-functions-p2">
+Tests: 0 / 1
+</div>
+
+<div id="practiceAttempts-functions-p2">
+Attempts: 0
+</div>
+
+<div id="practiceStatus-functions-p2">
+Status: Not Started
+</div>
+
+<div id="practiceMessage-functions-p2">
+Write your solution and check it.
+</div>
+
+</div>
+
+<div
+class="cb-c-practice-solution"
+id="practiceSolution-functions-p2">
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int maximum(int a, int b)
+{
+    if (a &gt; b)
+        return a;
+
+    return b;
+}
+
+int main(void)
+{
+    int a, b;
+
+    scanf("%d %d", &amp;a, &amp;b);
+
+    printf("%d\n", maximum(a, b));
+
+    return 0;
+}</code></pre>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     PRACTICE 3
+===================================================== -->
+
+<div class="cb-c-practice-item">
+
+<div class="cb-c-practice-problem-head">
+
+<h3>Problem 3 — Check Even or Odd</h3>
+
+<span
+class="cb-practice-badge"
+id="practiceBadge-functions-p3">
+Not Started
+</span>
+
+</div>
+
+<p>
+Create a function <code>isEven()</code> that returns <code>1</code> when
+the supplied integer is even and <code>0</code> otherwise.
+</p>
+
+<div class="cb-c-practice-buttons">
+
+<button
+class="cb-c-practice-start-button"
+onclick="document.getElementById('practiceWorkspace-functions-p3').classList.toggle('show')">
+Start Practice
+</button>
+
+<button
+class="cb-practice-hint-button"
+onclick="document.getElementById('practiceHint-functions-p3').classList.toggle('show')">
+Hint
+</button>
+
+<button
+class="cb-practice-program-button"
+onclick="document.getElementById('practiceSolution-functions-p3').classList.toggle('show')">
+View Solution
+</button>
+
+</div>
+
+<div class="cb-c-practice-hint" id="practiceHint-functions-p3">
+
+Use the remainder operator:
+
+<pre><code>n % 2</code></pre>
+
+</div>
+
+<div class="cb-c-practice-workspace" id="practiceWorkspace-functions-p3">
+
+<div class="cb-c-practice-grid">
+
+<div class="cb-c-practice-panel">
+
+<h4>Your Program</h4>
+
+<textarea
+class="cb-c-code-editor"
+id="practiceCode-functions-p3"
+spellcheck="false">#include &lt;stdio.h&gt;
+
+int isEven(int n)
+{
+    return 0;
+}
+
+int main(void)
+{
+    int n;
+
+    scanf("%d", &amp;n);
+
+    printf("%d\n", isEven(n));
+
+    return 0;
+}</textarea>
+
+<div class="cb-c-practice-actions">
+
+<button class="cb-c-run-btn">Run</button>
+<button class="cb-c-check-btn">Check</button>
+<button class="cb-c-reset-btn">Reset</button>
+
+</div>
+
+</div>
+
+<div class="cb-c-practice-panel">
+
+<h4>Input</h4>
+
+<textarea
+class="cb-c-code-editor"
+id="practiceInput-functions-p3">18</textarea>
+
+<h4>Expected Output</h4>
+
+<pre
+id="practiceOutput-functions-p3">1</pre>
+
+</div>
+
+</div>
+
+<div
+class="cb-c-practice-score"
+id="practiceScore-functions-p3">
+Score: 0
+</div>
+
+<div id="practiceTests-functions-p3">
+Tests: 0 / 1
+</div>
+
+<div id="practiceAttempts-functions-p3">
+Attempts: 0
+</div>
+
+<div id="practiceStatus-functions-p3">
+Status: Not Started
+</div>
+
+<div id="practiceMessage-functions-p3">
+Write your solution and check it.
+</div>
+
+</div>
+
+<div
+class="cb-c-practice-solution"
+id="practiceSolution-functions-p3">
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int isEven(int n)
+{
+    return n % 2 == 0;
+}
+
+int main(void)
+{
+    int n;
+
+    scanf("%d", &amp;n);
+
+    printf("%d\n", isEven(n));
+
+    return 0;
+}</code></pre>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     PRACTICE 4
+===================================================== -->
+
+<div class="cb-c-practice-item">
+
+<div class="cb-c-practice-problem-head">
+
+<h3>Problem 4 — Calculate Square and Cube</h3>
+
+<span
+class="cb-practice-badge"
+id="practiceBadge-functions-p4">
+Not Started
+</span>
+
+</div>
+
+<p>
+Create two functions: <code>square()</code> and <code>cube()</code>.
+Read one integer and print both results.
+</p>
+
+<div class="cb-c-practice-buttons">
+
+<button
+class="cb-c-practice-start-button"
+onclick="document.getElementById('practiceWorkspace-functions-p4').classList.toggle('show')">
+Start Practice
+</button>
+
+<button
+class="cb-practice-hint-button"
+onclick="document.getElementById('practiceHint-functions-p4').classList.toggle('show')">
+Hint
+</button>
+
+<button
+class="cb-practice-program-button"
+onclick="document.getElementById('practiceSolution-functions-p4').classList.toggle('show')">
+View Solution
+</button>
+
+</div>
+
+<div class="cb-c-practice-hint" id="practiceHint-functions-p4">
+
+Both functions should return an integer result.
+
+</div>
+
+<div class="cb-c-practice-workspace" id="practiceWorkspace-functions-p4">
+
+<div class="cb-c-practice-grid">
+
+<div class="cb-c-practice-panel">
+
+<h4>Your Program</h4>
+
+<textarea
+class="cb-c-code-editor"
+id="practiceCode-functions-p4"
+spellcheck="false">#include &lt;stdio.h&gt;
+
+int square(int n)
+{
+    return 0;
+}
+
+int cube(int n)
+{
+    return 0;
+}
+
+int main(void)
+{
+    int n;
+
+    scanf("%d", &amp;n);
+
+    printf("Square = %d\n", square(n));
+    printf("Cube = %d\n", cube(n));
+
+    return 0;
+}</textarea>
+
+<div class="cb-c-practice-actions">
+
+<button class="cb-c-run-btn">Run</button>
+<button class="cb-c-check-btn">Check</button>
+<button class="cb-c-reset-btn">Reset</button>
+
+</div>
+
+</div>
+
+<div class="cb-c-practice-panel">
+
+<h4>Input</h4>
+
+<textarea
+class="cb-c-code-editor"
+id="practiceInput-functions-p4">4</textarea>
+
+<h4>Expected Output</h4>
+
+<pre
+id="practiceOutput-functions-p4">Square = 16
+Cube = 64</pre>
+
+</div>
+
+</div>
+
+<div
+class="cb-c-practice-score"
+id="practiceScore-functions-p4">
+Score: 0
+</div>
+
+<div id="practiceTests-functions-p4">
+Tests: 0 / 1
+</div>
+
+<div id="practiceAttempts-functions-p4">
+Attempts: 0
+</div>
+
+<div id="practiceStatus-functions-p4">
+Status: Not Started
+</div>
+
+<div id="practiceMessage-functions-p4">
+Write your solution and check it.
+</div>
+
+</div>
+
+<div
+class="cb-c-practice-solution"
+id="practiceSolution-functions-p4">
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int square(int n)
+{
+    return n * n;
+}
+
+int cube(int n)
+{
+    return n * n * n;
+}
+
+int main(void)
+{
+    int n;
+
+    scanf("%d", &amp;n);
+
+    printf("Square = %d\n", square(n));
+    printf("Cube = %d\n", cube(n));
+
+    return 0;
+}</code></pre>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     PRACTICE 5
+===================================================== -->
+
+<div class="cb-c-practice-item">
+
+<div class="cb-c-practice-problem-head">
+
+<h3>Problem 5 — Sum from 1 to N Using a Function</h3>
+
+<span
+class="cb-practice-badge"
+id="practiceBadge-functions-p5">
+Not Started
+</span>
+
+</div>
+
+<p>
+Create a function <code>sumToN()</code> that receives a positive integer
+<code>n</code> and returns the sum of all integers from <code>1</code>
+through <code>n</code>.
+</p>
+
+<div class="cb-c-practice-buttons">
+
+<button
+class="cb-c-practice-start-button"
+onclick="document.getElementById('practiceWorkspace-functions-p5').classList.toggle('show')">
+Start Practice
+</button>
+
+<button
+class="cb-practice-hint-button"
+onclick="document.getElementById('practiceHint-functions-p5').classList.toggle('show')">
+Hint
+</button>
+
+<button
+class="cb-practice-program-button"
+onclick="document.getElementById('practiceSolution-functions-p5').classList.toggle('show')">
+View Solution
+</button>
+
+</div>
+
+<div class="cb-c-practice-hint" id="practiceHint-functions-p5">
+
+Use a loop inside the function.
+
+<pre><code>sum = 0;
+
+for (...)
+{
+    sum += i;
+}</code></pre>
+
+</div>
+
+<div class="cb-c-practice-workspace" id="practiceWorkspace-functions-p5">
+
+<div class="cb-c-practice-grid">
+
+<div class="cb-c-practice-panel">
+
+<h4>Your Program</h4>
+
+<textarea
+class="cb-c-code-editor"
+id="practiceCode-functions-p5"
+spellcheck="false">#include &lt;stdio.h&gt;
+
+int sumToN(int n)
+{
+    return 0;
+}
+
+int main(void)
+{
+    int n;
+
+    scanf("%d", &amp;n);
+
+    printf("%d\n", sumToN(n));
+
+    return 0;
+}</textarea>
+
+<div class="cb-c-practice-actions">
+
+<button class="cb-c-run-btn">Run</button>
+<button class="cb-c-check-btn">Check</button>
+<button class="cb-c-reset-btn">Reset</button>
+
+</div>
+
+</div>
+
+<div class="cb-c-practice-panel">
+
+<h4>Input</h4>
+
+<textarea
+class="cb-c-code-editor"
+id="practiceInput-functions-p5">10</textarea>
+
+<h4>Expected Output</h4>
+
+<pre
+id="practiceOutput-functions-p5">55</pre>
+
+</div>
+
+</div>
+
+<div
+class="cb-c-practice-score"
+id="practiceScore-functions-p5">
+Score: 0
+</div>
+
+<div id="practiceTests-functions-p5">
+Tests: 0 / 1
+</div>
+
+<div id="practiceAttempts-functions-p5">
+Attempts: 0
+</div>
+
+<div id="practiceStatus-functions-p5">
+Status: Not Started
+</div>
+
+<div id="practiceMessage-functions-p5">
+Write your solution and check it.
+</div>
+
+</div>
+
+<div
+class="cb-c-practice-solution"
+id="practiceSolution-functions-p5">
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int sumToN(int n)
+{
+    int sum = 0;
+
+    for (int i = 1; i &lt;= n; i++)
+    {
+        sum += i;
+    }
+
+    return sum;
+}
+
+int main(void)
+{
+    int n;
+
+    scanf("%d", &amp;n);
+
+    printf("%d\n", sumToN(n));
+
+    return 0;
+}</code></pre>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     EXTRA PRACTICE
+========================================================= -->
+
+<section class="content-card cb-added-section">
+
+<div class="cb-teaching-standard">
+
+<div class="cb-added-label">
+🚀 EXTRA PRACTICE
+</div>
+
+<h2>11.32 Challenge Yourself</h2>
+
+<div class="cb-added-note">
+
+<p>
+Try these without looking at the solution:
+</p>
+
+<ol>
+
+<li>
+Write a function to find the minimum of three integers.
+</li>
+
+<li>
+Write a function that counts the number of digits in an integer.
+</li>
+
+<li>
+Write a function to calculate the factorial of a number.
+</li>
+
+<li>
+Write a recursive function to calculate factorial.
+</li>
+
+<li>
+Write a function that checks whether a number is prime.
+</li>
+
+<li>
+Write a function that reverses an integer.
+</li>
+
+<li>
+Write a function that calculates the sum of array elements.
+</li>
+
+<li>
+Write a function that finds the maximum element of an array.
+</li>
+
+<li>
+Write a function that counts vowels in a string.
+</li>
+
+<li>
+Write a function that checks whether a string is a palindrome.
+</li>
+
+</ol>
+
+</div>
+
+<div class="cb-extra-practice">
+
+<strong>Placement Challenge</strong>
+
+<p>
+Given an array of integers, create separate functions to calculate:
+</p>
+
+<ul>
+<li>sum</li>
+<li>average</li>
+<li>maximum</li>
+<li>minimum</li>
+<li>number of even elements</li>
+<li>number of odd elements</li>
+</ul>
+
+<p>
+Keep <code>main()</code> responsible mainly for input, function calls and
+displaying results.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     KEY TAKEAWAY
+========================================================= -->
+
+<section class="content-card">
+
+<div class="cb-teaching-standard">
+
+<h2>⭐ Key Takeaway</h2>
+
+<div class="cb-important-box">
+
+<p>
+<strong>Functions divide a program into reusable units.</strong>
+</p>
+
+<p>
+A function can receive data through parameters, perform an operation,
+and optionally return a result to its caller.
+</p>
+
+<pre><code>Input
+  ↓
+Function Call
+  ↓
+Parameters receive values
+  ↓
+Function executes
+  ↓
+Return value
+  ↓
+Caller continues</code></pre>
+
+<p>
+Mastering functions is essential before moving deeply into pointers,
+structures, dynamic memory and larger C programs.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     TOPIC NAVIGATION
+========================================================= -->
+
+<div class="cb-topic-navigation">
+
+<a
+class="cb-topic-nav-btn cb-topic-nav-prev"
+href="strings.html">
+
+← Previous Topic
+<span>Strings</span>
+
+</a>
+
+<a
+class="cb-topic-nav-btn cb-topic-nav-next"
+href="pointers.html">
+
+Next Topic →
+<span>Pointers</span>
+
+</a>
+
+</div>
+
+
+</main>
+
+</div>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+<div class="footer-container">
+
+<div class="footer-brand-section">
+
+<div class="footer-brand">
+
+<span class="footer-code">Code</span><span class="footer-bhavya">Bhavya</span>
+
+</div>
+
+<p class="footer-tagline">
+From Learning to Limitless Possibilities.
+</p>
+
+<p class="footer-description">
+Learn, practice, build and grow with
+structured learning resources.
+</p>
+
+</div>
+
+
+<div class="footer-column">
+
+<h3>Quick Links</h3>
+
+<a href="../index.html">Home</a>
+
+<a href="../Maths/index.html">Maths</a>
+
+<a href="index.html">C Programming</a>
+
+</div>
+
+
+<div class="footer-column">
+
+<h3>Learning</h3>
+
+<a href="../Data-Structures/">Data Structures</a>
+
+<a href="../Advanced-Data-Structures/">
+Advanced Data Structures
+</a>
+
+<a href="#">Python</a>
+
+<a href="#">AI &amp; Machine Learning</a>
+
+</div>
+
+
+<div class="footer-column">
+
+<h3>Practice</h3>
+
+<a href="#practice">Practice Problems</a>
+
+<a href="#practice">Problem Solving</a>
+
+</div>
+
+</div>
+
+
+<div class="footer-bottom">
+
+<p>
+© 2026 CodeBhavya. All Rights Reserved.
+</p>
+
+<p>
+From Learning to Limitless Possibilities.
+</p>
+
+</div>
+
+</footer>
+
+
+<!-- =========================================================
+     CODEBHAVYA C PROGRAMMING JS
+========================================================= -->
+
+<script src="c-programming.js"></script>
+
+<script>
+
+const codeBhavyaCPracticeConfigs = [
+
+{
+    key: "functions-p1",
+
+    badgeId: "practiceBadge-functions-p1",
+
+    codeId: "practiceCode-functions-p1",
+
+    inputId: "practiceInput-functions-p1",
+
+    outputId: "practiceOutput-functions-p1",
+
+    testsId: "practiceTests-functions-p1",
+
+    scoreId: "practiceScore-functions-p1",
+
+    attemptsId: "practiceAttempts-functions-p1",
+
+    statusId: "practiceStatus-functions-p1",
+
+    messageId: "practiceMessage-functions-p1",
+
+    solutionId: "practiceSolution-functions-p1",
+
+    tests: [
+        {
+            input: "10 20",
+            output: "30"
+        }
+    ]
+},
+
+{
+    key: "functions-p2",
+
+    badgeId: "practiceBadge-functions-p2",
+
+    codeId: "practiceCode-functions-p2",
+
+    inputId: "practiceInput-functions-p2",
+
+    outputId: "practiceOutput-functions-p2",
+
+    testsId: "practiceTests-functions-p2",
+
+    scoreId: "practiceScore-functions-p2",
+
+    attemptsId: "practiceAttempts-functions-p2",
+
+    statusId: "practiceStatus-functions-p2",
+
+    messageId: "practiceMessage-functions-p2",
+
+    solutionId: "practiceSolution-functions-p2",
+
+    tests: [
+        {
+            input: "25 17",
+            output: "25"
+        }
+    ]
+},
+
+{
+    key: "functions-p3",
+
+    badgeId: "practiceBadge-functions-p3",
+
+    codeId: "practiceCode-functions-p3",
+
+    inputId: "practiceInput-functions-p3",
+
+    outputId: "practiceOutput-functions-p3",
+
+    testsId: "practiceTests-functions-p3",
+
+    scoreId: "practiceScore-functions-p3",
+
+    attemptsId: "practiceAttempts-functions-p3",
+
+    statusId: "practiceStatus-functions-p3",
+
+    messageId: "practiceMessage-functions-p3",
+
+    solutionId: "practiceSolution-functions-p3",
+
+    tests: [
+        {
+            input: "18",
+            output: "1"
+        }
+    ]
+},
+
+{
+    key: "functions-p4",
+
+    badgeId: "practiceBadge-functions-p4",
+
+    codeId: "practiceCode-functions-p4",
+
+    inputId: "practiceInput-functions-p4",
+
+    outputId: "practiceOutput-functions-p4",
+
+    testsId: "practiceTests-functions-p4",
+
+    scoreId: "practiceScore-functions-p4",
+
+    attemptsId: "practiceAttempts-functions-p4",
+
+    statusId: "practiceStatus-functions-p4",
+
+    messageId: "practiceMessage-functions-p4",
+
+    solutionId: "practiceSolution-functions-p4",
+
+    tests: [
+        {
+            input: "4",
+            output: "Square = 16\nCube = 64"
+        }
+    ]
+},
+
+{
+    key: "functions-p5",
+
+    badgeId: "practiceBadge-functions-p5",
+
+    codeId: "practiceCode-functions-p5",
+
+    inputId: "practiceInput-functions-p5",
+
+    outputId: "practiceOutput-functions-p5",
+
+    testsId: "practiceTests-functions-p5",
+
+    scoreId: "practiceScore-functions-p5",
+
+    attemptsId: "practiceAttempts-functions-p5",
+
+    statusId: "practiceStatus-functions-p5",
+
+    messageId: "practiceMessage-functions-p5",
+
+    solutionId: "practiceSolution-functions-p5",
+
+    tests: [
+        {
+            input: "10",
+            output: "55"
+        }
+    ]
+}
+
+];
+
+
+if (
+    typeof CodeBhavyaCPractice !== "undefined" &&
+    typeof CodeBhavyaCPractice.registerAll === "function"
+) {
+
+    CodeBhavyaCPractice.registerAll(
+        codeBhavyaCPracticeConfigs
+    );
+
+}
+
+</script>
+
+
+<script src="../script.js"></script>
+
+</body>
+</html>
+
