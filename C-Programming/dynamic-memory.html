@@ -54,7 +54,6 @@
 <div class="sidebar-title">💻 C Programming</div>
 <input class="search-box" id="topicSearch" onkeyup="searchTopics()" placeholder="🔍 Search topics..." type="text"/>
 <div class="sidebar-title">Fundamentals</div>
-<a class="cb-topic-link" data-topic-link="1" href="start-here.html">🚀 START HERE - Programming from Zero</a>
 <a class="cb-topic-link" data-topic-link="1" href="introduction.html">📖 Introduction to C</a>
 <a class="cb-topic-link" data-topic-link="1" href="structure.html">🏗️ Structure of C Program</a>
 <a class="cb-topic-link" data-topic-link="1" href="variables.html">🔤 Variables &amp; Constants</a>
@@ -85,62 +84,197 @@
 <a class="cb-topic-link" data-topic-link="1" href="practice.html">✍️ C Practice</a>
 </aside>
 <main class="main-content">
-<section class="content-card" data-content-standard="teaching-complete-v1" id="dynamic-memory">
-<h2>🧠 17. Dynamic Memory Allocation</h2><div class="cb-teaching-standard"><strong>🎓 Concept-First Explanation</strong><p>This lesson is organized in the same order a faculty member would normally teach it: meaning → purpose → syntax/model → internal working → examples → common confusion → safe use. The guided examples from the earlier lesson are preserved afterward for reinforcement.</p></div><h3>17.1 Why Dynamic Memory Exists</h3><p>Automatic arrays require a size/lifetime tied to block execution. Dynamic allocation lets a program request storage during runtime and keep that allocation alive until it is explicitly released.</p><div class="formula-box">request bytes → receive pointer or NULL → use within bounds → release exactly once</div><h3>17.2 Storage Duration vs “Stack/Heap” Vocabulary</h3><p>The C language specifies storage durations and allocation functions, while “stack” and “heap” are common implementation terms. Automatic local objects are commonly implemented using a stack-like region; <code>malloc</code>-family allocations commonly come from a heap-like allocator. Teach the language lifetime rules first, then the implementation model.</p><h3>17.3 malloc() — Allocate Uninitialized Storage</h3><pre><code>int *a = malloc(n * sizeof *a);
-if (a == NULL)
+<section class="content-card" id="dynamic-memory">
+<h2>🧠 17. Dynamic Memory Allocation</h2>
+<!-- 17.1 INTRODUCTION -->
+<h3>17.1 What Is Dynamic Memory Allocation?</h3>
+<p>Dynamic memory allocation lets a C program request storage <strong>while the program is running</strong>. This is useful when the required amount of memory is not known when the source code is written.</p>
+<div class="cb-concept-grid">
+<div class="cb-concept-card"><h4>Fixed-size storage</h4><p>Use ordinary variables and fixed-size arrays when the required storage is known in advance.</p></div>
+<div class="cb-concept-card"><h4>Dynamic storage</h4><p>Request storage at runtime when the program discovers how much data it needs.</p></div>
+</div>
+<div class="formula-box"><strong>Runtime size → request memory → check result → use it → resize if needed → free it</strong></div>
+<h3>17.2 Why Do We Need Dynamic Memory?</h3>
+<ul><li>The number of elements may be known only after input is read.</li><li>A program may need storage that grows or shrinks during execution.</li><li>Large or variable data structures can be created only when required.</li><li>Dynamic storage is fundamental to linked lists, trees, dynamic arrays and many real programs.</li></ul>
+<div class="cb-why-box"><strong>Think like a programmer:</strong> If the user enters <code>n</code>, a fixed array such as <code>int a[1000]</code> may reserve more space than necessary. Dynamic allocation can request storage for exactly the required number of elements.</div>
+<h3>17.3 Static/Automatic vs Dynamic Storage</h3>
+<div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Ordinary / Automatic Storage</th><th>Dynamic Storage</th></tr></thead><tbody><tr><td>Size is usually determined by the declaration.</td><td>Size is requested during execution.</td></tr><tr><td>Lifetime is managed automatically for automatic objects.</td><td>Programmer controls the allocation and release.</td></tr><tr><td>Example: <code>int a[10];</code></td><td>Example: <code>int *a = malloc(10 * sizeof *a);</code></td></tr><tr><td>No <code>free()</code> is required for an ordinary automatic array.</td><td>The allocated block must eventually be released with <code>free()</code>.</td></tr></tbody></table></div>
+<h3>17.4 Stack and Heap — A Practical Mental Model</h3>
+<p>Automatic local objects are commonly associated with stack storage, while memory returned by <code>malloc()</code>, <code>calloc()</code> and <code>realloc()</code> comes from dynamically allocated storage, commonly called the <strong>heap</strong>.</p>
+<div class="cb-memory-diagram"><div>Automatic/local objects</div><div>↓</div><div>Stack-oriented storage</div><div style="margin:12px 0">──────────────</div><div>Dynamic allocations</div><div>↓</div><div>Heap / dynamic storage</div></div>
+<p><strong>Important:</strong> “stack” and “heap” are useful practical models, but the exact implementation details are determined by the C implementation.</p>
+<h3>17.5 malloc() — Request a Block of Bytes</h3>
+<p><code>malloc()</code> allocates a block of memory containing the requested number of bytes. Its contents are <strong>indeterminate</strong>; the function does not initialize the allocated bytes for you.</p>
+<pre><code>#include &lt;stdlib.h&gt;
+
+int *p = malloc(5 * sizeof *p);</code></pre>
+<div class="cb-important-box"><strong>Best habit:</strong> Prefer <code>sizeof *p</code> instead of repeating the pointed-to type. It stays correct if the pointer type changes.</div>
+<h3>17.6 The malloc() Lifecycle</h3>
+<div class="cb-concept-tree"><div><strong>1. Declare pointer</strong><br/><code>int *p;</code></div><div>↓</div><div><strong>2. Allocate</strong><br/><code>p = malloc(n * sizeof *p);</code></div><div>↓</div><div><strong>3. Check</strong><br/><code>if (p == NULL)</code></div><div>↓</div><div><strong>4. Use</strong><br/><code>p[i]</code></div><div>↓</div><div><strong>5. Release</strong><br/><code>free(p);</code></div></div>
+<h3>17.7 A Safe malloc() Example</h3>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void)
 {
-    /* allocation failed */
-}</code></pre><p><code>malloc</code> returns a suitably aligned pointer to at least the requested number of bytes or a null pointer on failure. The allocated bytes have indeterminate contents until the program stores meaningful values.</p><h3>17.4 Why sizeof *ptr Is a Strong Pattern</h3><pre><code>int *a = malloc(n * sizeof *a);</code></pre><p>Using <code>sizeof *a</code> automatically follows the pointed-to type. If the declaration later changes from <code>int *</code> to another pointer type, the allocation expression is less likely to become inconsistent.</p><h3>17.5 Protect the Size Calculation from Overflow</h3><pre><code>if (n &gt; SIZE_MAX / sizeof *a)
-{
-    /* requested element count cannot be represented as byte count */
-}
-else
-{
-    a = malloc(n * sizeof *a);
-}</code></pre><p>Multiplication can overflow before <code>malloc</code> sees the size. A wrapped smaller request followed by writes for <code>n</code> elements can become a serious buffer overflow.</p><h3>17.6 calloc() — Count × Element Size with Zeroed Bytes</h3><pre><code>int *a = calloc(n, sizeof *a);</code></pre><p><code>calloc</code> allocates space for an array-like count of elements and initializes all bytes to zero. Zero bytes correspond to numeric zero for common integer representations, but “all-bits-zero” should not be generalized carelessly to every possible C object representation or conceptual invariant.</p><h3>17.7 realloc() — Resize While Preserving Existing Prefix Data</h3><pre><code>int *tmp = realloc(a, newCount * sizeof *a);
-if (tmp != NULL)
-{
+    int n;
+    scanf("%d", &amp;n);
+
+    int *a = malloc((size_t)n * sizeof *a);
+    if (a == NULL)
+        return 1;
+
+    for (int i = 0; i &lt; n; i++)
+        a[i] = i + 1;
+
+    for (int i = 0; i &lt; n; i++)
+        printf("%d ", a[i]);
+
+    free(a);
+    return 0;
+}</code></pre>
+<h3>17.8 malloc() Does Not Initialize Your Data</h3>
+<p>Reading an allocated object before storing a valid value into it can be invalid because the allocated bytes do not automatically contain useful initial values.</p>
+<div class="cb-confusion-box"><strong>Do not assume:</strong> <code>malloc()</code> means “give me an array filled with zero.” It means “give me a block of at least this many bytes.”</div>
+<h3>17.9 calloc() — Allocate and Zero-Initialize</h3>
+<p><code>calloc(count, size)</code> allocates space for an array of <code>count</code> objects, each of <code>size</code> bytes, and initializes the allocated bytes to zero.</p>
+<pre><code>int *a = calloc(5, sizeof *a);</code></pre>
+<p>For ordinary integer arrays, this gives elements whose initial representation is all-bits-zero; for portable C teaching, use the function according to its specified byte-zero initialization rather than treating it as a universal “zero every possible type” rule.</p>
+<h3>17.10 malloc() vs calloc()</h3>
+<div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Function</th><th>Arguments</th><th>Initialization</th><th>Typical use</th></tr></thead><tbody><tr><td><code>malloc(bytes)</code></td><td>Total bytes</td><td>Allocated bytes are not initialized</td><td>When you will assign values yourself</td></tr><tr><td><code>calloc(count, size)</code></td><td>Number × size</td><td>Allocated bytes are initialized to zero</td><td>When zero-initialized storage is useful</td></tr></tbody></table></div>
+<h3>17.11 realloc() — Resize an Existing Allocation</h3>
+<p><code>realloc()</code> changes the size of a previously allocated block. The block may stay at the same address or move to a different address.</p>
+<pre><code>int *tmp = realloc(a, new_count * sizeof *a);</code></pre>
+<div class="cb-important-box"><strong>Key idea:</strong> Never assume the address stays the same after <code>realloc()</code>.</div>
+<h3>17.12 Why a Temporary Pointer Matters</h3>
+<pre><code>int *tmp = realloc(a, new_count * sizeof *a);
+
+if (tmp != NULL) {
     a = tmp;
-    count = newCount;
-}
-else
-{
-    /* original a is still valid */
-}</code></pre><p><code>realloc</code> may keep the allocation at the same address or move it. On success, the old pointer value must no longer be used to access the old allocation; on ordinary failure for a nonzero request, the original allocation remains valid.</p><h3>17.8 Why a Temporary Pointer Matters with realloc</h3><pre><code>a = realloc(a, newSize); /* dangerous if failure would overwrite the only pointer */</code></pre><p>Assigning directly to the only owner can lose the original pointer when <code>realloc</code> returns <code>NULL</code>, creating a memory leak. Save the result in a temporary pointer until success is known.</p><h3>17.9 free() Ends the Allocation Lifetime</h3><pre><code>free(a);
-a = NULL; /* useful for this variable, but aliases may still dangle */</code></pre><p><code>free</code> releases an allocation obtained from the compatible allocation family. After release, accessing the former object through any pointer is invalid. Setting one pointer variable to <code>NULL</code> does not magically update other aliases.</p><h3>17.10 Memory Leak, Dangling Pointer, Double Free and Use-After-Free</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Bug</th><th>Meaning</th></tr></thead><tbody><tr><td>Memory leak</td><td>Live allocation becomes unreachable or is never released when no longer needed.</td></tr><tr><td>Dangling pointer</td><td>Pointer still stores an address after the referenced object lifetime ended.</td></tr><tr><td>Double free</td><td>Same allocation is released more than once.</td></tr><tr><td>Use-after-free</td><td>Program accesses storage after its allocation lifetime ended.</td></tr></tbody></table></div><h3>17.11 Ownership — Decide Who Must free()</h3><p>Dynamic-memory interfaces become much clearer when each allocation has an ownership rule. The owner is responsible for eventually releasing it, or explicitly transferring ownership to another component.</p><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Interface style</th><th>Ownership idea</th></tr></thead><tbody><tr><td>Function returns newly allocated pointer</td><td>Caller usually becomes owner.</td></tr><tr><td>Function receives borrowed pointer</td><td>Caller retains ownership; callee must not free unless contract says so.</td></tr><tr><td>Function takes <code>T **</code> and replaces allocation</td><td>Contract should state whether old allocation is freed/transferred.</td></tr></tbody></table></div><h3>17.12 Dynamic Arrays</h3><pre><code>size_t n;
-scanf("%zu", &amp;n);
+} else {
+    /* a is still valid here */
+}</code></pre>
+<p>Assigning <code>realloc()</code> directly to the only pointer can lose the original pointer if resizing fails. A temporary pointer lets you handle failure safely.</p>
+<h3>17.13 realloc() — What Can Change?</h3>
+<ul><li>The allocation may grow in place.</li><li>The allocation may move to a new location.</li><li>Existing contents are preserved up to the smaller of the old and new sizes.</li><li>When the new size is larger, the additional part has indeterminate values.</li><li>On failure for a nonzero requested size, the original allocation remains valid.</li></ul>
+<h3>17.14 free() — Release the Allocation</h3>
+<p><code>free(ptr)</code> releases memory previously obtained from an allocation function. After freeing the block, the pointer value should not be dereferenced.</p>
+<pre><code>free(p);
+p = NULL;</code></pre>
+<div class="cb-important-box"><strong>Good habit:</strong> Setting a pointer to <code>NULL</code> after freeing can help prevent accidental reuse through that pointer.</div>
+<h3>17.15 What Does NULL Mean Here?</h3>
+<p>If an allocation function returns <code>NULL</code>, the requested allocation was not successful. A null pointer must not be dereferenced.</p>
+<pre><code>int *p = malloc(n * sizeof *p);
 
-int *a = malloc(n * sizeof *a);
-if (a == NULL &amp;&amp; n != 0)
+if (p == NULL) {
+    printf("Allocation failed\n");
     return 1;
+}</code></pre>
+<h3>17.16 Dynamic Arrays</h3>
+<p>A pointer returned by an allocation function can be indexed using normal array notation.</p>
+<pre><code>int *a = malloc(n * sizeof *a);
 
-for (size_t i = 0; i &lt; n; i++)
-    a[i] = 0;
-
-free(a);</code></pre><p>Pointer subscripting works because the allocated block can be treated as an array of the requested element type when used according to the allocation/alignment/lifetime rules.</p><h3>17.13 Dynamic Strings</h3><pre><code>size_t len = strlen(src);
-char *copy = malloc(len + 1);
-if (copy != NULL)
-    memcpy(copy, src, len + 1);</code></pre><p>The <code>+1</code> reserves space for the terminating null character. String allocation bugs often come from forgetting that terminator or using the wrong source length.</p><h3>17.14 Dynamic Structures</h3><pre><code>struct Student *s = malloc(sizeof *s);
-if (s != NULL)
-{
-    s-&gt;id = 101;
-    s-&gt;cgpa = 8.9;
-}
-free(s);</code></pre><p>The arrow operator is natural when a structure object lives in dynamically allocated storage.</p><h3>17.15 Dynamic 2D Data: Contiguous vs Row-Pointer Designs</h3><pre><code>/* contiguous R x C block */
-int *m = malloc(rows * cols * sizeof *m);
-/* element (r,c): m[r * cols + c] */</code></pre><p>A contiguous block gives one allocation and predictable row-major layout. An array of row pointers supports separately allocated rows and potentially jagged lengths but requires more allocations and cleanup steps.</p><h3>17.16 Cleanup on Failure</h3><pre><code>FILE *fp = fopen(name, "r");
-if (!fp) return 1;
-
-char *buf = malloc(size);
-if (!buf)
-{
-    fclose(fp);
-    return 1;
+if (a != NULL) {
+    a[0] = 10;
+    a[1] = 20;
 }
 
-/* work */
-free(buf);
-fclose(fp);</code></pre><p>Every successfully acquired resource needs a corresponding release on every path that leaves its ownership scope. This is why centralized cleanup patterns are common in C.</p><h3>17.17 Dynamic-Memory Checklist</h3><ul><li>Is the byte-count calculation overflow-safe?</li><li>Is the returned pointer checked?</li><li>Is every access inside the allocated element count?</li><li>Who owns the allocation?</li><li>Can <code>realloc</code> failure preserve the original pointer?</li><li>Is every allocation released exactly once?</li><li>Are aliases prevented from being used after release?</li></ul><h3>17.18 Quick Revision</h3>
+free(a);</code></pre>
+<p>The expression <code>a[i]</code> is equivalent to <code>*(a + i)</code>. The allocation must contain enough space for every accessed element.</p>
+<h3>17.17 Dynamic Array Representation</h3>
+<div class="cb-memory-diagram"><div><strong>int *a</strong> → ┌─────┬─────┬─────┬─────┐</div><div>              │ 10  │ 20  │ 30  │ 40  │</div><div>              └─────┴─────┴─────┴─────┘</div><div>                0     1     2     3</div></div>
+<p>The pointer stores the address of the first element. The allocation itself contains the array elements.</p>
+<h3>17.18 Dynamically Allocated Strings</h3>
+<p>Strings are character arrays ending in <code>'\0'</code>. Dynamic allocation therefore needs room for the terminator.</p>
+<pre><code>const char *source = "CodeBhavya";
+size_t n = strlen(source) + 1;
+char *copy = malloc(n);
+
+if (copy != NULL) {
+    strcpy(copy, source);
+    printf("%s\n", copy);
+    free(copy);
+}</code></pre>
+<p>When using string functions, include <code>&lt;string.h&gt;</code> and make sure the destination has enough capacity.</p>
+<h3>17.19 Dynamic Structures</h3>
+<pre><code>struct Student {
+    int roll;
+    float marks;
+};
+
+struct Student *s = malloc(sizeof *s);
+
+if (s != NULL) {
+    s-&gt;roll = 101;
+    s-&gt;marks = 86.5f;
+    free(s);
+}</code></pre>
+<p>Use <code>-&gt;</code> when accessing a structure through a pointer.</p>
+<h3>17.20 Dynamic Array of Structures</h3>
+<pre><code>struct Student *students =
+    malloc(n * sizeof *students);
+
+if (students != NULL) {
+    students[0].roll = 101;
+    students[0].marks = 86.5f;
+}
+
+free(students);</code></pre>
+<p>This pattern is useful for runtime-sized collections of records.</p>
+<h3>17.21 Dynamic 2D Data — Choose a Representation</h3>
+<p>There is more than one way to represent dynamically allocated two-dimensional data. A beginner-friendly approach is an array of row pointers, while a single contiguous block can offer simpler memory ownership and better locality.</p>
+<pre><code>int *matrix = malloc(rows * cols * sizeof *matrix);
+
+if (matrix != NULL) {
+    matrix[r * cols + c] = 42;
+}
+
+free(matrix);</code></pre>
+<div class="cb-concept-grid"><div class="cb-concept-card"><h4>Contiguous block</h4><p>One allocation; access with <code>r * cols + c</code>.</p></div><div class="cb-concept-card"><h4>Array of pointers</h4><p>Rows can be allocated separately, allowing more flexible row sizes but requiring multiple allocations and releases.</p></div></div>
+<h3>17.22 Allocation Size — Use sizeof Correctly</h3>
+<pre><code>int *a = malloc(n * sizeof *a);
+double *b = malloc(n * sizeof *b);
+struct Student *s = malloc(n * sizeof *s);</code></pre>
+<p>This avoids hard-coding type sizes. For byte-count calculations involving an object count, use an appropriate unsigned size type such as <code>size_t</code>.</p>
+<h3>17.23 Allocation Failure Is Also a Program State</h3>
+<p>A robust program treats allocation failure as a possible runtime condition. It should decide what to do rather than immediately dereferencing the returned pointer.</p>
+<div class="cb-why-box"><strong>Placement point:</strong> Interviewers often ask, “What happens when malloc fails?” The correct direction is: it can return <code>NULL</code>; check before dereferencing and handle the failure according to the program's requirements.</div>
+<h3>17.24 Memory Leak</h3>
+<p>A <strong>memory leak</strong> occurs when dynamically allocated memory is no longer reachable by the program and therefore cannot be released.</p>
+<pre><code>int *p = malloc(100 * sizeof *p);
+
+/* if p is overwritten or lost without free(p),
+   the allocation can leak */</code></pre>
+<div class="cb-confusion-box"><strong>Leak ≠ unused variable.</strong> A leak specifically concerns dynamically allocated storage whose address has been lost without releasing the allocation.</div>
+<h3>17.25 Dangling Pointer</h3>
+<p>A dangling pointer is a pointer that refers to storage whose lifetime has ended.</p>
+<pre><code>int *p = malloc(sizeof *p);
+if (p != NULL) {
+    *p = 25;
+    free(p);
+    p = NULL;
+}</code></pre>
+<p>The important rule is not to dereference the old pointer after <code>free()</code>.</p>
+<h3>17.26 Double Free</h3>
+<p>A double free occurs when the same allocation is released more than once. This is invalid and can lead to serious runtime failures.</p>
+<pre><code>free(p);
+p = NULL;
+/* Do not free the same allocation again. */</code></pre>
+<h3>17.27 Use-After-Free</h3>
+<p>Use-after-free means accessing an allocation after it has been released.</p>
+<pre><code>free(p);
+/* *p = 10;  // invalid */</code></pre>
+<div class="cb-important-box"><strong>Lifetime rule:</strong> A pointer value does not keep dynamically allocated storage alive. The allocation remains usable only while its lifetime is valid.</div>
+<h3>17.28 The Complete Dynamic Memory Workflow</h3>
+<div class="cb-concept-tree"><div><strong>Need runtime storage?</strong></div><div>↓</div><div><strong>Calculate size safely</strong><br/><code>n * sizeof *p</code></div><div>↓</div><div><strong>Allocate</strong><br/><code>malloc / calloc</code></div><div>↓</div><div><strong>Check result</strong><br/><code>p != NULL</code></div><div>↓</div><div><strong>Initialize and use</strong></div><div>↓</div><div><strong>Need more/less space?</strong><br/><code>realloc</code> with a temporary pointer</div><div>↓</div><div><strong>Finish</strong><br/><code>free(p)</code></div></div>
+<h3>17.29 malloc(), calloc(), realloc(), free() — Quick Comparison</h3>
+<div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Function</th><th>Purpose</th><th>Important point</th></tr></thead><tbody><tr><td><code>malloc()</code></td><td>Allocate a byte block</td><td>Contents are not initialized</td></tr><tr><td><code>calloc()</code></td><td>Allocate an array of objects</td><td>Allocated bytes are zero-initialized</td></tr><tr><td><code>realloc()</code></td><td>Resize an allocation</td><td>Block may move; use a temporary pointer</td></tr><tr><td><code>free()</code></td><td>Release an allocation</td><td>Do not access the block afterward</td></tr></tbody></table></div>
+<h3>17.30 Common Dynamic Memory Mistakes</h3>
+<div class="cb-concept-grid"><div class="cb-concept-card"><h4>❌ No NULL check</h4><p>Dereferencing a failed allocation is invalid.</p></div><div class="cb-concept-card"><h4>❌ Wrong size</h4><p>Allocate enough bytes for every object, using <code>sizeof</code>.</p></div><div class="cb-concept-card"><h4>❌ Lost pointer</h4><p>Overwriting the only pointer can create a memory leak.</p></div><div class="cb-concept-card"><h4>❌ Unsafe realloc</h4><p>Use a temporary pointer when the old allocation must be preserved on failure.</p></div><div class="cb-concept-card"><h4>❌ Use-after-free</h4><p>Never read or write through a pointer to released storage.</p></div><div class="cb-concept-card"><h4>❌ Double free</h4><p>Release each allocation only once.</p></div></div>
+<h3>17.31 Dynamic Memory Problem-Solving Method</h3>
+<ol><li>Determine how many objects are required.</li><li>Calculate the required byte count.</li><li>Allocate with <code>malloc()</code> or <code>calloc()</code>.</li><li>Check for <code>NULL</code>.</li><li>Initialize before reading values.</li><li>Stay within the allocated bounds.</li><li>Use <code>realloc()</code> carefully if the size changes.</li><li>Release every successful allocation exactly once.</li></ol>
+<div class="cb-teaching-standard"><strong>CodeBhavya Rule:</strong> Dynamic memory is not just about <code>malloc()</code>. Always think in three questions: <strong>How much memory? Who owns it? When is its lifetime finished?</strong></div>
+<h3>17.32 Quick Revision</h3>
 <div class="tip-box">
 
         📌 <strong>malloc()</strong> → Allocates memory
@@ -234,7 +368,7 @@ fclose(fp);</code></pre><p>Every successfully acquired resource needs a correspo
 </div>
 <div class="cb-viz-stage">
 <div class="cb-viz-step" id="cbVizStep-dynamicmemory">Step 1</div>
-
+<h3 id="cbVizTitle-dynamicmemory"></h3>
 <p id="cbVizDetail-dynamicmemory"></p>
 <div class="cb-viz-dots" id="cbVizDots-dynamicmemory"></div>
 </div>
@@ -286,7 +420,7 @@ fclose(fp);</code></pre><p>Every successfully acquired resource needs a correspo
 </div>
 </div>
 </section>
-<h3>17.19 Quick MCQs</h3>
+<h3>17.33 Quick MCQs</h3>
 <p class="cb-mcq-guide">
         Select an answer first, then click <strong>Check Answer</strong>.
         A correct choice becomes green. If the answer is wrong, your choice becomes red
@@ -568,7 +702,7 @@ fclose(fp);</code></pre><p>Every successfully acquired resource needs a correspo
 </div>
 <div class="cb-c-dsa-practice-section">
 <span class="cb-c-practice-label">PRACTICE</span>
-<h3>17.20 🎯 Practice Problems</h3>
+<h3>17.34 🎯 Practice Problems</h3>
 <p class="cb-c-practice-guide">
             Practice allocation, arrays, strings, structures, matrices, realloc(),
             allocation checks, and memory-leak prevention.
@@ -2809,7 +2943,7 @@ int main()
 </div>
 </div>
 </div>
-<h3>17.21 Key Takeaway</h3>
+<h3>17.35 Key Takeaway</h3>
 <div class="tip-box">
 
         🎯 Remember:
