@@ -8,6 +8,7 @@
 
   let state=null, payload=null, current=0, answers={}, timerId=null, channel=null, waitingPoll=null;
   let inReview=false, examActive=false, submitting=false, fullscreenExitBusy=false, resumeMode="quiz", feedbackStage=false, feedbackSaved=false;
+  let timingQuestionId=null, timingStartedAt=0;
 
   async function loadState() {
     const { data, error } = await client.rpc("quiz_state_for_attempt_v1", { p_attempt_id: attemptId });
@@ -178,6 +179,21 @@
     }));
   }
 
+  async function flushQuestionTime(){
+    if(!timingQuestionId || !timingStartedAt) return;
+    const seconds=Math.max(0,Math.min(600,Math.round((Date.now()-timingStartedAt)/1000)));
+    const qid=timingQuestionId;
+    timingQuestionId=null; timingStartedAt=0;
+    if(seconds<1)return;
+    try{ await client.rpc("quiz_record_question_time_v7",{p_attempt_id:attemptId,p_question_id:qid,p_seconds:seconds}); }catch(e){console.warn(e)}
+  }
+
+  function startQuestionTime(questionId){
+    if(timingQuestionId===questionId && timingStartedAt)return;
+    if(timingQuestionId && timingQuestionId!==questionId) flushQuestionTime();
+    timingQuestionId=questionId; timingStartedAt=Date.now();
+  }
+
   function renderQuiz() {
     if(!document.fullscreenElement){
       renderFullscreenGate();
@@ -195,7 +211,7 @@
         <span class="badge live">LIVE</span>
       </div>
       <section class="question-card">
-        <div class="qmeta"><span>Question ${current+1} of ${payload.questions.length}</span><span>${q.marks} mark${q.marks===1?"":"s"}</span></div>
+        <div class="qmeta"><span>Question ${current+1} of ${payload.questions.length}</span><span>+${q.marks}${Number(q.negative_marks||0)>0?` / -${q.negative_marks}`:""} mark${q.marks===1?"":"s"}</span></div>
         <h2>${esc(q.text)}</h2>
         <div class="options">${optionHtml(q)}</div>
         <div class="actions">
@@ -205,6 +221,8 @@
         </div>
         <div class="palette">${paletteHtml()}</div>
       </section>`;
+
+    startQuestionTime(q.id);
 
     document.querySelectorAll('input[name="answer"]').forEach(r => r.addEventListener("change", async()=>{
       document.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));
@@ -221,6 +239,7 @@
   }
 
   function renderReview() {
+    flushQuestionTime();
     if(!document.fullscreenElement){
       renderFullscreenGate();
       return;
@@ -479,6 +498,7 @@
 
     submitting=true;
     try{
+      await flushQuestionTime();
       await saveCurrent();
       const { error } = await client.rpc("quiz_submit_v1", { p_attempt_id: attemptId });
       if (error) { submitting=false; toast(error.message,"error"); return; }
