@@ -1,7 +1,7 @@
 window.CODEBHAVYA_QUIZ_CONFIG = {
   // Use the SAME Supabase project already used by CodeBhavya.
-  supabaseUrl: "PASTE_YOUR_SUPABASE_URL_HERE",
-  supabaseAnonKey: "PASTE_YOUR_SUPABASE_ANON_KEY_HERE",
+  supabaseUrl: "https://etldagovmkmmowrrrlhs.supabase.co",
+  supabaseAnonKey: "sb_publishable_AFTthoxbavYyiQnwU8D7GQ_d8w8Fa4w",
 
   // Student quiz home page.
   quizHomeUrl: "/Quiz/",
