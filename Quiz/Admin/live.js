@@ -2,16 +2,26 @@
  const {client,$,requireAdmin,esc,localDate,toast}=CBQuiz;try{await requireAdmin()}catch{return}
  const id=new URLSearchParams(location.search).get("id"); if(!id){location.href="index.html";return}
  let quiz=null, channel=null;
+
+ function scheduleLine(){
+   if(quiz.start_mode!=="scheduled")return "";
+   const when=localDate(quiz.scheduled_start_at);
+   return `<div class="notice"><strong>Scheduled start:</strong> ${esc(when)}<br><span class="muted">The student waiting pages poll Supabase and open automatically at the scheduled time. Duration: ${Math.round(quiz.duration_seconds/60)} minutes.</span></div>`;
+ }
+
  async function load(){
-   const {data,error}=await client.rpc("quiz_admin_get_v1",{p_quiz_id:id}); if(error){$("control").innerHTML=esc(error.message);return}
+   const {data,error}=await client.rpc("quiz_admin_get_v7",{p_quiz_id:id});
+   if(error){$("control").innerHTML=esc(error.message);return}
    quiz=data;
    $("control").innerHTML=`<span class="badge ${esc(quiz.status)}">${esc(quiz.status)}</span>
    <h1>${esc(quiz.title)}</h1><div class="code-big">${esc(quiz.code)}</div>
    <p>${quiz.question_count} question${quiz.question_count===1?"":"s"} · ${Math.round(quiz.duration_seconds/60)} minutes · Joined: <strong>${quiz.joined_count}</strong></p>
+   ${scheduleLine()}
    <div class="actions" style="justify-content:center">
      ${["draft","waiting"].includes(quiz.status)?`<a class="btn ghost" href="edit.html?id=${encodeURIComponent(id)}">Edit Questions</a>`:""}
-     ${quiz.status==="draft"?`<button class="btn gold" id="openBtn">Open Waiting Room</button>`:""}
-     ${quiz.status==="waiting"?`<button class="btn teal" id="startBtn">START QUIZ</button>`:""}
+     ${quiz.start_mode==="manual"&&quiz.status==="draft"?`<button class="btn gold" id="openBtn">Open Waiting Room</button>`:""}
+     ${quiz.start_mode==="manual"&&quiz.status==="waiting"?`<button class="btn teal" id="startBtn">START QUIZ</button>`:""}
+     ${quiz.start_mode==="scheduled"&&quiz.status==="waiting"?`<span class="badge waiting">AUTO START ENABLED</span>`:""}
      ${quiz.status==="live"?`<button class="btn danger" id="closeBtn">CLOSE QUIZ</button>`:""}
      <a class="btn ghost" href="results.html?id=${encodeURIComponent(id)}">Results</a>
    </div>`;
@@ -31,5 +41,5 @@
    .on("postgres_changes",{event:"*",schema:"public",table:"quiz_attempts",filter:`quiz_id=eq.${id}`},loadParticipants)
    .on("postgres_changes",{event:"UPDATE",schema:"public",table:"quizzes",filter:`id=eq.${id}`},load)
    .subscribe();
- setInterval(loadParticipants,5000);
+ setInterval(()=>{loadParticipants();load()},5000);
 })();

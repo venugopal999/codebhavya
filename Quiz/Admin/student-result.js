@@ -34,13 +34,13 @@
     </div>
 
     <div class="tablewrap"><table class="table question-result-table">
-      <thead><tr><th>#</th><th>Question</th><th>Student Answer</th><th>Correct Answer</th><th>Result</th><th>Marks</th></tr></thead>
+      <thead><tr><th>#</th><th>Question</th><th>Student Answer</th><th>Correct Answer</th><th>Result</th><th>Marks</th><th>Time</th></tr></thead>
       <tbody>${qs.map((q,i)=>`<tr class="clickable-result-row" data-i="${i}">
         <td>Q${i+1}</td><td>${esc(q.question_text)}</td>
         <td>${esc(q.student_answer||"Not answered")}</td>
         <td>${esc(q.correct_answer||"—")}</td>
         <td><span class="result-pill ${q.status_class}">${q.is_correct===true?"Correct":q.is_correct===false?"Wrong":"Unanswered"}</span></td>
-        <td>${q.marks_awarded ?? 0}/${q.marks}</td>
+        <td>${q.marks_awarded ?? 0}/${q.marks}</td><td>${fmtDuration(q.time_spent_seconds||0)}</td>
       </tr>`).join("")}</tbody>
     </table></div>
 
@@ -50,7 +50,7 @@
     const q=qs[i];
     $("questionDetailPanel").hidden=false;
     $("questionDetailPanel").innerHTML=`
-      <div class="qmeta"><span>Question ${i+1} of ${qs.length}</span><span>${q.marks} mark${q.marks===1?"":"s"}</span></div>
+      <div class="qmeta"><span>Question ${i+1} of ${qs.length}</span><span>${q.marks} mark${q.marks===1?"":"s"} · ${fmtDuration(q.time_spent_seconds||0)}</span></div>
       <h2>${esc(q.question_text)}</h2>
       <div class="student-answer-detail">
         <div class="answer-detail-box ${q.is_correct===true?"correct":q.is_correct===false?"wrong":"unanswered"}">

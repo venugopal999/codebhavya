@@ -23,7 +23,7 @@
    $("bankEditorTitle").textContent="New Bank Question";
    $("bankCourse").value=$("filterCourse").value||"";
    $("bankTopic").value=$("filterTopic").value||"";
-   $("bankDifficulty").value="Medium"; $("bankMarks").value=1; $("bankTags").value=""; $("bankQuestionText").value="";
+   $("bankDifficulty").value="Medium"; $("bankMarks").value=1; $("bankNegative").value=0; $("bankTags").value=""; $("bankQuestionText").value="";
    drawOptions(["","","",""],0);
  }
 
@@ -33,7 +33,7 @@
    else{
      editingId=q.id; $("bankEditorTitle").textContent="Edit Bank Question";
      $("bankCourse").value=q.course||""; $("bankTopic").value=q.topic||""; $("bankDifficulty").value=q.difficulty||"Medium";
-     $("bankMarks").value=q.marks||1; $("bankTags").value=(q.tags||[]).join(", "); $("bankQuestionText").value=q.text||"";
+     $("bankMarks").value=q.marks||1; $("bankNegative").value=q.negative_marks||0; $("bankTags").value=(q.tags||[]).join(", "); $("bankQuestionText").value=q.text||"";
      const ci=Math.max(0,q.options.findIndex(o=>o.is_correct)); optionCount=q.options.length; drawOptions(q.options.map(o=>o.text),ci);
    }
    $("bankEditor").scrollIntoView({behavior:"smooth",block:"start"});
@@ -81,9 +81,9 @@
    const text=$("bankQuestionText").value.trim();
    if(!text||options.some(x=>!x)||correct<0){toast("Complete question, options and correct answer.","error");return}
    const tags=$("bankTags").value.split(",").map(x=>x.trim()).filter(Boolean);
-   const {error}=await client.rpc("quiz_bank_save_v6",{
+   const {error}=await client.rpc("quiz_bank_save_v7",{
      p_question_id:editingId,p_course:$("bankCourse").value.trim()||null,p_topic:$("bankTopic").value.trim()||null,
-     p_difficulty:$("bankDifficulty").value,p_question_text:text,p_marks:Number($("bankMarks").value)||1,
+     p_difficulty:$("bankDifficulty").value,p_question_text:text,p_marks:Number($("bankMarks").value)||1,p_negative_marks:Math.max(0,Number($("bankNegative").value)||0),
      p_tags:tags,p_options:options,p_correct_index:correct
    });
    if(error){toast(error.message,"error");return}
@@ -116,8 +116,8 @@
 
  $("templateBtn").onclick=()=>{
    const csv=[
-     ["question","option_a","option_b","option_c","option_d","correct_answer","marks","course","topic","difficulty","tags"],
-     ["Which operator gives remainder in C?","/","%","+","*","B","1","C Programming","Operators","Easy","arithmetic,operators"]
+     ["question","option_a","option_b","option_c","option_d","correct_answer","marks","negative_marks","course","topic","difficulty","tags"],
+     ["Which operator gives remainder in C?","/","%","+","*","B","1","0.25","C Programming","Operators","Easy","arithmetic,operators"]
    ];
    const text=csv.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(",")).join("\n");
    const blob=new Blob([text],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");
@@ -138,7 +138,7 @@
        return {
          question:String(lower.question||"").trim(),
          options:[lower.option_a,lower.option_b,lower.option_c,lower.option_d].map(x=>String(x||"").trim()),
-         correct_index:ci,marks:Number(lower.marks||1),
+         correct_index:ci,marks:Number(lower.marks||1),negative_marks:Math.max(0,Number(lower.negative_marks||0)),
          course:String(lower.course||"").trim()||null,topic:String(lower.topic||"").trim()||null,
          difficulty:String(lower.difficulty||"Medium").trim(),tags:String(lower.tags||"").split(",").map(x=>x.trim()).filter(Boolean)
        };

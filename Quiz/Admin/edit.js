@@ -30,28 +30,31 @@
   function setEditorEnabled(enabled){
     ["qText","qMarks","addOptionBtn","saveQuestionBtn","cancelEditBtn","newQuestionBtn","saveQuizBtn"].forEach(id=>{if($(id))$(id).disabled=!enabled});
     document.querySelectorAll("#editorPanel input,#editorPanel textarea,#editorPanel button").forEach(el=>el.disabled=!enabled);
-    ["title","course","duration","showResult","shuffleQuestions","shuffleOptions"].forEach(id=>{if($(id))$(id).disabled=!enabled});
+    ["title","course","duration","startMode","scheduledStart","showResult","shuffleQuestions","shuffleOptions"].forEach(id=>{if($(id))$(id).disabled=!enabled});
   }
 
   function resetEditor(){
-    editingQuestionId=null; $("editorTitle").textContent="Add Question"; $("qText").value=""; $("qMarks").value="1"; optionCount=4; drawOptions(["","","",""],0);
+    editingQuestionId=null; $("editorTitle").textContent="Add Question"; $("qText").value=""; $("qMarks").value="1"; $("qNegative").value="0"; optionCount=4; drawOptions(["","","",""],0);
   }
 
   function editQuestion(id){
     const q=bundle.questions.find(x=>x.id===id); if(!q)return;
-    editingQuestionId=id; $("editorTitle").textContent=`Edit Question ${q.position}`; $("qText").value=q.text; $("qMarks").value=q.marks;
+    editingQuestionId=id; $("editorTitle").textContent=`Edit Question ${q.position}`; $("qText").value=q.text; $("qMarks").value=q.marks; $("qNegative").value=q.negative_marks||0;
     const correct=Math.max(0,q.options.findIndex(o=>o.is_correct)); optionCount=q.options.length; drawOptions(q.options.map(o=>o.text),correct);
     $("editorPanel").scrollIntoView({behavior:"smooth",block:"start"});
   }
 
   async function load(){
-    const {data,error}=await client.rpc("quiz_admin_edit_bundle_v2",{p_quiz_id:quizId});
+    const {data,error}=await client.rpc("quiz_admin_edit_bundle_v7",{p_quiz_id:quizId});
     if(error){document.querySelector("main").innerHTML=`<section class="panel"><div class="notice bad">${esc(error.message)}</div></section>`;return}
     bundle=data; const q=data.quiz;
     $("title").value=q.title||""; $("course").value=q.course||""; $("duration").value=Math.round(q.duration_seconds/60); $("showResult").value=q.show_result;
+    $("startMode").value=q.start_mode||"manual";
+    $("scheduleFields").hidden=$("startMode").value!=="scheduled";
+    $("scheduledStart").value=q.scheduled_start_at?new Date(q.scheduled_start_at).toISOString().slice(0,16):"";
     $("shuffleQuestions").checked=!!q.shuffle_questions; $("shuffleOptions").checked=!!q.shuffle_options; $("controlLink").href=`live.html?id=${encodeURIComponent(q.id)}`;
     $("editStatus").innerHTML=`<div class="notice ${editable()?"":"warn"}">Status: <strong>${esc(q.status)}</strong> · Code: <strong>${esc(q.code)}</strong>${editable()?" · Editing is allowed until Start is pressed.":" · This quiz is locked because it has started or closed."}</div>`;
-    $("questionList").innerHTML=(data.questions||[]).map(x=>`<div class="question-manage-row"><div><strong>Q${x.position}. ${esc(x.text)}</strong><div class="muted">${x.options.length} options · ${x.marks} mark${x.marks===1?"":"s"}</div></div><div class="actions compact">${editable()?`<button class="btn ghost editQ" data-id="${esc(x.id)}">Edit</button><button class="btn danger deleteQ" data-id="${esc(x.id)}">Delete</button>`:""}</div></div>`).join("")||'<div class="notice warn">No questions yet.</div>';
+    $("questionList").innerHTML=(data.questions||[]).map(x=>`<div class="question-manage-row"><div><strong>Q${x.position}. ${esc(x.text)}</strong><div class="muted">${x.options.length} options · +${x.marks} / -${Number(x.negative_marks||0)}</div></div><div class="actions compact">${editable()?`<button class="btn ghost editQ" data-id="${esc(x.id)}">Edit</button><button class="btn danger deleteQ" data-id="${esc(x.id)}">Delete</button>`:""}</div></div>`).join("")||'<div class="notice warn">No questions yet.</div>';
     document.querySelectorAll(".editQ").forEach(b=>b.onclick=()=>editQuestion(b.dataset.id));
     document.querySelectorAll(".deleteQ").forEach(b=>b.onclick=async()=>{
       if(!confirm("Delete this question?"))return;
@@ -63,10 +66,11 @@
   }
 
   $("saveQuizBtn").onclick=async()=>{
-    const {error}=await client.rpc("quiz_admin_update_quiz_v2",{
+    const {error}=await client.rpc("quiz_admin_update_quiz_v7",{
       p_quiz_id:quizId,p_title:$("title").value.trim(),p_course:$("course").value.trim()||null,
       p_duration_seconds:Math.round(Number($("duration").value)*60),p_show_result:$("showResult").value,
-      p_shuffle_questions:$("shuffleQuestions").checked,p_shuffle_options:$("shuffleOptions").checked
+      p_shuffle_questions:$("shuffleQuestions").checked,p_shuffle_options:$("shuffleOptions").checked,
+      p_start_mode:$("startMode").value,p_scheduled_start_at:$("startMode").value==="scheduled"&&$("scheduledStart").value?new Date($("scheduledStart").value).toISOString():null
     });
     if(error){toast(error.message,"error");return} toast("Quiz settings saved."); await load();
   };
@@ -80,16 +84,17 @@
   };
 
   $("saveQuestionBtn").onclick=async()=>{
-    const text=$("qText").value.trim(),marks=Number($("qMarks").value)||1;
+    const text=$("qText").value.trim(),marks=Number($("qMarks").value)||1,negative=Math.max(0,Number($("qNegative").value)||0);
     const options=[...document.querySelectorAll(".opt-text")].map(x=>x.value.trim());
     const correct=Number(document.querySelector('input[name="correct"]:checked')?.value??-1);
     if(!text||options.length<2||options.some(x=>!x)||correct<0){toast("Complete the question, options and correct answer.","error");return}
     const call=editingQuestionId
-      ? client.rpc("quiz_admin_update_question_v2",{p_question_id:editingQuestionId,p_question_text:text,p_marks:marks,p_options:options,p_correct_index:correct})
-      : client.rpc("quiz_admin_add_question_v1",{p_quiz_id:quizId,p_question_text:text,p_marks:marks,p_options:options,p_correct_index:correct});
+      ? client.rpc("quiz_admin_update_question_v7",{p_question_id:editingQuestionId,p_question_text:text,p_marks:marks,p_negative_marks:negative,p_options:options,p_correct_index:correct})
+      : client.rpc("quiz_admin_add_question_v7",{p_quiz_id:quizId,p_question_text:text,p_marks:marks,p_negative_marks:negative,p_options:options,p_correct_index:correct});
     const {error}=await call; if(error){toast(error.message,"error");return}
     toast(editingQuestionId?"Question updated.":"Question added."); editingQuestionId=null; await load(); resetEditor();
   };
 
+  $("startMode").onchange=()=>{$("scheduleFields").hidden=$("startMode").value!=="scheduled"};
   await load();
 })();

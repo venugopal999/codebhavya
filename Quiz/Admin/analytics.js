@@ -24,7 +24,7 @@
    <td>Q${q.position}</td>
    <td><strong>${esc(q.question_text)}</strong>${q.accuracy===data.easiest_accuracy?'<span class="analytics-label easy">Easiest</span>':""}${q.accuracy===data.hardest_accuracy?'<span class="analytics-label hard">Hardest</span>':""}</td>
    <td>${q.correct_count}</td><td>${q.wrong_count}</td><td>${q.unanswered_count}</td>
-   <td><strong>${Number(q.accuracy||0).toFixed(1)}%</strong></td>
+   <td><strong>${Number(q.accuracy||0).toFixed(1)}%</strong></td><td>${fmtDuration(q.average_time_seconds||0)}</td>
    <td><div class="option-dist">${(q.options||[]).map(o=>`<div><span>${esc(o.label)}${o.is_correct?" ✓":""}</span><strong>${o.count}</strong></div>`).join("")}</div></td>
  </tr>`).join("")||'<tr><td colspan="7">No questions.</td></tr>';
 
@@ -34,7 +34,7 @@
    Correct:q.correct_count,
    Wrong:q.wrong_count,
    Unanswered:q.unanswered_count,
-   Accuracy_Percent:Number(q.accuracy||0).toFixed(2),
+   Accuracy_Percent:Number(q.accuracy||0).toFixed(2),Average_Time_Seconds:Number(q.average_time_seconds||0),
    Option_Distribution:(q.options||[]).map(o=>`${o.label}: ${o.count}${o.is_correct?" (correct)":""}`).join(" | ")
  }));
 
