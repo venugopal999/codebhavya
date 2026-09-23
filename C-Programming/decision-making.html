@@ -86,38 +86,161 @@
 </aside>
 <main class="main-content">
 <section class="content-card" data-content-standard="teaching-complete-v1" id="decision-making">
-<h2>🔀 8. Decision Making</h2><div class="cb-teaching-standard"><strong>🎓 Concept-First Explanation</strong><p>This lesson is organized in the same order a faculty member would normally teach it: meaning → purpose → syntax/model → internal working → examples → common confusion → safe use. The guided examples from the earlier lesson are preserved afterward for reinforcement.</p></div><h3>8.1 Decision Making Means Choosing a Control-Flow Path</h3><p>Decision statements evaluate a condition and choose which statement or block executes next. The key idea is not merely syntax such as <code>if</code>; it is control flow: the program may follow different paths for different data.</p><div class="cb-concept-tree"><pre>condition
-   ├── true  → path A
-   └── false → path B</pre></div><h3>8.2 Truth and Falsehood in C</h3><p>In a controlling expression, zero is false and any nonzero scalar value is true. Relational and logical operators produce <code>0</code> or <code>1</code>, but <code>if</code> can test other scalar expressions too.</p><pre><code>int x = -5;
+<h2>🔀 8. Decision Making</h2><div class="cb-teaching-standard"><strong>🎓 Concept-First Explanation</strong><p>This lesson is organized in the same order a faculty member would normally teach it: meaning → purpose → syntax/model → internal working → examples → common confusion → safe use. The guided examples from the earlier lesson are preserved afterward for reinforcement.</p></div><h3>8.1 What Is Decision Making?</h3>
+<div class="cb-deep-dive">
+<div class="cb-deep-dive-title">🎯 A Program Sometimes Has to Choose</div>
+<p>So far, our programs have mostly followed statements from top to bottom. Real programs cannot always do that. They need to <strong>choose a different action depending on the data</strong>.</p>
+<div class="cb-concept-tree"><pre>Input / current state
+        ↓
+     Condition
+      /      \\
+   true      false
+    ↓          ↓
+ Action A    Action B
+        \\    /
+         Continue</pre></div>
+<div class="cb-concept-grid">
+<div><strong>if</strong><span>Run a block only when a condition is true</span></div>
+<div><strong>if-else</strong><span>Choose between two alternatives</span></div>
+<div><strong>else-if</strong><span>Choose among several conditions</span></div>
+<div><strong>switch</strong><span>Choose among discrete constant cases</span></div>
+<div><strong>?:</strong><span>Choose one of two values inside an expression</span></div>
+<div><strong>goto</strong><span>Transfer control to a labeled statement; use carefully</span></div>
+</div>
+<div class="cb-why-box"><strong>💡 Main idea</strong><p>Decision making is not about memorizing <code>if</code> syntax. It is about controlling <strong>which path the program follows</strong>.</p></div>
+</div>
+
+<h3>8.2 Conditions in C — What Counts as True?</h3>
+<div class="cb-deep-dive">
+<p>When C evaluates a controlling expression such as the expression inside <code>if</code>, <strong>zero means false</strong> and <strong>any nonzero value means true</strong>.</p>
+<div class="cb-concept-grid">
+<div><strong>0</strong><span>false</span></div>
+<div><strong>1</strong><span>true</span></div>
+<div><strong>-5</strong><span>true</span></div>
+<div><strong>100</strong><span>true</span></div>
+</div>
+<pre><code>int x = -5;
+
 if (x)
-    puts("nonzero -&gt; true");</code></pre><div class="example-box"><strong>Do not confuse truth with the value 1</strong><p>A condition does not have to equal exactly 1 to be true. Any nonzero value is treated as true.</p></div><h3>8.3 Simple if Statement</h3><pre><code>if (temperature &gt; 40)
+{
+    puts("x is nonzero");
+}</code></pre>
+<div class="cb-confusion-box"><strong>⚠️ Important:</strong><p>A condition does <strong>not</strong> have to equal exactly <code>1</code>. Any nonzero value is treated as true. Relational and logical operators commonly produce <code>0</code> or <code>1</code>, but <code>if</code> can test other scalar expressions too.</p></div>
+</div>
+
+<h3>8.3 Simple <code>if</code> — Run Something Only When Needed</h3>
+<div class="cb-deep-dive">
+<p>Use <code>if</code> when there is an action that should happen <strong>only if a condition is satisfied</strong>.</p>
+<pre><code>if (temperature &gt; 40)
 {
     puts("High temperature");
-}</code></pre><p>The condition is evaluated first. If it is nonzero, the controlled statement/block executes. If it is zero, control continues after the <code>if</code> statement.</p><h3>8.4 if-else: Exactly One of Two Alternatives</h3><pre><code>if (n % 2 == 0)
+}</code></pre>
+<div class="cb-memory-diagram"><pre>Evaluate temperature &gt; 40
+          ↓
+       Is it true?
+       /       \\
+     YES        NO
+      ↓          ↓
+ print message  skip block
+      \          /
+       ↓        ↓
+       continue after if</pre></div>
+<ul>
+<li>The condition is evaluated first.</li>
+<li>If it is nonzero, the controlled statement/block executes.</li>
+<li>If it is zero, the block is skipped.</li>
+<li>Execution then continues with the statement after the <code>if</code>.</li>
+</ul>
+<div class="cb-important-box"><strong>🎯 Good habit:</strong><p>Use braces even when there is only one statement. They make the intended block obvious and reduce maintenance mistakes.</p></div>
+</div>
+
+<h3>8.4 <code>if-else</code> — Choose Between Two Alternatives</h3>
+<div class="cb-deep-dive">
+<pre><code>if (n % 2 == 0)
 {
     puts("Even");
 }
 else
 {
     puts("Odd");
-}</code></pre><p>For one execution of this statement, exactly one branch is selected. The second branch is not separately tested; it is the fallback when the first condition is false.</p><h3>8.5 else-if Ladder — First Matching Branch Wins</h3><pre><code>if (marks &gt;= 90)
+}</code></pre>
+<div class="cb-concept-tree"><pre>n % 2 == 0
+     ↓
+  ┌──┴──┐
+ true  false
+  ↓       ↓
+Even     Odd
+  └──┬────┘
+     ↓
+  continue</pre></div>
+<p>For one execution of this statement, one branch is selected. The <code>else</code> block is the fallback when the <code>if</code> condition is false.</p>
+<div class="cb-why-box"><strong>💡 When to use it</strong><p>Use <code>if-else</code> when the problem naturally says <strong>“if this happens, do A; otherwise, do B.”</strong></p></div>
+</div>
+
+<h3>8.5 <code>else-if</code> Ladder — Check Conditions in Order</h3>
+<div class="cb-deep-dive">
+<pre><code>if (marks &gt;= 90)
     grade = 'A';
 else if (marks &gt;= 75)
     grade = 'B';
 else if (marks &gt;= 60)
     grade = 'C';
 else
-    grade = 'D';</code></pre><p>Conditions are evaluated from top to bottom until one is true. Therefore condition order is part of the algorithm. If a broad condition appears before a narrower one, the narrower branch may never be reached.</p><h3>8.6 Nested if — A Decision Inside Another Decision</h3><pre><code>if (usernameValid)
+    grade = 'D';</code></pre>
+<div class="cb-memory-diagram"><pre>marks &gt;= 90 ?  → A
+      ↓ no
+marks &gt;= 75 ?  → B
+      ↓ no
+marks &gt;= 60 ?  → C
+      ↓ no
+     else     → D</pre></div>
+<ul>
+<li>Conditions are evaluated from <strong>top to bottom</strong>.</li>
+<li>The first true condition selects its branch.</li>
+<li>Once a branch is selected, the remaining conditions are skipped.</li>
+<li>If no condition is true, the final <code>else</code> executes, if present.</li>
+</ul>
+<div class="cb-confusion-box"><strong>⚠️ Condition order matters</strong><p>If a broad condition is placed before a narrower condition, the later branch may never be reached. Write conditions from the most appropriate first test to the fallback cases.</p></div>
+</div>
+
+<h3>8.6 Nested <code>if</code> — A Decision Inside Another Decision</h3>
+<div class="cb-deep-dive">
+<pre><code>if (usernameValid)
 {
     if (passwordValid)
+    {
         puts("Login allowed");
+    }
     else
+    {
         puts("Wrong password");
-}</code></pre><p>Nesting is useful when the second decision is meaningful only after the first succeeds. Deep nesting can reduce readability; combine conditions or extract functions when that communicates the rule more clearly.</p><h3>8.7 Dangling else — Which if Receives the else?</h3><pre><code>if (a &gt; 0)
+    }
+}</code></pre>
+<div class="cb-concept-tree"><pre>Username valid?
+      ↓
+   ┌──┴──┐
+  NO    YES
+  ↓       ↓
+stop   Password valid?
+          ↓
+       ┌──┴──┐
+      NO    YES
+      ↓       ↓
+ wrong     allowed</pre></div>
+<p>Nested decisions are useful when the second question makes sense only after the first condition succeeds.</p>
+<div class="cb-important-box"><strong>🎯 Readability rule</strong><p>Deep nesting can make code difficult to understand. When the logic becomes complicated, consider clearer conditions, early returns, or separate functions.</p></div>
+</div>
+
+<h3>8.7 The Dangling <code>else</code> — A Common Beginner Trap</h3>
+<div class="cb-deep-dive">
+<pre><code>if (a &gt; 0)
     if (b &gt; 0)
         puts("both positive");
     else
-        puts("b is not positive");</code></pre><p>Without braces, an <code>else</code> associates with the nearest unmatched <code>if</code>. This is legal C but easy to misread. Braces make intended structure explicit.</p><pre><code>if (a &gt; 0)
+        puts("b is not positive");</code></pre>
+<div class="cb-confusion-box"><strong>⚠️ Which <code>if</code> owns the <code>else</code>?</strong><p>In C, an <code>else</code> belongs to the <strong>nearest unmatched <code>if</code></strong>. Therefore the <code>else</code> above belongs to <code>if (b &gt; 0)</code>.</p></div>
+<p>Braces remove the ambiguity and make the intended structure visible:</p>
+<pre><code>if (a &gt; 0)
 {
     if (b &gt; 0)
         puts("both positive");
@@ -125,31 +248,126 @@ else
 else
 {
     puts("a is not positive");
-}</code></pre><h3>8.8 switch Statement — Multi-Way Selection on Discrete Values</h3><pre><code>switch (choice)
+}</code></pre>
+<div class="cb-why-box"><strong>💡 CodeBhavya rule:</strong><p>For beginner code and production code, braces are usually the safer and clearer choice.</p></div>
+</div>
+
+<h3>8.8 <code>switch</code> — Multi-Way Selection</h3>
+<div class="cb-deep-dive">
+<p><code>switch</code> is useful when one expression is compared against a set of <strong>discrete constant values</strong>.</p>
+<pre><code>switch (choice)
 {
     case 1:
         puts("Add");
         break;
+
     case 2:
         puts("Delete");
         break;
+
     default:
         puts("Invalid choice");
-}</code></pre><p>The controlling expression has an integer or enumeration type after permitted promotions. Each <code>case</code> label uses an integer constant expression. <code>switch</code> is not a general replacement for ranges such as <code>score &gt;= 90</code>.</p><h3>8.9 break and Fall-Through in switch</h3><p><code>break</code> exits the nearest enclosing <code>switch</code> or loop. Without it, execution continues into following case statements after a matching label is entered. This is called fall-through.</p><pre><code>switch (grade)
+}</code></pre>
+<div class="cb-concept-grid">
+<div><strong>switch</strong><span>Expression being tested</span></div>
+<div><strong>case</strong><span>Constant value to match</span></div>
+<div><strong>break</strong><span>Leave the switch</span></div>
+<div><strong>default</strong><span>Runs when no case matches</span></div>
+</div>
+<div class="cb-confusion-box"><strong>⚠️ Not for every condition</strong><p><code>switch</code> is not a general replacement for conditions such as <code>marks &gt;= 90</code> or <code>age &gt; 18 &amp;&amp; age &lt; 60</code>. It is designed around matching an expression with case values.</p></div>
+</div>
+
+<h3>8.9 <code>break</code> and Fall-Through in <code>switch</code></h3>
+<div class="cb-deep-dive">
+<p>After a matching case is entered, execution continues through following statements until a control-flow transfer such as <code>break</code> occurs or the switch ends.</p>
+<pre><code>switch (grade)
 {
     case 'A':
     case 'B':
         puts("Pass with strong grade");
         break;
+
     default:
         puts("Other grade");
-}</code></pre><div class="example-box"><strong>Intentional vs accidental</strong><p>Grouped labels can intentionally use fall-through. When fall-through is not intended, a missing <code>break</code> is a common bug.</p></div><h3>8.10 if-else vs switch — Choose by the Shape of the Condition</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Use if/else when</th><th>Use switch when</th></tr></thead><tbody><tr><td>Ranges or inequalities are central</td><td>Comparing one expression against discrete constant values</td></tr><tr><td>Different variables participate in conditions</td><td>Menu/state values map naturally to cases</td></tr><tr><td>Complex logical expressions are needed</td><td>Cases improve readability of many exact-value alternatives</td></tr></tbody></table></div><h3>8.11 Conditional Operator ?: for Choosing a Value</h3><pre><code>int max = (a &gt; b) ? a : b;</code></pre><p>The conditional operator is an expression: it chooses one of two expression results. Use it for compact value selection, not to compress large blocks of unrelated statements.</p><h3>8.12 goto and Labels — Unconditional Transfer</h3><pre><code>if (resource2_failed)
+}</code></pre>
+<div class="cb-memory-diagram"><pre>grade == 'A' ─┐
+              ├→ same block → break → exit switch
+grade == 'B' ─┘
+
+no match ───────────────→ default</pre></div>
+<p>When multiple labels intentionally share one block, fall-through is useful. When it happens accidentally because a <code>break</code> was forgotten, it becomes a bug.</p>
+<div class="cb-important-box"><strong>🎯 Interview point:</strong><p><code>break</code> exits the nearest enclosing <code>switch</code> or loop. It does not mean “go to the next case.”</p></div>
+</div>
+
+<h3>8.10 <code>if-else</code> vs <code>switch</code> — Choose by the Problem</h3>
+<div class="cb-deep-dive">
+<div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Use <code>if/else</code> when</th><th>Use <code>switch</code> when</th></tr></thead><tbody><tr><td>Ranges or inequalities matter</td><td>One expression is matched against discrete constant values</td></tr><tr><td>Several variables participate in the condition</td><td>A menu, command or state maps naturally to cases</td></tr><tr><td>Complex logical expressions are required</td><td>Many exact-value alternatives would be clearer as cases</td></tr></tbody></table></div>
+<div class="cb-why-box"><strong>💡 Example</strong><p><code>marks &gt;= 90</code> is naturally an <code>if</code> condition. A menu choice such as <code>1 = Add, 2 = Delete, 3 = Exit</code> is naturally expressed with <code>switch</code>.</p></div>
+</div>
+
+<h3>8.11 Conditional Operator <code>?:</code> — Choose a Value</h3>
+<div class="cb-deep-dive">
+<pre><code>int max = (a &gt; b) ? a : b;</code></pre>
+<div class="cb-concept-tree"><pre>condition: a &gt; b
+       ↓
+   ┌───┴───┐
+ true     false
+  ↓          ↓
+  a          b
+   \        /
+    → value ←</pre></div>
+<p>The conditional operator is an <strong>expression</strong>. It evaluates the condition and produces one of two expression results.</p>
+<div class="cb-concept-grid"><div><strong>condition</strong><span>Test to perform</span></div><div><strong>?</strong><span>Choose the true expression</span></div><div><strong>true expression</strong><span>Result when condition is true</span></div><div><strong>:</strong><span>Separates the two choices</span></div><div><strong>false expression</strong><span>Result when condition is false</span></div></div>
+<div class="cb-confusion-box"><strong>⚠️ Don't overuse it</strong><p>A short value selection can be clear with <code>?:</code>. Large nested conditional expressions can become harder to read than a normal <code>if-else</code>.</p></div>
+</div>
+
+<h3>8.12 <code>goto</code> and Labels — Unconditional Transfer</h3>
+<div class="cb-deep-dive">
+<p><code>goto</code> transfers control directly to a labeled statement in the same function.</p>
+<pre><code>if (resource2_failed)
     goto cleanup_resource1;
 
 /* normal work */
 
 cleanup_resource1:
-    release_resource1();</code></pre><p><code>goto</code> transfers control to a label within the same function. Most ordinary decisions/loops are clearer with structured constructs, but carefully used forward jumps can simplify centralized cleanup in low-level C code.</p><h3>8.13 Boundary Conditions Are Part of the Requirement</h3><p>A condition can look correct while being wrong at the boundary. Translate words such as “at least,” “more than,” “between,” and “up to” into operators carefully.</p><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Requirement</th><th>Typical condition</th></tr></thead><tbody><tr><td>At least 18</td><td><code>age &gt;= 18</code></td></tr><tr><td>More than 18</td><td><code>age &gt; 18</code></td></tr><tr><td>From 10 through 100</td><td><code>n &gt;= 10 &amp;&amp; n &lt;= 100</code></td></tr><tr><td>Outside 10..100</td><td><code>n &lt; 10 || n &gt; 100</code></td></tr></tbody></table></div><h3>8.14 Decision-Design Method</h3><div class="formula-box">State the rule in words → identify mutually exclusive cases → write boundary values → choose if/switch → test every boundary and fallback</div><p>Testing only “normal” middle values hides many decision bugs. For a pass mark of 40, test 39, 40 and 41—not only 75.</p><h3>8.15 Quick Revision</h3>
+    release_resource1();</code></pre>
+<div class="cb-why-box"><strong>💡 Where it can be useful</strong><p>In low-level C, a carefully controlled <code>goto</code> is sometimes used for cleanup when several resources may need to be released on different failure paths.</p></div>
+<div class="cb-confusion-box"><strong>⚠️ Why beginners are told to avoid it</strong><p>Unstructured jumps can make control flow difficult to follow. Do not use <code>goto</code> merely to replace normal <code>if</code>, loops or functions. Understand structured control flow first.</p></div>
+</div>
+
+<h3>8.13 Boundary Conditions Are Part of the Algorithm</h3>
+<div class="cb-deep-dive">
+<p>A decision is not complete until you know what happens at the <strong>boundary values</strong>.</p>
+<pre><code>if (marks &gt;= 40)
+    puts("Pass");
+else
+    puts("Fail");</code></pre>
+<div class="cb-concept-grid"><div><strong>39</strong><span>Fail</span></div><div><strong>40</strong><span>Pass</span></div><div><strong>41</strong><span>Pass</span></div></div>
+<p>The difference between <code>&gt; 40</code> and <code>&gt;= 40</code> changes the result for exactly one important boundary value.</p>
+<div class="cb-important-box"><strong>🎯 Placement habit</strong><p>Whenever you write a condition, test at least one value <strong>below</strong>, one value <strong>at</strong>, and one value <strong>above</strong> the boundary.</p></div>
+</div>
+
+<h3>8.14 Decision-Design Method — Think Before Writing <code>if</code></h3>
+<div class="cb-deep-dive">
+<div class="cb-concept-tree"><pre>1. Understand the requirement
+          ↓
+2. Identify the possible outcomes
+          ↓
+3. Identify the condition for each outcome
+          ↓
+4. Check boundary values
+          ↓
+5. Choose if / if-else / else-if / switch
+          ↓
+6. Write the simplest clear structure
+          ↓
+7. Test normal + boundary + invalid cases</pre></div>
+<div class="cb-concept-grid"><div><strong>Step 1</strong><span>What decision does the problem require?</span></div><div><strong>Step 2</strong><span>What are all possible outcomes?</span></div><div><strong>Step 3</strong><span>What exact condition selects each outcome?</span></div><div><strong>Step 4</strong><span>What happens at equality and boundaries?</span></div><div><strong>Step 5</strong><span>Which C construct communicates the rule best?</span></div><div><strong>Step 6</strong><span>Can another programmer understand it quickly?</span></div></div>
+<div class="cb-why-box"><strong>💡 Example: student result</strong><p>Requirement: marks below 40 → Fail; 40–59 → Pass; 60–74 → First Class; 75–89 → Distinction; 90+ → Outstanding.</p><p>Before coding, write the ranges clearly. Then order the conditions so every value is covered exactly once.</p></div>
+<div class="cb-confusion-box"><strong>⚠️ Avoid “condition guessing”</strong><p>Do not start writing <code>if</code> statements before deciding the ranges. Most decision bugs come from missing boundaries, overlapping conditions or incorrect condition order—not from the <code>if</code> syntax itself.</p></div>
+</div>
+
+<h3>8.15 Quick Revision</h3>
 <div class="tip-box">
 
         📌 <strong>if</strong> → One condition
