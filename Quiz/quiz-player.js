@@ -6,7 +6,8 @@
   const attemptId = params.get("attempt");
   if (!attemptId) { location.href="./"; return; }
 
-  let state=null, payload=null, current=0, answers={}, timerId=null, channel=null, waitingPoll=null, inReview=false;
+  let state=null, payload=null, current=0, answers={}, timerId=null, channel=null, waitingPoll=null;
+  let inReview=false, examActive=false, submitting=false, fullscreenExitBusy=false, resumeMode="quiz";
 
   async function loadState() {
     const { data, error } = await client.rpc("quiz_state_for_attempt_v1", { p_attempt_id: attemptId });
@@ -34,34 +35,53 @@
     if (payload.shuffle_options) payload.questions.forEach(q => q.options = deterministicShuffle(q.options, `${attemptId}:${q.id}:options`));
   }
 
-  async function goFullscreen() {
+  async function requestExamFullscreen() {
     const ok = await enterFullscreen();
-    if (ok) updateExamGuard();
+    if (ok) {
+      updateWaitingFullscreenState();
+      return true;
+    }
+    return false;
   }
 
-  function updateExamGuard() {
-    const guard=$("examGuard");
-    if (!guard) return;
-    if (state?.status === "live" && !document.fullscreenElement) {
-      guard.innerHTML='<div class="notice warn exam-guard">Full-screen mode is recommended for the quiz. <button class="btn ghost mini" id="guardFullscreen">Enter Full Screen</button></div>';
-      $("guardFullscreen")?.addEventListener("click",goFullscreen);
+  function updateWaitingFullscreenState() {
+    const btn=$("waitingFullscreen");
+    const status=$("fullscreenReadyStatus");
+    if (!btn || !status) return;
+    if (document.fullscreenElement) {
+      btn.textContent="Full Screen Ready ✓";
+      btn.disabled=true;
+      btn.classList.remove("teal");
+      btn.classList.add("ghost");
+      status.innerHTML='<span class="fullscreen-ready">✓ Ready for quiz</span>';
     } else {
-      guard.innerHTML="";
+      btn.textContent="Enter Full Screen & Get Ready";
+      btn.disabled=false;
+      btn.classList.add("teal");
+      btn.classList.remove("ghost");
+      status.innerHTML='<span class="fullscreen-not-ready">Full screen is required before questions can open.</span>';
     }
   }
 
   function renderWaiting() {
+    examActive=false;
     inReview=false;
+    $("examGuard").innerHTML="";
     $("quizRoot").innerHTML = `<section class="panel waiting-card">
       <span class="pulse"></span>
       <h1>${esc(state.title)}</h1>
       <p class="muted">${esc(state.course || "")}</p>
       <div class="code-big">${esc(state.code)}</div>
-      <div class="notice warn">You are joined. Keep this page open. The quiz will open automatically when faculty clicks Start.</div>
+      <div class="notice warn">You are joined. Before the quiz starts, enter full-screen mode and remain there until submission.</div>
       <p>${state.question_count} question${state.question_count===1?"":"s"} · ${Math.round(state.duration_seconds/60)} minutes</p>
-      <div class="actions" style="justify-content:center"><button class="btn teal" id="waitingFullscreen">Enter Full Screen</button></div>
+      <div id="fullscreenReadyStatus" class="fullscreen-ready-line"></div>
+      <div class="actions" style="justify-content:center">
+        <button class="btn teal" id="waitingFullscreen">Enter Full Screen & Get Ready</button>
+      </div>
+      <p class="muted small-note">When faculty starts the quiz, questions open only while this page is in browser full-screen mode.</p>
     </section>`;
-    $("waitingFullscreen")?.addEventListener("click",goFullscreen);
+    $("waitingFullscreen")?.addEventListener("click", requestExamFullscreen);
+    updateWaitingFullscreenState();
     startWaitingPoll();
   }
 
@@ -74,7 +94,7 @@
         await loadState();
         if (state.status!==before || state.question_count!==oldCount) await openLive();
       }catch(e){console.warn(e)}
-    },2000);
+    },1500);
   }
 
   function stopWaitingPoll(){clearInterval(waitingPoll);waitingPoll=null}
@@ -85,20 +105,60 @@
     return Math.max(0, Math.ceil((deadline-Date.now())/1000));
   }
 
+  function renderFullscreenGate() {
+    examActive=false;
+    inReview=false;
+    $("examGuard").innerHTML="";
+    $("quizRoot").innerHTML = `
+      <div class="quizhead">
+        <div><strong>${esc(state.title)}</strong><div class="muted">${esc(state.course||"")}</div></div>
+        <div class="timer" id="timer">${fmtDuration(remainingSeconds())}</div>
+        <span class="badge live">LIVE</span>
+      </div>
+      <section class="panel fullscreen-gate center">
+        <div class="fs-lock-icon">⛶</div>
+        <h1>Quiz has started</h1>
+        <p class="lead-text">Full-screen mode is required before the questions are shown.</p>
+        <div class="notice warn"><strong>Your quiz timer is already running.</strong><br>Enter full screen now to begin answering.</div>
+        <button class="btn teal fullscreen-main-btn" id="startFullscreenBtn">Enter Full Screen & Start Answering</button>
+        <p class="muted small-note">During the live quiz, leaving full screen triggers a warning. On the third full-screen exit, your quiz is automatically submitted.</p>
+      </section>`;
+    $("startFullscreenBtn").onclick=async()=>{
+      const ok=await requestExamFullscreen();
+      if(!ok) return;
+      try{
+        if(!payload) await loadPayload();
+        examActive=true;
+        renderQuiz();
+        startTimer();
+      }catch(e){toast(e.message,"error")}
+    };
+    startTimer();
+  }
+
   async function openLive() {
     await loadState();
     if (state.status === "closed" || state.attempt_status === "submitted") {
       stopWaitingPoll();
+      submitting=true;
       location.href=`result.html?attempt=${encodeURIComponent(attemptId)}`;
       return;
     }
     if (state.status !== "live") { renderWaiting(); return; }
+
     stopWaitingPoll();
-    await loadPayload();
+
+    // Questions are never shown until browser Fullscreen API is active.
+    if (!document.fullscreenElement) {
+      renderFullscreenGate();
+      return;
+    }
+
+    if(!payload) await loadPayload();
     current=Math.min(current,Math.max(0,payload.questions.length-1));
+    examActive=true;
     renderQuiz();
     startTimer();
-    updateExamGuard();
   }
 
   function optionHtml(q) {
@@ -119,8 +179,15 @@
   }
 
   function renderQuiz() {
+    if(!document.fullscreenElement){
+      renderFullscreenGate();
+      return;
+    }
+
+    examActive=true;
     inReview=false;
     const q = payload.questions[current];
+    $("examGuard").innerHTML="";
     $("quizRoot").innerHTML = `
       <div class="quizhead">
         <div><strong>${esc(payload.title)}</strong><div class="muted">${esc(payload.course||"")}</div></div>
@@ -151,13 +218,19 @@
       if(current<payload.questions.length-1){current++;renderQuiz()} else {renderReview()}
     };
     $("submitBtn").onclick=()=>submit(false);
-    updateExamGuard();
   }
 
   function renderReview() {
+    if(!document.fullscreenElement){
+      renderFullscreenGate();
+      return;
+    }
+
+    examActive=true;
     inReview=true;
     const answered=payload.questions.filter(q=>answers[q.id]).length;
     const unanswered=payload.questions.length-answered;
+    $("examGuard").innerHTML="";
     $("quizRoot").innerHTML=`
       <div class="quizhead">
         <div><strong>${esc(payload.title)}</strong><div class="muted">Review before submission</div></div>
@@ -180,11 +253,10 @@
     bindPalette();
     $("backQuestions").onclick=()=>renderQuiz();
     $("reviewSubmit").onclick=()=>submit(false);
-    updateExamGuard();
   }
 
   async function saveCurrent() {
-    if (!payload || inReview) return;
+    if (!payload || inReview || submitting) return;
     const q = payload.questions[current];
     const selected = document.querySelector('input[name="answer"]:checked');
     if (!selected) return;
@@ -201,17 +273,96 @@
       const rem=remainingSeconds();
       const el=$("timer");
       if(el){el.textContent=fmtDuration(rem);el.classList.toggle("urgent",rem<=60)}
-      if(rem<=0){clearInterval(timerId);await submit(true)}
+      if(rem<=0 && !submitting){clearInterval(timerId);await submit(true)}
     };
     tick(); timerId=setInterval(tick,1000);
   }
 
   async function submit(auto) {
+    if(submitting) return;
     if (!auto && !confirm("Submit this quiz now? You cannot attempt it again.")) return;
-    await saveCurrent();
-    const { error } = await client.rpc("quiz_submit_v1", { p_attempt_id: attemptId });
-    if (error) { toast(error.message,"error"); return; }
-    location.href=`result.html?attempt=${encodeURIComponent(attemptId)}`;
+    submitting=true;
+    try{
+      await saveCurrent();
+      const { error } = await client.rpc("quiz_submit_v1", { p_attempt_id: attemptId });
+      if (error) { submitting=false; toast(error.message,"error"); return; }
+      location.href=`result.html?attempt=${encodeURIComponent(attemptId)}`;
+    }catch(e){
+      submitting=false;
+      toast(e.message,"error");
+    }
+  }
+
+  function renderFullscreenWarning(count, maxWarnings=3) {
+    examActive=false;
+    resumeMode=inReview?"review":"quiz";
+    const remaining=Math.max(0,maxWarnings-count);
+    $("examGuard").innerHTML="";
+    $("quizRoot").innerHTML=`
+      <div class="quizhead">
+        <div><strong>${esc(payload?.title || state?.title || "Quiz")}</strong><div class="muted">Full-screen violation</div></div>
+        <div class="timer urgent" id="timer">${fmtDuration(remainingSeconds())}</div>
+        <span class="badge live">LIVE</span>
+      </div>
+      <section class="panel fullscreen-warning center">
+        <div class="warning-number">${count}</div>
+        <h1>Warning ${count} of ${maxWarnings}</h1>
+        <p class="lead-text">You exited full-screen mode while the quiz is in progress.</p>
+        <div class="notice bad">
+          Return to full screen to continue. <strong>The quiz timer is still running.</strong>
+        </div>
+        <p>${remaining>0
+          ? `You have <strong>${remaining}</strong> warning${remaining===1?"":"s"} remaining. On warning ${maxWarnings}, the quiz will be submitted automatically.`
+          : "Maximum warnings reached."}</p>
+        <button class="btn teal fullscreen-main-btn" id="returnFullscreenBtn">Return to Full Screen</button>
+      </section>`;
+    $("returnFullscreenBtn").onclick=async()=>{
+      const ok=await requestExamFullscreen();
+      if(!ok) return;
+      examActive=true;
+      if(resumeMode==="review") renderReview(); else renderQuiz();
+      startTimer();
+    };
+    startTimer();
+  }
+
+  async function handleFullscreenExit() {
+    if(fullscreenExitBusy || submitting || !state || state.status!=="live" || !examActive) return;
+    if(document.fullscreenElement) return;
+
+    fullscreenExitBusy=true;
+    try{
+      const {data,error}=await client.rpc("quiz_record_fullscreen_exit_v3",{p_attempt_id:attemptId});
+      if(error){
+        toast(error.message,"error");
+        renderFullscreenGate();
+        return;
+      }
+
+      const count=Number(data?.count||1);
+      const maxWarnings=Number(data?.max_warnings||3);
+
+      if(data?.auto_submitted){
+        submitting=true;
+        clearInterval(timerId);
+        $("quizRoot").innerHTML=`
+          <section class="panel fullscreen-warning center">
+            <div class="warning-number danger-count">${count}</div>
+            <h1>Quiz submitted automatically</h1>
+            <div class="notice bad">You exited full-screen mode ${count} times. The maximum allowed is ${maxWarnings}.</div>
+            <p>Your answers up to this point have been submitted.</p>
+          </section>`;
+        setTimeout(()=>location.href=`result.html?attempt=${encodeURIComponent(attemptId)}`,1600);
+        return;
+      }
+
+      renderFullscreenWarning(count,maxWarnings);
+    }catch(e){
+      toast(e.message,"error");
+      renderFullscreenGate();
+    }finally{
+      fullscreenExitBusy=false;
+    }
   }
 
   async function subscribe() {
@@ -222,13 +373,25 @@
       }).subscribe();
   }
 
-  // Exam-mode deterrents. These improve classroom discipline but are not a substitute for secure server-side scoring.
+  // Classroom-exam deterrents. Server-side scoring remains the real security boundary.
   document.addEventListener("contextmenu",e=>{
     if(state?.status==="live") { e.preventDefault(); toast("Right-click is disabled during the quiz.","error"); }
   });
-  document.addEventListener("fullscreenchange",updateExamGuard);
+
+  document.addEventListener("fullscreenchange",()=>{
+    if(state?.status==="waiting"){
+      updateWaitingFullscreenState();
+      return;
+    }
+    if(state?.status==="live" && !document.fullscreenElement){
+      handleFullscreenExit();
+    }
+  });
+
   window.addEventListener("beforeunload",e=>{
-    if(state?.status==="live" && state?.attempt_status!=="submitted") { e.preventDefault(); e.returnValue=""; }
+    if(state?.status==="live" && state?.attempt_status!=="submitted" && !submitting) {
+      e.preventDefault(); e.returnValue="";
+    }
   });
 
   try {
