@@ -2,15 +2,22 @@
   "use strict";
 
   const cfg = window.CODEBHAVYA_QUIZ_CONFIG || {};
-  if (!cfg.supabaseUrl || !cfg.supabaseAnonKey ||
-      cfg.supabaseUrl.includes("PASTE_") || cfg.supabaseAnonKey.includes("PASTE_")) {
-    console.warn("CodeBhavya Quiz: configure Quiz/config.js first.");
+  const sharedClient = window.CodeBhavyaSupabase && window.CodeBhavyaSupabase.client
+    ? window.CodeBhavyaSupabase.client
+    : null;
+
+  let client = sharedClient;
+  if (!client && window.supabase && typeof window.supabase.createClient === "function") {
+    if (cfg.supabaseUrl && cfg.supabaseAnonKey && !cfg.supabaseUrl.includes("PASTE_") && !cfg.supabaseAnonKey.includes("PASTE_")) {
+      client = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
+        auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+      });
+    }
   }
 
-  const { createClient } = window.supabase;
-  const client = createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
-    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
-  });
+  if (!client) {
+    console.error("CodeBhavya Quiz: Supabase client unavailable. Load Placement/supabase-config.js and Placement/supabase-client.js first.");
+  }
 
   const $ = (id) => document.getElementById(id);
   const esc = (v) => String(v ?? "")
@@ -19,22 +26,28 @@
     .replaceAll("'","&#039;");
 
   async function session() {
+    if (!client) throw new Error("Supabase connection is unavailable.");
     const { data, error } = await client.auth.getSession();
     if (error) throw error;
     return data.session || null;
   }
 
+  function safeReturnPath() {
+    const raw = location.pathname + location.search;
+    return raw.startsWith("/") && !raw.startsWith("//") ? raw : "/Quiz/";
+  }
+
   async function requireSession() {
     const s = await session();
     if (!s) {
-      const next = encodeURIComponent(location.pathname + location.search);
-      location.href = `/login.html?next=${next}`;
+      location.href = `/Quiz/signin.html?return=${encodeURIComponent(safeReturnPath())}`;
       throw new Error("Authentication required");
     }
     return s;
   }
 
   async function isAdmin() {
+    if (!client) return false;
     const { data, error } = await client.rpc("quiz_is_admin_v1");
     if (error) return false;
     return data === true;
@@ -79,8 +92,23 @@
     t.dataset.kind = kind;
     t.classList.add("show");
     clearTimeout(t._timer);
-    t._timer = setTimeout(() => t.classList.remove("show"), 2400);
+    t._timer = setTimeout(() => t.classList.remove("show"), 2600);
   }
 
-  window.CBQuiz = { client, $, esc, session, requireSession, isAdmin, requireAdmin, fmtDuration, localDate, toast, cfg };
+  async function enterFullscreen() {
+    try {
+      if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+        await document.documentElement.requestFullscreen();
+      }
+      return Boolean(document.fullscreenElement);
+    } catch (e) {
+      toast("Your browser blocked full screen. Use the browser full-screen control if needed.", "error");
+      return false;
+    }
+  }
+
+  window.CBQuiz = {
+    client, $, esc, session, requireSession, isAdmin, requireAdmin,
+    fmtDuration, localDate, toast, enterFullscreen, cfg
+  };
 })();
