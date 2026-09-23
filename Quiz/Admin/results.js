@@ -39,4 +39,31 @@
    <div class="tablewrap"><table class="table"><thead><tr><th>Student</th><th>UI</th><th>Questions</th><th>Overall</th><th>Difficulty</th><th>Comment</th></tr></thead>
    <tbody>${entries.map(f=>`<tr><td>${esc(f.student_label)}</td><td>${f.ui_rating}/5</td><td>${f.question_rating}/5</td><td>${f.overall_rating}/5</td><td>${esc((f.difficulty||"—").replaceAll("_"," "))}</td><td>${esc(f.comment||"—")}</td></tr>`).join("")||'<tr><td colspan="6">No feedback submitted yet.</td></tr>'}</tbody></table></div>`;
  document.querySelector("main.shell").appendChild(section);
+ $("analyticsLink").href=`analytics.html?id=${encodeURIComponent(id)}`;
+
+ const participantExport=data.participants.map(p=>({
+   Student:p.student_label,Status:p.status,Score:p.score??"",Max_Score:data.max_score,
+   Fullscreen_Warnings:Number(p.fullscreen_exit_count||0),Joined:localDate(p.joined_at),
+   Submitted:localDate(p.submitted_at),Time_Seconds:p.duration_seconds??""
+ }));
+ const feedbackExport=(data.feedback_entries||[]).map(f=>({
+   Student:f.student_label,UI_Rating:f.ui_rating,Question_Rating:f.question_rating,Overall_Rating:f.overall_rating,
+   Difficulty:(f.difficulty||"").replaceAll("_"," "),Comment:f.comment||"",Submitted:localDate(f.created_at)
+ }));
+
+ function csvDownload(rows,name){
+   if(!rows.length)rows=[{Info:"No data"}];
+   const heads=Object.keys(rows[0]),lines=[heads.join(",")];
+   rows.forEach(r=>lines.push(heads.map(h=>`"${String(r[h]??"").replaceAll('"','""')}"`).join(",")));
+   const blob=new Blob([lines.join("\n")],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");
+   a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href);
+ }
+ $("exportResultsCsv").onclick=()=>csvDownload(participantExport,`${data.title}-results.csv`);
+ $("exportResultsXlsx").onclick=()=>{
+   const wb=XLSX.utils.book_new();
+   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(participantExport),"Results");
+   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(feedbackExport.length?feedbackExport:[{Info:"No feedback"}]),"Feedback");
+   XLSX.writeFile(wb,`${data.title}-results.xlsx`);
+ };
+
 })();

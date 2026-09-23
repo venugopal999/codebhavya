@@ -2,6 +2,7 @@
   const {client,$,requireAdmin,esc,toast}=CBQuiz;
   try{await requireAdmin()}catch{return}
   const quizId=new URLSearchParams(location.search).get("id");
+  $("bankShortcut").href=`bank.html?quiz=${encodeURIComponent(quizId)}`;
   if(!quizId){location.href="index.html";return}
 
   let bundle=null, editingQuestionId=null, optionCount=4;

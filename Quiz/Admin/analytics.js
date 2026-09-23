@@ -1,0 +1,57 @@
+(async()=>{
+ const {client,$,requireAdmin,esc,fmtDuration}=CBQuiz;try{await requireAdmin()}catch{return}
+ const id=new URLSearchParams(location.search).get("id");if(!id){location.href="index.html";return}
+ $("resultsLink").href=`results.html?id=${encodeURIComponent(id)}`;
+
+ const {data,error}=await client.rpc("quiz_admin_analytics_v6",{p_quiz_id:id});
+ if(error){document.querySelector("main").innerHTML=`<section class="panel"><div class="notice bad">${esc(error.message)}</div></section>`;return}
+ $("analyticsTitle").textContent=data.title+" - Analytics";
+ const s=data.summary||{};
+ $("analyticsStats").innerHTML=`
+  <div class="analytics-stat"><span>Participants</span><strong>${s.participants||0}</strong></div>
+  <div class="analytics-stat"><span>Submitted</span><strong>${s.submitted||0}</strong></div>
+  <div class="analytics-stat"><span>Average</span><strong>${Number(s.average_score||0).toFixed(1)}</strong></div>
+  <div class="analytics-stat"><span>Median</span><strong>${Number(s.median_score||0).toFixed(1)}</strong></div>
+  <div class="analytics-stat"><span>Highest</span><strong>${Number(s.highest_score||0).toFixed(1)}</strong></div>
+  <div class="analytics-stat"><span>Lowest</span><strong>${Number(s.lowest_score||0).toFixed(1)}</strong></div>
+  <div class="analytics-stat"><span>≥ 40%</span><strong>${Number(s.pass_percentage_40||0).toFixed(1)}%</strong></div>
+  <div class="analytics-stat"><span>Avg Time</span><strong>${fmtDuration(s.average_duration_seconds||0)}</strong></div>
+  <div class="analytics-stat"><span>Warnings</span><strong>${s.fullscreen_warning_total||0}</strong></div>
+  <div class="analytics-stat"><span>Students Warned</span><strong>${s.students_with_warnings||0}</strong></div>`;
+
+ const qs=data.questions||[];
+ $("analyticsRows").innerHTML=qs.map(q=>`<tr>
+   <td>Q${q.position}</td>
+   <td><strong>${esc(q.question_text)}</strong>${q.accuracy===data.easiest_accuracy?'<span class="analytics-label easy">Easiest</span>':""}${q.accuracy===data.hardest_accuracy?'<span class="analytics-label hard">Hardest</span>':""}</td>
+   <td>${q.correct_count}</td><td>${q.wrong_count}</td><td>${q.unanswered_count}</td>
+   <td><strong>${Number(q.accuracy||0).toFixed(1)}%</strong></td>
+   <td><div class="option-dist">${(q.options||[]).map(o=>`<div><span>${esc(o.label)}${o.is_correct?" ✓":""}</span><strong>${o.count}</strong></div>`).join("")}</div></td>
+ </tr>`).join("")||'<tr><td colspan="7">No questions.</td></tr>';
+
+ const exportRows=qs.map(q=>({
+   Question:`Q${q.position}`,
+   Text:q.question_text,
+   Correct:q.correct_count,
+   Wrong:q.wrong_count,
+   Unanswered:q.unanswered_count,
+   Accuracy_Percent:Number(q.accuracy||0).toFixed(2),
+   Option_Distribution:(q.options||[]).map(o=>`${o.label}: ${o.count}${o.is_correct?" (correct)":""}`).join(" | ")
+ }));
+
+ function saveCsv(){
+   const headers=Object.keys(exportRows[0]||{Question:""}), lines=[headers.join(",")];
+   exportRows.forEach(r=>lines.push(headers.map(h=>`"${String(r[h]??"").replaceAll('"','""')}"`).join(",")));
+   const blob=new Blob([lines.join("\n")],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${data.title}-analytics.csv`;a.click();URL.revokeObjectURL(a.href);
+ }
+ $("csvAnalytics").onclick=saveCsv;
+ $("xlsxAnalytics").onclick=()=>{
+   const wb=XLSX.utils.book_new();
+   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet([{
+     Quiz:data.title,Participants:s.participants,Submitted:s.submitted,Average:s.average_score,Median:s.median_score,
+     Highest:s.highest_score,Lowest:s.lowest_score,Pass_Percentage_40:s.pass_percentage_40,
+     Average_Time_Seconds:s.average_duration_seconds,Fullscreen_Warnings:s.fullscreen_warning_total
+   }]),"Summary");
+   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(exportRows),"Questions");
+   XLSX.writeFile(wb,`${data.title}-analytics.xlsx`);
+ };
+})();
