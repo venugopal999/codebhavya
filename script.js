@@ -409,7 +409,8 @@ function searchTopics() {
                 { label: "Advanced Data Structures", path: "Advanced-Data-Structures/index.html" },
                 { label: "DBMS & SQL", path: "DBMS/index.html" },
                 { label: "Operating Systems", path: "Operating-Systems/index.html" },
-                { label: "Full Stack MERN", path: "Full-Stack/index.html" }
+                { label: "Full Stack MERN", path: "Full-Stack/index.html" },
+                { label: "Web-Technologies", path: "Web-Technologies/introduction.html", icon: "WT" }
             ]
         },
         {
