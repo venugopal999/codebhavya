@@ -10,28 +10,54 @@
 
     let client = null;
     let error = "";
-    const idleLimitMs = 24 * 60 * 60 * 1000;
+    const idleLimitMs = 5 * 60 * 1000;
     const activityKey = "codebhavya:placement:last-activity";
+    const tabMarker = "codebhavya:placement:tab-open";
+    const sessionKey = "codebhavya-placement-tab-auth-v1";
     let lastActivity = 0;
     let signedIn = false;
     let signingOutForIdle = false;
 
     function readActivity() {
-        try { return Number(window.localStorage.getItem(activityKey)) || lastActivity; }
+        try { return Number(window.sessionStorage.getItem(activityKey)) || lastActivity; }
         catch (_) { return lastActivity; }
     }
 
     function writeActivity(time) {
         lastActivity = time;
-        try { window.localStorage.setItem(activityKey, String(time)); }
+        try { window.sessionStorage.setItem(activityKey, String(time)); }
         catch (_) { /* Timer remains active in this tab. */ }
     }
 
     function clearActivity() {
         lastActivity = 0;
-        try { window.localStorage.removeItem(activityKey); }
+        try { window.sessionStorage.removeItem(activityKey); }
         catch (_) { /* Storage may be blocked. */ }
     }
+
+    function clearPlacementData() {
+        // Only Placement-owned keys: never clear another app's Supabase token.
+        const prefixes = ["codebhavya-placement-", "codebhavya-interview-", "codebhavya-mcq-revision-", "codebhavya-mock-", "codebhavya-full-", "codebhavya-solve-timer-"];
+        try {
+            for (let index = window.localStorage.length - 1; index >= 0; index--) {
+                const key = window.localStorage.key(index);
+                if (key && (prefixes.some(function (prefix) { return key.startsWith(prefix); })
+                    || /^codebhavya-[a-z0-9_-]+-draft:/.test(key))) {
+                    window.localStorage.removeItem(key);
+                }
+            }
+        } catch (_) { /* Storage may be blocked. */ }
+    }
+
+    try {
+        const last = Number(window.sessionStorage.getItem(activityKey));
+        if (!window.sessionStorage.getItem(tabMarker) || (last && Date.now() - last >= idleLimitMs)) {
+            window.sessionStorage.removeItem(sessionKey);
+            window.sessionStorage.removeItem(activityKey);
+            clearPlacementData();
+        }
+        window.sessionStorage.setItem(tabMarker, "1");
+    } catch (_) { /* Storage may be blocked. */ }
 
     function checkIdle() {
         if (!client || !signedIn || signingOutForIdle) return false;
@@ -49,6 +75,7 @@
                 const result = await client.auth.signOut({ scope: "local" });
                 if (result.error) throw result.error;
                 clearActivity();
+                window.location.reload();
             } catch (_) {
                 // Retry when the tab resumes or connectivity returns.
             } finally {
@@ -68,7 +95,9 @@
                 auth: {
                     autoRefreshToken: true,
                     persistSession: true,
-                    detectSessionInUrl: true
+                    detectSessionInUrl: true,
+                    storage: window.sessionStorage,
+                    storageKey: sessionKey
                 }
             });
             client.auth.onAuthStateChange(function (event, session) {
@@ -76,6 +105,7 @@
                 signedIn = Boolean(session && session.user);
                 if (event === "SIGNED_OUT") {
                     clearActivity();
+                    clearPlacementData();
                 } else if (signedIn && event === "SIGNED_IN" && !wasSignedIn && !readActivity()) {
                     writeActivity(Date.now());
                 } else if (signedIn) {
@@ -93,9 +123,6 @@
             });
             window.addEventListener("focus", checkIdle);
             window.addEventListener("online", checkIdle);
-            window.addEventListener("storage", function (event) {
-                if (event.key === activityKey) checkIdle();
-            });
             window.setInterval(checkIdle, 60 * 1000);
         } catch (clientError) {
             error = "Cloud progress could not be started. Local progress is still available.";
