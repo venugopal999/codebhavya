@@ -3,7 +3,12 @@
   let mode="signin";
   const params=new URLSearchParams(location.search);
   const rawReturn=params.get("return")||"/Quiz/";
-  const returnTo=(rawReturn.startsWith("/")&&!rawReturn.startsWith("//"))?rawReturn:"/Quiz/";
+  let returnTo="/Quiz/";
+  try{
+    const destination=new URL(rawReturn,location.origin);
+    if(destination.origin===location.origin&&destination.pathname.startsWith("/Quiz/"))
+      returnTo=destination.pathname+destination.search+destination.hash;
+  }catch(e){/* Keep the safe Quiz home fallback. */}
 
   const existing=await client.auth.getSession();
   if(existing.data?.session){ location.replace(returnTo); return; }
