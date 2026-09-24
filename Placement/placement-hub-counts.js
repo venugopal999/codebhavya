@@ -19,7 +19,7 @@
         if(!window.CodeBhavyaSupabase?.client){
             await load(new URL('supabase-config.js',root).href);
             if(!window.supabase?.createClient)await load('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2');
-            await load(new URL('supabase-client.js',root).href);
+            await load(new URL('supabase-client.js?v=2',root).href);
         }
         const client=window.CodeBhavyaSupabase?.client;if(!client)throw new Error('No client');
         await Promise.all(cards.map(async({topic,line})=>{
