@@ -11595,7 +11595,7 @@ body.cb-c-topic-page .cb-deep-dive th{background:#eef6f5;color:#0f172a}
     border-radius: 14px;
     background: linear-gradient(135deg, rgba(13,27,42,.055), rgba(15,118,110,.055));
 }
-.cb-c-topic-page .cb-teaching-standard strong {
+.cb-c-topic-page .cb-teaching-standard > strong {
     display: block;
     margin-bottom: 8px;
     color: #0d1b2a;
@@ -12617,5 +12617,143 @@ body:not(.cb-c-topic-page) .cb-c-index-card:hover {
         transition-duration: .01ms !important;
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
+    }
+}
+
+
+/* ============================================================
+   CODEBHAVYA C COURSE — SMALL UI FIXES (2026-09-24)
+   Scope: visual fixes only. No JavaScript/tracer/MCQ logic changes.
+   ============================================================ */
+
+/* 1) Lessons 4/5 sequence (Variables + Data Types): keep emphasized
+      words inline inside normal sentences and Programming Problems. */
+body.cb-c-topic-page .cb-teaching-standard p strong,
+body.cb-c-topic-page .cb-teaching-standard li strong,
+body.cb-c-topic-page .cb-teaching-standard td strong,
+body.cb-c-topic-page .cb-teaching-standard th strong,
+body.cb-c-topic-page .cb-teaching-standard .cb-c-practice-guide strong,
+body.cb-c-topic-page .cb-teaching-standard .cb-c-practice-item > p strong {
+    display: inline !important;
+    margin: 0 !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+}
+
+/* Preserve the deliberate block layout used by progress/score labels. */
+body.cb-c-topic-page .cb-teaching-standard .cb-practice-overall-item strong,
+body.cb-c-topic-page .cb-teaching-standard .cb-c-score-item strong {
+    display: block !important;
+    margin-bottom: 0 !important;
+}
+
+/* Make the Programming Problems block visually consistent even when a
+   lesson keeps it inside its teaching wrapper. */
+body.cb-c-topic-page .cb-c-dsa-practice-section {
+    width: 100%;
+    min-width: 0;
+}
+
+body.cb-c-topic-page .cb-c-dsa-practice-section > .cb-c-practice-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #fff7d6;
+    color: #9a6d00;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .12em;
+}
+
+body.cb-c-topic-page .cb-c-dsa-practice-section > h3 {
+    margin-top: 8px !important;
+    margin-bottom: 10px !important;
+    color: #153b6f !important;
+}
+
+body.cb-c-topic-page .cb-c-dsa-practice-section > .cb-c-practice-guide {
+    max-width: none;
+    margin: 0 0 16px !important;
+    color: #40536d !important;
+    line-height: 1.72 !important;
+}
+
+/* 2) Text visibility: deep-dive title bars are dark, so their heading text
+      must stay white even when generic h3 rules are more specific. */
+body.cb-c-topic-page .content-card .cb-deep-dive-title,
+body.cb-c-topic-page .content-card h3.cb-deep-dive-title,
+body.cb-c-topic-page .cb-deep-dive-title * {
+    color: #ffffff !important;
+}
+
+body.cb-c-topic-page .cb-deep-dive-title code {
+    border-color: rgba(255,255,255,.22) !important;
+    background: rgba(255,255,255,.10) !important;
+    color: #ffffff !important;
+}
+
+/* Light step cards sometimes live inside a dark memory diagram. The dark
+   container's universal light-text rule must not wash out those cards. */
+body.cb-c-topic-page .cb-memory-diagram .cb-mini-step-card,
+body.cb-c-topic-page .cb-memory-diagram .cb-mini-step-card * {
+    color: #17324f !important;
+}
+
+body.cb-c-topic-page .cb-memory-diagram .cb-mini-step-card .cb-mini-step-text {
+    color: #153b6f !important;
+}
+
+body.cb-c-topic-page .cb-memory-diagram .cb-mini-step-card .cb-mini-step-subtext {
+    color: #60748d !important;
+}
+
+body.cb-c-topic-page .cb-memory-diagram .cb-mini-step-card .cb-mini-step-badge {
+    color: #153b6f !important;
+}
+
+/* Inline code on dark concept/memory panels: use a dark chip rather than
+   the normal pale code chip, so enum/typedef and similar text stays visible. */
+body.cb-c-topic-page .cb-concept-tree :not(pre) > code,
+body.cb-c-topic-page .cb-memory-diagram :not(pre) > code {
+    border-color: rgba(177, 215, 255, .28) !important;
+    background: rgba(24, 67, 105, .92) !important;
+    color: #ffe28a !important;
+    box-shadow: none !important;
+}
+
+/* Titles/labels directly on dark concept panels always keep high contrast. */
+body.cb-c-topic-page .cb-memory-diagram > .cb-memory-diagram-title,
+body.cb-c-topic-page .cb-concept-tree > .cb-concept-tree-root,
+body.cb-c-topic-page .cb-concept-tree .cb-concept-tree-branch {
+    color: #eef7ff !important;
+}
+
+/* 3) Footer-safe desktop sidebar.
+   Keep the sidebar sticky while reading, but make it a normal sticky flex
+   item constrained by .docs-layout so it releases and moves upward when the
+   end of the lesson/footer is reached instead of being visually covered. */
+@media (min-width: 901px) {
+    body.cb-c-topic-page .docs-layout {
+        position: relative !important;
+        align-items: flex-start !important;
+        overflow: visible !important;
+    }
+
+    body.cb-c-topic-page .docs-layout > .sidebar {
+        position: sticky !important;
+        top: 72px !important;
+        bottom: auto !important;
+        align-self: flex-start !important;
+        height: auto !important;
+        max-height: calc(100vh - 72px) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        z-index: 5 !important;
+    }
+
+    body.cb-c-topic-page > .footer {
+        position: relative !important;
+        z-index: auto !important;
     }
 }
