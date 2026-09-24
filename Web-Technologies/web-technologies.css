@@ -2175,7 +2175,7 @@ a {
 }
 
 /* ============================================================
-   FLIP CARDS — INTERVIEW + GLOSSARY
+   FLIP CARDS — FIXED HEIGHT / NO OVERLAP
    ============================================================ */
 
 .flip-card-grid {
@@ -2187,12 +2187,18 @@ a {
             minmax(0, 1fr)
         );
 
-    gap: 16px;
+    gap: 18px;
+
+    align-items: stretch;
 }
 
 
 .flip-card {
-    min-height: 220px;
+    position: relative;
+
+    width: 100%;
+    height: 270px;
+    min-height: 270px;
 
     perspective: 1100px;
 
@@ -2206,14 +2212,13 @@ a {
     position: relative;
 
     width: 100%;
-    min-height: 220px;
+    height: 100%;
+    min-height: 0;
 
     transform-style: preserve-3d;
 
     transition:
         transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
-
-    border-radius: 16px;
 }
 
 
@@ -2227,7 +2232,11 @@ a {
 
     inset: 0;
 
-    min-height: 220px;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+
+    box-sizing: border-box;
 
     display: flex;
     flex-direction: column;
@@ -2241,6 +2250,8 @@ a {
 
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+
+    overflow: hidden;
 
     background:
         linear-gradient(
@@ -2264,6 +2275,8 @@ a {
 
     transform: rotateY(180deg);
 
+    overflow-y: auto;
+
     border-color:
         rgba(101, 203, 210, 0.28);
 
@@ -2273,6 +2286,25 @@ a {
             rgba(101, 203, 210, 0.075),
             var(--wt-panel)
         );
+
+    scrollbar-width: thin;
+}
+
+
+.flip-card-back::-webkit-scrollbar {
+    width: 5px;
+}
+
+
+.flip-card-back::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.flip-card-back::-webkit-scrollbar-thumb {
+    background: var(--wt-border);
+
+    border-radius: 10px;
 }
 
 
@@ -2332,7 +2364,9 @@ a {
     width: 34px;
     height: 34px;
 
-    margin-bottom: 14px;
+    margin:
+        14px
+        0;
 
     border-radius: 10px;
 
@@ -2389,6 +2423,8 @@ a {
 
 
 .flip-card-question {
+    margin: 0;
+
     color: var(--wt-text-soft);
 
     font-size: 0.95rem;
@@ -2399,7 +2435,7 @@ a {
 
 .flip-card-term {
     margin:
-        8px
+        18px
         0
         0;
 
@@ -2415,9 +2451,12 @@ a {
 .flip-card-hint {
     display: flex;
     align-items: center;
+
     gap: 7px;
 
-    margin-top: 18px;
+    margin-top: auto;
+
+    padding-top: 14px;
 
     color: var(--wt-text-muted);
 
@@ -2438,6 +2477,8 @@ a {
     width: 23px;
     height: 23px;
 
+    flex-shrink: 0;
+
     border-radius: 50%;
 
     background:
@@ -2457,6 +2498,10 @@ a {
 
     width: 37px;
     height: 37px;
+
+    flex-shrink: 0;
+
+    margin-top: 14px;
 
     border-radius: 10px;
 
@@ -2488,7 +2533,7 @@ a {
 
 
 /* ============================================================
-   FLIP CARD — GLOSSARY
+   GLOSSARY FLIP CARDS
    ============================================================ */
 
 .glossary-flip-grid {
@@ -2500,18 +2545,15 @@ a {
             minmax(0, 1fr)
         );
 
-    gap: 13px;
+    gap: 14px;
+
+    align-items: stretch;
 }
 
 
 .glossary-flip-card {
-    min-height: 190px;
-}
-
-
-.glossary-flip-card .flip-card-inner,
-.glossary-flip-card .flip-card-face {
-    min-height: 190px;
+    height: 205px;
+    min-height: 205px;
 }
 
 
@@ -2521,18 +2563,21 @@ a {
 
 
 .glossary-flip-card .flip-card-term {
+    margin-top: 17px;
+
     font-size: 1rem;
 }
 
 
 .glossary-flip-card .flip-card-back p {
     font-size: 0.8rem;
+
     line-height: 1.6;
 }
 
 
 /* ============================================================
-   RESPONSIVE FLIP CARDS
+   TABLET
    ============================================================ */
 
 @media (max-width: 1050px) {
@@ -2548,12 +2593,27 @@ a {
 }
 
 
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
 @media (max-width: 760px) {
 
     .flip-card-grid,
     .glossary-flip-grid {
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
+    }
+
+
+    .flip-card {
+        height: 250px;
+        min-height: 250px;
+    }
+
+
+    .glossary-flip-card {
+        height: 200px;
+        min-height: 200px;
     }
 
 }
@@ -2561,16 +2621,20 @@ a {
 
 @media (max-width: 500px) {
 
-    .flip-card,
-    .flip-card-inner,
-    .flip-card-face {
-        min-height: 210px;
+    .flip-card {
+        height: 255px;
+        min-height: 255px;
     }
 
-    .glossary-flip-card,
-    .glossary-flip-card .flip-card-inner,
-    .glossary-flip-card .flip-card-face {
-        min-height: 180px;
+
+    .glossary-flip-card {
+        height: 195px;
+        min-height: 195px;
+    }
+
+
+    .flip-card-face {
+        padding: 18px;
     }
 
 }
