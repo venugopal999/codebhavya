@@ -36,7 +36,7 @@
     <div class="tablewrap"><table class="table question-result-table">
       <thead><tr><th>#</th><th>Question</th><th>Student Answer</th><th>Correct Answer</th><th>Result</th><th>Marks</th><th>Time</th></tr></thead>
       <tbody>${qs.map((q,i)=>`<tr class="clickable-result-row" data-i="${i}">
-        <td>Q${i+1}</td><td>${q.image_url?`<img class="result-question-thumb" src="${esc(q.image_url)}" alt="">`:""}${esc(q.question_text)}<br><span class="muted">${esc((q.question_type||"single_mcq").replaceAll("_"," "))}</span></td>
+        <td>Q${i+1}</td><td>${q.image_url?`<img class="result-question-thumb" src="${esc(q.image_url)}" alt="">`:""}${esc(q.question_text)}<br><span class="muted">${esc((q.question_type||"single_mcq").replaceAll("_"," "))}${q.topic?` · ${esc(q.topic)}`:""} · ${esc(q.difficulty||"Medium")}${q.question_type==="multiple_mcq"?` · ${esc(q.multiple_scoring_mode||"exact")} scoring`:""}</span></td>
         <td>${esc(q.student_answer||"Not answered")}</td>
         <td>${esc(q.correct_answer||"—")}</td>
         <td><span class="result-pill ${q.status_class}">${q.is_correct===true?"Correct":q.is_correct===false?"Wrong":"Unanswered"}</span></td>
