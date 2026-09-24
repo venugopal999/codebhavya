@@ -2174,6 +2174,406 @@ a {
         rgba(101, 203, 210, 0.24);
 }
 
+/* ============================================================
+   FLIP CARDS — INTERVIEW + GLOSSARY
+   ============================================================ */
+
+.flip-card-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 16px;
+}
+
+
+.flip-card {
+    min-height: 220px;
+
+    perspective: 1100px;
+
+    cursor: pointer;
+
+    outline: none;
+}
+
+
+.flip-card-inner {
+    position: relative;
+
+    width: 100%;
+    min-height: 220px;
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
+
+    border-radius: 16px;
+}
+
+
+.flip-card.is-flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+
+.flip-card-face {
+    position: absolute;
+
+    inset: 0;
+
+    min-height: 220px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 22px;
+
+    border:
+        1px solid var(--wt-border);
+
+    border-radius: 16px;
+
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--wt-panel-2),
+            var(--wt-panel)
+        );
+
+    box-shadow:
+        0 14px 32px rgba(0, 0, 0, 0.16);
+}
+
+
+.flip-card-front {
+    justify-content: space-between;
+}
+
+
+.flip-card-back {
+    justify-content: flex-start;
+
+    transform: rotateY(180deg);
+
+    border-color:
+        rgba(101, 203, 210, 0.28);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(101, 203, 210, 0.075),
+            var(--wt-panel)
+        );
+}
+
+
+.flip-card:focus-visible .flip-card-face {
+    border-color:
+        rgba(239, 198, 91, 0.55);
+
+    box-shadow:
+        0 0 0 3px rgba(239, 198, 91, 0.08),
+        0 14px 32px rgba(0, 0, 0, 0.2);
+}
+
+
+.flip-card-label {
+    display: inline-flex;
+    align-items: center;
+
+    align-self: flex-start;
+
+    padding:
+        5px
+        9px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(239, 198, 91, 0.08);
+
+    border:
+        1px solid rgba(239, 198, 91, 0.2);
+
+    color: var(--wt-gold-soft);
+
+    font-size: 0.64rem;
+    font-weight: 800;
+
+    letter-spacing: 0.07em;
+}
+
+
+.flip-card-back .flip-card-label {
+    background:
+        rgba(101, 203, 210, 0.07);
+
+    border-color:
+        rgba(101, 203, 210, 0.2);
+
+    color: var(--wt-cyan-soft);
+}
+
+
+.flip-card-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    margin-bottom: 14px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(101, 203, 210, 0.07);
+
+    border:
+        1px solid rgba(101, 203, 210, 0.18);
+
+    color: var(--wt-cyan-soft);
+
+    font-size: 0.68rem;
+    font-weight: 800;
+}
+
+
+.flip-card-front h3,
+.flip-card-front h4 {
+    margin:
+        0
+        0
+        10px;
+
+    color: #ffffff;
+
+    font-size: 1.05rem;
+
+    line-height: 1.45;
+}
+
+
+.flip-card-back h3,
+.flip-card-back h4 {
+    margin:
+        12px
+        0
+        9px;
+
+    color: #ffffff;
+
+    font-size: 1rem;
+}
+
+
+.flip-card-back p {
+    margin: 0;
+
+    color: var(--wt-text-soft);
+
+    font-size: 0.88rem;
+
+    line-height: 1.7;
+}
+
+
+.flip-card-question {
+    color: var(--wt-text-soft);
+
+    font-size: 0.95rem;
+
+    line-height: 1.6;
+}
+
+
+.flip-card-term {
+    margin:
+        8px
+        0
+        0;
+
+    color: #ffffff;
+
+    font-size: 1.18rem;
+    font-weight: 800;
+
+    line-height: 1.35;
+}
+
+
+.flip-card-hint {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-top: 18px;
+
+    color: var(--wt-text-muted);
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    letter-spacing: 0.02em;
+}
+
+
+.flip-card-hint::before {
+    content: "↻";
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 23px;
+    height: 23px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(239, 198, 91, 0.07);
+
+    border:
+        1px solid rgba(239, 198, 91, 0.18);
+
+    color: var(--wt-gold);
+}
+
+
+.flip-card-answer-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 37px;
+    height: 37px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(103, 197, 150, 0.08);
+
+    border:
+        1px solid rgba(103, 197, 150, 0.2);
+
+    color: var(--wt-green);
+
+    font-size: 1rem;
+}
+
+
+.flip-card-answer-note {
+    margin-top: auto;
+
+    padding-top: 14px;
+
+    border-top:
+        1px solid var(--wt-border-soft);
+
+    color: var(--wt-text-muted);
+
+    font-size: 0.69rem;
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   FLIP CARD — GLOSSARY
+   ============================================================ */
+
+.glossary-flip-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+    gap: 13px;
+}
+
+
+.glossary-flip-card {
+    min-height: 190px;
+}
+
+
+.glossary-flip-card .flip-card-inner,
+.glossary-flip-card .flip-card-face {
+    min-height: 190px;
+}
+
+
+.glossary-flip-card .flip-card-face {
+    padding: 18px;
+}
+
+
+.glossary-flip-card .flip-card-term {
+    font-size: 1rem;
+}
+
+
+.glossary-flip-card .flip-card-back p {
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   RESPONSIVE FLIP CARDS
+   ============================================================ */
+
+@media (max-width: 1050px) {
+
+    .glossary-flip-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+}
+
+
+@media (max-width: 760px) {
+
+    .flip-card-grid,
+    .glossary-flip-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .flip-card,
+    .flip-card-inner,
+    .flip-card-face {
+        min-height: 210px;
+    }
+
+    .glossary-flip-card,
+    .glossary-flip-card .flip-card-inner,
+    .glossary-flip-card .flip-card-face {
+        min-height: 180px;
+    }
+
+}
 
 /* ============================================================
    MCQ
