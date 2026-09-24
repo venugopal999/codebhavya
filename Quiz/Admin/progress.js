@@ -26,6 +26,7 @@
     $('progressContent').hidden=false;
     $('progressTitle').textContent=`${s.class_name} · ${s.section_name}`;
     $('progressSubtitle').textContent=s.course;
+    $('gradebookLink').href=`gradebook.html?section=${encodeURIComponent(s.id)}`;
     $('progressStats').innerHTML=`<div class="stat"><strong>${Number(summary.quizzes)}</strong><span>Quizzes</span></div>
       <div class="stat"><strong>${Number(summary.students)}</strong><span>Students in current roster</span></div>
       <div class="stat"><strong>${pct(summary.average_percentage)}</strong><span>Average submitted score</span></div>`;
