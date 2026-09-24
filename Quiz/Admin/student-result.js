@@ -23,7 +23,7 @@
       <div><span>Correct</span><strong>${data.correct_count}</strong></div>
       <div><span>Wrong</span><strong>${data.wrong_count}</strong></div>
       <div><span>Unanswered</span><strong>${data.unanswered_count}</strong></div>
-      <div><span>Full-screen Warnings</span><strong>${data.fullscreen_exit_count} / 3</strong></div>
+      <div><span>Full-screen Warnings</span><strong>${data.fullscreen_exit_count} / 3</strong></div><div><span>Tab/Window Warnings</span><strong>${data.focus_exit_count} / ${data.focus_warning_limit}</strong></div>
     </div>
 
     <h2>Question-wise Result</h2>
@@ -36,7 +36,7 @@
     <div class="tablewrap"><table class="table question-result-table">
       <thead><tr><th>#</th><th>Question</th><th>Student Answer</th><th>Correct Answer</th><th>Result</th><th>Marks</th><th>Time</th></tr></thead>
       <tbody>${qs.map((q,i)=>`<tr class="clickable-result-row" data-i="${i}">
-        <td>Q${i+1}</td><td>${esc(q.question_text)}</td>
+        <td>Q${i+1}</td><td>${q.image_url?`<img class="result-question-thumb" src="${esc(q.image_url)}" alt="">`:""}${esc(q.question_text)}<br><span class="muted">${esc((q.question_type||"single_mcq").replaceAll("_"," "))}</span></td>
         <td>${esc(q.student_answer||"Not answered")}</td>
         <td>${esc(q.correct_answer||"—")}</td>
         <td><span class="result-pill ${q.status_class}">${q.is_correct===true?"Correct":q.is_correct===false?"Wrong":"Unanswered"}</span></td>
@@ -51,7 +51,7 @@
     $("questionDetailPanel").hidden=false;
     $("questionDetailPanel").innerHTML=`
       <div class="qmeta"><span>Question ${i+1} of ${qs.length}</span><span>${q.marks} mark${q.marks===1?"":"s"} · ${fmtDuration(q.time_spent_seconds||0)}</span></div>
-      <h2>${esc(q.question_text)}</h2>
+      <h2>${esc(q.question_text)}</h2>${q.image_url?`<figure class="quiz-question-image"><img src="${esc(q.image_url)}" alt="Question illustration"></figure>`:""}
       <div class="student-answer-detail">
         <div class="answer-detail-box ${q.is_correct===true?"correct":q.is_correct===false?"wrong":"unanswered"}">
           <span>Student Answer</span>

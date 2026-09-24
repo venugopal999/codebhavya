@@ -1,78 +1,21 @@
 <!doctype html><html><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Question Bank | CodeBhavya</title>
-<link rel="stylesheet" href="../quiz.css?v=7">
+<title>Question Bank | CodeBhavya</title><link rel="stylesheet" href="../quiz.css?v=8">
 <script src="../../Placement/supabase-config.js?v=1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../../Placement/supabase-client.js?v=1"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-</head><body>
-<header class="topbar"><a class="brand" href="index.html">Code<span>Bhavya</span> Quiz Admin</a>
-<nav><a href="index.html">Dashboard</a><a href="create.html">Create Quiz</a><a href="faculty.html">Faculty Accounts</a></nav></header>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script></head><body>
+<header class="topbar"><a class="brand" href="index.html">Code<span>Bhavya</span> Quiz Admin</a><nav><a href="index.html">Dashboard</a><a href="create.html">Create Quiz</a><a href="faculty.html">Faculty Accounts</a></nav></header>
 <main class="shell">
-<section class="hero"><span class="eyebrow">REUSABLE FACULTY LIBRARY</span><h1>Question Bank</h1>
-<p>Store questions once, filter them by course/topic/difficulty, add selected or random questions to editable quizzes, and import large sets from CSV or Excel.</p></section>
-
+<section class="hero"><span class="eyebrow">REUSABLE FACULTY LIBRARY</span><h1>Question Bank</h1><p>Store single-answer, multiple-answer and True / False questions, optionally with images, then reuse them across quizzes.</p></section>
 <div class="grid">
-<section class="panel col-12">
- <div class="section-head"><div><h2>Find Questions</h2><p class="muted">All questions below belong to your faculty account.</p></div>
- <button class="btn gold" id="newBankQuestion">+ New Bank Question</button></div>
- <div class="bank-filter-grid">
-   <input class="input" id="search" placeholder="Search question text or tags">
-   <input class="input" id="filterCourse" placeholder="Course e.g. C Programming">
-   <input class="input" id="filterTopic" placeholder="Topic e.g. Operators">
-   <select id="filterDifficulty"><option value="">All difficulties</option><option>Easy</option><option>Medium</option><option>Hard</option></select>
-   <button class="btn primary" id="applyFilters">Apply</button>
-   <button class="btn ghost" id="clearFilters">Clear</button>
- </div>
-
- <div class="bank-toolbar">
-   <label class="select-all-label"><input type="checkbox" id="selectAll"> Select all visible</label>
-   <select id="targetQuiz"><option value="">Choose target quiz...</option></select>
-   <button class="btn teal" id="addSelectedBtn">Add Selected to Quiz</button>
- </div>
-
- <div class="tablewrap"><table class="table">
- <thead><tr><th></th><th>Question</th><th>Course</th><th>Topic</th><th>Difficulty</th><th>Marks</th><th>Actions</th></tr></thead>
- <tbody id="bankRows"><tr><td colspan="7">Loading…</td></tr></tbody>
- </table></div>
-</section>
-
-<section class="panel col-6">
- <h2>Random Question Builder</h2><p class="muted">Quickly draw a fresh set from your bank. Existing bank-linked questions in the target quiz are excluded.</p>
- <label>Target quiz</label><select id="randomQuiz"></select>
- <label>Course</label><input class="input" id="randomCourse" placeholder="Optional">
- <label>Topic</label><input class="input" id="randomTopic" placeholder="Optional">
- <label>Difficulty</label><select id="randomDifficulty"><option value="">Any</option><option>Easy</option><option>Medium</option><option>Hard</option></select>
- <label>Number of questions</label><input class="input" id="randomCount" type="number" min="1" max="100" value="10">
- <div class="actions"><button class="btn gold" id="randomAddBtn">Add Random Questions</button></div>
-</section>
-
-<section class="panel col-6">
- <h2>Bulk Import - CSV / Excel</h2>
- <p class="muted">Import many MCQs into the Question Bank. The file is parsed in your browser, then saved through a faculty-only Supabase function.</p>
- <input class="input" id="importFile" type="file" accept=".csv,.xlsx,.xls">
- <div class="actions"><button class="btn primary" id="importBtn">Import Questions</button><button class="btn ghost" id="templateBtn">Download CSV Template</button></div>
- <div id="importStatus"></div>
- <div class="notice"><strong>Columns:</strong> question, option_a, option_b, option_c, option_d, correct_answer, marks, negative_marks, course, topic, difficulty, tags</div>
-</section>
-
-<section class="panel col-12" id="bankEditor" hidden>
- <div class="section-head"><h2 id="bankEditorTitle">New Bank Question</h2><button class="btn ghost" id="closeBankEditor">Close</button></div>
- <div class="two">
-   <div><label>Course</label><input class="input" id="bankCourse" placeholder="C Programming"></div>
-   <div><label>Topic</label><input class="input" id="bankTopic" placeholder="Operators"></div>
- </div>
- <div class="two">
-   <div><label>Difficulty</label><select id="bankDifficulty"><option>Easy</option><option selected>Medium</option><option>Hard</option></select></div>
-   <div><label>Marks / Negative</label><div class="two"><input class="input" id="bankMarks" type="number" min="1" max="100" value="1"><input class="input" id="bankNegative" type="number" min="0" max="100" step="0.25" value="0"></div></div>
- </div>
- <label>Tags <span class="muted">(comma separated)</span></label><input class="input" id="bankTags" placeholder="bitwise, operators, c">
- <label>Question</label><textarea id="bankQuestionText"></textarea>
- <div id="bankOptionEditor"></div>
- <div class="actions"><button class="btn ghost" id="bankAddOption">+ Option</button><button class="btn teal" id="saveBankQuestion">Save to Question Bank</button></div>
-</section>
-</div>
-</main>
-<script src="../quiz-common.js?v=7"></script><script src="bank.js?v=7"></script>
+<section class="panel col-12"><div class="section-head"><div><h2>Find Questions</h2><p class="muted">All questions below belong to your faculty account.</p></div><button class="btn gold" id="newBankQuestion">+ New Bank Question</button></div>
+<div class="bank-filter-grid"><input class="input" id="search" placeholder="Search question text or tags"><input class="input" id="filterCourse" placeholder="Course"><input class="input" id="filterTopic" placeholder="Topic"><select id="filterDifficulty"><option value="">All difficulties</option><option>Easy</option><option>Medium</option><option>Hard</option></select><select id="filterType"><option value="">All types</option><option value="single_mcq">Single MCQ</option><option value="multiple_mcq">Multiple MCQ</option><option value="true_false">True / False</option></select><button class="btn primary" id="applyFilters">Apply</button><button class="btn ghost" id="clearFilters">Clear</button></div>
+<div class="bank-toolbar"><label class="select-all-label"><input type="checkbox" id="selectAll"> Select all visible</label><select id="targetQuiz"><option value="">Choose target quiz...</option></select><button class="btn teal" id="addSelectedBtn">Add Selected to Quiz</button></div>
+<div class="tablewrap"><table class="table"><thead><tr><th></th><th>Question</th><th>Type</th><th>Course</th><th>Topic</th><th>Difficulty</th><th>Marks</th><th>Actions</th></tr></thead><tbody id="bankRows"><tr><td colspan="8">Loading…</td></tr></tbody></table></div></section>
+<section class="panel col-6"><h2>Random Question Builder</h2><label>Target quiz</label><select id="randomQuiz"></select><label>Course</label><input class="input" id="randomCourse" placeholder="Optional"><label>Topic</label><input class="input" id="randomTopic" placeholder="Optional"><label>Difficulty</label><select id="randomDifficulty"><option value="">Any</option><option>Easy</option><option>Medium</option><option>Hard</option></select><label>Question type</label><select id="randomType"><option value="">Any</option><option value="single_mcq">Single MCQ</option><option value="multiple_mcq">Multiple MCQ</option><option value="true_false">True / False</option></select><label>Number of questions</label><input class="input" id="randomCount" type="number" min="1" max="100" value="10"><div class="actions"><button class="btn gold" id="randomAddBtn">Add Random Questions</button></div></section>
+<section class="panel col-6"><h2>Bulk Import - CSV / Excel</h2><p class="muted">For multiple-answer questions use values such as <strong>A,C</strong> in correct_answer. For True / False use TRUE or FALSE.</p><input class="input" id="importFile" type="file" accept=".csv,.xlsx,.xls"><div class="actions"><button class="btn primary" id="importBtn">Import Questions</button><button class="btn ghost" id="templateBtn">Download CSV Template</button></div><div id="importStatus"></div><div class="notice"><strong>Columns:</strong> question_type, question, image_url, option_a, option_b, option_c, option_d, correct_answer, marks, negative_marks, course, topic, difficulty, tags</div></section>
+<section class="panel col-12" id="bankEditor" hidden><div class="section-head"><h2 id="bankEditorTitle">New Bank Question</h2><button class="btn ghost" id="closeBankEditor">Close</button></div><div class="two"><div><label>Course</label><input class="input" id="bankCourse" placeholder="C Programming"></div><div><label>Topic</label><input class="input" id="bankTopic" placeholder="Operators"></div></div><div class="two"><div><label>Question type</label><select id="bankType"><option value="single_mcq">Single Answer MCQ</option><option value="multiple_mcq">Multiple Answer MCQ</option><option value="true_false">True / False</option></select></div><div><label>Difficulty</label><select id="bankDifficulty"><option>Easy</option><option selected>Medium</option><option>Hard</option></select></div></div><div class="two"><div><label>Marks / Negative</label><div class="two"><input class="input" id="bankMarks" type="number" min="1" max="100" value="1"><input class="input" id="bankNegative" type="number" min="0" max="100" step="0.25" value="0"></div></div><div><label>Question image URL <span class="muted">(optional)</span></label><input class="input" id="bankImage" placeholder="https://.../diagram.png"></div></div><div id="bankImagePreview"></div><label>Tags <span class="muted">(comma separated)</span></label><input class="input" id="bankTags" placeholder="bitwise, operators, c"><label>Question</label><textarea id="bankQuestionText"></textarea><div id="bankTypeNote"></div><div id="bankOptionEditor"></div><div class="actions"><button class="btn ghost" id="bankAddOption">+ Option</button><button class="btn teal" id="saveBankQuestion">Save to Question Bank</button></div></section>
+</div></main>
+<script src="../quiz-common.js?v=8"></script><script src="bank.js?v=8"></script>
 </body></html>

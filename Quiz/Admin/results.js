@@ -2,7 +2,7 @@
  const {client,$,requireAdmin,esc,localDate,fmtDuration}=CBQuiz;try{await requireAdmin()}catch{return}
  const id=new URLSearchParams(location.search).get("id");
  const {data,error}=await client.rpc("quiz_admin_results_v1",{p_quiz_id:id});
- if(error){$("rows").innerHTML=`<tr><td colspan="8">${esc(error.message)}</td></tr>`;return}
+ if(error){$("rows").innerHTML=`<tr><td colspan="9">${esc(error.message)}</td></tr>`;return}
 
  $("title").textContent=data.title+" - Results";
  const submitted=data.participants.filter(x=>x.status==="submitted");
@@ -18,12 +18,12 @@
    <td><a class="student-result-link" href="student-result.html?attempt=${encodeURIComponent(p.attempt_id)}">${esc(p.student_label)}</a></td>
    <td>${esc(p.status)}</td>
    <td>${p.score==null?"—":p.score}</td>
-   <td>${Number(p.fullscreen_exit_count||0)} / 3</td>
+   <td>${Number(p.fullscreen_exit_count||0)} / 3</td><td>${Number(p.focus_exit_count||0)} / ${Number(p.focus_warning_limit||3)}</td>
    <td>${esc(localDate(p.joined_at))}</td>
    <td>${esc(localDate(p.submitted_at))}</td>
    <td>${p.duration_seconds==null?"—":fmtDuration(p.duration_seconds)}</td>
    <td><a class="btn ghost detail-btn" href="student-result.html?attempt=${encodeURIComponent(p.attempt_id)}">View</a></td>
- </tr>`).join("")||`<tr><td colspan="8">No attempts yet.</td></tr>`;
+ </tr>`).join("")||`<tr><td colspan="9">No attempts yet.</td></tr>`;
 
  const fs=data.feedback_summary||{};
  const entries=data.feedback_entries||[];
@@ -43,7 +43,7 @@
 
  const participantExport=data.participants.map(p=>({
    Student:p.student_label,Status:p.status,Score:p.score??"",Max_Score:data.max_score,
-   Fullscreen_Warnings:Number(p.fullscreen_exit_count||0),Joined:localDate(p.joined_at),
+   Fullscreen_Warnings:Number(p.fullscreen_exit_count||0),Tab_Window_Warnings:Number(p.focus_exit_count||0),Joined:localDate(p.joined_at),
    Submitted:localDate(p.submitted_at),Time_Seconds:p.duration_seconds??""
  }));
  const feedbackExport=(data.feedback_entries||[]).map(f=>({

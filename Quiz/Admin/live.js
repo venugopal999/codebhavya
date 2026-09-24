@@ -33,8 +33,8 @@
  async function action(name){const {error}=await client.rpc(name,{p_quiz_id:id});if(error)toast(error.message,"error");else await load()}
  async function loadParticipants(){
    const {data,error}=await client.rpc("quiz_admin_participants_v1",{p_quiz_id:id});
-   if(error){$("participants").innerHTML=`<tr><td colspan="5">${esc(error.message)}</td></tr>`;return}
-   $("participants").innerHTML=(data||[]).map(p=>`<tr><td>${esc(p.student_label)}</td><td>${esc(localDate(p.joined_at))}</td><td>${esc(p.status)}</td><td><strong>${Number(p.fullscreen_exit_count||0)}</strong> / 3</td><td>${p.score==null?"—":p.score}</td></tr>`).join("")||`<tr><td colspan="5">No students joined yet.</td></tr>`;
+   if(error){$("participants").innerHTML=`<tr><td colspan="6">${esc(error.message)}</td></tr>`;return}
+   $("participants").innerHTML=(data||[]).map(p=>`<tr><td>${esc(p.student_label)}</td><td>${esc(localDate(p.joined_at))}</td><td>${esc(p.status)}</td><td><strong>${Number(p.fullscreen_exit_count||0)}</strong> / 3</td><td><strong>${Number(p.focus_exit_count||0)}</strong> / ${Number(p.focus_warning_limit||3)}</td><td>${p.score==null?"—":p.score}</td></tr>`).join("")||`<tr><td colspan="6">No students joined yet.</td></tr>`;
  }
  await load();
  channel=client.channel(`admin-quiz-${id}`)

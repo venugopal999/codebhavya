@@ -16,13 +16,15 @@
   <div class="analytics-stat"><span>Lowest</span><strong>${Number(s.lowest_score||0).toFixed(1)}</strong></div>
   <div class="analytics-stat"><span>≥ 40%</span><strong>${Number(s.pass_percentage_40||0).toFixed(1)}%</strong></div>
   <div class="analytics-stat"><span>Avg Time</span><strong>${fmtDuration(s.average_duration_seconds||0)}</strong></div>
-  <div class="analytics-stat"><span>Warnings</span><strong>${s.fullscreen_warning_total||0}</strong></div>
-  <div class="analytics-stat"><span>Students Warned</span><strong>${s.students_with_warnings||0}</strong></div>`;
+  <div class="analytics-stat"><span>Full-screen Warnings</span><strong>${s.fullscreen_warning_total||0}</strong></div>
+  <div class="analytics-stat"><span>Students FS Warned</span><strong>${s.students_with_warnings||0}</strong></div>
+  <div class="analytics-stat"><span>Tab/Window Warnings</span><strong>${s.focus_warning_total||0}</strong></div>
+  <div class="analytics-stat"><span>Students Focus Warned</span><strong>${s.students_with_focus_warnings||0}</strong></div>`;
 
  const qs=data.questions||[];
  $("analyticsRows").innerHTML=qs.map(q=>`<tr>
    <td>Q${q.position}</td>
-   <td><strong>${esc(q.question_text)}</strong>${q.accuracy===data.easiest_accuracy?'<span class="analytics-label easy">Easiest</span>':""}${q.accuracy===data.hardest_accuracy?'<span class="analytics-label hard">Hardest</span>':""}</td>
+   <td><strong>${esc(q.question_text)}</strong><br><span class="muted">${esc((q.question_type||"single_mcq").replaceAll("_"," "))}</span>${q.accuracy===data.easiest_accuracy?'<span class="analytics-label easy">Easiest</span>':""}${q.accuracy===data.hardest_accuracy?'<span class="analytics-label hard">Hardest</span>':""}</td>
    <td>${q.correct_count}</td><td>${q.wrong_count}</td><td>${q.unanswered_count}</td>
    <td><strong>${Number(q.accuracy||0).toFixed(1)}%</strong></td><td>${fmtDuration(q.average_time_seconds||0)}</td>
    <td><div class="option-dist">${(q.options||[]).map(o=>`<div><span>${esc(o.label)}${o.is_correct?" ✓":""}</span><strong>${o.count}</strong></div>`).join("")}</div></td>
