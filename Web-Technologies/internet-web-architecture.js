@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setupArchitectureVisualizer();
 
+    setupFlipCards();
+
     setupCompletion();
 
 });
@@ -739,6 +741,69 @@ function setupArchitectureVisualizer() {
 
 
     renderStep(0);
+
+}
+
+/* ============================================================
+   FLIP CARDS
+   ============================================================ */
+
+function setupFlipCards() {
+
+    const cards =
+        document.querySelectorAll(
+            ".flip-card"
+        );
+
+
+    if (!cards.length) {
+        return;
+    }
+
+
+    cards.forEach((card) => {
+
+        function flipCard() {
+
+            const flipped =
+                card.classList.toggle(
+                    "is-flipped"
+                );
+
+
+            card.setAttribute(
+                "aria-pressed",
+                String(flipped)
+            );
+
+        }
+
+
+        card.addEventListener(
+            "click",
+            flipCard
+        );
+
+
+        card.addEventListener(
+            "keydown",
+            (event) => {
+
+                if (
+                    event.key === "Enter" ||
+                    event.key === " "
+                ) {
+
+                    event.preventDefault();
+
+                    flipCard();
+
+                }
+
+            }
+        );
+
+    });
 
 }
 
