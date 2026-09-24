@@ -27,7 +27,7 @@
     $('progressTitle').textContent=`${s.class_name} · ${s.section_name}`;
     $('progressSubtitle').textContent=s.course;
     $('progressStats').innerHTML=`<div class="stat"><strong>${Number(summary.quizzes)}</strong><span>Quizzes</span></div>
-      <div class="stat"><strong>${Number(summary.students)}</strong><span>Students in quiz rosters</span></div>
+      <div class="stat"><strong>${Number(summary.students)}</strong><span>Students in current roster</span></div>
       <div class="stat"><strong>${pct(summary.average_percentage)}</strong><span>Average submitted score</span></div>`;
     $('progressChart').innerHTML=quizzes.map(q=>{
       const score=q.average_percentage==null?0:Math.max(0,Math.min(100,Number(q.average_percentage)||0));
