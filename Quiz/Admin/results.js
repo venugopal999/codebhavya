@@ -41,26 +41,6 @@
  document.querySelector("main.shell").appendChild(section);
  $("analyticsLink").href=`analytics.html?id=${encodeURIComponent(id)}`;
 
- const attendancePanel=document.createElement("section");
- attendancePanel.className="panel attendance-panel";
- attendancePanel.innerHTML="<h2>Section Attendance</h2><p>Loading assigned rosters…</p>";
- document.querySelector("main.shell").appendChild(attendancePanel);
- const {data:attendance,error:attendanceError}=await client.rpc("quiz_admin_attendance_v10",{p_quiz_id:id});
- if(attendanceError){attendancePanel.innerHTML=`<h2>Section Attendance</h2><div class="notice bad">${esc(attendanceError.message)}</div>`}
- else if(!(attendance.sections||[]).length){attendancePanel.innerHTML='<h2>Section Attendance</h2><div class="notice">No sections were assigned to this quiz. The results above show students who joined by code.</div>'}
- else {
-   const summary=(attendance.sections||[]).map(s=>`<tr><td>${esc(s.class_name)} · ${esc(s.section_name)}</td><td>${esc(s.course)}</td><td>${Number(s.assigned)}</td><td>${Number(s.joined)}</td><td>${Number(s.submitted)}</td><td>${Number(s.absent)}</td><td>${s.average_score==null?"—":Number(s.average_score).toFixed(2)}</td></tr>`).join("");
-   const students=(attendance.students||[]).map(s=>`<tr><td>${esc(s.student_name||s.email)}<br><small>${esc(s.email)}</small></td><td>${esc(s.class_name)} · ${esc(s.section_name)}</td><td>${esc(s.status)}</td><td>${s.score==null?"—":Number(s.score)}</td><td>${esc(localDate(s.joined_at))}</td><td>${s.attempt_id?`<a class="btn ghost detail-btn" href="student-result.html?attempt=${encodeURIComponent(s.attempt_id)}">View</a>`:"—"}</td></tr>`).join("");
-   attendancePanel.innerHTML=`<div class="section-head"><div><h2>Section Attendance</h2><p class="muted">Roster captured when sections were assigned to this quiz.</p></div><button class="btn teal" id="exportAttendance">Export Attendance CSV</button></div><h3>Section comparison</h3><div class="tablewrap"><table class="table"><thead><tr><th>Class / Section</th><th>Course</th><th>Assigned</th><th>Joined</th><th>Submitted</th><th>Absent</th><th>Average Score</th></tr></thead><tbody>${summary}</tbody></table></div><h3>Student register</h3><div class="tablewrap"><table class="table"><thead><tr><th>Student</th><th>Class / Section</th><th>Status</th><th>Score</th><th>Joined at</th><th>Details</th></tr></thead><tbody>${students||'<tr><td colspan="6">The assigned sections have no students.</td></tr>'}</tbody></table></div>`;
-   $("exportAttendance").onclick=()=>{
-     const heads=["Course","Class","Section","Student","Email","Status","Score","Joined","Submitted"];
-     const rows=(attendance.students||[]).map(s=>[attendance.sections.find(x=>x.section_id===s.section_id)?.course||"",s.class_name,s.section_name,s.student_name,s.email,s.status,s.score??"",s.joined_at||"",s.submitted_at||""]);
-     const field=v=>{let x=String(v??"");if(/^[\s]*[=+@\-]/.test(x))x="'"+x;return `"${x.replaceAll('"','""')}"`};
-     const blob=new Blob(["\uFEFF"+[heads,...rows].map(row=>row.map(field).join(",")).join("\r\n")],{type:"text/csv;charset=utf-8"});
-     const link=document.createElement("a");link.href=URL.createObjectURL(blob);link.download=`${attendance.title.replace(/[^a-z0-9_-]+/gi,"-")}-attendance.csv`;link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);
-   };
- }
-
  const participantExport=data.participants.map(p=>({
    Student:p.student_label,Status:p.status,Score:p.score??"",Max_Score:data.max_score,
    Fullscreen_Warnings:Number(p.fullscreen_exit_count||0),Tab_Window_Warnings:Number(p.focus_exit_count||0),Joined:localDate(p.joined_at),
@@ -74,9 +54,10 @@
  function csvDownload(rows,name){
    if(!rows.length)rows=[{Info:"No data"}];
    const heads=Object.keys(rows[0]),lines=[heads.join(",")];
-   rows.forEach(r=>lines.push(heads.map(h=>`"${String(r[h]??"").replaceAll('"','""')}"`).join(",")));
+   const cell=value=>{if(typeof value==='number'&&Number.isFinite(value))return String(value);let s=String(value??'');if(/^\s*[=+@-]/.test(s))s="'"+s;return `"${s.replaceAll('"','""')}"`};
+   rows.forEach(r=>lines.push(heads.map(h=>cell(r[h])).join(",")));
    const blob=new Blob([lines.join("\n")],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");
-   a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href);
+   a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
  }
  $("exportResultsCsv").onclick=()=>csvDownload(participantExport,`${data.title}-results.csv`);
  $("exportResultsXlsx").onclick=()=>{
