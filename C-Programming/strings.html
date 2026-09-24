@@ -143,44 +143,216 @@ text[write] = '\0';</code></pre><div class="cb-concept-tree"><pre>read index →
 Step 2 → Scan the original string left to right
 Step 3 → Find the first character with frequency 1
 Step 4 → Report it</pre></div><p>The key idea is to preserve the original order during the second scan.</p><h3>11.33 Array of Strings</h3><p>Multiple strings can be stored in a two-dimensional character array.</p><pre><code>char names[5][100];</code></pre><p>Here each row can hold one null-terminated string of up to 99 characters plus <code>\0</code>.</p><h3>11.34 scanf() vs fgets() — Choose the Input Method</h3><div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Method</th><th>Typical use</th><th>Whitespace</th></tr></thead><tbody><tr><td><code>scanf("%s", ...)</code></td><td>Single word</td><td>Stops at whitespace</td></tr><tr><td><code>fgets()</code></td><td>Complete line</td><td>Can read spaces</td></tr></tbody></table></div><p>For a line-oriented problem, <code>fgets()</code> is usually the clearer choice. If it stores the newline, remove it when the problem requires a clean string.</p><h3>11.35 Why is \0 Important?</h3><p>The null character tells string functions where the string ends. Without it, a function such as <code>printf("%s", text)</code> may continue reading memory beyond the intended characters until a zero byte happens to be found.</p><div class="cb-memory-diagram"><pre>H E L L O \0 | unrelated memory...
-←---- string ----→</pre></div><div class="cb-confusion-box"><strong>Array size and string length are different:</strong> <code>char text[100]</code> can have capacity 99 visible characters plus <code>\0</code>, but its current string may be much shorter.</div><h3>11.36 Common String Mistakes</h3><ul class="cb-tip-grid"><li>Forgetting space for <code>\0</code>.</li><li>Using <code>==</code> to compare string contents.</li><li>Using <code>scanf("%s", text)</code> when the input contains spaces.</li><li>Calling <code>strcpy</code> or <code>strcat</code> without enough destination capacity.</li><li>Forgetting that <code>fgets()</code> may keep the newline.</li><li>Reading or writing outside the array bounds.</li><li>Forgetting to terminate a manually constructed string with <code>\0</code>.</li><li>Confusing <code>strlen(text)</code> with <code>sizeof(text)</code>.</li></ul><div class="cb-deep-dive"><strong>CodeBhavya Rule:</strong> Whenever you manipulate a string manually, always know three things: <strong>buffer capacity</strong>, <strong>current length</strong>, and <strong>where <code>\0</code> is</strong>.</div><h3>11.37 Quick Revision</h3>
-<div class="tip-box">
+←---- string ----→</pre></div><div class="cb-confusion-box"><strong>Array size and string length are different:</strong> <code>char text[100]</code> can have capacity 99 visible characters plus <code>\0</code>, but its current string may be much shorter.</div><h3>11.36 Common String Mistakes</h3><ul class="cb-tip-grid"><li>Forgetting space for <code>\0</code>.</li><li>Using <code>==</code> to compare string contents.</li><li>Using <code>scanf("%s", text)</code> when the input contains spaces.</li><li>Calling <code>strcpy</code> or <code>strcat</code> without enough destination capacity.</li><li>Forgetting that <code>fgets()</code> may keep the newline.</li><li>Reading or writing outside the array bounds.</li><li>Forgetting to terminate a manually constructed string with <code>\0</code>.</li><li>Confusing <code>strlen(text)</code> with <code>sizeof(text)</code>.</li></ul><div class="cb-deep-dive"><strong>CodeBhavya Rule:</strong> Whenever you manipulate a string manually, always know three things: <strong>buffer capacity</strong>, <strong>current length</strong>, and <strong>where <code>\0</code> is</strong>.</div>
+    
+    <!-- 11.37 QUICK REVISION -->
+
+    <h3>11.37 Quick Revision</h3>
+
+    <div class="tip-box">
 
         📌 C has no built-in string data type.
 
-        <br/><br/>
+        <br><br>
 
         📌 Strings are stored as character arrays.
 
-        <br/><br/>
+        <br><br>
 
         📌 Strings end with <strong>\0</strong>.
 
-        <br/><br/>
+        <br><br>
 
         📌 <strong>%s</strong> is used for string output.
 
-        <br/><br/>
+        <br><br>
 
         📌 <strong>strlen()</strong> → length.
 
-        <br/><br/>
+        <br><br>
 
         📌 <strong>strcpy()</strong> → copy.
 
-        <br/><br/>
+        <br><br>
 
         📌 <strong>strcat()</strong> → concatenate.
 
-        <br/><br/>
+        <br><br>
 
         📌 <strong>strcmp()</strong> → compare.
 
-        <br/><br/>
+        <br><br>
 
         📌 <strong>fgets()</strong> can read spaces.
 
     </div>
+
+
+    <!-- 11.38 MCQs -->
+
+    
+<section class="content-card cb-added-section cb-compact-learning" id="strings-visualizer-extra">
+
+    <span class="cb-added-label">INTERACTIVE LEARNING</span>
+
+    <h2>🎬 Strings — Character Traversal</h2>
+
+    <p class="cb-added-note">
+        Follow how C traverses a character array until the null terminator <code>\0</code>.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBConceptViz.toggle('strings')"
+    >▶ Open Visualization</button>
+
+    <div class="cb-compact-panel" id="cbVizPanel-strings" hidden>
+
+        <div
+            class="cb-viz-card cb-viz-dsa-standard"
+            data-cb-viz="strings"
+            data-frames="[{&quot;title&quot;:&quot;1. Start at index 0&quot;,&quot;detail&quot;:&quot;The first character is &#x27;C&#x27;. It is processed and the index advances.&quot;},{&quot;title&quot;:&quot;2. Visit index 1&quot;,&quot;detail&quot;:&quot;The next character is &#x27;o&#x27;. The loop continues because it is not the null character.&quot;},{&quot;title&quot;:&quot;3. Visit index 2&quot;,&quot;detail&quot;:&quot;The character &#x27;d&#x27; is processed.&quot;},{&quot;title&quot;:&quot;4. Visit index 3&quot;,&quot;detail&quot;:&quot;The character &#x27;e&#x27; is processed.&quot;},{&quot;title&quot;:&quot;5. Reach the null terminator&quot;,&quot;detail&quot;:&quot;At index 4 the character is &#x27;\\0&#x27;. This marks the end of the C string.&quot;}]"
+        >
+
+            <div class="cb-viz-dsa-topbar">
+                <div class="cb-viz-dsa-label">INTERACTIVE ALGORITHM VISUALIZATION</div>
+
+                <div class="cb-viz-dsa-brand" aria-label="CodeBhavya">
+                    <span class="cb-viz-dsa-brand-mark">
+                        <img src="../images/codebhavya-icon-32.png" alt="CodeBhavya logo">
+                    </span>
+                    <span class="cb-viz-dsa-code">Code</span><span class="cb-viz-dsa-bhavya">Bhavya</span>
+                </div>
+            </div>
+
+            <h3 class="cb-viz-dsa-title">🎬 String Traversal Visualizer</h3>
+
+            <p class="cb-viz-dsa-intro">
+                The currently visited character becomes active as the traversal moves toward <code>\0</code>.
+            </p>
+
+            <div class="cb-mini-step-flow">
+
+                <div class="cb-mini-step-card cb-mini-step-card-blue" data-cb-flow-step="0">
+                    <div class="cb-mini-step-badge">Index 0</div>
+                    <div class="cb-mini-step-text">C</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-gold" data-cb-flow-step="1">
+                    <div class="cb-mini-step-badge">Index 1</div>
+                    <div class="cb-mini-step-text">o</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-purple" data-cb-flow-step="2">
+                    <div class="cb-mini-step-badge">Index 2</div>
+                    <div class="cb-mini-step-text">d</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-green" data-cb-flow-step="3">
+                    <div class="cb-mini-step-badge">Index 3</div>
+                    <div class="cb-mini-step-text">e</div>
+                </div>
+
+                <div class="cb-mini-step-arrow">↓</div>
+
+                <div class="cb-mini-step-card cb-mini-step-card-pink" data-cb-flow-step="4">
+                    <div class="cb-mini-step-badge">Index 4</div>
+                    <div class="cb-mini-step-text">\0</div>
+                </div>
+
+            </div>
+
+            <div class="cb-viz-stage">
+                <div class="cb-viz-step" id="cbVizStep-strings">Step 1</div>
+                <h3 id="cbVizTitle-strings"></h3>
+                <p id="cbVizDetail-strings"></p>
+                <div class="cb-viz-dots" id="cbVizDots-strings"></div>
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBConceptViz.prev('strings')">← Previous</button>
+                <button class="cb-control cb-next" id="cbVizNext-strings" onclick="CBConceptViz.next('strings')">Next →</button>
+                <button class="cb-control cb-auto" id="cbVizAuto-strings" onclick="CBConceptViz.auto('strings')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBConceptViz.pause('strings')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBConceptViz.reset('strings')">↺ Reset</button>
+            </div>
+
+            <div class="cb-mini-progress">
+                <div id="cbVizProgress-strings"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="content-card cb-added-section cb-compact-learning" id="strings-tracing-extra">
+
+    <span class="cb-added-label">PROGRAM TRACING</span>
+
+    <h2>🔎 Program Tracing — Strings</h2>
+
+    <p class="cb-added-note">
+        Trace character-by-character traversal while counting vowels in a string.
+    </p>
+
+    <button
+        class="cb-compact-toggle"
+        type="button"
+        onclick="CBProgramTrace.toggle('strings')"
+    >▶ Program Tracing — Strings</button>
+
+    <div class="cb-compact-panel" id="cbTracePanel-strings" hidden>
+
+        <div
+            class="cb-tracer"
+            data-cb-trace="strings"
+            data-config="{&quot;code&quot;:[&quot;int main()&quot;,&quot;{&quot;,&quot;    char text[] = \&quot;Code\&quot;;&quot;,&quot;    int count = 0;&quot;,&quot;    for (int i = 0; text[i] != &#x27;\\0&#x27;; i++)&quot;,&quot;    {&quot;,&quot;        char ch = text[i];&quot;,&quot;        if (ch==&#x27;a&#x27; || ch==&#x27;e&#x27; || ch==&#x27;i&#x27; ||&quot;,&quot;            ch==&#x27;o&#x27; || ch==&#x27;u&#x27; || ch==&#x27;A&#x27; ||&quot;,&quot;            ch==&#x27;E&#x27; || ch==&#x27;I&#x27; || ch==&#x27;O&#x27; || ch==&#x27;U&#x27;)&quot;,&quot;        {&quot;,&quot;            count++;&quot;,&quot;        }&quot;,&quot;    }&quot;,&quot;    printf(\&quot;Vowels = %d\&quot;, count);&quot;,&quot;    return 0;&quot;,&quot;}&quot;],&quot;steps&quot;:[{&quot;line&quot;:0,&quot;state&quot;:{&quot;text&quot;:&quot;—&quot;,&quot;count&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;Execution starts at main().&quot;},{&quot;line&quot;:2,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:&quot;—&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;The character array text is initialized to \&quot;Code\&quot; followed by the null terminator.&quot;},{&quot;line&quot;:3,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;count is initialized to 0.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:0,&quot;i&quot;:0,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i = 0 and text[0] is &#x27;C&#x27;, not &#x27;\\0&#x27;, so the loop begins.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:0,&quot;i&quot;:0,&quot;ch&quot;:&quot;C&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;ch receives text[0], which is &#x27;C&#x27;.&quot;},{&quot;line&quot;:7,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:0,&quot;i&quot;:0,&quot;ch&quot;:&quot;C&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;&#x27;C&#x27; is not a vowel, so count remains 0.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:0,&quot;i&quot;:1,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i becomes 1. text[1] is &#x27;o&#x27;, so traversal continues.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:0,&quot;i&quot;:1,&quot;ch&quot;:&quot;o&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;ch receives &#x27;o&#x27;.&quot;},{&quot;line&quot;:11,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:1,&quot;i&quot;:1,&quot;ch&quot;:&quot;o&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;&#x27;o&#x27; is a vowel, so count becomes 1.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:1,&quot;i&quot;:2,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i becomes 2. text[2] is &#x27;d&#x27;.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:1,&quot;i&quot;:2,&quot;ch&quot;:&quot;d&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;ch receives &#x27;d&#x27;. It is not a vowel, so count stays 1.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:1,&quot;i&quot;:3,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i becomes 3. text[3] is &#x27;e&#x27;.&quot;},{&quot;line&quot;:6,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:1,&quot;i&quot;:3,&quot;ch&quot;:&quot;e&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;ch receives &#x27;e&#x27;.&quot;},{&quot;line&quot;:11,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:2,&quot;i&quot;:3,&quot;ch&quot;:&quot;e&quot;,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;&#x27;e&#x27; is a vowel, so count becomes 2.&quot;},{&quot;line&quot;:4,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:2,&quot;i&quot;:4,&quot;output&quot;:&quot;&quot;},&quot;note&quot;:&quot;i becomes 4. text[4] is &#x27;\\0&#x27;, so the loop terminates.&quot;},{&quot;line&quot;:14,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:2,&quot;output&quot;:&quot;Vowels = 2&quot;},&quot;note&quot;:&quot;printf() displays the final vowel count.&quot;},{&quot;line&quot;:15,&quot;state&quot;:{&quot;text&quot;:&quot;Code&quot;,&quot;count&quot;:2,&quot;output&quot;:&quot;Vowels = 2&quot;},&quot;note&quot;:&quot;return 0 ends the program successfully.&quot;}]}"
+        >
+
+            <div class="cb-tracer-grid">
+
+                <div class="cb-tracer-code-wrap">
+                    <div class="cb-tracer-heading">C Program</div>
+                    <pre class="cb-tracer-code" id="cbTraceCode-strings"></pre>
+                </div>
+
+                <div class="cb-tracer-state-wrap">
+                    <div class="cb-tracer-heading">Live Variables</div>
+
+                    <div class="cb-tracer-note" id="cbTraceNote-strings"></div>
+
+                    <div class="cb-live-state" id="cbTraceState-strings"></div>
+
+                    <div class="cb-tracer-output">
+                        <strong>Output</strong>
+                        <pre id="cbTraceOutput-strings">—</pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cb-standard-controls">
+                <button class="cb-control cb-previous" onclick="CBProgramTrace.prev('strings')">← Previous</button>
+                <button class="cb-control cb-next" id="cbTraceNext-strings" onclick="CBProgramTrace.next('strings')">Next →</button>
+                <button class="cb-control cb-auto" id="cbTraceAuto-strings" onclick="CBProgramTrace.auto('strings')">▶ Auto Run</button>
+                <button class="cb-control cb-pause" onclick="CBProgramTrace.pause('strings')">Ⅱ Pause</button>
+                <button class="cb-control cb-reset" onclick="CBProgramTrace.reset('strings')">↺ Reset</button>
+            </div>
+
+            <div class="cb-tracer-status" id="cbTraceStatus-strings">Step 0</div>
+
+        </div>
+    </div>
+</section>  
 <h3>11.38 Quick MCQs</h3>
 
     <p class="cb-mcq-guide">
