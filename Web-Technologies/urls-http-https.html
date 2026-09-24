@@ -1,0 +1,5522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="CodeBhavya Web Technologies Level 03 - URLs, HTTP and HTTPS. Learn URL anatomy, HTTP requests and responses, methods, headers, status codes, HTTPS, TLS and certificates."
+    >
+
+    <meta
+        name="keywords"
+        content="URLs, HTTP, HTTPS, HTTP Methods, HTTP Headers, HTTP Status Codes, TLS, SSL, Web Technologies, CodeBhavya"
+    >
+
+    <meta
+        name="author"
+        content="CodeBhavya"
+    >
+
+    <link
+        rel="canonical"
+        href="https://codebhavya.com/Web-Technologies/urls-http-https.html"
+    >
+
+    <title>
+        URLs, HTTP and HTTPS | CodeBhavya
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/common.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="web-technologies.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         CODEBHAVYA HEADER
+         ===================================================== -->
+
+    <div id="site-header"></div>
+
+
+    <!-- =====================================================
+         READING PROGRESS
+         ===================================================== -->
+
+    <div
+        class="reading-progress-wrap"
+        aria-hidden="true"
+    >
+
+        <div
+            class="reading-progress"
+            id="readingProgress"
+        ></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN PAGE
+         ===================================================== -->
+
+    <main class="wt-page">
+
+
+        <!-- =================================================
+             HERO
+             ================================================= -->
+
+        <section class="wt-hero">
+
+            <div class="wt-breadcrumb">
+
+                <a href="/Web-Technologies/index.html">
+                    Web Technologies
+                </a>
+
+                <span>›</span>
+
+                <span>Level 03</span>
+
+            </div>
+
+
+            <div class="level-badge">
+                LEVEL 03 · WEB FUNDAMENTALS
+            </div>
+
+
+            <h1>
+                URLs, HTTP and HTTPS
+            </h1>
+
+
+            <p class="hero-subtitle">
+                Learn how web addresses identify resources, how browsers
+                and servers exchange HTTP messages, how status codes and
+                headers communicate information, and how HTTPS protects
+                web communication.
+            </p>
+
+
+            <div class="hero-meta">
+
+                <span>
+                    🔗 URLs
+                </span>
+
+                <span>
+                    🌐 HTTP
+                </span>
+
+                <span>
+                    🔐 HTTPS
+                </span>
+
+                <span>
+                    📚 Beginner
+                </span>
+
+                <span>
+                    🎯 Placement Focus
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             LEARNING OBJECTIVES
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    01
+                </span>
+
+                <div>
+
+                    <h2>
+                        Learning Objectives
+                    </h2>
+
+                    <p>
+                        Build a strong understanding of how Web resources
+                        are addressed and communicated.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="objective-grid">
+
+
+                <article class="info-card">
+
+                    <div class="card-icon">
+                        🔗
+                    </div>
+
+                    <h3>
+                        Understand URLs
+                    </h3>
+
+                    <p>
+                        Identify the major parts of a URL and understand
+                        what each part represents.
+                    </p>
+
+                </article>
+
+
+                <article class="info-card">
+
+                    <div class="card-icon">
+                        🌐
+                    </div>
+
+                    <h3>
+                        Understand HTTP
+                    </h3>
+
+                    <p>
+                        Learn the purpose of HTTP and its request-response model.
+                    </p>
+
+                </article>
+
+
+                <article class="info-card">
+
+                    <div class="card-icon">
+                        📤
+                    </div>
+
+                    <h3>
+                        Understand Requests
+                    </h3>
+
+                    <p>
+                        Study methods, paths, headers and request bodies.
+                    </p>
+
+                </article>
+
+
+                <article class="info-card">
+
+                    <div class="card-icon">
+                        📥
+                    </div>
+
+                    <h3>
+                        Understand Responses
+                    </h3>
+
+                    <p>
+                        Learn status codes, response headers and response bodies.
+                    </p>
+
+                </article>
+
+
+                <article class="info-card">
+
+                    <div class="card-icon">
+                        🔐
+                    </div>
+
+                    <h3>
+                        Understand HTTPS
+                    </h3>
+
+                    <p>
+                        Understand TLS, certificates, confidentiality,
+                        integrity and authentication.
+                    </p>
+
+                </article>
+
+
+                <article class="info-card">
+
+                    <div class="card-icon">
+                        🚀
+                    </div>
+
+                    <h3>
+                        Compare HTTP Versions
+                    </h3>
+
+                    <p>
+                        Understand the major differences between HTTP/1.1,
+                        HTTP/2 and HTTP/3.
+                    </p>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             URL INTRODUCTION
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    02
+                </span>
+
+                <div>
+
+                    <h2>
+                        What Is a URL?
+                    </h2>
+
+                    <p>
+                        A URL identifies a resource and provides information
+                        about how to locate or access it.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="article-card">
+
+                <p>
+                    A <strong>URL</strong> is a Uniform Resource Locator.
+                    It is the familiar web address used to access a resource.
+                </p>
+
+
+                <p>
+                    A browser can use a URL to identify a web resource such as
+                    an HTML page, image, API endpoint, video, document or other
+                    network-accessible resource.
+                </p>
+
+
+                <div class="highlight-box">
+
+                    <div class="highlight-icon">
+                        💡
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Simple idea
+                        </strong>
+
+                        <p>
+                            A URL tells the client
+                            <strong>how</strong> to access something and
+                            <strong>where</strong> that resource is located.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             URL ANATOMY
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    03
+                </span>
+
+                <div>
+
+                    <h2>
+                        Anatomy of a URL
+                    </h2>
+
+                    <p>
+                        Let's break a complete URL into its major components.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="article-card">
+
+                <div class="trace-code">
+
+                    https://www.codebhavya.com/Web-Technologies/lesson.html?id=3#http
+
+                </div>
+
+
+                <div class="roadmap" style="margin-top: 20px;">
+
+
+                    <div class="roadmap-part">
+
+                        <div class="roadmap-number">
+                            01
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Scheme
+                            </h3>
+
+                            <p>
+                                <strong>https</strong> identifies the URL scheme
+                                used for the resource.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="roadmap-part">
+
+                        <div class="roadmap-number">
+                            02
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Host
+                            </h3>
+
+                            <p>
+                                <strong>www.codebhavya.com</strong> identifies
+                                the host.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="roadmap-part">
+
+                        <div class="roadmap-number">
+                            03
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Path
+                            </h3>
+
+                            <p>
+                                <strong>/Web-Technologies/lesson.html</strong>
+                                identifies the resource path.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="roadmap-part">
+
+                        <div class="roadmap-number">
+                            04
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Query
+                            </h3>
+
+                            <p>
+                                <strong>?id=3</strong> supplies query parameters.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="roadmap-part">
+
+                        <div class="roadmap-number">
+                            05
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Fragment
+                            </h3>
+
+                            <p>
+                                <strong>#http</strong> identifies a location
+                                within the document.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             URL COMPONENT TABLE
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    04
+                </span>
+
+                <div>
+
+                    <h2>
+                        URL Component Reference
+                    </h2>
+
+                    <p>
+                        Quickly review the role of each part.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="comparison-table-wrap">
+
+                <table class="comparison-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Component
+                            </th>
+
+                            <th>
+                                Example
+                            </th>
+
+                            <th>
+                                Purpose
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                Scheme
+                            </td>
+
+                            <td>
+                                https
+                            </td>
+
+                            <td>
+                                Identifies the access scheme.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Host
+                            </td>
+
+                            <td>
+                                www.example.com
+                            </td>
+
+                            <td>
+                                Identifies the destination host.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Port
+                            </td>
+
+                            <td>
+                                :443
+                            </td>
+
+                            <td>
+                                Identifies a specific service endpoint when specified.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Path
+                            </td>
+
+                            <td>
+                                /products/1
+                            </td>
+
+                            <td>
+                                Identifies the requested resource path.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Query
+                            </td>
+
+                            <td>
+                                ?page=2
+                            </td>
+
+                            <td>
+                                Carries query parameters.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Fragment
+                            </td>
+
+                            <td>
+                                #details
+                            </td>
+
+                            <td>
+                                Identifies a document fragment or location.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             HTTP INTRODUCTION
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    05
+                </span>
+
+                <div>
+
+                    <h2>
+                        What Is HTTP?
+                    </h2>
+
+                    <p>
+                        HTTP is the core application-layer protocol used
+                        for Web communication.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="article-card">
+
+                <p>
+                    <strong>HTTP</strong> stands for
+                    <strong>Hypertext Transfer Protocol</strong>.
+                </p>
+
+
+                <p>
+                    It follows a client-server request/response model.
+                    A client such as a browser sends a request and the
+                    server sends a response.
+                </p>
+
+
+                <p>
+                    HTTP is used for much more than HTML pages. It can carry
+                    images, scripts, videos, API data, form submissions and
+                    many other kinds of resources.
+                </p>
+
+
+                <div class="memory-box">
+
+                    <strong>
+                        Remember:
+                    </strong>
+
+                    <span>
+                        HTTP defines the communication semantics;
+                        HTML, CSS and JavaScript define the content,
+                        presentation and behavior of web pages.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             REQUEST RESPONSE
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    06
+                </span>
+
+                <div>
+
+                    <h2>
+                        HTTP Request and Response
+                    </h2>
+
+                    <p>
+                        Every HTTP exchange revolves around messages.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="architecture-grid">
+
+
+                <article class="architecture-card">
+
+                    <div class="architecture-label">
+                        CLIENT → SERVER
+                    </div>
+
+
+                    <h3>
+                        HTTP Request
+                    </h3>
+
+
+                    <div class="flow-mini">
+
+                        <div class="flow-node">
+                            Method
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            Target / Path
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node accent-node">
+                            Headers
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            Optional Body
+                        </div>
+
+                    </div>
+
+
+                    <p>
+                        The client describes what it wants the server
+                        to do or retrieve.
+                    </p>
+
+                </article>
+
+
+
+                <article class="architecture-card">
+
+                    <div class="architecture-label dynamic-label">
+                        SERVER → CLIENT
+                    </div>
+
+
+                    <h3>
+                        HTTP Response
+                    </h3>
+
+
+                    <div class="flow-mini">
+
+                        <div class="flow-node">
+                            Status Code
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            Headers
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node accent-node">
+                            Optional Body
+                        </div>
+
+                    </div>
+
+
+                    <p>
+                        The server reports the result and can return
+                        data or a representation of the resource.
+                    </p>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SAMPLE REQUEST
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    07
+                </span>
+
+                <div>
+
+                    <h2>
+                        Anatomy of an HTTP Request
+                    </h2>
+
+                    <p>
+                        Here is a simplified HTTP/1.1-style representation
+                        that helps beginners understand the message.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="article-card">
+
+                <div class="trace-code">
+
+                    GET /Web-Technologies/ HTTP/1.1
+                    <br>
+                    Host: codebhavya.com
+                    <br>
+                    Accept: text/html
+                    <br>
+                    User-Agent: Browser
+                    <br>
+                    Connection: keep-alive
+
+                </div>
+
+
+                <div class="roadmap" style="margin-top: 20px;">
+
+
+                    <div class="roadmap-part">
+
+                        <div class="roadmap-number">
+                            01
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Method
+                            </h3>
+
+                            <p>
+                                <strong>GET</strong> indicates the requested operation.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="roadmap-part">
+
+                        <div class="roadmap-number">
+                            02
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Target
+                            </h3>
+
+                            <p>
+                                The target identifies the resource being requested.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="roadmap-part">
+
+                        <div class="roadmap-number">
+                            03
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Headers
+                            </h3>
+
+                            <p>
+                                Headers carry additional metadata about the request.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="roadmap-part">
+
+                        <div class="roadmap-number">
+                            04
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Body
+                            </h3>
+
+                            <p>
+                                Some requests contain a body, such as many POST requests.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             HTTP METHODS
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    08
+                </span>
+
+                <div>
+
+                    <h2>
+                        HTTP Request Methods
+                    </h2>
+
+                    <p>
+                        Methods communicate the intended operation.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="technology-grid">
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        📥
+                    </div>
+
+                    <h3>
+                        GET
+                    </h3>
+
+                    <p>
+                        Requests a representation of a resource.
+                    </p>
+
+                    <span class="technology-role">
+                        RETRIEVE
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        📤
+                    </div>
+
+                    <h3>
+                        POST
+                    </h3>
+
+                    <p>
+                        Submits data to a resource and can cause server-side
+                        state changes.
+                    </p>
+
+                    <span class="technology-role">
+                        SUBMIT
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        🔄
+                    </div>
+
+                    <h3>
+                        PUT
+                    </h3>
+
+                    <p>
+                        Replaces the current representation of a target
+                        resource with the request content.
+                    </p>
+
+                    <span class="technology-role">
+                        REPLACE
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        🧩
+                    </div>
+
+                    <h3>
+                        PATCH
+                    </h3>
+
+                    <p>
+                        Applies a partial modification to a resource.
+                    </p>
+
+                    <span class="technology-role">
+                        MODIFY
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        🗑️
+                    </div>
+
+                    <h3>
+                        DELETE
+                    </h3>
+
+                    <p>
+                        Requests deletion of the specified resource.
+                    </p>
+
+                    <span class="technology-role">
+                        DELETE
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        ℹ️
+                    </div>
+
+                    <h3>
+                        HEAD
+                    </h3>
+
+                    <p>
+                        Requests headers corresponding to a GET response
+                        without the response body.
+                    </p>
+
+                    <span class="technology-role">
+                        METADATA
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        ⚙️
+                    </div>
+
+                    <h3>
+                        OPTIONS
+                    </h3>
+
+                    <p>
+                        Requests information about communication options
+                        available for a target resource.
+                    </p>
+
+                    <span class="technology-role">
+                        OPTIONS
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        🔗
+                    </div>
+
+                    <h3>
+                        CONNECT
+                    </h3>
+
+                    <p>
+                        Establishes a tunnel to the server identified by
+                        the target resource.
+                    </p>
+
+                    <span class="technology-role">
+                        TUNNEL
+                    </span>
+
+                </article>
+
+
+            </div>
+
+
+            <div class="note-box">
+
+                <strong>
+                    Placement Tip:
+                </strong>
+
+                <span>
+                    Do not memorize HTTP methods without understanding their
+                    semantics. Interviewers often ask the difference between
+                    GET, POST, PUT, PATCH and DELETE.
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SAFE / IDEMPOTENT
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    09
+                </span>
+
+                <div>
+
+                    <h2>
+                        Safe and Idempotent Methods
+                    </h2>
+
+                    <p>
+                        These terms describe important properties of HTTP methods.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="comparison-table-wrap">
+
+                <table class="comparison-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Method
+                            </th>
+
+                            <th>
+                                Safe
+                            </th>
+
+                            <th>
+                                Idempotent
+                            </th>
+
+                            <th>
+                                Basic Idea
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                GET
+                            </td>
+
+                            <td>
+                                Yes
+                            </td>
+
+                            <td>
+                                Yes
+                            </td>
+
+                            <td>
+                                Retrieve a representation
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                HEAD
+                            </td>
+
+                            <td>
+                                Yes
+                            </td>
+
+                            <td>
+                                Yes
+                            </td>
+
+                            <td>
+                                Retrieve headers
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                PUT
+                            </td>
+
+                            <td>
+                                No
+                            </td>
+
+                            <td>
+                                Yes
+                            </td>
+
+                            <td>
+                                Replace target representation
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                DELETE
+                            </td>
+
+                            <td>
+                                No
+                            </td>
+
+                            <td>
+                                Yes
+                            </td>
+
+                            <td>
+                                Delete target resource
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                POST
+                            </td>
+
+                            <td>
+                                No
+                            </td>
+
+                            <td>
+                                No
+                            </td>
+
+                            <td>
+                                Submit/process data
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                PATCH
+                            </td>
+
+                            <td>
+                                No
+                            </td>
+
+                            <td>
+                                Depends on implementation
+                            </td>
+
+                            <td>
+                                Partial modification
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="article-card">
+
+                <p>
+                    A method is called <strong>safe</strong> when its defined
+                    semantics are read-only from the client's perspective.
+                </p>
+
+
+                <p>
+                    An <strong>idempotent</strong> method means that repeating
+                    the same request is intended to have the same effect on
+                    the server state as making it once, even though individual
+                    responses can differ.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             HTTP RESPONSE
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    10
+                </span>
+
+                <div>
+
+                    <h2>
+                        Anatomy of an HTTP Response
+                    </h2>
+
+                    <p>
+                        A response tells the client what happened.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="article-card">
+
+                <div class="trace-code">
+
+                    HTTP/1.1 200 OK
+                    <br>
+                    Content-Type: text/html
+                    <br>
+                    Content-Length: 1200
+                    <br>
+                    Cache-Control: max-age=3600
+                    <br>
+                    <br>
+                    &lt;html&gt; ... &lt;/html&gt;
+
+                </div>
+
+
+                <div class="roadmap" style="margin-top: 20px;">
+
+
+                    <div class="roadmap-part">
+
+                        <div class="roadmap-number">
+                            01
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Protocol Version
+                            </h3>
+
+                            <p>
+                                Identifies the HTTP version used for the response
+                                representation in this HTTP/1.x-style example.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="roadmap-part">
+
+                        <div class="roadmap-number">
+                            02
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Status Code
+                            </h3>
+
+                            <p>
+                                <strong>200</strong> communicates successful completion.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="roadmap-part">
+
+                        <div class="roadmap-number">
+                            03
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Headers
+                            </h3>
+
+                            <p>
+                                Response headers provide additional metadata
+                                and processing instructions.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="roadmap-part">
+
+                        <div class="roadmap-number">
+                            04
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Body
+                            </h3>
+
+                            <p>
+                                The response body can contain HTML, JSON,
+                                text, media or other content.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             STATUS CODES
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    11
+                </span>
+
+                <div>
+
+                    <h2>
+                        HTTP Status Codes
+                    </h2>
+
+                    <p>
+                        The first digit tells you the broad class of response.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="technology-grid">
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        ℹ️
+                    </div>
+
+                    <h3>
+                        1xx
+                    </h3>
+
+                    <p>
+                        Informational responses.
+                    </p>
+
+                    <span class="technology-role">
+                        INFORMATION
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        ✅
+                    </div>
+
+                    <h3>
+                        2xx
+                    </h3>
+
+                    <p>
+                        Successful responses.
+                    </p>
+
+                    <span class="technology-role">
+                        SUCCESS
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        ↪️
+                    </div>
+
+                    <h3>
+                        3xx
+                    </h3>
+
+                    <p>
+                        Redirection responses.
+                    </p>
+
+                    <span class="technology-role">
+                        REDIRECTION
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        ⚠️
+                    </div>
+
+                    <h3>
+                        4xx
+                    </h3>
+
+                    <p>
+                        Client error responses.
+                    </p>
+
+                    <span class="technology-role">
+                        CLIENT ERROR
+                    </span>
+
+                </article>
+
+
+            </div>
+
+
+            <div class="architecture-grid">
+
+
+                <article class="architecture-card">
+
+                    <div class="architecture-label">
+                        COMMON RESPONSES
+                    </div>
+
+
+                    <h3>
+                        Frequently Seen Codes
+                    </h3>
+
+
+                    <div class="concept-list">
+
+                        <div>
+                            <strong>200</strong> — successful request
+                        </div>
+
+                        <div>
+                            <strong>201</strong> — resource created
+                        </div>
+
+                        <div>
+                            <strong>204</strong> — successful with no response content
+                        </div>
+
+                        <div>
+                            <strong>301</strong> — permanent redirection
+                        </div>
+
+                        <div>
+                            <strong>302</strong> — temporary redirection
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="architecture-card">
+
+                    <div class="architecture-label dynamic-label">
+                        ERROR RESPONSES
+                    </div>
+
+
+                    <h3>
+                        Common Error Codes
+                    </h3>
+
+
+                    <div class="concept-list">
+
+                        <div>
+                            <strong>400</strong> — bad request
+                        </div>
+
+                        <div>
+                            <strong>401</strong> — authentication required
+                        </div>
+
+                        <div>
+                            <strong>403</strong> — forbidden
+                        </div>
+
+                        <div>
+                            <strong>404</strong> — resource not found
+                        </div>
+
+                        <div>
+                            <strong>500</strong> — internal server error
+                        </div>
+
+                        <div>
+                            <strong>503</strong> — service unavailable
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             HEADERS
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    12
+                </span>
+
+                <div>
+
+                    <h2>
+                        HTTP Headers
+                    </h2>
+
+                    <p>
+                        Headers carry additional information about requests and responses.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="technology-grid">
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        📦
+                    </div>
+
+                    <h3>
+                        Content-Type
+                    </h3>
+
+                    <p>
+                        Describes the media type of the content.
+                    </p>
+
+                    <span class="technology-role">
+                        REPRESENTATION
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        📏
+                    </div>
+
+                    <h3>
+                        Content-Length
+                    </h3>
+
+                    <p>
+                        Communicates content length when applicable.
+                    </p>
+
+                    <span class="technology-role">
+                        SIZE
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        🗃️
+                    </div>
+
+                    <h3>
+                        Cache-Control
+                    </h3>
+
+                    <p>
+                        Communicates caching behavior.
+                    </p>
+
+                    <span class="technology-role">
+                        CACHE
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        🔑
+                    </div>
+
+                    <h3>
+                        Authorization
+                    </h3>
+
+                    <p>
+                        Carries credentials or authorization information
+                        in supported authentication schemes.
+                    </p>
+
+                    <span class="technology-role">
+                        AUTH
+                    </span>
+
+                </article>
+
+
+            </div>
+
+
+            <div class="article-card">
+
+                <p>
+                    Request and response headers are metadata associated with
+                    HTTP messages. They help clients and servers negotiate
+                    content, describe representations, control caching,
+                    communicate authentication details and more.
+                </p>
+
+
+                <div class="memory-box">
+
+                    <strong>
+                        Important:
+                    </strong>
+
+                    <span>
+                        A header is metadata. It is not the same thing as
+                        the main content carried in the message body.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             HTTP STATELESS
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    13
+                </span>
+
+                <div>
+
+                    <h2>
+                        Is HTTP Stateless?
+                    </h2>
+
+                    <p>
+                        HTTP itself does not automatically remember previous
+                        requests as application state.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="comparison-grid">
+
+
+                <article class="comparison-card">
+
+                    <div class="comparison-top">
+
+                        <span class="comparison-icon">
+                            📩
+                        </span>
+
+                        <h3>
+                            Request 1
+                        </h3>
+
+                    </div>
+
+                    <p>
+                        Browser sends a request containing the information
+                        needed for that request.
+                    </p>
+
+                    <div class="concept-list">
+
+                        <div>
+                            GET /login
+                        </div>
+
+                        <div>
+                            Request metadata
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <div class="vs-badge">
+                    +
+                </div>
+
+
+                <article class="comparison-card">
+
+                    <div class="comparison-top">
+
+                        <span class="comparison-icon">
+                            📩
+                        </span>
+
+                        <h3>
+                            Request 2
+                        </h3>
+
+                    </div>
+
+                    <p>
+                        A later request needs its own information needed
+                        by the application.
+                    </p>
+
+                    <div class="concept-list">
+
+                        <div>
+                            GET /dashboard
+                        </div>
+
+                        <div>
+                            State mechanisms may be included
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+
+            <div class="highlight-box">
+
+                <div class="highlight-icon">
+                    💡
+                </div>
+
+                <div>
+
+                    <strong>
+                        Then how do login systems work?
+                    </strong>
+
+                    <p>
+                        Applications can use mechanisms such as cookies,
+                        sessions and authorization tokens to associate
+                        multiple requests with application state.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             HTTP VERSIONS
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    14
+                </span>
+
+                <div>
+
+                    <h2>
+                        HTTP/1.1, HTTP/2 and HTTP/3
+                    </h2>
+
+                    <p>
+                        HTTP has evolved while preserving the core HTTP semantics.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="architecture-grid">
+
+
+                <article class="architecture-card">
+
+                    <div class="architecture-label">
+                        HTTP/1.1
+                    </div>
+
+
+                    <h3>
+                        Traditional Message Syntax
+                    </h3>
+
+
+                    <div class="concept-list">
+
+                        <div>
+                            ✔ Text-based HTTP message format
+                        </div>
+
+                        <div>
+                            ✔ Well-established request/response model
+                        </div>
+
+                        <div>
+                            ✔ Connection management features
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="architecture-card">
+
+                    <div class="architecture-label dynamic-label">
+                        HTTP/2
+                    </div>
+
+
+                    <h3>
+                        More Efficient Transport
+                    </h3>
+
+
+                    <div class="concept-list">
+
+                        <div>
+                            ✔ Binary framing
+                        </div>
+
+                        <div>
+                            ✔ Multiplexed exchanges
+                        </div>
+
+                        <div>
+                            ✔ Header compression
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="architecture-card">
+
+                    <div class="architecture-label">
+                        HTTP/3
+                    </div>
+
+
+                    <h3>
+                        HTTP over QUIC
+                    </h3>
+
+
+                    <div class="concept-list">
+
+                        <div>
+                            ✔ Uses QUIC
+                        </div>
+
+                        <div>
+                            ✔ Stream multiplexing
+                        </div>
+
+                        <div>
+                            ✔ Designed for lower-latency connection behavior
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+
+            <div class="note-box">
+
+                <strong>
+                    Important:
+                </strong>
+
+                <span>
+                    HTTP/2 and HTTP/3 improve how HTTP communication is
+                    transported and framed; the core request/response
+                    semantics remain recognizable across versions.
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             HTTP VS HTTPS
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    15
+                </span>
+
+                <div>
+
+                    <h2>
+                        HTTP vs HTTPS
+                    </h2>
+
+                    <p>
+                        HTTPS adds a protected TLS channel around HTTP communication.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="comparison-grid">
+
+
+                <article class="comparison-card">
+
+                    <div class="comparison-top">
+
+                        <span class="comparison-icon">
+                            🌐
+                        </span>
+
+                        <h3>
+                            HTTP
+                        </h3>
+
+                    </div>
+
+
+                    <p>
+                        HTTP is the Web application-layer protocol.
+                        Without TLS protection, the network path does not
+                        provide the same cryptographic protections as HTTPS.
+                    </p>
+
+
+                    <div class="concept-list">
+
+                        <div>
+                            HTTP communication
+                        </div>
+
+                        <div>
+                            No TLS protection by itself
+                        </div>
+
+                        <div>
+                            Common scheme:
+                            <strong>http://</strong>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <div class="vs-badge">
+                    VS
+                </div>
+
+
+                <article class="comparison-card">
+
+                    <div class="comparison-top">
+
+                        <span class="comparison-icon">
+                            🔐
+                        </span>
+
+                        <h3>
+                            HTTPS
+                        </h3>
+
+                    </div>
+
+
+                    <p>
+                        HTTPS uses HTTP over a secure TLS-protected connection.
+                    </p>
+
+
+                    <div class="concept-list">
+
+                        <div>
+                            ✔ Confidentiality
+                        </div>
+
+                        <div>
+                            ✔ Integrity
+                        </div>
+
+                        <div>
+                            ✔ Server authentication through certificates
+                        </div>
+
+                        <div>
+                            Common scheme:
+                            <strong>https://</strong>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             TLS
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    16
+                </span>
+
+                <div>
+
+                    <h2>
+                        What Is TLS?
+                    </h2>
+
+                    <p>
+                        TLS provides the security layer used by HTTPS.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="article-card">
+
+                <p>
+                    <strong>TLS</strong> stands for
+                    <strong>Transport Layer Security</strong>.
+                </p>
+
+
+                <p>
+                    TLS is designed to provide a secure communication channel
+                    between endpoints. Its security goals include
+                    <strong>authentication</strong>,
+                    <strong>confidentiality</strong> and
+                    <strong>integrity</strong>.
+                </p>
+
+
+                <div class="stack-map">
+
+
+                    <div class="stack-layer layer-frontend">
+
+                        <span class="stack-number">
+                            01
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                HTTP
+                            </strong>
+
+                            <small>
+                                Web application-layer communication
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stack-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="stack-layer layer-server">
+
+                        <span class="stack-number">
+                            02
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                TLS
+                            </strong>
+
+                            <small>
+                                Secure communication channel
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stack-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="stack-layer layer-data">
+
+                        <span class="stack-number">
+                            03
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Network Transport
+                            </strong>
+
+                            <small>
+                                Underlying transport depends on HTTP version and deployment
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             TLS SECURITY PROPERTIES
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    17
+                </span>
+
+                <div>
+
+                    <h2>
+                        What Security Does HTTPS Provide?
+                    </h2>
+
+                    <p>
+                        Understand the three important security goals.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="technology-grid">
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        🔒
+                    </div>
+
+                    <h3>
+                        Confidentiality
+                    </h3>
+
+                    <p>
+                        Helps prevent network observers from reading protected
+                        application data.
+                    </p>
+
+                    <span class="technology-role">
+                        PRIVACY
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        🛡️
+                    </div>
+
+                    <h3>
+                        Integrity
+                    </h3>
+
+                    <p>
+                        Helps detect unauthorized modification of protected data.
+                    </p>
+
+                    <span class="technology-role">
+                        PROTECTION
+                    </span>
+
+                </article>
+
+
+                <article class="technology-card">
+
+                    <div class="technology-icon">
+                        ✅
+                    </div>
+
+                    <h3>
+                        Authentication
+                    </h3>
+
+                    <p>
+                        TLS certificate verification helps the client authenticate
+                        the server identity.
+                    </p>
+
+                    <span class="technology-role">
+                        IDENTITY
+                    </span>
+
+                </article>
+
+
+            </div>
+
+
+            <div class="memory-box">
+
+                <strong>
+                    Remember:
+                </strong>
+
+                <span>
+                    HTTPS does not mean that a website itself is trustworthy.
+                    It protects the communication channel; application security
+                    is a separate concern.
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             DIGITAL CERTIFICATES
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    18
+                </span>
+
+                <div>
+
+                    <h2>
+                        Digital Certificates
+                    </h2>
+
+                    <p>
+                        Certificates help clients verify the identity associated
+                        with a secure endpoint.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="roadmap">
+
+
+                <div class="roadmap-part">
+
+                    <div class="roadmap-number">
+                        01
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Website Identity
+                        </h3>
+
+                        <p>
+                            The certificate contains identity-related information
+                            for the server and is digitally signed by a certificate authority.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="roadmap-part">
+
+                    <div class="roadmap-number">
+                        02
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Certificate Authority
+                        </h3>
+
+                        <p>
+                            A trusted certificate authority can issue or sign
+                            certificates according to the public-key infrastructure.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="roadmap-part">
+
+                    <div class="roadmap-number">
+                        03
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Browser Validation
+                        </h3>
+
+                        <p>
+                            The browser validates the certificate chain and
+                            relevant identity information according to its trust model.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="roadmap-part">
+
+                    <div class="roadmap-number">
+                        04
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Secure Session
+                        </h3>
+
+                        <p>
+                            After the TLS handshake establishes the required
+                            cryptographic parameters, protected application data
+                            can be exchanged.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             HTTPS VISUALIZER
+             ================================================= -->
+
+        <section class="content-section visualizer-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    19
+                </span>
+
+                <div>
+
+                    <h2>
+                        Premium Visualizer — HTTPS Connection
+                    </h2>
+
+                    <p>
+                        Step through a simplified HTTPS connection lifecycle.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="visualizer-shell">
+
+
+                <div class="visualizer-topbar">
+
+                    <div class="visualizer-title">
+
+                        <span class="pulse-dot"></span>
+
+                        <span>
+                            HTTPS SECURITY TRACE
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="visualizer-status"
+                        id="traceStatus"
+                    >
+                        Step 1 of 8
+                    </div>
+
+                </div>
+
+
+                <div class="trace-progress">
+
+                    <div
+                        class="trace-progress-bar"
+                        id="traceProgressBar"
+                    ></div>
+
+                </div>
+
+
+                <div class="trace-main">
+
+
+                    <div
+                        class="trace-stage"
+                        id="traceStage"
+                    >
+
+                        <div
+                            class="trace-icon"
+                            id="traceIcon"
+                        >
+                            🌐
+                        </div>
+
+
+                        <div
+                            class="trace-step-number"
+                            id="traceNumber"
+                        >
+                            STEP 01
+                        </div>
+
+
+                        <h3 id="traceTitle">
+                            Browser Requests HTTPS
+                        </h3>
+
+
+                        <p id="traceDescription">
+                            The browser begins a secure connection to the target host.
+                        </p>
+
+
+                        <div
+                            class="trace-code"
+                            id="traceCode"
+                        >
+                            https://codebhavya.com
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="trace-timeline"
+                        id="traceTimeline"
+                    >
+
+
+                        <button
+                            type="button"
+                            class="trace-point active"
+                            data-step="0"
+                        >
+
+                            <span>
+                                1
+                            </span>
+
+                            <strong>
+                                Start
+                            </strong>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-step="1"
+                        >
+
+                            <span>
+                                2
+                            </span>
+
+                            <strong>
+                                Hello
+                            </strong>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-step="2"
+                        >
+
+                            <span>
+                                3
+                            </span>
+
+                            <strong>
+                                Certificate
+                            </strong>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-step="3"
+                        >
+
+                            <span>
+                                4
+                            </span>
+
+                            <strong>
+                                Validate
+                            </strong>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-step="4"
+                        >
+
+                            <span>
+                                5
+                            </span>
+
+                            <strong>
+                                Keys
+                            </strong>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-step="5"
+                        >
+
+                            <span>
+                                6
+                            </span>
+
+                            <strong>
+                                Secure
+                            </strong>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-step="6"
+                        >
+
+                            <span>
+                                7
+                            </span>
+
+                            <strong>
+                                HTTP
+                            </strong>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-step="7"
+                        >
+
+                            <span>
+                                8
+                            </span>
+
+                            <strong>
+                                Response
+                            </strong>
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="trace-controls">
+
+
+                    <button
+                        type="button"
+                        class="trace-btn secondary"
+                        id="tracePrevious"
+                    >
+                        ← Previous
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="trace-btn primary"
+                        id="traceAuto"
+                    >
+                        ▶ Auto Run
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="trace-btn secondary"
+                        id="traceNext"
+                    >
+                        Next →
+                    </button>
+
+
+                </div>
+
+            </div>
+
+
+            <div class="trace-explanation">
+
+                <h3>
+                    What the visualizer teaches
+                </h3>
+
+
+                <div class="explanation-grid">
+
+
+                    <div>
+
+                        <span class="explanation-number">
+                            01
+                        </span>
+
+                        <p>
+                            HTTPS uses TLS to establish a protected
+                            communication channel.
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="explanation-number">
+                            02
+                        </span>
+
+                        <p>
+                            Certificates help authenticate the server identity.
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="explanation-number">
+                            03
+                        </span>
+
+                        <p>
+                            HTTP application data is exchanged through
+                            the protected connection after the security
+                            setup succeeds.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             HTTP REQUEST/RESPONSE SIMULATOR
+             ================================================= -->
+
+        <section class="content-section visualizer-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    20
+                </span>
+
+                <div>
+
+                    <h2>
+                        Premium Simulator — HTTP Request / Response
+                    </h2>
+
+                    <p>
+                        Select an HTTP method and inspect the corresponding
+                        simplified request and response.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="visualizer-shell">
+
+
+                <div class="visualizer-topbar">
+
+                    <div class="visualizer-title">
+
+                        <span class="pulse-dot"></span>
+
+                        <span>
+                            HTTP MESSAGE SIMULATOR
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="visualizer-status"
+                        id="simStatus"
+                    >
+                        Ready
+                    </div>
+
+                </div>
+
+
+                <div class="trace-main">
+
+
+                    <div
+                        style="
+                            display:grid;
+                            grid-template-columns:220px minmax(0,1fr);
+                            gap:14px;
+                        "
+                    >
+
+
+                        <div
+                            style="
+                                border:1px solid var(--wt-border);
+                                border-radius:12px;
+                                background:var(--wt-panel);
+                                padding:15px;
+                            "
+                        >
+
+                            <label
+                                for="httpMethod"
+                                style="
+                                    display:block;
+                                    margin-bottom:8px;
+                                    color:var(--wt-text-muted);
+                                    font-size:.72rem;
+                                    font-weight:800;
+                                    letter-spacing:.05em;
+                                "
+                            >
+                                SELECT METHOD
+                            </label>
+
+
+                            <select
+                                id="httpMethod"
+                                style="
+                                    width:100%;
+                                    min-height:40px;
+                                    padding:0 10px;
+                                    border:1px solid var(--wt-border);
+                                    border-radius:8px;
+                                    background:var(--wt-panel-3);
+                                    color:var(--wt-text-soft);
+                                "
+                            >
+
+                                <option value="GET">
+                                    GET
+                                </option>
+
+                                <option value="POST">
+                                    POST
+                                </option>
+
+                                <option value="PUT">
+                                    PUT
+                                </option>
+
+                                <option value="PATCH">
+                                    PATCH
+                                </option>
+
+                                <option value="DELETE">
+                                    DELETE
+                                </option>
+
+                            </select>
+
+
+                            <button
+                                type="button"
+                                class="trace-btn primary"
+                                id="simulateRequest"
+                                style="
+                                    width:100%;
+                                    margin-top:10px;
+                                "
+                            >
+                                ▶ Send Request
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                display:grid;
+                                grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+                                gap:12px;
+                            "
+                        >
+
+
+                            <div
+                                style="
+                                    border:1px solid var(--wt-border);
+                                    border-radius:12px;
+                                    background:var(--wt-panel-3);
+                                    padding:15px;
+                                "
+                            >
+
+                                <div
+                                    style="
+                                        color:var(--wt-cyan-soft);
+                                        font-size:.7rem;
+                                        font-weight:800;
+                                        letter-spacing:.06em;
+                                        margin-bottom:10px;
+                                    "
+                                >
+                                    REQUEST
+                                </div>
+
+
+                                <pre
+                                    id="requestPreview"
+                                    style="
+                                        margin:0;
+                                        white-space:pre-wrap;
+                                        overflow:auto;
+                                        color:var(--wt-text-soft);
+                                        font-size:.75rem;
+                                        line-height:1.7;
+                                        font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+                                    "
+                                >GET /api/students/101 HTTP/1.1
+Host: codebhavya.com
+Accept: application/json</pre>
+
+                            </div>
+
+
+                            <div
+                                style="
+                                    border:1px solid var(--wt-border);
+                                    border-radius:12px;
+                                    background:var(--wt-panel-3);
+                                    padding:15px;
+                                "
+                            >
+
+                                <div
+                                    style="
+                                        color:var(--wt-gold-soft);
+                                        font-size:.7rem;
+                                        font-weight:800;
+                                        letter-spacing:.06em;
+                                        margin-bottom:10px;
+                                    "
+                                >
+                                    RESPONSE
+                                </div>
+
+
+                                <pre
+                                    id="responsePreview"
+                                    style="
+                                        margin:0;
+                                        white-space:pre-wrap;
+                                        overflow:auto;
+                                        color:var(--wt-text-soft);
+                                        font-size:.75rem;
+                                        line-height:1.7;
+                                        font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+                                    "
+                                >HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "studentId": 101
+}</pre>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="trace-controls">
+
+                    <button
+                        type="button"
+                        class="trace-btn secondary"
+                        id="resetSimulator"
+                    >
+                        ↺ Reset
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CACHING BASICS
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    21
+                </span>
+
+                <div>
+
+                    <h2>
+                        Caching Basics
+                    </h2>
+
+                    <p>
+                        HTTP also defines mechanisms that allow responses
+                        to be reused efficiently.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="article-card">
+
+                <p>
+                    A cache can store an earlier response and reuse it for a
+                    later equivalent request when the response is permitted
+                    to be cached.
+                </p>
+
+
+                <p>
+                    HTTP caching can reduce response time and network usage.
+                    Headers such as <strong>Cache-Control</strong> and
+                    validators such as <strong>ETag</strong> are important
+                    parts of practical caching.
+                </p>
+
+
+                <div class="stack-map">
+
+
+                    <div class="stack-layer layer-frontend">
+
+                        <span class="stack-number">
+                            01
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Browser
+                            </strong>
+
+                            <small>
+                                May use cached responses
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stack-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="stack-layer layer-server">
+
+                        <span class="stack-number">
+                            02
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Intermediate Cache
+                            </strong>
+
+                            <small>
+                                May reuse an eligible response
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stack-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="stack-layer layer-data">
+
+                        <span class="stack-number">
+                            03
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Origin Server
+                            </strong>
+
+                            <small>
+                                Generates or returns the representation
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             REAL WORLD EXAMPLE
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    22
+                </span>
+
+                <div>
+
+                    <h2>
+                        Real-World Example — Student Result API
+                    </h2>
+
+                    <p>
+                        See how HTTP concepts combine in an actual application.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="real-world-layout">
+
+
+                <div class="real-world-story">
+
+                    <h3>
+                        Student Result Request
+                    </h3>
+
+
+                    <p>
+                        A browser or frontend application wants the result
+                        of student ID 101.
+                    </p>
+
+
+                    <p>
+                        It may send:
+                    </p>
+
+
+                    <div class="trace-code">
+
+                        GET /api/results/101 HTTP/1.1
+
+                    </div>
+
+
+                    <p>
+                        The application server processes the request and
+                        returns a response containing structured data.
+                    </p>
+
+                </div>
+
+
+                <div class="real-world-flow">
+
+
+                    <div class="rw-node">
+                        👨‍🎓 Student
+                    </div>
+
+
+                    <div class="rw-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="rw-node">
+                        🌐 Browser
+                    </div>
+
+
+                    <div class="rw-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="rw-node">
+                        📤 GET /api/results/101
+                    </div>
+
+
+                    <div class="rw-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="rw-node">
+                        ⚙️ Application Server
+                    </div>
+
+
+                    <div class="rw-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="rw-node">
+                        🗄️ Database
+                    </div>
+
+
+                    <div class="rw-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="rw-node">
+                        📥 JSON Response
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             COMMON MISTAKES
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    23
+                </span>
+
+                <div>
+
+                    <h2>
+                        Common Beginner Mistakes
+                    </h2>
+
+                    <p>
+                        Avoid these common misunderstandings.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="mistake-grid">
+
+
+                <article class="mistake-card">
+
+                    <span class="mistake-icon">
+                        ❌
+                    </span>
+
+                    <h3>
+                        URL = Domain
+                    </h3>
+
+                    <p>
+                        A domain is only one component of many possible
+                        parts of a complete URL.
+                    </p>
+
+                </article>
+
+
+                <article class="mistake-card">
+
+                    <span class="mistake-icon">
+                        ❌
+                    </span>
+
+                    <h3>
+                        HTTP = HTML
+                    </h3>
+
+                    <p>
+                        HTTP is a communication protocol; HTML is a
+                        markup language.
+                    </p>
+
+                </article>
+
+
+                <article class="mistake-card">
+
+                    <span class="mistake-icon">
+                        ❌
+                    </span>
+
+                    <h3>
+                        404 Means Server Is Down
+                    </h3>
+
+                    <p>
+                        404 means the requested resource was not found.
+                        It does not automatically mean the entire server is down.
+                    </p>
+
+                </article>
+
+
+                <article class="mistake-card">
+
+                    <span class="mistake-icon">
+                        ❌
+                    </span>
+
+                    <h3>
+                        HTTPS Means Website Is Safe
+                    </h3>
+
+                    <p>
+                        HTTPS protects communication with TLS; it does not
+                        guarantee that the application's content or behavior
+                        is trustworthy.
+                    </p>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             INTERVIEW PREPARATION — FLIP CARDS
+             ================================================= -->
+
+        <section class="content-section interview-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    24
+                </span>
+
+                <div>
+
+                    <h2>
+                        Interview Preparation
+                    </h2>
+
+                    <p>
+                        Think first, then click a card to reveal the answer.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="flip-card-grid">
+
+
+                <!-- CARD 01 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 1"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    01
+                                </div>
+
+
+                                <h3>
+                                    What is HTTP?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Think about the protocol used for
+                                    communication between web clients and servers.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                HTTP
+                            </h3>
+
+
+                            <p>
+                                HTTP is the Hypertext Transfer Protocol.
+                                It defines a client-server request/response
+                                communication model used for Web communication.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- CARD 02 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 2"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    02
+                                </div>
+
+
+                                <h3>
+                                    What is the difference between HTTP and HTTPS?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Think about TLS and protection of communication.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                HTTP vs HTTPS
+                            </h3>
+
+
+                            <p>
+                                HTTPS is HTTP carried through a TLS-protected
+                                channel. TLS provides security properties such
+                                as confidentiality, integrity and server
+                                authentication.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- CARD 03 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 3"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    03
+                                </div>
+
+
+                                <h3>
+                                    What is the difference between GET and POST?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Compare retrieval with submission and side effects.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                GET vs POST
+                            </h3>
+
+
+                            <p>
+                                GET requests a representation of a resource
+                                and is defined as safe. POST submits content
+                                for processing and can cause changes or other
+                                side effects on the server.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- CARD 04 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 4"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    04
+                                </div>
+
+
+                                <h3>
+                                    What are HTTP status codes?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Think about how a server communicates
+                                    the result of a request.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                HTTP Status Codes
+                            </h3>
+
+
+                            <p>
+                                Status codes indicate the outcome of an HTTP
+                                request. They are grouped into five classes:
+                                1xx informational, 2xx successful, 3xx
+                                redirection, 4xx client errors and 5xx
+                                server errors.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- CARD 05 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 5"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    05
+                                </div>
+
+
+                                <h3>
+                                    What is a URL?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Identify how a web address identifies
+                                    a resource and access scheme.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                URL
+                            </h3>
+
+
+                            <p>
+                                A URL is a Uniform Resource Locator. It
+                                identifies a resource and includes information
+                                such as the scheme and location needed to
+                                access it.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- CARD 06 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 6"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    06
+                                </div>
+
+
+                                <h3>
+                                    What is TLS?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Think about the security layer behind HTTPS.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                TLS
+                            </h3>
+
+
+                            <p>
+                                TLS is Transport Layer Security. It establishes
+                                a secure communication channel designed to
+                                provide properties including authentication,
+                                confidentiality and integrity.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PRACTICE
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    25
+                </span>
+
+                <div>
+
+                    <h2>
+                        Practice Problems
+                    </h2>
+
+                    <p>
+                        Test yourself without looking back at the lesson.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="practice-list">
+
+
+                <div class="practice-item">
+
+                    <span class="practice-number">
+                        01
+                    </span>
+
+                    <p>
+                        Break the URL
+                        <strong>
+                            https://example.com/products?id=25#reviews
+                        </strong>
+                        into its major components.
+                    </p>
+
+                </div>
+
+
+                <div class="practice-item">
+
+                    <span class="practice-number">
+                        02
+                    </span>
+
+                    <p>
+                        Explain the difference between GET, POST, PUT,
+                        PATCH and DELETE.
+                    </p>
+
+                </div>
+
+
+                <div class="practice-item">
+
+                    <span class="practice-number">
+                        03
+                    </span>
+
+                    <p>
+                        Explain all five HTTP status-code classes.
+                    </p>
+
+                </div>
+
+
+                <div class="practice-item">
+
+                    <span class="practice-number">
+                        04
+                    </span>
+
+                    <p>
+                        Explain the difference between an HTTP header
+                        and HTTP body.
+                    </p>
+
+                </div>
+
+
+                <div class="practice-item">
+
+                    <span class="practice-number">
+                        05
+                    </span>
+
+                    <p>
+                        Explain why HTTPS is more than simply putting an
+                        "S" at the end of HTTP.
+                    </p>
+
+                </div>
+
+
+                <div class="practice-item">
+
+                    <span class="practice-number">
+                        06
+                    </span>
+
+                    <p>
+                        Explain what happens when a browser receives
+                        an HTTP 404 response.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             MCQS
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    26
+                </span>
+
+                <div>
+
+                    <h2>
+                        Quick MCQs
+                    </h2>
+
+                    <p>
+                        Check your understanding.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="mcq-grid">
+
+
+                <!-- MCQ 01 -->
+
+                <article class="mcq-card">
+
+                    <div class="mcq-header">
+
+                        <span>
+                            MCQ 01
+                        </span>
+
+                        <span class="difficulty easy">
+                            EASY
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Which part of a URL commonly identifies query parameters?
+                    </h3>
+
+
+                    <div class="mcq-options">
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            A. #
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            B. ?
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                            data-correct="true"
+                        >
+                            B. The query delimiter ?
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            D. :
+                        </button>
+
+                    </div>
+
+
+                    <div class="mcq-feedback"></div>
+
+                </article>
+
+
+
+                <!-- MCQ 02 -->
+
+                <article class="mcq-card">
+
+                    <div class="mcq-header">
+
+                        <span>
+                            MCQ 02
+                        </span>
+
+                        <span class="difficulty easy">
+                            EASY
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Which HTTP method is defined as requesting a representation
+                        of a resource?
+                    </h3>
+
+
+                    <div class="mcq-options">
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                            data-correct="true"
+                        >
+                            A. GET
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            B. POST
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            C. PATCH
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            D. DELETE
+                        </button>
+
+                    </div>
+
+
+                    <div class="mcq-feedback"></div>
+
+                </article>
+
+
+
+                <!-- MCQ 03 -->
+
+                <article class="mcq-card">
+
+                    <div class="mcq-header">
+
+                        <span>
+                            MCQ 03
+                        </span>
+
+                        <span class="difficulty medium">
+                            MODERATE
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Which status-code class represents client errors?
+                    </h3>
+
+
+                    <div class="mcq-options">
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            A. 2xx
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                            data-correct="true"
+                        >
+                            B. 4xx
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            C. 5xx
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            D. 3xx
+                        </button>
+
+                    </div>
+
+
+                    <div class="mcq-feedback"></div>
+
+                </article>
+
+
+
+                <!-- MCQ 04 -->
+
+                <article class="mcq-card">
+
+                    <div class="mcq-header">
+
+                        <span>
+                            MCQ 04
+                        </span>
+
+                        <span class="difficulty medium">
+                            MODERATE
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        What does HTTPS primarily add to HTTP?
+                    </h3>
+
+
+                    <div class="mcq-options">
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            A. HTML parsing
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                            data-correct="true"
+                        >
+                            B. TLS-protected communication
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            C. Database storage
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            D. CSS processing
+                        </button>
+
+                    </div>
+
+
+                    <div class="mcq-feedback"></div>
+
+                </article>
+
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             GLOSSARY — FLIP CARDS
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    27
+                </span>
+
+                <div>
+
+                    <h2>
+                        Glossary
+                    </h2>
+
+                    <p>
+                        Click a term to flip the card and reveal its meaning.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="glossary-flip-grid">
+
+
+                <!-- 01 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary URL"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                URL
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                URL
+                            </h4>
+
+
+                            <p>
+                                Uniform Resource Locator. A web address
+                                that identifies a resource and how to access it.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- 02 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary HTTP"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                HTTP
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                HTTP
+                            </h4>
+
+
+                            <p>
+                                Hypertext Transfer Protocol, an application-layer
+                                protocol used for Web communication.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- 03 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary HTTPS"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                HTTPS
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                HTTPS
+                            </h4>
+
+
+                            <p>
+                                HTTP carried through a TLS-protected connection.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- 04 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary TLS"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                TLS
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                TLS
+                            </h4>
+
+
+                            <p>
+                                Transport Layer Security, which provides a
+                                protected communication channel.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- 05 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary HTTP Method"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                HTTP Method
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                HTTP Method
+                            </h4>
+
+
+                            <p>
+                                A method that indicates the intended operation
+                                of an HTTP request.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- 06 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary Status Code"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                Status Code
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                Status Code
+                            </h4>
+
+
+                            <p>
+                                A three-digit code indicating the outcome
+                                class of an HTTP request.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- 07 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary HTTP Header"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                HTTP Header
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                HTTP Header
+                            </h4>
+
+
+                            <p>
+                                Metadata that carries additional information
+                                about an HTTP request or response.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- 08 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary Certificate"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                Digital Certificate
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                Digital Certificate
+                            </h4>
+
+
+                            <p>
+                                A signed digital document used in public-key
+                                infrastructure to bind identity information
+                                to a public key.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             QUICK REVISION
+             ================================================= -->
+
+        <section class="content-section revision-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    28
+                </span>
+
+                <div>
+
+                    <h2>
+                        Quick Revision
+                    </h2>
+
+                    <p>
+                        Remember these relationships.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="revision-grid">
+
+
+                <div class="revision-card">
+
+                    <span>
+                        🔗
+                    </span>
+
+                    <strong>
+                        URL
+                    </strong>
+
+                    <p>
+                        Resource locator
+                    </p>
+
+                </div>
+
+
+                <div class="revision-card">
+
+                    <span>
+                        🌐
+                    </span>
+
+                    <strong>
+                        HTTP
+                    </strong>
+
+                    <p>
+                        Web communication
+                    </p>
+
+                </div>
+
+
+                <div class="revision-card">
+
+                    <span>
+                        📤
+                    </span>
+
+                    <strong>
+                        Request
+                    </strong>
+
+                    <p>
+                        Client message
+                    </p>
+
+                </div>
+
+
+                <div class="revision-card">
+
+                    <span>
+                        📥
+                    </span>
+
+                    <strong>
+                        Response
+                    </strong>
+
+                    <p>
+                        Server message
+                    </p>
+
+                </div>
+
+
+                <div class="revision-card">
+
+                    <span>
+                        🔢
+                    </span>
+
+                    <strong>
+                        Status Code
+                    </strong>
+
+                    <p>
+                        Request outcome
+                    </p>
+
+                </div>
+
+
+                <div class="revision-card">
+
+                    <span>
+                        🏷️
+                    </span>
+
+                    <strong>
+                        Header
+                    </strong>
+
+                    <p>
+                        Message metadata
+                    </p>
+
+                </div>
+
+
+                <div class="revision-card">
+
+                    <span>
+                        🔐
+                    </span>
+
+                    <strong>
+                        HTTPS
+                    </strong>
+
+                    <p>
+                        HTTP over TLS
+                    </p>
+
+                </div>
+
+
+                <div class="revision-card">
+
+                    <span>
+                        🛡️
+                    </span>
+
+                    <strong>
+                        TLS
+                    </strong>
+
+                    <p>
+                        Secure channel
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             KEY TAKEAWAY
+             ================================================= -->
+
+        <section class="content-section">
+
+            <div class="takeaway-card">
+
+                <div class="takeaway-icon">
+                    🎯
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Key Takeaway
+                    </h2>
+
+
+                    <p>
+                        URLs identify web resources. HTTP defines how clients
+                        and servers exchange requests and responses. Methods
+                        describe intended operations, headers carry metadata,
+                        and status codes communicate the result.
+                    </p>
+
+
+                    <p>
+                        HTTPS combines HTTP with TLS protection so that the
+                        communication channel can provide confidentiality,
+                        integrity and server authentication.
+                    </p>
+
+
+                    <p>
+                        These concepts will become the foundation for
+                        forms, APIs, AJAX, Fetch, authentication, security
+                        and server-side technologies later in this course.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             NAVIGATION
+             ================================================= -->
+
+        <section class="topic-navigation">
+
+
+            <a
+                href="/Web-Technologies/internet-web-architecture.html"
+                class="topic-nav-btn previous"
+            >
+
+                <span>
+                    ←
+                </span>
+
+
+                <div>
+
+                    <small>
+                        PREVIOUS TOPIC
+                    </small>
+
+
+                    <strong>
+                        Internet and Web Architecture
+                    </strong>
+
+                </div>
+
+            </a>
+
+
+
+            <a
+                href="/Web-Technologies/browsers-and-web-servers.html"
+                class="topic-nav-btn next"
+            >
+
+                <div>
+
+                    <small>
+                        NEXT TOPIC
+                    </small>
+
+
+                    <strong>
+                        Browsers and Web Servers
+                    </strong>
+
+                </div>
+
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             COMPLETION
+             ================================================= -->
+
+        <section class="completion-section">
+
+            <div class="completion-card">
+
+
+                <div class="completion-status">
+
+
+                    <div class="completion-icon">
+                        ✓
+                    </div>
+
+
+                    <div>
+
+                        <span class="completion-label">
+                            LEVEL 03
+                        </span>
+
+
+                        <h2>
+                            URLs, HTTP and HTTPS
+                        </h2>
+
+
+                        <p id="completionMessage">
+                            Finish the lesson and mark this topic as completed.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="completion-btn"
+                    id="completeLesson"
+                >
+                    ✓ Mark Lesson Complete
+                </button>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         CODEBHAVYA FOOTER
+         ===================================================== -->
+
+    <div id="site-footer"></div>
+
+
+    <script src="/components.js"></script>
+
+    <script src="urls-http-https.js"></script>
+
+</body>
+
+</html>
