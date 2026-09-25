@@ -95,6 +95,51 @@
     t._timer = setTimeout(() => t.classList.remove("show"), 2600);
   }
 
+  function addDashboardSignOut() {
+    const path = location.pathname.replace(/index\.html$/i, "");
+    if (path !== "/Quiz/" && path !== "/Quiz/Admin/") return;
+    const header = document.querySelector(".topbar");
+    if (!header || !client || header.querySelector(".quiz-signout")) return;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "quiz-signout";
+    button.textContent = "Sign out";
+    button.setAttribute("aria-label", "Sign out and switch student");
+    button.addEventListener("click", async () => {
+      button.disabled = true;
+      button.textContent = "Signing out…";
+      document.body.classList.add("quiz-signing-out");
+      try {
+        await Promise.race([
+          client.auth.signOut(),
+          new Promise(resolve => setTimeout(resolve, 2000))
+        ]);
+      } catch (_error) {
+        // The browser's saved sign-in is cleared below even when offline.
+      } finally {
+        try {
+          sessionStorage.removeItem("codebhavya-placement-tab-auth-v1");
+          sessionStorage.removeItem("codebhavya:placement:last-activity");
+          sessionStorage.removeItem("cb_quiz_join");
+        } catch (_error) { /* Continue to the sign-in page. */ }
+        try {
+          const prefixes = ["codebhavya-placement-", "codebhavya-interview-", "codebhavya-mcq-revision-", "codebhavya-mock-", "codebhavya-full-", "codebhavya-solve-timer-"];
+          for (let index = localStorage.length - 1; index >= 0; index--) {
+            const key = localStorage.key(index);
+            if (key && (prefixes.some(prefix => key.startsWith(prefix)) || /^codebhavya-[a-z0-9_-]+-draft:/.test(key))) {
+              localStorage.removeItem(key);
+            }
+          }
+        } catch (_error) { /* The private page is already covered. */ }
+        location.replace("/Quiz/signin.html");
+      }
+    });
+    header.classList.add("has-quiz-signout");
+    header.appendChild(button);
+  }
+
+  addDashboardSignOut();
+
   async function enterFullscreen() {
     try {
       if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
