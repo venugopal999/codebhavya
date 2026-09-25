@@ -18,6 +18,23 @@
     let signedIn = false;
     let signingOutForIdle = false;
 
+    function coverExpiredSession() {
+        const screen = document.createElement("div");
+        screen.setAttribute("role", "alert");
+        screen.setAttribute("aria-live", "assertive");
+        screen.style.cssText = "position:fixed;inset:0;z-index:2147483647;display:grid;place-content:center;gap:.75rem;padding:2rem;background:#f4f7fb;color:#102a4c;text-align:center;font:600 1rem/1.5 system-ui,sans-serif";
+        const title = document.createElement("strong");
+        title.textContent = "Session expired";
+        title.style.fontSize = "1.5rem";
+        const message = document.createElement("span");
+        message.textContent = "For your privacy, sign in again to continue.";
+        screen.append(title, message);
+        // This is outside the inert body so the message remains accessible.
+        document.documentElement.append(screen);
+        if (document.body) document.body.inert = true;
+        else document.addEventListener("DOMContentLoaded", function () { document.body.inert = true; }, { once: true });
+    }
+
     function readActivity() {
         try { return Number(window.sessionStorage.getItem(activityKey)) || lastActivity; }
         catch (_) { return lastActivity; }
@@ -69,17 +86,27 @@
         }
         if (Date.now() - last < idleLimitMs) return false;
         signingOutForIdle = true;
+        coverExpiredSession();
+        clearActivity();
+        clearPlacementData();
+        try { window.sessionStorage.removeItem(sessionKey); }
+        catch (_) { /* The visible session is already covered. */ }
         // Calling auth methods directly in an auth callback can deadlock.
         window.setTimeout(async function () {
             try {
-                const result = await client.auth.signOut({ scope: "local" });
-                if (result.error) throw result.error;
-                clearActivity();
-                window.location.reload();
+                // Do not leave a shared computer showing private data if this stalls offline.
+                await Promise.race([
+                    client.auth.signOut({ scope: "local" }),
+                    new Promise(function (resolve) { window.setTimeout(resolve, 2000); })
+                ]);
             } catch (_) {
-                // Retry when the tab resumes or connectivity returns.
+                // The local credential was already cleared; a server response is optional.
             } finally {
-                signingOutForIdle = false;
+                try { window.sessionStorage.removeItem(sessionKey); }
+                catch (_) { /* The page stays covered until it can reload. */ }
+                clearActivity();
+                clearPlacementData();
+                window.location.reload();
             }
         }, 0);
         return true;
