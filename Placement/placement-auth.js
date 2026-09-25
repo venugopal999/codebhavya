@@ -264,6 +264,14 @@
             return;
         }
 
+        const expiredUrl = new URL(window.location.href);
+        if (expiredUrl.searchParams.get("session") === "expired") {
+            openDialog("signin");
+            setAuthMessage("Your session expired after 5 minutes of inactivity. Sign in again.", "neutral");
+            expiredUrl.searchParams.delete("session");
+            window.history.replaceState(null, "", expiredUrl.pathname + expiredUrl.search + expiredUrl.hash);
+        }
+
         client.auth.onAuthStateChange(function (eventName, session) {
             const explicitSignOut = eventName === "SIGNED_OUT" && signOutRequested;
             signOutRequested = false;

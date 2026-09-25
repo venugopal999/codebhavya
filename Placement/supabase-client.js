@@ -106,7 +106,7 @@
                 catch (_) { /* The page stays covered until it can reload. */ }
                 clearActivity();
                 clearPlacementData();
-                window.location.reload();
+                window.location.replace("/Placement/index.html?session=expired#placementCloudPanel");
             }
         }, 0);
         return true;
