@@ -113,6 +113,12 @@ function renderLesson(){
   if(!lesson){main.innerHTML=`<section class="lesson-section"><p class="section-label">PLANNED LEVEL</p><h2>Level ${levelNumber}</h2><p>This level is part of the CodeBhavya Full Stack MERN roadmap and is not released yet.</p><a class="button primary" href="lesson.html?level=1">Open Level 01</a></section>`;return;}
   const d=legacyData(lesson), concepts=arr(d.concepts), quiz=arr(d.quiz);
   document.title=`Level ${levelNumber}: ${lesson.title||""} | CodeBhavya`;
+  const description = document.querySelector('meta[name="description"]');
+  if (description) {
+    const text = String(lesson.hero?.description || lesson.summary || `Learn ${lesson.title} in the CodeBhavya Full Stack course.`)
+      .replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+    description.content = text.length > 160 ? text.slice(0, 157).replace(/\s+\S*$/, "") + "…" : text;
+  }
   const hero=`<section class="lesson-hero premium-hero"><div class="hero-level-number">${String(levelNumber).padStart(2,"0")}</div><div><p class="eyebrow">${esc(lesson.kicker||lesson.hero?.badge||`LEVEL ${String(levelNumber).padStart(2,"0")}`)}</p><h1>${esc(lesson.title||"")}</h1><p>${rich(lesson.hero?.description||lesson.summary||"")}</p><div class="lesson-meta">${lesson.duration?`<span>⏱ ${esc(lesson.duration)}</span>`:""}${lesson.difficulty?`<span>◈ ${esc(lesson.difficulty)}</span>`:""}<span>▣ ${concepts.length} concepts</span><span>✓ ${quiz.length} checks</span></div></div></section>`;
   const content=concepts.map(renderConcept).join("");
   const prev=levelNumber>1?`<a href="lesson.html?level=${levelNumber-1}">← Previous level</a>`:`<span></span>`;
