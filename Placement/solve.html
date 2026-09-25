@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.css">
     <link rel="stylesheet" href="placement-coding-v2.css?v=46">
 <link rel="stylesheet" href="placement-quality.css?v=28">
-<link rel="stylesheet" href="placement-solve-refresh.css?v=2">
+<link rel="stylesheet" href="placement-solve-refresh.css?v=3">
 </head>
 <body class="placement-page coding-page solve-page">
 <header class="top-header"><a href="../index.html" class="logo codebhavya-new-logo"><img src="../images/codebhavya-main-logo.png" alt="" class="main-logo"><span class="brand-name"><span class="logo-code">Code</span><span class="logo-bhavya">Bhavya</span></span></a><nav class="top-nav" aria-label="Main navigation"><a href="practice.html">Practice Hub</a><a href="mcq-library.html?topic=c" id="navMcq">MCQ Library</a><a href="quiz.html?topic=c" id="navQuiz">Quiz</a><a href="company-prep.html">Company Prep</a><a href="coding.html?topic=c" id="navCoding" class="active">Coding Arena</a><a href="progress.html?topic=c" id="navProgress">My Progress</a></nav></header>
@@ -35,19 +35,11 @@
             <div class="coding-empty" id="codingEmpty"><span>&lt;/&gt;</span><h2>Loading your challenge…</h2><p>The problem statement and coding workspace will appear here.</p></div>
 
             <div class="coding-active" id="codingActive" hidden>
-                <section class="problem-statement">
+                <div class="problem-pane" id="problemPane">
+                <nav class="problem-pane-tabs" aria-label="Challenge views"><button type="button" id="problemTab" class="active" aria-pressed="true" aria-controls="problemStatement">Problem</button><button type="button" id="submissionsTab" aria-pressed="false" aria-controls="submissionPanel" disabled>Submissions</button></nav>
+                <section class="problem-statement" id="problemStatement">
                     <header><div><div class="problem-tags"><span id="problemDifficulty">Beginner</span><span id="problemSubtopic">C programming</span><span id="problemPoints">10 points</span><span id="problemTarget">General Campus</span><span id="problemType">Complete program</span></div><h2 id="problemTitle">Problem title</h2></div></header>
                     <div id="statementBody"><p id="problemText"></p><div class="problem-spec"><article><h3>Input format</h3><p id="inputFormat"></p></article><article><h3>Output format</h3><p id="outputFormat"></p></article></div><h3>Constraints</h3><ul id="problemConstraints"></ul><h3>Examples</h3><div id="problemExamples"></div></div>
-                </section>
-
-                <section class="code-lab">
-                    <header><div class="editor-tabs"><button class="active" type="button" id="editorFilename">solution</button><span id="draftStatus">Draft ready</span></div><button type="button" id="toggleStatement" aria-expanded="true">Hide problem</button><label>Language<select id="codingLanguage"></select></label><button type="button" id="resetCode">Reset code</button></header>
-                    <div class="editor-shell"><div class="line-numbers" id="lineNumbers">1</div><textarea id="codeEditor" spellcheck="false" autocapitalize="off" autocomplete="off" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" aria-label="Source code"></textarea></div>
-                    <div class="run-actions"><span id="judgeStatus" role="status">Ready</span><button type="button" class="reveal-button" id="revealCase" hidden>Show failed hidden case</button><button type="button" class="run-button" id="runSamples">Run sample tests</button><button type="button" class="submit-code" id="submitCode">Submit solution</button></div>
-                </section>
-
-                <section class="test-console" id="testConsole" aria-live="polite">
-                    <header><strong>Test results</strong><span id="testSummary">Run your code to see results.</span></header><div class="assistance-note" id="assistanceNote" hidden></div><div id="testResults"></div>
                 </section>
 
                 <section class="submission-panel" id="submissionPanel" hidden aria-labelledby="submissionPanelTitle">
@@ -60,6 +52,18 @@
                     </div>
                     <div class="submission-history" id="submissionHistory" hidden></div>
                 </section>
+                </div>
+
+                <section class="code-lab">
+                    <header><div class="editor-tabs"><button class="active" type="button" id="editorFilename">solution</button><span id="draftStatus">Draft ready</span></div><button type="button" id="toggleStatement" aria-expanded="true">Hide problem</button><label>Language<select id="codingLanguage"></select></label><button type="button" id="resetCode">Reset code</button></header>
+                    <div class="editor-shell"><div class="line-numbers" id="lineNumbers">1</div><textarea id="codeEditor" spellcheck="false" autocapitalize="off" autocomplete="off" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" aria-label="Source code"></textarea></div>
+                    <div class="run-actions"><span id="judgeStatus" role="status">Ready</span><button type="button" class="reveal-button" id="revealCase" hidden>Show failed hidden case</button><button type="button" class="run-button" id="runSamples">Run sample tests</button><button type="button" class="submit-code" id="submitCode">Submit solution</button></div>
+                </section>
+
+                <section class="test-console" id="testConsole" aria-live="polite">
+                    <header><strong>Test results</strong><span id="testSummary">Run your code to see results.</span></header><div class="assistance-note" id="assistanceNote" hidden></div><div id="testResults"></div>
+                </section>
+
             </div>
         </section>
     </div>
@@ -70,7 +74,7 @@
 <script src="../script.js?v=20260908"></script>
 <script src="supabase-config.js?v=1"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-client.js?v=3"></script>
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.js"></script><script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/clike/clike.min.js"></script><script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/python/python.min.js"></script><script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/mode/overlay.min.js"></script><script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/edit/matchbrackets.min.js"></script><script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/edit/closebrackets.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/sql/sql.min.js"></script><script src="placement-coding-v2.js?v=48"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/sql/sql.min.js"></script><script src="placement-coding-v2.js?v=49"></script>
 <script src="placement-quality.js?v=28"></script>
 </body>
 </html>

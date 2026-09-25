@@ -209,6 +209,69 @@
 .solve-page .submission-history summary:focus-visible{outline:2px solid #108c93;outline-offset:-2px}
 .solve-page .submission-history .submitted-code{max-height:9rem}
 
+/* Problem and submission history share the reading pane beside the editor. */
+.solve-page .problem-pane{
+  grid-row:1/4;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  min-height:31rem;
+  max-height:calc(100vh - 11.25rem);
+  overflow:hidden;
+  border-right:1px solid var(--solve-border);
+  background:#fff;
+}
+.solve-page .problem-pane-tabs{
+  display:flex;
+  flex:none;
+  gap:1.25rem;
+  padding:0 clamp(1.35rem,2.3vw,2.55rem);
+  border-bottom:1px solid var(--solve-border);
+}
+.solve-page .problem-pane-tabs button{
+  min-height:3.3rem;
+  padding:.8rem .2rem .65rem;
+  border:0;
+  border-bottom:3px solid transparent;
+  background:transparent;
+  color:#53667e;
+  font-size:.98rem;
+  font-weight:750;
+  cursor:pointer;
+}
+.solve-page .problem-pane-tabs button.active{
+  border-bottom-color:#108c93;
+  color:#15324b;
+}
+.solve-page .problem-pane-tabs button:hover:not(:disabled){color:#087d84}
+.solve-page .problem-pane-tabs button:disabled{opacity:.55;cursor:default}
+.solve-page .problem-pane-tabs button:focus-visible{outline:2px solid #108c93;outline-offset:-3px}
+.solve-page .problem-pane .problem-statement{
+  flex:1;
+  grid-row:auto;
+  min-height:0;
+  max-height:none;
+  border-right:0;
+}
+.solve-page .problem-pane .submission-panel{
+  flex:1;
+  grid-column:auto;
+  min-height:0;
+  max-height:none;
+  border-top:0;
+}
+.solve-page .problem-pane .submission-panel-head{flex-wrap:wrap;gap:.55rem}
+.solve-page .problem-pane .submission-meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+.solve-page .problem-pane .submission-history summary{
+  grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+  gap:.25rem .5rem;
+}
+.solve-page .problem-pane .submission-history summary span{overflow-wrap:anywhere}
+.solve-page .problem-pane:not(.show-submissions) .submission-panel,
+.solve-page .problem-pane.show-submissions .problem-statement{display:none}
+.solve-page .coding-active.statement-collapsed .problem-pane{display:none}
+html.full-assessment-embed .problem-pane-tabs{display:none}
+
 @media(max-width:1250px){
   .solve-page .solve-toolbar{grid-template-columns:minmax(0,1fr) max-content;grid-template-areas:"title metrics" "actions actions"}
   .solve-page .coding-active{grid-template-columns:minmax(19rem,43%) minmax(0,57%)}
@@ -218,6 +281,9 @@
   .solve-page .coding-active{grid-template-columns:minmax(0,1fr)}
   .solve-page .problem-statement{grid-row:auto;max-height:none;min-height:0;border-right:0;border-bottom:1px solid var(--solve-border)}
   .solve-page .test-console,.solve-page .submission-panel{grid-column:1}
+  .solve-page .problem-pane{grid-row:auto;min-height:0;max-height:none;border-right:0;overflow:visible;border-bottom:1px solid var(--solve-border)}
+  .solve-page .problem-pane .problem-statement{max-height:34rem;overflow:auto;border-bottom:0}
+  .solve-page .problem-pane .submission-panel{max-height:34rem;overflow:auto}
 }
 @media(max-width:560px){
   .solve-page .solve-toolbar{padding:.9rem 1rem}
@@ -229,4 +295,6 @@
   .solve-page .code-lab>header{flex-wrap:wrap}
   .solve-page .run-actions{flex-wrap:wrap}
   .solve-page .run-actions span{flex-basis:100%}
+  .solve-page .problem-pane-tabs{padding:0 1.2rem}
+  .solve-page .problem-pane .submission-meta{grid-template-columns:1fr}
 }

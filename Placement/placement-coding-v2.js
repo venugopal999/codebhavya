@@ -196,12 +196,31 @@
         document.querySelector(".code-lab")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
+    function setPaneView(view) {
+        const submissions = view === "submissions" && !$('submissionsTab').disabled;
+        if ($('codingActive').classList.contains('statement-collapsed')) collapseStatement(false);
+        $('problemPane').classList.toggle('show-submissions', submissions);
+        $('problemTab').classList.toggle('active', !submissions);
+        $('submissionsTab').classList.toggle('active', submissions);
+        $('problemTab').setAttribute('aria-pressed', String(!submissions));
+        $('submissionsTab').setAttribute('aria-pressed', String(submissions));
+        if (submissions && submissionRows.length > 1) {
+            $('submissionHistory').hidden = false;
+            $('toggleSubmissionHistory').textContent = 'Hide attempts';
+        }
+    }
+
     function renderSubmissionHistory(rows) {
         submissionRows = rows;
         const panel = $("submissionPanel");
         if (!panel) return;
         panel.hidden = !user || fullAssessmentEmbed;
-        if (panel.hidden) return;
+        $('submissionsTab').disabled = panel.hidden;
+        if (panel.hidden) {
+            setPaneView('problem');
+            return;
+        }
+        $('submissionsTab').textContent = rows.length ? `Submissions (${rows.length})` : 'Submissions';
         const empty = $("submissionEmpty");
         const latestBox = $("latestSubmission");
         const toggle = $("toggleSubmissionHistory");
@@ -257,6 +276,8 @@
     async function loadSubmissionHistory() {
         if (!user || !active || fullAssessmentEmbed) {
             if ($("submissionPanel")) $("submissionPanel").hidden = true;
+            $('submissionsTab').disabled = true;
+            setPaneView('problem');
             return;
         }
         const rows = await fetchMySubmissions();
@@ -880,6 +901,8 @@
         $("toggleStatement").addEventListener("click", () => {
             collapseStatement(!$("codingActive").classList.contains("statement-collapsed"));
         });
+        $('problemTab').addEventListener('click', () => setPaneView('problem'));
+        $('submissionsTab').addEventListener('click', () => setPaneView('submissions'));
         $("openLeaderboard").addEventListener("click", showLeaderboard);
         $("codingLanguage").addEventListener("change", changeLanguage);
         $("restartSolveTimer")?.addEventListener("click", restartSolveTimer);
