@@ -217,7 +217,8 @@
     align-items:end;
     gap:10px;
 }
-.queue-field label {
+.queue-field label,
+.queue-field .field-spacer {
     display:block;
     margin-bottom:5px;
     color:#475569;
@@ -2528,17 +2529,17 @@ REAR()
 <div class="queue-viz-controls">
 
 <div class="queue-field">
-<label>Initial Queue (front → rear)</label>
+<label for="queueVizInput">Initial Queue (front → rear)</label>
 <input id="queueVizInput" value="10,20,30"/>
 </div>
 
 <div class="queue-field">
-<label>Capacity</label>
+<label for="queueVizCapacity">Capacity</label>
 <input id="queueVizCapacity" type="number" min="1" max="12" value="8"/>
 </div>
 
 <div class="queue-field">
-<label>Operation</label>
+<label for="queueVizOperation">Operation</label>
 <select id="queueVizOperation" onchange="QueueViz.operationChanged()">
 <option value="enqueue">Enqueue Values</option>
 <option value="dequeue">Dequeue Multiple</option>
@@ -2548,12 +2549,12 @@ REAR()
 </div>
 
 <div class="queue-field">
-<label id="queueVizValueLabel">Values to Enqueue</label>
+<label id="queueVizValueLabel" for="queueVizValue">Values to Enqueue</label>
 <input id="queueVizValue" value="40,50"/>
 </div>
 
 <div class="queue-field">
-<label>&nbsp;</label>
+<span class="field-spacer" aria-hidden="true">&nbsp;</span>
 <button class="primary-button" type="button" onclick="QueueViz.load()">Load / Apply</button>
 </div>
 
@@ -2894,17 +2895,17 @@ For <code>MAX = 5</code>, modulo creates this index movement:
 <div class="queue-viz-controls">
 
 <div class="queue-field">
-<label>Initial Queue (front → rear)</label>
+<label for="circularVizInput">Initial Queue (front → rear)</label>
 <input id="circularVizInput" value="10,20,30"/>
 </div>
 
 <div class="queue-field">
-<label>Capacity</label>
+<label for="circularVizCapacity">Capacity</label>
 <input id="circularVizCapacity" type="number" min="3" max="10" value="5"/>
 </div>
 
 <div class="queue-field">
-<label>Operation</label>
+<label for="circularVizOperation">Operation</label>
 <select id="circularVizOperation" onchange="CircularViz.operationChanged()">
 <option value="wrap" selected>Wrap-Around Demo</option>
 <option value="enqueue">Enqueue Values</option>
@@ -2915,12 +2916,12 @@ For <code>MAX = 5</code>, modulo creates this index movement:
 </div>
 
 <div class="queue-field">
-<label id="circularVizValueLabel">Demo Values</label>
+<label id="circularVizValueLabel" for="circularVizValue">Demo Values</label>
 <input id="circularVizValue" value="10,20,30,40,50,60" disabled/>
 </div>
 
 <div class="queue-field">
-<label>&nbsp;</label>
+<span class="field-spacer" aria-hidden="true">&nbsp;</span>
 <button class="primary-button" type="button" onclick="CircularViz.load()">Load / Apply</button>
 </div>
 
@@ -3280,12 +3281,12 @@ At that moment, <code>rear</code> must also become <code>NULL</code>; otherwise 
 <div class="queue-viz-controls">
 
 <div class="queue-field">
-<label>Initial Queue (front → rear)</label>
+<label for="linkedQueueVizInput">Initial Queue (front → rear)</label>
 <input id="linkedQueueVizInput" value="10,20,30"/>
 </div>
 
 <div class="queue-field">
-<label>Operation</label>
+<label for="linkedQueueVizOperation">Operation</label>
 <select id="linkedQueueVizOperation" onchange="LinkedQueueViz.operationChanged()">
 <option value="enqueue">Enqueue Values</option>
 <option value="dequeue">Dequeue Multiple</option>
@@ -3295,12 +3296,12 @@ At that moment, <code>rear</code> must also become <code>NULL</code>; otherwise 
 </div>
 
 <div class="queue-field">
-<label id="linkedQueueVizValueLabel">Values to Enqueue</label>
+<label id="linkedQueueVizValueLabel" for="linkedQueueVizValue">Values to Enqueue</label>
 <input id="linkedQueueVizValue" value="40,50"/>
 </div>
 
 <div class="queue-field">
-<label>&nbsp;</label>
+<span class="field-spacer" aria-hidden="true">&nbsp;</span>
 <button class="primary-button" type="button" onclick="LinkedQueueViz.load()">Load / Apply</button>
 </div>
 
@@ -3650,17 +3651,17 @@ can wrap around and reuse freed positions in O(1) time.
 <div class="queue-viz-controls">
 
 <div class="queue-field">
-<label>Initial Deque (front → rear)</label>
+<label for="dequeVizInput">Initial Deque (front → rear)</label>
 <input id="dequeVizInput" value="20,30"/>
 </div>
 
 <div class="queue-field">
-<label>Capacity</label>
+<label for="dequeVizCapacity">Capacity</label>
 <input id="dequeVizCapacity" type="number" min="3" max="10" value="6"/>
 </div>
 
 <div class="queue-field">
-<label>Operation</label>
+<label for="dequeVizOperation">Operation</label>
 <select id="dequeVizOperation" onchange="DequeViz.operationChanged()">
 <option value="demo" selected>Two-End Demo</option>
 <option value="insertFront">Insert Front</option>
@@ -3673,12 +3674,12 @@ can wrap around and reuse freed positions in O(1) time.
 </div>
 
 <div class="queue-field">
-<label id="dequeVizValueLabel">Demo Values</label>
+<label id="dequeVizValueLabel" for="dequeVizValue">Demo Values</label>
 <input id="dequeVizValue" value="10,40,5,50" disabled/>
 </div>
 
 <div class="queue-field">
-<label>&nbsp;</label>
+<span class="field-spacer" aria-hidden="true">&nbsp;</span>
 <button class="primary-button" type="button" onclick="DequeViz.load()">Load / Apply</button>
 </div>
 
@@ -4090,17 +4091,17 @@ Use <code>data:priority</code>, for example
 <div class="queue-viz-controls">
 
 <div class="queue-field">
-<label>Initial Items (data:priority)</label>
+<label for="priorityVizInput">Initial Items (data:priority)</label>
 <input id="priorityVizInput" value="10:2,20:5,30:3,40:5"/>
 </div>
 
 <div class="queue-field">
-<label>Capacity</label>
+<label for="priorityVizCapacity">Capacity</label>
 <input id="priorityVizCapacity" type="number" min="1" max="10" value="6"/>
 </div>
 
 <div class="queue-field">
-<label>Operation</label>
+<label for="priorityVizOperation">Operation</label>
 <select id="priorityVizOperation" onchange="PriorityViz.operationChanged()">
 <option value="demo" selected>Priority Demo</option>
 <option value="enqueue">Enqueue Items</option>
@@ -4110,12 +4111,12 @@ Use <code>data:priority</code>, for example
 </div>
 
 <div class="queue-field">
-<label id="priorityVizValueLabel">Demo Item</label>
+<label id="priorityVizValueLabel" for="priorityVizValue">Demo Item</label>
 <input id="priorityVizValue" value="50:6" disabled/>
 </div>
 
 <div class="queue-field">
-<label>&nbsp;</label>
+<span class="field-spacer" aria-hidden="true">&nbsp;</span>
 <button class="primary-button" type="button" onclick="PriorityViz.load()">Load / Apply</button>
 </div>
 
