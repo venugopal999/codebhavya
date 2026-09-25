@@ -6,7 +6,7 @@
     document.head.append(finish);
     if(page==='practice.html'){
         const counts=document.createElement('script');
-        counts.src=new URL('placement-hub-counts.js?v=28',document.currentScript.src).href;
+        counts.src=new URL('placement-hub-counts.js?v=29',document.currentScript.src).href;
         document.head.append(counts);
     }
     const notes={

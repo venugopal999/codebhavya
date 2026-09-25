@@ -18,16 +18,16 @@
     let signedIn = false;
     let signingOutForIdle = false;
 
-    function coverExpiredSession() {
+    function coverPrivatePage(titleText, messageText) {
         const screen = document.createElement("div");
         screen.setAttribute("role", "alert");
         screen.setAttribute("aria-live", "assertive");
         screen.style.cssText = "position:fixed;inset:0;z-index:2147483647;display:grid;place-content:center;gap:.75rem;padding:2rem;background:#f4f7fb;color:#102a4c;text-align:center;font:600 1rem/1.5 system-ui,sans-serif";
         const title = document.createElement("strong");
-        title.textContent = "Session expired";
+        title.textContent = titleText;
         title.style.fontSize = "1.5rem";
         const message = document.createElement("span");
-        message.textContent = "For your privacy, sign in again to continue.";
+        message.textContent = messageText;
         screen.append(title, message);
         // This is outside the inert body so the message remains accessible.
         document.documentElement.append(screen);
@@ -66,6 +66,48 @@
         } catch (_) { /* Storage may be blocked. */ }
     }
 
+    function showHeaderSignOut() {
+        if (!document.body || !document.body.classList.contains("placement-page")) return;
+        const page = window.location.pathname.split("/").pop();
+        if (["quiz.html", "mock-session.html", "full-mock-session.html"].includes(page)) return;
+        const nav = document.querySelector(".top-header .top-nav");
+        if (!nav) return;
+        let button = nav.querySelector(".placement-header-signout");
+        if (!button && signedIn) {
+            button = document.createElement("button");
+            button.type = "button";
+            button.className = "placement-header-signout";
+            button.textContent = "Sign out";
+            button.setAttribute("aria-label", "Sign out and switch student");
+            button.addEventListener("click", async function () {
+                coverPrivatePage("Signing out", "The next student can sign in from the Placement home page.");
+                try {
+                    if (window.CodeBhavyaPlacementSync && typeof window.CodeBhavyaPlacementSync.flush === "function") {
+                        await Promise.race([
+                            window.CodeBhavyaPlacementSync.flush(),
+                            new Promise(function (resolve) { window.setTimeout(resolve, 2000); })
+                        ]);
+                    }
+                } catch (_) { /* Continue to sign out if saving is unavailable. */ }
+                try {
+                    await Promise.race([
+                        client.auth.signOut(),
+                        new Promise(function (resolve) { window.setTimeout(resolve, 2000); })
+                    ]);
+                } catch (_) { /* The local sign-in is cleared below even when offline. */ }
+                try {
+                    window.sessionStorage.removeItem(sessionKey);
+                    window.sessionStorage.removeItem("cb_quiz_join");
+                } catch (_) { /* The private page stays covered. */ }
+                clearActivity();
+                clearPlacementData();
+                window.location.replace("/Placement/index.html?signedout=1#placementCloudPanel");
+            });
+            nav.append(button);
+        }
+        if (button) button.hidden = !signedIn;
+    }
+
     try {
         const last = Number(window.sessionStorage.getItem(activityKey));
         if (!window.sessionStorage.getItem(tabMarker) || (last && Date.now() - last >= idleLimitMs)) {
@@ -86,7 +128,7 @@
         }
         if (Date.now() - last < idleLimitMs) return false;
         signingOutForIdle = true;
-        coverExpiredSession();
+        coverPrivatePage("Session expired", "For your privacy, sign in again to continue.");
         clearActivity();
         clearPlacementData();
         try { window.sessionStorage.removeItem(sessionKey); }
@@ -138,7 +180,10 @@
                 } else if (signedIn) {
                     checkIdle();
                 }
+                showHeaderSignOut();
             });
+            if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", showHeaderSignOut, { once: true });
+            else showHeaderSignOut();
             ["pointerdown", "keydown", "touchstart"].forEach(function (eventName) {
                 document.addEventListener(eventName, function () {
                     if (!signedIn || checkIdle()) return;
