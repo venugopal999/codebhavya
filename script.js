@@ -347,7 +347,7 @@ function searchTopics() {
                 { label: "DBMS & SQL", path: "DBMS/index.html", icon: "DB" },
                 { label: "Operating Systems", path: "Operating-Systems/index.html", icon: "OS" },
                 { label: "Full Stack MERN", path: "Full-Stack/index.html", icon: "FSM" },
-                { label: "Web-Technologies", path: "Web-Technologies/introduction.html", icon: "WT" },
+                { label: "Web-Technologies", path: "Web-Technologies/index.html", icon: "WT" },
                 { label: "Core CS Practice", path: "Placement/mcq-library.html?topic=core-cs", icon: "CS" },
                 { label: "Scenario Problem Lab", path: "Placement/core-cs-problems.html", icon: "Lab" }
             ]
@@ -410,7 +410,7 @@ function searchTopics() {
                 { label: "DBMS & SQL", path: "DBMS/index.html" },
                 { label: "Operating Systems", path: "Operating-Systems/index.html" },
                 { label: "Full Stack MERN", path: "Full-Stack/index.html" },
-                { label: "Web-Technologies", path: "Web-Technologies/introduction.html", icon: "WT" }
+                { label: "Web-Technologies", path: "Web-Technologies/index.html", icon: "WT" }
             ]
         },
         {
