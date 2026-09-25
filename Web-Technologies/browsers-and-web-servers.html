@@ -1,0 +1,4902 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="CodeBhavya Web Technologies Level 04 - Browsers and Web Servers. Learn browser architecture, DOM, CSSOM, JavaScript engines, rendering, web servers, static and dynamic content, reverse proxies and browser DevTools."
+    >
+
+    <meta
+        name="keywords"
+        content="Browser Architecture, Web Server, Rendering Engine, DOM, CSSOM, JavaScript Engine, DevTools, Elements, Console, Network, Sources, Reverse Proxy, CodeBhavya"
+    >
+
+    <meta
+        name="author"
+        content="CodeBhavya"
+    >
+
+    <link
+        rel="canonical"
+        href="https://codebhavya.com/Web-Technologies/browsers-and-web-servers.html"
+    >
+
+    <title>
+        Browsers and Web Servers | CodeBhavya
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="../css/common.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="web-technologies.css"
+    >
+
+    <link rel="stylesheet" href="web-technologies-refresh.css?v=1">
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         CODEBHAVYA HEADER
+         ========================================================= -->
+
+    <div id="site-header"></div>
+
+
+    <!-- =========================================================
+         READING PROGRESS
+         ========================================================= -->
+
+    <div
+        class="reading-progress-wrap"
+        aria-hidden="true"
+    >
+
+        <div
+            class="reading-progress"
+            id="readingProgress"
+        ></div>
+
+    </div>
+
+
+    <!-- =========================================================
+         MAIN PAGE
+         ========================================================= -->
+
+    <main class="wt-page">
+
+
+        <!-- =====================================================
+             HERO
+             ===================================================== -->
+
+        <section class="wt-hero">
+
+            <div class="wt-breadcrumb">
+
+                <a href="/Web-Technologies/introduction.html">
+                    Web Technologies
+                </a>
+
+                <span>›</span>
+
+                <span>
+                    Level 04
+                </span>
+
+            </div>
+
+
+            <div class="level-badge">
+                LEVEL 04 · WEB FUNDAMENTALS
+            </div>
+
+
+            <h1>
+                Browsers and Web Servers
+            </h1>
+
+
+            <p class="hero-subtitle">
+                Go inside the browser and web-server environment.
+                Learn how browsers process HTML, CSS and JavaScript,
+                how servers handle requests, and how developers inspect
+                web pages using browser Developer Tools.
+            </p>
+
+
+            <div class="hero-meta">
+
+                <span>
+                    🌐 Browser Architecture
+                </span>
+
+                <span>
+                    🖥️ Web Servers
+                </span>
+
+                <span>
+                    🧩 Rendering
+                </span>
+
+                <span>
+                    🛠️ DevTools
+                </span>
+
+                <span>
+                    🎯 Placement Focus
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             LEARNING OBJECTIVES
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    01
+                </span>
+
+                <div>
+
+                    <h2>
+                        Learning Objectives
+                    </h2>
+
+                    <p>
+                        Understand what happens between receiving a response
+                        and seeing a usable web page.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="objective-grid">
+
+
+                <article class="info-card">
+
+                    <div class="card-icon">
+                        🌐
+                    </div>
+
+                    <h3>
+                        Browser Architecture
+                    </h3>
+
+                    <p>
+                        Identify major browser components and understand
+                        their general responsibilities.
+                    </p>
+
+                </article>
+
+
+                <article class="info-card">
+
+                    <div class="card-icon">
+                        🌳
+                    </div>
+
+                    <h3>
+                        DOM and CSSOM
+                    </h3>
+
+                    <p>
+                        Understand how HTML and CSS are represented inside
+                        the browser.
+                    </p>
+
+                </article>
+
+
+                <article class="info-card">
+
+                    <div class="card-icon">
+                        🎨
+                    </div>
+
+                    <h3>
+                        Rendering
+                    </h3>
+
+                    <p>
+                        Trace the simplified rendering path from HTML
+                        and CSS to pixels.
+                    </p>
+
+                </article>
+
+
+                <article class="info-card">
+
+                    <div class="card-icon">
+                        ⚡
+                    </div>
+
+                    <h3>
+                        JavaScript Engine
+                    </h3>
+
+                    <p>
+                        Understand how JavaScript is executed and how
+                        scripts can change the page.
+                    </p>
+
+                </article>
+
+
+                <article class="info-card">
+
+                    <div class="card-icon">
+                        🖥️
+                    </div>
+
+                    <h3>
+                        Web Servers
+                    </h3>
+
+                    <p>
+                        Understand how servers receive requests and
+                        return static or dynamic content.
+                    </p>
+
+                </article>
+
+
+                <article class="info-card">
+
+                    <div class="card-icon">
+                        🛠️
+                    </div>
+
+                    <h3>
+                        Developer Tools
+                    </h3>
+
+                    <p>
+                        Learn the purpose of Elements, Console, Network
+                        and Sources panels.
+                    </p>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             BROWSER INTRODUCTION
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    02
+                </span>
+
+                <div>
+
+                    <h2>
+                        What Is a Web Browser?
+                    </h2>
+
+                    <p>
+                        A browser is the user's primary interface to the Web.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="article-card">
+
+                <p>
+                    A <strong>web browser</strong> is software that retrieves
+                    Web resources and processes them so that users can view
+                    and interact with web content.
+                </p>
+
+
+                <p>
+                    Browsers do much more than display HTML. They handle
+                    network communication, parse documents, build internal
+                    representations, execute JavaScript, apply styles,
+                    render pixels, manage storage and enforce important
+                    security boundaries.
+                </p>
+
+
+                <div class="highlight-box">
+
+                    <div class="highlight-icon">
+                        💡
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Think of the browser as a Web runtime
+                        </strong>
+
+                        <p>
+                            It receives resources, understands them,
+                            executes code, applies rules and finally
+                            produces an interactive interface.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             BROWSER ARCHITECTURE
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    03
+                </span>
+
+                <div>
+
+                    <h2>
+                        Simplified Browser Architecture
+                    </h2>
+
+                    <p>
+                        Different browsers have different internal implementations,
+                        but these responsibilities are useful for learning.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="browser-architecture-grid">
+
+
+                <article class="browser-component-card">
+
+                    <div class="browser-component-icon">
+                        🧭
+                    </div>
+
+                    <h3>
+                        User Interface
+                    </h3>
+
+                    <p>
+                        Browser controls such as tabs, address bars,
+                        navigation controls and menus.
+                    </p>
+
+                    <span>
+                        INTERFACE
+                    </span>
+
+                </article>
+
+
+                <article class="browser-component-card">
+
+                    <div class="browser-component-icon">
+                        🔄
+                    </div>
+
+                    <h3>
+                        Browser Engine
+                    </h3>
+
+                    <p>
+                        Coordinates major browser operations and connects
+                        user-interface actions with page processing.
+                    </p>
+
+                    <span>
+                        COORDINATION
+                    </span>
+
+                </article>
+
+
+                <article class="browser-component-card">
+
+                    <div class="browser-component-icon">
+                        🎨
+                    </div>
+
+                    <h3>
+                        Rendering Engine
+                    </h3>
+
+                    <p>
+                        Parses page resources and helps turn document
+                        and style information into the visual result.
+                    </p>
+
+                    <span>
+                        RENDERING
+                    </span>
+
+                </article>
+
+
+                <article class="browser-component-card">
+
+                    <div class="browser-component-icon">
+                        ⚡
+                    </div>
+
+                    <h3>
+                        JavaScript Engine
+                    </h3>
+
+                    <p>
+                        Executes JavaScript and allows scripts to interact
+                        with the page and browser APIs.
+                    </p>
+
+                    <span>
+                        EXECUTION
+                    </span>
+
+                </article>
+
+
+                <article class="browser-component-card">
+
+                    <div class="browser-component-icon">
+                        🌐
+                    </div>
+
+                    <h3>
+                        Networking Layer
+                    </h3>
+
+                    <p>
+                        Handles network communication needed to retrieve
+                        web resources and exchange data.
+                    </p>
+
+                    <span>
+                        NETWORK
+                    </span>
+
+                </article>
+
+
+                <article class="browser-component-card">
+
+                    <div class="browser-component-icon">
+                        💾
+                    </div>
+
+                    <h3>
+                        Storage
+                    </h3>
+
+                    <p>
+                        Provides browser-side storage capabilities such as
+                        cookies and Web Storage.
+                    </p>
+
+                    <span>
+                        STORAGE
+                    </span>
+
+                </article>
+
+
+                <article class="browser-component-card">
+
+                    <div class="browser-component-icon">
+                        🛡️
+                    </div>
+
+                    <h3>
+                        Security
+                    </h3>
+
+                    <p>
+                        Applies browser security rules and helps isolate
+                        web content and capabilities.
+                    </p>
+
+                    <span>
+                        SECURITY
+                    </span>
+
+                </article>
+
+
+                <article class="browser-component-card">
+
+                    <div class="browser-component-icon">
+                        🧩
+                    </div>
+
+                    <h3>
+                        Web Platform APIs
+                    </h3>
+
+                    <p>
+                        Exposes browser capabilities such as DOM,
+                        Fetch, Storage, History and many others.
+                    </p>
+
+                    <span>
+                        APIS
+                    </span>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             DOCUMENT PROCESSING
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    04
+                </span>
+
+                <div>
+
+                    <h2>
+                        From HTML Source to DOM
+                    </h2>
+
+                    <p>
+                        The browser parses HTML and constructs a DOM representation.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="real-world-layout">
+
+
+                <div class="article-card">
+
+                    <p>
+                        Consider this HTML:
+                    </p>
+
+
+                    <div class="trace-code">
+
+&lt;main&gt;
+    &lt;h1&gt;CodeBhavya&lt;/h1&gt;
+    &lt;p&gt;Learn Web Technologies&lt;/p&gt;
+&lt;/main&gt;
+
+                    </div>
+
+
+                    <p>
+                        The browser does not simply keep this as plain text.
+                        It parses the markup and represents the document
+                        as a tree of nodes.
+                    </p>
+
+                </div>
+
+
+                <div class="browser-tree-panel">
+
+                    <div class="browser-tree-title">
+                        DOM TREE
+                    </div>
+
+
+                    <div class="browser-tree">
+
+                        <div class="tree-node root">
+                            DOCUMENT
+                        </div>
+
+                        <div class="tree-line">
+                            │
+                        </div>
+
+                        <div class="tree-node">
+                            main
+                        </div>
+
+                        <div class="tree-branch">
+                            ├── h1
+                        </div>
+
+                        <div class="tree-text">
+                            │   └── "CodeBhavya"
+                        </div>
+
+                        <div class="tree-branch">
+                            └── p
+                        </div>
+
+                        <div class="tree-text">
+                                └── "Learn Web Technologies"
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="note-box">
+
+                <strong>
+                    Important:
+                </strong>
+
+                <span>
+                    The DOM shown by Developer Tools can differ from the
+                    original HTML source because the browser may normalize
+                    markup and JavaScript can modify the live DOM.
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CSSOM
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    05
+                </span>
+
+                <div>
+
+                    <h2>
+                        CSS and the CSSOM
+                    </h2>
+
+                    <p>
+                        CSS is also parsed into a representation the browser
+                        can use for styling and layout.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="architecture-grid">
+
+
+                <article class="architecture-card">
+
+                    <div class="architecture-label">
+                        HTML
+                    </div>
+
+                    <h3>
+                        DOM
+                    </h3>
+
+                    <div class="flow-mini">
+
+                        <div class="flow-node">
+                            HTML Source
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node accent-node">
+                            Parse HTML
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            DOM Tree
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Represents document structure.
+                    </p>
+
+                </article>
+
+
+                <article class="architecture-card">
+
+                    <div class="architecture-label dynamic-label">
+                        CSS
+                    </div>
+
+                    <h3>
+                        CSSOM
+                    </h3>
+
+                    <div class="flow-mini">
+
+                        <div class="flow-node">
+                            CSS Rules
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node accent-node">
+                            Parse CSS
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            CSSOM
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Represents stylesheet and styling information
+                        the browser can use.
+                    </p>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CRITICAL RENDERING PATH
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    06
+                </span>
+
+                <div>
+
+                    <h2>
+                        Critical Rendering Path
+                    </h2>
+
+                    <p>
+                        A simplified view of how the browser turns
+                        document resources into pixels.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="rendering-path">
+
+
+                <div class="rendering-step">
+
+                    <span>
+                        01
+                    </span>
+
+                    <strong>
+                        HTML
+                    </strong>
+
+                    <small>
+                        Parse into DOM
+                    </small>
+
+                </div>
+
+
+                <div class="rendering-arrow">
+                    →
+                </div>
+
+
+                <div class="rendering-step">
+
+                    <span>
+                        02
+                    </span>
+
+                    <strong>
+                        CSS
+                    </strong>
+
+                    <small>
+                        Parse into CSSOM
+                    </small>
+
+                </div>
+
+
+                <div class="rendering-arrow">
+                    →
+                </div>
+
+
+                <div class="rendering-step">
+
+                    <span>
+                        03
+                    </span>
+
+                    <strong>
+                        Style
+                    </strong>
+
+                    <small>
+                        Combine relevant information
+                    </small>
+
+                </div>
+
+
+                <div class="rendering-arrow">
+                    →
+                </div>
+
+
+                <div class="rendering-step">
+
+                    <span>
+                        04
+                    </span>
+
+                    <strong>
+                        Layout
+                    </strong>
+
+                    <small>
+                        Calculate size and position
+                    </small>
+
+                </div>
+
+
+                <div class="rendering-arrow">
+                    →
+                </div>
+
+
+                <div class="rendering-step">
+
+                    <span>
+                        05
+                    </span>
+
+                    <strong>
+                        Paint
+                    </strong>
+
+                    <small>
+                        Draw visual output
+                    </small>
+
+                </div>
+
+
+                <div class="rendering-arrow">
+                    →
+                </div>
+
+
+                <div class="rendering-step">
+
+                    <span>
+                        06
+                    </span>
+
+                    <strong>
+                        Composite
+                    </strong>
+
+                    <small>
+                        Assemble visual layers where needed
+                    </small>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             RENDERING VISUALIZER
+             ===================================================== -->
+
+        <section class="content-section visualizer-section">
+
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    07
+                </span>
+
+                <div>
+
+                    <h2>
+                        Premium Visualizer — Browser Rendering Pipeline
+                    </h2>
+
+                    <p>
+                        Step through the path from source code to the
+                        final visible interface.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="visualizer-shell">
+
+
+                <div class="visualizer-topbar">
+
+                    <div class="visualizer-title">
+
+                        <span class="pulse-dot"></span>
+
+                        <span>
+                            BROWSER RENDER TRACE
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="visualizer-status"
+                        id="renderStatus"
+                    >
+                        Step 1 of 8
+                    </div>
+
+                </div>
+
+
+                <div class="trace-progress">
+
+                    <div
+                        class="trace-progress-bar"
+                        id="renderProgress"
+                    ></div>
+
+                </div>
+
+
+                <div class="trace-main">
+
+
+                    <div
+                        class="trace-stage browser-render-stage"
+                        id="renderStage"
+                    >
+
+                        <div
+                            class="trace-icon"
+                            id="renderIcon"
+                        >
+                            📄
+                        </div>
+
+
+                        <div
+                            class="trace-step-number"
+                            id="renderNumber"
+                        >
+                            STEP 01
+                        </div>
+
+
+                        <h3 id="renderTitle">
+                            Receive HTML
+                        </h3>
+
+
+                        <p id="renderDescription">
+                            The browser receives the HTML resource from the network.
+                        </p>
+
+
+                        <div
+                            class="trace-code"
+                            id="renderCode"
+                        >
+                            &lt;h1&gt;CodeBhavya&lt;/h1&gt;
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="trace-timeline"
+                        id="renderTimeline"
+                    >
+
+                        <button
+                            type="button"
+                            class="trace-point active"
+                            data-render-step="0"
+                        >
+                            <span>1</span>
+                            <strong>HTML</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-render-step="1"
+                        >
+                            <span>2</span>
+                            <strong>DOM</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-render-step="2"
+                        >
+                            <span>3</span>
+                            <strong>CSS</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-render-step="3"
+                        >
+                            <span>4</span>
+                            <strong>CSSOM</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-render-step="4"
+                        >
+                            <span>5</span>
+                            <strong>Style</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-render-step="5"
+                        >
+                            <span>6</span>
+                            <strong>Layout</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-render-step="6"
+                        >
+                            <span>7</span>
+                            <strong>Paint</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-render-step="7"
+                        >
+                            <span>8</span>
+                            <strong>Screen</strong>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="trace-controls">
+
+                    <button
+                        type="button"
+                        class="trace-btn secondary"
+                        id="renderPrevious"
+                    >
+                        ← Previous
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="trace-btn primary"
+                        id="renderAuto"
+                    >
+                        ▶ Auto Run
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="trace-btn secondary"
+                        id="renderNext"
+                    >
+                        Next →
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="trace-explanation">
+
+                <h3>
+                    Why this matters
+                </h3>
+
+
+                <div class="explanation-grid">
+
+
+                    <div>
+
+                        <span class="explanation-number">
+                            01
+                        </span>
+
+                        <p>
+                            HTML and CSS are first converted into structures
+                            the browser can reason about.
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="explanation-number">
+                            02
+                        </span>
+
+                        <p>
+                            Layout calculates the geometry of visible content.
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="explanation-number">
+                            03
+                        </span>
+
+                        <p>
+                            Paint produces the visual result that eventually
+                            appears in the viewport.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             JAVASCRIPT ENGINE
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    08
+                </span>
+
+                <div>
+
+                    <h2>
+                        JavaScript in the Browser
+                    </h2>
+
+                    <p>
+                        JavaScript allows pages to become interactive and dynamic.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="article-card">
+
+                <p>
+                    JavaScript running in the browser can read and modify the
+                    DOM, respond to user events, make network requests and
+                    interact with browser APIs.
+                </p>
+
+
+                <div class="browser-js-flow">
+
+
+                    <div class="js-flow-node">
+                        JavaScript
+                    </div>
+
+
+                    <div class="js-flow-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="js-flow-node">
+                        JavaScript Engine
+                    </div>
+
+
+                    <div class="js-flow-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="js-flow-node">
+                        Execute Code
+                    </div>
+
+
+                    <div class="js-flow-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="js-flow-node">
+                        DOM / Web APIs
+                    </div>
+
+
+                </div>
+
+
+                <div class="highlight-box">
+
+                    <div class="highlight-icon">
+                        ⚡
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Example
+                        </strong>
+
+                        <p>
+                            A click handler can change a heading, add a class,
+                            create an element, fetch data from an API or
+                            update stored information.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             WEB SERVER
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    09
+                </span>
+
+                <div>
+
+                    <h2>
+                        What Is a Web Server?
+                    </h2>
+
+                    <p>
+                        A web server may refer to the server hardware,
+                        the HTTP server software, or the combined environment.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="article-card">
+
+                <p>
+                    A web server stores or has access to web resources such as
+                    HTML files, images, stylesheets and JavaScript files.
+                    Its HTTP server software receives incoming requests and
+                    sends responses.
+                </p>
+
+
+                <p>
+                    For a static request, the server may locate the requested
+                    file and return it. For a dynamic request, additional
+                    application software may process the request and produce
+                    a response.
+                </p>
+
+
+                <div class="memory-box">
+
+                    <strong>
+                        Remember:
+                    </strong>
+
+                    <span>
+                        A web server is not necessarily only one physical computer,
+                        and a real deployment can contain multiple server instances
+                        and layers.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             WEB SERVER WORKFLOW
+             ===================================================== -->
+
+        <section class="content-section">
+
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    10
+                </span>
+
+                <div>
+
+                    <h2>
+                        How a Web Server Handles a Request
+                    </h2>
+
+                    <p>
+                        Follow a simplified request-processing workflow.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="server-process-grid">
+
+
+                <div class="server-process-step">
+
+                    <span>
+                        01
+                    </span>
+
+                    <strong>
+                        Receive
+                    </strong>
+
+                    <p>
+                        Accept the incoming HTTP request.
+                    </p>
+
+                </div>
+
+
+                <div class="server-process-connector">
+                    →
+                </div>
+
+
+                <div class="server-process-step">
+
+                    <span>
+                        02
+                    </span>
+
+                    <strong>
+                        Identify
+                    </strong>
+
+                    <p>
+                        Inspect the requested host and resource.
+                    </p>
+
+                </div>
+
+
+                <div class="server-process-connector">
+                    →
+                </div>
+
+
+                <div class="server-process-step">
+
+                    <span>
+                        03
+                    </span>
+
+                    <strong>
+                        Locate
+                    </strong>
+
+                    <p>
+                        Find a file or route the request to application logic.
+                    </p>
+
+                </div>
+
+
+                <div class="server-process-connector">
+                    →
+                </div>
+
+
+                <div class="server-process-step">
+
+                    <span>
+                        04
+                    </span>
+
+                    <strong>
+                        Process
+                    </strong>
+
+                    <p>
+                        Generate or retrieve the required response.
+                    </p>
+
+                </div>
+
+
+                <div class="server-process-connector">
+                    →
+                </div>
+
+
+                <div class="server-process-step">
+
+                    <span>
+                        05
+                    </span>
+
+                    <strong>
+                        Respond
+                    </strong>
+
+                    <p>
+                        Send the HTTP response back to the client.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             STATIC AND DYNAMIC
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    11
+                </span>
+
+                <div>
+
+                    <h2>
+                        Static and Dynamic Server Processing
+                    </h2>
+
+                    <p>
+                        Understand the difference between serving a file
+                        as-is and generating a response.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="architecture-grid">
+
+
+                <article class="architecture-card">
+
+                    <div class="architecture-label">
+                        STATIC
+                    </div>
+
+
+                    <h3>
+                        Static Request
+                    </h3>
+
+
+                    <div class="flow-mini">
+
+                        <div class="flow-node">
+                            Browser
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            HTTP Server
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node accent-node">
+                            index.html
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            Browser
+                        </div>
+
+                    </div>
+
+
+                    <p>
+                        The server can return a stored resource directly
+                        when the resource is available and configured to be served.
+                    </p>
+
+                </article>
+
+
+                <article class="architecture-card">
+
+                    <div class="architecture-label dynamic-label">
+                        DYNAMIC
+                    </div>
+
+
+                    <h3>
+                        Dynamic Request
+                    </h3>
+
+
+                    <div class="flow-mini">
+
+                        <div class="flow-node">
+                            Browser
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            HTTP Server
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node accent-node">
+                            Application
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            Database / Services
+                        </div>
+
+                    </div>
+
+
+                    <p>
+                        Application logic can retrieve information, perform
+                        processing and generate a response.
+                    </p>
+
+                </article>
+
+
+            </div>
+
+
+            <div class="note-box">
+
+                <strong>
+                    CodeBhavya Connection:
+                </strong>
+
+                <span>
+                    This is where later technologies such as PHP, Servlets,
+                    JSP, Node.js and APIs become important.
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             REVERSE PROXY
+             ===================================================== -->
+
+        <section class="content-section">
+
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    12
+                </span>
+
+                <div>
+
+                    <h2>
+                        Reverse Proxy
+                    </h2>
+
+                    <p>
+                        A reverse proxy sits in front of backend servers
+                        and receives requests on their behalf.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="real-world-layout">
+
+
+                <div class="article-card">
+
+                    <p>
+                        A reverse proxy is an intermediate server that receives
+                        requests from clients and forwards them to one or more
+                        internal servers.
+                    </p>
+
+
+                    <p>
+                        Depending on the architecture, it can support functions
+                        such as load balancing, caching, authentication,
+                        compression or TLS termination.
+                    </p>
+
+                </div>
+
+
+                <div class="reverse-proxy-flow">
+
+
+                    <div class="proxy-node client">
+                        🌐 Browser
+                    </div>
+
+
+                    <div class="proxy-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="proxy-node proxy">
+                        🔀 Reverse Proxy
+                    </div>
+
+
+                    <div class="proxy-arrow split">
+                        ↙ &nbsp;&nbsp; ↓ &nbsp;&nbsp; ↘
+                    </div>
+
+
+                    <div class="proxy-backends">
+
+                        <div class="proxy-node backend">
+                            🖥️ Server A
+                        </div>
+
+                        <div class="proxy-node backend">
+                            🖥️ Server B
+                        </div>
+
+                        <div class="proxy-node backend">
+                            🖥️ Server C
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="memory-box">
+
+                <strong>
+                    Simple analogy:
+                </strong>
+
+                <span>
+                    A reverse proxy is like a reception desk that receives
+                    visitors and directs each request to the appropriate
+                    internal department.
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PREMIUM SERVER VISUALIZER
+             ===================================================== -->
+
+        <section class="content-section visualizer-section">
+
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    13
+                </span>
+
+                <div>
+
+                    <h2>
+                        Premium Visualizer — Web Server Request Handling
+                    </h2>
+
+                    <p>
+                        Trace how a web server decides what to return.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="visualizer-shell">
+
+
+                <div class="visualizer-topbar">
+
+                    <div class="visualizer-title">
+
+                        <span class="pulse-dot"></span>
+
+                        <span>
+                            WEB SERVER TRACE
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="visualizer-status"
+                        id="serverTraceStatus"
+                    >
+                        Step 1 of 7
+                    </div>
+
+                </div>
+
+
+                <div class="trace-progress">
+
+                    <div
+                        class="trace-progress-bar"
+                        id="serverProgress"
+                    ></div>
+
+                </div>
+
+
+                <div class="trace-main">
+
+
+                    <div
+                        class="trace-stage"
+                        id="serverTraceStage"
+                    >
+
+                        <div
+                            class="trace-icon"
+                            id="serverTraceIcon"
+                        >
+                            📩
+                        </div>
+
+
+                        <div
+                            class="trace-step-number"
+                            id="serverTraceNumber"
+                        >
+                            STEP 01
+                        </div>
+
+
+                        <h3 id="serverTraceTitle">
+                            Receive Request
+                        </h3>
+
+
+                        <p id="serverTraceDescription">
+                            The web server receives an HTTP request from a client.
+                        </p>
+
+
+                        <div
+                            class="trace-code"
+                            id="serverTraceCode"
+                        >
+                            GET /index.html HTTP/1.1
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="trace-timeline"
+                        id="serverTraceTimeline"
+                    >
+
+                        <button
+                            type="button"
+                            class="trace-point active"
+                            data-server-step="0"
+                        >
+                            <span>1</span>
+                            <strong>Receive</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-server-step="1"
+                        >
+                            <span>2</span>
+                            <strong>Host</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-server-step="2"
+                        >
+                            <span>3</span>
+                            <strong>Path</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-server-step="3"
+                        >
+                            <span>4</span>
+                            <strong>File / Route</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-server-step="4"
+                        >
+                            <span>5</span>
+                            <strong>Process</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-server-step="5"
+                        >
+                            <span>6</span>
+                            <strong>Response</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="trace-point"
+                            data-server-step="6"
+                        >
+                            <span>7</span>
+                            <strong>Browser</strong>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="trace-controls">
+
+                    <button
+                        type="button"
+                        class="trace-btn secondary"
+                        id="serverTracePrevious"
+                    >
+                        ← Previous
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="trace-btn primary"
+                        id="serverTraceAuto"
+                    >
+                        ▶ Auto Run
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="trace-btn secondary"
+                        id="serverTraceNext"
+                    >
+                        Next →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             DEVTOOLS
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    14
+                </span>
+
+                <div>
+
+                    <h2>
+                        Browser Developer Tools
+                    </h2>
+
+                    <p>
+                        Professional Web development requires the ability
+                        to inspect and debug what the browser is actually doing.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="article-card">
+
+                <p>
+                    Modern browsers include Developer Tools that can inspect
+                    the live DOM, applied CSS, JavaScript behavior and
+                    network requests.
+                </p>
+
+
+                <p>
+                    These tools are essential for debugging layout problems,
+                    JavaScript errors, missing resources, slow requests,
+                    unexpected styles and API failures.
+                </p>
+
+            </div>
+
+
+            <div class="devtools-tabs-shell">
+
+
+                <div class="devtools-tabs">
+
+                    <button
+                        type="button"
+                        class="devtools-tab active"
+                        data-devtool="elements"
+                    >
+                        Elements
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="devtools-tab"
+                        data-devtool="console"
+                    >
+                        Console
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="devtools-tab"
+                        data-devtool="network"
+                    >
+                        Network
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="devtools-tab"
+                        data-devtool="sources"
+                    >
+                        Sources
+                    </button>
+
+                </div>
+
+
+                <div class="devtools-content">
+
+
+                    <div
+                        class="devtools-panel active"
+                        data-panel="elements"
+                    >
+
+                        <div class="devtools-panel-header">
+                            ELEMENTS
+                        </div>
+
+
+                        <div class="devtools-screen">
+
+
+                            <div class="devtools-dom-row selected">
+                                <span>
+                                    ▼
+                                </span>
+
+                                <code>
+                                    &lt;main&gt;
+                                </code>
+                            </div>
+
+
+                            <div class="devtools-dom-row child">
+                                <span>
+                                    ↳
+                                </span>
+
+                                <code>
+                                    &lt;h1&gt;CodeBhavya&lt;/h1&gt;
+                                </code>
+                            </div>
+
+
+                            <div class="devtools-dom-row child">
+                                <span>
+                                    ↳
+                                </span>
+
+                                <code>
+                                    &lt;p&gt;Learn Web Technologies&lt;/p&gt;
+                                </code>
+                            </div>
+
+
+                        </div>
+
+
+                        <p class="devtools-help">
+                            Inspect the live DOM and view the CSS rules
+                            applied to selected elements.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="devtools-panel"
+                        data-panel="console"
+                    >
+
+                        <div class="devtools-panel-header">
+                            CONSOLE
+                        </div>
+
+
+                        <div class="devtools-screen console-screen">
+
+                            <div>
+                                <span class="console-prompt">
+                                    &gt;
+                                </span>
+
+                                document.title
+                            </div>
+
+
+                            <div class="console-result">
+                                "Browsers and Web Servers | CodeBhavya"
+                            </div>
+
+
+                            <div>
+                                <span class="console-prompt">
+                                    &gt;
+                                </span>
+
+                                5 + 7
+                            </div>
+
+
+                            <div class="console-result">
+                                12
+                            </div>
+
+                        </div>
+
+
+                        <p class="devtools-help">
+                            Run JavaScript expressions and inspect runtime
+                            output and errors.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="devtools-panel"
+                        data-panel="network"
+                    >
+
+                        <div class="devtools-panel-header">
+                            NETWORK
+                        </div>
+
+
+                        <div class="devtools-screen network-screen">
+
+
+                            <div class="network-row network-head">
+
+                                <span>
+                                    Name
+                                </span>
+
+                                <span>
+                                    Type
+                                </span>
+
+                                <span>
+                                    Status
+                                </span>
+
+                                <span>
+                                    Time
+                                </span>
+
+                            </div>
+
+
+                            <div class="network-row">
+
+                                <span>
+                                    index.html
+                                </span>
+
+                                <span>
+                                    document
+                                </span>
+
+                                <span class="status-good">
+                                    200
+                                </span>
+
+                                <span>
+                                    31 ms
+                                </span>
+
+                            </div>
+
+
+                            <div class="network-row">
+
+                                <span>
+                                    web-technologies.css
+                                </span>
+
+                                <span>
+                                    stylesheet
+                                </span>
+
+                                <span class="status-good">
+                                    200
+                                </span>
+
+                                <span>
+                                    12 ms
+                                </span>
+
+                            </div>
+
+
+                            <div class="network-row">
+
+                                <span>
+                                    app.js
+                                </span>
+
+                                <span>
+                                    script
+                                </span>
+
+                                <span class="status-good">
+                                    200
+                                </span>
+
+                                <span>
+                                    18 ms
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <p class="devtools-help">
+                            Inspect requests, responses, status codes,
+                            headers, timing and transferred resources.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="devtools-panel"
+                        data-panel="sources"
+                    >
+
+                        <div class="devtools-panel-header">
+                            SOURCES
+                        </div>
+
+
+                        <div class="devtools-screen source-screen">
+
+
+                            <div class="source-line active-line">
+                                <span>
+                                    01
+                                </span>
+
+                                <code>
+                                    const title = document.querySelector("h1");
+                                </code>
+                            </div>
+
+
+                            <div class="source-line">
+                                <span>
+                                    02
+                                </span>
+
+                                <code>
+                                    title.addEventListener("click", updatePage);
+                                </code>
+                            </div>
+
+
+                            <div class="source-line">
+                                <span>
+                                    03
+                                </span>
+
+                                <code>
+                                    function updatePage() {
+                                </code>
+                            </div>
+
+
+                            <div class="source-line">
+                                <span>
+                                    04
+                                </span>
+
+                                <code>
+                                    &nbsp;&nbsp;console.log("clicked");
+                                </code>
+                            </div>
+
+
+                        </div>
+
+
+                        <p class="devtools-help">
+                            Inspect source files, set breakpoints and
+                            debug JavaScript execution.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             DEVTOOLS PRACTICAL WORKFLOW
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    15
+                </span>
+
+                <div>
+
+                    <h2>
+                        Which DevTools Panel Should You Use?
+                    </h2>
+
+                    <p>
+                        Learn the basic debugging workflow.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="comparison-table-wrap">
+
+
+                <table class="comparison-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Problem
+                            </th>
+
+                            <th>
+                                Panel
+                            </th>
+
+                            <th>
+                                What to Inspect
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                Element looks wrong
+                            </td>
+
+                            <td>
+                                Elements
+                            </td>
+
+                            <td>
+                                DOM structure, computed styles and CSS rules
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                JavaScript error
+                            </td>
+
+                            <td>
+                                Console
+                            </td>
+
+                            <td>
+                                Errors, warnings and runtime output
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                API request failed
+                            </td>
+
+                            <td>
+                                Network
+                            </td>
+
+                            <td>
+                                URL, method, status, headers and response
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                JavaScript logic bug
+                            </td>
+
+                            <td>
+                                Sources
+                            </td>
+
+                            <td>
+                                Source code, breakpoints and execution
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="highlight-box">
+
+                <div class="highlight-icon">
+                    🛠️
+                </div>
+
+                <div>
+
+                    <strong>
+                        Professional habit
+                    </strong>
+
+                    <p>
+                        When a web page does not behave as expected,
+                        do not immediately rewrite everything. Inspect
+                        the DOM, console and network activity first.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             REAL WORLD EXAMPLE
+             ===================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    16
+                </span>
+
+                <div>
+
+                    <h2>
+                        Real-World Example — Broken Student Portal
+                    </h2>
+
+                    <p>
+                        See how a developer can diagnose a web problem.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="real-world-layout">
+
+
+                <div class="real-world-story">
+
+                    <h3>
+                        Problem
+                    </h3>
+
+
+                    <p>
+                        A student clicks the
+                        <strong>View Results</strong>
+                        button, but the result never appears.
+                    </p>
+
+
+                    <p>
+                        Instead of randomly changing the JavaScript,
+                        the developer opens Developer Tools.
+                    </p>
+
+
+                    <p>
+                        The Network panel shows that the request returned
+                        an error response. The developer can then inspect
+                        the request URL, response and server-side behavior.
+                    </p>
+
+                </div>
+
+
+                <div class="real-world-flow">
+
+
+                    <div class="rw-node">
+                        🖱️ Click Button
+                    </div>
+
+
+                    <div class="rw-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="rw-node">
+                        ⚡ JavaScript
+                    </div>
+
+
+                    <div class="rw-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="rw-node">
+                        🌐 Network Request
+                    </div>
+
+
+                    <div class="rw-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="rw-node">
+                        ⚠️ Error Response
+                    </div>
+
+
+                    <div class="rw-arrow">
+                        ↓
+                    </div>
+
+
+                    <div class="rw-node">
+                        🛠️ DevTools → Network
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             COMMON MISTAKES
+             ===================================================== -->
+
+        <section class="content-section">
+
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    17
+                </span>
+
+                <div>
+
+                    <h2>
+                        Common Beginner Mistakes
+                    </h2>
+
+                    <p>
+                        Build the correct browser and server mental model.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="mistake-grid">
+
+
+                <article class="mistake-card">
+
+                    <span class="mistake-icon">
+                        ❌
+                    </span>
+
+                    <h3>
+                        Browser Only Displays HTML
+                    </h3>
+
+                    <p>
+                        A browser also parses CSS, executes JavaScript,
+                        handles resources and exposes Web APIs.
+                    </p>
+
+                </article>
+
+
+                <article class="mistake-card">
+
+                    <span class="mistake-icon">
+                        ❌
+                    </span>
+
+                    <h3>
+                        DOM = Original HTML
+                    </h3>
+
+                    <p>
+                        The live DOM can differ from the original source
+                        and can be modified by JavaScript.
+                    </p>
+
+                </article>
+
+
+                <article class="mistake-card">
+
+                    <span class="mistake-icon">
+                        ❌
+                    </span>
+
+                    <h3>
+                        Web Server = Database
+                    </h3>
+
+                    <p>
+                        A database is a separate data system or layer.
+                        The web server does not automatically mean database.
+                    </p>
+
+                </article>
+
+
+                <article class="mistake-card">
+
+                    <span class="mistake-icon">
+                        ❌
+                    </span>
+
+                    <h3>
+                        DevTools Is Only for Errors
+                    </h3>
+
+                    <p>
+                        DevTools is also useful for understanding requests,
+                        layout, styles, performance and runtime behavior.
+                    </p>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             INTERVIEW — FLIP CARDS
+             ===================================================== -->
+
+        <section class="content-section interview-section">
+
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    18
+                </span>
+
+                <div>
+
+                    <h2>
+                        Interview Preparation
+                    </h2>
+
+                    <p>
+                        Think first, then click a card to reveal the answer.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="flip-card-grid">
+
+
+                <!-- 01 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 1"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    01
+                                </div>
+
+
+                                <h3>
+                                    What is a web browser?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Think about retrieval, processing and interaction.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                Web Browser
+                            </h3>
+
+
+                            <p>
+                                A web browser is software that retrieves,
+                                processes and displays Web content and
+                                provides an interactive environment for
+                                Web applications.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 02 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 2"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    02
+                                </div>
+
+
+                                <h3>
+                                    What is the DOM?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Think about how HTML becomes a tree structure.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                DOM
+                            </h3>
+
+
+                            <p>
+                                The Document Object Model is the browser's
+                                object representation of a document. It
+                                represents document structure as nodes that
+                                can be accessed and manipulated with APIs.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 03 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 3"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    03
+                                </div>
+
+
+                                <h3>
+                                    What is CSSOM?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Think about the browser's representation of CSS.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                CSSOM
+                            </h3>
+
+
+                            <p>
+                                The CSS Object Model provides an object-based
+                                representation and APIs for working with CSS
+                                information in the browser.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 04 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 4"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    04
+                                </div>
+
+
+                                <h3>
+                                    What is the role of a web server?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Think about requests and web resources.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                Web Server
+                            </h3>
+
+
+                            <p>
+                                A web server receives HTTP requests and returns
+                                web resources or responses. It can also work
+                                with application software in a dynamic system.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 05 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 5"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    05
+                                </div>
+
+
+                                <h3>
+                                    What is the difference between static and dynamic web content?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Compare serving stored resources with application-generated responses.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                Static vs Dynamic
+                            </h3>
+
+
+                            <p>
+                                Static content is generally served as stored,
+                                while dynamic content can be generated or
+                                modified by application logic using request
+                                information, data or other services.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 06 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 6"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    06
+                                </div>
+
+
+                                <h3>
+                                    What is a reverse proxy?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Think about a server that sits in front of backend servers.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                Reverse Proxy
+                            </h3>
+
+
+                            <p>
+                                A reverse proxy receives client requests and
+                                forwards them to internal servers. It can
+                                provide functions such as load balancing,
+                                caching, authentication or TLS termination.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 07 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 7"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    07
+                                </div>
+
+
+                                <h3>
+                                    What is the Critical Rendering Path?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Think about converting Web resources into pixels.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                Critical Rendering Path
+                            </h3>
+
+
+                            <p>
+                                It is the sequence of browser processing steps
+                                involved in converting HTML, CSS and related
+                                resources into the rendered pixels displayed
+                                on screen.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 08 -->
+
+                <article
+                    class="flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip interview question 8"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <div>
+
+                                <span class="flip-card-label">
+                                    INTERVIEW QUESTION
+                                </span>
+
+
+                                <div class="flip-card-number">
+                                    08
+                                </div>
+
+
+                                <h3>
+                                    Which DevTools panel helps you inspect network requests?
+                                </h3>
+
+
+                                <p class="flip-card-question">
+                                    Think about requests, responses and timing.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to reveal answer
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                ANSWER
+                            </span>
+
+
+                            <div class="flip-card-answer-icon">
+                                ✓
+                            </div>
+
+
+                            <h3>
+                                Network Panel
+                            </h3>
+
+
+                            <p>
+                                The Network panel shows requests made by the
+                                page and provides information such as request
+                                URLs, methods, status codes, headers, timing
+                                and transferred resources.
+                            </p>
+
+
+                            <div class="flip-card-answer-note">
+                                Click again to return to the question.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             MCQs
+             ===================================================== -->
+
+        <section class="content-section">
+
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    19
+                </span>
+
+                <div>
+
+                    <h2>
+                        Quick MCQs
+                    </h2>
+
+                    <p>
+                        Check your understanding before moving forward.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="mcq-grid">
+
+
+                <!-- MCQ 01 -->
+
+                <article class="mcq-card">
+
+                    <div class="mcq-header">
+
+                        <span>
+                            MCQ 01
+                        </span>
+
+                        <span class="difficulty easy">
+                            EASY
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Which browser representation models the structure of an HTML document?
+                    </h3>
+
+
+                    <div class="mcq-options">
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            A. CSSOM
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                            data-correct="true"
+                        >
+                            B. DOM
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            C. DNS
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            D. JDBC
+                        </button>
+
+                    </div>
+
+
+                    <div class="mcq-feedback"></div>
+
+                </article>
+
+
+                <!-- MCQ 02 -->
+
+                <article class="mcq-card">
+
+                    <div class="mcq-header">
+
+                        <span>
+                            MCQ 02
+                        </span>
+
+                        <span class="difficulty easy">
+                            EASY
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Which panel is primarily used to inspect requests sent by a page?
+                    </h3>
+
+
+                    <div class="mcq-options">
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            A. Elements
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                            data-correct="true"
+                        >
+                            B. Network
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            C. Console
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            D. Sources
+                        </button>
+
+                    </div>
+
+
+                    <div class="mcq-feedback"></div>
+
+                </article>
+
+
+                <!-- MCQ 03 -->
+
+                <article class="mcq-card">
+
+                    <div class="mcq-header">
+
+                        <span>
+                            MCQ 03
+                        </span>
+
+                        <span class="difficulty medium">
+                            MODERATE
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Which stage calculates the size and position of elements?
+                    </h3>
+
+
+                    <div class="mcq-options">
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            A. Paint
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                            data-correct="true"
+                        >
+                            B. Layout
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            C. DNS
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            D. Cache
+                        </button>
+
+                    </div>
+
+
+                    <div class="mcq-feedback"></div>
+
+                </article>
+
+
+                <!-- MCQ 04 -->
+
+                <article class="mcq-card">
+
+                    <div class="mcq-header">
+
+                        <span>
+                            MCQ 04
+                        </span>
+
+                        <span class="difficulty medium">
+                            MODERATE
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        What can a reverse proxy do?
+                    </h3>
+
+
+                    <div class="mcq-options">
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            A. Replace HTML with CSS
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                            data-correct="true"
+                        >
+                            B. Forward client requests to backend servers
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            C. Act as a browser DOM
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mcq-option"
+                        >
+                            D. Create IP addresses
+                        </button>
+
+                    </div>
+
+
+                    <div class="mcq-feedback"></div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PRACTICE
+             ===================================================== -->
+
+        <section class="content-section">
+
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    20
+                </span>
+
+                <div>
+
+                    <h2>
+                        Practice Problems
+                    </h2>
+
+                    <p>
+                        Test your understanding without looking at the lesson.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="practice-list">
+
+
+                <div class="practice-item">
+
+                    <span class="practice-number">
+                        01
+                    </span>
+
+                    <p>
+                        Explain what happens inside a browser after it receives an HTML document.
+                    </p>
+
+                </div>
+
+
+                <div class="practice-item">
+
+                    <span class="practice-number">
+                        02
+                    </span>
+
+                    <p>
+                        Draw the simplified relationship between DOM and CSSOM.
+                    </p>
+
+                </div>
+
+
+                <div class="practice-item">
+
+                    <span class="practice-number">
+                        03
+                    </span>
+
+                    <p>
+                        Explain the difference between layout and paint.
+                    </p>
+
+                </div>
+
+
+                <div class="practice-item">
+
+                    <span class="practice-number">
+                        04
+                    </span>
+
+                    <p>
+                        Explain how a web server handles a request for a static HTML file.
+                    </p>
+
+                </div>
+
+
+                <div class="practice-item">
+
+                    <span class="practice-number">
+                        05
+                    </span>
+
+                    <p>
+                        Explain static and dynamic server-side processing with an example.
+                    </p>
+
+                </div>
+
+
+                <div class="practice-item">
+
+                    <span class="practice-number">
+                        06
+                    </span>
+
+                    <p>
+                        A button click does nothing. Explain how you would use
+                        Elements, Console and Network to investigate the problem.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             GLOSSARY — FLIP CARDS
+             ===================================================== -->
+
+        <section class="content-section">
+
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    21
+                </span>
+
+                <div>
+
+                    <h2>
+                        Glossary
+                    </h2>
+
+                    <p>
+                        Click a term to flip the card and reveal its meaning.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="glossary-flip-grid">
+
+
+                <!-- 01 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary Browser"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                Browser
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                Browser
+                            </h4>
+
+
+                            <p>
+                                Software that retrieves, processes and
+                                displays Web content.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 02 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary DOM"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                DOM
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                DOM
+                            </h4>
+
+
+                            <p>
+                                Document Object Model, the browser's
+                                object representation of a document.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 03 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary CSSOM"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                CSSOM
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                CSSOM
+                            </h4>
+
+
+                            <p>
+                                CSS Object Model, the object-based representation
+                                and API model for CSS information.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 04 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary Rendering Engine"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                Rendering Engine
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                Rendering Engine
+                            </h4>
+
+
+                            <p>
+                                The browser subsystem responsible for processing
+                                Web resources and helping produce the visual page.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 05 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary Layout"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                Layout
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                Layout
+                            </h4>
+
+
+                            <p>
+                                The process of calculating the size and
+                                position of rendered elements.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 06 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary Paint"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                Paint
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                Paint
+                            </h4>
+
+
+                            <p>
+                                The rendering stage in which the browser
+                                draws visual content for display.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 07 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary Web Server"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                Web Server
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                Web Server
+                            </h4>
+
+
+                            <p>
+                                A server system and/or HTTP server software
+                                that handles Web requests and responses.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 08 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary Reverse Proxy"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                Reverse Proxy
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                Reverse Proxy
+                            </h4>
+
+
+                            <p>
+                                An intermediate server that receives client
+                                requests and forwards them to backend servers.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 09 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary Developer Tools"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                Developer Tools
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                Developer Tools
+                            </h4>
+
+
+                            <p>
+                                Built-in browser tools used to inspect,
+                                debug and analyze Web pages and requests.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 10 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary Critical Rendering Path"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                Critical Rendering Path
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                Critical Rendering Path
+                            </h4>
+
+
+                            <p>
+                                The sequence of browser processing steps
+                                involved in converting Web resources into
+                                pixels displayed on screen.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 11 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary JavaScript Engine"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                JavaScript Engine
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                JavaScript Engine
+                            </h4>
+
+
+                            <p>
+                                A browser component that executes JavaScript
+                                code.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- 12 -->
+
+                <article
+                    class="flip-card glossary-flip-card"
+                    tabindex="0"
+                    role="button"
+                    aria-pressed="false"
+                    aria-label="Flip glossary Static Content"
+                >
+
+                    <div class="flip-card-inner">
+
+
+                        <div class="flip-card-face flip-card-front">
+
+                            <span class="flip-card-label">
+                                TERM
+                            </span>
+
+
+                            <div class="flip-card-term">
+                                Static Content
+                            </div>
+
+
+                            <div class="flip-card-hint">
+                                Click to see meaning
+                            </div>
+
+                        </div>
+
+
+                        <div class="flip-card-face flip-card-back">
+
+                            <span class="flip-card-label">
+                                DEFINITION
+                            </span>
+
+
+                            <h4>
+                                Static Content
+                            </h4>
+
+
+                            <p>
+                                Content that can generally be served from
+                                stored resources without generating it
+                                dynamically for each request.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             QUICK REVISION
+             ===================================================== -->
+
+        <section class="content-section revision-section">
+
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    22
+                </span>
+
+                <div>
+
+                    <h2>
+                        Quick Revision
+                    </h2>
+
+                    <p>
+                        The concepts to remember before Level 05.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="revision-grid">
+
+
+                <div class="revision-card">
+                    <span>🌐</span>
+                    <strong>Browser</strong>
+                    <p>Web runtime environment</p>
+                </div>
+
+
+                <div class="revision-card">
+                    <span>🌳</span>
+                    <strong>DOM</strong>
+                    <p>Document structure</p>
+                </div>
+
+
+                <div class="revision-card">
+                    <span>🎨</span>
+                    <strong>CSSOM</strong>
+                    <p>CSS representation</p>
+                </div>
+
+
+                <div class="revision-card">
+                    <span>⚡</span>
+                    <strong>JS Engine</strong>
+                    <p>JavaScript execution</p>
+                </div>
+
+
+                <div class="revision-card">
+                    <span>📐</span>
+                    <strong>Layout</strong>
+                    <p>Size and position</p>
+                </div>
+
+
+                <div class="revision-card">
+                    <span>🖌️</span>
+                    <strong>Paint</strong>
+                    <p>Draw visual content</p>
+                </div>
+
+
+                <div class="revision-card">
+                    <span>🖥️</span>
+                    <strong>Web Server</strong>
+                    <p>HTTP request handling</p>
+                </div>
+
+
+                <div class="revision-card">
+                    <span>🛠️</span>
+                    <strong>DevTools</strong>
+                    <p>Inspect and debug</p>
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             KEY TAKEAWAY
+             ===================================================== -->
+
+        <section class="content-section">
+
+
+            <div class="takeaway-card">
+
+                <div class="takeaway-icon">
+                    🎯
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Key Takeaway
+                    </h2>
+
+
+                    <p>
+                        A browser is not simply a window that displays HTML.
+                        It is a complex Web runtime that processes resources,
+                        builds document and style representations, executes
+                        JavaScript and renders the final interface.
+                    </p>
+
+
+                    <p>
+                        A web server receives requests and can either serve
+                        existing resources or work with application software
+                        to generate dynamic responses.
+                    </p>
+
+
+                    <p>
+                        Developer Tools give developers a practical way to
+                        inspect the live DOM, CSS, JavaScript execution and
+                        network activity.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             NAVIGATION
+             ===================================================== -->
+
+        <section class="topic-navigation">
+
+
+            <a
+                href="/Web-Technologies/urls-http-https.html"
+                class="topic-nav-btn previous"
+            >
+
+                <span>
+                    ←
+                </span>
+
+
+                <div>
+
+                    <small>
+                        PREVIOUS TOPIC
+                    </small>
+
+
+                    <strong>
+                        URLs, HTTP and HTTPS
+                    </strong>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="/Web-Technologies/web-application-architecture.html"
+                class="topic-nav-btn next"
+            >
+
+                <div>
+
+                    <small>
+                        NEXT TOPIC
+                    </small>
+
+
+                    <strong>
+                        Web Application Architecture
+                    </strong>
+
+                </div>
+
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+        </section>
+
+
+        <!-- =====================================================
+             COMPLETION
+             ===================================================== -->
+
+        <section class="completion-section">
+
+
+            <div class="completion-card">
+
+
+                <div class="completion-status">
+
+
+                    <div class="completion-icon">
+                        ✓
+                    </div>
+
+
+                    <div>
+
+                        <span class="completion-label">
+                            LEVEL 04
+                        </span>
+
+
+                        <h2>
+                            Browsers and Web Servers
+                        </h2>
+
+
+                        <p id="completionMessage">
+                            Finish the lesson and mark this topic as completed.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="completion-btn"
+                    id="completeLesson"
+                >
+                    ✓ Mark Lesson Complete
+                </button>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================================================
+         CODEBHAVYA FOOTER
+         ========================================================= -->
+
+    <div id="site-footer"></div>
+
+
+    <script src="../js/components.js"></script>
+
+    <script src="browsers-and-web-servers.js"></script>
+
+    <script src="web-technologies-outline.js" defer></script>
+</body>
+
+</html>
