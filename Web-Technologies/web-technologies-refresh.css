@@ -1,6 +1,8 @@
 /* Course presentation layer. Existing lesson content and interactions are unchanged. */
 :root { --wt-fresh-ink:#10263f; --wt-fresh-copy:#435a75; --wt-fresh-muted:#5c708a; --wt-fresh-line:#d4e2f0; --wt-fresh-bg:#f4f8fd; --wt-fresh-blue:#096ba5; --wt-fresh-teal:#087c87; --wt-fresh-gold:#ba800d; }
 html {scroll-padding-top:100px}
+/* Keep the dynamically injected header visible while the lesson scrolls. */
+#site-header {position:sticky;top:0;z-index:1000}
 body,body.wt-index-page {background:var(--wt-fresh-bg);color:var(--wt-fresh-ink)}
 body :is(a,button,input,select,textarea):focus-visible {outline:3px solid #d69b20;outline-offset:3px}
 /* Nearly full width at desktop sizes, with modest side padding as in the OS course. */
@@ -13,7 +15,7 @@ body :is(a,button,input,select,textarea):focus-visible {outline:3px solid #d69b2
 .wt-sidebar {padding:0 3px 16px 0}
 .wt-index-page {--wt-index-text:var(--wt-fresh-ink);--wt-index-soft:var(--wt-fresh-copy);--wt-index-muted:var(--wt-fresh-muted);--wt-index-border:var(--wt-fresh-line);--wt-index-border-soft:var(--wt-fresh-line);--wt-index-panel:#fff;--wt-index-panel-2:#f7faff;--wt-index-cyan:var(--wt-fresh-teal);--wt-index-cyan-soft:var(--wt-fresh-teal);--wt-index-gold:var(--wt-fresh-gold);--wt-index-gold-soft:#946415;--wt-index-orange:#9b650e;--wt-index-green:#117447}
 /* Header and course hero retain the familiar CodeBhavya dark navy. */
-.wt-course-header {background:#0d2034;border-bottom:2px solid #e7b942;box-shadow:0 4px 16px #10263f15}
+.wt-course-header {position:relative;background:#0d2034;border-bottom:2px solid #e7b942;box-shadow:0 4px 16px #10263f15}
 .wt-course-header :is(a,.wt-course-brand-name) {color:#f8fbff}
 .wt-index-hero,.wt-hero {background:linear-gradient(120deg,#102339,#173b56);border:1px solid #2c5066;border-radius:20px;box-shadow:0 8px 28px #132b4420}
 .wt-index-hero {padding:clamp(26px,3vw,46px)}
@@ -53,7 +55,7 @@ body :is(a,button,input,select,textarea):focus-visible {outline:3px solid #d69b2
 .wt-course-footer {background:#0d2034}
 .wt-course-footer :is(h2,h3,p,span,a) {color:#e9eff8}
 /* Lesson outline is generated from the existing section headings; no lessons are rewritten. */
-.wt-lesson-sidebar {position:sticky;top:86px;max-height:calc(100vh - 102px);overflow:auto;padding:17px 10px;background:#fff;border:1px solid var(--wt-fresh-line);border-radius:16px;box-shadow:0 6px 20px #10263f0c;scrollbar-width:thin}
+.wt-lesson-sidebar {position:sticky;top:74px;max-height:calc(100vh - 102px);overflow:auto;padding:17px 10px;background:#fff;border:1px solid var(--wt-fresh-line);border-radius:16px;box-shadow:0 6px 20px #10263f0c;scrollbar-width:thin}
 .wt-lesson-sidebar .wt-outline-title {display:block;padding:0 11px 12px;font-size:.8rem;font-weight:800;letter-spacing:.08em;color:#90630b;text-transform:uppercase}
 .wt-lesson-sidebar a {display:block;padding:10px 12px;border-radius:9px;text-decoration:none;color:#25415d;font-size:.88rem;line-height:1.35}
 .wt-lesson-sidebar a:hover,.wt-lesson-sidebar a:focus-visible,.wt-lesson-sidebar a[aria-current="location"] {background:#eaf5fb;color:#075f86}
@@ -64,7 +66,26 @@ body :is(a,button,input,select,textarea):focus-visible {outline:3px solid #d69b2
 .wt-page .section-heading h2 {color:var(--wt-fresh-ink);font-family:Georgia,serif}
 .wt-page .section-heading p {color:var(--wt-fresh-muted)}
 .wt-page .section-number {background:#eaf4fa;color:#086787;border-color:#cfe1ee}
-.wt-page :is(.info-card,.article-card,.comparison-card,.architecture-card,.technology-card,.mistake-card,.qa-card,.mcq-card,.revision-card,.glossary-item,.roadmap-part,.completion-card,.topic-nav-btn,.practice-item,.scenario-card,.flip-card-front,.simple-node,.tier-card,.mvc-node,.side-panel,.stack-layer,.pipeline-step) {background:#f8fbff;border:1px solid var(--wt-fresh-line);box-shadow:none;color:var(--wt-fresh-ink)}
+.wt-page :is(.info-card,.article-card,.comparison-card,.architecture-card,.technology-card,.mistake-card,.qa-card,.mcq-card,.revision-card,.glossary-item,.roadmap-part,.completion-card,.topic-nav-btn,.practice-item,.scenario-card,.simple-node,.tier-card,.mvc-node,.side-panel,.stack-layer,.pipeline-step) {background:#f8fbff;border:1px solid var(--wt-fresh-line);box-shadow:none;color:var(--wt-fresh-ink)}
+
+/* Flip cards keep the premium dark CodeBhavya treatment so all front-face text remains readable. */
+.wt-page .flip-card-front {
+  background:linear-gradient(145deg,#10263f,#173b56);
+  border:1px solid #2c5066;
+  color:#f5f9ff;
+  box-shadow:0 10px 24px rgba(16,38,63,.18);
+}
+.wt-page .flip-card-back {
+  background:linear-gradient(145deg,#12384b,#102b45);
+  border:1px solid rgba(101,203,210,.32);
+  color:#edf8fb;
+}
+.wt-page .flip-card-front :is(h3,h4,p,strong,li,.flip-card-question,.flip-card-term) {color:#f5f9ff}
+.wt-page .flip-card-back :is(h3,h4,p,strong,li) {color:#edf8fb}
+.wt-page .flip-card-front .flip-card-label {color:#f4c759;background:rgba(239,198,91,.12);border-color:rgba(239,198,91,.28)}
+.wt-page .flip-card-back .flip-card-label {color:#65cbd2;background:rgba(101,203,210,.09);border-color:rgba(101,203,210,.28)}
+.wt-page .flip-card-hint {color:#b9d7e5 !important}
+.wt-page .flip-card-answer-note {color:#b9d7e5 !important}
 .wt-page :is(.info-card,.article-card,.comparison-card,.architecture-card,.technology-card,.mistake-card,.qa-card,.mcq-card,.revision-card,.glossary-item,.roadmap-part,.completion-card,.topic-nav-btn,.practice-item,.scenario-card,.flip-card-front,.simple-node,.tier-card,.mvc-node,.side-panel,.stack-layer,.pipeline-step) :is(h2,h3,h4,strong,p,li,small) {color:var(--wt-fresh-ink)}
 .wt-page :is(.info-card,.article-card,.comparison-card,.architecture-card,.technology-card,.mistake-card,.qa-card,.mcq-card,.revision-card,.glossary-item,.roadmap-part,.completion-card,.topic-nav-btn,.practice-item,.scenario-card,.flip-card-front,.simple-node,.tier-card,.mvc-node,.side-panel,.stack-layer,.pipeline-step) p {color:var(--wt-fresh-copy)}
 .wt-page :is(.highlight-box,.note-box,.memory-box,.takeaway-card) {background:#fff7e4;color:var(--wt-fresh-ink);border-color:#e3c671}
