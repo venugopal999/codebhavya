@@ -12,6 +12,23 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="apple-touch-icon" href="/images/codebhavya-icon-192.png">
+    <style>
+        .codebhavya-install-button {
+            border: 1px solid rgba(255,255,255,.8);
+            border-radius: 10px;
+            padding: 12px 19px;
+            background: rgba(255,255,255,.12);
+            color: #fff;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .codebhavya-install-button:hover,
+        .codebhavya-install-button:focus-visible { background: rgba(255,255,255,.24); }
+        .codebhavya-install-button:focus-visible { outline: 3px solid #f1be32; outline-offset: 3px; }
+        .codebhavya-install-help { margin: 12px 0 0; color: #fff; max-width: 31rem; }
+        @media (display-mode: standalone) { .codebhavya-install-button, .codebhavya-install-help { display: none; } }
+    </style>
 
     <title>CodeBhavya | From Learning to Limitless Possibilities</title>
 
@@ -124,8 +141,10 @@
     <a href="Maths/" class="primary-button">
         Start Learning →
     </a>
+    <button class="codebhavya-install-button" id="installCodeBhavya" type="button">Install CodeBhavya</button>
 
 </div>
+<p class="codebhavya-install-help" id="installCodeBhavyaHelp" role="status" aria-live="polite" hidden></p>
 
     </div>
 
@@ -748,6 +767,44 @@ Evidence Lab
 
 <script src="script.js?v=5"></script>
 <script>
+// Keep installation optional: the browser decides when it can offer its prompt.
+(function () {
+    const button = document.getElementById('installCodeBhavya');
+    const help = document.getElementById('installCodeBhavyaHelp');
+    let installPrompt = null;
+    const installed = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+
+    if (installed()) { button.hidden = true; return; }
+
+    window.addEventListener('beforeinstallprompt', function (event) {
+        event.preventDefault();
+        installPrompt = event;
+    });
+    window.addEventListener('appinstalled', function () {
+        installPrompt = null;
+        button.hidden = true;
+        help.hidden = true;
+    });
+
+    button.addEventListener('click', async function () {
+        if (installPrompt) {
+            const prompt = installPrompt;
+            installPrompt = null;
+            await prompt.prompt();
+            const choice = await prompt.userChoice;
+            if (choice.outcome !== 'accepted') {
+                help.textContent = 'You can install later using your browser menu.';
+                help.hidden = false;
+            }
+            return;
+        }
+        const isApplePhone = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        help.textContent = isApplePhone
+            ? 'In Safari, tap Share, then Add to Home Screen. Turn on Open as Web App if shown.'
+            : 'In Chrome, open the browser menu (⋮) and choose Install app or Add to Home screen. If you recently uninstalled it, the browser may wait before showing another popup.';
+        help.hidden = false;
+    });
+})();
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
         navigator.serviceWorker.register('/service-worker.js', { scope: '/' }).catch(function (error) {
