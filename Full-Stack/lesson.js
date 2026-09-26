@@ -152,10 +152,3 @@ function initReading(){const bar=document.getElementById("readingBar");if(!bar)r
 
 document.addEventListener("DOMContentLoaded",()=>{document.getElementById("year").textContent=new Date().getFullYear();renderSidebar();renderLesson();initCopy();initSidebar();initTopNav();initReading()});
 
-/* Include the shared mobile course drawer on Full Stack lessons. */
-if (!document.querySelector('script[data-cb-course-drawer]')) {
-  const courseDrawer = document.createElement('script');
-  courseDrawer.src = '../course-mobile-sidebar.js?v=3';
-  courseDrawer.dataset.cbCourseDrawer = '';
-  document.head.append(courseDrawer);
-}
