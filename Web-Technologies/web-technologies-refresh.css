@@ -88,3 +88,16 @@ body :is(a,button,input,select,textarea):focus-visible {outline:3px solid #d69b2
 @media (max-width:1050px) {.wt-index-layout,.wt-lesson-layout {grid-template-columns:230px minmax(0,1fr)}.wt-index-feature-grid,.wt-level-card-grid {grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:760px) {.wt-index-layout,.wt-lesson-layout {display:block;width:calc(100% - 20px)}.wt-lesson-sidebar {position:static;max-height:none;margin:10px 0;padding:12px}.wt-lesson-sidebar .wt-outline-links {display:flex;overflow:auto;gap:4px;white-space:nowrap;scrollbar-width:thin}.wt-lesson-sidebar .wt-outline-links a {flex:0 0 auto}.wt-lesson-sidebar .wt-course-back {margin-bottom:4px;padding-bottom:9px}.wt-sidebar-host {position:static;height:auto}.wt-sidebar {max-height:320px}.wt-page .wt-hero {padding:24px}.wt-page .content-section {padding:20px}.wt-index-main {padding-top:0}}
 @media (max-width:540px) {.wt-index-feature-grid,.wt-level-card-grid,.wt-page :is(.objective-grid,.mcq-grid,.technology-grid,.comparison-grid,.architecture-grid) {grid-template-columns:1fr}.wt-page .comparison-grid .vs-badge {margin:0 auto}.wt-page .content-section {padding:17px}.wt-lesson-sidebar .wt-outline-title {padding-bottom:6px}}
+
+/* Course index: keep the full roadmap available without putting it before the hero on phones. */
+.wt-mobile-course-toggle {display:none}
+@media (max-width:760px) {
+  .wt-index-page .wt-mobile-course-toggle {display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0 0 12px;padding:14px 17px;background:#fff;border:1px solid var(--wt-fresh-line);border-radius:12px;box-shadow:0 3px 12px #10263f0b;color:var(--wt-fresh-ink);font:750 1rem/1.25 Inter,Arial,sans-serif;cursor:pointer;text-align:left}
+  .wt-index-page .wt-mobile-course-toggle::after {content:'▾';font-size:1.35rem;color:#096b81;transition:transform .18s}
+  .wt-index-page .wt-mobile-course-toggle[aria-expanded="true"]::after {transform:rotate(180deg)}
+  .wt-index-page.wt-mobile-nav-ready .wt-sidebar-host {display:none;margin:0 0 14px;height:auto;max-height:none;overflow:hidden;background:#fff;border:1px solid var(--wt-fresh-line);border-radius:14px}
+  .wt-index-page.wt-mobile-nav-ready .wt-sidebar-host.wt-sidebar-mobile-open {display:block}
+  .wt-index-page .wt-sidebar {max-height:min(62vh,520px);padding:12px;overflow-y:auto}
+  .wt-index-page .wt-sidebar-header {padding:14px}
+  .wt-index-page .wt-index-main {padding-top:0}
+}
