@@ -33,7 +33,7 @@ qsa('[data-project]').forEach(card=>{function selectProject(){qsa('[data-project
 /* These seven lessons do not load the root script; load the shared drawer here. */
 if (!document.querySelector('script[data-cb-course-drawer]')) {
   const courseDrawer = document.createElement('script');
-  courseDrawer.src = '../course-mobile-sidebar.js?v=2';
+  courseDrawer.src = '../course-mobile-sidebar.js?v=3';
   courseDrawer.dataset.cbCourseDrawer = '';
   document.head.append(courseDrawer);
 }
