@@ -30,10 +30,3 @@ qs('#compareIsolation')?.addEventListener('click',()=>{const workload=qs('#workl
 
 qsa('[data-project]').forEach(card=>{function selectProject(){qsa('[data-project]').forEach(x=>x.classList.remove('selected'));card.classList.add('selected');const id=card.dataset.project,data={scheduler:'Implement scheduling policies, verify metric identities, visualize Gantt decisions and discuss fairness.',shell:'Parse commands, fork, redirect descriptors, build pipelines, reap children and handle errors.',memory:'Translate addresses, simulate replacement, measure faults and explain locality/thrashing.'}[id];qs('#projectOutput').innerHTML=`<span>PROJECT EVIDENCE PLAN</span><h3>${card.querySelector('h3').textContent}</h3><p>${data}</p>`;}card.addEventListener('click',selectProject);card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();selectProject();}});});
 
-/* These seven lessons do not load the root script; load the shared drawer here. */
-if (!document.querySelector('script[data-cb-course-drawer]')) {
-  const courseDrawer = document.createElement('script');
-  courseDrawer.src = '../course-mobile-sidebar.js?v=3';
-  courseDrawer.dataset.cbCourseDrawer = '';
-  document.head.append(courseDrawer);
-}
