@@ -151,3 +151,11 @@ function initTopNav(){document.getElementById("navToggle")?.addEventListener("cl
 function initReading(){const bar=document.getElementById("readingBar");if(!bar)return;const f=()=>{const max=document.documentElement.scrollHeight-innerHeight;bar.style.width=`${max?Math.max(0,Math.min(100,scrollY/max*100)):0}%`};addEventListener("scroll",f,{passive:true});addEventListener("resize",f);f()}
 
 document.addEventListener("DOMContentLoaded",()=>{document.getElementById("year").textContent=new Date().getFullYear();renderSidebar();renderLesson();initCopy();initSidebar();initTopNav();initReading()});
+
+/* Include the shared mobile course drawer on Full Stack lessons. */
+if (!document.querySelector('script[data-cb-course-drawer]')) {
+  const courseDrawer = document.createElement('script');
+  courseDrawer.src = '../course-mobile-sidebar.js?v=2';
+  courseDrawer.dataset.cbCourseDrawer = '';
+  document.head.append(courseDrawer);
+}
