@@ -1,10 +1,11 @@
 // Cache only public lessons that a student explicitly saves. Quiz and Placement
 // always use the network, including their pages, scripts, and signed-in data.
-const SHELL_CACHE = 'codebhavya-public-shell-v4';
+const SHELL_CACHE = 'codebhavya-public-shell-v5';
 const OFFLINE_URL = '/offline.html';
 const SHELL_FILES = [
   OFFLINE_URL, '/saved-lessons.html', '/saved-lessons.js',
   '/offline-course-catalog.js',
+  '/course-mobile-sidebar.css', '/course-mobile-sidebar.js',
   '/images/codebhavya-icon-192.png', '/images/codebhavya-icon-512.png'
 ];
 const SHELL_PATHS = new Set(SHELL_FILES);
