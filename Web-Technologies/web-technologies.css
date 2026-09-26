@@ -544,36 +544,14 @@ a {
 
     display: grid;
 
-    /* Normal comparison cards: two balanced columns. */
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+        1fr
+        70px
+        1fr;
 
     align-items: stretch;
 
     gap: 12px;
-
-    width: 100%;
-    min-width: 0;
-}
-
-/* A real VS/+ comparison keeps its dedicated middle badge column. */
-.comparison-grid:has(> .vs-badge) {
-    grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1fr);
-}
-
-/* Three-card comparison blocks use three equal columns. */
-.comparison-grid:has(> .comparison-card:nth-child(3):last-child) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-/* Four-card blocks use a clean 2 × 2 arrangement. */
-.comparison-grid:has(> .comparison-card:nth-child(4):last-child) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.comparison-grid > * {
-    min-width: 0;
-    max-width: 100%;
-    box-sizing: border-box;
 }
 
 .comparison-card {
@@ -6374,4 +6352,224 @@ a {
             110px;
     }
 
+}
+
+/* =========================================================
+   WEB TECHNOLOGIES — CARD / GRID WIDTH FIX
+   Prevent cards from becoming extremely narrow
+   ========================================================= */
+
+.cb-grid,
+.cb-card-grid,
+.cb-depth-grid,
+.comparison-grid,
+.comparison-cards,
+.tech-grid,
+.three-column-grid,
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+    min-width: 0;
+}
+
+/* Every grid child must be allowed to shrink */
+.cb-grid > *,
+.cb-card-grid > *,
+.cb-depth-grid > *,
+.comparison-grid > *,
+.comparison-cards > *,
+.tech-grid > *,
+.three-column-grid > *,
+.cards-grid > * {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* General content cards */
+.content-card,
+.cb-card,
+.cb-concept-card,
+.cb-depth-card,
+.comparison-card,
+.tech-card,
+.info-card,
+.theory-card,
+.example-card {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Text must wrap instead of forcing the card wider */
+.content-card p,
+.content-card li,
+.cb-card p,
+.cb-card li,
+.cb-concept-card p,
+.cb-depth-card p,
+.comparison-card p,
+.tech-card p,
+.info-card p,
+.theory-card p,
+.example-card p {
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+/* Code inside cards must never determine the card width */
+.content-card pre,
+.cb-card pre,
+.cb-concept-card pre,
+.cb-depth-card pre,
+.comparison-card pre,
+.tech-card pre,
+.info-card pre,
+.theory-card pre,
+.example-card pre {
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+/* Inline/code text */
+.content-card code,
+.cb-card code,
+.cb-concept-card code,
+.cb-depth-card code,
+.comparison-card code,
+.tech-card code,
+.info-card code,
+.theory-card code,
+.example-card code {
+    max-width: 100%;
+}
+
+/* Images / diagrams must stay inside their cards */
+.content-card img,
+.cb-card img,
+.cb-concept-card img,
+.cb-depth-card img,
+.comparison-card img,
+.tech-card img,
+.info-card img,
+.theory-card img,
+.example-card img,
+.content-card svg,
+.cb-card svg,
+.cb-concept-card svg,
+.cb-depth-card svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* =========================================================
+   TWO COLUMN LAYOUTS
+   ========================================================= */
+
+.two-column,
+.two-col,
+.cb-two-column,
+.content-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+    min-width: 0;
+}
+
+.two-column > *,
+.two-col > *,
+.cb-two-column > *,
+.content-grid-2 > * {
+    min-width: 0;
+}
+
+/* =========================================================
+   THREE COLUMN COMPARISON
+   ========================================================= */
+
+.three-column,
+.three-col,
+.cb-three-column,
+.content-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+    min-width: 0;
+}
+
+.three-column > *,
+.three-col > *,
+.cb-three-column > *,
+.content-grid-3 > * {
+    min-width: 0;
+}
+
+/* =========================================================
+   FLEX CONTAINERS
+   Prevent flex items from producing narrow / broken boxes
+   ========================================================= */
+
+.content-card,
+.cb-card,
+.tech-card,
+.comparison-card {
+    flex-shrink: 1;
+}
+
+.card-content,
+.cb-card-content,
+.tech-card-content,
+.comparison-card-content {
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+    .cb-grid,
+    .cb-card-grid,
+    .cb-depth-grid,
+    .comparison-grid,
+    .comparison-cards,
+    .tech-grid,
+    .three-column-grid,
+    .cards-grid,
+    .three-column,
+    .three-col,
+    .cb-three-column,
+    .content-grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .cb-grid,
+    .cb-card-grid,
+    .cb-depth-grid,
+    .comparison-grid,
+    .comparison-cards,
+    .tech-grid,
+    .three-column-grid,
+    .cards-grid,
+    .two-column,
+    .two-col,
+    .cb-two-column,
+    .content-grid-2,
+    .three-column,
+    .three-col,
+    .cb-three-column,
+    .content-grid-3 {
+        grid-template-columns: 1fr;
+    }
 }
