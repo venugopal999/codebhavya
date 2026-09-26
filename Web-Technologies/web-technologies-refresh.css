@@ -80,7 +80,21 @@ body :is(a,button,input,select,textarea):focus-visible {outline:3px solid #d69b2
 .wt-page .completion-btn {background:#f3bd43;color:#10263f}
 .wt-page .completion-btn.completed {background:#e2f5eb;color:#15653f}
 .wt-page .topic-navigation,.wt-page .completion-section {margin:18px 0}
-.wt-page .comparison-grid {grid-template-columns:minmax(0,1fr) 55px minmax(0,1fr)}
+.wt-page .comparison-grid {
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  min-width:0;
+}
+.wt-page .comparison-grid:has(> .vs-badge) {
+  grid-template-columns:minmax(0,1fr) 70px minmax(0,1fr);
+}
+.wt-page .comparison-grid:has(> .comparison-card:nth-child(3):last-child) {
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+.wt-page .comparison-grid:has(> .comparison-card:nth-child(4):last-child) {
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.wt-page .comparison-grid > * {min-width:0;max-width:100%;box-sizing:border-box;}
+.wt-page .comparison-grid pre {max-width:100%;overflow-x:auto;}
 .wt-page :is(pre,table,svg,img,video,canvas) {max-width:100%}
 .wt-page pre,.wt-page .comparison-table-wrap {overflow-x:auto}
 /* Dense learning panels keep their diagram contrast and retain existing controls. */
