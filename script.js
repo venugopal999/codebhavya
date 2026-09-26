@@ -780,9 +780,9 @@ function searchTopics() {
 })();
 
 /* Shared mobile course drawer, loaded only on supported course pages. */
-if (/^\/(?:C-Programming|Maths|Data-Structures|Advanced-Data-Structures|Python|AI-ML|DBMS|Operating-Systems)\//.test(location.pathname) && !document.querySelector('script[data-cb-course-drawer]')) {
+if (/^\/(?:C-Programming|Maths|Data-Structures|Advanced-Data-Structures|Python|AI-ML|DBMS|Operating-Systems|Java|Full-Stack)\//.test(location.pathname) && !document.querySelector('script[data-cb-course-drawer]')) {
   const courseDrawer = document.createElement('script');
-  courseDrawer.src = new URL('course-mobile-sidebar.js?v=1', document.currentScript?.src || location.href).href;
+  courseDrawer.src = new URL('course-mobile-sidebar.js?v=2', document.currentScript?.src || location.href).href;
   courseDrawer.dataset.cbCourseDrawer = '';
   document.head.append(courseDrawer);
 }

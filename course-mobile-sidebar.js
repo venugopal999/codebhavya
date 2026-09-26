@@ -13,7 +13,9 @@
     'AI-ML': ['AI & ML', '.docs-layout > .sidebar'],
     'DBMS': ['DBMS', '.docs-layout > .sidebar'],
     'Operating-Systems': ['Operating Systems', '.os-layout > .os-sidebar'],
-    'Computer-Networks': ['Computer Networks', '.cn-layout > .cn-nav']
+    'Computer-Networks': ['Computer Networks', '.cn-layout > .cn-nav'],
+    'Java': ['Java', '.lesson-layout > .lesson-sidebar'],
+    'Full-Stack': ['Full Stack', '.lesson-layout > aside']
   };
   const folder = decodeURIComponent(location.pathname.split('/').filter(Boolean)[0] || '');
   const course = courses[folder];
@@ -21,7 +23,7 @@
 
   const css = document.createElement('link');
   css.rel = 'stylesheet';
-  css.href = new URL('../course-mobile-sidebar.css?v=1', document.currentScript?.src || location.href).href;
+  css.href = new URL('../course-mobile-sidebar.css?v=2', document.currentScript?.src || location.href).href;
   document.head.append(css);
 
   function init() {
@@ -29,8 +31,8 @@
     const layout = sidebar?.parentElement;
     if (!sidebar || !layout || document.querySelector('.cb-course-menu-button')) return;
 
-    const oldToggle = document.querySelector('.os-sidebar-toggle, .aiml-sidebar-toggle, .dbms-sidebar-toggle, .python-sidebar-toggle');
-    const oldBackdrop = document.querySelector('.os-sidebar-backdrop, .dbms-sidebar-backdrop, .aiml-sidebar-backdrop, .python-sidebar-backdrop');
+    const oldToggle = document.querySelector('.os-sidebar-toggle, .aiml-sidebar-toggle, .dbms-sidebar-toggle, .python-sidebar-toggle, .lesson-menu');
+    const oldBackdrop = document.querySelector('.os-sidebar-backdrop, .dbms-sidebar-backdrop, .aiml-sidebar-backdrop, .python-sidebar-backdrop, .sidebar-shade, .shade');
     if (oldToggle) oldToggle.hidden = true;
     if (oldBackdrop) oldBackdrop.hidden = true;
 
