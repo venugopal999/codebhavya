@@ -59,10 +59,3 @@
   }
 })();
 
-/* Load the shared mobile course drawer. */
-if (!document.querySelector('script[data-cb-course-drawer]')) {
-  const courseDrawer = document.createElement('script');
-  courseDrawer.src = '../course-mobile-sidebar.js?v=3';
-  courseDrawer.dataset.cbCourseDrawer = '';
-  document.head.append(courseDrawer);
-}
