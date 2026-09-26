@@ -347,8 +347,7 @@ function searchTopics() {
                 { label: "DBMS & SQL", path: "DBMS/index.html", icon: "DB" },
                 { label: "Operating Systems", path: "Operating-Systems/index.html", icon: "OS" },
                 { label: "Full Stack MERN", path: "Full-Stack/index.html", icon: "FSM" },
-                { label: "Web-Technologies", path: "Web-Technologies/index.html", icon: "WT" },
-                { label: "Computer-Networks", path: "Computer-Networks/index.html", icon: "CN" },
+                { label: "Web-Technologies", path: "Web-Technologies/introduction.html", icon: "WT" },
                 { label: "Core CS Practice", path: "Placement/mcq-library.html?topic=core-cs", icon: "CS" },
                 { label: "Scenario Problem Lab", path: "Placement/core-cs-problems.html", icon: "Lab" }
             ]
@@ -411,7 +410,7 @@ function searchTopics() {
                 { label: "DBMS & SQL", path: "DBMS/index.html" },
                 { label: "Operating Systems", path: "Operating-Systems/index.html" },
                 { label: "Full Stack MERN", path: "Full-Stack/index.html" },
-                { label: "Web-Technologies", path: "Web-Technologies/index.html", icon: "WT" }
+                { label: "Web-Technologies", path: "Web-Technologies/introduction.html", icon: "WT" }
             ]
         },
         {
@@ -779,3 +778,11 @@ function searchTopics() {
     }
 
 })();
+
+/* Shared mobile course drawer, loaded only on supported course pages. */
+if (/^\/(?:C-Programming|Maths|Data-Structures|Advanced-Data-Structures|Python|AI-ML|DBMS|Operating-Systems)\//.test(location.pathname) && !document.querySelector('script[data-cb-course-drawer]')) {
+  const courseDrawer = document.createElement('script');
+  courseDrawer.src = new URL('course-mobile-sidebar.js?v=1', document.currentScript?.src || location.href).href;
+  courseDrawer.dataset.cbCourseDrawer = '';
+  document.head.append(courseDrawer);
+}
