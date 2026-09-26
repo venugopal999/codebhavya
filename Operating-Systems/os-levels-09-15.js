@@ -29,3 +29,11 @@ qs('#runLinuxLab')?.addEventListener('click',()=>{const kind=qs('#linuxScenario'
 qs('#compareIsolation')?.addEventListener('click',()=>{const workload=qs('#workload').value,out=qs('#isolationOutput');const pick={legacy:['Virtual machine','Different/legacy guest OS and strong kernel boundary are required.'],microservice:['Container','Fast start and high density fit stateless services when shared-kernel risk is acceptable.'],untrusted:['Sandboxed VM','Untrusted code benefits from a stronger boundary plus strict resource/network policy.'],desktop:['Virtual machine','A complete guest desktop needs its own OS environment.']}[workload];out.innerHTML=`<span>RECOMMENDED STARTING POINT</span><h3>${pick[0]}</h3><p>${pick[1]} This is a design starting point, not a security guarantee.</p>`;});
 
 qsa('[data-project]').forEach(card=>{function selectProject(){qsa('[data-project]').forEach(x=>x.classList.remove('selected'));card.classList.add('selected');const id=card.dataset.project,data={scheduler:'Implement scheduling policies, verify metric identities, visualize Gantt decisions and discuss fairness.',shell:'Parse commands, fork, redirect descriptors, build pipelines, reap children and handle errors.',memory:'Translate addresses, simulate replacement, measure faults and explain locality/thrashing.'}[id];qs('#projectOutput').innerHTML=`<span>PROJECT EVIDENCE PLAN</span><h3>${card.querySelector('h3').textContent}</h3><p>${data}</p>`;}card.addEventListener('click',selectProject);card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();selectProject();}});});
+
+/* These seven lessons do not load the root script; load the shared drawer here. */
+if (!document.querySelector('script[data-cb-course-drawer]')) {
+  const courseDrawer = document.createElement('script');
+  courseDrawer.src = '../course-mobile-sidebar.js?v=1';
+  courseDrawer.dataset.cbCourseDrawer = '';
+  document.head.append(courseDrawer);
+}
