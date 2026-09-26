@@ -348,6 +348,7 @@ function searchTopics() {
                 { label: "Operating Systems", path: "Operating-Systems/index.html", icon: "OS" },
                 { label: "Full Stack MERN", path: "Full-Stack/index.html", icon: "FSM" },
                 { label: "Web-Technologies", path: "Web-Technologies/index.html", icon: "WT" },
+                { label: "Computer-Networks", path: "Computer-Networks/index.html", icon: "CN" },
                 { label: "Core CS Practice", path: "Placement/mcq-library.html?topic=core-cs", icon: "CS" },
                 { label: "Scenario Problem Lab", path: "Placement/core-cs-problems.html", icon: "Lab" }
             ]
