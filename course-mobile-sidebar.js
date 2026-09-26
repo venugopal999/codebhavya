@@ -23,7 +23,7 @@
 
   const css = document.createElement('link');
   css.rel = 'stylesheet';
-  css.href = new URL('../course-mobile-sidebar.css?v=2', document.currentScript?.src || location.href).href;
+  css.href = new URL('../course-mobile-sidebar.css?v=3', document.currentScript?.src || location.href).href;
   document.head.append(css);
 
   function init() {
@@ -38,6 +38,47 @@
 
     if (!sidebar.id) sidebar.id = 'cbCourseSidebar';
     sidebar.classList.add('cb-course-sidebar');
+
+    // Give each course's existing links the same visual structure as the Web
+    // Technologies roadmap. Keep the original nodes, hrefs and listeners.
+    const header = document.createElement('div');
+    header.className = 'cb-course-drawer-header';
+    const kicker = document.createElement('span');
+    kicker.textContent = 'CODEBHAVYA COURSE';
+    const heading = document.createElement('h2');
+    heading.textContent = course[0];
+    const subtitle = document.createElement('p');
+    subtitle.textContent = 'Choose a topic to continue learning';
+    header.append(kicker, heading, subtitle);
+    sidebar.prepend(header);
+
+    const originalTitle = sidebar.querySelector('.sidebar-title, .os-sidebar-title');
+    if (originalTitle && originalTitle.textContent.trim().toLowerCase().includes(course[0].toLowerCase())) {
+      originalTitle.classList.add('cb-course-original-title');
+    }
+
+    let home = sidebar.querySelector('a[href="index.html"], a[href="./"], a[href="#courseTop"], a.course-home');
+    if (!home) {
+      home = document.createElement('a');
+      home.href = 'index.html';
+      home.textContent = '⌂  Course Home';
+      home.classList.add('cb-course-generated-home');
+      header.after(home);
+    }
+    home.classList.add('cb-course-home-link');
+
+    function decorateLinks() {
+      sidebar.querySelectorAll('.sidebar-title, .os-sidebar-group').forEach(group => {
+        if (!group.classList.contains('cb-course-original-title')) group.classList.add('cb-course-group');
+      });
+      sidebar.querySelectorAll('a[href]').forEach(link => {
+        if (link === home) return;
+        link.classList.add('cb-course-topic-link');
+        if (link.getAttribute('href')?.startsWith('#')) link.classList.add('cb-course-section-link');
+      });
+    }
+    decorateLinks();
+    new MutationObserver(decorateLinks).observe(sidebar, { childList: true, subtree: true });
 
     const toggle = document.createElement('button');
     toggle.type = 'button';

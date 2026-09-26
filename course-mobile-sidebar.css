@@ -1,5 +1,5 @@
 /* The Web Technologies mobile drawer pattern, shared across learning courses. */
-.cb-course-menu-button,.cb-course-menu-backdrop{display:none}
+.cb-course-menu-button,.cb-course-menu-backdrop,.cb-course-drawer-header,.cb-course-generated-home{display:none}
 @media (max-width:768px){
   body.cb-course-menu-ready .cb-course-menu-button{
     display:block!important;position:relative!important;top:auto!important;z-index:2!important;
@@ -31,6 +31,66 @@
   body.cb-course-menu-ready .docs-layout>.cb-course-sidebar{flex-direction:column!important;align-items:stretch!important;white-space:normal!important}
   body.cb-course-menu-ready .docs-layout>.cb-course-sidebar :is(a,.sidebar-title,input){flex:none!important;max-width:100%!important}
   body.cb-course-menu-ready .docs-layout>.cb-course-sidebar a{display:block;width:100%!important;white-space:normal!important}
+  /* The inside of the drawer follows the Web Technologies course roadmap. */
+  body.cb-course-menu-ready .cb-course-sidebar{counter-reset:cb-course-topic;color:#10263f!important;font-family:Arial,sans-serif!important}
+  body.cb-course-menu-ready .cb-course-sidebar .cb-course-drawer-header{
+    display:block!important;margin:0 0 10px!important;padding:18px!important;
+    border:1px solid #27435d!important;border-radius:14px!important;
+    background:#102b45!important;box-shadow:0 5px 18px #10263f16!important
+  }
+  body.cb-course-menu-ready .cb-course-sidebar .cb-course-drawer-header span{
+    display:block!important;margin:0 0 5px!important;color:#f4c759!important;
+    font-size:10px!important;font-weight:900!important;letter-spacing:.13em!important
+  }
+  body.cb-course-menu-ready .cb-course-sidebar .cb-course-drawer-header h2{
+    margin:0 0 6px!important;color:#fff!important;font:750 20px/1.3 Arial,sans-serif!important
+  }
+  body.cb-course-menu-ready .cb-course-sidebar .cb-course-drawer-header p{
+    margin:0!important;color:#d4e7f4!important;font:12px/1.55 Arial,sans-serif!important
+  }
+  body.cb-course-menu-ready .cb-course-sidebar .cb-course-original-title{display:none!important}
+  body.cb-course-menu-ready .cb-course-sidebar .cb-course-home-link{
+    display:flex!important;align-items:center!important;min-height:44px!important;
+    margin:8px 0 12px!important;padding:10px 13px!important;
+    border:1px solid #d4e2f0!important;border-radius:9px!important;
+    background:#fff!important;color:#10263f!important;
+    font:750 13px/1.35 Arial,sans-serif!important;text-decoration:none!important
+  }
+  body.cb-course-menu-ready .cb-course-sidebar .cb-course-group{
+    display:block!important;margin:15px 0 5px!important;padding:8px 10px!important;
+    border:0!important;background:transparent!important;color:#815809!important;
+    font:900 11px/1.4 Arial,sans-serif!important;letter-spacing:.07em!important;
+    text-transform:uppercase!important;white-space:normal!important
+  }
+  body.cb-course-menu-ready .cb-course-sidebar .cb-course-topic-link{
+    box-sizing:border-box!important;position:relative!important;min-height:42px!important;
+    margin:0 0 5px!important;padding:11px 10px!important;
+    border:1px solid #d4e2f0!important;border-radius:9px!important;
+    background:#fff!important;color:#10263f!important;
+    font:650 13px/1.4 Arial,sans-serif!important;text-align:left!important;
+    text-decoration:none!important;white-space:normal!important;box-shadow:none!important
+  }
+  body.cb-course-menu-ready .cb-course-sidebar .cb-course-topic-link:not(.cb-course-section-link){counter-increment:cb-course-topic}
+  body.cb-course-menu-ready .cb-course-sidebar .cb-course-topic-link:not(.cb-course-section-link):not(:has(>span))::before{
+    content:counter(cb-course-topic,decimal-leading-zero);display:inline-block;
+    min-width:26px;margin-right:8px;padding:5px 3px;border:1px solid #d7e8f0;
+    border-radius:6px;background:#edf6fa;color:#086b7b;
+    font:800 10px/1 Arial,sans-serif;text-align:center;vertical-align:middle
+  }
+  body.cb-course-menu-ready .cb-course-sidebar .cb-course-topic-link:hover,
+  body.cb-course-menu-ready .cb-course-sidebar .cb-course-topic-link:focus-visible,
+  body.cb-course-menu-ready .cb-course-sidebar .cb-course-topic-link:is(.active,.current,[aria-current]){
+    border-color:#a9d5e0!important;background:#e9f6fa!important;color:#10263f!important
+  }
+  body.cb-course-menu-ready .cb-course-sidebar :is(input[type="search"],input.search-box){
+    display:block!important;box-sizing:border-box!important;width:100%!important;
+    max-width:100%!important;min-height:42px!important;margin:8px 0 10px!important;
+    padding:9px 12px!important;border:1px solid #c9d9e8!important;
+    border-radius:9px!important;background:#fff!important;color:#10263f!important;
+    font:13px Arial,sans-serif!important
+  }
+  /* Course search hides links with inline display:none; never override it. */
+  body.cb-course-menu-ready .cb-course-sidebar a[style*="display: none"]{display:none!important}
   body.cb-course-menu-ready :is(.docs-layout,.os-layout,.cn-layout,.lesson-layout){display:block!important;min-width:0!important}
   body.cb-course-menu-ready .docs-layout>.main-content{width:100%!important;min-width:0!important;margin-inline:auto!important}
   body.cb-course-menu-ready .cn-layout>.cn-main,body.cb-course-menu-ready .os-layout>.os-main,
